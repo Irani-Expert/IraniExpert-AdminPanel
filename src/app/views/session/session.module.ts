@@ -18,6 +18,8 @@ import { ErrorComponent } from './error/error.component';
 import { LockscreenComponent } from './lockscreen/lockscreen.component';
 import { SigninComponent } from './signin/signin.component';
 
+import { SignUpComponent } from './sign-up/sign-up.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { SigninComponent } from './signin/signin.component';
     ErrorComponent,
     LockscreenComponent,
     SigninComponent,
+    SignUpComponent,
   ]
 })
 
