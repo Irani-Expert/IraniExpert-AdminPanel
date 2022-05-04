@@ -19,14 +19,14 @@
   <input
     type="text"
     (change)="getByTrackCode()"
-    placeholder="کدرهگیری رااینجاواردنمایید."
+    placeholder="مطلب مورد نظر را جستجو کنید."
     class="search-input"
     [formControl]="searchCtrl"
     autofocus
   />
 
   <div class="search-title">
-    <span class="text-muted">نتیجه جستجو</span>
+    <span class="text-muted">نتایح</span>
   </div>
 
   <div class="search-results list-horizontal">
@@ -41,11 +41,13 @@
           >
             <!-- OTHER DATA -->
             <a href="" class="w-40 w-sm-100">
-              <div class="item-title">{{  results$.agentFullName }}</div>
+              <div class="item-title">{{ results$.agentFullName }}</div>
             </a>
-            <p class="m-0 text-muted text-small w-15 w-sm-100">{{  results$.agentTell }}</p>
             <p class="m-0 text-muted text-small w-15 w-sm-100">
-              {{  results$.complaintDescription }}
+              {{ results$.agentTell }}
+            </p>
+            <p class="m-0 text-muted text-small w-15 w-sm-100">
+              {{ results$.complaintDescription }}
             </p>
             <p
               class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"

@@ -1,6 +1,6 @@
 <div class="main-header">
   <div class="logo">
-    <img src="./assets/images/logo.jpg" alt="" />
+    <img src="./assets/images/logo.png" class="logo-img" alt="" />
   </div>
 
   <div class="d-flex align-items-center">
@@ -8,7 +8,7 @@
     <div class="search-bar">
       <input
         type="text"
-        placeholder="رهگیری شکایت"
+        placeholder="جستجو"
         (focus)="searchService.searchOpen = true"
       />
       <i class="search-icon text-muted i-Magnifi-Glass1"></i>
@@ -74,7 +74,7 @@
       [placement]="'bottom-right'"
       class="user col align-self-end"
     >
-    <i  class="i-Male-21" style="font-size: 30px;"></i>
+      <i class="i-Male-21" style="font-size: 30px"></i>
 
       <div
         ngbDropdownMenu
@@ -82,13 +82,12 @@
         class="header-account-dropdown"
       >
         <div class="dropdown-header">
-          <i class="i-Lock-User mr-1" ></i> یاسر بهشتی
+          <i class="i-Lock-User mr-1"></i> یاسر بهشتی
         </div>
         <!-- <button class="dropdown-item">Account settings</button>
                 <button class="dropdown-item">Billing history</button> -->
         <button class="dropdown-item" (click)="signout()">خروج</button>
       </div>
     </div>
-
   </div>
 </div>
