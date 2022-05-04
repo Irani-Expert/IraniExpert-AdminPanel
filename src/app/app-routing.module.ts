@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { BlankLayoutComponent } from './shared/components/layouts/blank-layout/blank-layout.component';
 import { AdminLayoutSidebarLargeComponent } from './shared/components/layouts/admin-layout-sidebar-large/admin-layout-sidebar-large.component';
+import { AuthGaurd } from './shared/services/auth.gaurd';
 
 const adminRoutes: Routes = [
   {
@@ -12,11 +13,11 @@ const adminRoutes: Routes = [
         (m) => m.DashboardModule
       ),
   },
-  {
-    path: 'session',
-    loadChildren: () =>
-      import('./views/session/session.module').then((m) => m.SessionModule),
-  },
+  // {
+  //   path: 'session',
+  //   loadChildren: () =>
+  //     import('./views/session/session.module').then((m) => m.SessionModule),
+  // },
 ];
 
 const routes: Routes = [
@@ -25,16 +26,16 @@ const routes: Routes = [
     redirectTo: 'dashboard/v1',
     pathMatch: 'full',
   },
-  // {
-  //   path: '',
-  //   component: AuthLayoutComponent,
-  //   children: [
-  //     {
-  //       path: 'sessions',
-  //       loadChildren: () => import('./views/sessions/sessions.module').then(m => m.SessionsModule)
-  //     }
-  //   ]
-  // },
+  {
+    path: '',
+    component: AuthLayoutComponent,
+    children: [
+      {
+        path: 'sessions',
+        loadChildren: () => import('./views/session/session.module').then(m => m.SessionModule)
+      }
+    ]
+  },
   // {
   //   path: '',
   //   component: BlankLayoutComponent,
@@ -49,6 +50,8 @@ const routes: Routes = [
     path: '',
     component: AdminLayoutSidebarLargeComponent,
     children: adminRoutes,
+    canActivate: [AuthGaurd],
+   
   },
 
   {

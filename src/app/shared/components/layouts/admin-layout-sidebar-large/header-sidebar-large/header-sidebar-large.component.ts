@@ -90,7 +90,7 @@ export class HeaderSidebarLargeComponent implements OnInit {
     }
 
     signout() {
-      this.auth.logout();
+      this.auth.signout();
     }
 
 }

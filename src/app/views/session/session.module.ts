@@ -17,8 +17,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ErrorComponent } from './error/error.component';
 import { LockscreenComponent } from './lockscreen/lockscreen.component';
 import { SigninComponent } from './signin/signin.component';
-
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { BtnLoadingComponent } from 'src/app/shared/components/btn-loading/btn-loading.component';
 
 @NgModule({
   imports: [
@@ -37,7 +36,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     ErrorComponent,
     LockscreenComponent,
     SigninComponent,
-    SignUpComponent,
+    BtnLoadingComponent,
   ]
 })
 

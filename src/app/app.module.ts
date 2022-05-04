@@ -14,9 +14,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthService } from './shared/services/auth.service';
-import { AuthGuard } from './shared/services/auth.gaurd';
 import { GlobalService } from './shared/services/globalService';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { AuthGaurd } from './shared/services/auth.gaurd';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,7 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
       NgxSpinnerModule,
       SelectDropDownModule
   ],
-  providers: [ AuthService, AuthGuard,GlobalService],
+  providers: [ AuthService, AuthGaurd,GlobalService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]
 })

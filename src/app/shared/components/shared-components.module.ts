@@ -12,7 +12,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { LayoutsModule } from './layouts/layouts.module';
 
 const components = [
-  BtnLoadingComponent,
+  // BtnLoadingComponent,
   FeatherIconComponent,
 
 ];
