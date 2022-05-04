@@ -1,0 +1,9 @@
+<div class="breadcrumb">
+  <h1>{{ breadcrumbModel.title }}</h1>
+  <ul>
+    <li *ngFor="let item of breadcrumbModel.breadcrumbs">
+      <a [routerLink]="[item.link]">{{ item.title }}</a>
+    </li>
+  </ul>
+</div>
+<div class="separator-breadcrumb border-top"></div>
