@@ -12,7 +12,7 @@ export class ProductComponent implements OnInit {
   page = 1;
   pageSize = 8;
   products: any[] = [];
-  constructor(   private dl: DataLayerService) { }
+  constructor(   private dl: DataLayerService ) { }
 
   ngOnInit(): void {
     this.dl.getProducts()
