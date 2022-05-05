@@ -13,11 +13,11 @@ const adminRoutes: Routes = [
         (m) => m.DashboardModule
       ),
   },
-  // {
-  //   path: 'session',
-  //   loadChildren: () =>
-  //     import('./views/session/session.module').then((m) => m.SessionModule),
-  // },
+  {
+    path: 'prd',
+    loadChildren: () =>
+      import('./views/phr/phr.module').then((m) => m.PhrModule),
+  },
 ];
 
 const routes: Routes = [
@@ -36,6 +36,15 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'prd',
+    children: [
+      {
+        path: 'prd',
+        loadChildren: () => import('./views/phr/phr.module').then(m => m.PhrModule)
+      }
+    ]
+  },
   // {
   //   path: '',
   //   component: BlankLayoutComponent,
@@ -51,7 +60,7 @@ const routes: Routes = [
     component: AdminLayoutSidebarLargeComponent,
     children: adminRoutes,
     canActivate: [AuthGaurd],
-   
+
   },
 
   {
