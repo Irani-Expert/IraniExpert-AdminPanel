@@ -16,7 +16,7 @@ const adminRoutes: Routes = [
   {
     path: 'prd',
     loadChildren: () =>
-      import('./views/phr/phr.module').then((m) => m.PhrModule),
+      import('./views/prd/prd.module').then((m) => m.PhrModule),
   },
 ];
 
@@ -41,7 +41,7 @@ const routes: Routes = [
     children: [
       {
         path: 'prd',
-        loadChildren: () => import('./views/phr/phr.module').then(m => m.PhrModule)
+        loadChildren: () => import('./views/prd/prd.module').then(m => m.PhrModule)
       }
     ]
   },
