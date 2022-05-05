@@ -1,0 +1,89 @@
+<div
+  class="card o-hidden"
+  [@animate]="{
+    value: '*',
+    params: { y: '120px', opacity: '0', delay: '100ms', duration: '400ms' }
+  }"
+>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="p-4">
+        <div class="auth-logo text-center mb-4">
+          <img src="assets/images/logo.png" class="logo-img" alt="" />
+        </div>
+        <h1 class="mb-3 text-18">ایجاد حساب کاربری</h1>
+        <form>
+          <div class="form-group">
+            <label for="email">آدرس ایمیل خود را وارد کنید</label>
+            <input
+              id="email"
+              class="form-control form-control-rounded"
+              formControlName="email"
+              type="email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">نام کاربری</label>
+            <input
+              id="email"
+              class="form-control form-control-rounded"
+              formControlName="email"
+              type="email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">پسوورد</label>
+            <input
+              id="password"
+              class="form-control form-control-rounded"
+              formControlName="password"
+              type="password"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">تایید پسوورد</label>
+            <input
+              id="password"
+              class="form-control form-control-rounded"
+              formControlName="password"
+              type="password"
+            />
+          </div>
+          <!-- <button class="btn btn-rounded btn-primary btn-block mt-2">Sign In</button> -->
+          <button class="btn-primary btn-rounded btn-block mt-3">
+            ایجاد حساب
+          </button>
+        </form>
+      </div>
+    </div>
+    <div
+      class="col-md-6 text-center"
+      style="
+        background-size: cover;
+        background-image: url(./assets/images/photo-long-3.jpg);
+      "
+    >
+      <div class="pr-3 auth-right">
+        <button
+          class="btn btn-rounded btn-outline-primary btn-outline-email btn-block btn-icon-text"
+          routerLink="/sessions/signup"
+        >
+          <i class="i-Mail-with-At-Sign"></i>
+          ورود با حساب ایمیل
+        </button>
+        <button
+          class="btn btn-rounded btn-outline-primary btn-outline-google btn-block btn-icon-text"
+        >
+          <i class="i-Google-Plus"></i>
+          ورود با حساب گوگل
+        </button>
+        <button
+          class="btn btn-rounded btn-outline-primary btn-block btn-icon-text btn-outline-facebook"
+        >
+          <i class="i-Facebook-2"></i>
+          ورود با حساب فیسبوک
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

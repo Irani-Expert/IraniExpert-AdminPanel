@@ -36,7 +36,7 @@ export class SigninComponent implements OnInit {
   });
 
   this.signinForm = this.fb.group({
-      email: ['test@example.com', Validators.required],
+      email: ['name@example.com', Validators.required],
       password: ['1234', Validators.required]
   });
   }
@@ -44,7 +44,7 @@ export class SigninComponent implements OnInit {
 
   signin() {
     this.loading = true;
-    this.loadingText = 'Sigining in...';
+    this.loadingText = 'در حال ورود...';
     // this.auth.signin(this.signinForm.value)
     //     .subscribe(res => {
     //         this.router.navigateByUrl('/dashboard/v1');
