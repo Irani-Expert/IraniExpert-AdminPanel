@@ -51,38 +51,17 @@ export class NavigationService {
   defaultMenu: IMenuItem[] = [
     {
       name: 'داشبورد',
-      description: 'داشبورد مدیریتی دنا مارکتینگ ',
+      description: 'داشبورد مدیریتی ایرانی اکسپرت',
       type: 'link',
       icon: 'i-Bar-Chart',
-      state: '/dashboard/v1',
-      // sub: [
-      //     { icon: 'i-Clock-3', name: 'Version 1',  type: 'link' },
-      //     { icon: 'i-Clock-4', name: 'Version 2', state: '/dashboard/v2', type: 'link' },
-      //     { icon: 'i-Over-Time', name: 'Version 3', state: '/dashboard/v3', type: 'link' },
-      //     { icon: 'i-Clock', name: 'Version 4', state: '/dashboard/v4', type: 'link' },
-      // ]
+      state: '/dashboard/v1'
     },
     {
-      name: 'مدیریت بنر ها',
-      description: 'انواع بنر',
-      type: 'dropDown',
-      icon: 'i-Blogger',
-      sub: [
-        {
-          icon: 'i-Blogger',
-          name: 'ایجاد بنر جدید',
-          state: '/cnt/banner/create-banner',
-          type: 'link',
-        },
-        {
-          icon: 'i-Management',
-          name: 'بنر ها',
-          state: '/cnt/banners',
-          type: 'link',
-        },
-      ],
+      name: 'محصولات',
+      type: 'link',
+      icon: 'i-File-Clipboard-File--Text',
+      state: '/prd/products-list'
     },
-
     // {
     //     name: 'Forms',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',

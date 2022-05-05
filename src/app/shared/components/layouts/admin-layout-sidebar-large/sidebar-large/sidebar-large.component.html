@@ -4,7 +4,7 @@
   [perfectScrollbar]="{ suppressScrollX: true }"
 >
   <div class="logo">
-    <img src="./assets/images/logo.jpg" alt="" />
+    <img src="./assets/images/logo.png" alt="" />
   </div>
   <ul class="navigation-left">
     <li
@@ -30,7 +30,10 @@
         <i [class]="'nav-icon ' + item.icon"></i>
         <span class="nav-text">{{ item.name }}</span>
       </div>
-      <div class="nav-item-hold" *ngIf="!item.disabled && item.type === 'extLink'">
+      <div
+        class="nav-item-hold"
+        *ngIf="!item.disabled && item.type === 'extLink'"
+      >
         <a [href]="item.state" target="_blank">
           <i [class]="'nav-icon' + item.icon"></i>
           <span class="nav-text">{{ item.name }}</span>
@@ -53,7 +56,10 @@
     <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
   </header>
   <ng-container
-    *ngTemplateOutlet="menuTemplate; context: { parentItem: navService.selectedItem }"
+    *ngTemplateOutlet="
+      menuTemplate;
+      context: { parentItem: navService.selectedItem }
+    "
   ></ng-container>
 </div>
 
