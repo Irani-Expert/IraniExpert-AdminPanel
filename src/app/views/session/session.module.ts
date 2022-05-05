@@ -18,6 +18,7 @@ import { ErrorComponent } from './error/error.component';
 import { LockscreenComponent } from './lockscreen/lockscreen.component';
 import { SigninComponent } from './signin/signin.component';
 import { BtnLoadingComponent } from 'src/app/shared/components/btn-loading/btn-loading.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { BtnLoadingComponent } from 'src/app/shared/components/btn-loading/btn-l
     LockscreenComponent,
     SigninComponent,
     BtnLoadingComponent,
+    SignupComponent,
   ]
 })
 
