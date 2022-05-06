@@ -7,6 +7,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ProductComponent } from './product/product.component';
 import { ProductsRoutingModule } from './product-routing.module';
 import { BackTestComponent } from './back-test/back-test.component';
+import { PlansComponent } from './plans/plans.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -16,13 +18,15 @@ import { BackTestComponent } from './back-test/back-test.component';
     ProductsListComponent,
     ProductComponent,
     BackTestComponent,
+    PlansComponent,
 
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ProductsRoutingModule
+    ProductsRoutingModule,
+    NgbModule
   ]
 })
 export class PhrModule { }
