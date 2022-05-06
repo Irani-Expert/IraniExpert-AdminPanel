@@ -8,6 +8,7 @@ import { AddUpdateComponent } from './addUpdate/addUpdate.component';
 import { ProductsRoutingModule } from './prd.routing';
 import { FAQComponent } from './addUpdate/faq/faq.component';
 import { LearnComponent } from './addUpdate/learn/learn.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -24,7 +25,8 @@ import { LearnComponent } from './addUpdate/learn/learn.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ProductsRoutingModule
+    ProductsRoutingModule,
+    NgxPaginationModule,
   ]
 })
 export class PrdModule { }
