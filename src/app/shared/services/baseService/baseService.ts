@@ -1,5 +1,5 @@
 import { Observable, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IBaseService } from './baseService.interface';
 import { catchError, delay } from "rxjs/operators";
 import { Result } from '../../models/Base/result.model';
@@ -23,7 +23,6 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
   constructor(
     protected _http: HttpClient,
     protected _base: string,
-    protected _options: {}
   ) {
 
   }
@@ -35,8 +34,14 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @param route
    * @returns insert
    */
-  insert(t: object, route: string): Observable<Result<T>> {
-    return this._http.post<Result<T>>(this._base + "/" + route, t, this._options);
+  create(t: object, route: string): Observable<Result<T>> {
+   let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+      }),
+    };
+    return this._http.post<Result<T>>(this._base + "/" + route, t,_options);
   }
 
 
@@ -48,7 +53,13 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @returns update
    */
   update(id: number, t: T, route: string): Observable<Result<T>> {
-    return this._http.put<Result<T>>(this._base + "/" + route+"/"+id, t, this._options);
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+      }),
+    };
+    return this._http.put<Result<T>>(this._base + "/" + route+"/"+id, t,_options);
   }
 
   /**
@@ -57,8 +68,14 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @param route
    * @returns one by id
    */
-  getOneByID( route: string): Observable<Result<T>> {
-    return this._http.get<Result<T>>(this._base + "/" + route, this._options);
+  getOneByID(id: number, route: string): Observable<Result<T>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+      }),
+    };
+    return this._http.get<Result<T>>(this._base + "/" + route+"/"+id,_options);
   }
 
   /**
@@ -67,8 +84,20 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @param route
    * @returns one by id
    */
-  getTitleValues(route: string): Observable<Result<T[]>> {
-    return this._http.get<Result<T[]>>(this._base + "/" + route +"/GetTitleValues", this._options);
+  getTitleValues(pageIndex: number, pageSize: number, pageOrder: string, filter: string, route: string): Observable<Result<T[]>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+      }),
+    };
+    return this._http.get<Result<T[]>>(
+      this._base + "/" + route +
+      "/GetTitleValues?pagIndex="+pageIndex+
+      "&pageSize="+pageSize+
+      "&pageOrder="+pageOrder+
+      "&filter="+filter,
+    _options);
   }
 
   /**
@@ -76,12 +105,19 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @param route
    * @returns all
    */
-  getAll(route: string): Observable<Result<T[]>> {
-
-
-    return this._http.get<Result<T[]>>(this._base + "/" + route, this._options)
-
-
+  get(pageIndex: number, pageSize: number, pageOrder: string, filter: string, route: string): Observable<Result<T[]>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+      }),
+    };
+    return this._http.get<Result<T[]>>(this._base + "/" + route +
+    "?pagIndex="+pageIndex+
+    "&pageSize="+pageSize+
+    "&pageOrder="+pageOrder+
+    "&filter="+filter,
+    _options);
   }
 
 
@@ -91,8 +127,14 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @param route
    * @returns by id
    */
-  deleteByID(id: number, route: string): Observable<Result<T>> {
-    return this._http.delete<Result<T>>(this._base + "/" + route+"/"+id, this._options);
+  delete(id: number, route: string): Observable<Result<T>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+      }),
+    };
+    return this._http.delete<Result<T>>(this._base + "/" + route+"/"+id, _options);
   }
 
 
