@@ -44,7 +44,8 @@
         <!-- TUMBNAIL -->
       </div>
         <div
-          class="card-body align-self-center d-flex flex-column align-items-lg-center row"
+        id="myHeader"
+          class="card-body align-self-center d-flex flex-column align-items-lg-center th-list  row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
@@ -172,6 +173,7 @@
   </div>
 </div>
 
+
 <ng-template #deleteConfirmModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-title">حذف محصول</h4>
@@ -206,3 +208,6 @@
     </button>
   </div>
 </ng-template>
+
+
+
