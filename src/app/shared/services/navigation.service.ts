@@ -62,6 +62,28 @@ export class NavigationService {
       icon: 'i-File-Clipboard-File--Text',
       state: '/prd/products-list'
     },
+    {
+      name: 'مقالات',
+      type: 'link',
+      icon: 'i-File-Clipboard-File--Text',
+      state: '/cnt/article'
+    },  {
+      name: 'بنرها',
+      type: 'link',
+      icon: 'i-File-Clipboard-File--Text',
+      state: '/cnt/banner'
+    },  {
+      name: 'گروه ها',
+      type: 'link',
+      icon: 'i-File-Clipboard-File--Text',
+      state: '/bas/group'
+    },
+   {
+    name: 'سفارشات',
+    type: 'link',
+    icon: 'i-File-Clipboard-File--Text',
+    state: '/bsk/orders'
+  },
     // {
     //     name: 'Forms',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',

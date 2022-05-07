@@ -4,6 +4,7 @@ import { IBaseService } from './baseService.interface';
 import { catchError, delay } from "rxjs/operators";
 import { Result } from '../../models/Base/result.model';
 import { Filter } from '../../models/Base/filter.model';
+import { environment } from 'src/environments/environment.prod';
 
 /**
  * سرویس پایه
@@ -38,7 +39,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+        'Authorization': 'bearer '+environment.jwtToken
       }),
     };
     return this._http.post<Result<T>>(this._base + "/" + route, t,_options);
@@ -56,7 +57,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+        'Authorization': 'bearer '+environment.jwtToken
       }),
     };
     return this._http.put<Result<T>>(this._base + "/" + route+"/"+id, t,_options);
@@ -72,7 +73,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+        'Authorization': 'bearer '+environment.jwtToken
       }),
     };
     return this._http.get<Result<T>>(this._base + "/" + route+"/"+id,_options);
@@ -88,7 +89,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+        'Authorization': 'bearer '+environment.jwtToken
       }),
     };
     return this._http.get<Result<T[]>>(
@@ -109,7 +110,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+        'Authorization': 'bearer '+environment.jwtToken
       }),
     };
     return this._http.get<Result<T[]>>(this._base + "/" + route +
@@ -131,7 +132,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieWFzZXIiLCJyb2xlIjoiQWRtaW5pc3RyYXRvciIsIm5iZiI6MTY1MTgyODgyNSwiZXhwIjoxNjUzMDM4NDI0LCJpYXQiOjE2NTE4Mjg4MjUsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjYwMDEifQ.CkdzLIg49a14hCUQtUK2RKEw-5USacpc8hsSYgftMoU'
+        'Authorization': 'bearer '+environment.jwtToken
       }),
     };
     return this._http.delete<Result<T>>(this._base + "/" + route+"/"+id, _options);

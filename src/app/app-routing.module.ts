@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
-import { BlankLayoutComponent } from './shared/components/layouts/blank-layout/blank-layout.component';
 import { AdminLayoutSidebarLargeComponent } from './shared/components/layouts/admin-layout-sidebar-large/admin-layout-sidebar-large.component';
 import { AuthGaurd } from './shared/services/auth.gaurd';
 
@@ -17,6 +16,23 @@ const adminRoutes: Routes = [
     path: 'prd',
     loadChildren: () =>
       import('./views/prd/prd.module').then((m) => m.PrdModule),
+  },
+  {
+    path: 'bas',
+    loadChildren: () =>
+      import('./views/bas/bas.module').then((m) => m.BasModule),
+  },
+
+  {
+    path: 'cnt',
+    loadChildren: () =>
+      import('./views/cnt/cnt.module').then((m) => m.CntModule),
+  },
+
+  {
+    path: 'bsk',
+    loadChildren: () =>
+      import('./views/bsk/bsk.module').then((m) => m.BskModule),
   },
 ];
 
@@ -42,6 +58,37 @@ const routes: Routes = [
       {
         path: 'prd',
         loadChildren: () => import('./views/prd/prd.module').then(m => m.PrdModule)
+      }
+    ]
+  },
+
+  {
+    path: 'bas',
+    children: [
+      {
+        path: 'bas',
+        loadChildren: () => import('./views/bsk/bsk.module').then((m) => m.BskModule),
+      }
+    ]
+  },
+
+
+  {
+    path: 'cnt',
+    children: [
+      {
+        path: 'cnt',
+        loadChildren: () => import('./views/cnt/cnt.module').then(m => m.CntModule)
+      }
+    ]
+  },
+
+  {
+    path: 'bsk',
+    children: [
+      {
+        path: 'bsk',
+        loadChildren: () => import('./views/bsk/bsk.module').then(m => m.BskModule)
       }
     ]
   },
