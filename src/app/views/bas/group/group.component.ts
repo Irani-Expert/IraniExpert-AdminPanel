@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
@@ -16,14 +17,24 @@ export class GroupComponent implements OnInit {
   allSelected: boolean;
   pageIndex = 1;
   pageSize = 12;
+  addUpdate:GroupModel;
+  addForm: FormGroup;
   constructor(
     public _groupService: GroupService,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private _formBuilder: FormBuilder
+
   ) {}
 
   ngOnInit(): void {
     this.setPage(0);
+    this.addForm = this._formBuilder.group({
+      title: [null, Validators.compose([Validators.required])],
+      parentID: [null, Validators.compose([Validators.required])],
+      type: [null, Validators.compose([Validators.required])],
+      isActive: [null],
+    });
   }
 
   setPage(pageInfo: number) {
@@ -98,5 +109,105 @@ export class GroupComponent implements OnInit {
           });
         }
       );
+  }
+
+  addorEdit(content, row: GroupModel) {
+
+    debugger
+    if (row === undefined) {
+      row = new GroupModel();
+      row.id = 0;
+      row.type=null;
+      row.parentID=null;
+    }
+    this.addUpdate = row;
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result: boolean) => {
+          if (result != undefined) {
+              this.addOrUpdate(row);
+              this.addForm.reset();
+
+          }
+        },
+        (reason) => {
+          console.log('Err!', reason);
+          this.addForm.reset();
+        }
+      );
+  }
+
+  async addOrUpdate(row: GroupModel) {
+    if(row.id===0){
+      await this._groupService.create(row,"Group").toPromise()
+      .then(data => {
+        if (data.success) {
+          this.toastr.success(data.message, null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+
+            });
+        } else {
+          this.toastr.error(data.message, null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+        }
+      },
+        error => {
+          this.toastr.error("خطا مجدد تلاش فرمایید", null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+        }
+      );
+    }else{
+      await this._groupService.update(row.id,row,"Group").toPromise()
+      .then(data => {
+        if (data.success) {
+          this.toastr.success(data.message, null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+
+            });
+
+        } else {
+          this.toastr.error(data.message, null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+        }
+      },
+        error => {
+          this.toastr.error("خطا مجدد تلاش فرمایید", null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+        }
+      );
+    }
+
+    this.getGroupList(this.pageIndex,this.pageIndex)
+
+  }
+
+  selectParent($event:any){
+    debugger
+    if ($event != undefined) {
+      this.addUpdate.parentID =parseInt($event);
+    }
+  }
+  selectType($event:any){
+    debugger
+    if ($event != undefined) {
+      this.addUpdate.type =parseInt($event);
+    }
   }
 }

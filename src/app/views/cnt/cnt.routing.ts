@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { AddUpdateComponent } from "./article/add-update/add-update.component";
 import { ArticleComponent } from "./article/article/article.component";
 import { BannerComponent } from "./banner/banner/banner.component";
 
@@ -12,7 +13,11 @@ const routes: Routes = [
   },
   {
     path: 'article',
-    component: ArticleComponent
+    component: ArticleComponent,
+  },
+  {
+    path: 'article/addUpdate-article',
+    component: AddUpdateComponent,
   }
 
 
