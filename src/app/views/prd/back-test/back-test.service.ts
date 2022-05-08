@@ -22,7 +22,7 @@ export class BackTestService  extends BaseService<BackTestModel, 0> {
    * @param route
    * @returns all
    */
-     getBackTestByProductId(pageIndex: number, pageSize: number, pageOrder: string, filter: string, productId: string): Observable<Result<BackTestModel[]>> {
+     getBackTestByProductId(pageIndex: number, pageSize: number, pageOrder: string, filter: string, productId: number): Observable<Result<BackTestModel[]>> {
       let _options = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

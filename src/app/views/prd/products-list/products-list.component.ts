@@ -22,7 +22,8 @@ export class ProductsListComponent implements OnInit {
   constructor(
     public _productService: ProductService,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+
   ) {}
 
   ngOnInit(): void {

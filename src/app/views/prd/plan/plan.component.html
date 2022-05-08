@@ -8,7 +8,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-3">
+  <div class="col-md-3" *ngFor="let item of rows">
     <div class="card card-profile-1 mb-4">
       <div class="card-body text-center">
         <div class="avatar box-shadow-2 mb-2">
@@ -22,7 +22,7 @@
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
           <ngb-panel>
             <ng-template ngbPanelTitle>
-              <h6 class="text-center">امکانات</h6>
+              <h6 class="text-center" >{{item.price}}</h6>
             </ng-template>
             <ng-template ngbPanelContent>
               <span class="text-justify">
@@ -46,120 +46,6 @@
     </div>
   </div>
 
-  <div class="col-md-3">
-    <div class="card card-profile-1 mb-4">
-      <div class="card-body text-center">
-        <div class="avatar box-shadow-2 mb-2">
-          <img src="./assets/images/faces/16.jpg" alt="icon" />
-        </div>
-        <span class="badge badge-pill badge-success text-end p-2 mb-1 mr-1"
-          >Success</span
-        >
-        <h6 class="m-0">Jassica Hike</h6>
-        <p class="mt-0 text-muted">UI/UX Designer</p>
-        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-          <ngb-panel>
-            <ng-template ngbPanelTitle>
-              <h6 class="text-center">امکانات</h6>
-            </ng-template>
-            <ng-template ngbPanelContent>
-              <span class="text-justify">
-                <ol>
-                  <li class="col"></li>
-                  <li class="col"></li>
-                  <li class="col"></li>
-                </ol>
-              </span>
-            </ng-template>
-          </ngb-panel>
-        </ngb-accordion>
-
-        <button
-          class="btn btn-primary btn-block mt-2"
-          (click)="open(modalLong)"
-        >
-          ویرایش
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="card card-profile-1 mb-4">
-      <div class="card-body text-center">
-        <div class="avatar box-shadow-2 mb-2">
-          <img src="./assets/images/faces/16.jpg" alt="icon" />
-        </div>
-        <span class="badge badge-pill badge-success text-end p-2 mb-1 mr-1"
-          >Success</span
-        >
-        <h6 class="m-0">Jassica Hike</h6>
-        <p class="mt-0 text-muted">UI/UX Designer</p>
-        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-          <ngb-panel>
-            <ng-template ngbPanelTitle>
-              <h6 class="text-center">امکانات</h6>
-            </ng-template>
-            <ng-template ngbPanelContent>
-              <span class="text-justify">
-                <ol>
-                  <li class="col"></li>
-                  <li class="col"></li>
-                  <li class="col"></li>
-                </ol>
-              </span>
-            </ng-template>
-          </ngb-panel>
-        </ngb-accordion>
-
-        <button
-          class="btn btn-primary btn-block mt-2"
-          (click)="open(modalLong)"
-        >
-          ویرایش
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="card card-profile-1 mb-4">
-      <div class="card-body text-center">
-        <div class="avatar box-shadow-2 mb-2">
-          <img src="./assets/images/faces/16.jpg" alt="icon" />
-        </div>
-        <span class="badge badge-pill badge-success text-end p-2 mb-1 mr-1"
-          >Success</span
-        >
-        <h6 class="m-0">Jassica Hike</h6>
-        <p class="mt-0 text-muted">UI/UX Designer</p>
-        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-          <ngb-panel>
-            <ng-template ngbPanelTitle>
-              <h6 class="text-center">امکانات</h6>
-            </ng-template>
-            <ng-template ngbPanelContent>
-              <span class="text-justify">
-                <ol>
-                  <li class="col"></li>
-                  <li class="col"></li>
-                  <li class="col"></li>
-                </ol>
-              </span>
-            </ng-template>
-          </ngb-panel>
-        </ngb-accordion>
-
-        <button
-          class="btn btn-primary btn-block mt-2"
-          (click)="open(modalLong)"
-        >
-          ویرایش
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <ng-template #modalLong let-modal>
   <div class="modal-header">
