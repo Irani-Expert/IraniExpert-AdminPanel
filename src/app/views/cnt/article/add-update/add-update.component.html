@@ -1,0 +1,95 @@
+<div class="card">
+  <form [formGroup]="addForm">
+    <div class="row">
+
+      <div class="col-md-12 form-group mb-3">
+        <button class="btn btn-outline-primary btn-rounded mr-3" (click)="openUploader(modalCropper)">انتخاب تصویر شاخص</button>
+            <img *ngIf="addUpdate?.cardImagePath" class="rounded-circle" [src]="bannerModel?.filePath" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+      </div>
+
+      <div class="col-md-12 form-group mb-3">
+        <label for="title">عنوان</label>
+        <input type="text" class="form-control form-control-rounded" id="title" placeholder="عنوان را وارد نمایید."
+          [formControl]="addForm.controls['title']" [(ngModel)]="addUpdate.title" />
+        <small *ngIf="
+          addForm.controls['title'].hasError('required') &&
+          addForm.controls['title'].touched
+        " class="mat-text-warn m-t-negative">ورود عنوان ضروری است</small>
+      </div>
+
+      <div class="col-md-12 form-group mb-3">
+        <label for="brief">متن کوتاه</label>
+        <input type="text" class="form-control form-control-rounded" id="brief" placeholder="متن کوتاه را وارد نمایید."
+          [formControl]="addForm.controls['brief']" [(ngModel)]="addUpdate.brief" />
+        <small *ngIf="
+          addForm.controls['brief'].hasError('required') &&
+          addForm.controls['brief'].touched
+        " class="mat-text-warn m-t-negative">ورود عنوان ضروری است</small>
+      </div>
+
+      <div class="col-md-6 form-group mb-3">
+        <label for="picker1">انتخاب گروه</label>
+        <select [formControl]="addForm.controls['groupID']" class="form-control form-control-rounded"
+          (ngModelChange)="selectGroup($event)" [ngModel]="addUpdate.groupID">
+          <option value="0">تنظیمات</option>
+          <option value="1">مقاله </option>
+          <option value="2">FAQ</option>
+        </select>
+        <small *ngIf="
+              addForm.controls['groupID'].hasError('required') &&
+              addForm.controls['groupID'].touched
+            " class="mat-text-warn m-t-negative">انتخاب نوع گروه ضروری است</small>
+      </div>
+
+      <div class="col-md-6 form-group mb-3">
+        <label class="switch switch-primary mr-3">
+          <span>فعال/غیرفعال</span>
+          <input [(ngModel)]="addUpdate.isActive" [formControl]="addForm.controls['isActive']" type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="col-md-12 form-group mb-3">
+        <ckeditor [formControl]="addForm.controls['description']" [(ngModel)]="addUpdate.description" name="myckeditor"
+          required [config]="ckeConfig" debounce="500" (paste)="onPasteEditor($event)"
+          (change)="onChangeEditor($event)">
+        </ckeditor>
+        <small *ngIf="
+        addForm.controls['description'].hasError('required') &&
+        addForm.controls['description'].touched
+      " class="mat-text-warn m-t-negative">توضیحات ضروری است</small>
+      </div>
+
+    </div>
+
+    <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close(true)"
+      *ngIf="addUpdate.id !== 0" [disabled]="!addForm.valid">
+      ذخیره
+    </button>
+    <button type="button" class="btn btn-outline-dark btn-rounded" *ngIf="addUpdate.id === 0"
+      [disabled]="!addForm.valid">
+      ذخیره
+    </button>
+    <button [routerLink]="'cnt/article'" type="button" class="btn btn-outline-dark btn-rounded">
+      انصراف
+    </button>
+  </form>
+</div>
+
+
+
+<ng-template #modalCropper let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">آپلود و ویرایش تصویر</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <img-cropper [image]="image" [settings]="cropperSettings"></img-cropper><br>
+    <img *ngIf="image?.image" class="mt-3  mr-3" [src]="image?.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+    <img *ngIf="image?.image" class="rounded-circle  mt-3" [src]="image?.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-rounded btn-outline-dark" (click)="modal.close(image)">آپلود کن</button>
+  </div>
+</ng-template>

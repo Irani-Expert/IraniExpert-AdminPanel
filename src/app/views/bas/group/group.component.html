@@ -3,7 +3,7 @@
 _ngcontent-tco-c175=""
 type="button"
 class="btn btn-primary m-1"
-[routerLink]="'/bas/addUpdate-group'"
+(click)="addorEdit(addUpdateModal, undefined)"
 >
 ایجاد
 </button>
@@ -32,7 +32,7 @@ class="btn btn-primary m-1"
 
           <p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-actions">
             <button class="btn btn-icon bg-transparent"
-            [routerLink]="'/bas/addUpdate-group/'+item.id"
+            (click)="addorEdit(addUpdateModal, item)"
             [ngClass]="{'d-none': viewMode === 'grid'}">
               <i class="i-File-Edit text-16 text-primary"> ویرایش </i>
             </button>
@@ -75,6 +75,133 @@ class="btn btn-primary m-1"
     </button>
     <button type="button" ngbAutofocus class="btn btn-wide btn-danger btn-rounded" (click)="modal.close('Ok')">
       بله
+    </button>
+  </div>
+</ng-template>
+
+
+<ng-template #addUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+      <div class="row">
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="title">عنوان</label>
+          <input
+            type="text"
+            class="form-control form-control-rounded"
+            id="title"
+            placeholder="عنوان را وارد نمایید."
+            [formControl]="addForm.controls['title']"
+            [(ngModel)]="addUpdate.title"
+          />
+          <small
+            *ngIf="
+              addForm.controls['title'].hasError('required') &&
+              addForm.controls['title'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >ورود عنوان ضروری است</small
+          >
+        </div>
+
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="picker1">انتخاب والد</label>
+          <select
+            [formControl]="addForm.controls['parentID']"
+            class="form-control form-control-rounded"
+            (ngModelChange)="selectParent($event)"
+            [ngModel]="addUpdate.parentID"
+          >
+            <option value="null">والد ندارد</option>
+            <option *ngFor="let item of rows" value="{{item.id}}">
+              {{ item.title }}
+            </option>
+          </select>
+          <small
+            *ngIf="
+              addForm.controls['parentID'].hasError('required') &&
+              addForm.controls['parentID'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >انتخاب والد ضروری است</small
+          >
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="picker1">نوع گروه</label>
+          <select
+            [formControl]="addForm.controls['type']"
+            class="form-control form-control-rounded"
+            (ngModelChange)="selectType($event)"
+            [ngModel]="addUpdate.type"
+          >
+          <option value="0">تنظیمات</option>
+          <option value="1">مقاله  </option>
+          <option value="2">FAQ</option>
+          </select>
+          <small
+            *ngIf="
+              addForm.controls['type'].hasError('required') &&
+              addForm.controls['type'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >انتخاب نوع گروه  ضروری است</small
+          >
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+          <label class="switch switch-primary mr-3">
+            <span>فعال/غیرفعال</span>
+            <input
+              [(ngModel)]="addUpdate.isActive"
+              [formControl]="addForm.controls['isActive']"
+              type="checkbox"
+            />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id !== 0"
+      [disabled]="!addForm.valid"
+    >
+      ذخیره
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+      *ngIf="addUpdate.id === 0"
+      [disabled]="!addForm.valid"
+    >
+      ذخیره
     </button>
   </div>
 </ng-template>
