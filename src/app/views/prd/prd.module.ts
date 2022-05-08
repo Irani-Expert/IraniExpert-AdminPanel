@@ -9,6 +9,10 @@ import { ProductsRoutingModule } from './prd.routing';
 import { FAQComponent } from './addUpdate/faq/faq.component';
 import { LearnComponent } from './addUpdate/learn/learn.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { BackTestComponent } from './back-test/back-test.component';
+import { PlanComponent } from './plan/plan.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommentComponent } from './comment/comment.component';
 
 
 
@@ -19,6 +23,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AddUpdateComponent,
     FAQComponent,
     LearnComponent,
+    BackTestComponent,
+    PlanComponent,
+    CommentComponent,
 
   ],
   imports: [
@@ -27,6 +34,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     ProductsRoutingModule,
     NgxPaginationModule,
+    NgbModule
+
   ]
 })
 export class PrdModule { }

@@ -2,44 +2,40 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { FaqModel } from './faq.model';
-import { FaqService } from './faq.service';
+import { ProductModel } from '../products-list/product.model';
+import { BackTestModel } from './back-test.model';
+import { BackTestService } from './back-test.service';
 
 @Component({
-  selector: 'app-faq',
-  templateUrl: './faq.component.html',
-  styleUrls: ['./faq.component.scss'],
+  selector: 'app-back-test',
+  templateUrl: './back-test.component.html',
+  styleUrls: ['./back-test.component.scss']
 })
-export class FAQComponent implements OnInit {
-  rows: FaqModel[] = new Array<FaqModel>();
-  productid: string;
+export class BackTestComponent implements OnInit {
+  rows: BackTestModel[] = new Array<BackTestModel>();
+  productid:string ;
   pageIndex = 1;
   pageSize = 12;
+
   constructor(
-    public _FaqService: FaqService,
+    public _backtestService : BackTestService,
     private toastr: ToastrService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
-
+  ngOnInit(): void {
+  }
   setPage(pageInfo:number) {
     this.pageIndex = pageInfo;
 
-    this.getFaqListByProductId(this.pageIndex , this.pageSize);
+    this.getBackTestListByProductId(this.pageIndex , this.pageSize);
   }
 
-  async getFaqListByProductId(pageNumber: number, seedNumber: number) {
-    await this._FaqService
-      .getFaqByProductId(
-        pageNumber,
-        seedNumber,
-        'ID',
-        'faq',
-        this.productid
-      )
+  async getBackTestListByProductId(pageNumber: number, seedNumber: number) {
+    await this._backtestService
+      .getBackTestByProductId(pageNumber, seedNumber, 'ID', 'backtest' , this.productid)
       .subscribe(
-        (res: Result<FaqModel[]>) => {
+        (res: Result<BackTestModel[]>) => {
           this.rows = res.data;
           //  this.page.totalElements = res.data.length;
         },
@@ -55,12 +51,14 @@ export class FAQComponent implements OnInit {
         }
       );
   }
-  deleteFaq(id, modal) {
+
+
+  deleteBackTest(id, modal) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._FaqService.delete(id,"faq").toPromise().then((res) => {
+          this._backtestService.delete(id,"backtest").toPromise().then((res) => {
             if(res.success){
               debugger
               this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
@@ -77,7 +75,7 @@ export class FAQComponent implements OnInit {
 
               });
             }
-            this.getFaqListByProductId(
+            this.getBackTestListByProductId(
               this.pageIndex,
               this.pageSize
             );

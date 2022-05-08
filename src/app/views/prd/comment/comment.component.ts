@@ -2,44 +2,39 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { FaqModel } from './faq.model';
-import { FaqService } from './faq.service';
+import { CommentService } from './comment.service';
+import { CommentModel } from './commnet.model';
 
 @Component({
-  selector: 'app-faq',
-  templateUrl: './faq.component.html',
-  styleUrls: ['./faq.component.scss'],
+  selector: 'app-comment',
+  templateUrl: './comment.component.html',
+  styleUrls: ['./comment.component.scss']
 })
-export class FAQComponent implements OnInit {
-  rows: FaqModel[] = new Array<FaqModel>();
-  productid: string;
+export class CommentComponent implements OnInit {
+  rows: CommentModel[] = new Array<CommentModel>();
+  productid:string ;
   pageIndex = 1;
   pageSize = 12;
+
   constructor(
-    public _FaqService: FaqService,
+    public _CommenttService : CommentService,
     private toastr: ToastrService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   setPage(pageInfo:number) {
     this.pageIndex = pageInfo;
 
-    this.getFaqListByProductId(this.pageIndex , this.pageSize);
+    this.getCommentListByProductId(this.pageIndex , this.pageSize);
   }
-
-  async getFaqListByProductId(pageNumber: number, seedNumber: number) {
-    await this._FaqService
-      .getFaqByProductId(
-        pageNumber,
-        seedNumber,
-        'ID',
-        'faq',
-        this.productid
-      )
+  async getCommentListByProductId(pageNumber: number, seedNumber: number) {
+    await this._CommenttService
+      .getCommentByProductId(pageNumber, seedNumber, 'ID', 'backtest' , this.productid)
       .subscribe(
-        (res: Result<FaqModel[]>) => {
+        (res: Result<CommentModel[]>) => {
           this.rows = res.data;
           //  this.page.totalElements = res.data.length;
         },
@@ -55,12 +50,13 @@ export class FAQComponent implements OnInit {
         }
       );
   }
-  deleteFaq(id, modal) {
+
+  deleteComment(id, modal) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._FaqService.delete(id,"faq").toPromise().then((res) => {
+          this._CommenttService.delete(id,"comment").toPromise().then((res) => {
             if(res.success){
               debugger
               this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
@@ -77,7 +73,7 @@ export class FAQComponent implements OnInit {
 
               });
             }
-            this.getFaqListByProductId(
+            this.getCommentListByProductId(
               this.pageIndex,
               this.pageSize
             );
