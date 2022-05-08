@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
@@ -12,16 +13,25 @@ import { FaqService } from './faq.service';
 })
 export class FAQComponent implements OnInit {
   rows: FaqModel[] = new Array<FaqModel>();
-  productid: string;
+  productId: number;
+  tableType: number;
+
   pageIndex = 1;
   pageSize = 12;
   constructor(
     public _FaqService: FaqService,
     private toastr: ToastrService,
-    private modalService: NgbModal
-  ) {}
+    private modalService: NgbModal,
+    private activatedRoute:ActivatedRoute
+  ) {
+  this.productId= parseInt(this.activatedRoute.snapshot.paramMap.get('productId'));
+  this.tableType= parseInt(this.activatedRoute.snapshot.paramMap.get('tableType'));
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    this.setPage(0);
+  }
 
   setPage(pageInfo:number) {
     this.pageIndex = pageInfo;
@@ -36,7 +46,8 @@ export class FAQComponent implements OnInit {
         seedNumber,
         'ID',
         'faq',
-        this.productid
+        this.productId ,
+        this.tableType
       )
       .subscribe(
         (res: Result<FaqModel[]>) => {

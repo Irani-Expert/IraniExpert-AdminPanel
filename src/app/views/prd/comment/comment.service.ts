@@ -22,19 +22,20 @@ export class CommentService  extends BaseService<CommentModel, 0> {
    * @param route
    * @returns all
    */
-     getCommentByProductId(pageIndex: number, pageSize: number, pageOrder: string, filter: string, productId: string): Observable<Result<CommentModel[]>> {
+     getCommentByProductId(pageIndex: number, pageSize: number, pageOrder: string, filter: string, productId: number , tableType:number): Observable<Result<CommentModel[]>> {
       let _options = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Authorization': 'bearer '+environment.jwtToken
         }),
       };
-      return this._http.get<Result<CommentModel[]>>(this._base + "/comment/getCommentByProductId/" + productId +
+      return this._http.get<Result<CommentModel[]>>(this._base + "/comment/GetByTableTypeAndRowId/" + productId +"/"+ tableType+
       "?pagIndex="+pageIndex+
       "&pageSize="+pageSize+
       "&pageOrder="+pageOrder+
       "&filter="+filter+
-      "&productId="+productId,
+      "&productId="+productId+
+      "&tableType="+tableType,
       _options);
     }
 }

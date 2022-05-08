@@ -22,14 +22,14 @@ export class PlanService  extends BaseService<PlanModel, 0> {
    * @param route
    * @returns all
    */
-     getPlanByProductId(pageIndex: number, pageSize: number, pageOrder: string, filter: string, productId: string): Observable<Result<PlanModel[]>> {
+     getPlanByProductId(pageIndex: number, pageSize: number, pageOrder: string, filter: string, productId: number): Observable<Result<PlanModel[]>> {
       let _options = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Authorization': 'bearer '+environment.jwtToken
         }),
       };
-      return this._http.get<Result<PlanModel[]>>(this._base + "/Plan/GetPlanByProductId/" + productId +
+      return this._http.get<Result<PlanModel[]>>(this._base + "/Plan/GetByProductId/" + productId +
       "?pagIndex="+pageIndex+
       "&pageSize="+pageSize+
       "&pageOrder="+pageOrder+

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
@@ -13,17 +14,22 @@ import { LeranService } from './leran.service';
 export class LearnComponent implements OnInit {
 
   rows: LeranModel[] = new Array<LeranModel>();
-  productid:string ;
+  productId:number ;
   pageIndex = 1;
+  products: any[] = [];
   pageSize = 12;
 
   constructor(
     public _LeranService : LeranService,
     private toastr: ToastrService,
-    private modalService: NgbModal
-  ) { }
+    private modalService: NgbModal,
+    private activatedRoute:ActivatedRoute
+  ) {
+    this.productId = parseInt(this.activatedRoute.snapshot.paramMap.get('productId'));
+  }
 
   ngOnInit(): void {
+    this.setPage(0);
   }
 
   setPage(pageInfo:number) {
@@ -33,7 +39,7 @@ export class LearnComponent implements OnInit {
   }
   async getLeranListByProductId(pageNumber: number, seedNumber: number) {
     await this._LeranService
-      .getLeranByProductId(pageNumber, seedNumber, 'ID', 'backtest' , this.productid)
+      .getLeranByProductId(pageNumber, seedNumber, 'ID', 'Learn' , this.productId)
       .subscribe(
         (res: Result<LeranModel[]>) => {
           this.rows = res.data;

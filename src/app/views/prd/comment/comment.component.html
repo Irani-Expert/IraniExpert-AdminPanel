@@ -1,1 +1,47 @@
-<p>comment works!</p>
+
+<div class="my-css">
+<div class="timeline-card card mt-4" *ngFor="let item of rows">
+  <div class="card-body">
+    <div class="mb-1">
+      <strong class="mr-1" >{{item.name}}</strong>
+      <span class="badge badge-warning mr-1" *ngIf="item.isAccepted===false">تایید نشده</span>
+      <span class="badge badge-success mr-1" *ngIf="item.isAccepted===true">تایید شده</span>
+      <p class="text-muted">۱۶ ساعت قبل</p>
+    </div>
+
+    <p>
+{{item.text}}
+    </p>
+    <div class="mb-3">
+      <button type="button" class="btn btn-outline-info m-1" *ngIf="item.isAccepted===false" (click)="openSmall(modalSmall)" >پذیرفتن </button>
+
+      <div class="row">
+        <p href="#"  *ngIf="item.isAccepted===true"  class="ml-5 col">پذیرفته شده </p>
+      <button type="button" *ngIf="item.isAccepted===true" class="btn btn-danger btn-rounded  m-1"> حذف پیام</button>
+    </div>
+
+    </div>
+
+  </div>
+</div>
+</div>
+
+
+<ng-template #modalSmall let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">آیا از پذیرش پیام پیام مطمئن هستید</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')"> بله </button>
+    <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">خیر </button>
+  </div>
+</ng-template>
+
+
+
+
+

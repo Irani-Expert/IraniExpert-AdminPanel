@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
@@ -8,31 +9,45 @@ import { CommentModel } from './commnet.model';
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.scss']
+  styleUrls: ['./comment.component.scss'],
 })
 export class CommentComponent implements OnInit {
   rows: CommentModel[] = new Array<CommentModel>();
-  productid:string ;
+  productId: number;
+  taybleType: number;
+
   pageIndex = 1;
   pageSize = 12;
 
   constructor(
-    public _CommenttService : CommentService,
+    public _CommenttService: CommentService,
     private toastr: ToastrService,
-    private modalService: NgbModal
-  ) { }
-
-  ngOnInit(): void {
+    private modalService: NgbModal,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.snapshot.paramMap.get('productId');
+    this.activatedRoute.snapshot.paramMap.get('taybleType');
   }
 
-  setPage(pageInfo:number) {
+  ngOnInit(): void {
+    this.setPage(0);
+  }
+
+  setPage(pageInfo: number) {
     this.pageIndex = pageInfo;
 
-    this.getCommentListByProductId(this.pageIndex , this.pageSize);
+    this.getCommentListByProductId(this.pageIndex, this.pageSize);
   }
   async getCommentListByProductId(pageNumber: number, seedNumber: number) {
     await this._CommenttService
-      .getCommentByProductId(pageNumber, seedNumber, 'ID', 'backtest' , this.productid)
+      .getCommentByProductId(
+        pageNumber,
+        seedNumber,
+        'ID',
+        'backtest',
+        this.productId,
+        this.taybleType
+      )
       .subscribe(
         (res: Result<CommentModel[]>) => {
           this.rows = res.data;
@@ -56,44 +71,55 @@ export class CommentComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._CommenttService.delete(id,"comment").toPromise().then((res) => {
-            if(res.success){
-              debugger
-              this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
+          this._CommenttService
+            .delete(id, 'comment')
+            .toPromise()
+            .then((res) => {
+              if (res.success) {
+                debugger;
+                this.toastr.success(
+                  'فرایند حذف موفقیت آمیز بود',
+                  'موفقیت آمیز!',
+                  {
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                  }
+                );
+              } else {
+                debugger;
+
+                this.toastr.error('خطا در حذف', res.message, {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-left',
+                });
+              }
+              this.getCommentListByProductId(this.pageIndex, this.pageSize);
+            })
+            .catch((err) => {
+              this.toastr.error('خطا در حذف', err.message, {
                 timeOut: 3000,
-              positionClass: 'toast-top-left',
-
+                positionClass: 'toast-top-left',
               });
-            }else{
-              debugger
-
-              this.toastr.error('خطا در حذف',res.message, {
-                timeOut: 3000,
-              positionClass: 'toast-top-left',
-
-              });
-            }
-            this.getCommentListByProductId(
-              this.pageIndex,
-              this.pageSize
-            );
-          }).catch(err=>{
-            this.toastr.error('خطا در حذف',err.message, {
-              timeOut: 3000,
-              positionClass: 'toast-top-left',
             });
-          });
-          debugger
+          debugger;
         },
         (error) => {
-          debugger
-          this.toastr.error('خطا در حذف',error.message, {
+          debugger;
+          this.toastr.error('خطا در حذف', error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
-
           });
         }
       );
   }
 
+
+  openSmall(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
+    .result.then((result) => {
+      console.log(result);
+    }, (reason) => {
+      console.log('Err!', reason);
+    });
+  }
 }

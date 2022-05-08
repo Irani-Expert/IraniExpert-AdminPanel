@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddUpdateComponent } from './addUpdate/addUpdate.component';
 import { ProductsListComponent } from './products-list/products-list.component';
-import { LearnComponent } from './addUpdate/learn/learn.component';
-import { FAQComponent } from './addUpdate/faq/faq.component';
+import { LearnComponent } from './learn/learn.component';
+import { FAQComponent } from './faq/faq.component';
 import { PlanComponent } from './plan/plan.component';
 import { BackTestComponent } from './back-test/back-test.component';
+import { CommentComponent } from './comment/comment.component';
 const routes: Routes = [
   {
     path: 'addUpdate',
@@ -16,21 +17,28 @@ const routes: Routes = [
     component: ProductsListComponent,
   },
   {
-    path: 'learn',
+    path: 'lern/:productId',
     component: LearnComponent,
   },
   {
-    path: 'faq',
+    path: 'faq/:productId/:tableType',
     component: FAQComponent,
   },
   {
-    path: 'plan',
+    path: 'plan/:productId',
     component: PlanComponent,
   },
   {
-    path: 'backtest',
+    path: 'backtest/:productId',
     component: BackTestComponent,
   },
+
+  {
+    path: 'comment/:productId/:tableType',
+    component: CommentComponent,
+  },
+
+
 ];
 
 @NgModule({

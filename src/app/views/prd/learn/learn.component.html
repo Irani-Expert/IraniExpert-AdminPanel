@@ -1,0 +1,62 @@
+<div class="row">
+  <!-- SINGLE LIST ITEM -->
+  <div
+    class="list-item ng-tns-c174-4 ng-trigger ng-trigger-animate col-md-12 ng-star-inserted"
+    *ngFor="let item of rows"
+  >
+    <div class="card o-hidden mb-4 d-flex ng-tns-c174-4 flex-row">
+      <div class="list-thumb d-flex ng-tns-c174-4">
+        <img alt="" height="74px" class="ng-tns-c174-4" [src]="item.videoUrl" />
+      </div>
+      <div class="flex-grow-1 ng-tns-c174-4 pl-2 d-flex">
+        <div
+          class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center ng-tns-c174-4 flex-lg-row"
+        >
+          <a href="" class="w-40 w-sm-100 ng-tns-c174-4"
+            ><div class="item-title ng-tns-c174-4">
+              {{ item.title }}
+            </div></a
+          >
+          <p class="m-0 text-muted text-small w-15 w-sm-100 ng-tns-c174-4">
+            ابزارک
+          </p>
+          <p class="m-0 text-muted text-small w-15 w-sm-100 ng-tns-c174-4">
+            $32.00
+            <del class="text-secondary ng-tns-c174-4">$54.00</del>
+          </p>
+          <p
+            class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges ng-tns-c174-4"
+          >
+            <span class="ng-tns-c174-4 badge badge-info">20% off</span>
+          </p>
+          <p
+            class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-actions ng-tns-c174-4"
+          >
+            <button class="btn btn-icon bg-transparent ng-tns-c174-4">
+              ویرایش
+            </button>
+          </p>
+        </div>
+        <div class="align-self-center pl-3 pb-2 pr-3 item-select ng-tns-c174-4">
+          <label class="checkbox checkbox-outline-light ng-tns-c174-4"
+            ><input
+              type="checkbox"
+              class="ng-tns-c174-4 ng-untouched ng-pristine ng-valid" /><span
+              class="ng-tns-c174-4"
+            ></span
+            ><span class="checkmark ng-tns-c174-4"></span
+          ></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGINATION CONTROL -->
+  <div class="col-md-12 mt-3" *ngIf="products?.length">
+    <pagination-controls
+      (pageChange)="page = $event"
+      previousLabel=""
+      nextLabel=""
+    ></pagination-controls>
+  </div>
+</div>

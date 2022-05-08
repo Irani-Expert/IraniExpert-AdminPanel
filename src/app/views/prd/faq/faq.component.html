@@ -1,0 +1,12 @@
+
+
+
+<ngb-accordion class="text-start" #acc="ngbAccordion" [closeOthers]="true" [destroyOnHide]='false'  *ngFor="let item of rows">
+  <ngb-panel class="ngb-panel" title="{{item.question}}"  >
+    <ng-template ngbPanelContent >
+{{item.answer}}
+    </ng-template>
+  </ngb-panel>
+
+
+

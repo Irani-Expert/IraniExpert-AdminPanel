@@ -6,4 +6,5 @@ export interface IFaq extends IBase {
   Question: string;
   Answer: string;
   ID: number;
+
 }
