@@ -1,59 +1,175 @@
-<div class="separator-breadcrumb border-top"></div>
 <button
-_ngcontent-tco-c175=""
-type="button"
-class="btn btn-primary m-1"
-[routerLink]="'/bas/addUpdate-group'"
+  _ngcontent-tco-c175=""
+  type="button"
+  class="btn btn-primary m-1"
+  [routerLink]="'/bas/addUpdate-group'"
 >
-ایجاد
+  ایجاد
 </button>
+<div class="separator-breadcrumb border-top"></div>
+
 
 <div class="row list-horizontal">
+
   <!-- SINGLE LIST ITEM -->
-  <div *ngFor="let item of rows | paginate: { itemsPerPage: pageSize,
-       currentPage: pageIndex,totalItems: 500 } ; let i = index" class="list-item"
-       [ngClass]="{'col-md-12': viewMode === 'list', 'col-md-3': viewMode === 'grid'}">
-    <div class="card o-hidden mb-4 d-flex"  [ngClass]="{'flex-row': viewMode === 'list', 'flex-column': viewMode === 'grid'}">
+ <div
+    *ngFor="
+      let item of rows
+        | paginate
+          : { itemsPerPage: pageSize, currentPage: pageIndex, totalItems: 500 };
+      let i = index
+    "
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }"
+  >
+
+    <div
+      class="card o-hidden mb-4 d-flex"
+      [ngClass]="{
+        'flex-row': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }"
+    >
+      <div
+        class="flex-grow-1"
+        [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-bock': viewMode === 'grid'
+        }"
+      >
       <div class="list-thumb">
         <!-- TUMBNAIL -->
-        <img [src]="item.cardImagePath" width="100px" height="50px" alt="تصویری وجود ندارد">
       </div>
-      <div class="flex-grow-1" [ngClass]="{'pl-2 d-flex': viewMode === 'list', 'd-bock': viewMode === 'grid'}">
-        <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center "
-        [ngClass]="{'flex-lg-row': viewMode === 'list'}">
+        <div
+        id="myHeader"
+          class="card-body align-self-center d-flex flex-column align-items-lg-center th-list  row"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+        >
           <!-- OTHER DATA -->
-          <a href="" class="w-40 w-sm-100">
-            <div class="item-title">{{item.title}}</div>
-          </a>
-          <p class="m-0 text-muted text-small w-15 w-sm-100">{{item.description}}</p>
-          <p class="m-0 text-muted text-small w-15 w-sm-100">{{item.parentGroupTitle}}</p>
-          <p class="m-0 text-muted text-small w-15 w-sm-100" *ngIf="item.isActive==1">فعال</p>
-          <p class="m-0 text-muted text-small w-15 w-sm-100" *ngIf="item.isActive==0">غیرفعال</p>
+          <div class="m-0 text-muted text-small col  text-lg-center w-15 w-sm-100">
+            <!-- {{ item.product }} -->
+             نام محصول
+          </div>
+          <div class="m-0 text-muted text-small  col  text-lg-center w-15 w-sm-100">پلن</div>
+          <div class="m-0 text-muted text-small col  text-lg-center w-15 w-sm-100">
+            قیمت
+          </div>
+          <div class="m-0 text-muted text-small col  text-lg-center w-15 w-sm-100">
+        خریداری شده توسط
 
-          <p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-actions">
-            <button class="btn btn-icon bg-transparent"
-            [routerLink]="'/bas/addUpdate-group/'+item.id"
-            [ngClass]="{'d-none': viewMode === 'grid'}">
-              <i class="i-File-Edit text-16 text-primary"> ویرایش </i>
-            </button>
-          </p>
-          <p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-actions">
-            <button class="btn btn-icon bg-transparent"
-            [ngClass]="{'d-none': viewMode === 'grid'}"
-             (click)="deleteOrders(item.id, deleteConfirmModal)">
-              <i class="i-Delete-File text-16 text-primary">حذف</i>
-            </button>
-          </p>
+          </div>
+          <div class="m-0 text-muted text-small col   text-lg-center w-15 w-sm-100">
+            وضعیت پرداخت
+          </div>
+          <div class="col">
+          <div
+            class="m-0 text-muted text-small    text-lg-center w-15 w-sm-100 d-none d-lg-block item-actions"
+          >
+
+              <h6 class=" text-16 text-primary"> عملیات </h6>
+
+          </div>
+          <div
+            class="m-0 text-muted text-small text-lg-center w-15 col  w-sm-100 d-none d-lg-block item-actions"
+          >
+
+          </div>
+        </div>
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="rows?.length==0">
-    داده ای موجود نیست
+  <div
+    *ngFor="
+      let item of rows
+        | paginate
+          : { itemsPerPage: pageSize, currentPage: pageIndex, totalItems: 500 };
+      let i = index
+    "
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }"
+  >
+
+    <div
+      class="card o-hidden mb-4 d-flex"
+      [ngClass]="{
+        'flex-row': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }"
+    >
+    <div class="list-thumb">
+      <!-- TUMBNAIL -->
+    </div>
+      <div
+        class="flex-grow-1"
+        [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-bock': viewMode === 'grid'
+        }"
+      >
+        <div
+          class="card-body align-self-center d-flex flex-column align-items-lg-center row"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+        >
+          <!-- OTHER DATA -->
+          <div class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100">
+            <!-- {{ item.product }} -->
+             نام محصول
+          </div>
+          <div class="m-0 text-muted text-small col  text-lg-center w-15 w-sm-100">{{ item.plan }}</div>
+          <div class="m-0 text-muted text-small col  text-lg-center w-15 w-sm-100">
+            {{ item.price }}
+          </div>
+          <div class="m-0 text-muted text-small col  text-lg-center w-15 w-sm-100">
+            {{ item.userID }}
+          </div>
+          <div class="m-0 text-muted text-small col   text-lg-center w-15 w-sm-100">
+            {{ item.transactionStatus }}
+          </div>
+          <div class="col">
+            <div class="row">
+          <div
+            class="m-0 text-muted text-small col-6   text-lg-center w-15 w-sm-100 d-none d-lg-block item-actions"
+          >
+            <button
+              class="btn btn-icon bg-transparent"
+              [routerLink]="'/bas/addUpdate-group/' + item.id"
+              [ngClass]="{ 'd-none': viewMode === 'grid' }"
+            >
+              <i class="i-File-Edit text-16 text-primary"> ویرایش </i>
+            </button>
+          </div>
+          <div
+            class="m-0 text-muted text-small text-lg-center w-15 col-6  w-sm-100 d-none d-lg-block item-actions"
+          >
+            <button
+              class="btn btn-icon bg-transparent "
+              [ngClass]="{ 'd-none': viewMode === 'grid' }"
+              (click)="deleteOrders(item.id, deleteConfirmModal)"
+            >
+              <i class="i-Delete-File text-16 text-primary">حذف</i>
+            </button>
+          </div>
+        </div>
+        </div>
+        </div>
+      </div>
+    </div>
   </div>
+  <div *ngIf="rows?.length == 0">داده ای موجود نیست</div>
   <!-- PAGINATION CONTROL -->
-  <div class="col-md-12 mt-3" *ngIf="rows?.length>0">
-    <pagination-controls (pageChange)="setPage($event)" previousLabel="" nextLabel=""></pagination-controls>
+  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+    <pagination-controls
+      (pageChange)="setPage($event)"
+      previousLabel=""
+      nextLabel=""
+    ></pagination-controls>
   </div>
 </div>
 
@@ -61,8 +177,13 @@ class="btn btn-primary m-1"
 <ng-template #deleteConfirmModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-title">حذف محصول</h4>
-    <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
-      (click)="modal.dismiss('Cross click')">
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -70,11 +191,23 @@ class="btn btn-primary m-1"
     <p><strong>آیا از حذف مطمئنید؟</strong></p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary btn-rounded mr-1" (click)="modal.dismiss('cancel')">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
       خیر
     </button>
-    <button type="button" ngbAutofocus class="btn btn-wide btn-danger btn-rounded" (click)="modal.close('Ok')">
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
       بله
     </button>
   </div>
 </ng-template>
+
+
+

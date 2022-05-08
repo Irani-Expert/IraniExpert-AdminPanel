@@ -4,7 +4,6 @@ import { DataLayerService } from 'src/app/shared/services/data-layer.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'list';
