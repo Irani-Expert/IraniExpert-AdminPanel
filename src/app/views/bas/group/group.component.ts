@@ -126,7 +126,7 @@ export class GroupComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
-              this.addOrUpdate(row);
+              this.addOrUpdate(this.addUpdate);
               this.addForm.reset();
 
           }
