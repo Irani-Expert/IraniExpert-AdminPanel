@@ -36,6 +36,9 @@ class="btn btn-primary m-1"
     <div class="list-thumb">
       <!-- TUMBNAIL -->
     </div>
+    <div class="align-self-center">
+      ID
+    </div>
       <div
       id="myHeader"
         class="card-body align-self-center d-flex align-items-lg-center th-list text-center th-list  row"
@@ -82,6 +85,9 @@ class="btn btn-primary m-1"
       <div class="flex-grow-1" [ngClass]="{'pl-2 d-flex': viewMode === 'list', 'd-bock': viewMode === 'grid'}">
         <div class="card-body align-self-center text-center d-flex align-items-lg-center row "
         [ngClass]="{'flex-lg-row': viewMode === 'list'}">
+        <div class="align-self-center">
+          {{item.id}}
+        </div>
           <!-- OTHER DATA -->
           <a href="" class=" col w-sm-100">
             <div class="item-title w-100 ">{{item.title}}</div>

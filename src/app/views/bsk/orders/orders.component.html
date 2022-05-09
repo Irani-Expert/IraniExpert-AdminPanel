@@ -35,6 +35,9 @@
         <div class="list-thumb">
           <!-- TUMBNAIL -->
         </div>
+        <div class="align-self-center">
+          ID
+        </div>
         <div
           id="myHeader"
           class="card-body align-self-center d-flex align-items-lg-center th-list row"
@@ -115,6 +118,9 @@
           class="card-body align-self-center text-center d-flex align-items-lg-center row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
+        <div class="align-self-center">
+          {{item.id}}
+        </div>
           <!-- OTHER DATA -->
           <div
             class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
