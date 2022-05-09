@@ -39,7 +39,7 @@ class="btn btn-primary m-1"
         </div>
         <div
           id="myHeader"
-          class="card-body align-self-center d-flex align-items-lg-center th-list row"
+          class="card-body align-self-center d-flex align-items-lg-center th-list row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
@@ -74,7 +74,7 @@ class="btn btn-primary m-1"
             <div
               class="m-0 text-muted text-small text-lg-center w-15 w-sm-100 item-actions"
             >
-              <h6 class="text-16 text-primary">عملیات</h6>
+              <h6 class="text-16 text-primary text-center">عملیات</h6>
             </div>
             <div
               class="m-0 text-muted text-small text-lg-center w-15 col w-sm-100 item-actions"
@@ -92,11 +92,10 @@ class="btn btn-primary m-1"
   <div *ngFor="let item of rows | paginate: { itemsPerPage: pageSize,
        currentPage: pageIndex,totalItems: 500 } ; let i = index" class="list-item"
        [ngClass]="{'col-md-12': viewMode === 'list', 'col-md-3': viewMode === 'grid'}">
-    <div class="card o-hidden mb-4 d-flex"  [ngClass]="{'flex-row': viewMode === 'list', 'flex-column': viewMode === 'grid'}">
-      <div class="list-thumb">
-        <!-- TUMBNAIL -->
+    <div class="card o-hidden mb-4 d-flex"  [ngClass]="{'flex-row-2': viewMode === 'list', 'flex-column': viewMode === 'grid'}">
+      <!-- <div class="list-thumb">
         <img [src]="item.filePath" width="100px" height="50px" alt="تصویری وجود ندارد">
-      </div>
+      </div> -->
       <div class="flex-grow-1" [ngClass]="{'pl-2 d-flex': viewMode === 'list', 'd-bock': viewMode === 'grid'}">
         <div class="card-body align-self-center text-center d-flex align-items-lg-center row "
         [ngClass]="{'flex-lg-row': viewMode === 'list'}">
@@ -104,30 +103,57 @@ class="btn btn-primary m-1"
           <a href="" class="w-40 col w-sm-100">
             <div class="item-title">{{item.title}}</div>
           </a>
-          <div class="m-0 text-muted text-small col w-15 w-sm-100">{{item.rowID}}</div>
-          <div class="m-0 text-muted text-small col w-15 w-sm-100" *ngIf="item.isActive==1">فعال</div>
-          <div class="m-0 text-muted text-small  w-15 w-sm-100" *ngIf="item.isActive==0">غیرفعال</div>
+          <div class="m-0 text-muted text-small col w-15 w-sm-100">{{item.type}}</div>
+          <div class="m-0 text-muted text-small col w-15 w-sm-100">{{item.fileType}}</div>
+          <div class="m-0 text-muted text-small col w-15 w-sm-100">{{item.linkType}}</div>
+          <div class="m-0 text-muted text-small col w-15 w-sm-100" >{{item.isActive}}</div>
 
-          <div class="m-0 text-muted text-small w-15 col w-sm-100 d-none d-lg-block item-actions">
+          <div class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">
+            <div class="row text-center">
+          <div class="m-0 text-muted text-small w-15 col-6 w-sm-100  item-actions">
             <button class="btn btn-icon bg-transparent"
             [routerLink]="'/bas/addUpdate-group/'+item.id"
             [ngClass]="{'d-none': viewMode === 'grid'}">
-              <i class="i-File-Edit text-16 text-primary"> ویرایش </i>
+              <i class=" text-16 text-primary"> ویرایش </i>
             </button>
           </div>
-          <div class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-actions">
+          <div class="m-0 text-muted text-small col-6 w-15 w-sm-100  item-actions">
             <button class="btn btn-icon bg-transparent"
             [ngClass]="{'d-none': viewMode === 'grid'}"
              (click)="deleteBanner(item.id, deleteConfirmModal)">
-              <i class="i-Delete-File text-16 text-primary">حذف</i>
+              <i class=" text-16 text-primary">حذف</i>
             </button>
           </div>
         </div>
+        </div>
+        </div>
       </div>
+      <div
+      class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
+    >
+      <h6 class="text-center">عملیات</h6>
+      <button
+        type="button"
+        [ngClass]="{'d-none': viewMode === 'grid'}"
+        (click)="deleteBanner(item.id, deleteConfirmModal)"
+        class="btn btn-outline-danger col m-1"
+      >
+        حذف
+      </button>
+      <button
+        type="button"
+        [routerLink]="'/bas/addUpdate-group/'+item.id"
+        [ngClass]="{'d-none': viewMode === 'grid'}"
+        class="btn btn-outline-warning col m-1"
+      >
+        ویرایش
+      </button>
+    </div>
     </div>
   </div>
   <div *ngIf="rows?.length==0">
-    داده ای موجود نیست
+    <p class="no-response text-center">  داده ای موجود نیست
+    </p>
   </div>
   <!-- PAGINATION CONTROL -->
   <div class="col-md-12 mt-3" *ngIf="rows?.length>0">
@@ -220,6 +246,53 @@ class="btn btn-primary m-1"
           <option value="1">Other  </option>
           <option value="2">HomeTop</option>
           <option value="2">HomeMiddle</option>
+          </select>
+          <small
+            *ngIf="
+              addForm.controls['type'].hasError('required') &&
+              addForm.controls['type'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >انتخاب نوع گروه  ضروری است</small
+          >
+        </div>
+
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="picker1">LinkType</label>
+          <select
+            [formControl]="addForm.controls['LinkType']"
+            class="form-control form-control-rounded"
+            (ngModelChange)="selectType($event)"
+            [ngModel]="addUpdate.type"
+          >
+          <option value="0">Internal</option>
+          <option value="1">External</option>
+
+          </select>
+          <small
+            *ngIf="
+              addForm.controls['type'].hasError('required') &&
+              addForm.controls['type'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >انتخاب نوع گروه  ضروری است</small
+          >
+        </div>
+
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="picker1">نوع فایل</label>
+          <select
+            [formControl]="addForm.controls['FileType']"
+            class="form-control form-control-rounded"
+            (ngModelChange)="selectType($event)"
+            [ngModel]="addUpdate.type"
+          >
+          <option value="0">image</option>
+          <option value="1">video  </option>
+          <option value="2">Pdf</option>
+
           </select>
           <small
             *ngIf="
