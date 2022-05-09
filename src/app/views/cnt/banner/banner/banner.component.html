@@ -161,6 +161,10 @@ class="btn btn-primary m-1"
   </div>
 </div>
 
+<div *ngIf="rows?.length==0" class="row text-center">
+  <img src="../../../../../assets/images/97434-no-data-available.gif" class="gif-fluid col-12" alt="">
+</div>
+
 
 <ng-template #deleteConfirmModal let-modal>
   <div class="modal-header">
