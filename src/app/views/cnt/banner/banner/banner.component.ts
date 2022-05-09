@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CropperSettings } from 'ngx-img-cropper';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { GroupModel } from 'src/app/views/bas/group/group.model';
 import { CntModule } from '../../cnt.module';
 import { BannerModel } from './banner.model';
@@ -19,13 +21,18 @@ export class BannerComponent implements OnInit {
   allSelected: boolean;
   pageIndex = 1;
   pageSize = 12;
+  image: any;
+  cropperSettings: CropperSettings;
   addUpdate:GroupModel;
   addForm: FormGroup;
   constructor(
     public _bannerService: BannerService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _formBuilder: FormBuilder
+
+    private _formBuilder: FormBuilder,
+    private _fileUploaderService:FileUploaderService
+
 
   ) {}
 
@@ -36,11 +43,18 @@ export class BannerComponent implements OnInit {
       type: [null, Validators.compose([Validators.required])],
       LinkType: [null, Validators.compose([Validators.required])],
       FileType: [null, Validators.compose([Validators.required])],
-      isActive: [null],
+      isActive: [null, Validators.compose([Validators.required])],
+      url: [null, Validators.compose([Validators.required])],
+      fileInfo: [null, Validators.compose([Validators.required])],
+      filePath: [null, Validators.compose([Validators.required])],
     });
+      this.cropperSettings = new CropperSettings();
+    this.cropperSettings.width = 500;
+    this.cropperSettings.height = 300;
+    this.cropperSettings.cropperDrawSettings.lineDash = true;
+    this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
+    this.image ={};
   }
-
-
 
 
 
@@ -129,7 +143,7 @@ export class BannerComponent implements OnInit {
     }
     this.addUpdate = row;
     this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .open(content, {size:"lg", ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
@@ -205,6 +219,59 @@ async addOrUpdate(row: GroupModel) {
   this.getBannerList(this.pageIndex,this.pageIndex)
 
 }
+selectType($event:any){
+  debugger
+  if ($event != undefined) {
+    this.addUpdate.type =parseInt($event);
+  }
+}
 
+
+openUploader(modal) {
+
+  this.modalService.open(modal, { size:"lg" ,centered:true,ariaLabelledBy: 'modal-basic-title' })
+  .result.then((result) => {
+    debugger
+     this._fileUploaderService.uploadFile(result.image,"articles").subscribe(
+      (res: Result<string[]>) => {
+        debugger
+        if(res.success){
+          this.addUpdate.cardImagePath = res.data[0];
+          this.toastr.success(
+            'با موفقیت آپلود شد',
+            null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+        }else{
+          this.toastr.error(
+            res.errors[0],
+            'خطا در آپلود تصویر',
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+        }
+
+      },
+      (error) => {
+        this.toastr.error(
+          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+          null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          }
+        );
+      }
+    );
+  }, (reason) => {
+    debugger
+    console.log('Err!', reason);
+  });
+}
 
 }
