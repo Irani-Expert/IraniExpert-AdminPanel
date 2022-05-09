@@ -33,10 +33,9 @@ export class BannerComponent implements OnInit {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
-      parentID: [null, Validators.compose([Validators.required])],
       type: [null, Validators.compose([Validators.required])],
-      url:[null , Validators.compose([Validators.required])],
-
+      LinkType: [null, Validators.compose([Validators.required])],
+      FileType: [null, Validators.compose([Validators.required])],
       isActive: [null],
     });
   }
@@ -120,8 +119,7 @@ export class BannerComponent implements OnInit {
   }
 
 
-  addorEdit(content,row){
-
+  addorEdit(content,row:GroupModel){
     debugger
     if (row === undefined) {
       row = new GroupModel();
@@ -135,6 +133,7 @@ export class BannerComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
+            this.addOrUpdate(this.addUpdate);
               // this.addOrUpdate(this.addUpdate);
               this.addForm.reset();
           }
@@ -145,4 +144,67 @@ export class BannerComponent implements OnInit {
         }
       );
 }
+
+async addOrUpdate(row: GroupModel) {
+  debugger
+  if(row.id===0){
+    await this._bannerService.create(row,"Banner").toPromise()
+    .then(data => {
+      if (data.success) {
+        this.toastr.success(data.message, null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+
+          });
+      } else {
+        this.toastr.error(data.message, null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+      }
+    },
+      error => {
+        this.toastr.error("خطا مجدد تلاش فرمایید", null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+      }
+    );
+  }else{
+    await this._bannerService.update(row.id,row,"Banner").toPromise()
+    .then(data => {
+      if (data.success) {
+        this.toastr.success(data.message, null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+
+          });
+
+      } else {
+        this.toastr.error(data.message, null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+      }
+    },
+      error => {
+        this.toastr.error("خطا مجدد تلاش فرمایید", null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+      }
+    );
+  }
+
+  this.getBannerList(this.pageIndex,this.pageIndex)
+
+}
+
+
 }

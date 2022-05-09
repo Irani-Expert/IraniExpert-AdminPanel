@@ -11,12 +11,7 @@
 <div class="row list-horizontal">
   <!-- SINGLE LIST ITEM -->
   <div
-    *ngFor="
-      let item of rows
-        | paginate
-          : { itemsPerPage: pageSize, currentPage: pageIndex, totalItems: 500 };
-      let i = index
-    "
+
     class="list-item"
     [ngClass]="{
       'col-md-12': viewMode === 'list',
@@ -199,7 +194,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="rows?.length == 0">داده ای موجود نیست</div>
+
   <!-- PAGINATION CONTROL -->
   <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
     <pagination-controls
@@ -208,6 +203,9 @@
       nextLabel=""
     ></pagination-controls>
   </div>
+</div>
+<div *ngIf="rows?.length==0" class="row text-center">
+  <img src="../../../../../assets/images/97434-no-data-available.gif" class="gif-fluid col-12" alt="">
 </div>
 
 <ng-template #deleteConfirmModal let-modal>
