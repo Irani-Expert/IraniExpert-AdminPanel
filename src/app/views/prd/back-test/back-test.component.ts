@@ -13,6 +13,7 @@ import { BackTestService } from './back-test.service';
   styleUrls: ['./back-test.component.scss'],
 })
 export class BackTestComponent implements OnInit {
+  viewMode: 'list' | 'grid' = 'list';
   rows: BackTestModel[] = new Array<BackTestModel>();
   productId: number;
   pageIndex = 1;

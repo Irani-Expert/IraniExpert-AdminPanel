@@ -1,3 +1,105 @@
+<div
+
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }"
+  >
+    <div
+      class="card o-hidden mb-4 d-flex"
+      [ngClass]="{
+        'flex-row': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }"
+    >
+      <div
+        class="flex-grow-1"
+        [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-bock': viewMode === 'grid'
+        }"
+      >
+        <div class="list-thumb">
+          <!-- TUMBNAIL -->
+        </div>
+        <div
+          id="myHeader"
+          class="card-body align-self-center d-flex align-items-lg-center th-list row"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+        >
+          <!-- OTHER DATA -->
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+            <!-- {{ item.product }} -->
+            title
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+            type
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+            file type
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+          linktype
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+
+          </div>
+          <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
+            <div
+              class="m-0 text-muted text-small text-lg-center w-15 w-sm-100 item-actions"
+            >
+              <h6 class="text-16 text-primary">عملیات</h6>
+            </div>
+            <div
+              class="m-0 text-muted text-small text-lg-center w-15 col w-sm-100 item-actions"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="row ng-tns-c217-2 list-grid">
   <div
     class="list-item ng-tns-c217-2 ng-trigger ng-trigger-animate ng-star-inserted col-md-3"

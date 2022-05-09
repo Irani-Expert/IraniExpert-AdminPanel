@@ -13,6 +13,7 @@ import { LeranService } from './leran.service';
 })
 export class LearnComponent implements OnInit {
 
+  viewMode: 'list' | 'grid' = 'list';
   rows: LeranModel[] = new Array<LeranModel>();
   productId:number ;
   pageIndex = 1;

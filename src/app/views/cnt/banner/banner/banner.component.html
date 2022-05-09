@@ -3,12 +3,91 @@
 _ngcontent-tco-c175=""
 type="button"
 class="btn btn-primary m-1"
-[routerLink]="'/bas/addUpdate-group'"
+(click)="addorEdit(addUpdateModal, undefined)"
+
 >
 ایجاد
 </button>
 
+
 <div class="row list-horizontal">
+
+  <div
+
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }"
+  >
+    <div
+      class="card o-hidden mb-4 d-flex"
+      [ngClass]="{
+        'flex-row': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }"
+    >
+      <div
+        class="flex-grow-1"
+        [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-bock': viewMode === 'grid'
+        }"
+      >
+        <div class="list-thumb">
+          <!-- TUMBNAIL -->
+        </div>
+        <div
+          id="myHeader"
+          class="card-body align-self-center d-flex align-items-lg-center th-list row"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+        >
+          <!-- OTHER DATA -->
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+            <!-- {{ item.product }} -->
+            عنوان
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+            نوع
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+
+            نوع فایل
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+          لینک تایپ
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+          active
+          </div>
+          <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
+            <div
+              class="m-0 text-muted text-small text-lg-center w-15 w-sm-100 item-actions"
+            >
+              <h6 class="text-16 text-primary">عملیات</h6>
+            </div>
+            <div
+              class="m-0 text-muted text-small text-lg-center w-15 col w-sm-100 item-actions"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
   <!-- SINGLE LIST ITEM -->
   <div *ngFor="let item of rows | paginate: { itemsPerPage: pageSize,
        currentPage: pageIndex,totalItems: 500 } ; let i = index" class="list-item"
@@ -19,31 +98,30 @@ class="btn btn-primary m-1"
         <img [src]="item.filePath" width="100px" height="50px" alt="تصویری وجود ندارد">
       </div>
       <div class="flex-grow-1" [ngClass]="{'pl-2 d-flex': viewMode === 'list', 'd-bock': viewMode === 'grid'}">
-        <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center "
+        <div class="card-body align-self-center text-center d-flex align-items-lg-center row "
         [ngClass]="{'flex-lg-row': viewMode === 'list'}">
           <!-- OTHER DATA -->
-          <a href="" class="w-40 w-sm-100">
+          <a href="" class="w-40 col w-sm-100">
             <div class="item-title">{{item.title}}</div>
           </a>
-          <p class="m-0 text-muted text-small w-15 w-sm-100">{{item.description}}</p>
-          <p class="m-0 text-muted text-small w-15 w-sm-100">{{item.rowID}}</p>
-          <p class="m-0 text-muted text-small w-15 w-sm-100" *ngIf="item.isActive==1">فعال</p>
-          <p class="m-0 text-muted text-small w-15 w-sm-100" *ngIf="item.isActive==0">غیرفعال</p>
+          <div class="m-0 text-muted text-small col w-15 w-sm-100">{{item.rowID}}</div>
+          <div class="m-0 text-muted text-small col w-15 w-sm-100" *ngIf="item.isActive==1">فعال</div>
+          <div class="m-0 text-muted text-small  w-15 w-sm-100" *ngIf="item.isActive==0">غیرفعال</div>
 
-          <p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-actions">
+          <div class="m-0 text-muted text-small w-15 col w-sm-100 d-none d-lg-block item-actions">
             <button class="btn btn-icon bg-transparent"
             [routerLink]="'/bas/addUpdate-group/'+item.id"
             [ngClass]="{'d-none': viewMode === 'grid'}">
               <i class="i-File-Edit text-16 text-primary"> ویرایش </i>
             </button>
-          </p>
-          <p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-actions">
+          </div>
+          <div class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-actions">
             <button class="btn btn-icon bg-transparent"
             [ngClass]="{'d-none': viewMode === 'grid'}"
              (click)="deleteBanner(item.id, deleteConfirmModal)">
               <i class="i-Delete-File text-16 text-primary">حذف</i>
             </button>
-          </p>
+          </div>
         </div>
       </div>
     </div>
@@ -75,6 +153,118 @@ class="btn btn-primary m-1"
     </button>
     <button type="button" ngbAutofocus class="btn btn-wide btn-danger btn-rounded" (click)="modal.close('Ok')">
       بله
+    </button>
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+<ng-template #addUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+      <div class="row">
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="title">عنوان</label>
+          <input
+            type="text"
+            class="form-control form-control-rounded"
+            id="title"
+            placeholder="عنوان را وارد نمایید."
+            [formControl]="addForm.controls['title']"
+            [(ngModel)]="addUpdate.title"
+          />
+          <small
+            *ngIf="
+              addForm.controls['title'].hasError('required') &&
+              addForm.controls['title'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >ورود عنوان ضروری است</small
+          >
+        </div>
+
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="picker1">نوع گروه</label>
+          <select
+            [formControl]="addForm.controls['type']"
+            class="form-control form-control-rounded"
+            (ngModelChange)="selectType($event)"
+            [ngModel]="addUpdate.type"
+          >
+          <option value="0">BackTest</option>
+          <option value="1">Other  </option>
+          <option value="2">HomeTop</option>
+          <option value="2">HomeMiddle</option>
+          </select>
+          <small
+            *ngIf="
+              addForm.controls['type'].hasError('required') &&
+              addForm.controls['type'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >انتخاب نوع گروه  ضروری است</small
+          >
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+          <label class="switch switch-primary mr-3">
+            <span>فعال/غیرفعال</span>
+            <input
+              [(ngModel)]="addUpdate.isActive"
+              [formControl]="addForm.controls['isActive']"
+              type="checkbox"
+            />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id !== 0"
+      [disabled]="!addForm.valid"
+    >
+      ذخیره
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+      *ngIf="addUpdate.id === 0"
+      [disabled]="!addForm.valid"
+    >
+      ذخیره
     </button>
   </div>
 </ng-template>
