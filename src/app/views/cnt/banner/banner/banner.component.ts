@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { GroupModel } from 'src/app/views/bas/group/group.model';
 import { CntModule } from '../../cnt.module';
 import { BannerModel } from './banner.model';
 import { BannerService } from './banner.service';
@@ -17,15 +19,31 @@ export class BannerComponent implements OnInit {
   allSelected: boolean;
   pageIndex = 1;
   pageSize = 12;
+  addUpdate:GroupModel;
+  addForm: FormGroup;
   constructor(
     public _bannerService: BannerService,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private _formBuilder: FormBuilder
+
   ) {}
 
   ngOnInit(): void {
     this.setPage(0);
+    this.addForm = this._formBuilder.group({
+      title: [null, Validators.compose([Validators.required])],
+      parentID: [null, Validators.compose([Validators.required])],
+      type: [null, Validators.compose([Validators.required])],
+      url:[null , Validators.compose([Validators.required])],
+
+      isActive: [null],
+    });
   }
+
+
+
+
 
   setPage(pageInfo: number) {
     this.pageIndex = pageInfo;
@@ -100,4 +118,31 @@ export class BannerComponent implements OnInit {
         }
       );
   }
+
+
+  addorEdit(content,row){
+
+    debugger
+    if (row === undefined) {
+      row = new GroupModel();
+      row.id = 0;
+      row.type=null;
+      row.parentID=null;
+    }
+    this.addUpdate = row;
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result: boolean) => {
+          if (result != undefined) {
+              // this.addOrUpdate(this.addUpdate);
+              this.addForm.reset();
+          }
+        },
+        (reason) => {
+          console.log('Err!', reason);
+          this.addForm.reset();
+        }
+      );
+}
 }
