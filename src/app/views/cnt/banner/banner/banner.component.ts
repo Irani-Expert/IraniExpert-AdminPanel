@@ -23,7 +23,7 @@ export class BannerComponent implements OnInit {
   pageSize = 12;
   image: any;
   cropperSettings: CropperSettings;
-  addUpdate:GroupModel;
+  addUpdate:BannerModel;
   addForm: FormGroup;
   constructor(
     public _bannerService: BannerService,
@@ -41,11 +41,10 @@ export class BannerComponent implements OnInit {
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       type: [null, Validators.compose([Validators.required])],
-      LinkType: [null, Validators.compose([Validators.required])],
-      FileType: [null, Validators.compose([Validators.required])],
-      isActive: [null, Validators.compose([Validators.required])],
+      linkType: [null, Validators.compose([Validators.required])],
+      fileType: [null, Validators.compose([Validators.required])],
+      isActive: [null,Validators.compose([Validators.required])],
       url: [null, Validators.compose([Validators.required])],
-      fileInfo: [null, Validators.compose([Validators.required])],
       filePath: [null, Validators.compose([Validators.required])],
     });
       this.cropperSettings = new CropperSettings();
@@ -95,7 +94,7 @@ export class BannerComponent implements OnInit {
             .toPromise()
             .then((res) => {
               if (res.success) {
-                debugger;
+                ;
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
                   'موفقیت آمیز!',
@@ -105,7 +104,7 @@ export class BannerComponent implements OnInit {
                   }
                 );
               } else {
-                debugger;
+                ;
 
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
@@ -120,10 +119,10 @@ export class BannerComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             });
-          debugger;
+          ;
         },
         (error) => {
-          debugger;
+          ;
           this.toastr.error('خطا در حذف', error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -133,13 +132,15 @@ export class BannerComponent implements OnInit {
   }
 
 
-  addorEdit(content,row:GroupModel){
+  addorEdit(content,row:BannerModel){
     debugger
     if (row === undefined) {
-      row = new GroupModel();
+      row = new BannerModel();
       row.id = 0;
       row.type=null;
-      row.parentID=null;
+      row.fileType=null;
+      row.linkType=null;
+      row.tableType=null
     }
     this.addUpdate = row;
     this.modalService
@@ -148,7 +149,7 @@ export class BannerComponent implements OnInit {
         (result: boolean) => {
           if (result != undefined) {
             this.addOrUpdate(this.addUpdate);
-              // this.addOrUpdate(this.addUpdate);
+              this.addOrUpdate(this.addUpdate);
               this.addForm.reset();
           }
         },
@@ -159,8 +160,8 @@ export class BannerComponent implements OnInit {
       );
 }
 
-async addOrUpdate(row: GroupModel) {
-  debugger
+async addOrUpdate(row: BannerModel) {
+
   if(row.id===0){
     await this._bannerService.create(row,"Banner").toPromise()
     .then(data => {
@@ -220,9 +221,24 @@ async addOrUpdate(row: GroupModel) {
 
 }
 selectType($event:any){
-  debugger
+
   if ($event != undefined) {
     this.addUpdate.type =parseInt($event);
+  }
+}
+
+selectlinkType($event:any){
+
+  if ($event != undefined) {
+    this.addUpdate.linkType =parseInt($event);
+  }
+}
+
+
+selectPath($event:any){
+
+  if ($event != undefined) {
+    this.addUpdate.fileType =parseInt($event);
   }
 }
 
@@ -231,12 +247,12 @@ openUploader(modal) {
 
   this.modalService.open(modal, { size:"lg" ,centered:true,ariaLabelledBy: 'modal-basic-title' })
   .result.then((result) => {
-    debugger
+
      this._fileUploaderService.uploadFile(result.image,"articles").subscribe(
       (res: Result<string[]>) => {
-        debugger
+
         if(res.success){
-          this.addUpdate.cardImagePath = res.data[0];
+          this.addUpdate.filePath = res.data[0];
           this.toastr.success(
             'با موفقیت آپلود شد',
             null,
@@ -269,7 +285,7 @@ openUploader(modal) {
       }
     );
   }, (reason) => {
-    debugger
+
     console.log('Err!', reason);
   });
 }

@@ -9,6 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { ImageCropperModule } from 'ngx-img-cropper';
+import { LinkTypePipe } from 'src/app/shared/pipes/link-type.pipe';
+
+import { TypePipe } from 'src/app/shared/pipes/type.pipe';
+import { FileTypePipe } from 'src/app/shared/pipes/file-type.pipe';
 
 
 
@@ -17,6 +21,9 @@ import { ImageCropperModule } from 'ngx-img-cropper';
     BannerComponent,
     ArticleComponent,
     AddUpdateComponent,
+    LinkTypePipe,
+    TypePipe,
+    FileTypePipe
   ],
   imports: [
     CommonModule,
