@@ -46,6 +46,7 @@ export class BannerComponent implements OnInit {
       isActive: [null,Validators.compose([Validators.required])],
       url: [null, Validators.compose([Validators.required])],
       filePath: [null, Validators.compose([Validators.required])],
+      fileInfo: [null],
     });
       this.cropperSettings = new CropperSettings();
     this.cropperSettings.width = 500;

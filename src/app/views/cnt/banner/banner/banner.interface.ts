@@ -9,6 +9,7 @@ export interface IBanner extends IBase{
   tableType:number;
   rowID:number;
   url:string;
+  fileInfo : string ;
 
 }
 
