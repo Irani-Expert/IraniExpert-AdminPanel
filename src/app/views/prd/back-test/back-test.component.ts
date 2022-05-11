@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ import { BackTestService } from './back-test.service';
 export class BackTestComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'list';
   rows: BackTestModel[] = new Array<BackTestModel>();
-  productId: number;
+  @Input()  productId: number;
   pageIndex = 1;
   pageSize = 12;
 
@@ -23,11 +23,8 @@ export class BackTestComponent implements OnInit {
     public _backtestService: BackTestService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private activatedRoute: ActivatedRoute
   ) {
-    this.productId = parseInt(
-      this.activatedRoute.snapshot.paramMap.get('productId')
-    );
+
   }
 
   ngOnInit(): void {

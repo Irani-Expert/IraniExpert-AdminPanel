@@ -29,7 +29,7 @@ export class BackTestService  extends BaseService<BackTestModel, 0> {
           'Authorization': 'bearer '+environment.jwtToken
         }),
       };
-      return this._http.get<Result<BackTestModel[]>>(this._base + "/BackTest/GetBackTestByProductId/" + productId +
+      return this._http.get<Result<BackTestModel[]>>(this._base + "/BackTest/GetByProductId/" + productId +
       "?pagIndex="+pageIndex+
       "&pageSize="+pageSize+
       "&pageOrder="+pageOrder+

@@ -1,9 +1,66 @@
 
 
+   <form [formGroup]="addForm" >
+    <div class="row">
+
+      <div class="col-md-6 form-group mb-3">
+        <label for="title">سوال</label>
+        <input
+          type="text"
+          class="form-control form-control-rounded"
+          id="title"
+          placeholder="سوال را وارد نمایید."
+          [formControl]="addForm.controls['question']"
+          [(ngModel)]="addUpdate.question"
+        />
+        <small
+          *ngIf="
+            addForm.controls['question'].hasError('required') &&
+            addForm.controls['question'].touched
+          "
+          class="mat-text-warn m-t-negative"
+          >ورود سوال ضروری است</small
+        >
+      </div>
+
+
+      <div class="col-md-6 form-group mb-3">
+        <label for="answer">پاسخ</label>
+        <input
+        type="text"
+        class="form-control form-control-rounded"
+        id="answer"
+        placeholder="سوال را وارد نمایید."
+        [formControl]="addForm.controls['answer']"
+        [(ngModel)]="addUpdate.answer"
+      />
+        <small
+          *ngIf="
+            addForm.controls['answer'].hasError('required') &&
+            addForm.controls['answer'].touched
+          "
+          class="mat-text-warn m-t-negative"
+          >پاسخ ضروری  است</small
+        >
+      </div>
+      <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="addOrUpdate()"
+      [disabled]="!addForm.valid"
+    >
+      ذخیره
+    </button>
+    </div>
+  </form>
+
+
+
 
 <ngb-accordion class="text-start" #acc="ngbAccordion" [closeOthers]="true" [destroyOnHide]='false'  *ngFor="let item of rows">
   <ngb-panel class="ngb-panel" title="{{item.question}}"  >
     <ng-template ngbPanelContent >
+      <button (click)="addUpdate=item"> ویرایش</button>
 {{item.answer}}
     </ng-template>
   </ngb-panel>

@@ -13,6 +13,10 @@ const routes: Routes = [
     component: AddUpdateComponent,
   },
   {
+    path: 'addUpdate/:productId',
+    component: AddUpdateComponent,
+  },
+  {
     path: 'products-list',
     component: ProductsListComponent,
   },
@@ -27,10 +31,6 @@ const routes: Routes = [
   {
     path: 'plan/:productId',
     component: PlanComponent,
-  },
-  {
-    path: 'backtest/:productId',
-    component: BackTestComponent,
   },
 
   {

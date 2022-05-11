@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ export class LearnComponent implements OnInit {
 
   viewMode: 'list' | 'grid' = 'list';
   rows: LeranModel[] = new Array<LeranModel>();
-  productId:number ;
+ @Input() productId:number ;
   pageIndex = 1;
   products: any[] = [];
   pageSize = 12;
@@ -24,9 +24,7 @@ export class LearnComponent implements OnInit {
     public _LeranService : LeranService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private activatedRoute:ActivatedRoute
   ) {
-    this.productId = parseInt(this.activatedRoute.snapshot.paramMap.get('productId'));
   }
 
   ngOnInit(): void {
