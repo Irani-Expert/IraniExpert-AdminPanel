@@ -11,7 +11,7 @@ import { BannerService } from './banner.service';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.scss']
+  styleUrls: ['./banner.component.scss'],
 })
 export class BannerComponent implements OnInit {
   rows: BannerModel[] = new Array<BannerModel>();
@@ -21,16 +21,14 @@ export class BannerComponent implements OnInit {
   pageSize = 12;
   image: any;
   cropperSettings: CropperSettings;
-  addUpdate:BannerModel;
+  addUpdate: BannerModel;
   addForm: FormGroup;
   constructor(
     public _bannerService: BannerService,
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
-    private _fileUploaderService:FileUploaderService
-
-
+    private _fileUploaderService: FileUploaderService
   ) {}
 
   ngOnInit(): void {
@@ -40,21 +38,24 @@ export class BannerComponent implements OnInit {
       type: [null, Validators.compose([Validators.required])],
       linkType: [null, Validators.compose([Validators.required])],
       fileType: [null, Validators.compose([Validators.required])],
-      isActive: [null,Validators.compose([Validators.required])],
+      isActive: [null, Validators.compose([Validators.required])],
       url: [null, Validators.compose([Validators.required])],
       filePath: [null, Validators.compose([Validators.required])],
       fileInfo: [null],
       rowID: [null],
     });
-      this.cropperSettings = new CropperSettings();
+    this.cropperSettings = new CropperSettings();
     this.cropperSettings.width = 500;
     this.cropperSettings.height = 300;
     this.cropperSettings.cropperDrawSettings.lineDash = true;
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
-    this.image ={};
+    this.cropperSettings.canvasHeight = 200;
+    this.cropperSettings.canvasWidth = 200;
+    this.cropperSettings.croppedHeight = 200;
+    this.cropperSettings.croppedWidth = 200;
+
+    this.image = {};
   }
-
-
 
   setPage(pageInfo: number) {
     this.pageIndex = pageInfo;
@@ -93,7 +94,6 @@ export class BannerComponent implements OnInit {
             .toPromise()
             .then((res) => {
               if (res.success) {
-                ;
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
                   'موفقیت آمیز!',
@@ -103,8 +103,6 @@ export class BannerComponent implements OnInit {
                   }
                 );
               } else {
-                ;
-
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
@@ -118,10 +116,8 @@ export class BannerComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             });
-          ;
         },
         (error) => {
-          ;
           this.toastr.error('خطا در حذف', error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -130,25 +126,24 @@ export class BannerComponent implements OnInit {
       );
   }
 
-
-  addorEdit(content,row:BannerModel){
-    debugger
+  addorEdit(content, row: BannerModel) {
+    debugger;
     if (row === undefined) {
       row = new BannerModel();
       row.id = 0;
-      row.type=null;
-      row.fileType=null;
-      row.linkType=null;
-      row.tableType=null
+      row.type = null;
+      row.fileType = null;
+      row.linkType = null;
+      row.tableType = null;
     }
     this.addUpdate = row;
     this.modalService
-      .open(content, {size:"lg", ariaLabelledBy: 'modal-basic-title' })
+      .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
             this.addOrUpdate(this.addUpdate);
-              this.addForm.reset();
+            this.addForm.reset();
           }
         },
         (reason) => {
@@ -156,120 +151,97 @@ export class BannerComponent implements OnInit {
           this.addForm.reset();
         }
       );
-}
-
-async addOrUpdate(row: BannerModel) {
-  debugger
-  if(row.id===0){
-    await this._bannerService.create(row,"Banner").toPromise()
-    .then(data => {
-      if (data.success) {
-        this.toastr.success(data.message, null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-
-          });
-      } else {
-        this.toastr.error(data.message, null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-      }
-    },
-      error => {
-        this.toastr.error("خطا مجدد تلاش فرمایید", null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-      }
-    );
-  }else{
-    await this._bannerService.update(row.id,row,"Banner").toPromise()
-    .then(data => {
-      if (data.success) {
-        this.toastr.success(data.message, null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-
-          });
-
-      } else {
-        this.toastr.error(data.message, null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-      }
-    },
-      error => {
-        this.toastr.error("خطا مجدد تلاش فرمایید", null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-      }
-    );
   }
 
-  this.getBannerList(this.pageIndex,this.pageIndex)
+  async addOrUpdate(row: BannerModel) {
+    debugger;
+    if (row.id === 0) {
+      await this._bannerService
+        .create(row, 'Banner')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    } else {
+      await this._bannerService
+        .update(row.id, row, 'Banner')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    }
 
-}
-selectType($event:any){
-
-  if ($event != undefined) {
-    this.addUpdate.type =parseInt($event);
+    this.getBannerList(this.pageIndex, this.pageIndex);
   }
-}
-
-selectlinkType($event:any){
-
-  if ($event != undefined) {
-    this.addUpdate.linkType =parseInt($event);
+  selectType($event: any) {
+    if ($event != undefined) {
+      this.addUpdate.type = parseInt($event);
+    }
   }
-}
 
-
-selectPath($event:any){
-
-  if ($event != undefined) {
-    this.addUpdate.fileType =parseInt($event);
+  selectlinkType($event: any) {
+    if ($event != undefined) {
+      this.addUpdate.linkType = parseInt($event);
+    }
   }
-}
 
+  selectPath($event: any) {
+    if ($event != undefined) {
+      this.addUpdate.fileType = parseInt($event);
+    }
+  }
 
-openUploader(modal) {
-
-  this.modalService.open(modal, { size:"lg" ,centered:true,ariaLabelledBy: 'modal-basic-title' })
-  .result.then((result) => {
-
-     this._fileUploaderService.uploadFile(result.image,"articles").subscribe(
+  uploadFile(image) {
+    this._fileUploaderService.uploadFile(image.image, 'articles').subscribe(
       (res: Result<string[]>) => {
-
-        if(res.success){
+        if (res.success) {
           this.addUpdate.filePath = res.data[0];
-          this.toastr.success(
-            'با موفقیت آپلود شد',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
-        }else{
-          this.toastr.error(
-            res.errors[0],
-            'خطا در آپلود تصویر',
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
+          this.toastr.success('با موفقیت آپلود شد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
         }
-
       },
       (error) => {
         this.toastr.error(
@@ -282,10 +254,5 @@ openUploader(modal) {
         );
       }
     );
-  }, (reason) => {
-
-    console.log('Err!', reason);
-  });
-}
-
+  }
 }

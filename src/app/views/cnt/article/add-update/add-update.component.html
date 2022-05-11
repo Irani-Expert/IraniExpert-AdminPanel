@@ -2,26 +2,6 @@
   <form [formGroup]="addForm">
     <div class="row">
       <div class="col-md-12 form-group mb-3">
-        <img-cropper [image]="image" [settings]="cropperSettings"></img-cropper
-        ><br />
-        <!-- show image from addupdate.filtePath -->
-        <img
-          *ngIf="image?.image"
-          class="mt-3 mr-3"
-          [src]="image?.image"
-          [width]="cropperSettings.croppedWidth"
-          [height]="cropperSettings.croppedHeight"
-        />
-        <button
-        type="button"
-        class="btn btn-rounded btn-outline-dark"
-        (click)="uploadFile(image)"
-      >
-        آپلود کن
-      </button>
-      </div>
-
-      <div class="col-md-12 form-group mb-3">
         <label for="title">عنوان</label>
         <input
           type="text"
@@ -83,17 +63,7 @@
         >
       </div>
 
-      <div class="col-md-6 form-group mb-3">
-        <label class="switch switch-primary mr-3">
-          <span>فعال/غیرفعال</span>
-          <input
-            [(ngModel)]="addUpdate.isActive"
-            [formControl]="addForm.controls['isActive']"
-            type="checkbox"
-          />
-          <span class="slider"></span>
-        </label>
-      </div>
+
       <div class="col-md-12 form-group mb-3">
         <ckeditor
           [formControl]="addForm.controls['description']"
@@ -114,6 +84,47 @@
           class="mat-text-warn m-t-negative"
           >توضیحات ضروری است</small
         >
+      </div>
+
+
+      <div class="col-md-12 form-group mb-3">
+        <div class="row">
+          <img-cropper
+            class="col-12"
+            [image]="image"
+            [settings]="cropperSettings"
+          ></img-cropper>
+
+          <!-- show image from addupdate.filtePath -->
+          <img
+            *ngIf="image?.image"
+            class="col-2"
+            [src]="image?.image"
+            [width]="cropperSettings.croppedWidth"
+            [height]="cropperSettings.croppedHeight"
+          />
+          <br>
+          <div class="col-12 mt-2">
+            <button
+              type="button"
+              class="btn btn-rounded btn-outline-dark"
+              (click)="uploadFile(image)"
+            >
+              آپلود کن
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 form-group mb-3">
+        <label class="switch switch-primary mr-3">
+          <span>فعال/غیرفعال</span>
+          <input
+            [(ngModel)]="addUpdate.isActive"
+            [formControl]="addForm.controls['isActive']"
+            type="checkbox"
+          />
+          <span class="slider"></span>
+        </label>
       </div>
     </div>
 
@@ -145,5 +156,3 @@
     </button>
   </form>
 </div>
-
-
