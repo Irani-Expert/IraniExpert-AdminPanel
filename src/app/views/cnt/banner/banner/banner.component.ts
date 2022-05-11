@@ -47,6 +47,7 @@ export class BannerComponent implements OnInit {
       url: [null, Validators.compose([Validators.required])],
       filePath: [null, Validators.compose([Validators.required])],
       fileInfo: [null],
+      rowID: [null],
     });
       this.cropperSettings = new CropperSettings();
     this.cropperSettings.width = 500;
@@ -150,7 +151,6 @@ export class BannerComponent implements OnInit {
         (result: boolean) => {
           if (result != undefined) {
             this.addOrUpdate(this.addUpdate);
-              this.addOrUpdate(this.addUpdate);
               this.addForm.reset();
           }
         },
@@ -162,7 +162,7 @@ export class BannerComponent implements OnInit {
 }
 
 async addOrUpdate(row: BannerModel) {
-
+  debugger
   if(row.id===0){
     await this._bannerService.create(row,"Banner").toPromise()
     .then(data => {
