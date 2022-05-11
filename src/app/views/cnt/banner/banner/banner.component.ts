@@ -5,8 +5,6 @@ import { CropperSettings } from 'ngx-img-cropper';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
-import { GroupModel } from 'src/app/views/bas/group/group.model';
-import { CntModule } from '../../cnt.module';
 import { BannerModel } from './banner.model';
 import { BannerService } from './banner.service';
 
@@ -29,7 +27,6 @@ export class BannerComponent implements OnInit {
     public _bannerService: BannerService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-
     private _formBuilder: FormBuilder,
     private _fileUploaderService:FileUploaderService
 

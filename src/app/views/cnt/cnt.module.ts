@@ -10,7 +10,6 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { ImageCropperModule } from 'ngx-img-cropper';
 import { LinkTypePipe } from 'src/app/shared/pipes/link-type.pipe';
-
 import { TypePipe } from 'src/app/shared/pipes/type.pipe';
 import { FileTypePipe } from 'src/app/shared/pipes/file-type.pipe';
 
@@ -20,10 +19,10 @@ import { FileTypePipe } from 'src/app/shared/pipes/file-type.pipe';
   declarations: [
     BannerComponent,
     ArticleComponent,
-    AddUpdateComponent,
     LinkTypePipe,
     TypePipe,
-    FileTypePipe
+    FileTypePipe,
+    AddUpdateComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +31,8 @@ import { FileTypePipe } from 'src/app/shared/pipes/file-type.pipe';
     ReactiveFormsModule,
     CntRoutingModule,
     ImageCropperModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+
   ],
   providers:[FileUploaderService]
 })

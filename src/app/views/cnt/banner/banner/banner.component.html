@@ -144,7 +144,7 @@
               >
                 <button
                   class="btn btn-icon bg-transparent"
-                  [routerLink]="'/bas/addUpdate-group/' + item.id"
+                 (click)="addorEdit(addUpdateModal,item)"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                 >
                   <i class="text-16 text-primary"> ویرایش </i>
