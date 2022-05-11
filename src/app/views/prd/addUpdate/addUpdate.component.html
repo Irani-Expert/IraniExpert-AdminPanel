@@ -19,7 +19,9 @@
   </li>
   <li ngbNavItem [disabled]="productId == 0">
     <a ngbNavLink>پلن های فروش </a>
-    <ng-template ngbNavContent>Second content</ng-template>
+    <ng-template ngbNavContent>
+      <app-plan [productId]="productId"></app-plan>
+    </ng-template>
   </li>
   <li ngbNavItem [disabled]="productId == 0">
     <a ngbNavLink>FAQ</a>
@@ -29,7 +31,12 @@
   </li>
   <li ngbNavItem [disabled]="productId == 0">
     <a ngbNavLink>نظرات </a>
-    <ng-template ngbNavContent>Second content</ng-template>
+    <ng-template ngbNavContent>
+      <app-comment [productId]="productId" [tableType]="6"></app-comment>
+    </ng-template>
   </li>
 </ul>
+
+
+
 <div [ngbNavOutlet]="nav"></div>
