@@ -16,6 +16,7 @@ import { CommentComponent } from './comment/comment.component';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { CntRoutingModule } from '../cnt/cnt.routing';
 import { ImageCropperModule } from 'ngx-img-cropper';
+import { ProductTypePipe } from 'src/app/shared/pipes/product-type.pipe';
 
 
 
@@ -29,6 +30,7 @@ import { ImageCropperModule } from 'ngx-img-cropper';
     BackTestComponent,
     PlanComponent,
     CommentComponent,
+    ProductTypePipe
 
 
   ],
