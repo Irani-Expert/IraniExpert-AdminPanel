@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -13,22 +14,30 @@ import { FaqService } from './faq.service';
 })
 export class FAQComponent implements OnInit {
   rows: FaqModel[] = new Array<FaqModel>();
-  productId: number;
-  tableType: number;
-
+ @Input() productId: number=0;
+  @Input() tableType: number=6;
+  addForm:FormGroup;
+  addUpdate:FaqModel=new FaqModel();
   pageIndex = 1;
   pageSize = 12;
   constructor(
     public _FaqService: FaqService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private activatedRoute:ActivatedRoute
+    private _formBuilder:FormBuilder
   ) {
-  this.productId= parseInt(this.activatedRoute.snapshot.paramMap.get('productId'));
-  this.tableType= parseInt(this.activatedRoute.snapshot.paramMap.get('tableType'));
   }
 
   ngOnInit(): void {
+
+    this.addUpdate.id=0;
+
+
+
+    this.addForm = this._formBuilder.group({
+      question: [null, Validators.compose([Validators.required])],
+      answer: [null, Validators.compose([Validators.required])],
+    });
 
     this.setPage(0);
   }
@@ -111,4 +120,72 @@ export class FAQComponent implements OnInit {
       );
   }
 
+
+
+  async addOrUpdate() {
+    this.addUpdate.tableType=6;
+    this.addUpdate.rowId=this.productId;
+    this.addUpdate.title="تست";
+    this.addUpdate.description="";
+    this.addUpdate.isActive=true;
+      //TODO Order Id Must Fill From Input
+      this.addUpdate.orderID=1;
+    if(this.addUpdate.id===0){
+      debugger
+      await this._FaqService.create(this.addUpdate,"FAQ").toPromise()
+      .then(data => {
+        if (data.success) {
+          this.toastr.success(data.message, null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+
+            });
+        } else {
+          this.toastr.error(data.message, null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+        }
+      },
+        error => {
+          this.toastr.error("خطا مجدد تلاش فرمایید", null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+        }
+      );
+    }else{
+      await this._FaqService.update(this.addUpdate.id,this.addUpdate,"FAQ").toPromise()
+      .then(data => {
+        if (data.success) {
+          this.toastr.success(data.message, null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+
+            });
+
+        } else {
+          this.toastr.error(data.message, null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+        }
+      },
+        error => {
+          this.toastr.error("خطا مجدد تلاش فرمایید", null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+        }
+      );
+    }
+    this.addForm.reset();
+    this.getFaqListByProductId(this.pageIndex,this.pageIndex)
+  }
 }

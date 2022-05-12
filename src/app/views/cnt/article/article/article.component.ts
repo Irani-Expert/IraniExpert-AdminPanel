@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { ArticleModel } from './article.model';
 import { ArticleService } from './article.service';
 
@@ -17,10 +20,12 @@ export class ArticleComponent implements OnInit {
   pageIndex = 1;
   pageSize = 12;
   constructor(
-    public _articleService: ArticleService,
-    private toastr: ToastrService,
-
-    private modalService: NgbModal
+    private _formBuilder:FormBuilder,
+    private _articleService : ArticleService,
+    private _route:ActivatedRoute
+    , private modalService: NgbModal
+    ,private _fileUploaderService:FileUploaderService
+    ,private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {

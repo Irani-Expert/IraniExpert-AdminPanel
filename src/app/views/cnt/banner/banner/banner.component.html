@@ -144,7 +144,7 @@
               >
                 <button
                   class="btn btn-icon bg-transparent"
-                  [routerLink]="'/bas/addUpdate-group/' + item.id"
+                  (click)="addorEdit(addUpdateModal, item)"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                 >
                   <i class="text-16 text-primary"> ویرایش </i>
@@ -295,7 +295,7 @@
           >
             <option value="0">BackTest</option>
             <option value="2">HomeTop</option>
-            <option value="2">HomeMiddle</option>
+            <option value="3">HomeMiddle</option>
             <option value="1">Other</option>
           </select>
           <small
@@ -352,22 +352,30 @@
           class="col-12"
           *ngIf="addUpdate.fileType === 0 && addUpdate.fileType !== null"
         >
-          <div class="col-md-12 form-group mb-3">
-            <button
-              class="btn btn-outline-primary btn-rounded mr-3"
-              (click)="openUploader(modalCropper)"
-            >
-              انتخاب تصویر شاخص
-            </button>
+          <div class="col-md-6 form-group mb-3">
             <img
               *ngIf="addUpdate?.cardImagePath"
-              class="rounded-circle"
               [src]="bannerModel?.filePath"
-              [width]="cropperSettings.croppedWidth"
-              [height]="cropperSettings.croppedHeight"
               [formControl]="addForm.controls['filePath']"
               [(ngModel)]="addUpdate.filePath"
             />
+            <img-cropper
+              [image]="image"
+              [settings]="cropperSettings"
+              [width]="cropperSettings.croppedWidth"
+              [height]="cropperSettings.croppedHeight"
+            ></img-cropper
+            ><br />
+            <img
+              *ngIf="image?.image"
+              class="mt-3 mr-3"
+              [src]="image?.image"
+               [width]="cropperSettings.croppedWidth"
+              [height]="cropperSettings.croppedHeight"
+            />
+            <button class="btn btn-primary" (click)="uploadFile(image)">
+              آپلود
+            </button>
             <small
               *ngIf="
                 addForm.controls['filePath'].hasError('required') &&
@@ -432,6 +440,7 @@
               [(ngModel)]="addUpdate.isActive"
               [formControl]="addForm.controls['isActive']"
               type="checkbox"
+              id="isActive"
             />
             <span class="slider"></span>
           </label>
@@ -475,24 +484,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <img-cropper [image]="image" [settings]="cropperSettings"></img-cropper
-    ><br />
-    <img
-      *ngIf="image?.image"
-      class="mt-3 mr-3"
-      [src]="image?.image"
-      [width]="cropperSettings.croppedWidth"
-      [height]="cropperSettings.croppedHeight"
-    />
-    <img
-      *ngIf="image?.image"
-      class="rounded-circle mt-3"
-      [src]="image?.image"
-      [width]="cropperSettings.croppedWidth"
-      [height]="cropperSettings.croppedHeight"
-    />
-  </div>
+  <div class="modal-body"></div>
   <div class="modal-footer">
     <button
       type="button"

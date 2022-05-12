@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +15,7 @@ export class PlanComponent implements OnInit {
   rows: PlanModel[] = new Array<PlanModel>();
   pageIndex = 1;
   pageSize = 12;
-  productId: number;
+  @Input() productId: number;
 
   constructor(
     private modalService: NgbModal,
@@ -23,7 +23,7 @@ export class PlanComponent implements OnInit {
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.activatedRoute.snapshot.paramMap.get('productId');
+
   }
 
   ngOnInit(): void {

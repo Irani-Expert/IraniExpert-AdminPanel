@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +13,8 @@ import { CommentModel } from './commnet.model';
 })
 export class CommentComponent implements OnInit {
   rows: CommentModel[] = new Array<CommentModel>();
-  productId: number;
+ @Input() productId: number;
+ @Input() tableType:number ;
   taybleType: number;
 
   pageIndex = 1;
@@ -25,8 +26,7 @@ export class CommentComponent implements OnInit {
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute
   ) {
-    this.activatedRoute.snapshot.paramMap.get('productId');
-    this.activatedRoute.snapshot.paramMap.get('taybleType');
+
   }
 
   ngOnInit(): void {

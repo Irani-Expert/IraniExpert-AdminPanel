@@ -18,7 +18,12 @@ const routes: Routes = [
   {
     path: 'article/addUpdate-article',
     component: AddUpdateComponent,
+  },
+  {
+    path: 'article/addUpdate-article/:articleId',
+    component: AddUpdateComponent,
   }
+
 
 
 

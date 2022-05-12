@@ -3,10 +3,10 @@ import { IFaq } from "./faq.interface";
 
 
 export class FaqModel extends Base implements IFaq {
-  ProductID: number;
-  product: string;
-  Question: string;
-  Answer: string;
-  ID: number;
+  tableType: number;
+  rowId: number;
+  question: string;
+  answer: string;
+  id: number;
 
 }
