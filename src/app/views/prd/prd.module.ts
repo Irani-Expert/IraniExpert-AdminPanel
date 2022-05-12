@@ -13,6 +13,10 @@ import { BackTestComponent } from './back-test/back-test.component';
 import { PlanComponent } from './plan/plan.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentComponent } from './comment/comment.component';
+import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
+import { CntRoutingModule } from '../cnt/cnt.routing';
+import { ImageCropperModule } from 'ngx-img-cropper';
+import { ProductTypePipe } from 'src/app/shared/pipes/product-type.pipe';
 
 
 
@@ -26,6 +30,8 @@ import { CommentComponent } from './comment/comment.component';
     BackTestComponent,
     PlanComponent,
     CommentComponent,
+    ProductTypePipe
+
 
   ],
   imports: [
@@ -34,8 +40,12 @@ import { CommentComponent } from './comment/comment.component';
     ReactiveFormsModule,
     ProductsRoutingModule,
     NgxPaginationModule,
-    NgbModule
+    NgbModule,
+    CntRoutingModule,
+    ImageCropperModule,
+  ],
 
-  ]
+  providers:[FileUploaderService]
+
 })
 export class PrdModule { }

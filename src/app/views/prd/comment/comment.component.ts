@@ -13,24 +13,21 @@ import { CommentModel } from './commnet.model';
 })
 export class CommentComponent implements OnInit {
   rows: CommentModel[] = new Array<CommentModel>();
- @Input() productId: number;
- @Input() tableType:number ;
-  taybleType: number;
+  @Input() productId: number;
+  @Input() tableType: number;
 
   pageIndex = 1;
   pageSize = 12;
 
   constructor(
-    public _CommenttService: CommentService,
+    public _CommentService: CommentService,
     private toastr: ToastrService,
-    private modalService: NgbModal,
-    private activatedRoute: ActivatedRoute
-  ) {
-
-  }
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     this.setPage(0);
+
   }
 
   setPage(pageInfo: number) {
@@ -39,14 +36,14 @@ export class CommentComponent implements OnInit {
     this.getCommentListByProductId(this.pageIndex, this.pageSize);
   }
   async getCommentListByProductId(pageNumber: number, seedNumber: number) {
-    await this._CommenttService
-      .getCommentByProductId(
+    await this._CommentService
+      .GetByTableTypeAndRowId(
         pageNumber,
         seedNumber,
         'ID',
-        'backtest',
+        'comment',
         this.productId,
-        this.taybleType
+        this.tableType
       )
       .subscribe(
         (res: Result<CommentModel[]>) => {
@@ -71,7 +68,7 @@ export class CommentComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._CommenttService
+          this._CommentService
             .delete(id, 'comment')
             .toPromise()
             .then((res) => {
@@ -113,13 +110,16 @@ export class CommentComponent implements OnInit {
       );
   }
 
-
   openSmall(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
-    .result.then((result) => {
-      console.log(result);
-    }, (reason) => {
-      console.log('Err!', reason);
-    });
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
+      .result.then(
+        (result) => {
+          console.log(result);
+        },
+        (reason) => {
+          console.log('Err!', reason);
+        }
+      );
   }
 }

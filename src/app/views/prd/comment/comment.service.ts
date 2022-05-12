@@ -22,7 +22,7 @@ export class CommentService  extends BaseService<CommentModel, 0> {
    * @param route
    * @returns all
    */
-     getCommentByProductId(pageIndex: number, pageSize: number, pageOrder: string, filter: string, productId: number , tableType:number): Observable<Result<CommentModel[]>> {
+     GetByTableTypeAndRowId(pageIndex: number, pageSize: number, pageOrder: string, filter: string, productId: number , tableType:number): Observable<Result<CommentModel[]>> {
       let _options = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

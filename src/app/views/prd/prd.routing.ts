@@ -25,10 +25,6 @@ const routes: Routes = [
     component: LearnComponent,
   },
   {
-    path: 'back-test/:productId',
-    component: BackTestComponent,
-  },
-  {
     path: 'faq/:tableType/:productId',
     component: FAQComponent,
   },
