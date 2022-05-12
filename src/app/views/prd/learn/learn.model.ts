@@ -1,8 +1,8 @@
 import { Base } from "src/app/shared/models/Base/base.model";
-import { ILeran } from "./learn.interface";
+import { ILearn } from "./learn.interface";
 
 
-export class LearnModel extends Base implements ILeran {
+export class LearnModel extends Base implements ILearn {
   productID: number;
   product: string;
   videoUrl: string;

@@ -1,7 +1,7 @@
 
 import { IBase } from "src/app/shared/interfaces/Base/base.interface";
 
-export interface ILeran extends IBase{
+export interface ILearn extends IBase{
   productID:number;
   product:string;
   videoUrl:string;
