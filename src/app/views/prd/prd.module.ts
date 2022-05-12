@@ -13,6 +13,9 @@ import { BackTestComponent } from './back-test/back-test.component';
 import { PlanComponent } from './plan/plan.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentComponent } from './comment/comment.component';
+import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
+import { CntRoutingModule } from '../cnt/cnt.routing';
+import { ImageCropperModule } from 'ngx-img-cropper';
 
 
 
@@ -27,6 +30,7 @@ import { CommentComponent } from './comment/comment.component';
     PlanComponent,
     CommentComponent,
 
+
   ],
   imports: [
     CommonModule,
@@ -34,8 +38,12 @@ import { CommentComponent } from './comment/comment.component';
     ReactiveFormsModule,
     ProductsRoutingModule,
     NgxPaginationModule,
-    NgbModule
+    NgbModule,
+    CntRoutingModule,
+    ImageCropperModule,
+  ],
 
-  ]
+  providers:[FileUploaderService]
+
 })
 export class PrdModule { }

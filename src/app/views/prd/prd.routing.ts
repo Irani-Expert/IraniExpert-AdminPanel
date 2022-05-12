@@ -25,7 +25,7 @@ const routes: Routes = [
     component: LearnComponent,
   },
   {
-    path: 'faq/:productId/:tableType',
+    path: 'faq/:tableType/:productId',
     component: FAQComponent,
   },
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'comment/:productId/:tableType',
+    path: 'comment/:tableType/:productId',
     component: CommentComponent,
   },
 

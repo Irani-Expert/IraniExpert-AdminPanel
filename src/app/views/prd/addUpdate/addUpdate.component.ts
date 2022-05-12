@@ -9,10 +9,15 @@ import { DataLayerService } from 'src/app/shared/services/data-layer.service';
 })
 export class AddUpdateComponent implements OnInit {
 productId:number=0;
+tableType:number=6;
+
   constructor(private _route:ActivatedRoute) {
     this.productId = parseInt(
       this._route.snapshot.paramMap.get('productId') ?? '0'
     );
+
+
+
    }
 
   ngOnInit(): void {
