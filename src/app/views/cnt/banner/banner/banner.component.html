@@ -40,39 +40,39 @@
         >
           <!-- OTHER DATA -->
           <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
           >
             <!-- {{ item.product }} -->
             عنوان
           </div>
           <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
           >
             نوع
           </div>
           <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
           >
             نوع فایل
           </div>
           <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
           >
             لینک تایپ
           </div>
           <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
           >
             active
           </div>
           <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
             <div
-              class="m-0 text-muted text-small text-lg-center w-15 w-sm-100 item-actions"
+              class="m-0 text-muted text-small text-lg-center w-25 w-sm-100 item-actions"
             >
               <h6 class="text-16 text-primary text-center">عملیات</h6>
             </div>
             <div
-              class="m-0 text-muted text-small text-lg-center w-15 col w-sm-100 item-actions"
+              class="m-0 text-muted text-small text-lg-center w-25 col w-sm-100 item-actions"
             ></div>
           </div>
         </div>
@@ -122,16 +122,16 @@
           <a href="" class="w-40 col w-sm-100">
             <div class="item-title">{{ item.title }}</div>
           </a>
-          <div class="m-0 text-muted text-small col w-15 w-sm-100">
+          <div class="m-0 text-muted text-small col w-25 w-sm-100">
             {{ item.type | type }}
           </div>
-          <div class="m-0 text-muted text-small col w-15 w-sm-100">
+          <div class="m-0 text-muted text-small col w-25 w-sm-100">
             {{ item.fileType | fileType }}
           </div>
-          <div class="m-0 text-muted text-small col w-15 w-sm-100">
+          <div class="m-0 text-muted text-small col w-25 w-sm-100">
             {{ item.linkType | linkType }}
           </div>
-          <div class="m-0 text-muted text-small col w-15 w-sm-100">
+          <div class="m-0 text-muted text-small col w-25 w-sm-100">
             {{ item.isActive }}
           </div>
 
@@ -140,7 +140,7 @@
           >
             <div class="row text-center">
               <div
-                class="m-0 text-muted text-small w-15 col-6 w-sm-100 item-actions"
+                class="m-0 text-muted text-small w-25 col-6 w-sm-100 item-actions"
               >
                 <button
                   class="btn btn-icon bg-transparent"
@@ -151,7 +151,7 @@
                 </button>
               </div>
               <div
-                class="m-0 text-muted text-small col-6 w-15 w-sm-100 item-actions"
+                class="m-0 text-muted text-small col-6 w-25 w-sm-100 item-actions"
               >
                 <button
                   class="btn btn-icon bg-transparent"
@@ -370,7 +370,7 @@
               *ngIf="image?.image"
               class="mt-3 mr-3"
               [src]="image?.image"
-               [width]="cropperSettings.croppedWidth"
+              [width]="cropperSettings.croppedWidth"
               [height]="cropperSettings.croppedHeight"
             />
             <button class="btn btn-primary" (click)="uploadFile(image)">

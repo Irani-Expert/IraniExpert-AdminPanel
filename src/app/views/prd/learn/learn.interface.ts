@@ -2,12 +2,12 @@
 import { IBase } from "src/app/shared/interfaces/Base/base.interface";
 
 export interface ILeran extends IBase{
-  ProductID:number;
+  productID:number;
   product:string;
-  VideoUrl:string;
-  FileUrl:string;
-  TableType:string;
-  ID:number
+  videoUrl:string;
+  fileUrl:string;
+  tableType:string;
+  rowID:number
 
 }
 
