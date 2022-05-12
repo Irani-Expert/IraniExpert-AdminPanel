@@ -47,7 +47,7 @@ export class BackTestComponent implements OnInit {
       videoUrl: [null],
       fileUrl: [null],
       cardImagePath: [null],
-  })
+  }, { validator: this.checkValidFileOrUrl })
   this.cropperSettings = new CropperSettings();
   this.cropperSettings.width = 500;
   this.cropperSettings.height = 300;
@@ -60,7 +60,11 @@ export class BackTestComponent implements OnInit {
   this.image = {};
 
 }
+checkValidFileOrUrl(g: FormGroup) {
+  if(g.get('videoUrl').value!==null || g.get('fileUrl').value!==null )
+    return true;
 
+}
 
 
 
@@ -220,7 +224,7 @@ export class BackTestComponent implements OnInit {
     debugger;
     if (row.id === 0) {
       await this._backtestService
-        .create(row, 'back-test')
+        .create(row, 'BackTest')
         .toPromise()
         .then(
           (data) => {
@@ -245,7 +249,7 @@ export class BackTestComponent implements OnInit {
         );
     } else {
       await this._backtestService
-        .update(row.id, row, 'back-test')
+        .update(row.id, row, 'BackTest')
         .toPromise()
         .then(
           (data) => {
