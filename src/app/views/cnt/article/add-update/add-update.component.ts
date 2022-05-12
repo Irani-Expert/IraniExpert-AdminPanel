@@ -43,6 +43,7 @@ export class AddUpdateComponent implements OnInit {
       extraPlugins: 'divarea',
       forcePasteAsPlainText: true,
       removePlugins: 'exportpdf',
+
     };
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
