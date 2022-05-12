@@ -27,7 +27,7 @@ export class GroupComponent implements OnInit {
 
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
@@ -43,8 +43,8 @@ export class GroupComponent implements OnInit {
     this.getGroupList(this.pageIndex, this.pageSize);
   }
 
-  async getGroupList(pageNumber: number, seedNumber: number) {
-    await this._groupService
+   getGroupList(pageNumber: number, seedNumber: number) {
+     this._groupService
       .get(pageNumber, seedNumber, 'ID', null, 'Group')
       .subscribe(
         (res: Result<GroupModel[]>) => {

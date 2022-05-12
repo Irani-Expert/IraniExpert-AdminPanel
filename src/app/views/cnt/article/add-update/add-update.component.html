@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card container pb-2 pt-2">
   <form [formGroup]="addForm">
     <div class="row">
 
@@ -65,11 +65,11 @@
       *ngIf="addUpdate.id !== 0" [disabled]="!addForm.valid">
       ذخیره
     </button>
-    <button type="button" class="btn btn-outline-dark btn-rounded" *ngIf="addUpdate.id === 0"
+    <button type="button" class="btn btn-outline-dark btn-rounded mr-2" *ngIf="addUpdate.id === 0"
       [disabled]="!addForm.valid">
       ذخیره
     </button>
-    <button [routerLink]="'cnt/article'" type="button" class="btn btn-outline-dark btn-rounded">
+    <button [routerLink]="'cnt/article'" type="button" class="btn btn-outline-dark btn-rounded ml-2">
       انصراف
     </button>
   </form>
