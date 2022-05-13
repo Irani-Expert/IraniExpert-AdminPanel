@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { LeranModel } from './leran.model';
-import { LeranService } from './leran.service';
+import { LearnModel } from './learn.model';
+import { LearnService } from './learn.service';
 
 @Component({
   selector: 'app-learn',
@@ -12,35 +12,53 @@ import { LeranService } from './leran.service';
   styleUrls: ['./learn.component.scss']
 })
 export class LearnComponent implements OnInit {
-
+  rows: LearnModel[] = new Array<LearnModel>();
   viewMode: 'list' | 'grid' = 'list';
-  rows: LeranModel[] = new Array<LeranModel>();
+  allSelected: boolean;
+  addUpdate: LearnModel;
+  addForm: FormGroup;
  @Input() productId:number ;
   pageIndex = 1;
   products: any[] = [];
   pageSize = 12;
 
   constructor(
-    public _LeranService : LeranService,
+    public _learnService : LearnService,
     private toastr: ToastrService,
     private modalService: NgbModal,
+    private _formBuilder: FormBuilder,
+
   ) {
   }
 
   ngOnInit(): void {
     this.setPage(0);
+    this.addForm = this._formBuilder.group({
+      id: [null, Validators.compose([Validators.required,Validators.maxLength(100)])],
+      title: [null, Validators.compose([Validators.required,Validators.maxLength(100)])],
+      orderID: [null, Validators.compose([Validators.required])],
+      productId: [this.productId],
+      product: [null],
+      descreption: [null],
+      tableType : [6],
+      isActive: [null, Validators.compose([Validators.required])],
+      url: [null, Validators.compose([Validators.required])],
+      fileUrl: [null],
+      videoUrl: [null],
+      rowID: [this.productId],
+    });
   }
 
   setPage(pageInfo:number) {
     this.pageIndex = pageInfo;
 
-    this.getLeranListByProductId(this.pageIndex , this.pageSize);
+    this.getLearnByProductId(this.pageIndex , this.pageSize);
   }
-  async getLeranListByProductId(pageNumber: number, seedNumber: number) {
-    await this._LeranService
-      .getLeranByProductId(pageNumber, seedNumber, 'ID', 'Learn' , this.productId)
+  async getLearnByProductId(pageNumber: number, seedNumber: number) {
+    await this._learnService
+      .getLearnByProductId(pageNumber, seedNumber, 'ID', 'Learn' , this.productId)
       .subscribe(
-        (res: Result<LeranModel[]>) => {
+        (res: Result<LearnModel[]>) => {
           this.rows = res.data;
           //  this.page.totalElements = res.data.length;
         },
@@ -57,12 +75,12 @@ export class LearnComponent implements OnInit {
       );
   }
 
-  deleteLeran(id, modal) {
+  deleteLearn(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._LeranService.delete(id,"learn").toPromise().then((res) => {
+          this._learnService.delete(id,"learn").toPromise().then((res) => {
             if(res.success){
               debugger
               this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
@@ -79,7 +97,7 @@ export class LearnComponent implements OnInit {
 
               });
             }
-            this.getLeranListByProductId(
+            this.getLearnByProductId(
               this.pageIndex,
               this.pageSize
             );
@@ -101,5 +119,93 @@ export class LearnComponent implements OnInit {
         }
       );
   }
+  //Add OR Edit!!!!!!!!!!!!!!!
+  addorEdit(content: any, row: LearnModel) {
+    debugger;
+    if (row === undefined) {
+      row = new LearnModel();
+      row.id = 0;
+      row.tableType = null;
+    }
+    this.addUpdate = row;
+    this.modalService
+      .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result: boolean) => {
+          if (result != undefined) {
+            this.addOrUpdate(this.addUpdate);
+            this.addForm.reset();
+          }
+        },
+        (reason) => {
+          console.log('Err!', reason);
+          this.addForm.reset();
+        }
+      );
+  }
 
+  async addOrUpdate(row: LearnModel) {
+    debugger;
+    if ((row.fileUrl === null || row.fileUrl === undefined || row.fileUrl === "")
+    || (row.videoUrl === null || row.videoUrl === undefined || row.videoUrl === "")
+    ) {
+      return  this.toastr.error("ادرس فایل یا آدرس ویدئو اجباری است.", null, {
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      });
+    }
+    if (row.id === 0) {
+      await this._learnService
+        .create(row, 'learn')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    } else {
+      await this._learnService
+        .update(row.id, row, 'learn')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    }
+
+    this.getLearnByProductId(this.pageIndex, this.pageIndex);
+  }
 }

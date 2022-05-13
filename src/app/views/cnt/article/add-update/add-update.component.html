@@ -1,7 +1,7 @@
 <div class="card container pb-2 pt-2">
   <form [formGroup]="addForm">
     <div class="row">
-      <div class="col-md-12 form-group mb-3">
+      <div class="col-md-6 form-group mb-3">
         <label for="title">عنوان</label>
         <input
           type="text"
@@ -21,7 +21,7 @@
         >
       </div>
 
-      <div class="col-md-12 form-group mb-3">
+      <div class="col-md-6 form-group mb-3">
         <label for="brief">متن کوتاه</label>
         <input
           type="text"
@@ -41,7 +41,7 @@
         >
       </div>
 
-      <div class="col-md-6 form-group mb-3">
+      <div class="col-md-3 form-group mb-3">
         <label for="picker1">انتخاب گروه</label>
         <select
           [formControl]="addForm.controls['groupID']"
@@ -62,10 +62,6 @@
           >انتخاب نوع گروه ضروری است</small
         >
       </div>
-
-
-
-
 
       <div class="col-md-12 form-group mb-3">
         <ckeditor
@@ -104,7 +100,7 @@
             [width]="cropperSettings.croppedWidth"
             [height]="cropperSettings.croppedHeight"
           />
-          <br>
+          <br />
           <div class="col-12 mt-2">
             <button
               type="button"
@@ -116,8 +112,6 @@
           </div>
         </div>
       </div>
-
-
 
       <div class="col-md-12 form-group mb-3">
         <label class="switch switch-primary mr-3">
@@ -131,9 +125,6 @@
         </label>
       </div>
     </div>
-
-
-
 
     <button
       type="button"
