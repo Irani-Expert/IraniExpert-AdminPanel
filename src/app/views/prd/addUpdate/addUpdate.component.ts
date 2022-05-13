@@ -77,7 +77,7 @@ export class AddUpdateComponent implements OnInit {
     );
   }
 
-  uploadFile(image) {
+  async uploadFile(image) {
     this._fileUploaderService.uploadFile(image.image, 'articles').subscribe(
       (res: Result<string[]>) => {
         if (res.success) {
@@ -104,5 +104,65 @@ export class AddUpdateComponent implements OnInit {
         );
       }
     );
+  }
+
+
+
+
+  async addOrUpdate(row: ProductModel) {
+    debugger;
+    if (row.id === 0) {
+      await this._productsService
+        .create(row, 'product')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    } else {
+      await this._productsService
+        .update(row.id, row, 'product')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    }
+
+    this.getProductById();
   }
 }
