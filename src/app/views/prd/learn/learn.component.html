@@ -1,11 +1,11 @@
-<div class="row">
+<div class="row g-0 m-0 p-0">
   <!-- SINGLE LIST ITEM -->
-
+  <!----------------------------------- Head Table  -->
   <div
     class="list-item"
     [ngClass]="{
       'col-md-12': viewMode === 'list',
-      'col-md-3': viewMode === 'grid'
+      'col-md-3 g-0 m-0 p-0': viewMode === 'grid'
     }"
   >
     <div
@@ -18,8 +18,84 @@
       <div
         class="flex-grow-1"
         [ngClass]="{
-          'pl-2 d-flex': viewMode === 'list',
-          'd-bock': viewMode === 'grid'
+          'd-flex': viewMode === 'list',
+          'd-block': viewMode === 'grid'
+        }"
+      >
+        <div class="list-thumb">
+          <!-- TUMBNAIL -->
+        </div>
+        <div
+          id="myHeader"
+          class="card-body align-self-center d-flex align-items-lg-center row"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+        >
+          <!-- OTHER DATA -->
+
+          <!-- {{ item.product }} -->
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
+          >
+            <!-- {{ item.product }} -->
+            شناسه
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
+          >
+            عنوان
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
+          >
+            اولویت
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
+          >
+            ادرس فایل
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
+          >
+            rowID
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
+          ></div>
+          <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
+            <div
+              class="m-0 text-muted text-small text-lg-center w-100 w-sm-100 item-actions"
+            >
+              <h6 class="text-16 text-primary">عملیات</h6>
+            </div>
+            <div
+              class="m-0 text-muted text-small text-lg-center w-100 col w-sm-100 item-actions"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!---------------------------------- List -->
+  <div
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3 m-0 p-0 g-0': viewMode === 'grid'
+    }"
+  >
+    <div
+      class="card o-hidden mb-4 d-flex"
+      [ngClass]="{
+        'flex-row': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }"
+    >
+      <div
+        class="flex-grow-1"
+        [ngClass]="{
+          'd-flex': viewMode === 'list',
+          'd-block': viewMode === 'grid'
         }"
       >
         <div class="list-thumb">
@@ -31,94 +107,51 @@
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
+
+          <!-- {{ item.product }} -->
           <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
           >
             <!-- {{ item.product }} -->
-            title
+            شناسه
           </div>
           <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
           >
-            type
+            عنوان
           </div>
           <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
           >
-            file type
+            اولویت
           </div>
           <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
           >
-            linktype
+            ادرس فایل
           </div>
           <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
+          >
+            rowID
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
           ></div>
           <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
             <div
-              class="m-0 text-muted text-small text-lg-center w-15 w-sm-100 item-actions"
+              class="m-0 text-muted text-small text-lg-center w-100 w-sm-100 item-actions"
             >
               <h6 class="text-16 text-primary">عملیات</h6>
             </div>
             <div
-              class="m-0 text-muted text-small text-lg-center w-15 col w-sm-100 item-actions"
+              class="m-0 text-muted text-small text-lg-center w-100 col w-sm-100 item-actions"
             ></div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div
-    class="list-item ng-trigger ng-trigger-animate col-md-12 ng-star-inserted"
-    *ngFor="let item of rows"
-  >
-    <div class="card o-hidden mb-4 d-flex flex-row">
-      <div class="list-thumb d-flex">
-        <img alt="" height="74px" class="" [src]="item.videoUrl" />
-      </div>
-      <div class="flex-grow-1 pl-2 d-flex">
-        <div
-          class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center flex-lg-row"
-        >
-          <a href="" class="w-40 w-sm-100"
-            ><div class="item-title">
-              {{ item.title }}
-            </div></a
-          >
-          <p class="m-0 text-muted text-small w-25 w-sm-100">
-            {{ item.fileUrl }}
-          </p>
-          <p class="m-0 text-muted text-small w-25 w-sm-100">
-            <del class="text-secondary">$54.00</del>
-          </p>
-          <p
-            class="m-0 text-muted text-small w-25 w-sm-100 d-none d-lg-block item-badges"
-          >
-            <span class="badge badge-info">20% off</span>
-          </p>
-          <button
-            type="button"
-            class="btn btn-warning btn-rounded m-1"
-            [ngClass]="{ 'd-none': viewMode === 'grid' }"
-            (click)="addorEdit(addUpdateModal, item)"
-          >
-            ویرایش
-          </button>
-          <button
-            class="btn btn-danger btn-rounded m-1"
-            type="button"
-            [ngClass]="{ 'd-none': viewMode === 'grid' }"
-            (click)="deleteLearn(item.id, deleteConfirmModal)"
-          >
-            حذف
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!---------------------------------------------- MODALS -->
   <!-- Add Or Edit -->
   <ng-template #addUpdateModal let-modal>
@@ -144,12 +177,12 @@
         <div class="row">
           <!-- title -->
           <div class="col-md-6 form-group mb-3">
-            <label for="title">نام</label>
+            <label for="title">عنوان</label>
             <input
               type="text"
               class="form-control form-control-rounded"
               id="title"
-              placeholder="نام مورد نظر را وارد کنید "
+              placeholder="عنوان مورد نظر را وارد کنید "
               [formControl]="addForm.controls['title']"
               [(ngModel)]="addUpdate.title"
             />
@@ -159,23 +192,24 @@
                 addForm.controls['title'].touched
               "
               class="mat-text-warn m-t-negative"
-              >ورود نام ضروری است</small
+              >عنوان نام ضروری است</small
             >
           </div>
 
           <!-- Order ID  -->
           <div class="col-md-6 form-group mb-3">
-            <label for="orderID">جایگاه را مشخص کنید</label>
+            <label for="orderID">اولویت را مشخص کنید</label>
             <select
               [formControl]="addForm.controls['orderID']"
               class="form-control form-control-rounded"
               [ngModel]="addUpdate.orderID"
               (ngModelChange)="selectType($event)"
             >
-              <option value="0">BackTest</option>
-              <option value="2">HomeTop</option>
-              <option value="3">HomeMiddle</option>
-              <option value="1">Other</option>
+              <option value="0">اولویت بسیار بالا</option>
+              <option value="1">اولویت بالا</option>
+              <option value="2">اولویت متوسط</option>
+              <option value="3">اولویت پایین</option>
+              <option value="4">اولویت بسیار پایین</option>
             </select>
             <small
               *ngIf="
@@ -186,8 +220,20 @@
               >انتخاب نوع گروه ضروری است</small
             >
           </div>
+          <!-- Description -->
+          <div class="col-md-12 form-group mb-3">
+            <label for="description">توضیحات</label>
+            <input
+              type="text"
+              class="form-control form-control-rounded"
+              id="description"
+              placeholder="توضیحات مورد نظر را وارد کنید "
+              [formControl]="addForm.controls['description']"
+              [(ngModel)]="addUpdate.description"
+            />
+          </div>
           <!-- Url -->
-          <!-- filePath vidoe -->
+          <!-- filePath video -->
           <div
             class="col-md-12 form-group mb-3"
             *ngIf="addUpdate.fileUrl !== 0 && addUpdate.fileUrl !== null"

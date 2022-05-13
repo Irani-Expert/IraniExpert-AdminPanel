@@ -21,6 +21,7 @@ export class LearnComponent implements OnInit {
   pageIndex = 1;
   products: any[] = [];
   pageSize = 12;
+  rowId: number;
 
   constructor(
     public _learnService : LearnService,
@@ -34,18 +35,18 @@ export class LearnComponent implements OnInit {
   ngOnInit(): void {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
-      id: [null, Validators.compose([Validators.required,Validators.maxLength(100)])],
-      title: [null, Validators.compose([Validators.required,Validators.maxLength(100)])],
+      id: [null, Validators.compose([Validators.required])],
+      title: [null, Validators.compose([Validators.required,Validators.maxLength(50)])],
       orderID: [null, Validators.compose([Validators.required])],
       productId: [this.productId],
       product: [null],
-      descreption: [null],
+      description: [null],
       tableType : [6],
-      isActive: [null, Validators.compose([Validators.required])],
+      isActive: [null],
       url: [null, Validators.compose([Validators.required])],
       fileUrl: [null],
       videoUrl: [null],
-      rowID: [this.productId],
+      rowID: [this.rowId],
     });
   }
 
@@ -207,5 +208,10 @@ export class LearnComponent implements OnInit {
     }
 
     this.getLearnByProductId(this.pageIndex, this.pageIndex);
+  }
+  selectType($event:any){
+    if ($event != undefined) {
+      this.addUpdate.orderID =parseInt($event);
+    }
   }
 }
