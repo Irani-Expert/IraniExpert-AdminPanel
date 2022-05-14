@@ -2,14 +2,18 @@
   <div class="row">
     <div class="col-md-6 form-group mb-3">
       <label for="title">سوال</label>
-      <input
+      <textarea
+        name=""
+        id=""
+        cols="30"
+        rows="5"
         type="text"
         class="form-control form-control-rounded"
-        id="title"
+        id="question"
         placeholder="سوال را وارد نمایید."
         [formControl]="addForm.controls['question']"
         [(ngModel)]="addUpdate.question"
-      />
+      ></textarea>
       <small
         *ngIf="
           addForm.controls['question'].hasError('required') &&
@@ -21,24 +25,28 @@
     </div>
 
     <div class="col-md-6 form-group mb-3">
-      <label for="answer">پاسخ</label>
-      <input
+      <label for="title">پاسخ</label>
+      <textarea
+        name=""
+        cols="30"
+        rows="5"
         type="text"
         class="form-control form-control-rounded"
         id="answer"
-        placeholder="سوال را وارد نمایید."
+        placeholder="پاسخ را وارد نمایید."
         [formControl]="addForm.controls['answer']"
         [(ngModel)]="addUpdate.answer"
-      />
+      ></textarea>
       <small
         *ngIf="
           addForm.controls['answer'].hasError('required') &&
           addForm.controls['answer'].touched
         "
         class="mat-text-warn m-t-negative"
-        >پاسخ ضروری است</small
+        >ورود پاسخ ضروری است</small
       >
     </div>
+
     <button
       type="button"
       class="btn btn-outline-dark btn-rounded"
