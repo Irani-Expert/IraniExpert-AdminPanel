@@ -206,14 +206,17 @@
           <!-- Description -->
           <div class="col-md-12 form-group mb-3">
             <label for="description">توضیحات</label>
-            <input
+            <textarea
+              name=""
+              cols="30"
+              rows="10"
               type="text"
               class="form-control form-control-rounded"
               id="description"
-              placeholder="توضیحات مورد نظر را وارد کنید "
               [formControl]="addForm.controls['description']"
               [(ngModel)]="addUpdate.description"
-            />
+            >
+            </textarea>
           </div>
           <div class="col-md-4 form-group mb-3">
             <label for="fileUrl">آدرس فایل</label>
