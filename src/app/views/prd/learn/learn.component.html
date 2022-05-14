@@ -1,4 +1,14 @@
 <div class="row g-0 m-0 p-0">
+  <div class="mb-4">
+    <button
+      class="btn btn-primary m-1"
+      type="button"
+      [ngClass]="{ 'd-none': viewMode === 'grid' }"
+      (click)="addorEdit(addUpdateModal, undefined)"
+    >
+      ایجاد
+    </button>
+  </div>
   <!-- SINGLE LIST ITEM -->
   <!----------------------------------- Head Table  -->
   <div
@@ -9,7 +19,7 @@
     }"
   >
     <div
-      class="card o-hidden mb-4 d-flex"
+      class="card o-hidden mb-3 d-flex"
       [ngClass]="{
         'flex-row': viewMode === 'list',
         'flex-column': viewMode === 'grid'
@@ -32,45 +42,16 @@
         >
           <!-- OTHER DATA -->
 
-          <!-- {{ item.product }} -->
+          <div class="m-0 text-muted col w-100 w-sm-100">شناسه محصول</div>
+          <div class="m-0 text-muted col w-100 w-sm-100">عنوان</div>
+          <div class="m-0 text-muted col w-100 w-sm-100">توضیحات</div>
+          <div class="m-0 text-muted col w-100 w-sm-100">اولویت</div>
+          <div class="m-0 text-muted col w-100 w-sm-100">ادرس فایل</div>
+          <div class="m-0 text-muted col w-100 w-sm-100">وضعیت</div>
           <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
+            class="m-0 text-muted text-primary col text-lg-center w-100 w-sm-100"
           >
-            <!-- {{ item.product }} -->
-            شناسه
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          >
-            عنوان
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          >
-            اولویت
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          >
-            ادرس فایل
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          >
-            rowID
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          ></div>
-          <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
-            <div
-              class="m-0 text-muted text-small text-lg-center w-100 w-sm-100 item-actions"
-            >
-              <h6 class="text-16 text-primary">عملیات</h6>
-            </div>
-            <div
-              class="m-0 text-muted text-small text-lg-center w-100 col w-sm-100 item-actions"
-            ></div>
+            عملیات
           </div>
         </div>
       </div>
@@ -79,13 +60,14 @@
   <!---------------------------------- List -->
   <div
     class="list-item"
+    *ngFor="let item of rows"
     [ngClass]="{
       'col-md-12': viewMode === 'list',
       'col-md-3 m-0 p-0 g-0': viewMode === 'grid'
     }"
   >
     <div
-      class="card o-hidden mb-4 d-flex"
+      class="card o-hidden mb-2 d-flex"
       [ngClass]="{
         'flex-row': viewMode === 'list',
         'flex-column': viewMode === 'grid'
@@ -103,50 +85,51 @@
         </div>
         <div
           id="myHeader"
-          class="card-body align-self-center d-flex align-items-lg-center th-list row"
+          class="card-body align-self-center d-flex th-list align-items-lg-center row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
 
-          <!-- {{ item.product }} -->
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          >
-            <!-- {{ item.product }} -->
-            شناسه
+          <div class="m-0 text-muted col w-25">
+            {{ item.id }}
           </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          >
-            عنوان
+          <div class="m-0 text-muted col w-25">
+            {{ item.title }}
           </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          >
-            اولویت
+          <div class="m-0 text-muted col w-25">
+            {{ item.description }}
           </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          >
-            ادرس فایل
+          <div class="m-0 text-muted col w-25">
+            {{ item.orderID }}
           </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          >
-            rowID
+          <div class="m-0 text-muted col w-25">
+            {{ item.fileUrl }}
           </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-100 w-sm-100"
-          ></div>
-          <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
-            <div
-              class="m-0 text-muted text-small text-lg-center w-100 w-sm-100 item-actions"
-            >
-              <h6 class="text-16 text-primary">عملیات</h6>
+          <div class="m-0 text-muted col w-25">
+            <div *ngIf="item.isActive === false" class="badge badge-info">
+              غیر فعال
             </div>
-            <div
-              class="m-0 text-muted text-small text-lg-center w-100 col w-sm-100 item-actions"
-            ></div>
+            <div *ngIf="item.isActive === true" class="badge badge-info">
+              فعال
+            </div>
+          </div>
+          <div class="m-0 text-muted text-lg-center col w-25">
+            <button
+              class="btn btn-warning btn-rounded m-1"
+              type="button"
+              [ngClass]="{ 'd-none': viewMode === 'grid' }"
+              (click)="addorEdit(addUpdateModal, item)"
+            >
+              ویرایش
+            </button>
+            <button
+              class="btn btn-danger btn-rounded m-1"
+              type="button"
+              [ngClass]="{ 'd-none': viewMode === 'grid' }"
+              (click)="deleteLearn(item.id, deleteConfirmModal)"
+            >
+              حذف
+            </button>
           </div>
         </div>
       </div>
@@ -197,7 +180,7 @@
           </div>
 
           <!-- Order ID  -->
-          <div class="col-md-6 form-group mb-3">
+          <div class="col-md-4 form-group mb-3">
             <label for="orderID">اولویت را مشخص کنید</label>
             <select
               [formControl]="addForm.controls['orderID']"
@@ -232,54 +215,23 @@
               [(ngModel)]="addUpdate.description"
             />
           </div>
-          <!-- Url -->
-          <!-- filePath video -->
-          <div
-            class="col-md-12 form-group mb-3"
-            *ngIf="addUpdate.fileUrl !== 0 && addUpdate.fileUrl !== null"
-          >
+          <div class="col-md-4 form-group mb-3">
+            <label for="fileUrl">آدرس فایل</label>
             <input
               type="text"
               class="form-control form-control-rounded"
               id="fileUrl"
-              placeholder="Url فایل خود را وارد کنید"
+              placeholder="آدرس فایل مورد نظر را وارد کنید "
               [formControl]="addForm.controls['fileUrl']"
               [(ngModel)]="addUpdate.fileUrl"
             />
-            <small
-              *ngIf="
-                addForm.controls['fileUrl'].hasError('required') &&
-                addForm.controls['fileUrl'].touched
-              "
-              class="mat-text-warn m-t-negative"
-              >آدرس URL ضروری است
-            </small>
           </div>
-
-          <div class="col-md-6 form-group mb-3">
-            <label for="url">url</label>
-            <input
-              type="text"
-              class="form-control form-control-rounded"
-              id="url"
-              placeholder="عنوان را وارد نمایید."
-              [formControl]="addForm.controls['url']"
-              [(ngModel)]="addUpdate.url"
-            />
-            <small
-              *ngIf="
-                addForm.controls['url'].hasError('required') &&
-                addForm.controls['url'].touched
-              "
-              class="mat-text-warn m-t-negative"
-              >ورود url ضروری است</small
-            >
-          </div>
-
+          <!-- Url -->
           <!-- isActive -->
-          <div class="col-md-6 form-group mb-3">
-            <label class="switch switch-primary mr-3">
-              <span>فعال/غیرفعال</span>
+          <div class="col-md-6 form-group mb-3 mt-3">
+            <label class="m-1">فعال</label>
+            <label class="switch switch-primary mr-2 m-2">
+              <span>غیرفعال</span>
               <input
                 [(ngModel)]="addUpdate.isActive"
                 [formControl]="addForm.controls['isActive']"
@@ -306,7 +258,6 @@
         class="btn btn-outline-dark btn-rounded"
         (click)="modal.close(false)"
         *ngIf="addUpdate.id === 0"
-        [disabled]="!addForm.valid"
       >
         ایجاد
       </button>
@@ -315,7 +266,7 @@
   <!-- Delete -->
   <ng-template #deleteConfirmModal let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-title">حذف نظر</h4>
+      <h4 class="modal-title" id="modal-title">حذف آموزش</h4>
       <button
         type="button"
         class="close"

@@ -5,6 +5,6 @@ export interface IBackTest extends IBase{
   product: string;
   videoUrl: string;
   fileUrl: string;
-cardImagePath: string;
+  cardImagePath: string;
 }
 

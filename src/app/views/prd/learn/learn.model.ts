@@ -3,7 +3,7 @@ import { ILearn } from "./learn.interface";
 
 
 export class LearnModel extends Base implements ILearn {
-  productID: number;
+  productId: number;
   product: string;
   videoUrl: string;
   fileUrl: string;
