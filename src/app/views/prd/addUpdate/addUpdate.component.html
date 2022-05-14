@@ -3,10 +3,13 @@
     <a ngbNavLink>ایجاد یا ویرایش</a>
     <ng-template ngbNavContent>
       <div>
-        <form [formGroup]="addForm">
+        <form [formGroup]="addForm" >
           <div class="row list-item">
+            <!-- ID -->
+
+            <!-- title -->
             <div class="col-md-6 form-group mb-3">
-              <label for="title">متن کوتاه</label>
+              <label for="title">عنوان را وارد کنید</label>
               <input
                 type="text"
                 class="form-control form-control-rounded"
@@ -14,7 +17,6 @@
                 placeholder=" عنوان را وارد نمایید."
                 [formControl]="addForm.controls['title']"
                 [(ngModel)]="addUpdate.title"
-                value="{{ addUpdate.title }}"
               />
               <small
                 *ngIf="
@@ -26,6 +28,7 @@
               >
             </div>
 
+            <!-- description -->
             <div class="col-md-6 form-group mb-3">
               <label for="description">متن کوتاه</label>
               <input
@@ -69,7 +72,7 @@
                 >انتخاب نوع گروه ضروری است</small
               >
             </div>
-
+            <!-- icon -->
             <div class="col-md-6 form-group mb-3">
               <label for="iconPath">آیکون</label>
               <input
@@ -91,46 +94,28 @@
               >
             </div>
 
-            <div class="col-md-12 form-group mb-3 d-block" >
-              <button class="btn btn-primary" (click)="uploadFile(image)" >
-                آپلود عکس
-              </button>
-              <div class="row">
-                <div class="col-10 text-center">
-                  <img
-                    class=""
-                    [src]="productModel?.cardImagePath"
-                    [formControl]="addForm.controls['cardImagePath']"
-                    [(ngModel)]="addUpdate.cardImagePath"
-                  />
-                  <img-cropper
-                    [image]="image"
-                    [settings]="cropperSettings"
-                    [width]="cropperSettings.croppedWidth"
-                    [height]="cropperSettings.croppedHeight"
-                  ></img-cropper>
-
-                  <br />
-                  <img
-                    *ngIf="image?.cardImagePath"
-                    class="mt-3 mr-3"
-                    [src]="image?.cardImagePath"
-                    [width]="cropperSettings.croppedWidth"
-                    [height]="cropperSettings.croppedHeight"
-                  />
-                </div>
-              </div>
-
+            <!-- uploader image  -->
+            <div class="col-md-6 form-group mb-3">
+              <label for="iconPath">آیکون</label>
+              <input
+                type="text"
+                class="form-control form-control-rounded"
+                id="cardImagePath"
+                placeholder="متن کوتاه را وارد نمایید."
+                [formControl]="addForm.controls['cardImagePath']"
+                [(ngModel)]="addUpdate.cardImagePath"
+                value="{{ addUpdate.cardImagePath }}"
+              />
               <small
                 *ngIf="
                   addForm.controls['cardImagePath'].hasError('required') &&
                   addForm.controls['cardImagePath'].touched
                 "
                 class="mat-text-warn m-t-negative"
-                >انتخاب یک و آپلود ضروری است</small
+                >ورود عنوان ضروری است</small
               >
             </div>
-
+            <!-- is Active -->
             <div class="col-md-12 form-group mb-3">
               <label class="switch switch-primary mr-3">
                 <span>فعال/غیرفعال</span>
@@ -142,41 +127,35 @@
                 <span class="slider"></span>
               </label>
             </div>
-
-
-
-
+            <button
+              type="button"
+              class="btn btn-outline-dark btn-rounded"
+              (click)="modal.close(true)"
+              *ngIf="addUpdate.id !== 0"
+              [disabled]="!addForm.valid"
+              (click)="addOrUpdate(addUpdate)"
+              [routerLink]="'/prd/products-list'"
+            >
+              ویرایش
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-dark btn-rounded"
+              *ngIf="addUpdate.id === 0 "
+              [disabled]="!addForm.valid"
+              (click)="createProduct(addUpdate)"
+              [routerLink]="'/prd/products-list'"
+            >
+              ذخیره
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-dark btn-rounded"
+              [routerLink]="'/prd/products-list'"
+            >
+              انصراف
+            </button>
           </div>
-
-          <button
-            type="button"
-            class="btn btn-outline-dark btn-rounded"
-            (click)="modal.close(true)"
-            *ngIf="addUpdate.id !== 0"
-            [disabled]="!addForm.valid"
-            (click)="addOrUpdate(addUpdate)"
-            [routerLink]="'/prd/products-list'"
-
-          >
-            ویرایش
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-dark btn-rounded"
-            *ngIf="addUpdate.id === 0"
-            [disabled]="!addForm.valid"
-            (click)="addOrUpdate(addUpdate)"
-            [routerLink]="'/prd/products-list'"
-          >
-            ذخیره
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-dark btn-rounded"
-            [routerLink]="'/prd/products-list'"
-          >
-            انصراف
-          </button>
         </form>
       </div>
     </ng-template>

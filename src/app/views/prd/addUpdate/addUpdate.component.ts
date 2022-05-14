@@ -15,11 +15,13 @@ import { ProductService } from '../products-list/product.service';
   styleUrls: ['./addUpdate.component.scss'],
 })
 export class AddUpdateComponent implements OnInit {
-  productId: number = 0;
-  tableType: number = 6;
-  product: ProductModel = new ProductModel();
-  addUpdate: ProductModel;
-  addForm: FormGroup;
+  productId: number =  parseInt(
+    this._route.snapshot.paramMap.get('productId') ?? '0'
+  );
+;
+  addUpdate: ProductModel ;
+   addForm: FormGroup;
+   tableType: number = 6;
   cropperSettings: CropperSettings;
   image: any;
 
@@ -31,17 +33,38 @@ export class AddUpdateComponent implements OnInit {
     private _productsService: ProductService,
     private _fileUploaderService: FileUploaderService
   ) {
-    this.productId = parseInt(
-      this._route.snapshot.paramMap.get('productId') ?? '0'
-    );
 
+    if(this.productId === 0) {
+
+    this.addUpdate = new ProductModel();
+    this.addUpdate.id = this.productId
+    }
+
+  }
+
+  ngOnInit(): void {
+
+    console.log(this.productId );
+
+    this.getProductById();
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
-      description: [null, Validators.compose([Validators.required])],
-      cardImagePath: [null],
-      iconPath: [null],
-      type: [null, Validators.compose([Validators.required])],
+      description:[null , Validators.compose([Validators.required])],
+      orderID:[0],
+      isActive:[null , Validators.compose ([Validators.required])],
+      cardImagePath:[null],
+      iconPath:[null],
+      type:[null],
+      id:[this.productId , null ]
     });
+    // id:number;
+    // description:string;
+    // orderID:number;
+    // isActive:boolean;
+    // cardImagePath:string;
+    // iconPath:number;
+    // type:string;
+
 
     this.cropperSettings = new CropperSettings();
     this.cropperSettings.width = 500;
@@ -53,17 +76,20 @@ export class AddUpdateComponent implements OnInit {
     this.cropperSettings.cropperDrawSettings.lineDash = true;
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
     this.image = {};
-  }
 
-  ngOnInit(): void {
-    this.getProductById();
+
+
   }
   async getProductById() {
+    if(this.productId !== 0)
     await this._productsService.getOneByID(this.productId, 'Product').subscribe(
       (res: Result<ProductModel>) => {
         this.addUpdate = res.data;
         //  this.page.totalElements = res.data.length;
-      },
+
+
+      } ,
+
       (_error) => {
         this.toastr.error(
           'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
@@ -74,11 +100,17 @@ export class AddUpdateComponent implements OnInit {
           }
         );
       }
+
     );
+
+
+
   }
 
+
+
   async uploadFile(image) {
-    this._fileUploaderService.uploadFile(image.image, 'articles').subscribe(
+    this._fileUploaderService.uploadFile(image.image, 'Product').subscribe(
       (res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.cardImagePath = res.data[0];
@@ -106,21 +138,22 @@ export class AddUpdateComponent implements OnInit {
     );
   }
 
+  createProduct(row:ProductModel){
+    if ( row.id === 0) {
+      debugger
 
-
-
-  async addOrUpdate(row: ProductModel) {
-    debugger;
-    if (row.id === 0) {
-      await this._productsService
-        .create(row, 'product')
+       this._productsService
+        .create(row, 'Product')
         .toPromise()
         .then(
           (data) => {
+            row.id = 0
             if (data.success) {
               this.toastr.success(data.message, null, {
+
                 closeButton: true,
                 positionClass: 'toast-top-left',
+
               });
             } else {
               this.toastr.error(data.message, null, {
@@ -136,8 +169,13 @@ export class AddUpdateComponent implements OnInit {
             });
           }
         );
-    } else {
-      await this._productsService
+    }
+  }
+
+   addOrUpdate(row:ProductModel) {
+
+     if ( row.id !== 0)
+       this._productsService
         .update(row.id, row, 'product')
         .toPromise()
         .then(
@@ -161,8 +199,17 @@ export class AddUpdateComponent implements OnInit {
             });
           }
         );
-    }
+
 
     this.getProductById();
   }
+
+
+  selectType($event:any){
+    debugger
+    if ($event != undefined) {
+      this.addUpdate.type =parseInt($event);
+    }
+  }
+
 }
