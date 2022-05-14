@@ -28,8 +28,12 @@ export class ProductService  extends BaseService<ProductModel, 0> {
       }),
     };
     return this._http.get<Result<ProductModel>>(this._base + "/" + route+"/"+productId
-    
+
     ,_options);
   }
+
+
+
+
 }
 

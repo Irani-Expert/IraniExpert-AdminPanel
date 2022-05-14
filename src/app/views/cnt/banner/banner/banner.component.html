@@ -352,18 +352,20 @@
           class="col-12"
           *ngIf="addUpdate.fileType === 0 && addUpdate.fileType !== null"
         >
-          <div class="col-md-6 form-group mb-3">
+          <div class="row form-group mb-3">
             <img
               *ngIf="addUpdate?.cardImagePath"
               [src]="bannerModel?.filePath"
               [formControl]="addForm.controls['filePath']"
               [(ngModel)]="addUpdate.filePath"
+              class="col-md-6"
             />
             <img-cropper
               [image]="image"
               [settings]="cropperSettings"
               [width]="cropperSettings.croppedWidth"
               [height]="cropperSettings.croppedHeight"
+              class="col-md-6"
             ></img-cropper
             ><br />
             <img
