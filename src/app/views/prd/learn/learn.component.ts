@@ -35,11 +35,10 @@ export class LearnComponent implements OnInit {
   ngOnInit(): void {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
-
       title: [null, Validators.compose([Validators.required,Validators.maxLength(50)])],
       orderID: [null, Validators.compose([Validators.required])],
       description: [null],
-      isActive: [null],
+      isActive: [true],
       fileUrl: [null],
       videoUrl: [null],
       tableType:[6],

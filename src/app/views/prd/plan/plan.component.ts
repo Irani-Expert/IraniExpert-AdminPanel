@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
@@ -21,7 +20,6 @@ export class PlanComponent implements OnInit {
     private modalService: NgbModal,
     private _planservice: PlanService,
     private toastr: ToastrService,
-    private activatedRoute: ActivatedRoute
   ) {
 
   }
@@ -36,14 +34,14 @@ export class PlanComponent implements OnInit {
   }
 
   async getPlanListByProductId(pageNumber: number, seedNumber: number) {
-    await this._planservice
+    this._planservice
       .getPlanByProductId(pageNumber, seedNumber, 'ID', 'Plan', this.productId)
       .subscribe(
         (res: Result<PlanModel[]>) => {
           this.rows = res.data;
           //  this.page.totalElements = res.data.length;
         },
-        (error) => {
+        (_error) => {
           this.toastr.error(
             'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
             null,
@@ -56,7 +54,7 @@ export class PlanComponent implements OnInit {
       );
   }
 
-  open(content) {
+  open(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
@@ -69,11 +67,11 @@ export class PlanComponent implements OnInit {
       );
   }
 
-  deletePlan(id, modal) {
+  deletePlan(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
-        (result) => {
+        (_result) => {
           this._planservice
             .delete(id, 'plan')
             .toPromise()
