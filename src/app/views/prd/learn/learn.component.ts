@@ -76,7 +76,7 @@ export class LearnComponent implements OnInit {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
-        (result) => {
+        (_result) => {
           this._learnService.delete(id,"learn").toPromise().then((res) => {
             if(res.success){
             
@@ -118,7 +118,6 @@ export class LearnComponent implements OnInit {
   }
   //Add OR Edit!!!!!!!!!!!!!!!
   addorEdit(content: any, row: LearnModel) {
-
     if (row === undefined) {
       row = new LearnModel();
       row.id = 0;
@@ -146,7 +145,14 @@ export class LearnComponent implements OnInit {
   }
 
   async addOrUpdate(row: LearnModel) {
-   
+    if ((row.fileUrl === null || row.fileUrl === undefined || row.fileUrl === "")
+    || (row.videoUrl === null || row.videoUrl === undefined || row.videoUrl === "")
+    ) {
+      return  this.toastr.error("ادرس فایل یا آدرس ویدئو اجباری است.", null, {
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      });
+    }
     if (row.id === 0) {
       await this._learnService
         .create(row, 'learn')
@@ -165,7 +171,7 @@ export class LearnComponent implements OnInit {
               });
             }
           },
-          (error) => {
+          (_error) => {
             this.toastr.error('خطا مجدد تلاش فرمایید', null, {
               closeButton: true,
               positionClass: 'toast-top-left',
