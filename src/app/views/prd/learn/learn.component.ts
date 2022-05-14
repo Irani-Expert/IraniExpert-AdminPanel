@@ -38,7 +38,7 @@ export class LearnComponent implements OnInit {
       title: [null, Validators.compose([Validators.required,Validators.maxLength(50)])],
       orderID: [null, Validators.compose([Validators.required])],
       description: [null],
-      isActive: [true],
+      isActive: [null],
       fileUrl: [null],
       videoUrl: [null],
       tableType:[6],
