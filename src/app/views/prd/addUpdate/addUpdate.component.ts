@@ -23,7 +23,9 @@ export class AddUpdateComponent implements OnInit {
    addForm: FormGroup;
    tableType: number = 6;
   cropperSettings: CropperSettings;
+  cropperSettingsIcon: CropperSettings;
   image: any;
+  icon : any ;
 
   constructor(
     private _route: ActivatedRoute,
@@ -39,6 +41,9 @@ export class AddUpdateComponent implements OnInit {
     this.addUpdate = new ProductModel();
     this.addUpdate.id = this.productId
     }
+    this.image = {};
+    this.icon = {};
+
 
   }
 
@@ -67,17 +72,25 @@ export class AddUpdateComponent implements OnInit {
 
 
     this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 500;
+    this.cropperSettings.width = 400;
     this.cropperSettings.height = 300;
     this.cropperSettings.canvasHeight = 400;
     this.cropperSettings.canvasWidth = 400;
-    this.cropperSettings.croppedHeight = 100;
-    this.cropperSettings.croppedWidth = 100;
+    this.cropperSettings.croppedHeight = 400;
+    this.cropperSettings.croppedWidth = 400;
     this.cropperSettings.cropperDrawSettings.lineDash = true;
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
-    this.image = {};
 
 
+    this.cropperSettingsIcon = new CropperSettings();
+    this.cropperSettingsIcon.width = 80;
+    this.cropperSettingsIcon.height = 80;
+    this.cropperSettingsIcon.canvasHeight = 80;
+    this.cropperSettingsIcon.canvasWidth = 80;
+    this.cropperSettingsIcon.croppedHeight = 80;
+    this.cropperSettingsIcon.croppedWidth = 80;
+    this.cropperSettingsIcon.cropperDrawSettings.lineDash = true;
+    this.cropperSettingsIcon.cropperDrawSettings.dragIconStrokeWidth = 0;
 
   }
   async getProductById() {
@@ -109,7 +122,7 @@ export class AddUpdateComponent implements OnInit {
 
 
 
-  async uploadFile(image) {
+   uploadFile(image) {
     this._fileUploaderService.uploadFile(image.image, 'Product').subscribe(
       (res: Result<string[]>) => {
         if (res.success) {

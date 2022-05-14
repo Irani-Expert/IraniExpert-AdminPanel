@@ -3,13 +3,13 @@
     <a ngbNavLink>ایجاد یا ویرایش</a>
     <ng-template ngbNavContent>
       <div>
-        <form [formGroup]="addForm" >
+        <form [formGroup]="addForm">
           <div class="row list-item">
             <!-- ID -->
 
             <!-- title -->
             <div class="col-md-6 form-group mb-3">
-              <label for="title">عنوان را وارد کنید</label>
+              <label for="title">عنوان </label>
               <input
                 type="text"
                 class="form-control form-control-rounded"
@@ -30,12 +30,12 @@
 
             <!-- description -->
             <div class="col-md-6 form-group mb-3">
-              <label for="description">متن کوتاه</label>
+              <label for="description"> توضیحات</label>
               <input
                 type="text"
                 class="form-control form-control-rounded"
                 id="description"
-                placeholder="متن کوتاه را وارد نمایید."
+                placeholder="توضیحات را وارد نمایید."
                 [formControl]="addForm.controls['description']"
                 [(ngModel)]="addUpdate.description"
                 value="{{ addUpdate.description }}"
@@ -46,13 +46,13 @@
                   addForm.controls['description'].touched
                 "
                 class="mat-text-warn m-t-negative"
-                >ورود عنوان ضروری است</small
+                >ورود توضیحات ضروری است</small
               >
             </div>
 
             <!-- type  -->
             <div class="col-md-6 form-group mb-3">
-              <label for="type">جایگاه را مشخص کنید</label>
+              <label for="type">نوع </label>
               <select
                 [formControl]="addForm.controls['type']"
                 class="form-control form-control-rounded"
@@ -73,7 +73,7 @@
               >
             </div>
             <!-- icon -->
-            <div class="col-md-6 form-group mb-3">
+            <!-- <div class="col-md-6 form-group mb-3">
               <label for="iconPath">آیکون</label>
               <input
                 type="text"
@@ -92,11 +92,49 @@
                 class="mat-text-warn m-t-negative"
                 >ورود عنوان ضروری است</small
               >
+            </div> -->
+
+            <div
+              class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-12 align-self-center"
+            >
+              <label for="iconPath " class="col-md-12"
+                >آیکون مورد نظر خود را آپلود کنید</label
+              >
+              <br />
+
+              <!-- show image from addupdate.filtePath -->
+              <img
+                *ngIf="icon?.icon"
+                class="col-md-6 mt-5"
+                [src]="iconPath?.iconPath"
+                [width]="cropperSettingsIcon.croppedWidth"
+                [height]="cropperSettingsIcon.croppedHeight"
+              />
+              <img-cropper
+                class="col-md-6"
+                [icon]="iconPath"
+                id="iconPath"
+                [settings]="cropperSettingsIcon"
+                [src]="productModel?.iconPath"
+                [formControl]="addForm.controls['iconPath']"
+                [(ngModel)]="addUpdate.iconPath"
+              ></img-cropper>
+              <br />
+              <div class="col-12">
+                <button
+                  type="button"
+                  class="btn btn-rounded btn-outline-dark"
+                  (click)="uploadFile(image)"
+                >
+                  آپلود کن
+                </button>
+              </div>
             </div>
 
             <!-- uploader image  -->
-            <div class="col-md-6 form-group mb-3">
-              <label for="iconPath">آیکون</label>
+
+            <!-- <div class="col-md-6 form-group mb-3">
+              <label for="iconPath">عکس</label>
               <input
                 type="text"
                 class="form-control form-control-rounded"
@@ -114,9 +152,44 @@
                 class="mat-text-warn m-t-negative"
                 >ورود عنوان ضروری است</small
               >
+            </div> -->
+            <label class="col-md-12" for="cardImagePath "
+              >عکس مورد نظر خود را آپلود کنید</label
+            >
+            <div class="row align-items-center">
+              <img-cropper
+                class="col-md-4"
+                [image]="image"
+                [settings]="cropperSettings"
+                [src]="productModel?.cardImagePath"
+                [formControl]="addForm.controls['cardImagePath']"
+                id="cardImagePath"
+                [(ngModel)]="addUpdate.cardImagePath"
+              ></img-cropper>
+
+              <!-- show image from addupdate.filtePath -->
+              <img
+                *ngIf="image?.image"
+                class="col-md-8 mt-5"
+                [src]="image?.image"
+                [width]="cropperSettings.croppedWidth"
+                [height]="cropperSettings.croppedHeight"
+              />
+              <br />
+              <div class="col-12">
+                <button
+                  type="button"
+                  class="btn btn-rounded btn-outline-dark"
+                  (click)="uploadFile(image)"
+                >
+                  آپلود کن
+                </button>
+              </div>
             </div>
+
             <!-- is Active -->
-            <div class="col-md-12 form-group mb-3">
+
+            <div class="col-md-12 form-group mb-3 mt-2">
               <label class="switch switch-primary mr-3">
                 <span>فعال/غیرفعال</span>
                 <input
@@ -141,7 +214,7 @@
             <button
               type="button"
               class="btn btn-outline-dark btn-rounded"
-              *ngIf="addUpdate.id === 0 "
+              *ngIf="addUpdate.id === 0"
               [disabled]="!addForm.valid"
               (click)="createProduct(addUpdate)"
               [routerLink]="'/prd/products-list'"
@@ -150,7 +223,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-outline-dark btn-rounded"
+              class="btn btn-outline-dark btn-rounded ml-2"
               [routerLink]="'/prd/products-list'"
             >
               انصراف
