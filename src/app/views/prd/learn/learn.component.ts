@@ -21,6 +21,7 @@ export class LearnComponent implements OnInit {
   pageIndex = 1;
   products: any[] = [];
   pageSize = 12;
+  rowId: number;
 
   constructor(
     public _learnService : LearnService,
@@ -34,17 +35,13 @@ export class LearnComponent implements OnInit {
   ngOnInit(): void {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
-      id: [null, Validators.compose([Validators.required,Validators.maxLength(100)])],
-      title: [null, Validators.compose([Validators.required,Validators.maxLength(100)])],
+      title: [null, Validators.compose([Validators.required,Validators.maxLength(50)])],
       orderID: [null, Validators.compose([Validators.required])],
-      productId: [this.productId],
-      product: [null],
-      descreption: [null],
-      tableType : [6],
-      isActive: [null, Validators.compose([Validators.required])],
-      url: [null, Validators.compose([Validators.required])],
+      description: [null],
+      isActive: [true],
       fileUrl: [null],
       videoUrl: [null],
+      tableType:[6],
       rowID: [this.productId],
     });
   }
@@ -55,14 +52,14 @@ export class LearnComponent implements OnInit {
     this.getLearnByProductId(this.pageIndex , this.pageSize);
   }
   async getLearnByProductId(pageNumber: number, seedNumber: number) {
-    await this._learnService
-      .getLearnByProductId(pageNumber, seedNumber, 'ID', 'Learn' , this.productId)
+    this._learnService
+      .getLearnByProductId(pageNumber, seedNumber, 'ID', 'Learn', this.productId)
       .subscribe(
         (res: Result<LearnModel[]>) => {
           this.rows = res.data;
           //  this.page.totalElements = res.data.length;
         },
-        (error) => {
+        (_error) => {
           this.toastr.error(
             'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
             null,
@@ -82,14 +79,14 @@ export class LearnComponent implements OnInit {
         (result) => {
           this._learnService.delete(id,"learn").toPromise().then((res) => {
             if(res.success){
-              debugger
+            
               this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
                 timeOut: 3000,
               positionClass: 'toast-top-left',
 
               });
             }else{
-              debugger
+
 
               this.toastr.error('خطا در حذف',res.message, {
                 timeOut: 3000,
@@ -107,10 +104,10 @@ export class LearnComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           });
-          debugger
+
         },
         (error) => {
-          debugger
+
           this.toastr.error('خطا در حذف',error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -121,11 +118,15 @@ export class LearnComponent implements OnInit {
   }
   //Add OR Edit!!!!!!!!!!!!!!!
   addorEdit(content: any, row: LearnModel) {
-    debugger;
+
     if (row === undefined) {
       row = new LearnModel();
       row.id = 0;
       row.tableType = null;
+      row.productId = this.productId;
+      row.product = null;
+      row.videoUrl = null;
+      row.fileUrl = null;
     }
     this.addUpdate = row;
     this.modalService
@@ -145,15 +146,7 @@ export class LearnComponent implements OnInit {
   }
 
   async addOrUpdate(row: LearnModel) {
-    debugger;
-    if ((row.fileUrl === null || row.fileUrl === undefined || row.fileUrl === "")
-    || (row.videoUrl === null || row.videoUrl === undefined || row.videoUrl === "")
-    ) {
-      return  this.toastr.error("ادرس فایل یا آدرس ویدئو اجباری است.", null, {
-        closeButton: true,
-        positionClass: 'toast-top-left',
-      });
-    }
+   
     if (row.id === 0) {
       await this._learnService
         .create(row, 'learn')
@@ -207,5 +200,10 @@ export class LearnComponent implements OnInit {
     }
 
     this.getLearnByProductId(this.pageIndex, this.pageIndex);
+  }
+  selectType($event:any){
+    if ($event != undefined) {
+      this.addUpdate.orderID =parseInt($event);
+    }
   }
 }

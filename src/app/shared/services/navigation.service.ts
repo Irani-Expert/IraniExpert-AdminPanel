@@ -65,23 +65,23 @@ export class NavigationService {
     {
       name: 'مقالات',
       type: 'link',
-      icon: 'i-File-Clipboard-File--Text',
+      icon: 'i-File-Edit',
       state: '/cnt/article'
     },  {
       name: 'بنرها',
       type: 'link',
-      icon: 'i-File-Clipboard-File--Text',
+      icon: 'i-Tag-2',
       state: '/cnt/banner'
     },  {
       name: 'گروه ها',
       type: 'link',
-      icon: 'i-File-Clipboard-File--Text',
+      icon: 'i-Double-Tap',
       state: '/bas/group'
     },
    {
     name: 'سفارشات',
     type: 'link',
-    icon: 'i-File-Clipboard-File--Text',
+    icon: 'i-File-Horizontal-Text',
     state: '/bsk/orders'
   },
     // {

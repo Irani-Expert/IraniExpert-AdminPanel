@@ -1,5 +1,3 @@
-
-
 <div class="separator-breadcrumb border-top"></div>
 <div class="row mb-4">
   <!-- GRID AND LIST BUTTONS -->
@@ -12,7 +10,7 @@
     <div class="card card-profile-1 mb-4">
       <div class="card-body text-center">
         <div class="avatar box-shadow-2 mb-2">
-          <img src="./assets/images/faces/16.jpg" alt="icon" />
+          <img src="./assets/images/faces/12.jpg" alt="icon" />
         </div>
         <span class="badge badge-pill badge-success text-end p-2 mb-1 mr-1"
           >Success</span
@@ -22,7 +20,7 @@
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
           <ngb-panel>
             <ng-template ngbPanelTitle>
-              <h6 class="text-center" >{{item.price}}</h6>
+              <h6 class="text-center">{{ item.price }}</h6>
             </ng-template>
             <ng-template ngbPanelContent>
               <span class="text-justify">
@@ -46,46 +44,48 @@
     </div>
   </div>
 
-
-<ng-template #modalLong let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Modal With large content</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-      blanditiis ipsam voluptate eveniet. Ipsum, vero similique? Lorem ipsum
-      dolor sit amet consectetur adipisicing elit. Aspernatur blanditiis ipsam
-      voluptate eveniet. Ipsum, vero similique?
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-      blanditiis ipsam voluptate eveniet. Ipsum, vero similique? Lorem ipsum
-      dolor sit amet consectetur adipisicing elit. Aspernatur blanditiis ipsam
-      voluptate eveniet. Ipsum, vero similique?
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-      blanditiis ipsam voluptate eveniet. Ipsum, vero similique? Lorem ipsum
-      dolor sit amet consectetur adipisicing elit. Aspernatur blanditiis ipsam
-      voluptate eveniet. Ipsum, vero similique?
-    </p>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-dark btn-rounded"
-      (click)="modal.close('ok')"
-    >
-      Ok
-    </button>
-  </div>
-</ng-template>
+  <ng-template #modalLong let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        Modal With large content
+      </h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
+        blanditiis ipsam voluptate eveniet. Ipsum, vero similique? Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Aspernatur blanditiis ipsam
+        voluptate eveniet. Ipsum, vero similique?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
+        blanditiis ipsam voluptate eveniet. Ipsum, vero similique? Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Aspernatur blanditiis ipsam
+        voluptate eveniet. Ipsum, vero similique?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
+        blanditiis ipsam voluptate eveniet. Ipsum, vero similique? Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Aspernatur blanditiis ipsam
+        voluptate eveniet. Ipsum, vero similique?
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="modal.close('ok')"
+      >
+        Ok
+      </button>
+    </div>
+  </ng-template>
+</div>
