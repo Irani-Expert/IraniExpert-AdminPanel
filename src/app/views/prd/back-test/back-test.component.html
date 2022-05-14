@@ -9,7 +9,7 @@
 
 <div class="row  list-grid">
   <div
-    class="list-item  ng-trigger ng-trigger-animate ng-star-inserted col-md-3"
+    class="list-item  ng-trigger ng-trigger-animate ng-star-inserted col-xl-4 col-lg-4  col-md-6 col-sm-12 col-12"
     *ngFor="let item of rows"
   >
     <div class="card o-hidden mb-4 d-flex  flex-column">
@@ -27,9 +27,9 @@
           <a href="" class="w-40 w-sm-100 "
             ><div class="item-title "></div
           ></a>
-          <p class="m-0 text-muted text-small w-15 w-sm-100 ">
+          <h5 class="m-0 text-muted text-center  w-15 w-sm-100 ">
             {{ item.title }}
-          </p>
+          </h5>
 
           <p
             class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges "
@@ -37,35 +37,31 @@
             <span class=" badge badge-info">بک تست</span>
           </p>
 
-          <div class="row text-center mt-2">
-            <div class="col-6">
-              <button class="btn btn-primary"  >
+          <div class=" col-md-12 mt-3 p-0  ">
+          <div class="row text-center m-0 p-0">
+            <div class="col-6 p-1">
+              <button class="btn btn-primary col-12 p-1" (click)="showvideo(item ,showvideo )" >
                 نمایش ویدیو
               </button>
-            </div>
-
-            <div class="col-6">
-              <button class="btn">
+              </div>
+              <div class="col-6 p-1">
+              <button class="btn col-12 p-1">
                 دانلود فایل PDF
               </button>
-            </div>
-          </div>
-
-
-          <div class="row text-center mt-2">
-
-            <div class="col-6">
-              <button class="btn "  >
+              </div>
+              <div class="col-6 p-1">
+              <button class="btn col-12 p-1" (click)="addorEdit(addUpdateModal, item)" >
                 ویرایش
               </button>
-            </div>
-
-            <div class="col-6">
-              <button class="btn">
+              </div>
+          <div class="col-6 p-1">
+              <button class="btn col-12 p-1" (click)="deleteBackTest(item.id, deleteConfirmModal)">
                  حذف
               </button>
             </div>
-          </div>
+            </div>
+        </div>
+
         </div>
       </div>
     </div>
@@ -256,6 +252,88 @@
       [disabled]="!addForm.valid"
     >
       ایجاد
+    </button>
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+<ng-template #deleteConfirmModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">حذف بک تست </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از حذف مطمئنید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
+    </button>
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+<ng-template #showvideo let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">  نمایش بک تست {{item.title}} </h4>
+
+  </div>
+  <div class="modal-body">
+    <video src="" id="backtestvideo" controls loop muted autoplay>
+
+    </video>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
     </button>
   </div>
 </ng-template>

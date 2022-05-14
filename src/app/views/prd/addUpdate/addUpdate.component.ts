@@ -217,11 +217,9 @@ export class AddUpdateComponent implements OnInit {
     this.getProductById();
   }
 
-
-  selectType($event:any){
-    debugger
+  selectType($event: any) {
     if ($event != undefined) {
-      this.addUpdate.type =parseInt($event);
+      this.addUpdate.type = parseInt($event);
     }
   }
 

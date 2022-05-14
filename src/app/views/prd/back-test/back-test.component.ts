@@ -176,6 +176,11 @@ export class BackTestComponent implements OnInit {
       );
   }
 
+
+  showvideo(content:BackTestModel , modal ){
+
+  }
+
   addorEdit(content, row: BackTestModel) {
     debugger;
     if (row === undefined) {
