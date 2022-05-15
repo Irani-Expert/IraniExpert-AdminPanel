@@ -1,13 +1,15 @@
-<div class="separator-breadcrumb border-top"></div>
 <button
   type="button"
-  class="btn btn-primary m-1"
+  class="btn btn-create btn-primary m-1"
   (click)="addorEdit(addUpdateModal, undefined)"
 >
   ایجاد
 </button>
 
-<div class="row list-horizontal">
+<div class="separator-breadcrumb border-top"></div>
+
+
+<div class="row list-horizontal" >
   <div
     class="list-item"
     [ngClass]="{
@@ -32,11 +34,12 @@
         <div class="list-thumb">
           <!-- TUMBNAIL -->
         </div>
-        <div class="align-self-center">ID</div>
+        <div class="align-self-center" *ngIf="rows.length > 0 && rows !== undefined &&rows !== null">ID</div>
         <div
           id="myHeader"
           class="card-body align-self-center d-flex align-items-lg-center th-list row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+          *ngIf="rows.length > 0 && rows !== undefined &&rows !== null"
         >
           <!-- OTHER DATA -->
           <div
@@ -199,10 +202,10 @@
   </div>
 </div>
 
-<div *ngIf="rows?.length == 0" class="row text-center">
+<div *ngIf="rows?.length == 0" class="row text-center ">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
-    class="gif-fluid col-12"
+    class="gif-fluid"
     alt=""
   />
 </div>

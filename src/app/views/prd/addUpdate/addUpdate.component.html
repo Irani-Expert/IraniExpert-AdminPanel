@@ -97,30 +97,24 @@
             <div
               class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-12 align-self-center"
             >
-              <label for="iconPath " class="col-md-12"
-                >آیکون مورد نظر خود را آپلود کنید</label
-              >
-              <br />
+
+
 
               <!-- show image from addupdate.filtePath -->
-              <img
-                *ngIf="icon?.icon"
-                class="col-md-6 mt-5"
-                [src]="iconPath?.iconPath"
-                [width]="cropperSettingsIcon.croppedWidth"
-                [height]="cropperSettingsIcon.croppedHeight"
-              />
+              <div class="col-12">
+                <label for="iconPath " class="col-md-6"
+                >آیکون مورد نظر خود را آپلود کنید</label
+              >
               <img-cropper
-                class="col-md-6"
+                class="col-md-12 text-center"
                 [icon]="iconPath"
                 id="iconPath"
                 [settings]="cropperSettingsIcon"
-                [src]="productModel?.iconPath"
                 [formControl]="addForm.controls['iconPath']"
                 [(ngModel)]="addUpdate.iconPath"
               ></img-cropper>
-              <br />
-              <div class="col-12">
+
+
                 <button
                   type="button"
                   class="btn btn-rounded btn-outline-dark"

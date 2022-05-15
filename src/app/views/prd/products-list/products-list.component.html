@@ -1,13 +1,18 @@
+
+<!-- <button
+
+class="btn btn-primary m-1"
+>
+ایجاد
+</button> -->
+<button type="button"  [routerLink]="'/prd/addUpdate'" class="custom-btn btn-6 mb-4 "><span>ایجاد</span></button>
+
+
+
+
+
 <div class="separator-breadcrumb border-top"></div>
 
-<button
-  _ngcontent-tco-c175=""
-  type="button"
-  class="btn btn-primary m-1"
-  [routerLink]="'/prd/addUpdate'"
->
-  ایجاد
-</button>
 <!-- DATA LIST -->
 <div class="row list-horizontal">
   <div
@@ -34,11 +39,12 @@
         <div class="list-thumb">
           <!-- TUMBNAIL -->
         </div>
-        <div class="align-self-center">ID</div>
+        <div class="align-self-center" *ngIf="rows.length > 0 && rows !== undefined &&rows !== null">ID</div>
         <div
           id="myHeader"
           class="card-body align-self-center d-flex align-items-lg-center th-list row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+          *ngIf="rows.length > 0 && rows !== undefined &&rows !== null"
         >
           <!-- OTHER DATA -->
           <div
@@ -120,7 +126,9 @@
           <!-- OTHER DATA -->
           <a href="" class="w-40 col w-sm-100">
             <div class="item-title">
-              <img [src]="item.cardImagePath" class="img-card" alt="" />
+              <!-- <img *ngIf="item.cardImagePath"[src]="item.cardImagePath" class="img-card" alt="" /> -->
+              <img  src="../../../../assets/images/photo-wide-1.jpg" class="img-card" alt="" />
+
             </div>
           </a>
           <p class="m-0 text-muted text-small w-15 w-sm-100 col">
@@ -155,7 +163,7 @@
                   [routerLink]="'/prd/addUpdate/' + item.id"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                 >
-                  <i class="text-16 text-primary"> ویرایش </i>
+                  <i class="text-16 text-primary"> جزئیات </i>
                 </button>
               </p>
               <p
@@ -191,8 +199,7 @@
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-warning col m-1"
         >
-          ویرایش
-        </button>
+          جزئیات    </button>
       </div>
     </div>
   </div>
