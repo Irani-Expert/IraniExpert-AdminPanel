@@ -35,9 +35,9 @@ export class LearnComponent implements OnInit {
   ngOnInit(): void {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
-      title: [null, Validators.compose([Validators.required,Validators.maxLength(50)])],
+      title: [null, Validators.compose([Validators.required,Validators.maxLength(50),Validators.minLength(2)])],
       orderID: [null, Validators.compose([Validators.required])],
-      description: [null],
+      description: [null , Validators.compose([Validators.maxLength(500)])],
       isActive: [null],
       fileUrl: [null],
       videoUrl: [null],
@@ -79,7 +79,7 @@ export class LearnComponent implements OnInit {
         (_result) => {
           this._learnService.delete(id,"learn").toPromise().then((res) => {
             if(res.success){
-            
+
               this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
                 timeOut: 3000,
               positionClass: 'toast-top-left',
@@ -148,7 +148,7 @@ export class LearnComponent implements OnInit {
     if ((row.fileUrl === null || row.fileUrl === undefined || row.fileUrl === "")
     || (row.videoUrl === null || row.videoUrl === undefined || row.videoUrl === "")
     ) {
-      return  this.toastr.error("ادرس فایل یا آدرس ویدئو اجباری است.", null, {
+        this.toastr.error("ادرس فایل یا آدرس ویدئو اجباری است.", null, {
         closeButton: true,
         positionClass: 'toast-top-left',
       });
