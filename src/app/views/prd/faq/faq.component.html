@@ -59,7 +59,6 @@
 </form>
 
 <ngb-accordion
-  class="text-start"
   #acc="ngbAccordion"
   [closeOthers]="true"
   [destroyOnHide]="false"
@@ -68,10 +67,10 @@
   <ngb-panel class="ngb-panel" title="{{ item.question }}">
     <ng-template ngbPanelContent>
       <div class="row">
-        <div class="col-12 text-center">
+        <div class="col-10 text-start mr-5">
           {{ item.answer }}
         </div>
-        <div class="col-12 text-center align-items-center">
+        <div class="col-10 text-start">
           <button (click)="addUpdate = item" class="btn btn-info mt-4">
             ویرایش
           </button>

@@ -44,6 +44,7 @@ export class LearnComponent implements OnInit {
       tableType:[6],
       rowID: [this.productId],
     });
+  
   }
 
   setPage(pageInfo:number) {
@@ -145,14 +146,6 @@ export class LearnComponent implements OnInit {
   }
 
   async addOrUpdate(row: LearnModel) {
-    if ((row.fileUrl === null || row.fileUrl === undefined || row.fileUrl === "")
-    || (row.videoUrl === null || row.videoUrl === undefined || row.videoUrl === "")
-    ) {
-        this.toastr.error("ادرس فایل یا آدرس ویدئو اجباری است.", null, {
-        closeButton: true,
-        positionClass: 'toast-top-left',
-      });
-    }
     if (row.id === 0) {
       await this._learnService
         .create(row, 'learn')
