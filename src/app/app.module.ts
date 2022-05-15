@@ -6,17 +6,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { AuthService } from './shared/services/auth.service';
 import { GlobalService } from './shared/services/globalService';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
-import { AuthGaurd } from './shared/services/auth.gaurd';
+import { JwtInterceptor } from './shared/services/auth/jwt.interceptor';
+import { ErrorInterceptor } from './shared/services/auth/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,10 @@ import { AuthGaurd } from './shared/services/auth.gaurd';
       NgxSpinnerModule,
       SelectDropDownModule
   ],
-  providers: [ AuthService, AuthGaurd,GlobalService],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    GlobalService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]
 })

@@ -4,7 +4,6 @@ import { ActivatedRoute, ResolveEnd, ResolveStart, RouteConfigLoadEnd, RouteConf
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment.prod';
-import { AuthService } from 'src/app/shared/services/auth.service';
 
 
 @Component({
@@ -19,7 +18,6 @@ export class SignupComponent implements OnInit {
   public form: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private auth: AuthService,
     private router: Router
 ) { }
 
