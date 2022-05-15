@@ -129,7 +129,7 @@ addorEdit(content: any, row: PlanModel) {
   }
   this.addUpdate = row;
   this.modalService
-    .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
+    .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
     .result.then(
       (result: boolean) => {
         if (result != undefined) {
