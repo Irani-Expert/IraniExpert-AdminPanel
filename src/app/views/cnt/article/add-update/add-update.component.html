@@ -84,23 +84,25 @@
           >توضیحات ضروری است</small
         >
       </div>
-      <div class="col-md-6 form-group mb-3">
+      <div class="col-md-12 form-group mb-3">
         <div class="row">
+
           <img-cropper
-            class="col-12"
+          class="col-4 text-start d-inline-block"
             [image]="image"
             [settings]="cropperSettings"
           ></img-cropper>
 
           <!-- show image from addupdate.filtePath -->
           <img
+          class="col-8 mt-5"
             *ngIf="image?.image"
-            class="col-2"
             [src]="image?.image"
             [width]="cropperSettings.croppedWidth"
             [height]="cropperSettings.croppedHeight"
           />
-          <br />
+        </div>
+
           <div class="col-12 mt-2">
             <button
               type="button"
@@ -109,7 +111,7 @@
             >
               آپلود کن
             </button>
-          </div>
+
         </div>
       </div>
 

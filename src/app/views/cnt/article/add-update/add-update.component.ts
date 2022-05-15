@@ -56,9 +56,9 @@ export class AddUpdateComponent implements OnInit {
     this.cropperSettings.width = 500;
     this.cropperSettings.height = 300;
     this.cropperSettings.canvasHeight = 400;
-    this.cropperSettings.canvasWidth = 400;
-    this.cropperSettings.croppedHeight = 100;
-    this.cropperSettings.croppedWidth = 100;
+    this.cropperSettings.canvasWidth = 300;
+    this.cropperSettings.croppedHeight = 400;
+    this.cropperSettings.croppedWidth = 300;
     this.cropperSettings.cropperDrawSettings.lineDash = true;
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
     this.image = {};

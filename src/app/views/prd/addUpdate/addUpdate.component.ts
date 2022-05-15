@@ -40,6 +40,7 @@ export class AddUpdateComponent implements OnInit {
 
     this.addUpdate = new ProductModel();
     this.addUpdate.id = this.productId
+    this.addUpdate.isActive = false
     }
     this.image = {};
     this.icon = {};
@@ -85,10 +86,11 @@ export class AddUpdateComponent implements OnInit {
     this.cropperSettingsIcon = new CropperSettings();
     this.cropperSettingsIcon.width = 80;
     this.cropperSettingsIcon.height = 80;
-    this.cropperSettingsIcon.canvasHeight = 80;
-    this.cropperSettingsIcon.canvasWidth = 80;
-    this.cropperSettingsIcon.croppedHeight = 80;
-    this.cropperSettingsIcon.croppedWidth = 80;
+    this.cropperSettingsIcon.canvasHeight = 150;
+    this.cropperSettingsIcon.canvasWidth = 150;
+    this.cropperSettingsIcon.croppedHeight = 50;
+    this.cropperSettingsIcon.croppedWidth = 50;
+    this.cropperSettingsIcon.rounded = true;
     this.cropperSettingsIcon.cropperDrawSettings.lineDash = true;
     this.cropperSettingsIcon.cropperDrawSettings.dragIconStrokeWidth = 0;
 
