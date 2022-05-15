@@ -58,7 +58,6 @@ export class LearnComponent implements OnInit {
       .subscribe(
         (res: Result<LearnModel[]>) => {
           this.rows = res.data;
-          //  this.page.totalElements = res.data.length;
         },
         (_error) => {
           this.toastr.error(
@@ -122,7 +121,6 @@ export class LearnComponent implements OnInit {
     if (row === undefined) {
       row = new LearnModel();
       row.id = 0;
-      row.tableType = null;
       row.productId = this.productId;
       row.product = null;
       row.videoUrl = null;

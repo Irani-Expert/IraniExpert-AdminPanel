@@ -8,390 +8,388 @@
     ایجاد
   </button>
 </div>
-<div class="row g-0 m-0 p-0">
-  <!-- SINGLE LIST ITEM -->
-  <!----------------------------------- Head Table  -->
-  <div class="row list-horizontal">
+<!-- SINGLE LIST ITEM -->
+<!----------------------------------- Head Table  -->
+<div class="row list-horizontal">
+  <div
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }"
+  >
     <div
-      class="list-item"
+      class="card o-hidden mb-4 d-flex"
       [ngClass]="{
-        'col-md-12': viewMode === 'list',
-        'col-md-3': viewMode === 'grid'
+        'flex-row': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
       }"
     >
       <div
-        class="card o-hidden mb-4 d-flex"
+        class="flex-grow-1"
         [ngClass]="{
-          'flex-row': viewMode === 'list',
-          'flex-column': viewMode === 'grid'
+          'pl-2 d-flex': viewMode === 'list',
+          'd-bock': viewMode === 'grid'
         }"
       >
+        <div class="list-thumb">
+          <!-- TUMBNAIL -->
+        </div>
+        <div class="align-self-center">شناسه</div>
         <div
-          class="flex-grow-1"
-          [ngClass]="{
-            'pl-2 d-flex': viewMode === 'list',
-            'd-bock': viewMode === 'grid'
-          }"
+          id="myHeader"
+          class="card-body align-self-center d-flex align-items-lg-center th-list row text-center"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
-          <div class="list-thumb">
-            <!-- TUMBNAIL -->
-          </div>
-          <div class="align-self-center">شناسه</div>
+          <!-- OTHER DATA -->
           <div
-            id="myHeader"
-            class="card-body align-self-center d-flex align-items-lg-center th-list row text-center"
-            [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
           >
-            <!-- OTHER DATA -->
+            عنوان
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
+          >
+            توضیحات
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
+          >
+            آدرس فایل
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
+          >
+            active
+          </div>
+          <div
+            class="col w-100 d-md-block d-lg-block d-xl-block d-sm-none d-none text-center"
+          >
             <div
-              class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
+              class="m-0 text-muted text-small text-lg-center text-center w-sm-100 item-actions"
             >
-              عنوان
+              <h6 class="text-16 text-primary text-center">عملیات</h6>
             </div>
             <div
-              class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
-            >
-              توضیحات
-            </div>
-            <div
-              class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
-            >
-              آدرس فایل
-            </div>
-            <div
-              class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
-            >
-              active
-            </div>
-            <div
-              class="col w-100 d-md-block d-lg-block d-xl-block d-sm-none d-none text-center"
-            >
-              <div
-                class="m-0 text-muted text-small text-lg-center text-center w-sm-100 item-actions"
-              >
-                <h6 class="text-16 text-primary text-center">عملیات</h6>
-              </div>
-              <div
-                class="m-0 text-muted text-small text-lg-center w-25 col w-sm-100 item-actions"
-              ></div>
-            </div>
+              class="m-0 text-muted text-small text-lg-center w-25 col w-sm-100 item-actions"
+            ></div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- SINGLE LIST ITEM -->
+  <!-- SINGLE LIST ITEM -->
+  <div
+    *ngFor="let item of rows"
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }"
+  >
     <div
-      *ngFor="let item of rows"
-      class="list-item"
+      class="card o-hidden mb-4 d-flex"
       [ngClass]="{
-        'col-md-12': viewMode === 'list',
-        'col-md-3': viewMode === 'grid'
+        'flex-row-2': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
       }"
     >
-      <div
-        class="card o-hidden mb-4 d-flex"
-        [ngClass]="{
-          'flex-row-2': viewMode === 'list',
-          'flex-column': viewMode === 'grid'
-        }"
-      >
-        <!-- <div class="list-thumb">
+      <!-- <div class="list-thumb">
           <img [src]="item.filePath" width="100px" height="50px" alt="تصویری وجود ندارد">
         </div> -->
+      <div
+        class=""
+        [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-bock': viewMode === 'grid'
+        }"
+      >
         <div
-          class=""
-          [ngClass]="{
-            'pl-2 d-flex': viewMode === 'list',
-            'd-bock': viewMode === 'grid'
-          }"
+          class="card-body align-self-center text-center d-flex align-items-lg-center row"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
-          <div
-            class="card-body align-self-center text-center d-flex align-items-lg-center row"
-            [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-          >
-            <div class="align-self-center">
-              {{ item.id }}
-            </div>
-            <!-- OTHER DATA -->
-            <a href="" class="w-40 col w-sm-100">
-              <div class="item-title">{{ item.title }}</div>
-            </a>
-            <div class="m-0 text-muted text-small col w-25 w-sm-100">
-              {{ item.description }}
-            </div>
-            <div class="m-0 text-muted text-small col w-25 w-sm-100">
-              {{ item.fileUrl }}
-            </div>
-            <div class="m-0 text-muted text-small bag col w-25 w-sm-100">
-              <div
-                *ngIf="item.isActive === false"
-                class="badge badge-info text-center p-2"
-              >
-                غیر فعال
-              </div>
-              <div
-                *ngIf="item.isActive === true"
-                class="badge badge-success text-center p-2"
-              >
-                فعال
-              </div>
-            </div>
-
+          <div class="align-self-center">
+            {{ item.id }}
+          </div>
+          <!-- OTHER DATA -->
+          <a href="" class="w-40 col w-sm-100">
+            <div class="item-title">{{ item.title }}</div>
+          </a>
+          <div class="m-0 text-muted text-small col w-25 w-sm-100">
+            {{ item.description }}
+          </div>
+          <div class="m-0 text-muted text-small col w-25 w-sm-100">
+            {{ item.fileUrl }}
+          </div>
+          <div class="m-0 text-muted text-small bag col w-25 w-sm-100">
             <div
-              class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+              *ngIf="item.isActive === false"
+              class="badge badge-info text-center p-2"
             >
-              <div class="row text-center">
-                <div class="m-0 text-dark w-25 col-6 w-sm-100 item-actions">
-                  <button
-                    class="btn btn-warning"
-                    (click)="addorEdit(addUpdateModal, item)"
-                    [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  >
-                    <i class="text-dark"> ویرایش </i>
-                  </button>
-                </div>
-                <div class="m-0 text-dark col-6 w-25 w-sm-100 item-actions">
-                  <button
-                    class="btn btn-danger"
-                    [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                    (click)="deleteLearn(item.id, deleteConfirmModal)"
-                  >
-                    <i class="text-white">حذف</i>
-                  </button>
-                </div>
+              غیر فعال
+            </div>
+            <div
+              *ngIf="item.isActive === true"
+              class="badge badge-success text-center p-2"
+            >
+              فعال
+            </div>
+          </div>
+
+          <div
+            class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+          >
+            <div class="row text-center">
+              <div class="m-0 text-dark w-25 col-6 w-sm-100 item-actions">
+                <button
+                  class="btn btn-warning"
+                  (click)="addorEdit(addUpdateModal, item)"
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                >
+                  <i class="text-dark"> ویرایش </i>
+                </button>
+              </div>
+              <div class="m-0 text-dark col-6 w-25 w-sm-100 item-actions">
+                <button
+                  class="btn btn-danger"
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                  (click)="deleteLearn(item.id, deleteConfirmModal)"
+                >
+                  <i class="text-white">حذف</i>
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <div
-          class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
+      </div>
+      <div
+        class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
+      >
+        <h6 class="text-center">عملیات</h6>
+        <button
+          type="button"
+          [ngClass]="{ 'd-none': viewMode === 'grid' }"
+          (click)="deleteLearn(item.id, deleteConfirmModal)"
+          class="btn btn-outline-danger col-6 m-1"
         >
-          <h6 class="text-center">عملیات</h6>
-          <button
-            type="button"
-            [ngClass]="{ 'd-none': viewMode === 'grid' }"
-            (click)="deleteLearn(item.id, deleteConfirmModal)"
-            class="btn btn-outline-danger col-6 m-1"
-          >
-            حذف
-          </button>
-          <button
-            type="button"
-            [routerLink]="'/bas/addUpdate-group/' + item.id"
-            [ngClass]="{ 'd-none': viewMode === 'grid' }"
-            class="btn btn-outline-warning col-6 m-1"
-          >
-            ویرایش
-          </button>
-        </div>
+          حذف
+        </button>
+        <button
+          type="button"
+          [routerLink]="'/bas/addUpdate-group/' + item.id"
+          [ngClass]="{ 'd-none': viewMode === 'grid' }"
+          class="btn btn-outline-warning col-6 m-1"
+        >
+          ویرایش
+        </button>
       </div>
     </div>
   </div>
+</div>
 
-  <div *ngIf="rows?.length == 0" class="row text-center">
-    <img
-      src="../../../../../assets/images/97434-no-data-available.gif"
-      class="gif-fluid col-12"
-      alt=""
-    />
+<div *ngIf="rows?.length == 0" class="row text-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="gif-fluid col-12"
+    alt=""
+  />
+</div>
+<!---------------------------------------------- MODALS -->
+<!-- Add Or Edit -->
+<ng-template #addUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-  <!---------------------------------------------- MODALS -->
-  <!-- Add Or Edit -->
-  <ng-template #addUpdateModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
-        ایجاد
-      </h4>
-      <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
-        ویرایش
-      </h4>
+  <div class="modal-body">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+      <div class="row">
+        <!-- title -->
+        <div class="col-md-6 form-group mb-3">
+          <label for="title">عنوان</label>
+          <input
+            type="text"
+            class="form-control form-control-rounded"
+            id="title"
+            placeholder="عنوان مورد نظر را وارد کنید "
+            [formControl]="addForm.controls['title']"
+            [(ngModel)]="addUpdate.title"
+            maxlength="51"
+            minlength="2"
+          />
 
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form [formGroup]="addForm" (ngSubmit)="submit()">
-        <div class="row">
-          <!-- title -->
-          <div class="col-md-6 form-group mb-3">
-            <label for="title">عنوان</label>
-            <input
-              type="text"
-              class="form-control form-control-rounded"
-              id="title"
-              placeholder="عنوان مورد نظر را وارد کنید "
-              [formControl]="addForm.controls['title']"
-              [(ngModel)]="addUpdate.title"
-              maxlength="51"
-              minlength="2"
-            />
+          <small
+            *ngIf="
+              addForm.controls['title'].hasError('required') &&
+              addForm.controls['title'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >عنوان نام ضروری است</small
+          >
+          <small
+            *ngIf="addForm.controls['title'].hasError('maxlength')"
+            class="mat-text-warn m-t-negative"
+            >عنوان بیشتر از حد مجاز است</small
+          >
 
-            <small
-              *ngIf="
-                addForm.controls['title'].hasError('required') &&
-                addForm.controls['title'].touched
-              "
-              class="mat-text-warn m-t-negative"
-              >عنوان نام ضروری است</small
-            >
-            <small
-              *ngIf="addForm.controls['title'].hasError('maxlength')"
-              class="mat-text-warn m-t-negative"
-              >عنوان بیشتر از حد مجاز است</small
-            >
-
-            <small
-              *ngIf="addForm.controls['title'].hasError('minlength')"
-              class="mat-text-warn m-t-negative"
-            >
-              عنوان کوتاه است</small
-            >
-          </div>
-
-          <!-- Order ID  -->
-          <div class="col-md-4 form-group mb-3">
-            <label for="orderID">اولویت را مشخص کنید</label>
-            <select
-              [formControl]="addForm.controls['orderID']"
-              class="form-control form-control-rounded"
-              [ngModel]="addUpdate.orderID"
-              (ngModelChange)="selectType($event)"
-            >
-              <option value="0">اولویت بسیار بالا</option>
-              <option value="1">اولویت بالا</option>
-              <option value="2">اولویت متوسط</option>
-              <option value="3">اولویت پایین</option>
-              <option value="4">اولویت بسیار پایین</option>
-            </select>
-            <small
-              *ngIf="
-                addForm.controls['orderID'].hasError('required') &&
-                addForm.controls['orderID'].touched
-              "
-              class="mat-text-warn m-t-negative"
-              >انتخاب نوع گروه ضروری است</small
-            >
-          </div>
-          <!-- Description -->
-          <div class="col-md-12 form-group mb-3">
-            <label for="description">توضیحات</label>
-            <textarea
-              name=""
-              cols="30"
-              rows="10"
-              type="text"
-              class="form-control form-control-rounded"
-              id="description"
-              [formControl]="addForm.controls['description']"
-              [(ngModel)]="addUpdate.description"
-              maxlength="501"
-            >
-            </textarea>
-            <small
-              *ngIf="addForm.controls['description'].hasError('maxlength')"
-              class="mat-text-warn m-t-negative"
-              >توضیحات بیشتر از حد مجاز</small
-            >
-          </div>
-          <div class="col-md-4 form-group mb-3">
-            <label for="fileUrl">آدرس فایل</label>
-            <input
-              type="url"
-              class="form-control form-control-rounded"
-              id="fileUrl"
-              placeholder="آدرس فایل مورد نظر را وارد کنید "
-              [formControl]="addForm.controls['fileUrl']"
-              [(ngModel)]="addUpdate.fileUrl"
-            />
-          </div>
-          <!-- Url -->
-          <!-- isActive -->
-          <div class="col-md-6 form-group mb-3 mt-3">
-            <label class="m-1">فعال</label>
-            <label class="switch switch-primary mr-2 m-2">
-              <span>غیرفعال</span>
-              <input
-                [(ngModel)]="addUpdate.isActive"
-                [formControl]="addForm.controls['isActive']"
-                type="checkbox"
-                id="isActive"
-              />
-              <span class="slider"></span>
-            </label>
-          </div>
+          <small
+            *ngIf="addForm.controls['title'].hasError('minlength')"
+            class="mat-text-warn m-t-negative"
+          >
+            عنوان کوتاه است</small
+          >
         </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(true)"
-        *ngIf="addUpdate.id !== 0"
-      >
-        ویرایش
-      </button>
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(false)"
-        *ngIf="addUpdate.id === 0"
-      >
-        ایجاد
-      </button>
-    </div>
-  </ng-template>
-  <!-- Delete -->
-  <ng-template #deleteConfirmModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-title">حذف آموزش</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close button"
-        aria-describedby="modal-title"
-        (click)="modal.dismiss('Cross click')"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p><strong>آیا از حذف مطمئنید؟</strong></p>
-    </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-secondary btn-rounded mr-1"
-        (click)="modal.dismiss('cancel')"
-      >
-        خیر
-      </button>
-      <button
-        type="button"
-        ngbAutofocus
-        class="btn btn-wide btn-danger btn-rounded"
-        (click)="modal.close('Ok')"
-      >
-        بله
-      </button>
-    </div>
-  </ng-template>
 
-  <!-- PAGINATION CONTROL -->
-  <div class="col-md-12 mt-3" *ngIf="products?.length">
-    <pagination-controls
-      (pageChange)="page = $event"
-      previousLabel=""
-      nextLabel=""
-    ></pagination-controls>
+        <!-- Order ID  -->
+        <div class="col-md-4 form-group mb-3">
+          <label for="orderID">اولویت را مشخص کنید</label>
+          <select
+            [formControl]="addForm.controls['orderID']"
+            class="form-control form-control-rounded"
+            [ngModel]="addUpdate.orderID"
+            (ngModelChange)="selectType($event)"
+          >
+            <option value="0">اولویت بسیار بالا</option>
+            <option value="1">اولویت بالا</option>
+            <option value="2">اولویت متوسط</option>
+            <option value="3">اولویت پایین</option>
+            <option value="4">اولویت بسیار پایین</option>
+          </select>
+          <small
+            *ngIf="
+              addForm.controls['orderID'].hasError('required') &&
+              addForm.controls['orderID'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >انتخاب نوع گروه ضروری است</small
+          >
+        </div>
+        <!-- Description -->
+        <div class="col-md-12 form-group mb-3">
+          <label for="description">توضیحات</label>
+          <textarea
+            name=""
+            cols="30"
+            rows="10"
+            type="text"
+            class="form-control form-control-rounded"
+            id="description"
+            [formControl]="addForm.controls['description']"
+            [(ngModel)]="addUpdate.description"
+            maxlength="501"
+          >
+          </textarea>
+          <small
+            *ngIf="addForm.controls['description'].hasError('maxlength')"
+            class="mat-text-warn m-t-negative"
+            >توضیحات بیشتر از حد مجاز</small
+          >
+        </div>
+        <div class="col-md-4 form-group mb-3">
+          <label for="fileUrl">آدرس فایل</label>
+          <input
+            type="url"
+            class="form-control form-control-rounded"
+            id="fileUrl"
+            placeholder="آدرس فایل مورد نظر را وارد کنید "
+            [formControl]="addForm.controls['fileUrl']"
+            [(ngModel)]="addUpdate.fileUrl"
+          />
+        </div>
+        <!-- Url -->
+        <!-- isActive -->
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label class="m-1">فعال</label>
+          <label class="switch switch-primary mr-2 m-2">
+            <span>غیرفعال</span>
+            <input
+              [(ngModel)]="addUpdate.isActive"
+              [formControl]="addForm.controls['isActive']"
+              type="checkbox"
+              id="isActive"
+            />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </form>
   </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id !== 0"
+    >
+      ویرایش
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+      *ngIf="addUpdate.id === 0"
+    >
+      ایجاد
+    </button>
+  </div>
+</ng-template>
+<!-- Delete -->
+<ng-template #deleteConfirmModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">حذف آموزش</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از حذف مطمئنید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
+    </button>
+  </div>
+</ng-template>
+
+<!-- PAGINATION CONTROL -->
+<div class="col-md-12 mt-3" *ngIf="products?.length">
+  <pagination-controls
+    (pageChange)="page = $event"
+    previousLabel=""
+    nextLabel=""
+  ></pagination-controls>
 </div>
 <div *ngIf="rows?.length == 0" class="row text-center">
   <img
