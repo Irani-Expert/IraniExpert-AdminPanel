@@ -353,14 +353,14 @@
           *ngIf="addUpdate.fileType === 0 && addUpdate.fileType !== null"
         >
           <div class="row form-group mb-3">
-            <div class="col-12">
+<div class="col-12 text-start">
             <img
               *ngIf="addUpdate?.cardImagePath"
               [src]="bannerModel?.filePath"
               [formControl]="addForm.controls['filePath']"
               [(ngModel)]="addUpdate.filePath"
-              class="col"
             />
+
             <img-cropper
               [image]="image"
               [settings]="cropperSettings"
@@ -369,7 +369,10 @@
               class="col"
             ></img-cropper
             >
+          </div>
+          <div class="col-12 text-start">
             <img
+            class="col"
               *ngIf="image?.image"
               class="mt-3 mr-3"
               [src]="image?.image"
@@ -377,9 +380,12 @@
               [height]="cropperSettings.croppedHeight"
             />
           </div>
+
+          <div class="col-12 mt-2">
             <button class="btn btn-primary col-2" (click)="uploadFile(image)">
               آپلود
             </button>
+          </div>
             <small
               *ngIf="
                 addForm.controls['filePath'].hasError('required') &&
