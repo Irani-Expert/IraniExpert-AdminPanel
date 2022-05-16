@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { AdminLayoutSidebarLargeComponent } from './shared/components/layouts/admin-layout-sidebar-large/admin-layout-sidebar-large.component';
-import { AuthGaurd } from './shared/services/auth.gaurd';
+import { AuthGuard } from './shared/services/auth/auth.guard';
 
 const adminRoutes: Routes = [
   {
@@ -106,8 +106,7 @@ const routes: Routes = [
     path: '',
     component: AdminLayoutSidebarLargeComponent,
     children: adminRoutes,
-    canActivate: [AuthGaurd],
-
+    canActivate: [AuthGuard]
   },
 
   {

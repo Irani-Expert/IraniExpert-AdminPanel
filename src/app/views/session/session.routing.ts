@@ -14,7 +14,7 @@ import { NgModule } from '@angular/core';
       path: '404',
       component: NotFoundComponent
     }, {
-      path: '403',
+      path: '401',
       component: ErrorComponent
     },  {
       path: 'lockscreen',

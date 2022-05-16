@@ -2,7 +2,7 @@ import { Base } from 'src/app/shared/models/Base/base.model';
 import {  IPlan } from './plan.interface';
 
 export class PlanModel extends Base implements IPlan {
-  productID: number;
+  productId: number;
   product: string;
   price: number;
   expireDate: Date;

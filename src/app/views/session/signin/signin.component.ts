@@ -4,7 +4,7 @@ import { ActivatedRoute, ResolveEnd, ResolveStart, RouteConfigLoadEnd, RouteConf
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment.prod';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 
 
 @Component({
@@ -19,8 +19,8 @@ export class SigninComponent implements OnInit {
   public form: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private auth:AuthenticateService
 ) { }
 
    ngOnInit() {
@@ -36,8 +36,8 @@ export class SigninComponent implements OnInit {
   });
 
   this.signinForm = this.fb.group({
-      email: ['name@example.com', Validators.required],
-      password: ['1234', Validators.required]
+      username: [null, Validators.required],
+      password: [null, Validators.required]
   });
   }
 
@@ -45,10 +45,10 @@ export class SigninComponent implements OnInit {
   signin() {
     this.loading = true;
     this.loadingText = 'در حال ورود...';
-    // this.auth.signin(this.signinForm.value)
-    //     .subscribe(res => {
-    //         this.router.navigateByUrl('/dashboard/v1');
-    //         this.loading = false;
-    //     });
+    this.auth.login(this.signinForm.value)
+        .subscribe(res => {
+            this.router.navigateByUrl('/dashboard/v1');
+            this.loading = false;
+        });
 }
 }

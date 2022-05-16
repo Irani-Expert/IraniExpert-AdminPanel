@@ -1,20 +1,23 @@
-<div class="separator-breadcrumb border-top"></div>
-<div class="row mb-4">
-  <!-- GRID AND LIST BUTTONS -->
-
-  <!-- SELECT CEHECKBOX -->
+<!--------------------------- Create Plan -->
+<div class="mb-4 d-block">
+  <button
+    class="btn btn-primary m-1"
+    type="button"
+    (click)="addorEdit(addUpdateModal, undefined)"
+  >
+    ایجاد
+  </button>
 </div>
-
-<div class="row">
-  <div class="col-md-3" *ngFor="let item of rows">
+<!--------------------------- Plan Cards -->
+<div class="row justify-content-md-between justify-content-center">
+  <div class="col-lg-3 col-md-4 col-sm-8 col-12" *ngFor="let item of rows">
     <div class="card card-profile-1 mb-4">
       <div class="card-body text-center">
-        <div class="avatar box-shadow-2 mb-2">
-          <img src="./assets/images/faces/12.jpg" alt="icon" />
+        <div class="bg-primary border-top rounded-top">
+          <h4 class="p-2 mb-1 mr-1 text-white">
+            {{ item.title }}
+          </h4>
         </div>
-        <span class="badge badge-pill badge-success text-end p-2 mb-1 mr-1"
-          >Success</span
-        >
         <h6 class="m-0">Jassica Hike</h6>
         <p class="mt-0 text-muted">UI/UX Designer</p>
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
@@ -34,58 +37,179 @@
           </ngb-panel>
         </ngb-accordion>
 
-        <button
-          class="btn btn-primary btn-block mt-2"
-          (click)="open(modalLong)"
-        >
-          ویرایش
-        </button>
+        <div class="row mt-3 justify-content-center">
+          <button
+            class="btn col-auto btn-warning"
+            (click)="addorEdit(addUpdateModal, item)"
+          >
+            ویرایش
+          </button>
+        </div>
       </div>
     </div>
   </div>
-
-  <ng-template #modalLong let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">
-        Modal With large content
-      </h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-        blanditiis ipsam voluptate eveniet. Ipsum, vero similique? Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Aspernatur blanditiis ipsam
-        voluptate eveniet. Ipsum, vero similique?
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-        blanditiis ipsam voluptate eveniet. Ipsum, vero similique? Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Aspernatur blanditiis ipsam
-        voluptate eveniet. Ipsum, vero similique?
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-        blanditiis ipsam voluptate eveniet. Ipsum, vero similique? Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Aspernatur blanditiis ipsam
-        voluptate eveniet. Ipsum, vero similique?
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close('ok')"
-      >
-        Ok
-      </button>
-    </div>
-  </ng-template>
 </div>
+<!-- Add Or Edit -->
+<ng-template #addUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+      <div class="row align-content-center justify-content-center">
+        <!-- title -->
+        <div class="col-md-6 form-group mb-3">
+          <label for="title" class="mr-2 pr-2">عنوان</label>
+          <input
+            type="text"
+            class="form-control form-control-rounded"
+            id="title"
+            placeholder="عنوان مورد نظر را وارد کنید "
+            [formControl]="addForm.controls['title']"
+            [(ngModel)]="addUpdate.title"
+            maxlength="51"
+            minlength="2"
+          />
+
+          <small
+            *ngIf="
+              addForm.controls['title'].hasError('required') &&
+              addForm.controls['title'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >عنوان نام ضروری است</small
+          >
+          <small
+            *ngIf="addForm.controls['title'].hasError('maxlength')"
+            class="mat-text-warn m-t-negative"
+            >عنوان بیشتر از حد مجاز است</small
+          >
+
+          <small
+            *ngIf="addForm.controls['title'].hasError('minlength')"
+            class="mat-text-warn m-t-negative"
+          >
+            عنوان کوتاه است</small
+          >
+        </div>
+
+        <!-- Order ID  -->
+
+        <!-- Description -->
+        <div class="col-md-12 form-group mb-3">
+          <label for="description">توضیحات</label>
+          <textarea
+            name=""
+            cols="30"
+            rows="4"
+            type="text"
+            class="form-control form-control-rounded"
+            id="description"
+            [formControl]="addForm.controls['description']"
+            [(ngModel)]="addUpdate.description"
+            maxlength="501"
+          >
+          </textarea>
+          <small
+            *ngIf="addForm.controls['description'].hasError('maxlength')"
+            class="mat-text-warn m-t-negative"
+            >توضیحات بیشتر از حد مجاز</small
+          >
+        </div>
+        <div class="col-md-4 form-group mb-3">
+          <label for="expireDate">تاریخ انقضا</label>
+          <input
+            type="datetime-local"
+            class="form-control form-control-rounded"
+            id="expireDate"
+            placeholder="آدرس فایل مورد نظر را وارد کنید "
+            [formControl]="addForm.controls['expireDate']"
+            [(ngModel)]="addUpdate.expireDate"
+          />
+        </div>
+        <!-- Url -->
+        <!-- isActive -->
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label class="m-1">فعال</label>
+          <label class="switch switch-primary mr-2 m-2">
+            <span>غیرفعال</span>
+            <input
+              [(ngModel)]="addUpdate.isActive"
+              [formControl]="addForm.controls['isActive']"
+              type="checkbox"
+              id="isActive"
+            />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id !== 0"
+    >
+      ویرایش
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+      *ngIf="addUpdate.id === 0"
+    >
+      ایجاد
+    </button>
+  </div>
+</ng-template>
+<!-- Delete -->
+<ng-template #deleteConfirmModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">حذف آموزش</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از حذف مطمئنید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
+    </button>
+  </div>
+</ng-template>

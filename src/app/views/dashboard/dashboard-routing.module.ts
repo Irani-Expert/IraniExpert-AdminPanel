@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { DashboadDefaultComponent } from './dashboad-default/dashboad-default.component';
 
 
 const routes: Routes = [
   {
     path: 'v1',
-    component: DashboadDefaultComponent
+    component: DashboadDefaultComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
