@@ -9,45 +9,53 @@
   </button>
 </div>
 <!--------------------------- Plan Cards -->
-<div class="row justify-content-md-between justify-content-center">
-  <div class="col-lg-3 col-md-4 col-sm-8 col-12" *ngFor="let item of rows">
-    <div class="card card-profile-1 mb-4">
+<div class="row justify-content-lg-start justify-content-center">
+  <div class="col-lg-4 col-md-6 col-sm-8 col-12" *ngFor="let item of rows">
+    <div class="card mb-2">
       <div class="card-body text-center">
-        <div class="bg-secondary w-100 rounded-top">
-          <h4 class="p-2 pt-3 mb-1 mr-1 text-white">
-            {{ item.title }}
-          </h4>
+        <div class="bg-info w-100 rounded-top rounded-bottom">
+          <h4 class="p-2 pt-3 mb-1 mr-1 text-white">پلن : {{ item.title }}</h4>
+        </div>
+        <div class="bg-transparent w-100">
+          <label for="description" class="text-black-50 mt-3">توضیحات</label>
+          <h5 class="p-2 pt-3 mb-1 mr-1 text-black-50 brief-text">
+            {{ item.description }}
+          </h5>
         </div>
         <div class="mt-3">
           <div
             *ngIf="item.isActive === false"
-            class="badge badge-info text-center p-2"
+            class="badge badge-dark badge-pill text-center p-2"
           >
             غیر فعال
           </div>
           <div
             *ngIf="item.isActive === true"
-            class="badge badge-success text-center p-2"
+            class="badge badge-success badge-pill text-center p-2"
           >
             فعال
           </div>
         </div>
-        <p class="mt-2 text-muted">{{ item.expireDate }}</p>
+        <p class="mt-2 text-muted">{{ item.expireDate | date: "MMMM d, y" }}</p>
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
           <ngb-panel>
             <ng-template ngbPanelTitle>
-              <h6 class="text-center">${{ item.price }}</h6>
+              <h6 class="text-center text-white">
+                {{ item.price | currency }}
+              </h6>
             </ng-template>
             <ng-template ngbPanelContent>
-              <span class="text-center">
+              <span>
                 <ol>
-                  <li class="col"></li>
-                  <li class="col"></li>
-                  <li class="col"></li>
+                  <li>
+                    {{ item.id }}
+                  </li>
+                  <li>{{ item.productId }}</li>
+                  <li>{{ item.productId }}</li>
                 </ol>
 
                 <button
-                  class="btn btn-success col-12 btn-block"
+                  class="btn btn-success col-12 btn-block btn-rounded"
                   (click)="addorEdit(addUpdateModal, item)"
                 >
                   امکانات
@@ -59,14 +67,14 @@
 
         <div class="row mt-3 p-2 justify-content-around">
           <button
-            class="btn btn-warning col-8 btn-block"
+            class="btn btn-warning col-8 btn-block btn-rounded"
             (click)="addorEdit(addUpdateModal, item)"
           >
             ویرایش
           </button>
 
           <button
-            class="btn btn-danger col-8 btn-block"
+            class="btn btn-danger col-8 btn-block btn-rounded"
             (click)="deletePlan(item.id, deleteConfirmModal)"
           >
             حذف
@@ -85,7 +93,6 @@
     <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
       ویرایش
     </h4>
-
     <button
       type="button"
       class="close"
@@ -96,6 +103,7 @@
     </button>
   </div>
   <div class="modal-body">
+    <!-- Id -->
     <form [formGroup]="addForm" (ngSubmit)="submit()">
       <div class="row align-content-center justify-content-center">
         <!-- title -->
@@ -174,17 +182,16 @@
             type="number"
             class="form-control form-control-rounded"
             id="price"
-            placeholder="آدرس فایل مورد نظر را وارد کنید "
+            placeholder="قیمت مورد نظر را وارد کنید "
             [formControl]="addForm.controls['price']"
             [(ngModel)]="addUpdate.price"
           />
         </div>
         <!-- Url -->
         <!-- isActive -->
-        <div class="col-md-12 form-group mb-3 mt-3">
-          <label class="m-1">فعال</label>
+        <div class="form-group col-10 mb-3 mt-3 text-center">
+          <label class="m-2">فعال</label>
           <label class="switch switch-primary mr-2 m-2">
-            <span>غیرفعال</span>
             <input
               [(ngModel)]="addUpdate.isActive"
               [formControl]="addForm.controls['isActive']"
@@ -193,6 +200,7 @@
             />
             <span class="slider"></span>
           </label>
+          <label>غیرفعال</label>
         </div>
       </div>
     </form>

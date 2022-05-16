@@ -49,7 +49,7 @@
 
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn btn-outline-dark btn-rounded mb-4"
       (click)="addOrUpdate()"
       [disabled]="!addForm.valid"
     >
@@ -64,7 +64,7 @@
   [destroyOnHide]="false"
   *ngFor="let item of rows"
 >
-  <ngb-panel class="ngb-panel" title="{{ item.question }}">
+  <ngb-panel class="ngb-panel text-white" title="{{ item.question }}">
     <ng-template ngbPanelContent>
       <div class="row">
         <div class="col-10 text-start mr-5">

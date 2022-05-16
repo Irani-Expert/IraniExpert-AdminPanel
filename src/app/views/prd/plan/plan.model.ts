@@ -7,6 +7,7 @@ export class PlanModel extends Base implements IPlan {
   price: number;
   expireDate: Date;
   iconPath: string;
+  planOption: string;
 }
 
 
