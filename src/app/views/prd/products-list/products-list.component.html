@@ -1,15 +1,16 @@
-
 <!-- <button
 
 class="btn btn-primary m-1"
 >
 ایجاد
 </button> -->
-<button type="button"  [routerLink]="'/prd/addUpdate'" class="custom-btn btn-6 mb-4 "><span>ایجاد</span></button>
-
-
-
-
+<button
+  type="button"
+  [routerLink]="'/prd/addUpdate'"
+  class="custom-btn btn-6 mb-4"
+>
+  <span>ایجاد</span>
+</button>
 
 <div class="separator-breadcrumb border-top"></div>
 
@@ -39,12 +40,17 @@ class="btn btn-primary m-1"
         <div class="list-thumb">
           <!-- TUMBNAIL -->
         </div>
-        <div class="align-self-center" *ngIf="rows.length > 0 && rows !== undefined &&rows !== null">ID</div>
+        <div
+          class="align-self-center"
+          *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
+        >
+          ID
+        </div>
         <div
           id="myHeader"
           class="card-body align-self-center d-flex align-items-lg-center th-list row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-          *ngIf="rows.length > 0 && rows !== undefined &&rows !== null"
+          *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
         >
           <!-- OTHER DATA -->
           <div
@@ -127,8 +133,11 @@ class="btn btn-primary m-1"
           <a href="" class="w-40 col w-sm-100">
             <div class="item-title">
               <!-- <img *ngIf="item.cardImagePath"[src]="item.cardImagePath" class="img-card" alt="" /> -->
-              <img  src="../../../../assets/images/photo-wide-1.jpg" class="img-card" alt="" />
-
+              <img
+                src="../../../../assets/images/photo-wide-1.jpg"
+                class="img-card"
+                alt=""
+              />
             </div>
           </a>
           <p class="m-0 text-muted text-small w-15 w-sm-100 col">
@@ -199,7 +208,8 @@ class="btn btn-primary m-1"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-warning col m-1"
         >
-          جزئیات    </button>
+          جزئیات
+        </button>
       </div>
     </div>
   </div>
