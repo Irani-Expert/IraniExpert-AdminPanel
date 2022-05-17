@@ -4,6 +4,7 @@ import { GroupComponent } from './group/group.component';
 import { BasRoutingModule } from './bas.routing';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PlanOptionComponent } from './plan-option/plan-option.component';
 
 
 
@@ -11,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     GroupComponent,
+    PlanOptionComponent,
 
 
   ],

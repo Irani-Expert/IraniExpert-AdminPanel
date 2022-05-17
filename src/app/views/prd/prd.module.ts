@@ -10,14 +10,14 @@ import { FAQComponent } from './faq/faq.component';
 import { LearnComponent } from './learn/learn.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BackTestComponent } from './back-test/back-test.component';
-import { PlanComponent } from './plan/plan.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentComponent } from './comment/comment.component';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { CntRoutingModule } from '../cnt/cnt.routing';
 import { ImageCropperModule } from 'ngx-img-cropper';
+import { PlanComponent } from '../bas/plan/plan.component';
 import { ProductTypePipe } from 'src/app/shared/pipes/product-type.pipe';
-import { PlanOptionComponent } from './plan/plan-option/plan-option.component';
+
 
 
 
@@ -32,7 +32,6 @@ import { PlanOptionComponent } from './plan/plan-option/plan-option.component';
     PlanComponent,
     CommentComponent,
     ProductTypePipe,
-    PlanOptionComponent
 
 
   ],
