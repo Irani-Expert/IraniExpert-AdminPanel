@@ -17,6 +17,7 @@ import { CntRoutingModule } from '../cnt/cnt.routing';
 import { ImageCropperModule } from 'ngx-img-cropper';
 import { PlanComponent } from '../bas/plan/plan.component';
 import { ProductTypePipe } from 'src/app/shared/pipes/product-type.pipe';
+import { PlanOptionComponent } from '../bas/plan-option/plan-option.component';
 
 
 
@@ -32,7 +33,7 @@ import { ProductTypePipe } from 'src/app/shared/pipes/product-type.pipe';
     PlanComponent,
     CommentComponent,
     ProductTypePipe,
-
+    PlanOptionComponent
 
   ],
   imports: [

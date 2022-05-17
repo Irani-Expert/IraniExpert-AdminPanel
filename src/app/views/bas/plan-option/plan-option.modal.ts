@@ -1,6 +1,6 @@
 import { Base } from 'src/app/shared/models/Base/base.model';
-import {  IPlan } from './plan.interface';
-export class PlanModel extends Base implements IPlan {
+import { IPlanOption } from './plan-option.interface';
+export class PlanOptionModal extends Base implements IPlanOption {
   productId: number;
   product: string;
   price: number;
@@ -8,6 +8,3 @@ export class PlanModel extends Base implements IPlan {
   iconPath: string;
   planOption: string;
 }
-
-
-
