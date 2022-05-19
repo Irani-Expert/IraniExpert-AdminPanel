@@ -219,7 +219,7 @@ class="btn btn-primary m-1"
             (ngModelChange)="selectParent($event)"
             [ngModel]="addUpdate.parentID"
           >
-            <option value="null">والد ندارد</option>
+            <option value="0">والد ندارد</option>
             <option *ngFor="let item of rows" value="{{item.id}}">
               {{ item.title }}
             </option>
@@ -234,7 +234,7 @@ class="btn btn-primary m-1"
           >
         </div>
 
-        <div class="col-md-6 form-group mb-3">
+        <!-- <div class="col-md-6 form-group mb-3">
           <label for="picker1">نوع گروه</label>
           <select
             [formControl]="addForm.controls['type']"
@@ -254,7 +254,7 @@ class="btn btn-primary m-1"
             class="mat-text-warn m-t-negative"
             >انتخاب نوع گروه  ضروری است</small
           >
-        </div>
+        </div> -->
 
         <div class="col-md-6 form-group mb-3">
           <label class="switch switch-primary mr-3">

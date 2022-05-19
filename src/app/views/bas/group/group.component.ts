@@ -32,7 +32,6 @@ export class GroupComponent implements OnInit {
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       parentID: [null, Validators.compose([Validators.required])],
-      type: [null, Validators.compose([Validators.required])],
       isActive: [null],
     });
   }
@@ -49,6 +48,7 @@ export class GroupComponent implements OnInit {
       .subscribe(
         (res: Result<GroupModel[]>) => {
           this.rows = res.data;
+
           //  this.page.totalElements = res.data.length;
         },
         (error) => {
@@ -139,6 +139,7 @@ export class GroupComponent implements OnInit {
   }
 
   async addOrUpdate(row: GroupModel) {
+    row.type=0;
     if(row.id===0){
       await this._groupService.create(row,"Group").toPromise()
       .then(data => {
@@ -201,7 +202,10 @@ export class GroupComponent implements OnInit {
   selectParent($event:any){
     debugger
     if ($event != undefined) {
+      if(parseInt($event)!==0)
       this.addUpdate.parentID =parseInt($event);
+      else
+      this.addUpdate.parentID=null;
     }
   }
   selectType($event:any){
