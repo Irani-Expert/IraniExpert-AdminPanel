@@ -46,7 +46,7 @@ export class ArticleComponent implements OnInit {
           this.rows = res.data;
           //  this.page.totalElements = res.data.length;
         },
-        (error) => {
+        (_error) => {
           this.toastr.error(
             'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
             null,

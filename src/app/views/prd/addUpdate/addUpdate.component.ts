@@ -124,8 +124,8 @@ export class AddUpdateComponent implements OnInit {
 
 
 
-   uploadFile(image) {
-    this._fileUploaderService.uploadFile(image.image, 'Product').subscribe(
+   uploadFile(image: { image: string; }) {
+    this._fileUploaderService.uploadFile(image.image, 'addUpdates').subscribe(
       (res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.cardImagePath = res.data[0];
@@ -140,7 +140,7 @@ export class AddUpdateComponent implements OnInit {
           });
         }
       },
-      (error) => {
+      (_error) => {
         this.toastr.error(
           'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
           null,
