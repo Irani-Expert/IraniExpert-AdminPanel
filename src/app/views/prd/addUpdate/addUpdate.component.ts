@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CropperSettings } from 'ngx-img-cropper';
 import { ToastrService } from 'ngx-toastr';
@@ -15,117 +15,79 @@ import { ProductService } from '../products-list/product.service';
   styleUrls: ['./addUpdate.component.scss'],
 })
 export class AddUpdateComponent implements OnInit {
-  productId: number =  parseInt(
+  productId: number = parseInt(
     this._route.snapshot.paramMap.get('productId') ?? '0'
   );
-;
-  addUpdate: ProductModel ;
-   addForm: FormGroup;
-   tableType: number = 6;
+  addUpdate: ProductModel;
+  addForm: FormGroup;
+  tableType: number = 6;
   cropperSettings: CropperSettings;
-  cropperSettingsIcon: CropperSettings;
   image: any;
-  icon : any ;
-
   constructor(
     private _route: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     private modalService: NgbModal,
+    private _router:Router,
     private _productsService: ProductService,
     private _fileUploaderService: FileUploaderService
   ) {
 
-    if(this.productId === 0) {
-
-    this.addUpdate = new ProductModel();
-    this.addUpdate.id = this.productId
-    this.addUpdate.isActive = false
-    }
-    this.image = {};
-    this.icon = {};
-
-
   }
 
-  ngOnInit(): void {
-
-    console.log(this.productId );
-
-    this.getProductById();
+ async ngOnInit() {
+    if (this.productId === 0) {
+      this.addUpdate = new ProductModel();
+      this.addUpdate.id = this.productId;
+      this.addUpdate.isActive = false;
+    }else{
+     await this.getProductById();
+    }
     this.addForm = this._formBuilder.group({
+      cardImagePath: [null],
       title: [null, Validators.compose([Validators.required])],
-      description:[null , Validators.compose([Validators.required])],
-      orderID:[0],
-      isActive:[null , Validators.compose ([Validators.required])],
-      cardImagePath:[null],
-      iconPath:[null],
-      type:[null],
-      id:[this.productId , null ]
+      type: [null, Validators.compose([Validators.required])],
+      orderID: [null, Validators.compose([Validators.required])],
+      isActive: [null, Validators.compose([Validators.required])],
+      description: [null, Validators.compose([Validators.required])],
     });
-    // id:number;
-    // description:string;
-    // orderID:number;
-    // isActive:boolean;
-    // cardImagePath:string;
-    // iconPath:number;
-    // type:string;
-
-
     this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 400;
-    this.cropperSettings.height = 300;
-    this.cropperSettings.canvasHeight = 400;
-    this.cropperSettings.canvasWidth = 400;
-    this.cropperSettings.croppedHeight = 400;
-    this.cropperSettings.croppedWidth = 400;
     this.cropperSettings.cropperDrawSettings.lineDash = true;
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
+    this.cropperSettings.canvasHeight = 300;
+    this.cropperSettings.canvasWidth = 500;
+    this.cropperSettings.croppedHeight = 100;
+    this.cropperSettings.croppedWidth = 200;
 
-
-    this.cropperSettingsIcon = new CropperSettings();
-    this.cropperSettingsIcon.width = 80;
-    this.cropperSettingsIcon.height = 80;
-    this.cropperSettingsIcon.canvasHeight = 150;
-    this.cropperSettingsIcon.canvasWidth = 150;
-    this.cropperSettingsIcon.croppedHeight = 50;
-    this.cropperSettingsIcon.croppedWidth = 50;
-    this.cropperSettingsIcon.rounded = true;
-    this.cropperSettingsIcon.cropperDrawSettings.lineDash = true;
-    this.cropperSettingsIcon.cropperDrawSettings.dragIconStrokeWidth = 0;
-
+    this.image = {};
   }
+
   async getProductById() {
-    if(this.productId !== 0)
-    await this._productsService.getOneByID(this.productId, 'Product').subscribe(
-      (res: Result<ProductModel>) => {
-        this.addUpdate = res.data;
-        //  this.page.totalElements = res.data.length;
+    if (this.productId !== 0)
+      await this._productsService
+        .getOneByID(this.productId, 'Product')
+        .subscribe(
+          (res: Result<ProductModel>) => {
+            debugger
+            this.addUpdate = res.data;
+            //  this.page.totalElements = res.data.length;
+          },
 
-
-      } ,
-
-      (_error) => {
-        this.toastr.error(
-          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-          null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
+          (_error) => {
+            this.toastr.error(
+              'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+              null,
+              {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              }
+            );
           }
         );
-      }
-
-    );
-
-
-
   }
 
-
-
-   uploadFile(image: { image: string; }) {
-    this._fileUploaderService.uploadFile(image.image, 'addUpdates').subscribe(
+  uploadFile(image: { image: string; }) {
+    this._fileUploaderService.uploadFile(image.image, 'Products').subscribe(
       (res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.cardImagePath = res.data[0];
@@ -152,71 +114,64 @@ export class AddUpdateComponent implements OnInit {
       }
     );
   }
-
-  createProduct(row:ProductModel){
-    if ( row.id === 0) {
-      debugger
-
-       this._productsService
-        .create(row, 'Product')
-        .toPromise()
-        .then(
-          (data) => {
-            row.id = 0
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-
-                closeButton: true,
-                positionClass: 'toast-top-left',
-
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+  addOrUpdate(row: ProductModel) {
+    if (row.id !== 0)
+    {
+      this._productsService
+      .update(row.id, row, 'product')
+      .toPromise()
+      .then(
+        (data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
           }
-        );
+        },
+        (error) => {
+          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      );
+
+    }else{
+     var x= this._productsService
+      .create(row, 'Product')
+      .toPromise()
+      .then(
+        (data) => {
+          row.id = 0;
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+            this._router.navigate(['prd/addUpdate/'+data.data])
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        },
+        (error) => {
+          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      );
+
     }
-  }
 
-   addOrUpdate(row:ProductModel) {
-
-     if ( row.id !== 0)
-       this._productsService
-        .update(row.id, row, 'product')
-        .toPromise()
-        .then(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        );
-
-
-    this.getProductById();
   }
 
   selectType($event: any) {
@@ -224,5 +179,9 @@ export class AddUpdateComponent implements OnInit {
       this.addUpdate.type = parseInt($event);
     }
   }
-
+  selectOrder($event: any) {
+    if ($event != undefined) {
+      this.addUpdate.orderID = parseInt($event);
+    }
+  }
 }

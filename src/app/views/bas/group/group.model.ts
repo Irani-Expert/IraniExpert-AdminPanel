@@ -5,7 +5,7 @@ import { IGroup } from './group.interface';
 export class GroupModel extends Base implements IGroup{
   parentID: number;
   parentGroupTitle: string;
-  type: number;
+  type: number=1;
   iconKey: string;
   cardImagePath: string;
 
