@@ -87,7 +87,7 @@ export class AddUpdateComponent implements OnInit {
   }
 
   uploadFile(image: { image: string; }) {
-    this._fileUploaderService.uploadFile(image.image, 'Products').subscribe(
+    this._fileUploaderService.uploadFile(image.image, 'products').subscribe(
       (res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.cardImagePath = res.data[0];

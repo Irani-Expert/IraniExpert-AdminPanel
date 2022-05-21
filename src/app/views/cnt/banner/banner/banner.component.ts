@@ -228,7 +228,7 @@ export class BannerComponent implements OnInit {
   }
 
   uploadFile(image) {
-    this._fileUploaderService.uploadFile(image.image, 'articles').subscribe(
+    this._fileUploaderService.uploadFile(image.image, 'banners').subscribe(
       (res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.filePath = res.data[0];
