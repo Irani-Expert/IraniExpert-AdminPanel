@@ -76,8 +76,8 @@ export class AddUpdateComponent implements OnInit {
     //this.log += new Date() + "<br />";
   }
 
-  uploadFile(image) {
-    this._fileUploaderService.uploadFile(image.image, 'product').subscribe(
+  uploadFile(image: { image: string; }) {
+    this._fileUploaderService.uploadFile(image.image, 'articles').subscribe(
       (res: Result<string[]>) => {
         debugger;
         if (res.success) {

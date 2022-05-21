@@ -7,10 +7,7 @@
   ایجاد
 </button>
 
-
-
 <div class="separator-breadcrumb border-top"></div>
-
 
 <div class="row list-horizontal">
   <div
@@ -37,12 +34,17 @@
         <div class="list-thumb">
           <!-- TUMBNAIL -->
         </div>
-        <div class="align-self-center" *ngIf="rows.length > 0 && rows !== undefined &&rows !== null">ID</div>
+        <div
+          class="align-self-center"
+          *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
+        >
+          ID
+        </div>
         <div
           id="myHeader"
           class="card-body align-self-center d-flex align-items-lg-center th-list row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-          *ngIf="rows.length > 0 && rows !== undefined &&rows !== null"
+          *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
         >
           <!-- OTHER DATA -->
           <div
@@ -115,7 +117,7 @@
           <!-- OTHER DATA -->
           <div class="m-0 text-muted text-small col w-15 w-sm-100 h-100">
             {{ item.cardImagePath }}
-            <img src="../../../../../assets/images/photo-wide-1.jpg" class="img-card" alt="">
+            <img [src]="" class="img-card" alt="" />
           </div>
           <div href="" class="w-40 w-sm-100 col">
             <div class="item-title">{{ item.title }}</div>

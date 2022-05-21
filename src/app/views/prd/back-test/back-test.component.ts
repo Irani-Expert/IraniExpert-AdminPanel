@@ -94,9 +94,9 @@ export class BackTestComponent implements OnInit {
       );
   }
 
-  uploadFile(image) {
+  uploadFile(image: { image: string; }) {
     this._fileUploaderService
-      .uploadFile(this.image.image, 'articles')
+      .uploadFile(image.image, 'backTests')
       .subscribe(
         (res: Result<string[]>) => {
           debugger;
@@ -107,7 +107,7 @@ export class BackTestComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           } else {
-            //TODO Delete Set AddUpdate.cardImagePAth
+            //TODO Delete Set AddUpdate.cardImagePath
             this.addUpdate.cardImagePath = res.errors[0];
             this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
               closeButton: true,
