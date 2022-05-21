@@ -74,8 +74,50 @@
           <button (click)="addUpdate = item" class="btn btn-info mt-4">
             ویرایش
           </button>
+          <button
+            type="button"
+            (click)="deleteFaq(item.id, deleteConfirmModal)"
+            class="btn btn-danger mt-4 ml-2"
+          >
+            حذف
+          </button>
         </div>
       </div>
     </ng-template>
   </ngb-panel>
 </ngb-accordion>
+<!-- Delete -->
+<ng-template #deleteConfirmModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">حذف آموزش</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از حذف مطمئنید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
+    </button>
+  </div>
+</ng-template>
