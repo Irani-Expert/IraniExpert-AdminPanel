@@ -39,20 +39,20 @@ export class BannerComponent implements OnInit {
       linkType: [null, Validators.compose([Validators.required])],
       fileType: [null, Validators.compose([Validators.required])],
       isActive: [null, Validators.compose([Validators.required])],
-      url: [null, Validators.compose([Validators.required])],
+      url: [null],
       filePath: [null, Validators.compose([Validators.required])],
       fileInfo: [null],
       rowID: [null],
     });
     this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 300;
-    this.cropperSettings.height = 300;
+    this.cropperSettings.width = 2000;
+    this.cropperSettings.height = 1500;
     this.cropperSettings.cropperDrawSettings.lineDash = true;
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
-    this.cropperSettings.canvasHeight = 350;
-    this.cropperSettings.canvasWidth = 350;
-    this.cropperSettings.croppedHeight = 200;
-    this.cropperSettings.croppedWidth = 200;
+    this.cropperSettings.canvasHeight = 800;
+    this.cropperSettings.canvasWidth = 700;
+    this.cropperSettings.croppedHeight = 768;
+    this.cropperSettings.croppedWidth = 1500;
 
     this.image = {};
   }
