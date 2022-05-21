@@ -7,5 +7,5 @@ export class BackTestModel extends Base implements IBackTest {
   product: string;
   videoUrl: string;
   fileUrl: string;
-cardImagePath: string;
+  cardImagePath: string;
 }

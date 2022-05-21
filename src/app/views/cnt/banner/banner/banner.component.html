@@ -48,6 +48,9 @@
           <!-- OTHER DATA -->
           <div
             class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
+          ></div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
           >
             <!-- {{ item.product }} -->
             عنوان
@@ -110,14 +113,6 @@
         'flex-column': viewMode === 'grid'
       }"
     >
-      <div class="list-thumb">
-        <img
-          [src]=""
-          width="100px"
-          height="50px"
-          alt="تصویری وجود ندارد"
-        />
-      </div>
       <div
         class="flex-grow-1"
         [ngClass]="{
@@ -129,8 +124,16 @@
           class="card-body align-self-center text-center d-flex align-items-lg-center row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
-          <div class="align-self-center">
+          <div class="align-self-center mr-2">
             {{ item.id }}
+          </div>
+          <div class="list-thumb">
+            <img
+              [src]="this.FilePath"
+              alt="تصویری وجود ندارد"
+              width="50px"
+              height="50px"
+            />
           </div>
           <!-- OTHER DATA -->
           <a href="" class="w-40 col w-sm-100">
