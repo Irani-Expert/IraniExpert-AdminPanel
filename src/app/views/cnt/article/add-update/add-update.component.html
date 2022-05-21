@@ -48,10 +48,9 @@
           class="form-control form-control-rounded"
           (ngModelChange)="selectGroup($event)"
           [ngModel]="addUpdate.groupID"
+          *ngFor="let item of groupList"
         >
-          <option value="0">تنظیمات</option>
-          <option value="1">مقاله</option>
-          <option value="2">FAQ</option>
+          <option value="{{ item.value }}">{{ item.title }}</option>
         </select>
         <small
           *ngIf="
@@ -86,16 +85,15 @@
       </div>
       <div class="col-md-12 form-group mb-3">
         <div class="row">
-
           <img-cropper
-          class="col-4 text-start d-inline-block"
+            class="col-4 text-start d-inline-block"
             [image]="image"
             [settings]="cropperSettings"
           ></img-cropper>
 
           <!-- show image from addupdate.filtePath -->
           <img
-          class="col-8 mt-5"
+            class="col-8 mt-5"
             *ngIf="image?.image"
             [src]="image?.image"
             [width]="cropperSettings.croppedWidth"
@@ -103,15 +101,14 @@
           />
         </div>
 
-          <div class="col-12 mt-2">
-            <button
-              type="button"
-              class="btn btn-rounded btn-outline-dark"
-              (click)="uploadFile(image)"
-            >
-              آپلود کن
-            </button>
-
+        <div class="col-12 mt-2">
+          <button
+            type="button"
+            class="btn btn-rounded btn-outline-dark"
+            (click)="uploadFile(image)"
+          >
+            آپلود کن
+          </button>
         </div>
       </div>
 

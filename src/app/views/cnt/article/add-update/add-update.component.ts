@@ -9,6 +9,8 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { ToastrService } from 'ngx-toastr';
 import { CropperSettings } from 'ngx-img-cropper';
 import { ArticleService } from '../article/article.service';
+import { GroupModel } from 'src/app/views/bas/group/group.model';
+import { GroupService } from 'src/app/views/bas/group/group.service';
 
 @Component({
   selector: 'app-add-update',
@@ -17,6 +19,7 @@ import { ArticleService } from '../article/article.service';
 })
 export class AddUpdateComponent implements OnInit {
   addUpdate: ArticleModel = new ArticleModel();
+  groupList: GroupModel[] = new Array<GroupModel>();
   addForm: FormGroup;
   ckeConfig: CKEDITOR.config;
   @ViewChild('myckeditor') ckeditor: CKEditorComponent;
@@ -29,10 +32,12 @@ export class AddUpdateComponent implements OnInit {
     private modalService: NgbModal,
     private _router: Router,
     private _fileUploaderService: FileUploaderService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _groupService: GroupService
   ) {}
 
   ngOnInit(): void {
+    this.getGroupList();
     this.addUpdate = new ArticleModel();
     this.addUpdate.id = parseInt(
       this._route.snapshot.paramMap.get('articleId') ?? '0'
@@ -43,7 +48,6 @@ export class AddUpdateComponent implements OnInit {
       extraPlugins: 'divarea',
       forcePasteAsPlainText: true,
       removePlugins: 'exportpdf',
-
     };
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
@@ -76,7 +80,7 @@ export class AddUpdateComponent implements OnInit {
     //this.log += new Date() + "<br />";
   }
 
-  uploadFile(image: { image: string; }) {
+  uploadFile(image: { image: string }) {
     this._fileUploaderService.uploadFile(image.image, 'articles').subscribe(
       (res: Result<string[]>) => {
         debugger;
@@ -126,6 +130,27 @@ export class AddUpdateComponent implements OnInit {
         );
       }
     );
+  }
+
+  async getGroupList() {
+    await this._groupService
+      .getTitleValues(0, 10000, 'ID', null, 'Group')
+      .subscribe(
+        (res: Result<GroupModel[]>) => {
+          this.groupList = res.data;
+          //  this.page.totalElements = res.data.length;
+        },
+        (error) => {
+          this.toastr.error(
+            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+            null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+        }
+      );
   }
 
   async addOrUpdate(row: ArticleModel) {
