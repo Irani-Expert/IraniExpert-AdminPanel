@@ -46,14 +46,16 @@ export class BannerComponent implements OnInit {
       rowID: [null],
     });
     this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 7000;
+    this.cropperSettings.width = 9000;
     this.cropperSettings.height = 5000;
     this.cropperSettings.cropperDrawSettings.lineDash = true;
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
+    this.cropperSettings.dynamicSizing=true;
     this.cropperSettings.canvasHeight = 300;
     this.cropperSettings.canvasWidth = 200;
     this.cropperSettings.croppedHeight = 500;
     this.cropperSettings.croppedWidth = 500;
+    this.cropperSettings.keepAspect=true ;
 
     this.image = {};
   }

@@ -403,12 +403,12 @@
               <img-cropper
                 [image]="image"
                 [settings]="cropperSettings"
-                [width]="cropperSettings.croppedWidth"
-                [height]="cropperSettings.croppedHeight"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="16/ 9"
                 class="col"
               ></img-cropper>
             </div>
-            <div class="col-6 text-start">
+            <div class="col-12 text-start">
               <img
                 class="col-6"
                 *ngIf="image?.image"
