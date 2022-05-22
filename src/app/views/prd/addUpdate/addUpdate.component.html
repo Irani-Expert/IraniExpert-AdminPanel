@@ -7,7 +7,7 @@
           <!-- cardImagePath img -->
           <div class="col-md-12">
             <div class="row form-group mb-3">
-              <div class="col-md-6 text-start">
+              <div class="col-md-12 text-start">
                 <img
                   *ngIf="addUpdate?.cardImagePath"
                   [src]="bannerModel?.filePath"
@@ -23,7 +23,7 @@
                   class="col"
                 ></img-cropper>
               </div>
-              <div class="col-6 text-start">
+              <div class="col-12 text-start">
                 <img
                   class="col"
                   *ngIf="image?.image"
@@ -32,9 +32,9 @@
                   [width]="cropperSettings.croppedWidth"
                   [height]="cropperSettings.croppedHeight"
                 />
-
+                <br />
                 <button
-                  class="btn btn-primary col-2"
+                  class="btn btn-primary mt-5 col-2"
                   (click)="uploadFile(image)"
                 >
                   آپلود

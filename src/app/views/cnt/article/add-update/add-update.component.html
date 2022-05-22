@@ -86,14 +86,14 @@
       <div class="col-md-12 form-group mb-3">
         <div class="row">
           <img-cropper
-            class="col-4 text-start d-inline-block"
+            class="col-12 text-start d-inline-block"
             [image]="image"
             [settings]="cropperSettings"
           ></img-cropper>
 
           <!-- show image from addupdate.filtePath -->
           <img
-            class="col-8 mt-5"
+            class="col-12 mt-5"
             *ngIf="image?.image"
             [src]="image?.image"
             [width]="cropperSettings.croppedWidth"
