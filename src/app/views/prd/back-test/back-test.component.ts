@@ -38,7 +38,7 @@ export class BackTestComponent implements OnInit {
       {
         title: [null, Validators.compose([Validators.required])],
         description: [null],
-        product: [null, Validators.compose([Validators.required])],
+        product: [null],
         videoUrl: [null],
         fileUrl: [null],
         cardImagePath: [null],
