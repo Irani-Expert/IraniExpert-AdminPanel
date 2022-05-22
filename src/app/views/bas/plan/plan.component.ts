@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { PlanOptionComponent } from '../plan-option/plan-option.component';
 import { PlanModel } from './plan.model';
 import { PlanService } from './plan.service';
 
@@ -199,4 +200,11 @@ async addOrUpdate(row: PlanModel) {
 
   this.getPlanListByProductId(this.pageIndex, this.pageIndex);
 }
+
+
+openPlanOptionMoadl(item:PlanModel){
+  const modalRef = this.modalService.open(PlanOptionComponent, { size: 'md', ariaLabelledBy: 'modal-basic-title' });
+  modalRef.componentInstance.planId = item.id;
+}
+
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-plan-option',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./plan-option.component.scss']
 })
 export class PlanOptionComponent implements OnInit {
-
-  constructor() { }
+  @Input() planId:number;
+  constructor(public activeModal: NgbActiveModal) {
+    
+   }
 
   ngOnInit(): void {
   }

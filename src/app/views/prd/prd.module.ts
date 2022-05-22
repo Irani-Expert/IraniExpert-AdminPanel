@@ -18,7 +18,8 @@ import { ImageCropperModule } from 'ngx-img-cropper';
 import { PlanComponent } from '../bas/plan/plan.component';
 import { ProductTypePipe } from 'src/app/shared/pipes/product-type.pipe';
 import { PlanOptionComponent } from '../bas/plan-option/plan-option.component';
-import { FacilitiyComponent } from './facilitiy/facilitiy.component';
+import { FacilityComponent } from './facility/facility.component';
+
 
 
 
@@ -35,7 +36,7 @@ import { FacilitiyComponent } from './facilitiy/facilitiy.component';
     CommentComponent,
     ProductTypePipe,
     PlanOptionComponent,
-    FacilitiyComponent
+    FacilityComponent
 
   ],
   imports: [

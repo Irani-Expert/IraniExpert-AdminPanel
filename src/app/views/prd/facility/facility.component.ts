@@ -3,19 +3,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { FacilitiyModel } from './facilitiy.model';
-import { FacilitiyService } from './facility.service';
+import { FacilityModel } from './facility.model';
+import { FacilityService } from './facility.service';
+
 
 
 @Component({
   selector: 'app-facilitiy',
-  templateUrl: './facilitiy.component.html',
-  styleUrls: ['./facilitiy.component.scss']
+  templateUrl: './facility.component.html',
+  styleUrls: ['./facility.component.scss']
 })
-export class FacilitiyComponent implements OnInit {
-  rows: FacilitiyModel[] = new Array<FacilitiyModel>();
+export class FacilityComponent implements OnInit {
+  rows: FacilityModel[] = new Array<FacilityModel>();
   allSelected: boolean;
-  addUpdate: FacilitiyModel;
+  addUpdate: FacilityModel;
   addForm: FormGroup;
  @Input() productId:number ;
   pageIndex = 1;
@@ -24,7 +25,7 @@ export class FacilitiyComponent implements OnInit {
   
 
   constructor(
-    public _facilitiyService : FacilitiyService,
+    public _facilityService : FacilityService,
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
@@ -47,13 +48,13 @@ export class FacilitiyComponent implements OnInit {
   setPage(pageInfo:number) {
     this.pageIndex = pageInfo;
 
-    this.getFacilitiyByProductId(this.pageIndex , this.pageSize);
+    this.getFacilityByProductId(this.pageIndex , this.pageSize);
   }
-  async getFacilitiyByProductId(pageNumber: number, seedNumber: number) {
-    this._facilitiyService
-      .getFacilitiyByProductId(pageNumber, seedNumber, 'ID', 'Facilitiy', this.productId)
+  async getFacilityByProductId(pageNumber: number, seedNumber: number) {
+    this._facilityService
+      .getFacilityByProductId(pageNumber, seedNumber, 'ID', 'Facilitiy', this.productId)
       .subscribe(
-        (res: Result<FacilitiyModel[]>) => {
+        (res: Result<FacilityModel[]>) => {
           this.rows = res.data;
         },
         (error) => {
@@ -69,12 +70,12 @@ export class FacilitiyComponent implements OnInit {
       );
   }
 
-  deleteLearn(id: number, modal: any) {
+  deleteFacility(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (_result) => {
-          this._facilitiyService.delete(id,"facility").toPromise().then((res) => {
+          this._facilityService.delete(id,"Facility").toPromise().then((res) => {
             if(res.success){
 
               this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
@@ -89,7 +90,7 @@ export class FacilitiyComponent implements OnInit {
 
               });
             }
-            this.getFacilitiyByProductId(
+            this.getFacilityByProductId(
               this.pageIndex,
               this.pageSize
             );
@@ -112,9 +113,9 @@ export class FacilitiyComponent implements OnInit {
       );
   }
   //Add OR Edit!!!!!!!!!!!!!!!
-  addorEdit(content: any, row: FacilitiyModel) {
+  addorEdit(content: any, row: FacilityModel) {
     if (row === undefined) {
-      row = new FacilitiyModel();
+      row = new FacilityModel();
       row.id = 0;
       row.productId = this.productId;
       row.product = null;
@@ -137,10 +138,10 @@ export class FacilitiyComponent implements OnInit {
       );
   }
 
-  async addOrUpdate(row: FacilitiyModel) {
+  async addOrUpdate(row: FacilityModel) {
     if (row.id === 0) {
-      await this._facilitiyService
-        .create(row, 'learn')
+      await this._facilityService
+        .create(row, 'Facility')
         .toPromise()
         .then(
           (data) => {
@@ -164,8 +165,8 @@ export class FacilitiyComponent implements OnInit {
           }
         );
     } else {
-      await this._facilitiyService
-        .update(row.id, row, 'learn')
+      await this._facilityService
+        .update(row.id, row, 'Facility')
         .toPromise()
         .then(
           (data) => {
@@ -190,7 +191,7 @@ export class FacilitiyComponent implements OnInit {
         );
     }
 
-    this.getFacilitiyByProductId(this.pageIndex, this.pageIndex);
+    this.getFacilityByProductId(this.pageIndex, this.pageIndex);
   }
   selectType($event:any){
     if ($event != undefined) {
