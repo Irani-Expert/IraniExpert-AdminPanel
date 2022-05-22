@@ -18,10 +18,10 @@ export class FacilitiyComponent implements OnInit {
   addUpdate: FacilitiyModel;
   addForm: FormGroup;
  @Input() productId:number ;
- products: any[] = [];
   pageIndex = 1;
+  products: any[] = [];
   pageSize = 12;
-  rowId: number;
+  
 
   constructor(
     public _facilitiyService : FacilitiyService,
@@ -122,7 +122,7 @@ export class FacilitiyComponent implements OnInit {
     this.addUpdate = row;
     this.modalService
 
-      .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
+      .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
