@@ -35,6 +35,7 @@ export class BannerComponent implements OnInit {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
+      description: [null,Validators.compose([Validators.maxLength(500)])],
       type: [null, Validators.compose([Validators.required])],
       linkType: [null, Validators.compose([Validators.required])],
       fileType: [null,Validators.compose([Validators.required])],
@@ -45,8 +46,8 @@ export class BannerComponent implements OnInit {
       rowID: [null],
     });
     this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 4000;
-    this.cropperSettings.height = 2500;
+    this.cropperSettings.width = 7000;
+    this.cropperSettings.height = 5000;
     this.cropperSettings.cropperDrawSettings.lineDash = true;
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
     this.cropperSettings.canvasHeight = 300;

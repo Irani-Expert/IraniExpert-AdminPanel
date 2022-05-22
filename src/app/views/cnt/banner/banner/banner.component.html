@@ -301,6 +301,28 @@
           >
         </div>
 
+
+        <div class="col-md-12 form-group mb-3">
+          <label for="description">توضیحات</label>
+          <textarea
+            name=""
+            cols="30"
+            rows="10"
+            type="text"
+            class="form-control form-control-rounded"
+            id="description"
+            [formControl]="addForm.controls['description']"
+            [(ngModel)]="addUpdate.description"
+            maxlength="501"
+          >
+          </textarea>
+          <small
+            *ngIf="addForm.controls['description'].hasError('maxlength')"
+            class="mat-text-warn m-t-negative"
+            >توضیحات بیشتر از حد مجاز</small
+          >
+        </div>
+
         <!-- type  -->
         <div class="col-md-6 form-group mb-3">
           <label for="type">جایگاه را مشخص کنید</label>
