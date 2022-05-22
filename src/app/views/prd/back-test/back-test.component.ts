@@ -46,14 +46,14 @@ export class BackTestComponent implements OnInit {
       { validator: this.checkValidFileOrUrl }
     );
     this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 500;
-    this.cropperSettings.height = 300;
-    this.cropperSettings.canvasHeight = 400;
-    this.cropperSettings.canvasWidth = 400;
-    this.cropperSettings.croppedHeight = 100;
-    this.cropperSettings.croppedWidth = 100;
+    this.cropperSettings.width = 2000;
+    this.cropperSettings.height = 1500;
     this.cropperSettings.cropperDrawSettings.lineDash = true;
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
+    this.cropperSettings.canvasHeight = 800;
+    this.cropperSettings.canvasWidth = 700;
+    this.cropperSettings.croppedHeight = 1000;
+    this.cropperSettings.croppedWidth = 1000;
     this.image = {};
   }
   checkValidFileOrUrl(g: FormGroup) {

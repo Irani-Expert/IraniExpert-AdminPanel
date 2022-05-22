@@ -51,8 +51,8 @@ export class BannerComponent implements OnInit {
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
     this.cropperSettings.canvasHeight = 800;
     this.cropperSettings.canvasWidth = 700;
-    this.cropperSettings.croppedHeight = 768;
-    this.cropperSettings.croppedWidth = 1500;
+    this.cropperSettings.croppedHeight = 1000;
+    this.cropperSettings.croppedWidth = 1000;
 
     this.image = {};
   }
