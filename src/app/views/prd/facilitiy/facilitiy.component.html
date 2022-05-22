@@ -1,1 +1,137 @@
-<p>facilitiy works!</p>
+<div class="mb-4 d-block">
+  <button
+    class="btn btn-primary m-1"
+    type="button"
+    (click)="addorEdit(addUpdateModal, undefined)"
+  >
+    ایجاد
+  </button>
+</div>
+<ngb-accordion
+  #acc="ngbAccordion"
+  [closeOthers]="true"
+  [destroyOnHide]="false"
+  *ngFor="let item of rows"
+>
+  <ngb-panel class="ngb-panel text-white" title="{{ item.title }}">
+    <ng-template ngbPanelContent>
+      <div class="row">
+        <div class="col-10 text-start mr-5">
+          {{ item.description }}
+        </div>
+        <div class="col-10 text-start">
+          <button
+            (click)="addorEdit(addUpdateModal, item)"
+            class="btn btn-info mt-4"
+          >
+            ویرایش
+          </button>
+          <button
+            type="button"
+            (click)="deleteFacilitiy(item.id, deleteConfirmModal)"
+            class="btn btn-danger mt-4 ml-2"
+          >
+            حذف
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+<!-- Delete -->
+<ng-template #deleteConfirmModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">حذف آموزش</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از حذف مطمئنید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
+    </button>
+  </div>
+</ng-template>
+
+<!-- Add update -->
+<ng-template #addUpdateModal let-modal>
+  <form [formGroup]="addForm">
+    <div class="row">
+      <div class="col-md-6 form-group mb-3">
+        <label for="title">نام امکان</label>
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="5"
+          type="text"
+          class="form-control form-control-rounded"
+          id="title"
+          placeholder="سوال را وارد نمایید."
+          [formControl]="addForm.controls['title']"
+          [(ngModel)]="addUpdate.title"
+        ></textarea>
+        <small
+          *ngIf="
+            addForm.controls['title'].hasError('required') &&
+            addForm.controls['title'].touched
+          "
+          class="mat-text-warn m-t-negative"
+          >ورود نام امکان ضروری است</small
+        >
+      </div>
+
+      <div class="col-md-6 form-group mb-3">
+        <label for="title">توضیحات</label>
+        <textarea
+          name=""
+          cols="30"
+          rows="5"
+          type="text"
+          class="form-control form-control-rounded"
+          id="description"
+          placeholder="توضیحات درباره امکان"
+          [formControl]="addForm.controls['description']"
+          [(ngModel)]="addUpdate.description"
+        ></textarea>
+        <small
+          *ngIf="
+            addForm.controls['description'].hasError('required') &&
+            addForm.controls['description'].touched
+          "
+          class="mat-text-warn m-t-negative"
+          >ورود توضیحات امکان ضروری است</small
+        >
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded mb-4"
+        (click)="addorEdit(addUpdateModal, item)"
+      >
+        ذخیره
+      </button>
+    </div>
+  </form>
+</ng-template>

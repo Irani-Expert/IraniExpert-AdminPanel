@@ -9,7 +9,13 @@ import { BackTestComponent } from './back-test/back-test.component';
 import { CommentComponent } from './comment/comment.component';
 import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { PlanComponent } from '../bas/plan/plan.component';
+import { FacilitiyComponent } from './facilitiy/facilitiy.component';
 const routes: Routes = [
+  {
+    path: 'facilitiy/:productId',
+    component: FacilitiyComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path: 'addUpdate',
     component: AddUpdateComponent,
@@ -26,7 +32,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'lern/:productId',
+    path: 'learn/:productId',
     component: LearnComponent,
     canActivate: [AuthGuard]
   },
