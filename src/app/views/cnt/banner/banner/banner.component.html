@@ -370,7 +370,7 @@
           *ngIf="addUpdate.fileType === 0 && addUpdate.fileType !== null"
         >
           <div class="row form-group mb-3">
-            <div class="col-12 text-start">
+            <div class="col-6 text-start">
               <img
                 *ngIf="addUpdate?.cardImagePath"
                 [src]="bannerModel?.filePath"
@@ -386,9 +386,9 @@
                 class="col"
               ></img-cropper>
             </div>
-            <div class="col-12 text-start">
+            <div class="col-6 text-start">
               <img
-                class="col"
+                class="col-6"
                 *ngIf="image?.image"
                 class="mt-3 mr-3"
                 [src]="image?.image"

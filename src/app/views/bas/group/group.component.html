@@ -1,156 +1,232 @@
 <button
-_ngcontent-tco-c175=""
-type="button"
-class="btn btn-primary m-1"
-(click)="addorEdit(addUpdateModal, undefined)"
+  _ngcontent-tco-c175=""
+  type="button"
+  class="btn btn-primary m-1"
+  (click)="addorEdit(addUpdateModal, undefined)"
 >
-ایجاد
+  ایجاد
 </button>
-
-
-
-
 
 <div class="separator-breadcrumb border-top"></div>
 
-
 <div class="row list-horizontal">
   <div
-
-  class="list-item"
-  [ngClass]="{
-    'col-md-12': viewMode === 'list',
-    'col-md-3': viewMode === 'grid'
-  }"
->
-
-  <div
-    class="card o-hidden mb-4 d-flex"
+    class="list-item"
     [ngClass]="{
-      'flex-row': viewMode === 'list',
-      'flex-column': viewMode === 'grid'
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
     }"
   >
     <div
-      class="flex-grow-1"
+      class="card o-hidden mb-4 d-flex"
       [ngClass]="{
-        'pl-2 d-flex': viewMode === 'list',
-        'd-bock': viewMode === 'grid'
+        'flex-row': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
       }"
     >
-    <div class="list-thumb">
-      <!-- TUMBNAIL -->
-    </div>
-    <div class="align-self-center" *ngIf="rows.length > 0 && rows !== undefined &&rows !== null">
-      ID
-    </div>
       <div
-      id="myHeader"
-        class="card-body align-self-center d-flex align-items-lg-center th-list text-center th-list  row"
-        [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-        *ngIf="rows.length > 0 && rows !== undefined &&rows !== null"
+        class="flex-grow-1"
+        [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-bock': viewMode === 'grid'
+        }"
       >
-        <!-- OTHER DATA -->
-        <div class="m-0 text-muted text-small col  text-lg-center w-15 w-sm-100">
-          <!-- {{ item.product }} -->
-
-عنوان
-   </div>
-        <div class="m-0 text-muted text-small col  text-lg-center w-15 w-sm-100">
-عنوان مجموعه اصلی
+        <div class="list-thumb">
+          <!-- TUMBNAIL -->
         </div>
-        <div class="m-0 text-muted text-small col  text-lg-center w-15 w-sm-100">
-وضعیت
+        <div
+          class="align-self-center"
+          *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
+        >
+          ID
         </div>
-
-        <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
+        <div
+          id="myHeader"
+          class="card-body align-self-center d-flex align-items-lg-center th-list text-center th-list row"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+          *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
+        >
+          <!-- OTHER DATA -->
           <div
-            class="m-0 text-muted text-small    text-lg-center w-15 w-sm-100 item-actions"
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
           >
+            <!-- {{ item.product }} -->
 
-              <h6 class=" text-16 text-primary"> عملیات </h6>
-
+            عنوان
           </div>
           <div
-            class="m-0 text-muted text-small text-lg-center w-15 col  w-sm-100  item-actions"
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
           >
+            عنوان مجموعه اصلی
+          </div>
+          <div
+            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
+          >
+            وضعیت
+          </div>
 
+          <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
+            <div
+              class="m-0 text-muted text-small text-lg-center w-15 w-sm-100 item-actions"
+            >
+              <h6 class="text-16 text-primary">عملیات</h6>
+            </div>
+            <div
+              class="m-0 text-muted text-small text-lg-center w-15 col w-sm-100 item-actions"
+            ></div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
-</div>
   <!-- SINGLE LIST ITEM -->
-  <div *ngFor="let item of rows | paginate: { itemsPerPage: pageSize,
-       currentPage: pageIndex,totalItems: 500 } ; let i = index" class="list-item"
-       [ngClass]="{'col-md-12': viewMode === 'list', 'col-md-3': viewMode === 'grid'}">
-    <div class="card o-hidden mb-4 d-flex"  [ngClass]="{'flex-row-2': viewMode === 'list', 'flex-column': viewMode === 'grid'}">
-
-      <div class="flex-grow-1" [ngClass]="{'pl-2 d-flex': viewMode === 'list', 'd-bock': viewMode === 'grid'}">
-        <div class="card-body align-self-center text-center d-flex align-items-lg-center row "
-        [ngClass]="{'flex-lg-row': viewMode === 'list'}">
-        <div class="align-self-center">
-          {{item.id}}
-        </div>
+  <div
+    *ngFor="
+      let item of rows
+        | paginate
+          : { itemsPerPage: pageSize, currentPage: pageIndex, totalItems: 500 };
+      let i = index
+    "
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }"
+  >
+    <div
+      class="card o-hidden mb-4 d-flex"
+      [ngClass]="{
+        'flex-row-2': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }"
+    >
+      <div
+        class="flex-grow-1"
+        [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-bock': viewMode === 'grid'
+        }"
+      >
+        <div
+          class="card-body align-self-center text-center d-flex align-items-lg-center row"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+        >
+          <div class="align-self-center">
+            {{ item.id }}
+          </div>
           <!-- OTHER DATA -->
-          <a href="" class=" col w-sm-100">
-            <div class="item-title w-100 ">{{item.title}}</div>
+          <a href="" class="col w-sm-100">
+            <div class="item-title w-100">{{ item.title }}</div>
           </a>
-          <div class="m-0 text-muted text-small w-15 col w-sm-100"  *ngIf="item.parentGroupTitle !== null">{{item.parentGroupTitle}}</div>
-          <div class="m-0 text-muted text-small w-15 col w-sm-100" *ngIf="item.parentGroupTitle === null">ندارد</div>
+          <div
+            class="m-0 text-muted text-small w-15 col w-sm-100"
+            *ngIf="item.parentGroupTitle !== null"
+          >
+            {{ item.parentGroupTitle }}
+          </div>
+          <div
+            class="m-0 text-muted text-small w-15 col w-sm-100"
+            *ngIf="item.parentGroupTitle === null"
+          >
+            ندارد
+          </div>
 
           <div class="col">
-          <div class="m-0 text-muted text-small w-15  w-sm-100" *ngIf="item.isActive==1">فعال</div>
-          <div class="m-0 text-muted text-small w-15  w-sm-100" *ngIf="item.isActive==0">غیرفعال</div>
-        </div>
-<div class="col d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block">
-  <div class="row text-center">
-          <div class="m-0 text-muted text-small w-15 w-sm-100  item-actions col-6">
-            <button class="btn btn-icon bg-transparent"
-            (click)="addorEdit(addUpdateModal, item)"
-            [ngClass]="{'d-none': viewMode === 'grid'}">
-              <i class=" text-16 text-primary"> ویرایش </i>
-            </button>
+            <div
+              class="m-0 text-muted text-small w-15 w-sm-100"
+              *ngIf="item.isActive == 1"
+            >
+              فعال
+            </div>
+            <div
+              class="m-0 text-muted text-small w-15 w-sm-100"
+              *ngIf="item.isActive == 0"
+            >
+              غیرفعال
+            </div>
           </div>
-          <div class="m-0 text-muted text-small w-15 w-sm-100  item-actions col-6 ">
-            <button class="btn btn-icon bg-transparent"
-            [ngClass]="{'d-none': viewMode === 'grid'}"
-             (click)="deleteGroup(item.id, deleteConfirmModal)">
-              <i class=" text-16 text-primary">حذف</i>
-            </button>
+          <div
+            class="col d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+          >
+            <div class="row text-center">
+              <div
+                class="m-0 text-muted text-small w-15 w-sm-100 item-actions col-6"
+              >
+                <button
+                  class="btn btn-icon bg-transparent"
+                  (click)="addorEdit(addUpdateModal, item)"
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                >
+                  <i class="text-16 text-primary"> ویرایش </i>
+                </button>
+              </div>
+              <div
+                class="m-0 text-muted text-small w-15 w-sm-100 item-actions col-6"
+              >
+                <button
+                  class="btn btn-icon bg-transparent"
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                  (click)="deleteGroup(item.id, deleteConfirmModal)"
+                >
+                  <i class="text-16 text-primary">حذف</i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-        </div>
-      </div>
-      <div class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none">
+      <div
+        class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
+      >
         <h6 class="text-cneter">عملیات</h6>
-        <button type="button"    [ngClass]="{'d-none': viewMode === 'grid'}"
-        (click)="deleteGroup(item.id, deleteConfirmModal)" class="btn btn-outline-danger col m-1">حذف</button>
-        <button type="button"        (click)="addorEdit(addUpdateModal, item)"
-        [ngClass]="{'d-none': viewMode === 'grid'}" class="btn btn-outline-warning col m-1">ویرایش</button>
-     </div>
+        <button
+          type="button"
+          [ngClass]="{ 'd-none': viewMode === 'grid' }"
+          (click)="deleteGroup(item.id, deleteConfirmModal)"
+          class="btn btn-outline-danger col m-1"
+        >
+          حذف
+        </button>
+        <button
+          type="button"
+          (click)="addorEdit(addUpdateModal, item)"
+          [ngClass]="{ 'd-none': viewMode === 'grid' }"
+          class="btn btn-outline-warning col m-1"
+        >
+          ویرایش
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- PAGINATION CONTROL -->
 
-  <div class="col-md-12 mt-3" *ngIf="rows?.length>0">
-    <pagination-controls (pageChange)="setPage($event)" previousLabel="" nextLabel=""></pagination-controls>
+  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+    <pagination-controls
+      (pageChange)="setPage($event)"
+      previousLabel=""
+      nextLabel=""
+    ></pagination-controls>
   </div>
 </div>
-<div *ngIf="rows?.length==0" class="row text-center">
-  <img src="../../../../../assets/images/97434-no-data-available.gif" class="gif-fluid col-12" alt="">
+<div *ngIf="rows?.length == 0" class="row text-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="gif-fluid col-12"
+    alt=""
+  />
 </div>
 
 <ng-template #deleteConfirmModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-title">حذف محصول</h4>
-    <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
-      (click)="modal.dismiss('Cross click')">
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -158,15 +234,23 @@ class="btn btn-primary m-1"
     <p><strong>آیا از حذف مطمئنید؟</strong></p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary btn-rounded mr-1" (click)="modal.dismiss('cancel')">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
       خیر
     </button>
-    <button type="button" ngbAutofocus class="btn btn-wide btn-danger btn-rounded" (click)="modal.close('Ok')">
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
       بله
     </button>
   </div>
 </ng-template>
-
 
 <ng-template #addUpdateModal let-modal>
   <div class="modal-header">
@@ -189,7 +273,6 @@ class="btn btn-primary m-1"
   <div class="modal-body">
     <form [formGroup]="addForm" (ngSubmit)="submit()">
       <div class="row">
-
         <div class="col-md-6 form-group mb-3">
           <label for="title">عنوان</label>
           <input
@@ -210,7 +293,6 @@ class="btn btn-primary m-1"
           >
         </div>
 
-
         <div class="col-md-6 form-group mb-3">
           <label for="picker1">انتخاب والد</label>
           <select
@@ -220,7 +302,7 @@ class="btn btn-primary m-1"
             [ngModel]="addUpdate.parentID"
           >
             <option value="0">والد ندارد</option>
-            <option *ngFor="let item of rows" value="{{item.id}}">
+            <option *ngFor="let item of rows" value="{{ item.id }}">
               {{ item.title }}
             </option>
           </select>
@@ -267,8 +349,6 @@ class="btn btn-primary m-1"
             <span class="slider"></span>
           </label>
         </div>
-
-
       </div>
     </form>
   </div>
