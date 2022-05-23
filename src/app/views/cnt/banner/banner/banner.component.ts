@@ -35,24 +35,27 @@ export class BannerComponent implements OnInit {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
+      description: [null,Validators.compose([Validators.maxLength(500)])],
       type: [null, Validators.compose([Validators.required])],
       linkType: [null, Validators.compose([Validators.required])],
-      fileType: [null, Validators.compose([Validators.required])],
+      fileType: [null,Validators.compose([Validators.required])],
       isActive: [null, Validators.compose([Validators.required])],
       url: [null],
-      filePath: [null, Validators.compose([Validators.required])],
+      filePath: [null],
       fileInfo: [null],
       rowID: [null],
     });
     this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 2000;
-    this.cropperSettings.height = 1500;
+    this.cropperSettings.width = 9000;
+    this.cropperSettings.height = 5000;
     this.cropperSettings.cropperDrawSettings.lineDash = true;
     this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
-    this.cropperSettings.canvasHeight = 800;
-    this.cropperSettings.canvasWidth = 700;
-    this.cropperSettings.croppedHeight = 1000;
-    this.cropperSettings.croppedWidth = 1000;
+    this.cropperSettings.dynamicSizing=true;
+    this.cropperSettings.canvasHeight = 300;
+    this.cropperSettings.canvasWidth = 200;
+    this.cropperSettings.croppedHeight = 500;
+    this.cropperSettings.croppedWidth = 500;
+    this.cropperSettings.keepAspect=true ;
 
     this.image = {};
   }

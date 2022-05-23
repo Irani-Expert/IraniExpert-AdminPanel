@@ -48,9 +48,9 @@
           class="form-control form-control-rounded"
           (ngModelChange)="selectGroup($event)"
           [ngModel]="addUpdate.groupID"
-          *ngFor="let item of groupList"
+
         >
-          <option value="{{ item.value }}">{{ item.title }}</option>
+          <option   *ngFor="let item of groupList" value="{{ item.value }}">{{ item.title }}</option>
         </select>
         <small
           *ngIf="
