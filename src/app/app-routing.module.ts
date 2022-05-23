@@ -34,6 +34,11 @@ const adminRoutes: Routes = [
     loadChildren: () =>
       import('./views/bsk/bsk.module').then((m) => m.BskModule),
   },
+  {
+    path: 'shr',
+    loadChildren: () =>
+      import('./views/shr/shr.module').then((m) => m.ShrModule),
+  },
 ];
 
 const routes: Routes = [
@@ -48,18 +53,20 @@ const routes: Routes = [
     children: [
       {
         path: 'sessions',
-        loadChildren: () => import('./views/session/session.module').then(m => m.SessionModule)
-      }
-    ]
+        loadChildren: () =>
+          import('./views/session/session.module').then((m) => m.SessionModule),
+      },
+    ],
   },
   {
     path: 'prd',
     children: [
       {
         path: 'prd',
-        loadChildren: () => import('./views/prd/prd.module').then(m => m.PrdModule)
-      }
-    ]
+        loadChildren: () =>
+          import('./views/prd/prd.module').then((m) => m.PrdModule),
+      },
+    ],
   },
 
   {
@@ -67,20 +74,21 @@ const routes: Routes = [
     children: [
       {
         path: 'bas',
-        loadChildren: () => import('./views/bsk/bsk.module').then((m) => m.BskModule),
-      }
-    ]
+        loadChildren: () =>
+          import('./views/bsk/bsk.module').then((m) => m.BskModule),
+      },
+    ],
   },
-
 
   {
     path: 'cnt',
     children: [
       {
         path: 'cnt',
-        loadChildren: () => import('./views/cnt/cnt.module').then(m => m.CntModule)
-      }
-    ]
+        loadChildren: () =>
+          import('./views/cnt/cnt.module').then((m) => m.CntModule),
+      },
+    ],
   },
 
   {
@@ -88,9 +96,20 @@ const routes: Routes = [
     children: [
       {
         path: 'bsk',
-        loadChildren: () => import('./views/bsk/bsk.module').then(m => m.BskModule)
-      }
-    ]
+        loadChildren: () =>
+          import('./views/bsk/bsk.module').then((m) => m.BskModule),
+      },
+    ],
+  },
+  {
+    path: 'shr',
+    children: [
+      {
+        path: 'shr',
+        loadChildren: () =>
+          import('./views/shr/shr.module').then((m) => m.ShrModule),
+      },
+    ],
   },
   // {
   //   path: '',
@@ -106,7 +125,7 @@ const routes: Routes = [
     path: '',
     component: AdminLayoutSidebarLargeComponent,
     children: adminRoutes,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
 
   {

@@ -54,36 +54,44 @@ export class NavigationService {
       description: 'داشبورد مدیریتی ایرانی اکسپرت',
       type: 'link',
       icon: 'i-Bar-Chart',
-      state: '/dashboard/v1'
+      state: '/dashboard/v1',
     },
     {
       name: 'محصولات',
       type: 'link',
       icon: 'i-File-Clipboard-File--Text',
-      state: '/prd/products-list'
+      state: '/prd/products-list',
+    },
+    {
+      name: 'درخواست مشتریان',
+      type: 'link',
+      icon: 'i-Administrator',
+      state: '/shr/user-need',
     },
     {
       name: 'مقالات',
       type: 'link',
       icon: 'i-File-Edit',
-      state: '/cnt/article'
-    },  {
+      state: '/cnt/article',
+    },
+    {
       name: 'بنرها',
       type: 'link',
       icon: 'i-Tag-2',
-      state: '/cnt/banner'
-    },  {
+      state: '/cnt/banner',
+    },
+    {
       name: 'گروه ها',
       type: 'link',
       icon: 'i-Double-Tap',
-      state: '/bas/group'
+      state: '/bas/group',
     },
-   {
-    name: 'سفارشات',
-    type: 'link',
-    icon: 'i-File-Horizontal-Text',
-    state: '/bsk/orders'
-  },
+    {
+      name: 'سفارشات',
+      type: 'link',
+      icon: 'i-File-Horizontal-Text',
+      state: '/bsk/orders',
+    },
     // {
     //     name: 'Forms',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',

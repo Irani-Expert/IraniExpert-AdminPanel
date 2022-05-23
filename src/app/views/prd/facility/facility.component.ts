@@ -6,53 +6,61 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { FacilityModel } from './facility.model';
 import { FacilityService } from './facility.service';
 
-
-
 @Component({
   selector: 'app-facility',
   templateUrl: './facility.component.html',
-  styleUrls: ['./facility.component.scss']
+  styleUrls: ['./facility.component.scss'],
 })
 export class FacilityComponent implements OnInit {
   rows: FacilityModel[] = new Array<FacilityModel>();
   allSelected: boolean;
   addUpdate: FacilityModel;
   addForm: FormGroup;
- @Input() productId:number ;
+  @Input() productId: number;
   pageIndex = 1;
   products: any[] = [];
   pageSize = 12;
-  
 
   constructor(
-    public _facilityService : FacilityService,
+    public _facilityService: FacilityService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _formBuilder: FormBuilder,
-  ) {
-  }
+    private _formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
-      title: [null, Validators.compose([Validators.required,Validators.maxLength(50),Validators.minLength(2)])],
+      title: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.minLength(2),
+        ]),
+      ],
       orderID: [null, Validators.compose([Validators.required])],
-      description: [null , Validators.compose([Validators.maxLength(500)])],
+      description: [null],
       isActive: [null],
-      tableType:[6],
+      tableType: [6],
       rowID: [this.productId],
     });
-  
   }
 
-  setPage(pageInfo:number) {
+  setPage(pageInfo: number) {
     this.pageIndex = pageInfo;
 
-    this.getFacilityByProductId(this.pageIndex , this.pageSize);
+    this.getFacilityByProductId(this.pageIndex, this.pageSize);
   }
   async getFacilityByProductId(pageNumber: number, seedNumber: number) {
     this._facilityService
-      .getFacilityByProductId(pageNumber, seedNumber, 'ID', 'Facilitiy', this.productId)
+      .getFacilityByProductId(
+        pageNumber,
+        seedNumber,
+        'ID',
+        'Facility',
+        this.productId
+      )
       .subscribe(
         (res: Result<FacilityModel[]>) => {
           this.rows = res.data;
@@ -75,37 +83,36 @@ export class FacilityComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (_result) => {
-          this._facilityService.delete(id,"Facility").toPromise().then((res) => {
-            if(res.success){
-
-              this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
+          this._facilityService
+            .delete(id, 'Facility')
+            .toPromise()
+            .then((res) => {
+              if (res.success) {
+                this.toastr.success(
+                  'فرایند حذف موفقیت آمیز بود',
+                  'موفقیت آمیز!',
+                  {
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                  }
+                );
+              } else {
+                this.toastr.error('خطا در حذف', res.message, {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-left',
+                });
+              }
+              this.getFacilityByProductId(this.pageIndex, this.pageSize);
+            })
+            .catch((err) => {
+              this.toastr.error('خطا در حذف', err.message, {
                 timeOut: 3000,
-              positionClass: 'toast-top-left',
-
+                positionClass: 'toast-top-left',
               });
-            }else{
-              this.toastr.error('خطا در حذف',res.message, {
-                timeOut: 3000,
-              positionClass: 'toast-top-left',
-
-              });
-            }
-            this.getFacilityByProductId(
-              this.pageIndex,
-              this.pageSize
-            );
-          })
-          .catch(err=>{
-            this.toastr.error('خطا در حذف',err.message, {
-              timeOut: 3000,
-              positionClass: 'toast-top-left',
             });
-          });
-
         },
         (error) => {
-
-          this.toastr.error('خطا در حذف',error.message, {
+          this.toastr.error('خطا در حذف', error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
           });
@@ -193,9 +200,9 @@ export class FacilityComponent implements OnInit {
 
     this.getFacilityByProductId(this.pageIndex, this.pageIndex);
   }
-  selectType($event:any){
+  selectType($event: any) {
     if ($event != undefined) {
-      this.addUpdate.orderID =parseInt($event);
+      this.addUpdate.orderID = parseInt($event);
     }
   }
 }
