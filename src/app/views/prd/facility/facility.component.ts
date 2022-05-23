@@ -9,7 +9,7 @@ import { FacilityService } from './facility.service';
 
 
 @Component({
-  selector: 'app-facilitiy',
+  selector: 'app-facility',
   templateUrl: './facility.component.html',
   styleUrls: ['./facility.component.scss']
 })

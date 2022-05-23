@@ -202,7 +202,7 @@ async addOrUpdate(row: PlanModel) {
 }
 
 
-openPlanOptionMoadl(item:PlanModel){
+openPlanOptionModal(item:PlanModel){
   const modalRef = this.modalService.open(PlanOptionComponent, { size: 'md', ariaLabelledBy: 'modal-basic-title' });
   modalRef.componentInstance.planId = item.id;
 }
