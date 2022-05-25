@@ -7,24 +7,24 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { ToastrService } from 'ngx-toastr';
-import { CropperSettings } from 'ngx-img-cropper';
 import { ArticleService } from '../article/article.service';
 import { GroupModel } from 'src/app/views/bas/group/group.model';
 import { GroupService } from 'src/app/views/bas/group/group.service';
-
+import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 @Component({
   selector: 'app-add-update',
   templateUrl: './add-update.component.html',
   styleUrls: ['./add-update.component.scss'],
 })
 export class AddUpdateComponent implements OnInit {
+  imgChangeEvt: any = '';
+  cropImagePreview: any = '';
   addUpdate: ArticleModel = new ArticleModel();
   groupList: GroupModel[] = new Array<GroupModel>();
   addForm: FormGroup;
-  ckeConfig: CKEDITOR.config;
+  // ckeConfig: CKEDITOR.config;
   @ViewChild('myckeditor') ckeditor: CKEditorComponent;
-  image: any;
-  cropperSettings: CropperSettings;
+  // cropperSettings: CropperSettings;
   constructor(
     private _formBuilder: FormBuilder,
     private _articleService: ArticleService,
@@ -43,12 +43,12 @@ export class AddUpdateComponent implements OnInit {
       this._route.snapshot.paramMap.get('articleId') ?? '0'
     );
     if (this.addUpdate.id != 0) this.getArticleById(this.addUpdate.id);
-    this.ckeConfig = {
-      allowedContent: false,
-      extraPlugins: 'divarea',
-      forcePasteAsPlainText: true,
-      removePlugins: 'exportpdf',
-    };
+    // this.ckeConfig = {
+    //   allowedContent: false,
+    //   extraPlugins: 'divarea',
+    //   forcePasteAsPlainText: true,
+    //   removePlugins: 'exportpdf',
+    // };
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       brief: [null, Validators.compose([Validators.required])],
@@ -56,16 +56,6 @@ export class AddUpdateComponent implements OnInit {
       isActive: [null],
       description: [null, Validators.compose([Validators.required])],
     });
-    this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 2500;
-    this.cropperSettings.height = 2500;
-    this.cropperSettings.cropperDrawSettings.lineDash = true;
-    this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
-    this.cropperSettings.canvasHeight = 300;
-    this.cropperSettings.canvasWidth = 200;
-    this.cropperSettings.croppedHeight = 500;
-    this.cropperSettings.croppedWidth = 500;
-    this.image = {};
   }
 
   selectGroup($event) {}
@@ -79,38 +69,50 @@ export class AddUpdateComponent implements OnInit {
     console.log('onPaste');
     //this.log += new Date() + "<br />";
   }
-
-  uploadFile(image: { image: string }) {
-    this._fileUploaderService.uploadFile(image.image, 'articles').subscribe(
-      (res: Result<string[]>) => {
-        debugger;
-        if (res.success) {
-          this.addUpdate.cardImagePath = res.data[0];
-          this.toastr.success('با موفقیت آپلود شد', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          //TODO Delete Set AddUpdate.cardImagePAth
-          this.addUpdate.cardImagePath = res.errors[0];
-          this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-        //Todo Image={}
-      },
-      (error) => {
-        this.toastr.error(
-          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-          null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
+  onFileChanged(event: any) {
+    this.imgChangeEvt = event;
+  }
+  cropImg(e: ImageCroppedEvent) {
+    this.cropImagePreview = e.base64;
+  }
+  imgLoad() {}
+  initCropper() {}
+  imgFailed() {
+    alert('image Failed to Show');
+  }
+  uploadFile() {
+    this._fileUploaderService
+      .uploadFile(this.cropImagePreview, 'articles')
+      .subscribe(
+        (res: Result<string[]>) => {
+          debugger;
+          if (res.success) {
+            this.addUpdate.cardImagePath = res.data[0];
+            this.toastr.success('با موفقیت آپلود شد', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            //TODO Delete Set AddUpdate.cardImagePAth
+            this.addUpdate.cardImagePath = res.errors[0];
+            this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
           }
-        );
-      }
-    );
+          //Todo Image={}
+        },
+        (error) => {
+          this.toastr.error(
+            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+            null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+        }
+      );
   }
 
   async getArticleById(id: number) {
