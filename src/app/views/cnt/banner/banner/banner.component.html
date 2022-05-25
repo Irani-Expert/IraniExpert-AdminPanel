@@ -301,7 +301,6 @@
           >
         </div>
 
-
         <div class="col-md-12 form-group mb-3">
           <label for="description">توضیحات</label>
           <textarea
@@ -399,28 +398,29 @@
                 [formControl]="addForm.controls['filePath']"
                 [(ngModel)]="addUpdate.filePath"
               />
-
-              <img-cropper
-                [image]="image"
-                [settings]="cropperSettings"
-                [maintainAspectRatio]="true"
-                [aspectRatio]="16/ 9"
-                class="col"
-              ></img-cropper>
             </div>
-            <div class="col-12 text-start">
-              <img
-                class="col-6"
-                *ngIf="image?.image"
-                class="mt-3 mr-3"
-                [src]="image?.image"
-                [width]="cropperSettings.croppedWidth"
-                [height]="cropperSettings.croppedHeight"
-              />
+            <div class="col-md-7 mt-4">
+              <input type="file" (change)="onFileChanged($event)" />
+
+              <div>
+                <image-cropper
+                  [imageChangedEvent]="imgChangeEvt"
+                  [maintainAspectRatio]="false"
+                  format="jpg"
+                  (imageCropped)="cropImg($event)"
+                  (imageLoaded)="imgLoad()"
+                  (cropperReady)="initCropper()"
+                  (loadImageFailed)="imgFailed()"
+                >
+                </image-cropper>
+              </div>
+              <div class="float-left w-25">
+                <img [src]="cropImagePreview" alt="" />
+              </div>
             </div>
 
             <div class="col-12 mt-2">
-              <button class="btn btn-primary col-2" (click)="uploadFile(image)">
+              <button class="btn btn-primary col-2" (click)="uploadFile()">
                 آپلود
               </button>
             </div>
@@ -430,7 +430,7 @@
                 addForm.controls['filePath'].touched
               "
               class="mat-text-warn m-t-negative"
-              >انتخاب یک و آپلود ضروری است</small
+              >انتخاب یک مورد و آپلود ضروری است</small
             >
           </div>
         </div>

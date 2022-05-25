@@ -1,4 +1,64 @@
-<div class="card container pb-2 pt-2">
+<div class="card container p-4">
+  <form action="">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="title">عنوان</label>
+        <input
+          type="text"
+          class="form-control form-control-rounded"
+          id="title"
+          placeholder
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="brief">متن کوتاه</label>
+        <input
+          type="text"
+          class="form-control form-control-rounded"
+          id="brief"
+          placeholder
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="picker1">انتخاب گروه</label>
+        <select
+          class="form-control form-control-rounded"
+          id="brief"
+          placeholder
+        ></select>
+      </div>
+      <div class="col-md-7 mt-4">
+        <input type="file" (change)="onFileChanged($event)" />
+
+        <div>
+          <image-cropper
+            [imageChangedEvent]="imgChangeEvt"
+            [maintainAspectRatio]="false"
+            format="jpg"
+            (imageCropped)="cropImg($event)"
+            (imageLoaded)="imgLoad()"
+            (cropperReady)="initCropper()"
+            (loadImageFailed)="imgFailed()"
+          >
+          </image-cropper>
+        </div>
+        <div class="float-left w-25">
+          <img [src]="cropImagePreview" alt="" />
+        </div>
+      </div>
+      <div class="col-12 mt-1">
+        <button
+          type="button"
+          class="btn btn-rounded btn-outline-dark"
+          (click)="uploadFile()"
+        >
+          آپلود کن
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- <div class="card container pb-2 pt-2">
   <form [formGroup]="addForm">
     <div class="row">
       <div class="col-md-6 form-group mb-3">
@@ -91,7 +151,7 @@
             [settings]="cropperSettings"
           ></img-cropper>
 
-          <!-- show image from addupdate.filtePath -->
+       show image from addupdate.filtePath
           <img
             class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12"
             *ngIf="image?.image"
@@ -152,4 +212,25 @@
       انصراف
     </button>
   </form>
-</div>
+</div> -->
+<!-- <div class="container col-5 mt-5 text-center">
+  <h3>image Cropper</h3>
+  <div class="col-md-6">
+    <input type="file" (change)="onFileChanged($event)" />
+  </div>
+  <div class="float-left">
+    <image-cropper
+      [imageChangedEvent]="imgChangeEvt"
+      [maintainAspectRatio]="false"
+      format="jpg"
+      (imageCropped)="cropImg($event)"
+      (imageLoaded)="imgLoad()"
+      (cropperReady)="initCropper()"
+      (loadImageFailed)="imgFailed()"
+    >
+    </image-cropper>
+  </div>
+  <div class="float-left w-25">
+    <img [src]="cropImagePreview" alt="" />
+  </div>
+</div> -->
