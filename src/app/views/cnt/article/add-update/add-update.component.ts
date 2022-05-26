@@ -22,9 +22,9 @@ export class AddUpdateComponent implements OnInit {
   addUpdate: ArticleModel = new ArticleModel();
   groupList: GroupModel[] = new Array<GroupModel>();
   addForm: FormGroup;
-  // ckeConfig: CKEDITOR.config;
+  ckeConfig: CKEDITOR.config;
   @ViewChild('myckeditor') ckeditor: CKEditorComponent;
-  // cropperSettings: CropperSettings;
+
   constructor(
     private _formBuilder: FormBuilder,
     private _articleService: ArticleService,
@@ -43,12 +43,12 @@ export class AddUpdateComponent implements OnInit {
       this._route.snapshot.paramMap.get('articleId') ?? '0'
     );
     if (this.addUpdate.id != 0) this.getArticleById(this.addUpdate.id);
-    // this.ckeConfig = {
-    //   allowedContent: false,
-    //   extraPlugins: 'divarea',
-    //   forcePasteAsPlainText: true,
-    //   removePlugins: 'exportpdf',
-    // };
+    this.ckeConfig = {
+      allowedContent: false,
+      extraPlugins: 'divarea',
+      forcePasteAsPlainText: true,
+      removePlugins: 'exportpdf',
+    };
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       brief: [null, Validators.compose([Validators.required])],

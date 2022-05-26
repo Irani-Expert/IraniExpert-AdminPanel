@@ -7,8 +7,18 @@
           type="text"
           class="form-control form-control-rounded"
           id="title"
-          placeholder
+          placeholder="عنوان را وارد نمایید."
+          [formControl]="addForm.controls['title']"
+          [(ngModel)]="addUpdate.title"
         />
+        <small
+          *ngIf="
+            addForm.controls['title'].hasError('required') &&
+            addForm.controls['title'].touched
+          "
+          class="mat-text-warn m-t-negative"
+          >ورود عنوان ضروری است</small
+        >
       </div>
       <div class="col-md-6">
         <label for="brief">متن کوتاه</label>
@@ -16,16 +26,39 @@
           type="text"
           class="form-control form-control-rounded"
           id="brief"
-          placeholder
+          placeholder="متن کوتاه را وارد نمایید."
+          [formControl]="addForm.controls['brief']"
+          [(ngModel)]="addUpdate.brief"
         />
+        <small
+          *ngIf="
+            addForm.controls['brief'].hasError('required') &&
+            addForm.controls['brief'].touched
+          "
+          class="mat-text-warn m-t-negative"
+          >ورود عنوان ضروری است</small
+        >
       </div>
       <div class="col-md-6">
         <label for="picker1">انتخاب گروه</label>
         <select
+          [formControl]="addForm.controls['groupID']"
           class="form-control form-control-rounded"
-          id="brief"
-          placeholder
-        ></select>
+          (ngModelChange)="selectGroup($event)"
+          [ngModel]="addUpdate.groupID"
+        >
+          <option *ngFor="let item of groupList" value="{{ item.value }}">
+            {{ item.title }}
+          </option>
+        </select>
+        <small
+          *ngIf="
+            addForm.controls['groupID'].hasError('required') &&
+            addForm.controls['groupID'].touched
+          "
+          class="mat-text-warn m-t-negative"
+          >انتخاب نوع گروه ضروری است</small
+        >
       </div>
       <div class="col-md-7 mt-4">
         <input type="file" (change)="onFileChanged($event)" />
@@ -46,7 +79,7 @@
           <img [src]="cropImagePreview" alt="" />
         </div>
       </div>
-      <div class="col-12 mt-1">
+      <div class="col-12 mt-1 mb-2">
         <button
           type="button"
           class="btn btn-rounded btn-outline-dark"
@@ -55,7 +88,54 @@
           آپلود کن
         </button>
       </div>
+      <div class="col-md-12 form-group mb-3">
+        <ckeditor
+          [formControl]="addForm.controls['description']"
+          [(ngModel)]="addUpdate.description"
+          name="myckeditor"
+          required
+          [config]="ckeConfig"
+          debounce="500"
+          (paste)="onPasteEditor($event)"
+          (change)="onChangeEditor($event)"
+        >
+        </ckeditor>
+        <small
+          *ngIf="
+            addForm.controls['description'].hasError('required') &&
+            addForm.controls['description'].touched
+          "
+          class="mat-text-warn m-t-negative"
+          >توضیحات ضروری است</small
+        >
+      </div>
     </div>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id !== 0"
+      [disabled]="!addForm.valid"
+      (click)="addOrUpdate(addUpdate)"
+    >
+      ویرایش
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      *ngIf="addUpdate.id === 0"
+      [disabled]="!addForm.valid"
+      (click)="addOrUpdate(addUpdate)"
+    >
+      ذخیره
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      [routerLink]="'/cnt/article'"
+    >
+      انصراف
+    </button>
   </form>
 </div>
 <!-- <div class="card container pb-2 pt-2">

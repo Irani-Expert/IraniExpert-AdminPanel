@@ -53,13 +53,13 @@ export class NavigationService {
       name: 'داشبورد',
       description: 'داشبورد مدیریتی ایرانی اکسپرت',
       type: 'link',
-      icon: 'i-Bar-Chart',
+      icon: 'i-Dashboard',
       state: '/dashboard/v1',
     },
     {
       name: 'محصولات',
       type: 'link',
-      icon: 'i-File-Clipboard-File--Text',
+      icon: 'i-Checkout-Basket',
       state: '/prd/products-list',
     },
     {
