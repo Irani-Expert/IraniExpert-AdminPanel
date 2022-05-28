@@ -45,9 +45,12 @@ export class AddUpdateComponent implements OnInit {
     if (this.addUpdate.id != 0) this.getArticleById(this.addUpdate.id);
     this.ckeConfig = {
       allowedContent: false,
-      extraPlugins: 'divarea',
+      extraPlugins: 'fileBrowser',
       forcePasteAsPlainText: true,
       removePlugins: 'exportpdf',
+      skin: 'moono',
+      defaultLanguage: 'fa',
+      language: 'fa',
     };
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
