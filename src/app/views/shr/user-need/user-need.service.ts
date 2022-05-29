@@ -15,37 +15,4 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
   constructor(public _http: HttpClient) {
     super(_http, environment.api.baseUrl);
   }
-
-  /**
-   * درخواست دریافت همه
-   * @param route
-   * @returns all
-   */
-  GetByTableTypeAndRowId(
-    pageIndex: number,
-    pageSize: number,
-    pageOrder: string,
-    filter: string
-  ): Observable<Result<UserNeedModel[]>> {
-    let _options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'bearer ' + environment.jwtToken,
-      }),
-    };
-    return this._http.get<Result<UserNeedModel[]>>(
-      this._base +
-        '/UserNeed/GetById/' +
-        '/' +
-        '?pagIndex=' +
-        pageIndex +
-        '&pageSize=' +
-        pageSize +
-        '&pageOrder=' +
-        pageOrder +
-        '&filter=' +
-        filter,
-      _options
-    );
-  }
 }

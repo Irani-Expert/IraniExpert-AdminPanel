@@ -25,26 +25,24 @@ export class UserNeedComponent implements OnInit {
   setPage(pageInfo: number) {
     this.pageIndex = pageInfo;
 
-    this.GetUserNeedById(this.pageIndex, this.pageSize);
+    this.GetUserNeedById();
   }
-  async GetUserNeedById(pageNumber: number, seedNumber: number) {
-    this._UserNeedService
-      .get(pageNumber, seedNumber, 'ID', 'UserNeed', '')
-      .subscribe(
-        (res: Result<UserNeedModel[]>) => {
-          this.rows = res.data;
-        },
-        (_error) => {
-          // this.toastr.error(
-          //   'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-          //   null,
-          //   {
-          //     closeButton: true,
-          //     positionClass: 'toast-top-left',
-          //   }
-          // );
-        }
-      );
+  async GetUserNeedById() {
+    this._UserNeedService.get(0, 1000, 'ID', null, 'UserNeed').subscribe(
+      (res: Result<UserNeedModel[]>) => {
+        this.rows = res.data;
+      },
+      (_error) => {
+        // this.toastr.error(
+        //   'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+        //   null,
+        //   {
+        //     closeButton: true,
+        //     positionClass: 'toast-top-left',
+        //   }
+        // );
+      }
+    );
   }
   // deleteUserNeed(_id: any, modal: any) {
   //   this.modalService
