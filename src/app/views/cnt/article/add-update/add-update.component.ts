@@ -44,6 +44,7 @@ export class AddUpdateComponent implements OnInit {
     );
     if (this.addUpdate.id != 0) this.getArticleById(this.addUpdate.id);
     this.ckeConfig = {
+      extraPlugins: 'filebrowser',
       allowedContent: false,
       forcePasteAsPlainText: true,
       removePlugins: 'exportpdf',

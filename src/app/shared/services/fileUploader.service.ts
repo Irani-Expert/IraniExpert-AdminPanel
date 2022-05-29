@@ -19,9 +19,9 @@ export class FileUploaderService {
    */
   uploadFile(t: string, folder: string): Observable<Result<string[]>> {
     const payload = new FormData();
-    var myFile:Blob=this.dataURItoBlob(t);
-    debugger
-    payload.append('file',myFile,"banner.jpg");
+    var myFile: Blob = this.dataURItoBlob(t);
+    debugger;
+    payload.append('file', myFile, 'banner.jpg');
     return this._http.post<Result<string[]>>(
       this.url + '?folder=' + folder,
       payload,

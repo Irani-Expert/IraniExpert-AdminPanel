@@ -12,7 +12,8 @@
               <image-cropper
                 [imageChangedEvent]="imgChangeEvt"
                 [maintainAspectRatio]="false"
-                format="jpg"
+                format="png"
+                [resizeToWidth]="1280"
                 (imageCropped)="cropImg($event)"
                 (imageLoaded)="imgLoad()"
                 (cropperReady)="initCropper()"

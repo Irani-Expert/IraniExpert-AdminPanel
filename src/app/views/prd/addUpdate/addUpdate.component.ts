@@ -79,10 +79,13 @@ export class AddUpdateComponent implements OnInit {
     this.imgChangeEvt = event;
   }
   cropImg(e: ImageCroppedEvent) {
+    debugger;
     this.cropImagePreview = e.base64;
   }
   imgLoad() {}
-  initCropper() {}
+  initCropper(event: any) {
+    debugger;
+  }
   imgFailed() {
     alert('image Failed to Show');
   }

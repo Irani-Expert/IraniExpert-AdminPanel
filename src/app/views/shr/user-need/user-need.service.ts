@@ -25,9 +25,7 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
     pageIndex: number,
     pageSize: number,
     pageOrder: string,
-    filter: string,
-    productId: number,
-    tableType: number
+    filter: string
   ): Observable<Result<UserNeedModel[]>> {
     let _options = {
       headers: new HttpHeaders({
@@ -37,10 +35,8 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
     };
     return this._http.get<Result<UserNeedModel[]>>(
       this._base +
-        '/UserNeed/GetByTableTypeAndRowId/' +
-        productId +
+        '/UserNeed/GetById/' +
         '/' +
-        tableType +
         '?pagIndex=' +
         pageIndex +
         '&pageSize=' +
@@ -48,11 +44,7 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
         '&pageOrder=' +
         pageOrder +
         '&filter=' +
-        filter +
-        '&productId=' +
-        productId +
-        '&tableType=' +
-        tableType,
+        filter,
       _options
     );
   }
