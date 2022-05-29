@@ -67,7 +67,7 @@
           <image-cropper
             [imageChangedEvent]="imgChangeEvt"
             [maintainAspectRatio]="false"
-            format="png"
+            format="webp"
             [resizeToWidth]="1280"
             (imageCropped)="cropImg($event)"
             (imageLoaded)="imgLoad()"
@@ -109,6 +109,19 @@
           class="mat-text-warn m-t-negative"
           >توضیحات ضروری است</small
         >
+      </div>
+      <div class="col-md-6 form-group mb-3 mt-3">
+        <label class="m-1">فعال</label>
+        <label class="switch switch-primary mr-2 m-2">
+          <span>غیرفعال</span>
+          <input
+            [(ngModel)]="addUpdate.isActive"
+            [formControl]="addForm.controls['isActive']"
+            type="checkbox"
+            id="isActive"
+          />
+          <span class="slider"></span>
+        </label>
       </div>
     </div>
     <button
