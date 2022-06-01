@@ -12,7 +12,7 @@
 <div class="row justify-content-lg-start justify-content-center">
   <div class="col-lg-4 col-md-6 col-sm-8 col-12" *ngFor="let item of rows">
     <div class="card mb-2">
-      <div class="card-body text-center">
+      <div class="card-body">
         <div class="bg-info w-100 rounded-top rounded-bottom">
           <h4 class="p-2 pt-3 mb-1 mr-1 text-white">پلن : {{ item.title }}</h4>
         </div>
@@ -22,7 +22,7 @@
             {{ item.description }}
           </h5>
         </div>
-        <div class="mt-3">
+        <div class="mt-3 text-center">
           <div
             *ngIf="item.isActive === false"
             class="badge badge-dark badge-pill text-center p-2"
@@ -36,7 +36,7 @@
             فعال
           </div>
         </div>
-        <p class="mt-2 text-muted">{{ item.expireDate | date: "MMMM d, y" }}</p>
+        <p class="mt-2">تاریخ انقضا:{{ item.expireDate | date: " d MMMM " }}</p>
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
           <ngb-panel>
             <ng-template ngbPanelTitle>
@@ -47,18 +47,38 @@
             <ng-template ngbPanelContent>
               <span>
                 <ol>
-                  <li>
-                    {{ item.id }}
+                  <li
+                    class="mb-2 d-flex justify-content-between"
+                    *ngFor="let planOption of item.planOptions"
+                  >
+                    <p class="pt-1">
+                      {{ planOption.title }}
+                    </p>
+                    <span>
+                      <button
+                        (click)="openPlanOptionModal(planOption, item.id)"
+                        class="btn-warning btn rounded-pill mr-1 font-bigger pt-2"
+                      >
+                        <i class="i-Pen-5"></i>
+                      </button>
+                      <button
+                        (click)="
+                          deletePlanOption(planOption.id, deleteConfirmModal)
+                        "
+                        type="button"
+                        class="btn btn-danger rounded-pill mr-1 font-bigger pt-2"
+                      >
+                        <i class="i-Remove"></i>
+                      </button>
+                    </span>
                   </li>
-                  <li>{{ item.productId }}</li>
-                  <li>{{ item.productId }}</li>
                 </ol>
 
                 <button
                   class="btn btn-success col-12 btn-block btn-rounded"
-                  (click)="openPlanOptionModal(item)"
+                  (click)="openPlanOptionModal(undefined, item.id)"
                 >
-                  امکانات
+                  ایجاد امکان
                 </button>
               </span>
             </ng-template>
@@ -225,9 +245,45 @@
   </div>
 </ng-template>
 <!-- Delete -->
+<!-- Delete Plan -->
 <ng-template #deleteConfirmModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">حذف آموزش</h4>
+    <h4 class="modal-title" id="modal-title">حذف پلن</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از حذف مطمئنید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
+    </button>
+  </div>
+</ng-template>
+<!-- Delete Option -->
+<ng-template #deleteConfirmModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">حذف امکان</h4>
     <button
       type="button"
       class="close"

@@ -7,26 +7,27 @@ import { environment } from 'src/environments/environment.prod';
 import { PlanOptionModel } from './plan-option.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlanOptionService extends BaseService<PlanOptionModel, 0> {
   userGuid = environment.jwtToken;
-  constructor(public _http : HttpClient) {
-
+  constructor(public _http: HttpClient) {
     super(_http, environment.api.baseUrl);
   }
-  /** 
- * @param route
- * @return all
-*/
-  getPlanOptionByPlanId(planId: number) : Observable<Result<PlanOptionModel[]>> {
+  /**
+   * @param route
+   * @return all
+   */
+  getPlanOptionByPlanId(planId: number): Observable<Result<PlanOptionModel[]>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer '+environment.jwtToken
+        Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.get<Result<PlanOptionModel[]>>(this._base + "/Plan/GetByPlanID/" + planId ,
-    _options);
+    return this._http.get<Result<PlanOptionModel[]>>(
+      this._base + '/PlanOption/GetByPlanID/' + planId,
+      _options
+    );
   }
 }

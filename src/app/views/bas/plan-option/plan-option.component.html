@@ -1,84 +1,127 @@
-<ng-template #openPlanOptionModal let-modal>
+<div>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">شماره پلن:PlanID</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="close-button"
-      aria-describedby="modal-title"
-    >
+    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <div class="col-md-6 form-group mb-3">
-      <label for="title" class="mr-2 pr-2">امکان</label>
-      <input
-        type="text"
-        class="form-control form-control-rounded"
-        id="title"
-        placeholder="امکان مورد نظر را وارد کنید "
-      />
-    </div>
-    <div class="col-md-12 form-group mb-3">
-      <label for="description">توضیحات</label>
-      <textarea
-        name=""
-        cols="30"
-        rows="4"
-        type="text"
-        class="form-control form-control-rounded"
-        id="description"
-      >
-      </textarea>
-      <!-- <small
+    <form [formGroup]="addForm" class="row">
+      <div class="col-md-6 form-group mb-3">
+        <label for="title" class="mr-2 pr-2">امکان</label>
+        <input
+          [(ngModel)]="addUpdate.title"
+          maxlength="51"
+          minlength="2"
+          type="text"
+          class="form-control form-control-rounded"
+          id="title"
+          [formControl]="addForm.controls['title']"
+          placeholder="امکان مورد نظر را وارد کنید "
+        />
+      </div>
+      <div class="col-md-6 form-group mb-3">
+        <label for="price">قیمت</label>
+        <input
+          type="number"
+          class="form-control form-control-rounded"
+          id="price"
+          placeholder="قیمت مورد نظر را وارد کنید "
+          [formControl]="addForm.controls['price']"
+          [(ngModel)]="addUpdate.price"
+        />
+      </div>
+      <div class="col-md-9 form-group mb-3">
+        <label for="description">توضیحات</label>
+        <textarea
+          name=""
+          rows="3"
+          type="text"
+          class="form-control form-control-rounded"
+          id="description"
+          placeholder="توضیحات امکان پلن"
+          [formControl]="addForm.controls['description']"
+          [(ngModel)]="addUpdate.description"
+        >
+        </textarea>
+        <!-- <small
       *ngIf="addForm.controls['description'].hasError('maxlength')"
       class="mat-text-warn m-t-negative"
       >توضیحات بیشتر از حد مجاز</small
     > -->
-    </div>
-    <div class="col-md-4 form-group mb-3">
-      <label for="price">قیمت</label>
-      <input
-        type="number"
-        class="form-control form-control-rounded"
-        id="price"
-        placeholder="قیمت مورد نظر را وارد کنید "
-      />
-    </div>
-    <div class="col-md-6 form-group mb-3">
-      <label for="title" class="mr-2 pr-2">مسیر آیکون</label>
-      <input
-        type="text"
-        class="form-control form-control-rounded"
-        id="title"
-        placeholder="امکان مورد نظر را وارد کنید "
-      />
-    </div>
-    <!-- isActive -->
-    <div class="form-group col-10 mb-3 mt-3 text-center">
-      <label class="m-2">فعال</label>
-      <label class="switch switch-primary mr-2 m-2">
-        <input type="checkbox" id="isActive" />
-        <span class="slider"></span>
-      </label>
-      <label>غیرفعال</label>
-    </div>
+      </div>
+      <!-- <div class="col-md-6 form-group mb-3">
+        <label for="title" class="mr-2 pr-2">مسیر آیکون</label>
+        <input
+          type="text"
+          class="form-control form-control-rounded"
+          id="title"
+          placeholder="امکان مورد نظر را وارد کنید "
+          [formControl]="addForm.controls['description']"
+          [(ngModel)]="addUpdate.description"
+        />
+      </div> -->
+      <!-- Order ID  -->
+      <div class="col-md-4 form-group mb-3">
+        <label for="orderID">اولویت را مشخص کنید</label>
+        <select
+          [formControl]="addForm.controls['orderID']"
+          class="form-control form-control-rounded"
+          [ngModel]="addUpdate.orderID"
+          (ngModelChange)="selectType($event)"
+        >
+          <option value="0">اولویت بسیار بالا</option>
+          <option value="1">اولویت بالا</option>
+          <option value="2">اولویت متوسط</option>
+          <option value="3">اولویت پایین</option>
+          <option value="4">اولویت بسیار پایین</option>
+        </select>
+        <small
+          *ngIf="
+            addForm.controls['orderID'].hasError('required') &&
+            addForm.controls['orderID'].touched
+          "
+          class="mat-text-warn m-t-negative"
+          >انتخاب نوع گروه ضروری است</small
+        >
+      </div>
+      <!-- isActive -->
+      <div class="form-group col-md-8 mb-3 mt-3 text-center">
+        <label class="m-2">فعال</label>
+        <label class="switch switch-primary mr-2 m-2">
+          <input
+            type="checkbox"
+            id="isActive"
+            [formControl]="addForm.controls['isActive']"
+            [(ngModel)]="addUpdate.isActive"
+          />
+          <span class="slider"></span>
+        </label>
+        <label>غیرفعال</label>
+      </div>
+    </form>
   </div>
-  <!-- <small class="mat-text-warn m-t-negative">عنوان نام ضروری است</small>
-    <small class="mat-text-warn m-t-negative">عنوان بیشتر از حد مجاز است</small>
 
-    <small class="mat-text-warn m-t-negative"> عنوان کوتاه است</small> -->
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary btn-rounded mr-2">
+    <button
+      (click)="close()"
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-2"
+    >
       انصراف
     </button>
     <button
       type="button"
       ngbAutofocus
       class="btn btn-wide btn-danger btn-rounded"
+      (click)="addOrUpdate(addUpdate)"
     >
       ذخیره
     </button>
   </div>
-</ng-template>
+</div>

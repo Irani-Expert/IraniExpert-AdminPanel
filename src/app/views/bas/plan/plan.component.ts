@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { PlanOptionComponent } from '../plan-option/plan-option.component';
+import { PlanOptionModel } from '../plan-option/plan-option.model';
+import { PlanOptionService } from '../plan-option/plan-option.service';
 import { PlanModel } from './plan.model';
 import { PlanService } from './plan.service';
 
@@ -24,24 +26,30 @@ export class PlanComponent implements OnInit {
   pageSize = 12;
 
   constructor(
+    private _planOptionService: PlanOptionService,
     private modalService: NgbModal,
     private _planService: PlanService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
-      title: [null, Validators.compose([Validators.required,Validators.maxLength(50),Validators.minLength(2)])],
+      title: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.minLength(2),
+        ]),
+      ],
       orderID: [null, Validators.compose([Validators.required])],
-      description: [null , Validators.compose([Validators.maxLength(500)])],
+      description: [null, Validators.compose([Validators.maxLength(500)])],
       isActive: [null],
-      expireDate : [null],
+      expireDate: [null],
       price: [null],
-      tableType:[6],
+      tableType: [6],
       iconPath: [null],
     });
   }
@@ -106,10 +114,8 @@ export class PlanComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             });
-          debugger;
         },
         (error) => {
-          debugger;
           this.toastr.error('انصراف از حذف', error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -117,21 +123,148 @@ export class PlanComponent implements OnInit {
         }
       );
   }
-//__________________Add Or Edit
-addorEdit(content: any, row: PlanModel) {
-  if (row === undefined) {
-    row = new PlanModel();
-    row.id = 0;
-    row.productId = this.productId;
-    row.product = null;
-    row.expireDate = null;
-    row.iconPath = null;
-    row.price = null;
+  // Delete Option
+  deletePlanOption(id: number, modal: any) {
+    this.modalService
+      .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
+      .result.then(
+        (_result) => {
+          this._planOptionService
+            .delete(id, 'planOption')
+            .toPromise()
+            .then((res: { success: any; message: string }) => {
+              if (res.success) {
+                debugger;
+                this.toastr.success(
+                  'فرایند حذف موفقیت آمیز بود',
+                  'موفقیت آمیز!',
+                  {
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                  }
+                );
+              } else {
+                debugger;
+
+                this.toastr.error('خطا در حذف', res.message, {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-left',
+                });
+              }
+            })
+            .catch((err) => {
+              this.toastr.error('خطا در حذف', err.message, {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+            });
+        },
+        (error) => {
+          this.toastr.error('انصراف از حذف', error.message, {
+            timeOut: 3000,
+            positionClass: 'toast-top-left',
+          });
+        }
+      );
   }
-  this.addUpdate = row;
-  this.modalService
-    .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
-    .result.then(
+  //__________________Add Or Edit
+  addorEdit(content: any, row: PlanModel) {
+    if (row === undefined) {
+      row = new PlanModel();
+      row.id = 0;
+      row.productId = this.productId;
+      row.product = null;
+      row.expireDate = null;
+      row.iconPath = null;
+      row.price = null;
+    }
+    this.addUpdate = row;
+    this.modalService
+      .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result: boolean) => {
+          if (result != undefined) {
+            this.addOrUpdate(this.addUpdate);
+            this.addForm.reset();
+          }
+        },
+        (reason) => {
+          console.log('Err!', reason);
+          this.addForm.reset();
+        }
+      );
+  }
+
+  async addOrUpdate(row: PlanModel) {
+    if (row.id === 0) {
+      await this._planService
+        .create(row, 'plan')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (_error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    } else {
+      await this._planService
+        .update(row.id, row, 'plan')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    }
+
+    this.getPlanListByProductId(this.pageIndex, this.pageIndex);
+  }
+
+  openPlanOptionModal(item: PlanOptionModel, planId: number) {
+    const modalRef = this.modalService.open(PlanOptionComponent, {
+      size: 'md',
+      ariaLabelledBy: 'modal-basic-title',
+      centered: true,
+    });
+
+    if (item === undefined) {
+      item = new PlanOptionModel();
+      item.planID = planId;
+      item.id = 0;
+    }
+    modalRef.componentInstance.addUpdate = item;
+    modalRef.result.then(
       (result: boolean) => {
         if (result != undefined) {
           this.addOrUpdate(this.addUpdate);
@@ -143,68 +276,5 @@ addorEdit(content: any, row: PlanModel) {
         this.addForm.reset();
       }
     );
-}
-
-async addOrUpdate(row: PlanModel) {
-  if (row.id === 0) {
-    await this._planService
-      .create(row, 'plan')
-      .toPromise()
-      .then(
-        (data) => {
-          if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        },
-        (_error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      );
-  } else {
-    await this._planService
-      .update(row.id, row, 'plan')
-      .toPromise()
-      .then(
-        (data) => {
-          if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        },
-        (error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      );
   }
-
-  this.getPlanListByProductId(this.pageIndex, this.pageIndex);
-}
-
-
-openPlanOptionModal(item:PlanModel){
-  const modalRef = this.modalService.open(PlanOptionComponent, { size: 'md', ariaLabelledBy: 'modal-basic-title' });
-  modalRef.componentInstance.planId = item.id;
-}
-
 }
