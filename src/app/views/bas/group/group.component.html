@@ -297,7 +297,7 @@
             (ngModelChange)="selectParent($event)"
             [ngModel]="addUpdate.parentID"
           >
-            <option value="0">والد ندارد</option>
+            <option value="null">والد ندارد</option>
             <option *ngFor="let item of rows" value="{{ item.id }}">
               {{ item.title }}
             </option>

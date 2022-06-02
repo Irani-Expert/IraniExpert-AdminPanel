@@ -17,14 +17,13 @@ export class GroupComponent implements OnInit {
   allSelected: boolean;
   pageIndex = 1;
   pageSize = 12;
-  addUpdate:GroupModel;
+  addUpdate: GroupModel;
   addForm: FormGroup;
   constructor(
     public _groupService: GroupService,
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder
-
   ) {}
 
   ngOnInit() {
@@ -42,8 +41,8 @@ export class GroupComponent implements OnInit {
     this.getGroupList(this.pageIndex, this.pageSize);
   }
 
-   getGroupList(pageNumber: number, seedNumber: number) {
-     this._groupService
+  getGroupList(pageNumber: number, seedNumber: number) {
+    this._groupService
       .get(pageNumber, seedNumber, 'ID', null, 'Group')
       .subscribe(
         (res: Result<GroupModel[]>) => {
@@ -64,7 +63,7 @@ export class GroupComponent implements OnInit {
       );
   }
 
-  deleteGroup(id, modal) {
+  deleteGroup(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
@@ -111,14 +110,12 @@ export class GroupComponent implements OnInit {
       );
   }
 
-  addorEdit(content, row: GroupModel) {
-
-    debugger
+  addorEdit(content: any, row: GroupModel) {
     if (row === undefined) {
       row = new GroupModel();
       row.id = 0;
-      row.type=null;
-      row.parentID=null;
+      row.type = null;
+      row.parentID = null;
     }
     this.addUpdate = row;
     this.modalService
@@ -126,9 +123,8 @@ export class GroupComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
-              this.addOrUpdate(this.addUpdate);
-              this.addForm.reset();
-
+            this.addOrUpdate(this.addUpdate);
+            this.addForm.reset();
           }
         },
         (reason) => {
@@ -139,79 +135,73 @@ export class GroupComponent implements OnInit {
   }
 
   async addOrUpdate(row: GroupModel) {
-    row.type=0;
-    if(row.id===0){
-      await this._groupService.create(row,"Group").toPromise()
-      .then(data => {
-        if (data.success) {
-          this.toastr.success(data.message, null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-
-            });
-        } else {
-          this.toastr.error(data.message, null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-        }
-      },
-        error => {
-          this.toastr.error("خطا مجدد تلاش فرمایید", null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-        }
-      );
-    }else{
-      await this._groupService.update(row.id,row,"Group").toPromise()
-      .then(data => {
-        if (data.success) {
-          this.toastr.success(data.message, null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-
-            });
-
-        } else {
-          this.toastr.error(data.message, null,
-            {
+    row.type = 0;
+    if (row.id === 0) {
+      await this._groupService
+        .create(row, 'Group')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-        }
-      },
-        error => {
-          this.toastr.error("خطا مجدد تلاش فرمایید", null,
-            {
+          }
+        );
+    } else {
+      await this._groupService
+        .update(row.id, row, 'Group')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-        }
-      );
+          }
+        );
     }
 
-    this.getGroupList(this.pageIndex,this.pageIndex)
-
+    this.getGroupList(this.pageIndex, this.pageIndex);
   }
 
-  selectParent($event:any){
-    debugger
+  selectParent($event: any) {
+    debugger;
     if ($event != undefined) {
-      if(parseInt($event)!==0)
-      this.addUpdate.parentID =parseInt($event);
-      else
-      this.addUpdate.parentID=null;
+      if (parseInt($event) !== 0) this.addUpdate.parentID = parseInt($event);
+      else this.addUpdate.parentID = null;
     }
   }
-  selectType($event:any){
-    debugger
+  selectType($event: any) {
+    debugger;
     if ($event != undefined) {
-      this.addUpdate.type =parseInt($event);
+      this.addUpdate.type = parseInt($event);
     }
   }
 }
