@@ -148,34 +148,41 @@
           <div class="m-0 text-muted text-small col w-25 w-sm-100">
             {{ item.linkType | linkType }}
           </div>
-          <div class="m-0 text-muted text-small col w-25 w-sm-100">
-            {{ item.isActive }}
+          <div class="col">
+            <div
+              *ngIf="item.isActive === false"
+              class="badge badge-dark badge-pill text-center p-2"
+            >
+              غیر فعال
+            </div>
+            <div
+              *ngIf="item.isActive === true"
+              class="badge badge-success badge-pill text-center p-2"
+            >
+              فعال
+            </div>
           </div>
 
           <div
             class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
           >
-            <div class="row text-center">
-              <div
-                class="m-0 text-muted text-small w-25 col-6 w-sm-100 item-actions"
-              >
+            <div class="text-center col-auto d-flex justify-content-between">
+              <div class="w-25 w-sm-100">
                 <button
-                  class="btn btn-icon bg-transparent"
+                  class="btn btn-warning"
                   (click)="addorEdit(addUpdateModal, item)"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                 >
-                  <i class="text-16 text-primary"> ویرایش </i>
+                  ویرایش
                 </button>
               </div>
-              <div
-                class="m-0 text-muted text-small col-6 w-25 w-sm-100 item-actions"
-              >
+              <div class="w-25 w-sm-100">
                 <button
-                  class="btn btn-icon bg-transparent"
+                  class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteBanner(item.id, deleteConfirmModal)"
                 >
-                  <i class="text-16 text-primary">حذف</i>
+                  حذف
                 </button>
               </div>
             </div>

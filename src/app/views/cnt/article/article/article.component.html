@@ -118,7 +118,7 @@
           <div class="m-0 text-muted text-small col w-15 w-sm-100 h-100">
             <img src="{{ item.cardImagePath }}" class="img-card" alt="" />
           </div>
-          <div href="" class="w-40 w-sm-100 col">
+          <div href="" class="w-40 w-sm-100 col briefed-text">
             <div class="item-title">{{ item.title }}</div>
           </div>
 
@@ -127,27 +127,23 @@
           </div>
 
           <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
-            <div class="row text-center">
-              <div
-                class="m-0 text-muted text-small w-15 col text-center w-sm-100 item-actions"
-              >
+            <div class="text-center col-auto d-flex justify-content-around">
+              <div class="w-25 w-sm-100">
                 <button
-                  class="btn btn-icon bg-transparent text-center"
+                  class="btn btn-warning"
                   [routerLink]="'/cnt/article/addUpdate-article/' + item.id"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                 >
-                  <i class="text-16 text-primary"> ویرایش </i>
+                  ویرایش
                 </button>
               </div>
-              <div
-                class="m-0 text-muted text-small w-15 col text-center w-sm-100 item-actions"
-              >
+              <div class="w-25 w-sm-100">
                 <button
-                  class="btn btn-icon bg-transparent text-center"
+                  class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="deleteArticle(item.id, deleteConfirmModal)"
+                  (click)="deleteProduct(item.id, deleteConfirmModal)"
                 >
-                  <i class="text-16 text-primary">حذف</i>
+                  حذف
                 </button>
               </div>
             </div>

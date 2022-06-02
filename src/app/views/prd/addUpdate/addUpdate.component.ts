@@ -28,7 +28,6 @@ export class AddUpdateComponent implements OnInit {
     private _route: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private modalService: NgbModal,
     private _router: Router,
     private _productsService: ProductService,
     private _fileUploaderService: FileUploaderService

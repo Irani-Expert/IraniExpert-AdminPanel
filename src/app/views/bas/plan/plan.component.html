@@ -46,18 +46,18 @@
             </ng-template>
             <ng-template ngbPanelContent>
               <span>
-                <ol>
+                <ul class="list-unstyled">
                   <li
                     class="mb-2 d-flex justify-content-between"
                     *ngFor="let planOption of item.planOptions"
                   >
-                    <p class="pt-1">
+                    <strong class="pt-1 mr-2">
                       {{ planOption.title }}
-                    </p>
+                    </strong>
                     <span>
                       <button
                         (click)="openPlanOptionModal(planOption, item.id)"
-                        class="btn-warning btn rounded-pill mr-1 font-bigger pt-2"
+                        class="btn-warning btn rounded-pill mr-1 font-bigger pt-2 mb-sm-1 mb-xl-0"
                       >
                         <i class="i-Pen-5"></i>
                       </button>
@@ -66,13 +66,13 @@
                           deletePlanOption(planOption.id, deleteConfirmModal)
                         "
                         type="button"
-                        class="btn btn-danger rounded-pill mr-1 font-bigger pt-2"
+                        class="btn btn-danger rounded-pill mr-1 font-bigger pt-2 mb-sm-1 mb-xl-0"
                       >
                         <i class="i-Remove"></i>
                       </button>
                     </span>
                   </li>
-                </ol>
+                </ul>
 
                 <button
                   class="btn btn-success col-12 btn-block btn-rounded"

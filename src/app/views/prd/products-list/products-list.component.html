@@ -140,48 +140,44 @@ class="btn btn-primary m-1"
             {{ item.title }}
           </p>
           <p class="m-0 text-muted text-small w-15 w-sm-100 col">
-            {{ item.type }}
+            {{ item.type | type }}
           </p>
           <div class="col">
-            <p
-              class="m-0 text-muted text-small w-15 w-sm-100"
-              *ngIf="item.isActive == 1"
+            <div
+              *ngIf="item.isActive === false"
+              class="badge badge-dark badge-pill text-center p-2"
+            >
+              غیر فعال
+            </div>
+            <div
+              *ngIf="item.isActive === true"
+              class="badge badge-success badge-pill text-center p-2"
             >
               فعال
-            </p>
-            <p
-              class="m-0 text-muted text-small w-15 w-sm-100"
-              *ngIf="item.isActive == 0"
-            >
-              غیرفعال
-            </p>
+            </div>
           </div>
           <div
             class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
           >
-            <div class="row">
-              <p
-                class="m-0 text-muted text-small w-15 w-sm-100 col-6 item-actions"
-              >
+            <div class="text-center col-auto d-flex justify-content-around">
+              <div class="w-25 w-sm-100">
                 <button
-                  class="btn btn-icon bg-transparent"
+                  class="btn btn-info"
                   [routerLink]="'/prd/addUpdate/' + item.id"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                 >
-                  <i class="text-16 text-primary"> جزئیات </i>
+                  جزئیات
                 </button>
-              </p>
-              <p
-                class="m-0 text-muted text-small w-15 w-sm-100 col-6 item-actions"
-              >
+              </div>
+              <div class="w-25 w-sm-100">
                 <button
-                  class="btn btn-icon bg-transparent"
+                  class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteProduct(item.id, deleteConfirmModal)"
                 >
-                  <i class="text-16 text-primary">حذف</i>
+                  حذف
                 </button>
-              </p>
+              </div>
             </div>
           </div>
         </div>

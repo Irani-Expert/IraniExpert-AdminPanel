@@ -133,42 +133,38 @@
 
           <div class="col">
             <div
-              class="m-0 text-muted text-small w-15 w-sm-100"
-              *ngIf="item.isActive == 1"
+              *ngIf="item.isActive === false"
+              class="badge badge-dark badge-pill text-center p-2"
             >
-              فعال
+              غیر فعال
             </div>
             <div
-              class="m-0 text-muted text-small w-15 w-sm-100"
-              *ngIf="item.isActive == 0"
+              *ngIf="item.isActive === true"
+              class="badge badge-success badge-pill text-center p-2"
             >
-              غیرفعال
+              فعال
             </div>
           </div>
           <div
             class="col d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
           >
-            <div class="row text-center">
-              <div
-                class="m-0 text-muted text-small w-15 w-sm-100 item-actions col-6"
-              >
+            <div class="text-center col-auto d-flex justify-content-around">
+              <div class="w-25 w-sm-100">
                 <button
-                  class="btn btn-icon bg-transparent"
+                  class="btn btn-warning"
                   (click)="addorEdit(addUpdateModal, item)"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                 >
-                  <i class="text-16 text-primary"> ویرایش </i>
+                  ویرایش
                 </button>
               </div>
-              <div
-                class="m-0 text-muted text-small w-15 w-sm-100 item-actions col-6"
-              >
+              <div class="w-25 w-sm-100">
                 <button
-                  class="btn btn-icon bg-transparent"
+                  class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteGroup(item.id, deleteConfirmModal)"
                 >
-                  <i class="text-16 text-primary">حذف</i>
+                  حذف
                 </button>
               </div>
             </div>
@@ -183,15 +179,15 @@
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           (click)="deleteGroup(item.id, deleteConfirmModal)"
-          class="btn btn-outline-danger col m-1"
+          class="btn btn-outline-danger col-6 m-1"
         >
           حذف
         </button>
         <button
           type="button"
-          (click)="addorEdit(addUpdateModal, item)"
+          [routerLink]="'/bas/addUpdate-group/' + item.id"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          class="btn btn-outline-warning col m-1"
+          class="btn btn-outline-warning col-6 m-1"
         >
           ویرایش
         </button>
@@ -369,7 +365,7 @@
       *ngIf="addUpdate.id === 0"
       [disabled]="!addForm.valid"
     >
-      ذخیره
+      ایجاد
     </button>
   </div>
 </ng-template>
