@@ -8,4 +8,5 @@ export class PlanModel extends Base implements IPlan {
   expireDate: Date;
   iconPath: string;
   planOptions: PlanOptionModel[];
+  isFirstBuy: boolean;
 }

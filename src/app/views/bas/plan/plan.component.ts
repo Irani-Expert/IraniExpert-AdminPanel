@@ -51,6 +51,7 @@ export class PlanComponent implements OnInit {
       price: [null],
       tableType: [6],
       iconPath: [null],
+      isFirstBuy: [null],
     });
   }
   setPage(pageInfo: number) {
@@ -177,6 +178,7 @@ export class PlanComponent implements OnInit {
       row.expireDate = null;
       row.iconPath = null;
       row.price = null;
+      row.isFirstBuy = null;
     }
     this.addUpdate = row;
     this.modalService
@@ -249,6 +251,11 @@ export class PlanComponent implements OnInit {
     }
 
     this.getPlanListByProductId(this.pageIndex, this.pageIndex);
+  }
+  selectType($event: any) {
+    if ($event != undefined) {
+      this.addUpdate.orderID = parseInt($event);
+    }
   }
 
   openPlanOptionModal(item: PlanOptionModel, planId: number) {

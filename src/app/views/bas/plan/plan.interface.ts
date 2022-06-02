@@ -8,4 +8,5 @@ export interface IPlan extends IBase {
   expireDate: Date;
   iconPath: string;
   planOptions: PlanOptionModel[];
+  isFirstBuy: boolean;
 }
