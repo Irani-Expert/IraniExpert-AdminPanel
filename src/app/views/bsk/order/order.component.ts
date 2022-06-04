@@ -31,7 +31,7 @@ export class OrderComponent implements OnInit {
   }
   async getOrderList(pageNumber: number, seedNumber: number) {
     this._orderService
-      .get(pageNumber, seedNumber, 'ID', null, 'order')
+      .get(pageNumber, seedNumber, 'ID', null, 'orders')
       .subscribe(
         (res: Result<OrderModel[]>) => {
           this.rows = res.data;
@@ -54,7 +54,7 @@ export class OrderComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then((result) => {
         this._orderService
-          .delete(id, 'order')
+          .delete(id, 'orders')
           .toPromise()
           .then((res) => {
             if (res.success) {

@@ -15,17 +15,4 @@ export class OrderService extends BaseService<OrderModel, 0> {
   constructor(public _http: HttpClient) {
     super(_http, environment.api.baseUrl);
   }
-  getOneByID(orderId: number, route: string): Observable<Result<OrderModel>> {
-    let _options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'bearer ' + environment.jwtToken,
-      }),
-    };
-    return this._http.get<Result<OrderModel>>(
-      this._base + '/' + route + '/' + orderId,
-
-      _options
-    );
-  }
 }
