@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleModel } from '../article/article.model';
 import { CKEditorComponent } from 'ng2-ckeditor';
@@ -58,6 +63,7 @@ export class AddUpdateComponent implements OnInit {
       groupID: [null, Validators.compose([Validators.required])],
       isActive: [null],
       description: [null, Validators.compose([Validators.required])],
+      publishDate: [null],
     });
   }
 
@@ -88,7 +94,6 @@ export class AddUpdateComponent implements OnInit {
       .uploadFile(this.cropImagePreview, 'articles')
       .subscribe(
         (res: Result<string[]>) => {
-          debugger;
           if (res.success) {
             this.addUpdate.cardImagePath = res.data[0];
             this.toastr.success('با موفقیت آپلود شد', null, {
@@ -159,7 +164,10 @@ export class AddUpdateComponent implements OnInit {
   }
 
   async addOrUpdate(row: ArticleModel) {
-    debugger;
+    if(row.isActive) {
+    row.publishDate = new Date();
+  }
+
     if (row.id === 0) {
       await this._articleService
         .create(row, 'article')

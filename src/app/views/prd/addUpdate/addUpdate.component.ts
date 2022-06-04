@@ -18,7 +18,7 @@ export class AddUpdateComponent implements OnInit {
   productId: number = parseInt(
     this._route.snapshot.paramMap.get('productId') ?? '0'
   );
-  addUpdate: ProductModel;
+  addUpdate: ProductModel = new ProductModel();
   addForm: FormGroup;
   tableType: number = 6;
   imgChangeEvt: any = '';
@@ -78,13 +78,10 @@ export class AddUpdateComponent implements OnInit {
     this.imgChangeEvt = event;
   }
   cropImg(e: ImageCroppedEvent) {
-    debugger;
     this.cropImagePreview = e.base64;
   }
   imgLoad() {}
-  initCropper(event: any) {
-    debugger;
-  }
+  initCropper() {}
   imgFailed() {
     alert('image Failed to Show');
   }
@@ -100,6 +97,7 @@ export class AddUpdateComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           } else {
+            this.addUpdate.cardImagePath = res.errors[0];
             this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
               closeButton: true,
               positionClass: 'toast-top-left',
@@ -118,10 +116,10 @@ export class AddUpdateComponent implements OnInit {
         }
       );
   }
-  addOrUpdate(row: ProductModel) {
-    if (row.id !== 0) {
+  async addOrUpdate(row: ProductModel) {
+    if (row.id === 0) {
       this._productsService
-        .update(row.id, row, 'product')
+        .create(row, 'product')
         .toPromise()
         .then(
           (data) => {
@@ -145,8 +143,8 @@ export class AddUpdateComponent implements OnInit {
           }
         );
     } else {
-      var x = this._productsService
-        .create(row, 'Product')
+      this._productsService
+        .update(row.id, row, 'product')
         .toPromise()
         .then(
           (data) => {

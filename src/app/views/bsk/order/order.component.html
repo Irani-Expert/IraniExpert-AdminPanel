@@ -1,0 +1,135 @@
+<div class="mb-4 d-block">
+  <button class="btn btn-primary m-1" type="button">ایجاد</button>
+</div>
+<!----------------------------------- Head Table  -->
+<div class="row list-horizontal">
+  <div
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }"
+  >
+    <div
+      class="card mb-4 d-flex"
+      [ngClass]="{
+        'flex-row': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }"
+    >
+      <div
+        class="flex-grow-1"
+        [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-block': viewMode === 'grid'
+        }"
+      >
+        <!-- <div class="list-thumb">
+             THUMBNAIL
+          </div> -->
+        <!-- ID -->
+        <div class="align-self-center">ID</div>
+        <div
+          class="card-body align-self-center d-flex align-items-lg-center text-center"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+        >
+          <!-- OTHER DATA -->
+          <div class="text-muted col text-lg-center w-25 w-sm-100">
+            شناسه کابر
+          </div>
+          <div class="text-muted col text-lg-center w-25 w-sm-100">
+            نام و شناسه محصول
+          </div>
+          <div class="text-muted col text-lg-center w-25 w-sm-100">هزینه</div>
+          <div class="text-muted col text-lg-center w-25 w-sm-100">وضعیت</div>
+          <div
+            class="text-primary d-md-block d-none col text-center w-25 w-sm-100"
+          >
+            عملیات
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Orders-List -->
+  <div
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }"
+  >
+    <div
+      class="card mb-2 o-hidden d-flex"
+      [ngClass]="{
+        'flex-row-2': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }"
+    >
+      <div
+        class="flex-grow-1"
+        [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-block': viewMode === 'grid'
+        }"
+      >
+        <!-- <div class="list-thumb">
+               THUMBNAIL
+            </div> -->
+        <!-- ID -->
+        <div class="align-self-center">ID</div>
+        <div
+          class="card-body align-self-center d-flex align-items-lg-center text-center row"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+        >
+          <!-- OTHER DATA -->
+          <div class="text-muted col text-lg-center w-25 w-sm-100">عنوان</div>
+          <div class="text-muted col text-lg-center w-25 w-sm-100">توضیحات</div>
+          <div class="text-muted col text-lg-center w-25 w-sm-100">
+            آدرس فایل
+          </div>
+          <div class="text-muted col text-lg-center w-25 w-sm-100">active</div>
+          <div
+            class="m-lg-0 ml-2 ml-lg-2 d-md-block d-none col text-center w-25 w-sm-100"
+          >
+            <div class="text-center row d-lg-flex justify-content-lg-center">
+              <div class="text-dark w-25 col-4">
+                <button
+                  class="btn btn-info margin-right"
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                >
+                  جزئیات
+                </button>
+              </div>
+              <div class="col-4 w-25">
+                <button
+                  class="btn btn-danger"
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                >
+                  حذف
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center row m-5 d-block d-md-none">
+        <h6 class="text-center">عملیات</h6>
+        <button
+          type="button"
+          [ngClass]="{ 'd-none': viewMode === 'grid' }"
+          class="btn btn-outline-danger col m-1"
+        >
+          حذف
+        </button>
+        <button
+          type="button"
+          [ngClass]="{ 'd-none': viewMode === 'grid' }"
+          class="btn btn-outline-info col m-1"
+        >
+          جزئیات
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

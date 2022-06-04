@@ -1,20 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BskRoutingModule } from './bsk.routing';
-import { OrdersComponent } from './orders/orders.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-
-
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
-  declarations: [
-    OrdersComponent
-  ],
-  imports: [
-    CommonModule,
-    BskRoutingModule,
-    NgxPaginationModule,
-
-  ]
+  declarations: [OrderComponent],
+  imports: [CommonModule, BskRoutingModule, NgxPaginationModule],
 })
-export class BskModule { }
+export class BskModule {}

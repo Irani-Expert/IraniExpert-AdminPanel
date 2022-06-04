@@ -11,7 +11,7 @@ import { ArticleService } from './article.service';
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
-  styleUrls: ['./article.component.scss']
+  styleUrls: ['./article.component.scss'],
 })
 export class ArticleComponent implements OnInit {
   rows: ArticleModel[] = new Array<ArticleModel>();
@@ -20,12 +20,10 @@ export class ArticleComponent implements OnInit {
   pageIndex = 1;
   pageSize = 12;
   constructor(
-    private _formBuilder:FormBuilder,
-    private _articleService : ArticleService,
-    private _route:ActivatedRoute
-    , private modalService: NgbModal
-    ,private _fileUploaderService:FileUploaderService
-    ,private toastr: ToastrService
+    private _articleService: ArticleService,
+    private _route: ActivatedRoute,
+    private modalService: NgbModal,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +57,7 @@ export class ArticleComponent implements OnInit {
       );
   }
 
-  deleteArticle(id, modal) {
+  deleteArticle(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CropperSettings } from 'ngx-img-cropper';
 import { ToastrService } from 'ngx-toastr';
+import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { BackTestModel } from './back-test.model';
@@ -21,8 +21,8 @@ export class BackTestComponent implements OnInit {
   pageSize = 12;
   addUpdate: BackTestModel;
   addForm: FormGroup;
-  cropperSettings: CropperSettings;
-  image: any;
+  imgChangeEvt: any = '';
+  cropImagePreview: any = '';
 
   constructor(
     public _backtestService: BackTestService,
@@ -45,16 +45,6 @@ export class BackTestComponent implements OnInit {
       },
       { validator: this.checkValidFileOrUrl }
     );
-    this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 2000;
-    this.cropperSettings.height = 1500;
-    this.cropperSettings.cropperDrawSettings.lineDash = true;
-    this.cropperSettings.cropperDrawSettings.dragIconStrokeWidth = 0;
-    this.cropperSettings.canvasHeight = 800;
-    this.cropperSettings.canvasWidth = 700;
-    this.cropperSettings.croppedHeight = 1000;
-    this.cropperSettings.croppedWidth = 1000;
-    this.image = {};
   }
   checkValidFileOrUrl(g: FormGroup) {
     if (g.get('videoUrl').value !== null || g.get('fileUrl').value !== null)
@@ -93,10 +83,23 @@ export class BackTestComponent implements OnInit {
         }
       );
   }
-
-  uploadFile(image: { image: string; }) {
+  onFileChanged(event: any) {
+    this.imgChangeEvt = event;
+  }
+  cropImg(e: ImageCroppedEvent) {
+    debugger;
+    this.cropImagePreview = e.base64;
+  }
+  imgLoad() {}
+  initCropper(event: any) {
+    debugger;
+  }
+  imgFailed() {
+    alert('image Failed to Show');
+  }
+  uploadFile() {
     this._fileUploaderService
-      .uploadFile(image.image, 'backTests')
+      .uploadFile(this.cropImagePreview, 'backTests')
       .subscribe(
         (res: Result<string[]>) => {
           debugger;
@@ -176,10 +179,7 @@ export class BackTestComponent implements OnInit {
       );
   }
 
-
-  showvideo(content:BackTestModel , modal ){
-
-  }
+  showvideo(content: BackTestModel, modal) {}
 
   addorEdit(content, row: BackTestModel) {
     debugger;
