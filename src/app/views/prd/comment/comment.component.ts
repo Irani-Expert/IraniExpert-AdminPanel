@@ -110,16 +110,49 @@ export class CommentComponent implements OnInit {
       );
   }
 
-  openSmall(content) {
+  openSmall(content,row) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
         (result) => {
-          console.log(result);
+          if(result)
+          debugger
+             this.acceptComment(row)
         },
         (reason) => {
           console.log('Err!', reason);
         }
       );
+  }
+
+
+  acceptComment(row:CommentModel){
+    row.isAccepted=true;
+    row.isActive=true;
+    this._CommentService
+    .update(row.id,row, 'Comment')
+    .toPromise()
+    .then(
+      (data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+                        this.getCommentListByProductId(this.pageIndex, this.pageSize);
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      },
+      (error) => {
+        this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    );
   }
 }

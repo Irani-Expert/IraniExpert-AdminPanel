@@ -19,6 +19,7 @@ import { PlanComponent } from '../bas/plan/plan.component';
 import { ProductTypePipe } from 'src/app/shared/pipes/product-type.pipe';
 import { PlanOptionComponent } from '../bas/plan-option/plan-option.component';
 import { FacilityComponent } from './facility/facility.component';
+import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { FacilityComponent } from './facility/facility.component';
     NgbModule,
     CntRoutingModule,
     ImageCropperModule,
+    SharedPipesModule
   ],
 
   providers: [FileUploaderService],
