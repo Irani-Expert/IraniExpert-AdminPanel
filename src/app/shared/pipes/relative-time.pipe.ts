@@ -11,24 +11,24 @@ export class RelativeTimePipe implements PipeTransform {
     let interval: number = Math.floor(seconds / 31536000);
 
     if (interval > 1) {
-      return interval + ' years ago';
+      return interval + ' سال قبل';
     }
     interval = Math.floor(seconds / 2592000);
     if (interval > 1) {
-      return interval + ' months ago';
+      return interval + 'ماه قبل';
     }
     interval = Math.floor(seconds / 86400);
     if (interval > 1) {
-      return interval + ' days ago';
+      return interval + 'روز قبل';
     }
     interval = Math.floor(seconds / 3600);
     if (interval > 1) {
-      return interval + ' hours ago';
+      return interval + ' ساعت قبل';
     }
     interval = Math.floor(seconds / 60);
     if (interval > 1) {
-      return interval + ' minutes ago';
+      return interval + ' دقیقه قبل';
     }
-    return Math.floor(seconds) + ' seconds ago';
+    return Math.floor(seconds) + ' لحظاتی پیش';
   }
 }
