@@ -155,7 +155,7 @@
             type="text"
             class="form-control form-control-rounded"
             id="videoUrl"
-            placeholder="نام مورد نظر را وارد کنید "
+            placeholder="ویدیو مورد نظر را وارد کنید "
             [formControl]="addForm.controls['videoUrl']"
             [(ngModel)]="addUpdate.videoUrl"
           />
@@ -167,7 +167,7 @@
             type="text"
             class="form-control form-control-rounded"
             id="fileUrl"
-            placeholder="نام مورد نظر را وارد کنید "
+            placeholder="آدرس فایل مورد نظر را وارد کنید "
             [formControl]="addForm.controls['fileUrl']"
             [(ngModel)]="addUpdate.fileUrl"
           />
@@ -179,10 +179,23 @@
             type="text"
             class="form-control form-control-rounded"
             id="description"
-            placeholder="نام مورد نظر را وارد کنید "
+            placeholder="توضیحات مورد نظر را وارد کنید "
             [formControl]="addForm.controls['description']"
             [(ngModel)]="addUpdate.description"
           />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label class="m-1">نمایش دادن</label>
+          <label class="switch switch-primary mr-2 m-2">
+            <span>عدم نمایش</span>
+            <input
+              [(ngModel)]="addUpdate.isActive"
+              [formControl]="addForm.controls['isActive']"
+              type="checkbox"
+              id="isActive"
+            />
+            <span class="slider"></span>
+          </label>
         </div>
       </div>
     </form>

@@ -488,7 +488,30 @@
             >ورود url ضروری است</small
           >
         </div>
-
+        <!-- OrderId -->
+        <div class="col-md-4 form-group mb-3">
+          <label for="orderID">اولویت را مشخص کنید</label>
+          <select
+            [formControl]="addForm.controls['orderID']"
+            class="form-control form-control-rounded"
+            [ngModel]="addUpdate.orderID"
+            (ngModelChange)="selectOrderId($event)"
+          >
+            <option value="0">اولویت بسیار بالا</option>
+            <option value="1">اولویت بالا</option>
+            <option value="2">اولویت متوسط</option>
+            <option value="3">اولویت پایین</option>
+            <option value="4">اولویت بسیار پایین</option>
+          </select>
+          <small
+            *ngIf="
+              addForm.controls['orderID'].hasError('required') &&
+              addForm.controls['orderID'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >انتخاب نوع گروه ضروری است</small
+          >
+        </div>
         <!-- isActive -->
         <div class="col-md-6 form-group mb-3 mt-3">
           <label class="m-1">فعال</label>

@@ -47,6 +47,7 @@ export class BannerComponent implements OnInit {
       filePath: [null],
       fileInfo: [null],
       rowID: [null],
+      orderID: [null, Validators.compose([Validators.required])],
     });
   }
 
@@ -217,7 +218,11 @@ export class BannerComponent implements OnInit {
       this.addUpdate.type = parseInt($event);
     }
   }
-
+  selectOrderId($event: any) {
+    if ($event != undefined) {
+      this.addUpdate.orderID = parseInt($event);
+    }
+  }
   selectlinkType($event: any) {
     if ($event != undefined) {
       this.addUpdate.linkType = parseInt($event);
