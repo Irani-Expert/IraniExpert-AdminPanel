@@ -162,7 +162,7 @@
     <a ngbNavLink>نظرات </a>
     <ng-template ngbNavContent>
       <!-- [disabled]="articleId == 0 -->
-      <app-comment>
+      <app-comment [articleId]="articleId">
         <!-- [articleId]="articleId" -->
       </app-comment>
     </ng-template>

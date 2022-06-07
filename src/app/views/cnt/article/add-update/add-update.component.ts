@@ -25,6 +25,7 @@ export class AddUpdateComponent implements OnInit {
   articleId: number = parseInt(
     this._route.snapshot.paramMap.get('articleId') ?? '0'
   );
+  tableType: number = 1;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
   addUpdate: ArticleModel = new ArticleModel();
@@ -42,11 +43,16 @@ export class AddUpdateComponent implements OnInit {
     private _fileUploaderService: FileUploaderService,
     private toastr: ToastrService,
     private _groupService: GroupService
-  ) {}
+  ) {
+    console.log(this.articleId);
+  }
 
-  async ngOnInit() {
+  ngOnInit(): void {
     this.getGroupList();
     this.addUpdate = new ArticleModel();
+    this.addUpdate.id = parseInt(
+      this._route.snapshot.paramMap.get('articleId') ?? '0'
+    );
     if (this.addUpdate.id != 0) this.getArticleById(this.addUpdate.id);
     this.ckeConfig = {
       extraPlugins: 'filebrowser',
@@ -164,9 +170,9 @@ export class AddUpdateComponent implements OnInit {
   }
 
   async addOrUpdate(row: ArticleModel) {
-    if (row.isActive) {
-      row.publishDate = new Date();
-    }
+    // if (row.isActive) {
+    //   row.publishDate = new Date();
+    // }
 
     if (row.id === 0) {
       await this._articleService

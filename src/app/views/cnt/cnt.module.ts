@@ -14,6 +14,7 @@ import { TypePipe } from 'src/app/shared/pipes/type.pipe';
 import { FileTypePipe } from 'src/app/shared/pipes/file-type.pipe';
 import { CommentComponent } from './article/comment/comment.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ImageCropperModule,
     NgxPaginationModule,
     NgbModule,
+    SharedPipesModule,
   ],
   providers: [FileUploaderService],
 })

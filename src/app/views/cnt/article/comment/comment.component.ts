@@ -16,7 +16,6 @@ import { ActivatedRoute } from '@angular/router';
 export class CommentComponent implements OnInit {
   rows: CommentModel[] = new Array<CommentModel>();
   @Input() articleId: number;
-  @Input() tableType: number;
   pageIndex = 1;
   pageSize = 12;
   constructor(
@@ -27,6 +26,7 @@ export class CommentComponent implements OnInit {
 
   ngOnInit(): void {
     this.setPage(0);
+    console.log(this.articleId);
   }
   setPage(pageInfo: number) {
     this.pageIndex = pageInfo;
@@ -41,7 +41,7 @@ export class CommentComponent implements OnInit {
         'ID',
         'comment',
         this.articleId,
-        this.tableType
+        1
       )
       .subscribe(
         (res: Result<CommentModel[]>) => {
@@ -54,7 +54,7 @@ export class CommentComponent implements OnInit {
             null,
             {
               closeButton: true,
-              positionClass: 'toast-center',
+              positionClass: 'toast-top-left',
             }
           );
         }
@@ -94,7 +94,7 @@ export class CommentComponent implements OnInit {
             });
         },
         (error) => {
-          this.toastr.error('خطا در حذف', error.message, {
+          this.toastr.error('انصراف از حذف', error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
           });
@@ -106,8 +106,7 @@ export class CommentComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
         (result) => {
-          if (result) debugger;
-          this.acceptComment(row);
+          if (result) this.acceptComment(row);
         },
         (reason) => {
           console.log('Err!', reason);

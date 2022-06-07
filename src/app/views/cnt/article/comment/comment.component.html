@@ -5,9 +5,17 @@
         <strong class="mr-1 text-white">
           {{ item.name }}
         </strong>
-        <span class="badge badge-warning mr-1 text-primary">تایید نشده</span>
-        <span class="badge badge-success mr-1 text-white">تایید شده</span>
-        <p class="text-white-50">{{ item.createDate | date }}</p>
+        <span
+          class="badge badge-warning mr-1 text-primary"
+          *ngIf="item.isAccepted === false"
+          >تایید نشده</span
+        >
+        <span
+          class="badge badge-success mr-1 text-white"
+          *ngIf="item.isAccepted === true"
+          >تایید شده</span
+        >
+        <p class="text-white-50">{{ item.createDate | relativeTime }}</p>
       </div>
     </div>
     <div class="card-body bg-secondary">
@@ -16,12 +24,22 @@
       </p>
       <div>
         <div class="mb-2">
-          <button type="button" class="btn btn-light btn-rounded m-1">
+          <button
+            type="button"
+            class="btn btn-light btn-rounded m-1"
+            *ngIf="item.isAccepted === false"
+            (click)="openSmall(modalSmall, item)"
+          >
             پذیرفتن
           </button>
         </div>
         <div class="mb-2">
-          <button type="button" class="btn btn-danger btn-rounded m-1">
+          <button
+            type="button"
+            class="btn btn-danger btn-rounded m-1"
+            *ngIf="item.isAccepted === true"
+            (click)="deleteComment(item.id, deleteModal)"
+          >
             حذف پیام
           </button>
         </div>
@@ -35,14 +53,31 @@
     <h4 class="modal-title" id="modal-basic-title">
       آیا از پذیرش پیام مطمئن هستید
     </h4>
-    <button type="button" class="close" aria-label="Close">
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss(false)"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark btn-rounded">بله</button>
-    <button type="button" class="btn btn-outline-dark btn-rounded">خیر</button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+    >
+      بله
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+    >
+      خیر
+    </button>
   </div>
 </ng-template>
 
@@ -57,7 +92,19 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark btn-rounded">بله</button>
-    <button type="button" class="btn btn-outline-dark btn-rounded">خیر</button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+    >
+      بله
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.dismiss(false)"
+    >
+      خیر
+    </button>
   </div>
 </ng-template>
