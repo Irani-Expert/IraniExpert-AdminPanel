@@ -1,6 +1,3 @@
-<div class="mb-4 d-block">
-  <button class="btn btn-primary m-1" type="button">ایجاد</button>
-</div>
 <!----------------------------------- Head Table  -->
 <div class="row list-horizontal">
   <div
@@ -11,7 +8,7 @@
     }"
   >
     <div
-      class="card mb-4 d-flex"
+      class="card bg-dark mb-4 d-flex"
       [ngClass]="{
         'flex-row': viewMode === 'list',
         'flex-column': viewMode === 'grid'
@@ -28,22 +25,22 @@
              THUMBNAIL
           </div> -->
         <!-- ID -->
-        <div class="align-self-center">ID</div>
+        <div class="align-self-center text-white">ID</div>
         <div
           class="card-body align-self-center d-flex align-items-lg-center text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
-          <div class="text-muted col text-lg-center w-25 w-sm-100">
-            شناسه کابر
+          <div class="col text-lg-center w-25 w-sm-100 text-white">
+            شناسه کاربر
           </div>
-          <div class="text-muted col text-lg-center w-25 w-sm-100">
+          <div class="col text-lg-center w-25 w-sm-100 text-white">
             نام و شناسه محصول
           </div>
-          <div class="text-muted col text-lg-center w-25 w-sm-100">هزینه</div>
-          <div class="text-muted col text-lg-center w-25 w-sm-100">وضعیت</div>
+          <div class="col text-lg-center w-25 w-sm-100 text-white">هزینه</div>
+          <div class="col text-lg-center w-25 w-sm-100 text-white">وضعیت</div>
           <div
-            class="text-primary d-md-block d-none col text-center w-25 w-sm-100"
+            class="text-light d-md-block d-none col text-center w-25 w-sm-100"
           >
             عملیات
           </div>

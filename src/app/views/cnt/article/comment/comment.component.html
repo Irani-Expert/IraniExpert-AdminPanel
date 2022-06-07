@@ -1,0 +1,63 @@
+<div class="my-css w-75">
+  <div class="timeline-card card mt-4" *ngFor="let item of rows">
+    <div class="card-header bg-dark">
+      <div class="mb-1">
+        <strong class="mr-1 text-white">
+          {{ item.name }}
+        </strong>
+        <span class="badge badge-warning mr-1 text-primary">تایید نشده</span>
+        <span class="badge badge-success mr-1 text-white">تایید شده</span>
+        <p class="text-white-50">{{ item.createDate | date }}</p>
+      </div>
+    </div>
+    <div class="card-body bg-secondary">
+      <p class="text-white">
+        {{ item.text }}
+      </p>
+      <div>
+        <div class="mb-2">
+          <button type="button" class="btn btn-light btn-rounded m-1">
+            پذیرفتن
+          </button>
+        </div>
+        <div class="mb-2">
+          <button type="button" class="btn btn-danger btn-rounded m-1">
+            حذف پیام
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalSmall let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      آیا از پذیرش پیام مطمئن هستید
+    </h4>
+    <button type="button" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-rounded">بله</button>
+    <button type="button" class="btn btn-outline-dark btn-rounded">خیر</button>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      آیا از حذف نظر مطمئن هستید
+    </h4>
+    <button type="button" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark btn-rounded">بله</button>
+    <button type="button" class="btn btn-outline-dark btn-rounded">خیر</button>
+  </div>
+</ng-template>

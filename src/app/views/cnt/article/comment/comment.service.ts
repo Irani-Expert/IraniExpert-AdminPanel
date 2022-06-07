@@ -26,7 +26,7 @@ export class CommentService extends BaseService<CommentModel, 0> {
     pageSize: number,
     pageOrder: string,
     filter: string,
-    productId: number,
+    articleId: number,
     tableType: number
   ): Observable<Result<CommentModel[]>> {
     let _options = {
@@ -38,7 +38,7 @@ export class CommentService extends BaseService<CommentModel, 0> {
     return this._http.get<Result<CommentModel[]>>(
       this._base +
         '/comment/GetByTableTypeAndRowId/' +
-        productId +
+        articleId +
         '/' +
         tableType +
         '?pagIndex=' +
@@ -49,8 +49,8 @@ export class CommentService extends BaseService<CommentModel, 0> {
         pageOrder +
         '&filter=' +
         filter +
-        '&productId=' +
-        productId +
+        '&articleId=' +
+        articleId +
         '&tableType=' +
         tableType,
       _options

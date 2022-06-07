@@ -12,6 +12,8 @@ import { ImageCropperModule } from 'projects/ngx-image-cropper/src/public-api';
 import { LinkTypePipe } from 'src/app/shared/pipes/link-type.pipe';
 import { TypePipe } from 'src/app/shared/pipes/type.pipe';
 import { FileTypePipe } from 'src/app/shared/pipes/file-type.pipe';
+import { CommentComponent } from './article/comment/comment.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { FileTypePipe } from 'src/app/shared/pipes/file-type.pipe';
     TypePipe,
     FileTypePipe,
     AddUpdateComponent,
+    CommentComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +33,7 @@ import { FileTypePipe } from 'src/app/shared/pipes/file-type.pipe';
     CntRoutingModule,
     ImageCropperModule,
     NgxPaginationModule,
+    NgbModule,
   ],
   providers: [FileUploaderService],
 })

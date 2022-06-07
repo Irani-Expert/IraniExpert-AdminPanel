@@ -17,7 +17,7 @@
     }"
   >
     <div
-      class="card o-hidden mb-4 d-flex"
+      class="card bg-dark o-hidden mb-4 d-flex"
       [ngClass]="{
         'flex-row': viewMode === 'list',
         'flex-column': viewMode === 'grid'
@@ -27,65 +27,26 @@
         class="flex-grow-1"
         [ngClass]="{
           'pl-2 d-flex': viewMode === 'list',
-          'd-bock': viewMode === 'grid'
+          'd-block': viewMode === 'grid'
         }"
       >
-        <div class="list-thumb">
-          <!-- TUMBNAIL -->
-        </div>
-        <div
-          class="align-self-center"
-          *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
-        >
-          ID
-        </div>
         <div
           id="myHeader"
-          class="card-body align-self-center d-flex align-items-lg-center th-list row text-center"
+          class="card-body align-self-center d-flex align-items-lg-center row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
           *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
         >
           <!-- OTHER DATA -->
+          <div class="m-0 text-white col-2 text-lg-center">ID</div>
+          <div class="m-0 text-white col text-lg-center">عکس</div>
+          <div class="m-0 text-white col text-lg-center">عنوان</div>
+          <div class="m-0 text-white col text-lg-center">اولویت</div>
+          <div class="m-0 text-white col text-lg-center">وضعیت</div>
+
           <div
-            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
-          ></div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
+            class="m-0 col d-md-block text-light d-lg-block d-xl-block d-sm-none d-none text-lg-center"
           >
-            <!-- {{ item.product }} -->
-            عنوان
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
-          >
-            نوع
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
-          >
-            نوع فایل
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
-          >
-            لینک تایپ
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-25 w-sm-100"
-          >
-            active
-          </div>
-          <div
-            class="col w-100 d-md-block d-lg-block d-xl-block d-sm-none d-none text-center"
-          >
-            <div
-              class="m-0 text-muted text-small text-lg-center text-center w-sm-100 item-actions"
-            >
-              <h6 class="text-16 text-primary text-center">عملیات</h6>
-            </div>
-            <div
-              class="m-0 text-muted text-small text-lg-center w-25 col w-sm-100 item-actions"
-            ></div>
+            عملیات
           </div>
         </div>
       </div>
@@ -113,41 +74,35 @@
         'flex-column': viewMode === 'grid'
       }"
     >
+      <div class="list-thumb">
+        <!-- TUMBNAIL -->
+      </div>
       <div
         class="flex-grow-1"
         [ngClass]="{
           'pl-2 d-flex': viewMode === 'list',
-          'd-bock': viewMode === 'grid'
+          'd-block': viewMode === 'grid'
         }"
       >
         <div
           class="card-body align-self-center text-center d-flex align-items-lg-center row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
-          <div class="align-self-center mr-2">
-            {{ item.id }}
-          </div>
-          <div class="list-thumb">
-            <img
-              [src]="this.FilePath"
-              alt="تصویری وجود ندارد"
-              width="50px"
-              height="50px"
-            />
-          </div>
           <!-- OTHER DATA -->
-          <a href="" class="w-40 col w-sm-100">
-            <div class="item-title">{{ item.title }}</div>
+          <p class="m-0 col-2">
+            {{ item.id }}
+          </p>
+          <a href="" class="col">
+            <div class="item-title">
+              <img src="{{ item.cardImagePath }}" class="img-card" alt="" />
+            </div>
           </a>
-          <div class="m-0 text-muted text-small col w-25 w-sm-100">
-            {{ item.type | type }}
-          </div>
-          <div class="m-0 text-muted text-small col w-25 w-sm-100">
-            {{ item.fileType | fileType }}
-          </div>
-          <div class="m-0 text-muted text-small col w-25 w-sm-100">
-            {{ item.linkType | linkType }}
-          </div>
+          <p class="m-0 col briefed-text">
+            {{ item.title }}
+          </p>
+          <p class="m-0 col briefed-text">
+            {{ item.OrderID }}
+          </p>
           <div class="col">
             <div
               *ngIf="item.isActive === false"
@@ -162,12 +117,11 @@
               فعال
             </div>
           </div>
-
           <div
             class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
           >
-            <div class="text-center col-auto d-flex justify-content-between">
-              <div class="w-25 w-sm-100">
+            <div class="text-center col-auto d-flex justify-content-around">
+              <div class="w-25 w-sm-100 mr-sm-2">
                 <button
                   class="btn btn-warning"
                   (click)="addorEdit(addUpdateModal, item)"
@@ -176,7 +130,7 @@
                   ویرایش
                 </button>
               </div>
-              <div class="w-25 w-sm-100">
+              <div class="w-25 w-sm-100 ml-sm-2">
                 <button
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
@@ -202,8 +156,8 @@
           حذف
         </button>
         <button
+          (click)="addorEdit(addUpdateModal, item)"
           type="button"
-          [routerLink]="'/bas/addUpdate-group/' + item.id"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-warning col m-1"
         >

@@ -13,7 +13,6 @@ import { BackTestComponent } from './back-test/back-test.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommentComponent } from './comment/comment.component';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
-import { CntRoutingModule } from '../cnt/cnt.routing';
 import { ImageCropperModule } from 'projects/ngx-image-cropper/src/public-api';
 import { PlanComponent } from '../bas/plan/plan.component';
 import { ProductTypePipe } from 'src/app/shared/pipes/product-type.pipe';
@@ -41,9 +40,8 @@ import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
     ProductsRoutingModule,
     NgxPaginationModule,
     NgbModule,
-    CntRoutingModule,
     ImageCropperModule,
-    SharedPipesModule
+    SharedPipesModule,
   ],
 
   providers: [FileUploaderService],

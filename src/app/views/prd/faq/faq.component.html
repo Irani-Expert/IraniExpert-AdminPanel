@@ -49,7 +49,7 @@
 
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded mb-4"
+      class="btn btn-outline-primary btn-rounded mb-4"
       (click)="addOrUpdate()"
       [disabled]="!addForm.valid"
     >
@@ -57,7 +57,7 @@
     </button>
   </div>
 </form>
-
+<div class="separator-breadcrumb border-top"></div>
 <ngb-accordion
   #acc="ngbAccordion"
   [closeOthers]="true"

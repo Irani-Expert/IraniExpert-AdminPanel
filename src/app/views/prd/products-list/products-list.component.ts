@@ -64,7 +64,7 @@ export class ProductsListComponent implements OnInit {
       );
   }
 
-  deleteProduct(id, modal) {
+  deleteProduct(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(

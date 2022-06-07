@@ -1,5 +1,4 @@
 <button
-  _ngcontent-tco-c175=""
   type="button"
   class="btn btn-primary m-1"
   [routerLink]="'/cnt/article/addUpdate-article'"
@@ -18,7 +17,7 @@
     }"
   >
     <div
-      class="card o-hidden mb-4 d-flex"
+      class="card bg-dark o-hidden mb-4 d-flex"
       [ngClass]="{
         'flex-row': viewMode === 'list',
         'flex-column': viewMode === 'grid'
@@ -28,51 +27,26 @@
         class="flex-grow-1"
         [ngClass]="{
           'pl-2 d-flex': viewMode === 'list',
-          'd-bock': viewMode === 'grid'
+          'd-block': viewMode === 'grid'
         }"
       >
-        <div class="list-thumb">
-          <!-- TUMBNAIL -->
-        </div>
-        <div
-          class="align-self-center"
-          *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
-        >
-          ID
-        </div>
         <div
           id="myHeader"
-          class="card-body align-self-center d-flex align-items-lg-center th-list row text-center"
+          class="card-body align-self-center d-flex align-items-lg-center row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
           *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
         >
           <!-- OTHER DATA -->
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
-          >
-            <!-- {{ item.product }} -->
-            عکس
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
-          >
-            عنوان
-          </div>
-          <div
-            class="m-0 text-muted text-small col text-lg-center w-15 w-sm-100"
-          >
-            پیش گفتار
-          </div>
+          <div class="m-0 text-white col-2 text-lg-center">ID</div>
+          <div class="m-0 text-white col text-lg-center">عکس</div>
+          <div class="m-0 text-white col text-lg-center">عنوان</div>
+          <div class="m-0 text-white col text-lg-center">پیش گفتار</div>
+          <div class="m-0 text-white col text-lg-center">وضعیت</div>
 
-          <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
-            <div
-              class="m-0 text-muted text-small text-lg-center w-15 w-sm-100 item-actions"
-            >
-              <h6 class="text-16 text-primary">عملیات</h6>
-            </div>
-            <div
-              class="m-0 text-muted text-small text-lg-center w-15 col w-sm-100 item-actions"
-            ></div>
+          <div
+            class="m-0 col d-md-block text-light d-lg-block d-xl-block d-sm-none d-none text-lg-center"
+          >
+            عملیات
           </div>
         </div>
       </div>
@@ -99,36 +73,54 @@
         'flex-column': viewMode === 'grid'
       }"
     >
+      <div class="list-thumb">
+        <!-- TUMBNAIL -->
+      </div>
       <div
         class="flex-grow-1"
         [ngClass]="{
           'pl-2 d-flex': viewMode === 'list',
-          'd-bock': viewMode === 'grid'
+          'd-block': viewMode === 'grid'
         }"
       >
         <div
-          class="card-body align-self-center d-flex justify-content-between align-items-lg-center row text-center"
+          class="card-body align-self-center text-center d-flex align-items-lg-center row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
-          <div class="align-self-center">
-            {{ item.id }}
-          </div>
-
           <!-- OTHER DATA -->
-          <div class="m-0 text-muted text-small col w-15 w-sm-100 h-100">
-            <img src="{{ item.cardImagePath }}" class="img-card" alt="" />
+          <p class="m-0 col-2">
+            {{ item.id }}
+          </p>
+          <a href="" class="col">
+            <div class="item-title">
+              <img src="{{ item.cardImagePath }}" class="img-card" alt="" />
+            </div>
+          </a>
+          <div class="m-0 col briefed-text">
+            {{ item.title }}
           </div>
-          <div href="" class="w-40 w-sm-100 col briefed-text">
-            <div class="item-title">{{ item.title }}</div>
-          </div>
-
-          <div class="m-0 text-muted text-small col brief-text w-15 w-sm-100">
+          <p class="m-0 col briefed-text">
             {{ item.brief }}
+          </p>
+          <div class="col">
+            <div
+              *ngIf="item.isActive === false"
+              class="badge badge-dark badge-pill text-center p-2"
+            >
+              غیر فعال
+            </div>
+            <div
+              *ngIf="item.isActive === true"
+              class="badge badge-success badge-pill text-center p-2"
+            >
+              فعال
+            </div>
           </div>
-
-          <div class="col d-md-block d-lg-block d-xl-block d-sm-none d-none">
+          <div
+            class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+          >
             <div class="text-center col-auto d-flex justify-content-around">
-              <div class="w-25 w-sm-100">
+              <div class="w-25 w-sm-100 mr-sm-2">
                 <button
                   class="btn btn-warning"
                   [routerLink]="'/cnt/article/addUpdate-article/' + item.id"
@@ -137,11 +129,11 @@
                   ویرایش
                 </button>
               </div>
-              <div class="w-25 w-sm-100">
+              <div class="w-25 w-sm-100 ml-sm-2">
                 <button
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="deleteProduct(item.id, deleteConfirmModal)"
+                  (click)="deleteArticle(item.id, deleteConfirmModal)"
                 >
                   حذف
                 </button>
@@ -157,14 +149,14 @@
         <button
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          (click)="deleteBanner(item.id, deleteConfirmModal)"
+          (click)="deleteArticle(item.id, deleteConfirmModal)"
           class="btn btn-outline-danger col m-1"
         >
           حذف
         </button>
         <button
+          [routerLink]="'/cnt/article/addUpdate-article/' + item.id"
           type="button"
-          [routerLink]="'/bas/addUpdate-group/' + item.id"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-warning col m-1"
         >

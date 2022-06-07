@@ -1,43 +1,41 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { AuthGuard } from "src/app/shared/services/auth/auth.guard";
-import { AddUpdateComponent } from "./article/add-update/add-update.component";
-import { ArticleComponent } from "./article/article/article.component";
-import { BannerComponent } from "./banner/banner/banner.component";
-
-
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
+import { AddUpdateComponent } from './article/add-update/add-update.component';
+import { ArticleComponent } from './article/article/article.component';
+import { CommentComponent } from './article/comment/comment.component';
+import { BannerComponent } from './banner/banner/banner.component';
 
 const routes: Routes = [
   {
     path: 'banner',
     component: BannerComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'article',
     component: ArticleComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'comment',
+    component: CommentComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'article/addUpdate-article',
     component: AddUpdateComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'article/addUpdate-article/:articleId',
     component: AddUpdateComponent,
-    canActivate: [AuthGuard]
-  }
-
-
-
-
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class CntRoutingModule { }
+export class CntRoutingModule {}

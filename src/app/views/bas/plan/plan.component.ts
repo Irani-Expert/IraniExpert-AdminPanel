@@ -167,6 +167,7 @@ export class PlanComponent implements OnInit {
           });
         }
       );
+    this.getPlanListByProductId(this.pageIndex, this.pageIndex);
   }
   //__________________Add Or Edit
   addorEdit(content: any, row: PlanModel) {
@@ -283,5 +284,6 @@ export class PlanComponent implements OnInit {
         this.addForm.reset();
       }
     );
+    this.getPlanListByProductId(this.pageIndex, this.pageIndex);
   }
 }

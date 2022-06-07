@@ -22,6 +22,9 @@ import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
   styleUrls: ['./add-update.component.scss'],
 })
 export class AddUpdateComponent implements OnInit {
+  articleId: number = parseInt(
+    this._route.snapshot.paramMap.get('articleId') ?? '0'
+  );
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
   addUpdate: ArticleModel = new ArticleModel();
@@ -41,12 +44,9 @@ export class AddUpdateComponent implements OnInit {
     private _groupService: GroupService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.getGroupList();
     this.addUpdate = new ArticleModel();
-    this.addUpdate.id = parseInt(
-      this._route.snapshot.paramMap.get('articleId') ?? '0'
-    );
     if (this.addUpdate.id != 0) this.getArticleById(this.addUpdate.id);
     this.ckeConfig = {
       extraPlugins: 'filebrowser',
@@ -164,9 +164,9 @@ export class AddUpdateComponent implements OnInit {
   }
 
   async addOrUpdate(row: ArticleModel) {
-    if(row.isActive) {
-    row.publishDate = new Date();
-  }
+    if (row.isActive) {
+      row.publishDate = new Date();
+    }
 
     if (row.id === 0) {
       await this._articleService
