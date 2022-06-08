@@ -1,1 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+.bg-loadscreen {
+    background: rgba(44, 97, 90, 0.575);
+    height: 100vh;
+}

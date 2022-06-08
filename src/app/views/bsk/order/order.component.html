@@ -32,10 +32,10 @@
         >
           <!-- OTHER DATA -->
           <div class="col text-lg-center w-25 w-sm-100 text-white">
-            شناسه کاربر
+            نام کاربر
           </div>
           <div class="col text-lg-center w-25 w-sm-100 text-white">
-            نام و شناسه محصول
+            نام و پلن محصول
           </div>
           <div class="col text-lg-center w-25 w-sm-100 text-white">هزینه</div>
           <div class="col text-lg-center w-25 w-sm-100 text-white">وضعیت</div>
@@ -82,13 +82,13 @@
         >
           <!-- OTHER DATA -->
           <div class="text-muted col text-lg-center w-25 w-sm-100">
-            {{ item.userID }}
+            {{ item.firstName }}&nbsp;{{item.lastName}}
           </div>
           <div class="text-muted col text-lg-center w-25 w-sm-100">
-            {{ item.planID }}
+            {{ item.product }}|{{ item.plan }}
           </div>
           <div class="text-muted col text-lg-center w-25 w-sm-100">
-            {{ item.price }}
+            {{ item.price | currency }}
           </div>
           <div class="text-muted col text-lg-center w-25 w-sm-100">
             {{ item.transactionStatus }}
@@ -102,7 +102,7 @@
                   class="btn btn-info margin-right"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                 >
-                  جزئیات
+                  فاکتور ها
                 </button>
               </div>
               <div class="col-4 w-25">
@@ -131,7 +131,7 @@
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-info col m-1"
         >
-          جزئیات
+          فاکتور ها
         </button>
       </div>
     </div>
