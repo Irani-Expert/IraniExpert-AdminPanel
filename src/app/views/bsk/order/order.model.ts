@@ -3,7 +3,7 @@ import { PlanModel } from '../../bas/plan/plan.model';
 import { IOrder } from './order.interface';
 
 export class OrderModel extends Base implements IOrder {
-  firstName;
+  firstName:string;
   lastName: string;
   userID: number;
   transactionStatus: number;

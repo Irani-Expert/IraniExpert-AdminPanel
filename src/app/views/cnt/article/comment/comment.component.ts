@@ -19,14 +19,13 @@ export class CommentComponent implements OnInit {
   pageIndex = 1;
   pageSize = 12;
   constructor(
-    public _CommentService: CommentService,
+    public _commentService: CommentService,
     private toastr: ToastrService,
     private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.setPage(0);
-    console.log(this.articleId);
   }
   setPage(pageInfo: number) {
     this.pageIndex = pageInfo;
@@ -34,7 +33,7 @@ export class CommentComponent implements OnInit {
     this.getCommentListByArticleId(this.pageIndex, this.pageSize);
   }
   async getCommentListByArticleId(pageNumber: number, seedNumber: number) {
-    this._CommentService
+    this._commentService
       .GetByTableTypeAndRowId(
         pageNumber,
         seedNumber,
@@ -65,7 +64,7 @@ export class CommentComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._CommentService
+          this._commentService
             .delete(id, 'comment')
             .toPromise()
             .then((res) => {
@@ -116,7 +115,7 @@ export class CommentComponent implements OnInit {
   acceptComment(row: CommentModel) {
     row.isAccepted = true;
     row.isActive = true;
-    this._CommentService
+    this._commentService
       .update(row.id, row, 'Comment')
       .toPromise()
       .then(

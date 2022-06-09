@@ -1,15 +1,10 @@
+import { IBase } from 'src/app/shared/interfaces/Base/base.interface';
 
-import { IBase } from "src/app/shared/interfaces/Base/base.interface";
-
-export interface ILearn extends IBase{
-  productId:number;
-  product:string;
-  videoUrl:string;
-  fileUrl:string;
-  tableType:string;
-  rowID:number
-
+export interface ILearn extends IBase {
+  productId: number;
+  product: string;
+  videoUrl: string;
+  fileUrl: string;
+  tableType: number;
+  rowID: number;
 }
-
-
-
