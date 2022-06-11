@@ -1,4 +1,3 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,11 +16,10 @@ import { GlobalService } from './shared/services/globalService';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { JwtInterceptor } from './shared/services/auth/jwt.interceptor';
 import { ErrorInterceptor } from './shared/services/auth/error.interceptor';
+import { LoaderInterceptor } from './shared/loader.interceptor';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     SharedModule,
@@ -34,19 +32,21 @@ import { ErrorInterceptor } from './shared/services/auth/error.interceptor';
     MatAutocompleteModule,
     NgxDatatableModule.forRoot({
       messages: {
-      emptyMessage: 'داده ای یافت نشد',
-      totalMessage: 'مجموع',
-      selectedMessage: 'انتخاب شده'
-      }
-      }),
-      NgxSpinnerModule,
-      SelectDropDownModule
+        emptyMessage: 'داده ای یافت نشد',
+        totalMessage: 'مجموع',
+        selectedMessage: 'انتخاب شده',
+      },
+    }),
+    NgxSpinnerModule,
+    SelectDropDownModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    GlobalService],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  bootstrap: [AppComponent]
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+    GlobalService,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
