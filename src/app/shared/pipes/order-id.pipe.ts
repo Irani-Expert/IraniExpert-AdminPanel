@@ -8,20 +8,20 @@ export class OrderIdPipe implements PipeTransform {
     var result = '';
     switch (value) {
       case 0:
-        result = 'اولویت بسیار بالا';
+        result = ' بسیار بالا';
         break;
       case 1:
-        result = 'اولویت بالا';
+        result = ' بالا';
         break;
       case 2:
-        result = 'اولویت متوسط';
+        result = ' متوسط';
         break;
 
       case 3:
-        result = 'اولویت پایین ';
+        result = ' پایین ';
         break;
       case 4:
-        result = 'اولویت بسیار پایین ';
+        result = ' بسیار پایین ';
         break;
       default:
         result = 'مشخص نشده';
