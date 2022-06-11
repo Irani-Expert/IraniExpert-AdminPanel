@@ -33,16 +33,13 @@
           'd-bock': viewMode === 'grid'
         }"
       >
-        <div class="list-thumb">
-          <!-- TUMBNAIL -->
-        </div>
+        <div class="align-self-center text-white">ID</div>
         <div
           id="myHeader"
           class="card-body align-self-center d-flex align-items-lg-center row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
-          <div class="m-0 col text-white text-lg-center">ID</div>
           <div class="m-0 col text-white text-lg-center">عنوان</div>
           <div class="m-0 col text-white text-lg-center">توضیحات</div>
           <div class="m-0 col text-white text-lg-center">آدرس فایل</div>
@@ -83,14 +80,12 @@
           'd-block': viewMode === 'grid'
         }"
       >
+        <div class="align-self-center">{{ item.id }}</div>
         <div
           class="card-body align-self-center text-center d-flex align-items-lg-center row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
-          <div class="m-0 col">
-            {{ item.id }}
-          </div>
           <a href="" class="col">
             <div class="item-title">{{ item.title }}</div>
           </a>

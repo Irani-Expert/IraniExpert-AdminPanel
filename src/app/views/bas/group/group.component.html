@@ -31,14 +31,13 @@
           'd-block': viewMode === 'grid'
         }"
       >
+        <div class="align-self-center text-white">ID</div>
         <div
           id="myHeader"
           class="card-body align-self-center d-flex align-items-lg-center row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-          *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
         >
           <!-- OTHER DATA -->
-          <div class="m-0 text-white col-2 text-lg-center">ID</div>
           <div class="m-0 text-white col text-lg-center">عنوان</div>
           <div class="m-0 text-white col text-lg-center">عنوان مجموعه اصلی</div>
           <div class="m-0 text-white col text-lg-center">وضعیت</div>
@@ -83,14 +82,12 @@
           'd-block': viewMode === 'grid'
         }"
       >
+        <div class="align-self-center">{{ item.id }}</div>
         <div
           class="card-body align-self-center text-center d-flex align-items-lg-center row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
-          <p class="m-0 col-2">
-            {{ item.id }}
-          </p>
           <div class="m-0 col briefed-text">
             {{ item.title }}
           </div>

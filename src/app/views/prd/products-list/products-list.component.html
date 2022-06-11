@@ -37,14 +37,14 @@ class="btn btn-primary m-1"
           'd-block': viewMode === 'grid'
         }"
       >
+        <div class="align-self-center text-white">ID</div>
         <div
           id="myHeader"
           class="card-body align-self-center d-flex align-items-lg-center row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-          *ngIf="rows.length > 0 && rows !== undefined && rows !== null"
         >
           <!-- OTHER DATA -->
-          <div class="m-0 text-white col-2 text-lg-center">ID</div>
+
           <div class="m-0 text-white col text-lg-center">عکس</div>
           <div class="m-0 text-white col text-lg-center">عنوان</div>
           <div class="m-0 text-white col text-lg-center">نوع</div>
@@ -75,15 +75,12 @@ class="btn btn-primary m-1"
     }"
   >
     <div
-      class="card o-hidden mb-4 d-flex"
+      class="card o-hidden mb-2 d-flex"
       [ngClass]="{
         'flex-row-2': viewMode === 'list',
         'flex-column': viewMode === 'grid'
       }"
     >
-      <div class="list-thumb">
-        <!-- TUMBNAIL -->
-      </div>
       <div
         class="flex-grow-1"
         [ngClass]="{
@@ -91,14 +88,15 @@ class="btn btn-primary m-1"
           'd-block': viewMode === 'grid'
         }"
       >
+        <div class="align-self-center">
+          {{ item.id }}
+        </div>
         <div
           class="card-body align-self-center text-center d-flex align-items-lg-center row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
-          <p class="m-0 col-2">
-            {{ item.id }}
-          </p>
+
           <a href="" class="col">
             <div class="item-title">
               <img src="{{ item.cardImagePath }}" class="img-card" alt="" />
