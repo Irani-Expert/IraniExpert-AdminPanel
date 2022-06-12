@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ToastrService } from 'ngx-toastr/toastr/toastr.service';
+import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { UserNeedModel } from './user-need.model';
 import { UserNeedService } from './user-need.service';
@@ -16,6 +15,7 @@ export class UserNeedComponent implements OnInit {
   rows: UserNeedModel[] = new Array<UserNeedModel>();
   constructor(
     public _UserNeedService: UserNeedService,
+    private toastr: ToastrService,
     private modalService: NgbModal
   ) {}
 
@@ -25,76 +25,66 @@ export class UserNeedComponent implements OnInit {
   setPage(pageInfo: number) {
     this.pageIndex = pageInfo;
 
-    this.GetUserNeedById();
+    this.GetUserNeedById(this.pageIndex, this.pageSize);
   }
-  async GetUserNeedById() {
-    this._UserNeedService.get(0, 1000, 'ID', null, 'UserNeed').subscribe(
-      (res: Result<UserNeedModel[]>) => {
-        this.rows = res.data;
-      },
-      (_error) => {
-        // this.toastr.error(
-        //   'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-        //   null,
-        //   {
-        //     closeButton: true,
-        //     positionClass: 'toast-top-left',
-        //   }
-        // );
-      }
-    );
+  async GetUserNeedById(pageNumber: number, seedNumber: number) {
+    this._UserNeedService
+      .get(pageNumber, seedNumber, 'ID', null, 'UserNeed')
+      .subscribe(
+        (res: Result<UserNeedModel[]>) => {
+          this.rows = res.data;
+        },
+        (_error) => {
+          this.toastr.error(
+            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+            null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+        }
+      );
   }
-  // deleteUserNeed(_id: any, modal: any) {
-  //   this.modalService
-  //     .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-  //     .result.then(
-  //       (result) => {
-  //         this._UserNeedService
-  //           .delete(id, 'UserNeed')
-  //           .toPromise()
-  //           .then((res) => {
-  //             if (res.success) {
-  //               this.toastr.success(
-  //                 'فرآیند حذف موفقیت آمیز بود',
-  //                 'موفقیت آمیز!',
-  //                 {
-  //                   timeOut: 2000,
-  //                   positionClass: 'toast-top-left',
-  //                 }
-  //               );
-  //             } else {
-  //               this.toastr.error('خطا در حذف', res.message, {
-  //                 timeOut: 2000,
-  //                 positionClass: 'toast-top-left',
-  //               });
-  //             }
-  //             this.GetUserNeedById(this.pageIndex, this.pageSize);
-  //           })
-  //           .catch((err) => {
-  //             this.toastr.error('خطا در حذف', err.message, {
-  //               timeOut: 2000,
-  //               positionClass: 'toast-top-left',
-  //             });
-  //           });
-  //       },
-  //       (error) => {
-  //         this.toastr.error('خطا در حذف', error.message, {
-  //           timeOut: 2000,
-  //           positionClass: 'toast-top-left',
-  //         });
-  //       }
-  //     );
-  // }
-  // openSmall(content) {
-  //   this.modalService
-  //     .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
-  //     .result.then(
-  //       (result) => {
-  //         console.log(result);
-  //       },
-  //       (reason) => {
-  //         console.log('Err!', reason);
-  //       }
-  //     );
-  // }
+  deleteUserNeed(id: any, modal: any) {
+    this.modalService
+      .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
+      .result.then(
+        (result) => {
+          this._UserNeedService
+            .delete(id, 'UserNeed')
+            .toPromise()
+            .then((res) => {
+              if (res.success) {
+                this.toastr.success(
+                  'فرآیند حذف موفقیت آمیز بود',
+                  'موفقیت آمیز!',
+                  {
+                    timeOut: 2000,
+                    positionClass: 'toast-top-left',
+                  }
+                );
+              } else {
+                this.toastr.error('خطا در حذف', res.message, {
+                  timeOut: 2000,
+                  positionClass: 'toast-top-left',
+                });
+              }
+              this.GetUserNeedById(this.pageIndex, this.pageSize);
+            })
+            .catch((err) => {
+              this.toastr.error('خطا در حذف', err.message, {
+                timeOut: 2000,
+                positionClass: 'toast-top-left',
+              });
+            });
+        },
+        (error) => {
+          this.toastr.error('خطا در حذف', error.message, {
+            timeOut: 2000,
+            positionClass: 'toast-top-left',
+          });
+        }
+      );
+  }
 }

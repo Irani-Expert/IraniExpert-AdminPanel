@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserNeedComponent } from './user-need/user-need.component';
 import { ShrRoutingModule } from './shr.routing';
-import { ToastrModule } from 'ngx-toastr';
+import { UserWantsPipe } from 'src/app/shared/pipes/user-wants.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [UserNeedComponent],
-  imports: [CommonModule, ShrRoutingModule, ToastrModule],
+  declarations: [UserNeedComponent, UserWantsPipe],
+  imports: [CommonModule, ShrRoutingModule, NgbModule],
 })
 export class ShrModule {}

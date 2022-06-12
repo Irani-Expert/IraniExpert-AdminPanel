@@ -11,7 +11,7 @@
           </div>
           <div>
             <label for="FullName" class="text-muted">درخواست:</label>
-            <strong class="mr-1">&nbsp;{{ item.userWant }} </strong>
+            <strong class="mr-1">&nbsp;{{ item.userWant | userWants }} </strong>
           </div>
         </div>
         <div class="col-6">
@@ -24,19 +24,28 @@
         </div>
       </div>
       <div class="mb-3">
-        <!-- <button type="button" class="btn btn-outline-info m-1">پذیرفتن</button>
-        <button type="button" class="btn btn-danger btn-rounded m-1">
-          حذف پیام
-        </button> -->
+        <button
+          (click)="deleteUserNeed(item.id, deleteModal)"
+          type="button"
+          class="btn btn-danger btn-rounded m-1"
+        >
+          حذف درخواست
+        </button>
       </div>
     </div>
   </div>
 </div>
-
-<!-- <ng-template #modalSmall let-modal>
+<div *ngIf="rows?.length == 0" class="row text-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="gif-fluid col-12"
+    alt=""
+  />
+</div>
+<ng-template #deleteModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">
-      آیا از پذیرش پیام مطمئن هستید
+      آیا از حذف درخواست مطمئن هستید
     </h4>
     <button type="button" class="close" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -44,7 +53,19 @@
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark btn-rounded">بله</button>
-    <button type="button" class="btn btn-outline-dark btn-rounded">خیر</button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+    >
+      بله
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+    >
+      خیر
+    </button>
   </div>
-</ng-template> -->
+</ng-template>

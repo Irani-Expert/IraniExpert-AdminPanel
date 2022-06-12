@@ -1,23 +1,24 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'productType',
+  name: 'videoType',
 })
-export class ProductTypePipe implements PipeTransform {
+export class VideoTypePipe implements PipeTransform {
   transform(value: number): string {
     var result = '';
     switch (value) {
       case 0:
-        result = 'اکسپرت';
+        result = 'خانه';
         break;
       case 1:
-        result = 'اندیکاتور';
+        result = 'بک تست';
         break;
       case 2:
-        result = 'کمکی';
+        result = 'آموزش';
         break;
-      default:
-        result = '';
+      case 99:
+        result = 'دیگر';
+        break;
     }
     return result;
   }

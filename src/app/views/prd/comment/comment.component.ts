@@ -62,7 +62,7 @@ export class CommentComponent implements OnInit {
       );
   }
 
-  deleteComment(id, modal) {
+  deleteComment(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
