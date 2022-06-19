@@ -1,5 +1,5 @@
-@media screen and (max-width: 1463px) {
-    .margin-right {
-        margin-right: -1.94rem;
-    }
-}
+.brief-text{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }

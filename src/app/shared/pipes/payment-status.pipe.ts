@@ -8,21 +8,24 @@ export class PaymentStatusPipe implements PipeTransform {
     var result = '';
     switch (value) {
       case 0:
-        result = 'Init';
+        result = 'شروع سفارش';
         break;
       case 1:
-        result = 'آماده پرداخت';
+        result = 'آماده سفارش';
         break;
       case 2:
-        result = 'درحال پرداخت';
+        result = 'درانتظار پرداخت';
         break;
       case 3:
         result = 'پرداخت شده';
         break;
-      case 98:
-        result = 'خطا در اعتبارسنجی';
+      case 4:
+        result = 'در انتظار تائید';
         break;
-      case 99:
+      case 98:
+        result = 'خطا در اعتبار سنجی';
+        break;
+        case 99:
         result = 'با خطا مواجه شده';
         break;
     }

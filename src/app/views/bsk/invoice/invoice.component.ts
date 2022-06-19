@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { InvoiceModel } from './invoice.model';
@@ -19,15 +20,23 @@ export class InvoiceComponent implements OnInit {
   );
   pageIndex = 1;
   pageSize = 12;
+  invoiceDetail: InvoiceModel= new InvoiceModel();
+  addForm: FormGroup;
   constructor(
     public _invoiceService: InvoiceService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _formBuilder:FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.setPage(0);
+    this.invoiceDetail = new InvoiceModel();
+    this.addForm = this._formBuilder.group({
+      status: [null],
+      isConfirmed: [null],
+    });
   }
   setPage(pageInfo: number) {
     this.pageIndex = pageInfo;
@@ -60,16 +69,47 @@ export class InvoiceComponent implements OnInit {
         }
       );
   }
-  // openSmall(content: any, row: InvoiceModel) {
-  //   this.modalService
-  //     .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
-  //     .result.then(
-  //       (result) => {
-  //         // if (result) this.acceptComment(row);
-  //       },
-  //       (reason) => {
-  //         console.log('Err!', reason);
-  //       }
-  //     );
-  // }
+  openModal(content:any,item:InvoiceModel) {
+    this.invoiceDetail = item;
+    this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title',centered: true })
+    .result.then(
+      (result:boolean) => {
+        if (result !=undefined) {
+          this.addOrUpdate(this.invoiceDetail);
+          this.addForm.reset();
+        }
+      }
+    )
+  }
+  async addOrUpdate(item: InvoiceModel) {
+    await this._invoiceService
+        .update(item.id, item, 'invoice')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+}
+selectSatus($event: any) {
+  if ($event != undefined) {
+    this.invoiceDetail.status = parseInt($event);
+  }
+}
 }

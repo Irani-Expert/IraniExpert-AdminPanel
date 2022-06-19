@@ -42,6 +42,7 @@ export class BackTestComponent implements OnInit {
         videoUrl: [null],
         fileUrl: [null],
         cardImagePath: [null],
+        isActive: [null]
       },
       { validator: this.checkValidFileOrUrl }
     );
