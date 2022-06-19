@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { OrderModel } from '../order/order.model';
 import { InvoiceModel } from './invoice.model';
 import { InvoiceService } from './invoice.service';
 
@@ -33,6 +34,9 @@ export class InvoiceComponent implements OnInit {
   ngOnInit(): void {
     this.setPage(0);
     this.invoiceDetail = new InvoiceModel();
+    // this.invoiceDetail.id = parseInt(
+    //   this._route.snapshot.paramMap.get('orderId') ?? '0'
+    // );
     this.addForm = this._formBuilder.group({
       status: [null],
       isConfirmed: [null],
