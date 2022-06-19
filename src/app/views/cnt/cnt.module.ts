@@ -26,6 +26,7 @@ import { OrderIdPipe } from 'src/app/shared/pipes/order-id.pipe';
     AddUpdateComponent,
     CommentComponent,
     OrderIdPipe,
+
   ],
   imports: [
     CommonModule,

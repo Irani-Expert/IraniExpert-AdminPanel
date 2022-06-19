@@ -1,5 +1,6 @@
 <div class="my-css w-75">
-  <div class="timeline-card card mt-4" *ngFor="let item of rows">
+  <div *ngFor="let item of rows">
+  <div class="timeline-card card bg-secondary mt-4" *ngIf="item.parentID===null">
     <div
       class="card-header bg-dark d-flex justify-content-between align-items-center"
     >
@@ -25,30 +26,35 @@
       <p class="text-white">
         {{ item.text }}
       </p>
-      <div>
-        <div class="mb-2">
-          <button
-            type="button"
-            class="btn btn-light btn-rounded m-1"
-            *ngIf="item.isAccepted === false"
-            (click)="openSmall(modalSmall, item)"
-          >
-            پذیرفتن
-          </button>
-        </div>
-        <div class="mb-2">
-          <button
-            type="button"
-            class="btn btn-danger btn-rounded m-1"
-            *ngIf="item.isAccepted === true"
-            (click)="deleteComment(item.id, deleteModal)"
-          >
-            حذف پیام
-          </button>
-        </div>
+      <ng-component *ngIf="item.parentID!==null">
+        <p class="bg-dark text-white ml-3">پاسخ:{{item.parentComment.text}}</p>
+      </ng-component>
+      
+    </div>
+    <div class="card-footer bg-secondary">
+      <div class="mb-2">
+        <button
+          type="button"
+          class="btn btn-light btn-rounded m-1"
+          *ngIf="item.isAccepted === false"
+          (click)="openSmall(modalSmall, item)"
+        >
+          پذیرفتن
+        </button>
+      </div>
+      <div class="mb-2">
+        <button
+          type="button"
+          class="btn btn-danger btn-rounded m-1"
+          *ngIf="item.isAccepted === true"
+          (click)="deleteComment(item.id, deleteModal)"
+        >
+          حذف پیام
+        </button>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <ng-template #modalSmall let-modal>
@@ -65,11 +71,14 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-
+  <div class="modal-body">
+    <label class="text-black-50 mb-2">درصورت نیاز یا علاقه پاسخ این نظر را بدهید</label>
+    <textarea [(ngModel)]="replyText" class="form-control"></textarea>
+  </div>
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn btn-outline-dark btn-rounded mr-2"
       (click)="modal.close(true)"
     >
       بله

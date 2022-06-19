@@ -5,7 +5,7 @@ import { IComment } from './comment.interface';
 export class CommentModel extends Base implements IComment {
   userID: number;
   parentID: number;
-  parentComment: string;
+  parentComment: CommentModel[];
   tableType: number;
   rowID: number;
   name: string;
@@ -13,4 +13,5 @@ export class CommentModel extends Base implements IComment {
   rate: number;
   text: string;
   isAccepted: boolean;
+  
 }

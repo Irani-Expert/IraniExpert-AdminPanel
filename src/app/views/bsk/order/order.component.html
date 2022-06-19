@@ -32,6 +32,7 @@
         >
           <!-- OTHER DATA -->
           <div class="m-0 col text-lg-center text-white">نام کاربر</div>
+          <div class="m-0 col text-lg-center text-white">شماره تماس</div>
           <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
           <div class="m-0 col text-lg-center text-white">هزینه</div>
           <div class="m-0 col text-lg-center text-white">وضعیت</div>
@@ -74,6 +75,7 @@
           <div class="col m-0">
             {{ item.userInfo.firstName }}&nbsp;{{ item.userInfo.lastName }}
           </div>
+          <div class="col m-0">{{ item.userInfo.phoneNumber }}</div>
           <div class="col m-0">{{ item.product }}|{{ item.plan }}</div>
           <div class="col m-0">
             {{ item.price | currency }}

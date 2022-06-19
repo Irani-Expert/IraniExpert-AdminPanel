@@ -15,12 +15,12 @@ export class CommentComponent implements OnInit {
   rows: CommentModel[] = new Array<CommentModel>();
   @Input() productId: number;
   @Input() tableType: number;
-
+  replyText:string=null;
   pageIndex = 1;
   pageSize = 12;
-
+  parentComment : CommentModel = new CommentModel()
   constructor(
-    public _CommentService: CommentService,
+    public _commentService: CommentService,
     private toastr: ToastrService,
     private modalService: NgbModal
   ) {}
@@ -35,7 +35,7 @@ export class CommentComponent implements OnInit {
     this.getCommentListByProductId(this.pageIndex, this.pageSize);
   }
   async getCommentListByProductId(pageNumber: number, seedNumber: number) {
-    await this._CommentService
+    await this._commentService
       .GetByTableTypeAndRowId(
         pageNumber,
         seedNumber,
@@ -67,7 +67,7 @@ export class CommentComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._CommentService
+          this._commentService
             .delete(id, 'comment')
             .toPromise()
             .then((res) => {
@@ -104,7 +104,17 @@ export class CommentComponent implements OnInit {
       );
   }
 
-  openSmall(content, row) {
+  openSmall(content: any, row: CommentModel) {
+    this.parentComment=new CommentModel();
+    this.parentComment.parentID=row.id;
+    this.parentComment.rate=0;
+    this.parentComment.email="admin@iraniexpert.com";
+    this.parentComment.name="پشتیبان سایت";
+    this.parentComment.isAccepted=true;
+    this.parentComment.tableType=row.tableType;
+    this.parentComment.rowID=row.rowID;
+    this.parentComment.isActive=true;
+
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
@@ -119,10 +129,32 @@ export class CommentComponent implements OnInit {
   }
 
   acceptComment(row: CommentModel) {
+    if(this.replyText!==null && this.replyText.length>0){
+      this.parentComment.text=this.replyText;
+      this._commentService
+      .create(this.parentComment,'comment')
+      .toPromise()
+      .then(
+        (data) => {
+          if (data.success) {} else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        },
+        (error) => {
+          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      );
+     }
     row.isAccepted = true;
     row.isActive = true;
-    this._CommentService
-      .update(row.id, row, 'Comment')
+    this._commentService
+      .update(row.id, row, 'comment')
       .toPromise()
       .then(
         (data) => {

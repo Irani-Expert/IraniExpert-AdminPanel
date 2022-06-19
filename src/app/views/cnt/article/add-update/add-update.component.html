@@ -25,21 +25,21 @@
           </div>
           <div class="col-md-6">
             <label for="brief">متن کوتاه</label>
-            <input
+            <textarea
               type="text"
               class="form-control form-control-rounded"
               id="brief"
               placeholder="متن کوتاه را وارد نمایید."
               [formControl]="addForm.controls['brief']"
               [(ngModel)]="addUpdate.brief"
-            />
+            ></textarea>
             <small
               *ngIf="
                 addForm.controls['brief'].hasError('required') &&
                 addForm.controls['brief'].touched
               "
               class="mat-text-warn m-t-negative"
-              >ورود عنوان ضروری است</small
+              >ورود متن کوتاه ضروری است</small
             >
           </div>
           <div class="col-md-6">

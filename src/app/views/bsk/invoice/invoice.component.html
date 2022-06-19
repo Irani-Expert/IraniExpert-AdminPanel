@@ -161,7 +161,8 @@
     <div class="modal-body">
      
         <div class="row">
-          <div class="col col-md-3 form-group mb-3">
+          
+          <div class="col col-md-4 form-group mb-3">
             <label for="createDate">ایجاد شده در:</label>
             <div 
             for="createDate" 
@@ -169,13 +170,29 @@
             {{invoiceDetail.createDate | date: " d MMMM "}}
             </div>    
           </div>
-          <div class="col col-md-3 form-group mb-3">
+          <div class="col col-md-4 form-group mb-3">
             <label for="updateDate">آخرین به روزرسانی:</label>
             <div 
             for="updateDate" 
             class="mb-3 text-white rounded-left rounded-right bg-dark p-2">
             {{invoiceDetail.updateDate | relativeTime}}
+            </div> 
+            <div class="col col-md-5 form-group mb-3">
+              <label for="Name">نام و نام خانوادگی</label>
+              <div 
+              for="Name" 
+              class="mb-3 text-white rounded-left rounded-right bg-dark p-2">
+              {{invoiceDetail.userInfo.firstName }}&nbsp;{{invoiceDetail.userInfo.firstName }}
+              </div>    
+            </div>
+            <div class="col col-md-5 form-group mb-3">
+            <label for="phoneNumber">شماره</label>
+            <div 
+            for="phoneNumber" 
+            class="mb-3 text-white rounded-left rounded-right bg-dark p-2">
+            {{invoiceDetail.userInfo.phoneNumber }}
             </div>    
+          </div>   
           </div>
           <div class="col-md-8 form-group mb-3">
             <strong for="bankResponse" class="mb-3">پاسخ بانک</strong>
