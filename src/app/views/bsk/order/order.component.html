@@ -73,9 +73,9 @@
         >
           <!-- OTHER DATA -->
           <div class="col m-0">
-            {{ item.userInfo.firstName }}&nbsp;{{ item.userInfo.lastName }}
+            {{ item.userInfo?.firstName }}&nbsp;{{ item.userInfo?.lastName }}
           </div>
-          <div class="col m-0">{{ item.userInfo.phoneNumber }}</div>
+          <div class="col m-0">{{ item.userInfo?.phoneNumber }}</div>
           <div class="col m-0">{{ item.product }}|{{ item.plan }}</div>
           <div class="col m-0">
             {{ item.price | currency }}
@@ -133,6 +133,7 @@
     </div>
   </div>
 </div>
+
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-title">حذف امکان</h4>

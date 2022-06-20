@@ -63,23 +63,34 @@ export class NavigationService {
       state: '/prd/products-list',
     },
     {
-      name: 'درخواست مشتریان',
+      name: 'سفارشات',
       type: 'link',
-      icon: 'i-Administrator',
-      state: '/shr/user-need',
+      icon: 'i-File-Horizontal-Text',
+      state: '/bsk/orders',
     },
+    {
+      name: 'کاربران',
+      type: 'dropDown',
+      icon: 'i-Administrator',
+      sub: [
+          { icon: 'i-Add-UserStar', name: 'دسترسی ها کاربران', state: '/sec/user-role', type: 'link' },
+          { icon: 'i-Gear', name: 'مدیریت دسترسی ها ', state: '/sec/role-management', type: 'link' },
+          { icon: 'i-Business-Man', name: ' مدیریت کاربران ', state: '/sec/user-management', type: 'link' },
+      ]
+  },
+  {
+    name: 'بنرها',
+    type: 'link',
+    icon: 'i-Tag-2',
+    state: '/cnt/banner',
+  },
     {
       name: 'مقالات',
       type: 'link',
       icon: 'i-File-Edit',
       state: '/cnt/article',
     },
-    {
-      name: 'بنرها',
-      type: 'link',
-      icon: 'i-Tag-2',
-      state: '/cnt/banner',
-    },
+    
     {
       name: 'گروه ها',
       type: 'link',
@@ -87,26 +98,13 @@ export class NavigationService {
       state: '/bas/group',
     },
     {
-      name: 'سفارشات',
+      name: 'درخواست مشتریان',
       type: 'link',
-      icon: 'i-File-Horizontal-Text',
-      state: '/bsk/orders',
+      icon: 'i-Love-User',
+      state: '/shr/user-need',
     },
-    // {
-    //     name: 'Forms',
-    //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-    //     type: 'dropDown',
-    //     icon: 'i-File-Clipboard-File--Text',
-    //     sub: [
-    //         { icon: 'i-File-Clipboard-Text--Image', name: 'Basic components', state: '/forms/basic', type: 'link' },
-    //         { icon: 'i-Split-Vertical', name: 'Form layouts', state: '/forms/layouts', type: 'link' },
-    //         { icon: 'i-Receipt-4', name: 'Input Group', state: '/forms/input-group', type: 'link' },
-    //         { icon: 'i-File-Edit', name: 'Input Mask', state: '/forms/input-mask', type: 'link' },
-    //         { icon: 'i-Tag-2', name: 'Tag Input', state: '/forms/tag-input', type: 'link' },
-    //         { icon: 'i-Width-Window', name: 'Wizard', state: '/forms/wizard', type: 'link' },
-    //         { icon: 'i-Crop-2', name: 'Image Cropper', state: '/forms/img-cropper', type: 'link' },
-    //     ]
-    // },
+   
+   
     // {
     //     name: 'Data Tables',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',

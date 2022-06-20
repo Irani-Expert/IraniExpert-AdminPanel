@@ -39,6 +39,11 @@ const adminRoutes: Routes = [
     loadChildren: () =>
       import('./views/shr/shr.module').then((m) => m.ShrModule),
   },
+  {
+    path: 'sec',
+    loadChildren: () =>
+      import('./views/sec/sec.module').then((m) => m.SecModule),
+  },
 ];
 
 const routes: Routes = [
@@ -108,6 +113,16 @@ const routes: Routes = [
         path: 'shr',
         loadChildren: () =>
           import('./views/shr/shr.module').then((m) => m.ShrModule),
+      },
+    ],
+  },
+  {
+    path: 'sec',
+    children: [
+      {
+        path: 'sec',
+        loadChildren: () =>
+          import('./views/sec/sec.module').then((m) => m.SecModule),
       },
     ],
   },
