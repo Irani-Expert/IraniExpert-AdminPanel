@@ -4,6 +4,7 @@ import { GroupComponent } from './group/group.component';
 import { BasRoutingModule } from './bas.routing';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 @NgModule({
   declarations: [
     GroupComponent,
@@ -15,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
        BasRoutingModule,
        NgxPaginationModule,
+       SharedPipesModule
 
   ]
 })

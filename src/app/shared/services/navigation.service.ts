@@ -73,24 +73,39 @@ export class NavigationService {
       type: 'dropDown',
       icon: 'i-Administrator',
       sub: [
-          { icon: 'i-Add-UserStar', name: 'دسترسی ها کاربران', state: '/sec/user-role', type: 'link' },
-          { icon: 'i-Gear', name: 'مدیریت دسترسی ها ', state: '/sec/role-management', type: 'link' },
-          { icon: 'i-Business-Man', name: ' مدیریت کاربران ', state: '/sec/user-management', type: 'link' },
-      ]
-  },
-  {
-    name: 'بنرها',
-    type: 'link',
-    icon: 'i-Tag-2',
-    state: '/cnt/banner',
-  },
+        {
+          icon: 'i-Add-UserStar',
+          name: 'دسترسی ها کاربران',
+          state: '/sec/user-role',
+          type: 'link',
+        },
+        {
+          icon: 'i-Gear',
+          name: 'مدیریت دسترسی ها ',
+          state: '/sec/role-management',
+          type: 'link',
+        },
+        {
+          icon: 'i-Business-Man',
+          name: ' مدیریت کاربران ',
+          state: '/sec/user-management',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      name: 'بنرها',
+      type: 'link',
+      icon: 'i-Tag-2',
+      state: '/cnt/banner',
+    },
     {
       name: 'مقالات',
       type: 'link',
       icon: 'i-File-Edit',
       state: '/cnt/article',
     },
-    
+
     {
       name: 'گروه ها',
       type: 'link',
@@ -103,8 +118,7 @@ export class NavigationService {
       icon: 'i-Love-User',
       state: '/shr/user-need',
     },
-   
-   
+
     // {
     //     name: 'Data Tables',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',

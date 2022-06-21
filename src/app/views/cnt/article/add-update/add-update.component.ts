@@ -55,7 +55,8 @@ export class AddUpdateComponent implements OnInit {
     );
     if (this.addUpdate.id != 0) this.getArticleById(this.addUpdate.id);
     this.ckeConfig = {
-      extraPlugins: 'filebrowser',
+      filebrowserBrowseUrl: 'iraniexpert.com//uploads/images/articles',
+      filebrowserUploadUrl: 'iraniexpert.com//uploads/images/articles',
       allowedContent: false,
       forcePasteAsPlainText: true,
       removePlugins: 'exportpdf',

@@ -58,6 +58,7 @@
         'flex-row-2': viewMode === 'list',
         'flex-column': viewMode === 'grid'
       }"
+      *ngIf="item.transactionStatus !== 0"
     >
       <div
         class="flex-grow-1"

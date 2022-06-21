@@ -38,7 +38,7 @@
           </div>
         </div>
         <p class="mt-2 text-white">
-          تاریخ انقضا:{{ item.expireDate | date: " d MMMM " }}
+          اولویت:{{ item.orderID | orderID }}
         </p>
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
           <ngb-panel>

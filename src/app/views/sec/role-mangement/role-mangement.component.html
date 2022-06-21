@@ -1,1 +1,22 @@
-<p>role-mangement works!</p>
+<div class="row justify-content-lg-start justify-content-center">
+  <div class="col-lg-3 col-md-6 col-sm-8 col-12" *ngFor="let item of rows">
+    <div class="card bg-dark">
+      <div class="card-header text-center m-0 p-0">
+        <p class="text-white align-self-center mt-2">نقش</p>
+      </div>
+      <div class="card-body bg-secondary text-center">
+        <div class="w-100 text-white">
+          {{ item.name }}
+        </div>
+      </div>
+      <div class="card-footer">
+        <div
+          class="d-flex justify-content-around align-content-center align-items-center"
+        >
+          <button class="col-5 btn btn-warning">ویرایش نقش</button>
+          <button class="col-5 btn btn-danger">حذف نقش</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,8 +27,8 @@ export class RelativeTimePipe implements PipeTransform {
     }
     interval = Math.floor(seconds / 60);
     if (interval > 1) {
-      return interval + ' دقیقه قبل';
+      return interval + ' دقیقه پیش';
     }
-    return Math.floor(seconds) + ' لحظاتی پیش';
+    return Math.floor(seconds) + 'ثانیه پیش';
   }
 }

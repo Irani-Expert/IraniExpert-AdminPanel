@@ -15,7 +15,6 @@ import { FileTypePipe } from 'src/app/shared/pipes/file-type.pipe';
 import { CommentComponent } from './article/comment/comment.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
-import { OrderIdPipe } from 'src/app/shared/pipes/order-id.pipe';
 @NgModule({
   declarations: [
     BannerComponent,
@@ -25,8 +24,6 @@ import { OrderIdPipe } from 'src/app/shared/pipes/order-id.pipe';
     FileTypePipe,
     AddUpdateComponent,
     CommentComponent,
-    OrderIdPipe,
-
   ],
   imports: [
     CommonModule,

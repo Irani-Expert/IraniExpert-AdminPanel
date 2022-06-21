@@ -7,24 +7,25 @@ import { UserRoleComponent } from './user-role/user-role.component';
 
 const routes: Routes = [
   {
-  path: 'user-role',
-  component: UserRoleComponent,
-  canActivate: [AuthGuard],
-},
-{
-  path: 'user-management',
-  component: UserMangementComponent,
-  canActivate: [AuthGuard],
-},
+    path: 'user-role',
+    component: UserRoleComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'user-management',
+    component: UserMangementComponent,
+    canActivate: [AuthGuard],
+  },
 
-{
-  path: 'role-management',
-  component: RoleMangementComponent,
-  canActivate: [AuthGuard],
-},];
+  {
+    path: 'role-management',
+    component: RoleMangementComponent,
+    canActivate: [AuthGuard],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SecRoutingModule { }
+export class SecRoutingModule {}
