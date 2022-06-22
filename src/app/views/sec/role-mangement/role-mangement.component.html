@@ -1,3 +1,11 @@
+<button
+  type="button"
+  class="btn btn-primary m-1"
+  (click)="roleEdit(addUpdate, undefined)"
+>
+  ایجاد
+</button>
+<div class="separator-breadcrumb border-top"></div>
 <div class="row justify-content-lg-start justify-content-center">
   <div class="col-lg-3 col-md-6 col-sm-8 col-12" *ngFor="let item of rows">
     <div class="card bg-dark">
@@ -13,10 +21,79 @@
         <div
           class="d-flex justify-content-around align-content-center align-items-center"
         >
-          <button class="col-5 btn btn-warning">ویرایش نقش</button>
-          <button class="col-5 btn btn-danger">حذف نقش</button>
+          <button
+            class="col-5 btn btn-warning"
+            (click)="roleEdit(addUpdate, item.id)"
+          >
+            ویرایش
+          </button>
+          <button
+            class="col-5 btn btn-danger"
+            (click)="deleteRole(item.id, deleteModal)"
+          >
+            حذف
+          </button>
         </div>
       </div>
     </div>
   </div>
 </div>
+<div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="img-fluid w-50"
+    alt=""
+  />
+</div>
+<ng-template #addUpdate let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="addForm" (ngSubmit)="submit()">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="name">نام نقش</label>
+          <input
+            [(ngModel)]="addUpdate.name"
+            [formControl]="addForm.controls['name']"
+            type="text"
+            id="name"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="modal.close(true)"
+        *ngIf="addUpdate.id !== 0"
+      >
+        ویرایش
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="modal.close(true)"
+        *ngIf="addUpdate.id === 0"
+      >
+        ایجاد
+      </button>
+    </div>
+  </form>
+</ng-template>

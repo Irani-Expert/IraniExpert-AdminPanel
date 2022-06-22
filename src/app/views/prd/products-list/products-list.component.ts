@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { BaseFilterModel } from 'src/app/shared/models/Base/baseFilter.model';
 import { Page } from 'src/app/shared/models/Base/page';
@@ -7,7 +6,6 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { ProductModel } from './product.model';
 import { ProductService } from './product.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-products-list',
@@ -21,7 +19,6 @@ export class ProductsListComponent implements OnInit {
   pageIndex = 1;
   pageSize = 12;
   constructor(
-    private spinner: NgxSpinnerService,
     public _productService: ProductService,
     private toastr: ToastrService,
     private modalService: NgbModal
@@ -29,12 +26,6 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.setPage(0);
-    this.spinner.show();
-
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 5000);
   }
 
   setPage(pageInfo: number) {
