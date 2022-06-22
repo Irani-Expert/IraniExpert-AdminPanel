@@ -1,62 +1,72 @@
 <div class="my-css w-75">
   <div *ngFor="let item of rows">
-  <div class="timeline-card card bg-secondary mt-4" *ngIf="item.parentID===null">
     <div
-      class="card-header bg-dark d-flex justify-content-between align-items-center"
+      class="timeline-card card bg-secondary mt-4"
+      *ngIf="item.parentID === null"
     >
-      <div class="mb-1">
-        <strong class="mr-1 text-white">
-          {{ item.name }}
-        </strong>
-        <span
-          class="badge badge-warning mr-1 text-primary"
-          *ngIf="item.isAccepted === false"
-          >تایید نشده</span
-        >
-        <span
-          class="badge badge-success mr-1 text-white"
-          *ngIf="item.isAccepted === true"
-          >تایید شده</span
-        >
-        <p class="text-white-50">{{ item.createDate | relativeTime }}</p>
+      <div
+        class="card-header bg-dark d-flex justify-content-between align-items-center"
+      >
+        <div class="mb-1">
+          <strong class="mr-1 text-white">
+            {{ item.name }}
+          </strong>
+          <span
+            class="badge badge-warning mr-1 text-primary"
+            *ngIf="item.isAccepted === false"
+            >تایید نشده</span
+          >
+          <span
+            class="badge badge-success mr-1 text-white"
+            *ngIf="item.isAccepted === true"
+            >تایید شده</span
+          >
+          <p class="text-white-50">{{ item.createDate | relativeTime }}</p>
+        </div>
+        <div class="text-warning">امتیاز:5\{{ item.rate }}</div>
       </div>
-      <div class="text-warning">امتیاز:5\{{ item.rate }}</div>
-    </div>
-    <div class="card-body bg-secondary">
-      <p class="text-white">
-        {{ item.text }}
-      </p>
-      <ng-component *ngIf="item.parentID!==null">
-        <p class="bg-dark text-white ml-3">پاسخ:{{item.parentComment.text}}</p>
-      </ng-component>
-      
-    </div>
-    <div class="card-footer bg-secondary">
-      <div class="mb-2">
-        <button
-          type="button"
-          class="btn btn-light btn-rounded m-1"
-          *ngIf="item.isAccepted === false"
-          (click)="openSmall(modalSmall, item)"
-        >
-          پذیرفتن
-        </button>
+      <div class="card-body bg-secondary">
+        <p class="text-white">
+          {{ item.text }}
+        </p>
+        <ng-component *ngIf="item.parentID !== null">
+          <p class="bg-dark text-white ml-3">
+            پاسخ:{{ item.parentComment.text }}
+          </p>
+        </ng-component>
       </div>
-      <div class="mb-2">
-        <button
-          type="button"
-          class="btn btn-danger btn-rounded m-1"
-          *ngIf="item.isAccepted === true"
-          (click)="deleteComment(item.id, deleteModal)"
-        >
-          حذف پیام
-        </button>
+      <div class="card-footer bg-secondary">
+        <div class="mb-2">
+          <button
+            type="button"
+            class="btn btn-light btn-rounded m-1"
+            *ngIf="item.isAccepted === false"
+            (click)="openSmall(modalSmall, item)"
+          >
+            پذیرفتن
+          </button>
+        </div>
+        <div class="mb-2">
+          <button
+            type="button"
+            class="btn btn-danger btn-rounded m-1"
+            *ngIf="item.isAccepted === true"
+            (click)="deleteComment(item.id, deleteModal)"
+          >
+            حذف پیام
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="img-fluid w-50"
+    alt=""
+  />
 </div>
-
 <ng-template #modalSmall let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">
@@ -72,7 +82,9 @@
     </button>
   </div>
   <div class="modal-body">
-    <label class="text-black-50 mb-2">درصورت نیاز یا علاقه پاسخ این نظر را بدهید</label>
+    <label class="text-black-50 mb-2"
+      >درصورت نیاز یا علاقه پاسخ این نظر را بدهید</label
+    >
     <textarea [(ngModel)]="replyText" class="form-control"></textarea>
   </div>
   <div class="modal-footer">

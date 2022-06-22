@@ -37,9 +37,7 @@
             فعال
           </div>
         </div>
-        <p class="mt-2 text-white">
-          اولویت:{{ item.orderID | orderID }}
-        </p>
+        <p class="mt-2 text-white">اولویت:{{ item.orderID | orderID }}</p>
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
           <ngb-panel>
             <ng-template ngbPanelTitle>
@@ -110,6 +108,13 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="img-fluid w-50"
+    alt=""
+  />
 </div>
 <!-- Add Or Edit -->
 <ng-template #addUpdateModal let-modal>

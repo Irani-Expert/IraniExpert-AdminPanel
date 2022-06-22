@@ -70,7 +70,13 @@
     </div>
   </div>
 </div>
-
+<div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="img-fluid w-50"
+    alt=""
+  />
+</div>
 <ng-template #addUpdateModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">

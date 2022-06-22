@@ -189,7 +189,7 @@ export class FacilityComponent implements OnInit {
               });
             }
           },
-          (error) => {
+          (_error) => {
             this.toastr.error('خطا مجدد تلاش فرمایید', null, {
               closeButton: true,
               positionClass: 'toast-top-left',
