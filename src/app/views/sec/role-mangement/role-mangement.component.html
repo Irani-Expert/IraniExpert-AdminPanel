@@ -1,7 +1,7 @@
 <button
   type="button"
   class="btn btn-primary m-1"
-  (click)="roleEdit(addUpdate, undefined)"
+  (click)="roleEdit(addUpdateModal, undefined)"
 >
   ایجاد
 </button>
@@ -23,7 +23,7 @@
         >
           <button
             class="col-5 btn btn-warning"
-            (click)="roleEdit(addUpdate, item.id)"
+            (click)="roleEdit(addUpdateModal, item)"
           >
             ویرایش
           </button>
@@ -45,55 +45,81 @@
     alt=""
   />
 </div>
-<ng-template #addUpdate let-modal>
+<ng-template #addUpdateModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
-      ایجاد
-    </h4>
-    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
-      ویرایش
-    </h4>
-
+    <h4 class="modal-title" id="modal-basic-title">ویرایش</h4>
     <button
       type="button"
       class="close"
-      aria-label="Close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
       (click)="modal.dismiss('Cross click')"
     >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form [formGroup]="addForm" (ngSubmit)="submit()">
-    <div class="modal-body">
-      <div class="row">
-        <div class="col-md-6 form-group mb-3 mt-3">
-          <label for="name">نام نقش</label>
-          <input
-            [(ngModel)]="addUpdate.name"
-            [formControl]="addForm.controls['name']"
-            type="text"
-            id="name"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(true)"
-        *ngIf="addUpdate.id !== 0"
-      >
-        ویرایش
-      </button>
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(true)"
-        *ngIf="addUpdate.id === 0"
-      >
-        ایجاد
-      </button>
-    </div>
-  </form>
+  <div class="modal-body">
+    <form action="" [formGroup]="addForm" (ngSubmit)="submit()">
+      <label for="name">نقش</label>
+      <input
+        name="name"
+        id="name"
+        class="form-control"
+        [(ngModel)]="addUpdate.name"
+        [formControl]="addForm.controls['name']"
+      />
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id !== 0"
+    >
+      ویرایش
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+      *ngIf="addUpdate.id === 0"
+    >
+      ایجاد
+    </button>
+  </div>
+</ng-template>
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">حذف محصول</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از حذف مطمئنید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
+    </button>
+  </div>
 </ng-template>

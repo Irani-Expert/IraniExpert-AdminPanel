@@ -130,8 +130,7 @@ export class BannerComponent implements OnInit {
       );
   }
 
-  addorEdit(content, row: BannerModel) {
-    debugger;
+  addorEdit(content: any, row: BannerModel) {
     if (row === undefined) {
       row = new BannerModel();
       row.id = 0;
@@ -158,7 +157,6 @@ export class BannerComponent implements OnInit {
   }
 
   async addOrUpdate(row: BannerModel) {
-    debugger;
     if (row.id === 0) {
       await this._bannerService
         .create(row, 'Banner')

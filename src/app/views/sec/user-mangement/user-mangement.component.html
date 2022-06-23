@@ -38,11 +38,12 @@
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
-          <div class="m-0 col text-lg-center text-white">نام کاربر</div>
-          <div class="m-0 col text-lg-center text-white">نقش کاربر</div>
-          <div class="m-0 col text-lg-center text-white">ایمیل کاربر</div>
-          <div class="m-0 col text-lg-center text-white">رمز کاربر</div>
-          <div class="m-0 col text-lg-center text-white">سوسکی</div>
+          <div class="m-0 col text-lg-center text-white">نام کاربری</div>
+          <div class="m-0 col text-lg-center text-white">
+            نام و نام خانوادگی
+          </div>
+          <div class="m-0 col text-lg-center text-white">ایمیل</div>
+          <div class="m-0 col text-lg-center text-white">شماره حساب</div>
           <div class="m-0 text-light d-md-block d-none col text-center">
             عملیات
           </div>
@@ -73,7 +74,7 @@
         }"
       >
         <div class="align-self-center">
-          <!-- {{ item.id }} -->
+          {{ item.id }}
         </div>
         <div
           class="card-body align-self-center d-flex align-items-lg-center text-center row"
@@ -81,19 +82,16 @@
         >
           <!-- OTHER DATA -->
           <div class="col m-0">
-            <!-- {{ item.userInfo?.firstName }}&nbsp;{{ item.userInfo?.lastName }} -->
+            {{ item.userName }}
           </div>
           <div class="col m-0">
-            <!-- {{ item.userInfo?.phoneNumber }} -->
+            {{ item.firstName }}&nbsp;{{ item.lastName }}
           </div>
           <div class="col m-0">
-            <!-- {{ item.product }}|{{ item.plan }} -->
+            {{ item.email }}
           </div>
           <div class="col m-0">
-            <!-- {{ item.price | currency }} -->
-          </div>
-          <div class="col m-0">
-            <!-- {{ item.transactionStatus | transactionStatus }} -->
+            {{ item.accountNumber }}
           </div>
           <div
             class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"

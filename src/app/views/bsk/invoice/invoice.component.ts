@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { OrderModel } from '../order/order.model';
 import { InvoiceModel } from './invoice.model';
 import { InvoiceService } from './invoice.service';
 
@@ -21,14 +20,14 @@ export class InvoiceComponent implements OnInit {
   );
   pageIndex = 1;
   pageSize = 12;
-  invoiceDetail: InvoiceModel= new InvoiceModel();
+  invoiceDetail: InvoiceModel = new InvoiceModel();
   addForm: FormGroup;
   constructor(
     public _invoiceService: InvoiceService,
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _route: ActivatedRoute,
-    private _formBuilder:FormBuilder
+    private _formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -73,47 +72,50 @@ export class InvoiceComponent implements OnInit {
         }
       );
   }
-  openModal(content:any,item:InvoiceModel) {
+  openModal(content: any, item: InvoiceModel) {
     this.invoiceDetail = item;
-    this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title',centered: true })
-    .result.then(
-      (result:boolean) => {
-        if (result !=undefined) {
+    this.modalService
+      .open(content, {
+        size: 'lg',
+        ariaLabelledBy: 'modal-basic-title',
+        centered: true,
+      })
+      .result.then((result: boolean) => {
+        if (result != undefined) {
           this.addOrUpdate(this.invoiceDetail);
           this.addForm.reset();
         }
-      }
-    )
+      });
   }
   async addOrUpdate(item: InvoiceModel) {
     await this._invoiceService
-        .update(item.id, item, 'invoice')
-        .toPromise()
-        .then(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+      .update(item.id, item, 'invoice')
+      .toPromise()
+      .then(
+        (data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
           }
-        );
-}
-selectSatus($event: any) {
-  if ($event != undefined) {
-    this.invoiceDetail.status = parseInt($event);
+        },
+        (error) => {
+          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      );
   }
-}
+  selectSatus($event: any) {
+    if ($event != undefined) {
+      this.invoiceDetail.status = parseInt($event);
+    }
+  }
 }

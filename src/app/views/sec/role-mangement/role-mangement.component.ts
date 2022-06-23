@@ -16,7 +16,7 @@ export class RoleMangementComponent implements OnInit {
   allSelected: boolean;
   pageIndex = 1;
   pageSize = 12;
-  addUpdate: RoleModel;
+  addUpdate: RoleModel = new RoleModel();
   addForm: FormGroup;
   constructor(
     public _roleService: RoleService,
@@ -28,7 +28,7 @@ export class RoleMangementComponent implements OnInit {
   ngOnInit(): void {
     this.setPage(0);
     this.addForm = this._formBuilder.group({
-      name: [null, Validators.compose([Validators.required])],
+      name: [null],
     });
   }
   setPage(pageInfo: number) {
@@ -54,11 +54,10 @@ export class RoleMangementComponent implements OnInit {
         }
       );
   }
-  async roleEdit(content: any, row: RoleModel) {
+  roleEdit(content: any, row: RoleModel) {
     if (row === undefined) {
       row = new RoleModel();
       row.id = 0;
-      row.name = null;
     }
     this.addUpdate = row;
     this.modalService
@@ -69,14 +68,15 @@ export class RoleMangementComponent implements OnInit {
       })
       .result.then(
         (result: boolean) => {
-          if (result != undefined) {
+          if (result) {
+            debugger;
             this.addOrUpdate(this.addUpdate);
             this.addForm.reset();
           }
         },
         (reason) => {
           console.log('Err!', reason);
-          this.addForm.reset;
+          this.addForm.reset();
         }
       );
   }
@@ -98,6 +98,7 @@ export class RoleMangementComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
+            this.getRoleList(this.pageIndex, this.pageSize);
           },
           (_error) => {
             this.toastr.error('خطا مجدد تلاش فرمایید', null, {
@@ -123,6 +124,7 @@ export class RoleMangementComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
+            this.getRoleList(this.pageIndex, this.pageSize);
           },
           (_error) => {
             this.toastr.error('خطا مجدد تلاش فرمایید', null, {
@@ -132,7 +134,6 @@ export class RoleMangementComponent implements OnInit {
           }
         );
     }
-    this.getRoleList(this.pageIndex, this.pageIndex);
   }
   deleteRole(id: number, modal: any) {
     this.modalService
@@ -157,8 +158,8 @@ export class RoleMangementComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
+            this.getRoleList(this.pageIndex, this.pageSize);
           });
       });
-    this.getRoleList(this.pageIndex, this.pageSize);
   }
 }
