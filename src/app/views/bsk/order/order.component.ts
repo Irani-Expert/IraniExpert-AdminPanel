@@ -15,7 +15,7 @@ export class OrderComponent implements OnInit {
   rows: OrderModel[] = new Array<OrderModel>();
   viewMode: 'list' | 'grid' = 'list';
   pageIndex = 1;
-  pageSize = 12;
+  pageSize = 10000;
   constructor(
     public _orderService: OrderService,
     private toastr: ToastrService,

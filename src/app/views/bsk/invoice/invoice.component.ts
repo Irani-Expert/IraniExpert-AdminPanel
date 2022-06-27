@@ -19,7 +19,7 @@ export class InvoiceComponent implements OnInit {
     this._route.snapshot.paramMap.get('orderId') ?? '0'
   );
   pageIndex = 1;
-  pageSize = 12;
+  pageSize = 10000;
   invoiceDetail: InvoiceModel = new InvoiceModel();
   addForm: FormGroup;
   constructor(
