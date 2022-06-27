@@ -1,7 +1,7 @@
 <button
   type="button"
   class="btn btn-primary m-1"
-  (click)="usersEdit(addUpdate, undefined)"
+  (click)="usersEdit(addUpdateModal, undefined)"
 >
   ایجاد
 </button>
@@ -101,7 +101,7 @@
                 <button
                   class="btn btn-info"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="usersEdit(addUpdate, item.id)"
+                  (click)="usersEdit(addUpdateModal, item)"
                 >
                   ویرایش
                 </button>
@@ -135,7 +135,7 @@
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-info col m-1"
-          (click)="usersEdit(addUpdate, item.id)"
+          (click)="usersEdit(addUpdateModal, item)"
         >
           ویرایش
         </button>
@@ -150,7 +150,7 @@
     alt=""
   />
 </div>
-<ng-template #addUpdate let-modal>
+<ng-template #addUpdateModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
       ایجاد
@@ -172,13 +172,54 @@
     <div class="modal-body">
       <div class="row">
         <div class="col-md-6 form-group mb-3 mt-3">
-          <!-- <label for="name">نام نقش</label>
+          <label for="firstName ">نام کاربری</label>
           <input
-            [(ngModel)]="addUpdate.name"
-            [formControl]="addForm.controls['name']"
-            type="text"
-            id="name"
-          /> -->
+            name="userName"
+            id="userName"
+            class="form-control"
+            [(ngModel)]="addUpdate.userName"
+            [formControl]="addForm.controls['userName']"
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="firstName ">نام </label>
+          <input
+            name="firstName"
+            id="firstName"
+            class="form-control"
+            [(ngModel)]="addUpdate.firstName"
+            [formControl]="addForm.controls['firstName']"
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="lastName">نام خانواگی</label>
+          <input
+            name="lastName"
+            id="lastName"
+            class="form-control"
+            [(ngModel)]="addUpdate.lastName"
+            [formControl]="addForm.controls['lastName']"
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="email ">ایمیل</label>
+          <input
+            name="email"
+            id="email"
+            class="form-control"
+            [(ngModel)]="addUpdate.email"
+            [formControl]="addForm.controls['email']"
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="accountNumber ">شماره حساب</label>
+          <input
+            name="accountNumber"
+            id="accountNumber"
+            class="form-control"
+            [(ngModel)]="addUpdate.accountNumber"
+            [formControl]="addForm.controls['accountNumber']"
+          />
         </div>
       </div>
     </div>

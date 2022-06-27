@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
@@ -28,7 +28,13 @@ export class UserMangementComponent implements OnInit {
 
   ngOnInit(): void {
     this.setPage(0);
-    this.addForm = this._formBuilder.group({});
+    this.addForm = this._formBuilder.group({
+      userName: [null, Validators.compose([Validators.required])],
+      firstName: [null, Validators.compose([Validators.required])],
+      lastName: [null, Validators.compose([Validators.required])],
+      email: [null, Validators.compose([Validators.required])],
+      accountNumber: [null, Validators.compose([Validators.required])],
+    });
   }
   setPage(pageInfo: number) {
     this.pageIndex = pageInfo;

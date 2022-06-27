@@ -47,7 +47,12 @@
 </div>
 <ng-template #addUpdateModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">ویرایش</h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
     <button
       type="button"
       class="close"
