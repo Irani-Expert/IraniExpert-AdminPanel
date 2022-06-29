@@ -78,7 +78,7 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn btn-outline-warning btn-rounded mr-1"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id !== 0"
     >
@@ -86,14 +86,22 @@
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
-      (click)="modal.close(false)"
+      class="btn btn-outline-primary btn-rounded mr-1"
+      (click)="modal.close(true)"
       *ngIf="addUpdate.id === 0"
     >
       ایجاد
     </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+    >
+      انصراف
+    </button>
   </div>
 </ng-template>
+<!-------- Delete -->
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-title">حذف محصول</h4>

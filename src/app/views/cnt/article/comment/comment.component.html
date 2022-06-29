@@ -1,9 +1,7 @@
 <div class="my-css w-75">
   <div *ngFor="let item of rows">
-    <div
-      class="timeline-card card bg-secondary mt-4"
-      *ngIf="item.parentID === null"
-    >
+    <div class="timeline-card card bg-secondary mt-4">
+      <!-- *ngIf="item.parentID === null" -->
       <div
         class="card-header bg-dark d-flex justify-content-between align-items-center"
       >
@@ -29,11 +27,6 @@
         <p class="text-white">
           {{ item.text }}
         </p>
-        <ng-component *ngIf="item.parentID !== null">
-          <p class="bg-dark text-white ml-3">
-            پاسخ:{{ item.parentComment.text }}
-          </p>
-        </ng-component>
       </div>
       <div class="card-footer bg-secondary">
         <div class="mb-2">

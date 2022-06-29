@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { RoleModel } from './role.model';
@@ -163,3 +163,87 @@ export class RoleMangementComponent implements OnInit {
       });
   }
 }
+// export class RoleMangementComponent implements OnInit {
+//   rows: RoleModel[] = new Array<RoleModel>();
+//   pageIndex = 1;
+//   pageSize = 1000;
+//   addUpdate: RoleModel;
+//   addForm: FormGroup;
+//   constructor(
+//     public _roleService: RoleService,
+//     private toastr: ToastrService,
+//     private modalService: NgbModal,
+//     private _formBuilder: FormBuilder
+//   ) {}
+//   ngOnInit(): void {
+//     this.setPage(0);
+//     this.addForm = this._formBuilder.group({
+//       name: [null],
+//     });
+//   }
+//   setPage(pageInfo: number) {
+//     this.pageIndex = pageInfo;
+
+//     this.getRoleList(this.pageIndex, this.pageSize);
+//   }
+//   async getRoleList(pageNumber: number, seedNumber: number) {
+//     this._roleService
+//       .get(pageNumber, seedNumber, 'ID', null, 'aspnetrole')
+//       .subscribe(
+//         (res: Result<RoleModel[]>) => {
+//           this.rows = res.data;
+//         },
+//         (_error) => {
+//           this.toastr.error(
+//             'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+//             null,
+//             {
+//               closeButton: true,
+//               positionClass: 'toast-top-left',
+//             }
+//           );
+//         }
+//       );
+//   }
+//   deleteRole(id: any, modal: any) {
+//     this.modalService
+//       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
+//       .result.then(
+//         (result) => {
+//           this._roleService
+//             .delete(id, 'aspnetrole')
+//             .toPromise()
+//             .then((res) => {
+//               if (res.success) {
+//                 this.toastr.success(
+//                   'فرایند حذف موفقیت آمیز بود',
+//                   'موفقیت آمیز!',
+//                   {
+//                     timeOut: 3000,
+//                     positionClass: 'toast-top-left',
+//                   }
+//                 );
+//               } else {
+//                 this.toastr.error('خطا در حذف', res.message, {
+//                   timeOut: 3000,
+//                   positionClass: 'toast-top-left',
+//                 });
+//               }
+//               this.getRoleList(this.pageIndex, this.pageSize);
+//             })
+//             .catch((err) => {
+//               this.toastr.error('خطا در حذف', err.message, {
+//                 timeOut: 3000,
+//                 positionClass: 'toast-top-left',
+//               });
+//             });
+//         },
+//         (error) => {
+//           this.toastr.error('خطا در حذف', error.message, {
+//             timeOut: 3000,
+//             positionClass: 'toast-top-left',
+//           });
+//         }
+//       );
+//   }
+// }
