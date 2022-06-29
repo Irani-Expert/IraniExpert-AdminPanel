@@ -33,9 +33,6 @@ export class InvoiceComponent implements OnInit {
   ngOnInit(): void {
     this.setPage(0);
     this.invoiceDetail = new InvoiceModel();
-    // this.invoiceDetail.id = parseInt(
-    //   this._route.snapshot.paramMap.get('orderId') ?? '0'
-    // );
     this.addForm = this._formBuilder.group({
       status: [null],
       isConfirmed: [null],
@@ -112,8 +109,9 @@ export class InvoiceComponent implements OnInit {
           });
         }
       );
+    this.getInvoiceListByOrderId(this.pageIndex, this.pageIndex);
   }
-  selectSatus($event: any) {
+  selectStatus($event: any) {
     if ($event != undefined) {
       this.invoiceDetail.status = parseInt($event);
     }

@@ -156,8 +156,9 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <form [formGroup]="addForm" (ngSubmit)="submit()">
-      <div class="modal-body">
+
+    <div class="modal-body">
+      <form [formGroup]="addForm" (ngSubmit)="submit()">
         <div class="row">
           <div class="col col-md-4 form-group mb-3">
             <label for="createDate">ایجاد شده در:</label>
@@ -243,6 +244,7 @@
               disabled
             />
           </div>
+
           <div class="col-md-4 form-group mb-3">
             <strong for="status" class="mb-3">وضعیت</strong>
             <select
@@ -250,8 +252,8 @@
               id="status"
               placeholder="{{ invoiceDetail.status | paymentStatus }}"
               [formControl]="addForm.controls['status']"
-              [ngModel]="invoiceDetail.status"
               (ngModelChange)="selectStatus($event)"
+              [ngModel]="invoiceDetail.status"
             >
               <option value="0">شروع سفارش</option>
               <option value="1">'آماده سفارش</option>
@@ -293,31 +295,17 @@
             'bg-info': invoiceDetail.status === 4 ,
             'bg-warning text-dark': invoiceDetail.status === 98 ,
             'bg-danger': invoiceDetail.status === 99 }" -->
-          <!-- isConfirmed -->
-          <div class="form-group col-auto mb-3 mt-3 text-center">
-            <label class="m-2">تائید</label>
-            <label class="switch switch-primary mr-2 m-2">
-              <input
-                [(ngModel)]="invoiceDetail.isConfirmed"
-                [formControl]="addForm.controls['isConfirmed']"
-                type="checkbox"
-                id="isConfirmed"
-              />
-              <span class="slider"></span>
-            </label>
-            <label>عدم تائید</label>
-          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-outline-dark btn-rounded"
-          (click)="addOrUpdate(invoiceDetail)"
-        >
-          ویرایش
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="modal.close(true)"
+      >
+        ویرایش
+      </button>
+    </div>
   </div>
 </ng-template>

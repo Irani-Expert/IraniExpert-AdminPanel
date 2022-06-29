@@ -7,11 +7,13 @@ export class RelativeTimePipe implements PipeTransform {
       value = new Date(value);
     }
 
-    const seconds: number = Math.floor(((new Date()).getTime() - value.getTime()) / 1000);
+    const seconds: number = Math.floor(
+      (new Date().getTime() - value.getTime()) / 1000
+    );
     let interval: number = Math.floor(seconds / 31536000);
 
     if (interval > 1) {
-      return interval + ' سال قبل';
+      return interval + ' ثانیه قبل';
     }
     interval = Math.floor(seconds / 2592000);
     if (interval > 1) {

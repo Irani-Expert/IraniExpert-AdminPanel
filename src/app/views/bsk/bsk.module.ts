@@ -10,9 +10,27 @@ import { PaymentStatusPipe } from 'src/app/shared/pipes/payment-status.pipe';
 import { BankTypePipe } from 'src/app/shared/pipes/bank-type.pipe';
 import { BankMethodPipe } from 'src/app/shared/pipes/bank-method.pipe';
 import { IsConfirmedPipe } from 'src/app/shared/pipes/is-confirmed.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [OrderComponent, InvoiceComponent, TransactionStatusPipe,PaymentStatusPipe,BankTypePipe,BankMethodPipe,IsConfirmedPipe],
-  imports: [CommonModule, BskRoutingModule, NgxPaginationModule,SharedPipesModule],
+  declarations: [
+    OrderComponent,
+    InvoiceComponent,
+    TransactionStatusPipe,
+    PaymentStatusPipe,
+    BankTypePipe,
+    BankMethodPipe,
+    IsConfirmedPipe,
+  ],
+  imports: [
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    BskRoutingModule,
+    NgxPaginationModule,
+    SharedPipesModule,
+  ],
 })
 export class BskModule {}
