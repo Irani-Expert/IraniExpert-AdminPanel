@@ -64,9 +64,22 @@ export class NavigationService {
     },
     {
       name: 'سفارشات',
-      type: 'link',
+      type: 'dropDown',
       icon: 'i-File-Horizontal-Text',
-      state: '/bsk/orders',
+      sub: [
+        {
+          icon: 'i-Sync',
+          name: 'سفارش ها در حال بررسی',
+          state: '/bsk/orders',
+          type: 'link',
+        },
+        {
+          icon: 'i-Yes',
+          name: 'سفارش های تأیید شده',
+          state: '/bsk/license',
+          type: 'link',
+        },
+      ],
     },
     {
       name: 'کاربران',

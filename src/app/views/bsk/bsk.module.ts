@@ -12,6 +12,8 @@ import { BankMethodPipe } from 'src/app/shared/pipes/bank-method.pipe';
 import { IsConfirmedPipe } from 'src/app/shared/pipes/is-confirmed.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LicenseComponent } from './license/license.component';
+import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BankTypePipe,
     BankMethodPipe,
     IsConfirmedPipe,
+    LicenseComponent,
   ],
   imports: [
     NgbModule,
@@ -32,5 +35,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgxPaginationModule,
     SharedPipesModule,
   ],
+  providers: [FileUploaderService],
 })
 export class BskModule {}

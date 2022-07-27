@@ -35,7 +35,6 @@ export class InvoiceComponent implements OnInit {
     this.invoiceDetail = new InvoiceModel();
     this.addForm = this._formBuilder.group({
       status: [null],
-      isConfirmed: [null],
     });
   }
   setPage(pageInfo: number) {

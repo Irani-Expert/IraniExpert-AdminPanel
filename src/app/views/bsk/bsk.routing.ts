@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { LicenseComponent } from './license/license.component';
 import { OrderComponent } from './order/order.component';
 
 const routes: Routes = [
@@ -13,6 +14,11 @@ const routes: Routes = [
   {
     path: 'invoice/:orderId',
     component: InvoiceComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'license',
+    component: LicenseComponent,
     canActivate: [AuthGuard],
   },
 ];
