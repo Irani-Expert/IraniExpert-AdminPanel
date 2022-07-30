@@ -5,6 +5,7 @@ import { catchError, delay } from "rxjs/operators";
 import { Result } from '../../models/Base/result.model';
 import { Filter } from '../../models/Base/filter.model';
 import { environment } from 'src/environments/environment.prod';
+import { Paginate } from '../../models/Base/paginate.model';
 
 /**
  * سرویس پایه
@@ -106,14 +107,14 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @param route
    * @returns all
    */
-  get(pageIndex: number, pageSize: number, pageOrder: string, filter: string, route: string): Observable<Result<T[]>> {
+  get(pageIndex: number, pageSize: number, pageOrder: string, filter: string, route: string): Observable<Result<Paginate<T>>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'bearer '+environment.jwtToken
       }),
     };
-    return this._http.get<Result<T[]>>(this._base + "/" + route +
+    return this._http.get<Result<Paginate<T>>>(this._base + "/" + route +
     "?pagIndex="+pageIndex+
     "&pageSize="+pageSize+
     "&pageOrder="+pageOrder+

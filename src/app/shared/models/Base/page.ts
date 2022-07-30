@@ -6,4 +6,6 @@ export class Page{
   totalPages: number = 0;
   // The current page number
   pageNumber: number = 0;
+  hasNextPage:boolean;
+  hasPreviousPage:boolean;
 }

@@ -3,6 +3,8 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { ArticleModel } from './article.model';
@@ -17,32 +19,39 @@ export class ArticleComponent implements OnInit {
   rows: ArticleModel[] = new Array<ArticleModel>();
   viewMode: 'list' | 'grid' = 'list';
   allSelected: boolean;
-  pageIndex = 1;
-  pageSize = 12;
+
+  page:Page=new Page();
   constructor(
     private _articleService: ArticleService,
     private _route: ActivatedRoute,
     private modalService: NgbModal,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.page.pageNumber=0;
+    this.page.size=12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
   }
 
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
+    this.page.pageNumber = pageInfo;
 
-    this.getArticleList(this.pageIndex, this.pageSize);
+    this.getArticleList(this.page.pageNumber, this.page.size);
   }
 
   async getArticleList(pageNumber: number, seedNumber: number) {
     await this._articleService
-      .get(pageNumber, seedNumber, 'ID', null, 'Article')
+      .get( (pageNumber!==0 ?pageNumber-1 : pageNumber), seedNumber, 'ID', null,'Article')
       .subscribe(
-        (res: Result<ArticleModel[]>) => {
-          this.rows = res.data;
-          //  this.page.totalElements = res.data.length;
+        (res: Result<Paginate<ArticleModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements=res.data.totalCount;
+          this.page.totalPages=res.data.totalPages-1;
+          //TODO if Pagenumber response
+          // this.page.pageNumber=res.data.pageNumber;
+
         },
         (_error) => {
           this.toastr.error(
@@ -84,7 +93,7 @@ export class ArticleComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getArticleList(this.pageIndex, this.pageSize);
+              this.getArticleList(this.page.pageNumber, this.page.size);
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {
