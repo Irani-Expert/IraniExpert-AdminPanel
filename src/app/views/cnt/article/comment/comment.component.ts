@@ -15,8 +15,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CommentComponent implements OnInit {
   rows: CommentModel[] = new Array<CommentModel>();
-  replyText:string=null;
-  parentComment : CommentModel = new CommentModel()
+  replyText: string = null;
+  parentComment: CommentModel = new CommentModel();
   @Input() articleId: number;
   pageIndex = 1;
   pageSize = 12;
@@ -31,7 +31,6 @@ export class CommentComponent implements OnInit {
   }
   setPage(pageInfo: number) {
     this.pageIndex = pageInfo;
-
     this.getCommentListByArticleId(this.pageIndex, this.pageSize);
   }
   async getCommentListByArticleId(pageNumber: number, seedNumber: number) {
@@ -47,7 +46,7 @@ export class CommentComponent implements OnInit {
       .subscribe(
         (res: Result<CommentModel[]>) => {
           this.rows = res.data;
-         
+
           //  this.page.totalElements = res.data.length;
         },
         (_error) => {
@@ -105,15 +104,15 @@ export class CommentComponent implements OnInit {
       );
   }
   openSmall(content: any, row: CommentModel) {
-    this.parentComment=new CommentModel();
-    this.parentComment.parentID=row.id;
-    this.parentComment.rate=0;
-    this.parentComment.email="admin@iraniexpert.com";
-    this.parentComment.name="پشتیبان سایت";
-    this.parentComment.isAccepted=true;
-    this.parentComment.tableType=row.tableType;
-    this.parentComment.rowID=row.rowID;
-    this.parentComment.isActive=true;
+    this.parentComment = new CommentModel();
+    this.parentComment.parentID = row.id;
+    this.parentComment.rate = 0;
+    this.parentComment.email = 'admin@iraniexpert.com';
+    this.parentComment.name = 'پشتیبان سایت';
+    this.parentComment.isAccepted = true;
+    this.parentComment.tableType = row.tableType;
+    this.parentComment.rowID = row.rowID;
+    this.parentComment.isActive = true;
 
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
@@ -127,28 +126,29 @@ export class CommentComponent implements OnInit {
       );
   }
   acceptComment(row: CommentModel) {
-   if(this.replyText!==null && this.replyText.length>0){
-    this.parentComment.text=this.replyText;
-    this._commentService
-    .create(this.parentComment,'comment')
-    .toPromise()
-    .then(
-      (data) => {
-        if (data.success) {} else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      },
-      (error) => {
-        this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-      }
-    );
-   }
+    if (this.replyText !== null && this.replyText.length > 0) {
+      this.parentComment.text = this.replyText;
+      this._commentService
+        .create(this.parentComment, 'comment')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    }
     row.isAccepted = true;
     row.isActive = true;
     this._commentService
