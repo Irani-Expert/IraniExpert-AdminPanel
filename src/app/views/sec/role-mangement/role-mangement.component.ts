@@ -5,6 +5,8 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { RoleModel } from './role.model';
 import { RoleService } from './role.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 
 @Component({
   selector: 'app-role-mangement',
@@ -14,8 +16,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class RoleMangementComponent implements OnInit {
   rows: RoleModel[] = new Array<RoleModel>();
   allSelected: boolean;
-  pageIndex = 1;
-  pageSize = 12;
+  page: Page = new Page();
   addUpdate: RoleModel = new RoleModel();
   addForm: FormGroup;
   constructor(
@@ -23,24 +24,37 @@ export class RoleMangementComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       name: [null],
     });
   }
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
-    this.getRoleList(this.pageIndex, this.pageSize);
+    this.page.pageNumber = pageInfo;
+
+    this.getRoleList(this.page.pageNumber, this.page.size);
   }
   async getRoleList(pageNumber: number, seedNumber: number) {
     this._roleService
-      .get(pageNumber, seedNumber, 'ID', null, 'aspnetrole')
+      .get(
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        seedNumber,
+        'ID',
+        null,
+        'aspnetrole'
+      )
       .subscribe(
-        (res: Result<RoleModel[]>) => {
-          this.rows = res.data;
+        (res: Result<Paginate<RoleModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(
@@ -98,7 +112,7 @@ export class RoleMangementComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-            this.getRoleList(this.pageIndex, this.pageSize);
+            this.getRoleList(this.page.pageNumber, this.page.size);
           },
           (_error) => {
             this.toastr.error('خطا مجدد تلاش فرمایید', null, {
@@ -124,7 +138,7 @@ export class RoleMangementComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-            this.getRoleList(this.pageIndex, this.pageSize);
+            this.getRoleList(this.page.pageNumber, this.page.size);
           },
           (_error) => {
             this.toastr.error('خطا مجدد تلاش فرمایید', null, {
@@ -158,7 +172,7 @@ export class RoleMangementComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-            this.getRoleList(this.pageIndex, this.pageSize);
+            this.getRoleList(this.page.pageNumber, this.page.size);
           });
       });
   }

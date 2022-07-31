@@ -17,13 +17,13 @@ export interface IBaseService<T, ID> {
     pageOrder: string,
     filter: string,
     route: string
-  ): Observable<Result<T[]>>;
+  ): Observable<Result<Paginate<T[]>>>;
   get(
     pageIndex: number,
     pageSize: number,
     pageOrder: string,
     filter: string,
     route: string
-  ): Observable<Result<Paginate<T>>>;
+  ): Observable<Result<Paginate<T[]>>>;
   delete(id: number, route: string): Observable<Result<T>>;
 }

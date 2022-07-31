@@ -1,5 +1,17 @@
 <div class="my-css">
-  <div class="timeline-card card mt-4" *ngFor="let item of rows">
+  <div
+    class="timeline-card card mt-4"
+    *ngFor="
+      let item of rows
+        | paginate
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber,
+              currentPage: page.pageNumber,
+              totalItems: page.totalElements
+            }
+    "
+  >
     <div class="card-body">
       <div class="mb-1 row g-0">
         <div class="col-6">
@@ -33,6 +45,13 @@
         </button>
       </div>
     </div>
+  </div>
+  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+    <pagination-controls
+      (pageChange)="setPage($event)"
+      previousLabel=""
+      nextLabel=""
+    ></pagination-controls>
   </div>
 </div>
 <div *ngIf="rows.length == 0" class="d-flex justify-content-center">

@@ -1,7 +1,7 @@
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IBaseService } from './baseService.interface';
-import { catchError, delay } from "rxjs/operators";
+import { catchError, delay } from 'rxjs/operators';
 import { Result } from '../../models/Base/result.model';
 import { Filter } from '../../models/Base/filter.model';
 import { environment } from 'src/environments/environment.prod';
@@ -13,22 +13,13 @@ import { Paginate } from '../../models/Base/paginate.model';
  * @template ID
  */
 export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
-
-
-
   /**
    * نمونه ای از سرویس پایه .
    * @param _http
    * @param _base
    * @param _options
    */
-  constructor(
-    protected _http: HttpClient,
-    protected _base: string,
-  ) {
-
-  }
-
+  constructor(protected _http: HttpClient, protected _base: string) {}
 
   /**
    *  درخواست ایجاد
@@ -37,15 +28,14 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @returns insert
    */
   create(t: object, route: string): Observable<Result<T>> {
-   let _options = {
+    let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer '+environment.jwtToken
+        Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.post<Result<T>>(this._base + "/" + route, t,_options);
+    return this._http.post<Result<T>>(this._base + '/' + route, t, _options);
   }
-
 
   /**
    * درخواست  آپدیت
@@ -58,10 +48,14 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer '+environment.jwtToken
+        Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.put<Result<T>>(this._base + "/" + route+"/"+id, t,_options);
+    return this._http.put<Result<T>>(
+      this._base + '/' + route + '/' + id,
+      t,
+      _options
+    );
   }
 
   /**
@@ -74,10 +68,13 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer '+environment.jwtToken
+        Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.get<Result<T>>(this._base + "/" + route+"/"+id,_options);
+    return this._http.get<Result<T>>(
+      this._base + '/' + route + '/' + id,
+      _options
+    );
   }
 
   /**
@@ -86,20 +83,33 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @param route
    * @returns one by id
    */
-  getTitleValues(pageIndex: number, pageSize: number, pageOrder: string, filter: string, route: string): Observable<Result<T[]>> {
+  getTitleValues(
+    pageIndex: number,
+    pageSize: number,
+    pageOrder: string,
+    filter: string,
+    route: string
+  ): Observable<Result<Paginate<T[]>>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer '+environment.jwtToken
+        Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.get<Result<T[]>>(
-      this._base + "/" + route +
-      "/GetTitleValues?pagIndex="+pageIndex+
-      "&pageSize="+pageSize+
-      "&pageOrder="+pageOrder+
-      "&filter="+filter,
-    _options);
+    return this._http.get<Result<Paginate<T[]>>>(
+      this._base +
+        '/' +
+        route +
+        '/GetTitleValues?pagIndex=' +
+        pageIndex +
+        '&pageSize=' +
+        pageSize +
+        '&pageOrder=' +
+        pageOrder +
+        '&filter=' +
+        filter,
+      _options
+    );
   }
 
   /**
@@ -107,21 +117,34 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @param route
    * @returns all
    */
-  get(pageIndex: number, pageSize: number, pageOrder: string, filter: string, route: string): Observable<Result<Paginate<T>>> {
+  get(
+    pageIndex: number,
+    pageSize: number,
+    pageOrder: string,
+    filter: string,
+    route: string
+  ): Observable<Result<Paginate<T[]>>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer '+environment.jwtToken
+        Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.get<Result<Paginate<T>>>(this._base + "/" + route +
-    "?pagIndex="+pageIndex+
-    "&pageSize="+pageSize+
-    "&pageOrder="+pageOrder+
-    "&filter="+filter,
-    _options);
+    return this._http.get<Result<Paginate<T[]>>>(
+      this._base +
+        '/' +
+        route +
+        '?pageIndex=' +
+        pageIndex +
+        '&pageSize=' +
+        pageSize +
+        '&pageOrder=' +
+        pageOrder +
+        '&filter=' +
+        filter,
+      _options
+    );
   }
-
 
   /**
    * درخواست حذف
@@ -133,13 +156,14 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'bearer '+environment.jwtToken
+        Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.delete<Result<T>>(this._base + "/" + route+"/"+id, _options);
+    return this._http.delete<Result<T>>(
+      this._base + '/' + route + '/' + id,
+      _options
+    );
   }
-
-
 
   protected handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -148,5 +172,4 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
       return throwError(errMsg);
     };
   }
-
 }

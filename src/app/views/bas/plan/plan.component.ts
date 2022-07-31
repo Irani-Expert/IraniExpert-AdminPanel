@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { PlanOptionComponent } from '../plan-option/plan-option.component';
 import { PlanOptionModel } from '../plan-option/plan-option.model';
@@ -21,9 +23,8 @@ export class PlanComponent implements OnInit {
   addUpdate: PlanModel;
   addForm: FormGroup;
   @Input() productId: number;
-  pageIndex = 1;
   products: any[] = [];
-  pageSize = 12;
+  page: Page = new Page();
 
   constructor(
     private _planOptionService: PlanOptionService,
@@ -31,10 +32,13 @@ export class PlanComponent implements OnInit {
     private _planService: PlanService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       title: [
         null,
@@ -55,17 +59,26 @@ export class PlanComponent implements OnInit {
     });
   }
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
+    this.page.pageNumber = pageInfo;
 
-    this.getPlanListByProductId(this.pageIndex, this.pageSize);
+    this.getPlanListByProductId(this.page.pageNumber, this.page.size);
   }
 
   async getPlanListByProductId(pageNumber: number, seedNumber: number) {
     this._planService
-      .getPlanByProductId(pageNumber, seedNumber, 'ID', 'Plan', this.productId)
+      .getPlanByProductId(
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        seedNumber,
+        'ID',
+        'Plan',
+        this.productId
+      )
       .subscribe(
-        (res: Result<PlanModel[]>) => {
-          this.rows = res.data;
+        (res: Result<Paginate<PlanModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(
@@ -107,7 +120,7 @@ export class PlanComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getPlanListByProductId(this.pageIndex, this.pageSize);
+              this.getPlanListByProductId(this.page.pageNumber, this.page.size);
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {
@@ -167,7 +180,7 @@ export class PlanComponent implements OnInit {
           });
         }
       );
-    this.getPlanListByProductId(this.pageIndex, this.pageIndex);
+    this.getPlanListByProductId(this.page.pageNumber, this.page.size);
   }
   //__________________Add Or Edit
   addorEdit(content: any, row: PlanModel) {
@@ -251,7 +264,7 @@ export class PlanComponent implements OnInit {
         );
     }
 
-    this.getPlanListByProductId(this.pageIndex, this.pageIndex);
+    this.getPlanListByProductId(this.page.pageNumber, this.page.size);
   }
   selectType($event: any) {
     if ($event != undefined) {
@@ -284,6 +297,6 @@ export class PlanComponent implements OnInit {
         this.addForm.reset();
       }
     );
-    this.getPlanListByProductId(this.pageIndex, this.pageIndex);
+    this.getPlanListByProductId(this.page.pageNumber, this.page.size);
   }
 }

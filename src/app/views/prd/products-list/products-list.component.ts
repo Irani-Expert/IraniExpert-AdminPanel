@@ -6,6 +6,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { ProductModel } from './product.model';
 import { ProductService } from './product.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 
 @Component({
   selector: 'app-products-list',
@@ -16,33 +17,36 @@ export class ProductsListComponent implements OnInit {
   rows: ProductModel[] = new Array<ProductModel>();
   viewMode: 'list' | 'grid' = 'list';
   allSelected: boolean;
-  pageIndex = 1;
-  pageSize = 12;
+  page: Page = new Page();
   constructor(
     public _productService: ProductService,
     private toastr: ToastrService,
     private modalService: NgbModal
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
   }
 
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
+    this.page.pageNumber = pageInfo;
 
-    this.getProductList(this.pageIndex, this.pageSize);
+    this.getProductList(this.page.pageNumber, this.page.size);
   }
 
   async getProductList(pageNumber: number, seedNumber: number) {
-    await this._productService
+    this._productService
       .get(pageNumber, seedNumber, 'ID', null, 'Product')
       .subscribe(
-        (res: Result<ProductModel[]>) => {
-          this.rows = res.data;
-          //  this.page.totalElements = res.data.length;
+        (res: Result<Paginate<ProductModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
         },
-        (error) => {
+        (_error) => {
           this.toastr.error(
             'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
             null,
@@ -59,7 +63,7 @@ export class ProductsListComponent implements OnInit {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
-        (result) => {
+        (_result) => {
           this._productService
             .delete(id, 'Product')
             .toPromise()

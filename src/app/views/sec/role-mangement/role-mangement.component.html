@@ -7,7 +7,19 @@
 </button>
 <div class="separator-breadcrumb border-top"></div>
 <div class="row justify-content-lg-start justify-content-center">
-  <div class="col-lg-3 col-md-6 col-sm-8 col-12" *ngFor="let item of rows">
+  <div
+    class="col-lg-3 col-md-6 col-sm-8 col-12"
+    *ngFor="
+      let item of rows
+        | paginate
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber,
+              currentPage: page.pageNumber,
+              totalItems: page.totalElements
+            }
+    "
+  >
     <div class="card bg-dark">
       <div class="card-header text-center m-0 p-0">
         <p class="text-white align-self-center mt-2">نقش</p>
@@ -36,6 +48,13 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+    <pagination-controls
+      (pageChange)="setPage($event)"
+      previousLabel=""
+      nextLabel=""
+    ></pagination-controls>
   </div>
 </div>
 <div *ngIf="rows.length == 0" class="d-flex justify-content-center">

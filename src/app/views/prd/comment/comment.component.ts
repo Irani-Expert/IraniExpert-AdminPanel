@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { CommentService } from './comment.service';
 import { CommentModel } from './comment.model';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { Page } from 'src/app/shared/models/Base/page';
 
 @Component({
   selector: 'app-comment',
@@ -15,29 +16,31 @@ export class CommentComponent implements OnInit {
   rows: CommentModel[] = new Array<CommentModel>();
   @Input() productId: number;
   @Input() tableType: number;
-  replyText:string=null;
-  pageIndex = 1;
-  pageSize = 12;
-  parentComment : CommentModel = new CommentModel()
+  replyText: string = null;
+  page: Page = new Page();
+  parentComment: CommentModel = new CommentModel();
   constructor(
     public _commentService: CommentService,
     private toastr: ToastrService,
     private modalService: NgbModal
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
   }
 
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
+    this.page.pageNumber = pageInfo;
 
-    this.getCommentListByProductId(this.pageIndex, this.pageSize);
+    this.getCommentListByProductId(this.page.pageNumber, this.page.size);
   }
   async getCommentListByProductId(pageNumber: number, seedNumber: number) {
     await this._commentService
       .GetByTableTypeAndRowId(
-        pageNumber,
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
         'ID',
         'comment',
@@ -45,9 +48,11 @@ export class CommentComponent implements OnInit {
         this.tableType
       )
       .subscribe(
-        (res: Result<CommentModel[]>) => {
-          this.rows = res.data;
-          //  this.page.totalElements = res.data.length;
+        (res: Result<Paginate<CommentModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (error) => {
           this.toastr.error(
@@ -86,7 +91,10 @@ export class CommentComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getCommentListByProductId(this.pageIndex, this.pageSize);
+              this.getCommentListByProductId(
+                this.page.pageNumber,
+                this.page.size
+              );
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {
@@ -105,15 +113,15 @@ export class CommentComponent implements OnInit {
   }
 
   openSmall(content: any, row: CommentModel) {
-    this.parentComment=new CommentModel();
-    this.parentComment.parentID=row.id;
-    this.parentComment.rate=0;
-    this.parentComment.email="admin@iraniexpert.com";
-    this.parentComment.name="پشتیبان سایت";
-    this.parentComment.isAccepted=true;
-    this.parentComment.tableType=row.tableType;
-    this.parentComment.rowID=row.rowID;
-    this.parentComment.isActive=true;
+    this.parentComment = new CommentModel();
+    this.parentComment.parentID = row.id;
+    this.parentComment.rate = 0;
+    this.parentComment.email = 'admin@iraniexpert.com';
+    this.parentComment.name = 'پشتیبان سایت';
+    this.parentComment.isAccepted = true;
+    this.parentComment.tableType = row.tableType;
+    this.parentComment.rowID = row.rowID;
+    this.parentComment.isActive = true;
 
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
@@ -129,28 +137,29 @@ export class CommentComponent implements OnInit {
   }
 
   acceptComment(row: CommentModel) {
-    if(this.replyText!==null && this.replyText.length>0){
-      this.parentComment.text=this.replyText;
+    if (this.replyText !== null && this.replyText.length > 0) {
+      this.parentComment.text = this.replyText;
       this._commentService
-      .create(this.parentComment,'comment')
-      .toPromise()
-      .then(
-        (data) => {
-          if (data.success) {} else {
-            this.toastr.error(data.message, null, {
+        .create(this.parentComment, 'comment')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      );
-     }
+        );
+    }
     row.isAccepted = true;
     row.isActive = true;
     this._commentService
@@ -163,7 +172,10 @@ export class CommentComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-            this.getCommentListByProductId(this.pageIndex, this.pageSize);
+            this.getCommentListByProductId(
+              this.page.pageNumber,
+              this.page.size
+            );
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,

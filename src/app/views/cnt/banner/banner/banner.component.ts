@@ -8,6 +8,8 @@ import { FileUploaderService } from 'src/app/shared/services/fileUploader.servic
 import { BannerModel } from './banner.model';
 import { BannerService } from './banner.service';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 
 @Component({
   selector: 'app-banner',
@@ -20,8 +22,7 @@ export class BannerComponent implements OnInit {
   rows: BannerModel[] = new Array<BannerModel>();
   viewMode: 'list' | 'grid' = 'list';
   allSelected: boolean;
-  pageIndex = 1;
-  pageSize = 12;
+  page: Page = new Page();
   image: any;
   cropperSettings: CropperSettings;
   addUpdate: BannerModel;
@@ -32,10 +33,13 @@ export class BannerComponent implements OnInit {
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
     private _fileUploaderService: FileUploaderService
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       description: [null, Validators.compose([Validators.maxLength(500)])],
@@ -52,18 +56,26 @@ export class BannerComponent implements OnInit {
   }
 
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
+    this.page.pageNumber = pageInfo;
 
-    this.getBannerList(this.pageIndex, this.pageSize);
+    this.getBannerList(this.page.pageNumber, this.page.size);
   }
 
   async getBannerList(pageNumber: number, seedNumber: number) {
     await this._bannerService
-      .get(pageNumber, seedNumber, 'ID', null, 'Banner')
+      .get(
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        seedNumber,
+        'ID',
+        null,
+        'Banner'
+      )
       .subscribe(
-        (res: Result<BannerModel[]>) => {
-          this.rows = res.data;
-          //  this.page.totalElements = res.data.length;
+        (res: Result<Paginate<BannerModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(
@@ -112,7 +124,7 @@ export class BannerComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getBannerList(this.pageIndex, this.pageSize);
+              this.getBannerList(this.page.pageNumber, this.page.size);
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {
@@ -209,7 +221,7 @@ export class BannerComponent implements OnInit {
         );
     }
 
-    this.getBannerList(this.pageIndex, this.pageIndex);
+    this.getBannerList(this.page.pageNumber, this.page.size);
   }
   selectType($event: any) {
     if ($event != undefined) {

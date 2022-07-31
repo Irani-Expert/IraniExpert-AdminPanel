@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { GroupModel } from './group.model';
 import { GroupService } from './group.service';
@@ -15,8 +17,8 @@ export class GroupComponent implements OnInit {
   rows: GroupModel[] = new Array<GroupModel>();
   viewMode: 'list' | 'grid' = 'list';
   allSelected: boolean;
-  pageIndex = 1;
-  pageSize = 12;
+  page: Page = new Page();
+
   addUpdate: GroupModel;
   addForm: FormGroup;
   constructor(
@@ -24,10 +26,13 @@ export class GroupComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit() {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       parentID: [null, Validators.compose([Validators.required])],
@@ -36,21 +41,28 @@ export class GroupComponent implements OnInit {
   }
 
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
+    this.page.pageNumber = pageInfo;
 
-    this.getGroupList(this.pageIndex, this.pageSize);
+    this.getGroupList(this.page.pageNumber, this.page.size);
   }
 
   getGroupList(pageNumber: number, seedNumber: number) {
     this._groupService
-      .get(pageNumber, seedNumber, 'ID', null, 'Group')
+      .get(
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        seedNumber,
+        'ID',
+        null,
+        'Group'
+      )
       .subscribe(
-        (res: Result<GroupModel[]>) => {
-          this.rows = res.data;
-
-          //  this.page.totalElements = res.data.length;
+        (res: Result<Paginate<GroupModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
-        (error) => {
+        (_error) => {
           this.toastr.error(
             'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
             null,
@@ -90,7 +102,7 @@ export class GroupComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getGroupList(this.pageIndex, this.pageSize);
+              this.getGroupList(this.page.pageNumber, this.page.size);
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {
@@ -188,7 +200,7 @@ export class GroupComponent implements OnInit {
         );
     }
 
-    this.getGroupList(this.pageIndex, this.pageIndex);
+    this.getGroupList(this.page.pageNumber, this.page.size);
   }
 
   selectParent($event: any) {

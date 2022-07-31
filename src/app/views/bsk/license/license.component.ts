@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { OrderModel } from '../order/order.model';
@@ -22,8 +24,7 @@ export class LicenseComponent implements OnInit {
   loading: boolean = false;
   viewMode: 'list' | 'grid' = 'list';
   rows: OrderModel[] = new Array<OrderModel>();
-  pageIndex = 1;
-  pageSize = 12;
+  page: Page = new Page();
   licenseModel: LicenseModel;
   addForm: FormGroup;
   constructor(
@@ -33,10 +34,13 @@ export class LicenseComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       title: [null],
       startDate: [null],
@@ -47,16 +51,19 @@ export class LicenseComponent implements OnInit {
   }
 
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
+    this.page.pageNumber = pageInfo;
 
-    this.getOrderList(this.pageIndex, this.pageSize);
+    this.getOrderList(this.page.pageNumber, this.page.size);
   }
   async getOrderList(pageNumber: number, seedNumber: number) {
     this._orderService
       .get(pageNumber, seedNumber, 'ID', null, 'orders')
       .subscribe(
-        (res: Result<OrderModel[]>) => {
-          this.rows = res.data;
+        (res: Result<Paginate<OrderModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(
@@ -136,7 +143,7 @@ export class LicenseComponent implements OnInit {
             });
           }
         );
-      this.getOrderList(this.pageIndex, this.pageIndex);
+      this.getOrderList(this.page.pageNumber, this.page.size);
     }
   }
   onFileChanged(event: any) {

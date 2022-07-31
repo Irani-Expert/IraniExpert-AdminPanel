@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { OrderModel } from './order.model';
 import { OrderService } from './order.service';
@@ -14,29 +16,33 @@ import { OrderService } from './order.service';
 export class OrderComponent implements OnInit {
   rows: OrderModel[] = new Array<OrderModel>();
   viewMode: 'list' | 'grid' = 'list';
-  pageIndex = 1;
-  pageSize = 12;
+  page: Page = new Page();
   constructor(
     public _orderService: OrderService,
     private toastr: ToastrService,
     private modalService: NgbModal
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
   }
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
+    this.page.pageNumber = pageInfo;
 
-    this.getOrderList(this.pageIndex, this.pageSize);
+    this.getOrderList(this.page.pageNumber, this.page.size);
   }
   async getOrderList(pageNumber: number, seedNumber: number) {
     this._orderService
       .get(pageNumber, seedNumber, 'ID', null, 'orders')
       .subscribe(
-        (res: Result<OrderModel[]>) => {
-          this.rows = res.data;
-          //  this.page.totalElements = res.data.length;
+        (res: Result<Paginate<OrderModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(
@@ -73,7 +79,7 @@ export class OrderComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-            this.getOrderList(this.pageIndex, this.pageSize);
+            this.getOrderList(this.page.pageNumber, this.page.size);
           });
       });
   }

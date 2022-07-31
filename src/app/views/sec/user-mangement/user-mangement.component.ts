@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { UsersModel } from './users.model';
 import { UsersService } from './users.service';
@@ -15,8 +17,7 @@ export class UserMangementComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'list';
   rows: UsersModel[] = new Array<UsersModel>();
   allSelected: boolean;
-  pageIndex = 1;
-  pageSize = 12;
+  page: Page = new Page();
   addUpdate: UsersModel;
   addForm: FormGroup;
   constructor(
@@ -24,10 +25,13 @@ export class UserMangementComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       userName: [null, Validators.compose([Validators.required])],
       firstName: [null, Validators.compose([Validators.required])],
@@ -37,15 +41,19 @@ export class UserMangementComponent implements OnInit {
     });
   }
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
-    this.getUsersList(this.pageIndex, this.pageSize);
+    this.page.pageNumber = pageInfo;
+
+    this.getUsersList(this.page.pageNumber, this.page.size);
   }
   async getUsersList(pageNumber: number, seedNumber: number) {
     this._usersService
       .get(pageNumber, seedNumber, 'ID', null, 'aspnetuser')
       .subscribe(
-        (res: Result<UsersModel[]>) => {
-          this.rows = res.data;
+        (res: Result<Paginate<UsersModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(
@@ -136,7 +144,7 @@ export class UserMangementComponent implements OnInit {
           }
         );
     }
-    this.getUsersList(this.pageIndex, this.pageIndex);
+    this.getUsersList(this.page.pageNumber, this.page.size);
   }
   deleteUser(id: number, modal: any) {
     this.modalService
@@ -163,6 +171,6 @@ export class UserMangementComponent implements OnInit {
             }
           });
       });
-    this.getUsersList(this.pageIndex, this.pageSize);
+    this.getUsersList(this.page.pageNumber, this.page.size);
   }
 }

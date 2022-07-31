@@ -57,8 +57,12 @@
     *ngFor="
       let item of rows
         | paginate
-          : { itemsPerPage: pageSize, currentPage: pageIndex, totalItems: 500 };
-      let i = index
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber,
+              currentPage: page.pageNumber,
+              totalItems: page.totalElements
+            }
     "
     class="list-item"
     [ngClass]="{

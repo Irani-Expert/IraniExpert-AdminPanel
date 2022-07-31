@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { ArticleModel } from './article.model';
 import { ArticleService } from './article.service';
 
@@ -20,15 +18,15 @@ export class ArticleComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'list';
   allSelected: boolean;
 
-  page:Page=new Page();
+  page: Page = new Page();
   constructor(
     private _articleService: ArticleService,
     private _route: ActivatedRoute,
     private modalService: NgbModal,
     private toastr: ToastrService
   ) {
-    this.page.pageNumber=0;
-    this.page.size=12;
+    this.page.pageNumber = 0;
+    this.page.size = 12;
   }
 
   ngOnInit(): void {
@@ -42,16 +40,20 @@ export class ArticleComponent implements OnInit {
   }
 
   async getArticleList(pageNumber: number, seedNumber: number) {
-    await this._articleService
-      .get( (pageNumber!==0 ?pageNumber-1 : pageNumber), seedNumber, 'ID', null,'Article')
+    this._articleService
+      .get(
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        seedNumber,
+        'ID',
+        null,
+        'Article'
+      )
       .subscribe(
         (res: Result<Paginate<ArticleModel[]>>) => {
           this.rows = res.data.items;
-          this.page.totalElements=res.data.totalCount;
-          this.page.totalPages=res.data.totalPages-1;
-          //TODO if Pagenumber response
-          // this.page.pageNumber=res.data.pageNumber;
-
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(

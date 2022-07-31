@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { UserNeedModel } from './user-need.model';
 import { UserNeedService } from './user-need.service';
@@ -10,29 +12,40 @@ import { UserNeedService } from './user-need.service';
   styleUrls: ['./user-need.component.scss'],
 })
 export class UserNeedComponent implements OnInit {
-  pageIndex = 1;
-  pageSize = 12;
   rows: UserNeedModel[] = new Array<UserNeedModel>();
+  page: Page = new Page();
   constructor(
     public _UserNeedService: UserNeedService,
     private toastr: ToastrService,
     private modalService: NgbModal
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
   }
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
+    this.page.pageNumber = pageInfo;
 
-    this.GetUserNeedById(this.pageIndex, this.pageSize);
+    this.getUserNeedById(this.page.pageNumber, this.page.size);
   }
-  async GetUserNeedById(pageNumber: number, seedNumber: number) {
+  async getUserNeedById(pageNumber: number, seedNumber: number) {
     this._UserNeedService
-      .get(pageNumber, seedNumber, 'ID', null, 'UserNeed')
+      .get(
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        seedNumber,
+        'ID',
+        null,
+        'UserNeed'
+      )
       .subscribe(
-        (res: Result<UserNeedModel[]>) => {
-          this.rows = res.data;
+        (res: Result<Paginate<UserNeedModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(
@@ -70,7 +83,7 @@ export class UserNeedComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.GetUserNeedById(this.pageIndex, this.pageSize);
+              this.getUserNeedById(this.page.pageNumber, this.page.size);
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {

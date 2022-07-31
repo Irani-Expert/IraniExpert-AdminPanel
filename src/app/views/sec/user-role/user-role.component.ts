@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { UserRoleModel } from './user-role.model';
 import { UserRoleService } from './user-role.service';
@@ -15,8 +17,7 @@ export class UserRoleComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'list';
   rows: UserRoleModel[] = new Array<UserRoleModel>();
   allSelected: boolean;
-  pageIndex = 1;
-  pageSize = 12;
+  page: Page = new Page();
   addUpdate: UserRoleModel;
   addForm: FormGroup;
   constructor(
@@ -27,19 +28,23 @@ export class UserRoleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({});
   }
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
-    this.getUserRoleList(this.pageIndex, this.pageSize);
+    this.page.pageNumber = pageInfo;
+
+    this.getUserRoleList(this.page.pageNumber, this.page.size);
   }
   async getUserRoleList(pageNumber: number, seedNumber: number) {
     this._userRoleService
       .get(pageNumber, seedNumber, 'ID', null, 'aspnetuserrole')
       .subscribe(
-        (res: Result<UserRoleModel[]>) => {
-          this.rows = res.data;
+        (res: Result<Paginate<UserRoleModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(
@@ -130,7 +135,7 @@ export class UserRoleComponent implements OnInit {
           }
         );
     }
-    this.getUserRoleList(this.pageIndex, this.pageIndex);
+    this.getUserRoleList(this.page.pageNumber, this.page.size);
   }
   deleteUserRole(id: number, modal: any) {
     this.modalService
@@ -157,6 +162,6 @@ export class UserRoleComponent implements OnInit {
             }
           });
       });
-    this.getUserRoleList(this.pageIndex, this.pageIndex);
+    this.getUserRoleList(this.page.pageNumber, this.page.size);
   }
 }

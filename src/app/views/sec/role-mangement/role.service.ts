@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
-import { SecModule } from '../sec.module';
+import { RoleModel } from './role.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RoleService extends BaseService<SecModule, 0> {
+export class RoleService extends BaseService<RoleModel, 0> {
   userGuid = environment.jwtToken;
 
   constructor(public _http: HttpClient) {

@@ -57,7 +57,12 @@
     *ngFor="
       let item of rows
         | paginate
-          : { itemsPerPage: page.size,page:page.pageNumber, currentPage: page.pageNumber, totalItems: page.totalElements};
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber,
+              currentPage: page.pageNumber,
+              totalItems: page.totalElements
+            }
     "
     class="list-item"
     [ngClass]="{
@@ -167,10 +172,8 @@
   <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
     <pagination-controls
       (pageChange)="setPage($event)"
-
       previousLabel=""
       nextLabel=""
-
     ></pagination-controls>
   </div>
 </div>

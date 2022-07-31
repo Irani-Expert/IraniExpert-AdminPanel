@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
@@ -28,14 +29,14 @@ export class CommentService extends BaseService<CommentModel, 0> {
     filter: string,
     articleId: number,
     tableType: number
-  ): Observable<Result<CommentModel[]>> {
+  ): Observable<Result<Paginate<CommentModel[]>>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.get<Result<CommentModel[]>>(
+    return this._http.get<Result<Paginate<CommentModel[]>>>(
       this._base +
         '/comment/GetByTableTypeAndRowId/' +
         articleId +

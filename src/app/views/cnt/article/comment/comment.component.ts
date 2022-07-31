@@ -7,6 +7,8 @@ import { CommentService } from './comment.service';
 import { CommentModel } from './comment.model';
 import { Route } from '@angular/compiler/src/core';
 import { ActivatedRoute } from '@angular/router';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { Page } from 'src/app/shared/models/Base/page';
 
 @Component({
   selector: 'app-comment',
@@ -18,25 +20,29 @@ export class CommentComponent implements OnInit {
   replyText: string = null;
   parentComment: CommentModel = new CommentModel();
   @Input() articleId: number;
-  pageIndex = 1;
-  pageSize = 12;
+  page: Page = new Page();
   constructor(
     public _commentService: CommentService,
     private toastr: ToastrService,
     private modalService: NgbModal
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
   }
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
-    this.getCommentListByArticleId(this.pageIndex, this.pageSize);
+    this.page.pageNumber = pageInfo;
+
+    this.getCommentListByArticleId(this.page.pageNumber, this.page.size);
   }
+
   async getCommentListByArticleId(pageNumber: number, seedNumber: number) {
     this._commentService
       .GetByTableTypeAndRowId(
-        pageNumber,
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
         'ID',
         'comment',
@@ -44,10 +50,11 @@ export class CommentComponent implements OnInit {
         1
       )
       .subscribe(
-        (res: Result<CommentModel[]>) => {
-          this.rows = res.data;
-
-          //  this.page.totalElements = res.data.length;
+        (res: Result<Paginate<CommentModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(

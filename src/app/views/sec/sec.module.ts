@@ -6,6 +6,7 @@ import { RoleMangementComponent } from './role-mangement/role-mangement.componen
 import { UserRoleComponent } from './user-role/user-role.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     UserRoleComponent,
   ],
   imports: [
+    NgxPaginationModule
     CommonModule,
     SecRoutingModule,
     NgbModule,

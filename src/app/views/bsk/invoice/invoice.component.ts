@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { InvoiceModel } from './invoice.model';
 import { InvoiceService } from './invoice.service';
@@ -18,8 +20,7 @@ export class InvoiceComponent implements OnInit {
   orderId: number = parseInt(
     this._route.snapshot.paramMap.get('orderId') ?? '0'
   );
-  pageIndex = 1;
-  pageSize = 10000;
+  page: Page = new Page();
   invoiceDetail: InvoiceModel = new InvoiceModel();
   addForm: FormGroup;
   constructor(
@@ -28,24 +29,27 @@ export class InvoiceComponent implements OnInit {
     private modalService: NgbModal,
     private _route: ActivatedRoute,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+  }
 
   ngOnInit(): void {
-    this.setPage(0);
+    this.setPage(this.page.pageNumber);
     this.invoiceDetail = new InvoiceModel();
     this.addForm = this._formBuilder.group({
       status: [null],
     });
   }
   setPage(pageInfo: number) {
-    this.pageIndex = pageInfo;
+    this.page.pageNumber = pageInfo;
 
-    this.getInvoiceListByOrderId(this.pageIndex, this.pageSize);
+    this.getInvoiceListByOrderId(this.page.pageNumber, this.page.size);
   }
   async getInvoiceListByOrderId(pageNumber: number, seedNumber: number) {
     this._invoiceService
       .GetByTableTypeAndRowId(
-        pageNumber,
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
         'ID',
         'invoice',
@@ -53,8 +57,11 @@ export class InvoiceComponent implements OnInit {
         8
       )
       .subscribe(
-        (res: Result<InvoiceModel[]>) => {
-          this.rows = res.data;
+        (res: Result<Paginate<InvoiceModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(
@@ -108,7 +115,7 @@ export class InvoiceComponent implements OnInit {
           });
         }
       );
-    this.getInvoiceListByOrderId(this.pageIndex, this.pageIndex);
+    this.getInvoiceListByOrderId(this.page.pageNumber, this.page.size);
   }
   selectStatus($event: any) {
     if ($event != undefined) {
