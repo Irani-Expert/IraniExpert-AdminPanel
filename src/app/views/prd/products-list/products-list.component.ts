@@ -86,7 +86,7 @@ export class ProductsListComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getProductList(this.pageIndex, this.pageSize);
+              this.getProductList(this.page.pageNumber, this.page.size);
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {

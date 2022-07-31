@@ -47,7 +47,13 @@ export class UserMangementComponent implements OnInit {
   }
   async getUsersList(pageNumber: number, seedNumber: number) {
     this._usersService
-      .get(pageNumber, seedNumber, 'ID', null, 'aspnetuser')
+      .get(
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        seedNumber,
+        'ID',
+        null,
+        'aspnetuser'
+      )
       .subscribe(
         (res: Result<Paginate<UsersModel[]>>) => {
           this.rows = res.data.items;

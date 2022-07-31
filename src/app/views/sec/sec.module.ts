@@ -15,7 +15,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UserRoleComponent,
   ],
   imports: [
-    NgxPaginationModule
+    NgxPaginationModule,
     CommonModule,
     SecRoutingModule,
     NgbModule,

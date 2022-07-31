@@ -16,6 +16,7 @@ import { ArticleService } from '../article/article.service';
 import { GroupModel } from 'src/app/views/bas/group/group.model';
 import { GroupService } from 'src/app/views/bas/group/group.service';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 @Component({
   selector: 'app-add-update',
   templateUrl: './add-update.component.html',
@@ -56,7 +57,8 @@ export class AddUpdateComponent implements OnInit {
     if (this.addUpdate.id != 0) this.getArticleById(this.addUpdate.id);
     this.ckeConfig = {
       filebrowserBrowseUrl: 'iraniexpert.com//uploads/images/articles',
-      filebrowserUploadUrl: 'https://iraniexpert.com/FileUploader/FileUploadCkEditor',
+      filebrowserUploadUrl:
+        'https://iraniexpert.com/FileUploader/FileUploadCkEditor',
       allowedContent: false,
       forcePasteAsPlainText: true,
       removePlugins: 'exportpdf',
@@ -153,8 +155,8 @@ export class AddUpdateComponent implements OnInit {
     await this._groupService
       .getTitleValues(0, 10000, 'ID', null, 'Group')
       .subscribe(
-        (res: Result<GroupModel[]>) => {
-          this.groupList = res.data;
+        (res: Result<Paginate<GroupModel[]>>) => {
+          this.groupList = res.data.items;
           //  this.page.totalElements = res.data.length;
         },
         (error) => {

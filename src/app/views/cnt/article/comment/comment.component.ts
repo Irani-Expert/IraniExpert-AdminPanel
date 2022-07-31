@@ -93,7 +93,10 @@ export class CommentComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getCommentListByArticleId(this.pageIndex, this.pageSize);
+              this.getCommentListByArticleId(
+                this.page.pageNumber,
+                this.page.size
+              );
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {
@@ -168,7 +171,10 @@ export class CommentComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-            this.getCommentListByArticleId(this.pageIndex, this.pageSize);
+            this.getCommentListByArticleId(
+              this.page.pageNumber,
+              this.page.size
+            );
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
