@@ -33,6 +33,7 @@
           <!-- OTHER DATA -->
           <div class="m-0 col text-lg-center text-white">نام کاربر</div>
 
+          <div class="m-0 col text-lg-center text-white">شماره حساب</div>
           <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
           <div class="m-0 col text-lg-center text-white">هزینه</div>
           <div class="m-0 text-light d-md-block d-none col text-center">
@@ -84,7 +85,10 @@
         >
           <!-- OTHER DATA -->
           <div class="col m-0">
-            {{ item.userInfo?.firstName }}&nbsp;{{ item.userInfo?.lastName }}
+            {{ item.firstName }}&nbsp;{{ item.lastName }}
+          </div>
+          <div class="col m-0">
+            {{ item.accountNumber }}
           </div>
           <div class="col m-0">{{ item.product }}|{{ item.plan }}</div>
           <div class="col m-0">
