@@ -94,19 +94,19 @@ export class LicenseComponent implements OnInit {
       });
   }
   async addOrUpdate(item: LicenseModel) {
-    // item.startDate =
-    //   this.startDate.year +
-    //   '/' +
-    //   this.startDate.month +
-    //   '/' +
-    //   this.startDate.day;
+    item.startDate =
+      this.startDate.year +
+      '-' +
+      this.startDate.month +
+      '-' +
+      this.startDate.day;
 
-    // item.expireDate =
-    //   this.expireDate.year +
-    //   '/' +
-    //   this.expireDate.month +
-    //   '/' +
-    //   this.expireDate.day;
+    item.expireDate =
+      this.expireDate.year +
+      '-' +
+      this.expireDate.month +
+      '-' +
+      this.expireDate.day;
 
     this.licenseModel = item;
     debugger;
@@ -120,6 +120,7 @@ export class LicenseComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
+            this.setPage(0);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
@@ -176,7 +177,7 @@ export class LicenseComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.loading = false; // Flag variable
-          this.licenseModel.file = res.data[0];
+          this.licenseModel.filePath = res.data[0];
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',

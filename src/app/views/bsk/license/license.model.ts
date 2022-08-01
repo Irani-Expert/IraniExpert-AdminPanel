@@ -4,10 +4,10 @@ import { ILicense } from './license.interface';
 export class LicenseModel extends Base implements ILicense {
   updateDate: string;
   createDate: string;
-  file: string;
+  filePath: string;
   userID: number;
-  startDate: Date;
-  expireDate: Date;
+  startDate: string;
+  expireDate: string;
   rowID: number;
   accountNumber: number;
 }
