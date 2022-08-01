@@ -25,8 +25,10 @@ export class LicenseComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'list';
   rows: OrderModel[] = new Array<OrderModel>();
   page: Page = new Page();
-  licenseModel: LicenseModel;
+  licenseModel: LicenseModel = new LicenseModel();
   addForm: FormGroup;
+  startDate: any;
+  expireDate: any;
   constructor(
     private _fileUploaderService: FileUploaderService,
     public _licenseService: LicenseService,
@@ -34,30 +36,28 @@ export class LicenseComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder
-  ) {
-    this.page.pageNumber = 0;
-    this.page.size = 12;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
-      title: [null],
       startDate: [null],
       expireDate: [null],
-      file: [null],
-      userID: [null],
+      accountNumber: [null],
     });
   }
 
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
 
-    this.getOrderList(this.page.pageNumber, this.page.size);
+    this.getOrdersIsPaid(this.page.pageNumber, this.page.size);
   }
-  async getOrderList(pageNumber: number, seedNumber: number) {
-    this._orderService
-      .get(pageNumber, seedNumber, 'ID', null, 'orders')
+  async getOrdersIsPaid(pageNumber: number, seedNumber: number) {
+    this._licenseService
+      .getOrdersIsPaid(
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        seedNumber
+      )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
           this.rows = res.data.items;
@@ -77,8 +77,8 @@ export class LicenseComponent implements OnInit {
         }
       );
   }
-  openModal(content: any, item: LicenseModel) {
-    this.licenseModel = item;
+  openModal(content: any, row: OrderModel) {
+    debugger;
     this.modalService
       .open(content, {
         size: 'lg',
@@ -87,64 +87,81 @@ export class LicenseComponent implements OnInit {
       })
       .result.then((result: boolean) => {
         if (result != undefined) {
+          this.licenseModel.rowID = row.id;
           this.addOrUpdate(this.licenseModel);
           this.addForm.reset();
         }
       });
   }
   async addOrUpdate(item: LicenseModel) {
-    if (item.id === 0) {
-      await this._licenseService
-        .create(item, 'License')
-        .toPromise()
-        .then(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+    // item.startDate =
+    //   this.startDate.year +
+    //   '/' +
+    //   this.startDate.month +
+    //   '/' +
+    //   this.startDate.day;
+
+    // item.expireDate =
+    //   this.expireDate.year +
+    //   '/' +
+    //   this.expireDate.month +
+    //   '/' +
+    //   this.expireDate.day;
+
+    this.licenseModel = item;
+    debugger;
+    await this._licenseService
+      .create(item, 'License')
+      .toPromise()
+      .then(
+        (data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
           }
-        );
-    } else {
-      await this._licenseService
-        .update(item.id, item, 'License')
-        .toPromise()
-        .then(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        );
-      this.getOrderList(this.page.pageNumber, this.page.size);
-    }
+        },
+        (_error) => {
+          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      );
+
+    // } else {
+    //   await this._licenseService
+    //     .update(item.id, item, 'License')
+    //     .toPromise()
+    //     .then(
+    //       (data) => {
+    //         if (data.success) {
+    //           this.toastr.success(data.message, null, {
+    //             closeButton: true,
+    //             positionClass: 'toast-top-left',
+    //           });
+    //         } else {
+    //           this.toastr.error(data.message, null, {
+    //             closeButton: true,
+    //             positionClass: 'toast-top-left',
+    //           });
+    //         }
+    //       },
+    //       (_error) => {
+    //         this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+    //           closeButton: true,
+    //           positionClass: 'toast-top-left',
+    //         });
+    //       }
+    //     );
+    //   this.getOrdersIsPaid(this.page.pageNumber, this.page.size);
+    // }
   }
   onFileChanged(event: any) {
     this.fullPath = document.getElementById('upload');
@@ -159,7 +176,7 @@ export class LicenseComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.loading = false; // Flag variable
-          this.licenseFile = res.data[0];
+          this.licenseModel.file = res.data[0];
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',

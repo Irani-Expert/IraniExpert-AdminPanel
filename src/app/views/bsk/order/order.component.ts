@@ -36,7 +36,13 @@ export class OrderComponent implements OnInit {
   }
   async getOrderList(pageNumber: number, seedNumber: number) {
     this._orderService
-      .get(pageNumber, seedNumber, 'ID', null, 'orders')
+      .get(
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        seedNumber,
+        'ID',
+        null,
+        'orders'
+      )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
           this.rows = res.data.items;

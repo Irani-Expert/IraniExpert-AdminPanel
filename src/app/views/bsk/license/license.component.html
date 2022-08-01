@@ -55,6 +55,7 @@
           : {
               itemsPerPage: page.size,
               page: page.pageNumber,
+
               currentPage: page.pageNumber,
               totalItems: page.totalElements
             }
@@ -150,27 +151,14 @@
         <div class="row mt-2">
           <div class="col-md-3 form-group mb-3">
             <strong for="file" class="mb-3">فایل لایسنس</strong>
-            <input
-              id="upload"
-              type="file"
-              class=""
-              [formControl]="addForm.controls['file']"
-              (change)="onFileChanged($event)"
-            />
+            <input id="upload" type="file" (change)="onFileChanged($event)" />
           </div>
           <div class="col-12 mt-2 mb-2">
             <button class="btn btn-primary col-2" (click)="uploadFile()">
               آپلود
             </button>
           </div>
-          <div class="col-md-3 form-group mb-3">
-            <strong for="title" class="mb-3">عنوان</strong>
-            <input
-              type="text"
-              class="form-control"
-              [formControl]="addForm.controls['title']"
-            />
-          </div>
+
           <div class="col-md-3 form-group mb-3" dir="ltr">
             <strong for="startDate" class="mb-3">تاریخ شروع</strong>
             <!-- <button (click)="s.toggle()" class="mb-3 btn btn-primary">
@@ -182,6 +170,7 @@
               class="form-control"
               ngbDatepicker
               #s="ngbDatepicker"
+              [(ngModel)]="licenseModel.startDate"
               [formControl]="addForm.controls['startDate']"
             />
           </div>
@@ -196,17 +185,30 @@
               class="form-control"
               ngbDatepicker
               #e="ngbDatepicker"
+              [(ngModel)]="licenseModel.expireDate"
               [formControl]="addForm.controls['expireDate']"
             />
           </div>
-          <div class="col-md-3 form-group mb-3">
-            <strong for="userID" class="mb-3">user ID</strong>
+          <div class="col-md-5 form-group mb-3" dir="ltr">
+            <strong for="expireDate" class="mb-3">شماره حساب کاربر</strong>
+            <!-- <button (click)="e.toggle()" class="mb-3 btn btn-primary">
+              تاریخ انقضا
+            </button> -->
             <input
               type="text"
               class="form-control"
-              [formControl]="addForm.controls['userID']"
+              [(ngModel)]="licenseModel.accountNumber"
+              [formControl]="addForm.controls['accountNumber']"
             />
           </div>
+          <!-- <div class="col-md-3 form-group mb-3">
+            <strong for="rowID" class="mb-3">شماره سفارش</strong>
+            <input
+              type="text"
+              class="form-control"
+              disabled
+            />
+          </div> -->
         </div>
       </form>
     </div>

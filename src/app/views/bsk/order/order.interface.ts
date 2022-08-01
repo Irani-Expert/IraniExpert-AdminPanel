@@ -10,5 +10,8 @@ export interface IOrder extends IBase {
   transactionStatus: number;
   updateDate: string;
   userID: number;
-  userInfo: any;
+  phoneNumber: number;
+  firstName: string;
+  lastName: string;
+  accountNumber: number;
 }

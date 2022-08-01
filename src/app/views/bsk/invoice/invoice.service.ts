@@ -27,14 +27,14 @@ export class InvoiceService extends BaseService<InvoiceModel, 0> {
     filter: string,
     orderId: number,
     tableType: number
-  ): Observable<Result<Paginate<InvoiceModel[]>>> {
+  ): Observable<Result<InvoiceModel[]>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.get<Result<Paginate<InvoiceModel[]>>>(
+    return this._http.get<Result<InvoiceModel[]>>(
       this._base +
         '/invoice/GetByTableTypeAndRowId/' +
         orderId +

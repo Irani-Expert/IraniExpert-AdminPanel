@@ -57,11 +57,11 @@ export class InvoiceComponent implements OnInit {
         8
       )
       .subscribe(
-        (res: Result<Paginate<InvoiceModel[]>>) => {
-          this.rows = res.data.items;
-          this.page.totalElements = res.data.totalCount;
-          this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber;
+        (res: Result<InvoiceModel[]>) => {
+          this.rows = res.data;
+          // this.page.totalElements = res.data.totalCount;
+          // this.page.totalPages = res.data.totalPages - 1;
+          // this.page.pageNumber = res.data.pageNumber;
         },
         (_error) => {
           this.toastr.error(

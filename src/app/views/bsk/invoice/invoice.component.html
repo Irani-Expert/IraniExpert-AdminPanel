@@ -271,7 +271,20 @@
             />
           </div>
 
-          <div class="col-md-4 form-group mb-3"></div>
+          <div class="col-md-4 form-group mb-3">
+            <strong for="status" class="mb-3">تغییر وضعیت</strong>
+            <select
+              class="form-control mt-1 text-dark"
+              id="status"
+              placeholder="{{ invoiceDetail.status | paymentStatus }}"
+              [formControl]="addForm.controls['status']"
+              (ngModelChange)="selectStatus($event)"
+              [ngModel]="invoiceDetail.status"
+            >
+              <option value="3">پرداخت شده</option>
+              <option value="99">با خطا مواجه شده</option>
+            </select>
+          </div>
 
           <!-- <div class="col-md-3 form-group mb-3">
             <strong for="bankType" class="mb-3">نوع بانک</strong>

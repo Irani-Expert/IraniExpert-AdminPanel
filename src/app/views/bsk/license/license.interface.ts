@@ -5,6 +5,8 @@ export interface ILicense extends IBase {
   createDate: string;
   file: string;
   userID: number;
-  startDate: string;
-  expireDate: string;
+  startDate: Date;
+  expireDate: Date;
+  rowID: number;
+  accountNumber: number;
 }

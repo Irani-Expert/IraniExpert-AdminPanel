@@ -3,6 +3,10 @@ import { InvoiceModel } from '../invoice/invoice.model';
 import { IOrder } from './order.interface';
 
 export class OrderModel extends Base implements IOrder {
+  phoneNumber: number;
+  firstName: string;
+  lastName: string;
+  accountNumber: number;
   plan: string;
   planID: number;
   price: number;
