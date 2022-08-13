@@ -5,9 +5,16 @@ import { ShrRoutingModule } from './shr.routing';
 import { UserWantsPipe } from 'src/app/shared/pipes/user-wants.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 
 @NgModule({
   declarations: [UserNeedComponent, UserWantsPipe],
-  imports: [CommonModule, ShrRoutingModule, NgbModule, NgxPaginationModule],
+  imports: [
+    CommonModule,
+    ShrRoutingModule,
+    NgbModule,
+    NgxPaginationModule,
+    SharedPipesModule,
+  ],
 })
 export class ShrModule {}

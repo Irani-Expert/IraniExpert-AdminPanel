@@ -2,39 +2,38 @@
   <li ngbNavItem>
     <a ngbNavLink>ایجاد یا ویرایش</a>
     <ng-template ngbNavContent>
-      <form>
-        <div class="row">
-          <!-- cardImagePath img -->
-          <div class="col-md-7 mt-4">
-            <input type="file" (change)="onFileChanged($event)" />
+      <div class="row">
+        <!-- cardImagePath img -->
+        <div class="col-md-7 mt-4">
+          <input type="file" (change)="onFileChanged($event)" />
 
-            <div>
-              <image-cropper
-                [imageChangedEvent]="imgChangeEvt"
-                [maintainAspectRatio]="false"
-                format="webp"
-                [resizeToWidth]="1280"
-                (imageCropped)="cropImg($event)"
-                (imageLoaded)="imgLoad()"
-                (cropperReady)="initCropper()"
-                (loadImageFailed)="imgFailed()"
-              >
-              </image-cropper>
-            </div>
-            <div class="float-left w-25">
-              <img [src]="cropImagePreview" alt="" />
-            </div>
-          </div>
-          <div class="col-12 mt-2 mb-3">
-            <button
-              type="button"
-              class="btn btn-rounded btn-outline-dark"
-              (click)="uploadFile()"
+          <div>
+            <image-cropper
+              [imageChangedEvent]="imgChangeEvt"
+              [maintainAspectRatio]="false"
+              format="webp"
+              [resizeToWidth]="1280"
+              (imageCropped)="cropImg($event)"
+              (imageLoaded)="imgLoad()"
+              (cropperReady)="initCropper()"
+              (loadImageFailed)="imgFailed()"
             >
-              آپلود کن
-            </button>
+            </image-cropper>
           </div>
-
+          <div class="float-left w-25">
+            <img [src]="cropImagePreview" alt="" />
+          </div>
+        </div>
+        <div class="col-12 mt-2 mb-3">
+          <button
+            type="button"
+            class="btn btn-rounded btn-outline-dark"
+            (click)="uploadFile()"
+          >
+            آپلود کن
+          </button>
+        </div>
+        <form class="col-12 row mt-2 mb-3" [formGroup]="addForm">
           <!-- Title -->
           <div class="col-md-6 form-group mb-3">
             <label for="title">عنوان</label>
@@ -139,30 +138,26 @@
               >توضیحات بیشتر از حد مجاز</small
             >
           </div>
-
-          <button
-            type="button"
-            class="btn btn-outline-dark btn-rounded"
-            (click)="addOrUpdate(addUpdate)"
-            *ngIf="addUpdate.id !== 0"
-            [disabled]="!addForm.valid"
-          >
-            <!-- [disabled]="!addForm.valid"
-      [disabled]="!addForm.valid" -->
-
-            ویرایش
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-dark btn-rounded"
-            (click)="addOrUpdate(addUpdate)"
-            *ngIf="addUpdate.id === 0"
-            [disabled]="!addForm.valid"
-          >
-            ایجاد
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="addOrUpdate(addUpdate)"
+        *ngIf="addUpdate.id !== 0"
+        [disabled]="!addForm.valid"
+      >
+        ویرایش
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="addOrUpdate(addUpdate)"
+        *ngIf="addUpdate.id === 0"
+        [disabled]="!addForm.valid"
+      >
+        ایجاد
+      </button>
     </ng-template>
   </li>
   <li ngbNavItem [disabled]="productId == 0">

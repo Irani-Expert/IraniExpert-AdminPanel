@@ -31,8 +31,10 @@
             >ایمیل و شماره تماس</label
           >
           <strong class="mr-1"
-            >&nbsp;{{ item.email }}_{{ item.phoneNumber }}
+            >{{ item.email }}<br />{{ item.phoneNumber }}
           </strong>
+          <br />
+          <strong class="mr-1">{{ item.updateDate | relativeTime }} </strong>
         </div>
       </div>
       <div class="mb-3">

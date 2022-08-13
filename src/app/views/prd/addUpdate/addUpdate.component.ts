@@ -38,7 +38,7 @@ export class AddUpdateComponent implements OnInit {
       this.addUpdate.id = this.productId;
       this.addUpdate.isActive = false;
     } else {
-      await this.getProductById();
+      this.getProductById();
     }
     this.addForm = this._formBuilder.group({
       cardImagePath: [null],
@@ -56,7 +56,6 @@ export class AddUpdateComponent implements OnInit {
         .getOneByID(this.productId, 'Product')
         .subscribe(
           (res: Result<ProductModel>) => {
-            debugger;
             this.addUpdate = res.data;
             //  this.page.totalElements = res.data.length;
           },

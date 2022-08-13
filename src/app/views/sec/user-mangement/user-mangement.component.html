@@ -241,16 +241,18 @@
     </div>
     <div class="modal-footer">
       <button
+        ngbAutofocus
         type="button"
-        class="btn btn-outline-dark btn-rounded mr-1"
+        class="btn btn-outline-primary btn-rounded mr-1"
         (click)="modal.close(true)"
         *ngIf="addUpdate.id !== 0"
       >
         ویرایش
       </button>
       <button
+        ngbAutofocus
         type="button"
-        class="btn btn-outline-dark btn-rounded mr-1"
+        class="btn btn-outline-primary btn-rounded mr-1"
         (click)="modal.close(true)"
         *ngIf="addUpdate.id === 0"
       >
@@ -286,7 +288,7 @@
     <button
       type="button"
       class="btn btn-outline-secondary btn-rounded mr-1"
-      (click)="modal.dismiss('cancel')"
+      (click)="modal.close(false)"
     >
       خیر
     </button>
@@ -294,7 +296,7 @@
       type="button"
       ngbAutofocus
       class="btn btn-wide btn-danger btn-rounded"
-      (click)="modal.close('Ok')"
+      (click)="modal.close(true)"
     >
       بله
     </button>

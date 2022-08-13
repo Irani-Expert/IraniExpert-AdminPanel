@@ -256,8 +256,8 @@
   }
   .sidebar-left-secondary,
   .sidebar-left {
-    // top: $topbar-height-mobile;
-    // height: calc(100vh - #{$topbar-height-mobile});
+    top: $topbar-height-mobile;
+    height: calc(100vh - #{$topbar-height-mobile});
   }
   .sidebar-left {
     left: calc(-#{$sidebar-left-width-mobile} - #{$side-clearance});
