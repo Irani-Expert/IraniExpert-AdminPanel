@@ -1,3 +1,16 @@
+<span>
+  <a
+    class="menu-btn"
+    ngbTooltip="  ابزار سئو برای مقالات"
+    [openDelay]="100"
+    [closeDelay]="500"
+  >
+    <!-- (click)="toggelSidebar()" -->
+    <div></div>
+    <div></div>
+    <div></div>
+  </a>
+</span>
 <ul ngbNav #nav="ngbNav" class="nav-tabs">
   <li ngbNavItem>
     <a ngbNavLink>ایجاد یا ویرایش</a>
@@ -168,4 +181,5 @@
     </ng-template>
   </li>
 </ul>
+
 <div [ngbNavOutlet]="nav"></div>
