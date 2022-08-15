@@ -61,36 +61,25 @@ export class PlanComponent implements OnInit {
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
 
-    this.getPlanListByProductId(this.page.pageNumber, this.page.size);
+    this.getPlanListByProductId();
   }
 
-  async getPlanListByProductId(pageNumber: number, seedNumber: number) {
-    this._planService
-      .getPlanByProductId(
-        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
-        seedNumber,
-        'ID',
-        'Plan',
-        this.productId
-      )
-      .subscribe(
-        (res: Result<Paginate<PlanModel[]>>) => {
-          this.rows = res.data.items;
-          this.page.totalElements = res.data.totalCount;
-          this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber;
-        },
-        (_error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
-        }
-      );
+  async getPlanListByProductId() {
+    this._planService.getPlanByProductId(this.productId).subscribe(
+      (res: Result<PlanModel[]>) => {
+        this.rows = res.data;
+      },
+      (_error) => {
+        this.toastr.error(
+          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+          null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          }
+        );
+      }
+    );
   }
   //____________________Delete Function
   deletePlan(id: number, modal: any) {
@@ -120,7 +109,7 @@ export class PlanComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getPlanListByProductId(this.page.pageNumber, this.page.size);
+              this.getPlanListByProductId();
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {
@@ -180,7 +169,7 @@ export class PlanComponent implements OnInit {
           });
         }
       );
-    this.getPlanListByProductId(this.page.pageNumber, this.page.size);
+    this.getPlanListByProductId();
   }
   //__________________Add Or Edit
   addorEdit(content: any, row: PlanModel) {
@@ -264,7 +253,7 @@ export class PlanComponent implements OnInit {
         );
     }
 
-    this.getPlanListByProductId(this.page.pageNumber, this.page.size);
+    this.getPlanListByProductId();
   }
   selectType($event: any) {
     if ($event != undefined) {
@@ -297,6 +286,6 @@ export class PlanComponent implements OnInit {
         this.addForm.reset();
       }
     );
-    this.getPlanListByProductId(this.page.pageNumber, this.page.size);
+    this.getPlanListByProductId();
   }
 }

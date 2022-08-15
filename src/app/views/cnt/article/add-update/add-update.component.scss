@@ -2,3 +2,18 @@
   color: black !important;
   font-size: 18px !important;
 }
+div:empty {
+  border-bottom: 1px solid #111827;
+  width: 24px;
+  display: block;
+  height: 3px;
+  margin: 3px 0;
+}
+.menu-btn {
+  padding: 8px 8px 9px 8px;
+  background: #6d28d9;
+  border-radius: 8px;
+  position: relative;
+  float: left;
+  cursor: pointer;
+}

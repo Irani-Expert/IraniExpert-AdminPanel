@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -20,6 +20,7 @@ export class UserMangementComponent implements OnInit {
   page: Page = new Page();
   addUpdate: UsersModel;
   addForm: FormGroup;
+
   constructor(
     public _usersService: UsersService,
     private toastr: ToastrService,
@@ -81,7 +82,7 @@ export class UserMangementComponent implements OnInit {
     this.addUpdate = row;
     this.modalService
       .open(content, {
-        size: 'sm',
+        size: 'md',
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
       })
@@ -124,6 +125,7 @@ export class UserMangementComponent implements OnInit {
             });
           }
         );
+      this.getUsersList(this.page.pageNumber, this.page.size);
     } else {
       await this._usersService
         .update(row.id, row, 'aspnetuser')
@@ -149,34 +151,35 @@ export class UserMangementComponent implements OnInit {
             });
           }
         );
+      this.getUsersList(this.page.pageNumber, this.page.size);
     }
-    this.getUsersList(this.page.pageNumber, this.page.size);
   }
   deleteUser(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then((result) => {
-        this._usersService
-          .delete(id, 'aspnetuser')
-          .toPromise()
-          .then((res) => {
-            if (res.success) {
-              this.toastr.success(
-                'فرایند حذف موفقیت آمیز بود',
-                'موفقیت آمیز!',
-                {
+      .result.then((_result) => {
+        if (_result)
+          this._usersService
+            .delete(id, 'aspnetuser')
+            .toPromise()
+            .then((res) => {
+              if (res.success) {
+                this.toastr.success(
+                  'فرایند حذف موفقیت آمیز بود',
+                  'موفقیت آمیز!',
+                  {
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                  }
+                );
+              } else {
+                this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
-                }
-              );
-            } else {
-              this.toastr.error('خطا در حذف', res.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
-            }
-          });
+                });
+              }
+            });
+        this.getUsersList(this.page.pageNumber, this.page.size);
       });
-    this.getUsersList(this.page.pageNumber, this.page.size);
   }
 }
