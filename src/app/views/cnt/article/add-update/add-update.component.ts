@@ -61,10 +61,12 @@ export class AddUpdateComponent implements OnInit {
         'https://iraniexpert.com/FileUploader/FileUploadCkEditor',
       allowedContent: false,
       forcePasteAsPlainText: true,
-      removePlugins: 'exportpdf',
-      skin: 'moono',
+      skin: 'kama',
       defaultLanguage: 'fa',
       language: 'fa',
+      removePlugins: 'elementspath,save,magicline,exportpdf',
+      extraPlugins: 'divarea,smiley,justify,indentblock,colordialog',
+
     };
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
@@ -90,14 +92,19 @@ export class AddUpdateComponent implements OnInit {
   onFileChanged(event: any) {
     this.imgChangeEvt = event;
   }
+
   cropImg(e: ImageCroppedEvent) {
     this.cropImagePreview = e.base64;
   }
+
   imgLoad() {}
+
   initCropper() {}
+
   imgFailed() {
     alert('image Failed to Show');
   }
+
   uploadFile() {
     this._fileUploaderService
       .uploadFile(this.cropImagePreview, 'articles')
