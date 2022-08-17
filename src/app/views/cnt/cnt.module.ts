@@ -15,6 +15,7 @@ import { FileTypePipe } from 'src/app/shared/pipes/file-type.pipe';
 import { CommentComponent } from './article/comment/comment.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
+import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 @NgModule({
   declarations: [
     BannerComponent,
@@ -35,6 +36,7 @@ import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
     NgxPaginationModule,
     NgbModule,
     SharedPipesModule,
+    SharedDirectivesModule,
   ],
   providers: [FileUploaderService],
 })

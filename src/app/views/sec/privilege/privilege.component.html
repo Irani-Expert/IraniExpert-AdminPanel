@@ -1,0 +1,192 @@
+<button
+  type="button"
+  class="btn btn-primary m-1"
+  (click)="addorEdit(addUpdateModal, undefined)"
+>
+  ایجاد
+</button>
+<div class="separator-breadcrumb border-top"></div>
+<div class="row justify-content-lg-start justify-content-center">
+  <div
+    class="col-lg-3 col-md-6 col-sm-8 col-12"
+    *ngFor="
+      let item of rows
+        | paginate
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber,
+              currentPage: page.pageNumber,
+              totalItems: page.totalElements
+            }
+    "
+  >
+    <div class="card bg-dark">
+      <div class="card-header text-center m-0 p-0">
+        <p class="text-white align-self-center mt-2">عنوان</p>
+      </div>
+      <div class="card-body radius-card bg-secondary text-center">
+        <div class="w-100 text-white mb-3">
+          {{ item.title }}
+        </div>
+        <div class="w-100 text-white mb-3">دسترسی به &nbsp;{{ item.key }}</div>
+        <div
+          class="d-flex justify-content-around align-content-center align-items-center mt-3"
+        >
+          <button
+            class="col-5 btn btn-warning"
+            (click)="addorEdit(addUpdateModal, item)"
+          >
+            ویرایش
+          </button>
+          <button
+            class="col-5 btn btn-danger"
+            (click)="deleteRole(item.id, deleteModal)"
+          >
+            حذف
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+    <pagination-controls
+      (pageChange)="setPage($event)"
+      previousLabel=""
+      nextLabel=""
+    ></pagination-controls>
+  </div>
+</div>
+<div *ngIf="rows.length == 0" class="d-flex justify-content-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="img-fluid w-50"
+    alt=""
+  />
+</div>
+<!-- ------ Modal For Adding -->
+<ng-template #addUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.close(false)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form action="" [formGroup]="addForm" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="title">عنوان</label>
+          <input
+            name="title"
+            id="title"
+            class="form-control"
+            [(ngModel)]="addUpdate.title"
+            [formControl]="addForm.controls['title']"
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="key">دسترسی</label>
+          <input
+            name="key"
+            id="key"
+            class="form-control"
+            [(ngModel)]="addUpdate.key"
+            [formControl]="addForm.controls['key']"
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="parentID">زیر مجموعه ای از</label>
+          <select
+            class="form-control"
+            (ngModelChange)="selectRole($event)"
+            [ngModel]="addUpdate.parentID"
+            [formControl]="addForm.controls['parentID']"
+          >
+            <option *ngFor="let role of roles" value="{{ role.value }}">
+              {{ role.name }}
+            </option>
+          </select>
+          <!-- <small
+          *ngIf="
+            addForm.controls['roleId'].hasError('required') &&
+            addForm.controls['roleId'].touched
+          "
+          class="mat-text-warn m-t-negative"
+          >انتخاب نقش ضروری است</small
+        > -->
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-warning btn-rounded mr-1"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id !== 0"
+    >
+      ویرایش
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-primary btn-rounded mr-1"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id === 0"
+    >
+      ایجاد
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+    >
+      انصراف
+    </button>
+  </div>
+</ng-template>
+<!-- ------  Modal For Delete -->
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">حذف محصول</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از حذف مطمئنید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
+    </button>
+  </div>
+</ng-template>

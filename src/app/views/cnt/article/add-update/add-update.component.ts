@@ -61,12 +61,11 @@ export class AddUpdateComponent implements OnInit {
         'https://iraniexpert.com/FileUploader/FileUploadCkEditor',
       allowedContent: false,
       forcePasteAsPlainText: true,
-      skin: 'kama',
+      skin: 'moono',
       defaultLanguage: 'fa',
       language: 'fa',
       removePlugins: 'elementspath,save,magicline,exportpdf',
       extraPlugins: 'divarea,smiley,justify,indentblock,colordialog',
-
     };
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],

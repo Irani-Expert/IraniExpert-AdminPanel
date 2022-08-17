@@ -94,7 +94,7 @@ export class NavigationService {
         },
         {
           icon: 'i-Gear',
-          name: 'مدیریت دسترسی ها ',
+          name: 'مدیریت نقش  ها ',
           state: '/sec/role-management',
           type: 'link',
         },
@@ -102,6 +102,18 @@ export class NavigationService {
           icon: 'i-Business-Man',
           name: ' مدیریت کاربران ',
           state: '/sec/user-management',
+          type: 'link',
+        },
+        {
+          icon: 'i-Surprise',
+          name: '  دسترسی نقش ها ',
+          state: '/sec/privilege',
+          type: 'link',
+        },
+        {
+          icon: 'i-Business-Man',
+          name: 'تخصیص دسترسی به کاربران',
+          state: '/sec/user-privilege',
           type: 'link',
         },
       ],

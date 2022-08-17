@@ -8,12 +8,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
+import { PrivilegeComponent } from './privilege/privilege.component';
+import { UserPrivilegeComponent } from './privilege/user-privilege/user-privilege.component';
 
 @NgModule({
   declarations: [
     UserMangementComponent,
     RoleMangementComponent,
     UserRoleComponent,
+    PrivilegeComponent,
+    UserPrivilegeComponent,
   ],
   imports: [
     NgxPaginationModule,

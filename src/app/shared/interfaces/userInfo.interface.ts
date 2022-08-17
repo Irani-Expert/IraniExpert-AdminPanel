@@ -1,6 +1,4 @@
-import { IRole } from "./role.interface";
-
-
+import { IRole } from './role.interface';
 
 /**
  * اینترفیس اطلاعات کاربر
@@ -12,4 +10,7 @@ export interface IUserInfo {
   subject: string;
   validFrom: string;
   validTo: string;
+  firstName: string;
+  lastName: string;
+  username: string;
 }
