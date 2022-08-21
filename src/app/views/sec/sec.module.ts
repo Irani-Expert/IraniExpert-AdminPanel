@@ -10,6 +10,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { PrivilegeComponent } from './privilege/privilege.component';
 import { UserPrivilegeComponent } from './privilege/user-privilege/user-privilege.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UserPrivilegeComponent } from './privilege/user-privilege/user-privileg
   ],
   imports: [
     NgxPaginationModule,
+    DragDropModule,
     CommonModule,
     SecRoutingModule,
     NgbModule,

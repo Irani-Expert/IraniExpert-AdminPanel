@@ -13,7 +13,10 @@
 </span>
 <ul ngbNav #nav="ngbNav" class="nav-tabs">
   <li ngbNavItem>
-    <a ngbNavLink>ایجاد یا ویرایش</a>
+    <a ngbNavLink
+      ><p *ngIf="addUpdate.id == 0">ایجاد</p>
+      <p *ngIf="addUpdate.id !== 0">ویرایش</p></a
+    >
     <ng-template ngbNavContent>
       <form class="card container p-4">
         <div class="row">
@@ -140,7 +143,8 @@
             </label>
           </div>
         </div>
-        <div class="row" *appCanAccess="''">
+        <div class="row">
+          <!-- *appCanAccess="'punisher' || 'hoas'" -->
           <button
             type="button"
             class="btn btn-outline-dark btn-rounded col-auto m-1"

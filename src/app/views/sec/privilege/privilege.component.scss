@@ -1,4 +1,64 @@
-.radius-card {
-  border-bottom-left-radius: 4px !important;
-  border-bottom-right-radius: 4px !important;
+.order-card {
+  color: #fff;
+}
+.clickable-btn {
+  cursor: pointer;
+  font-size: 23px !important;
+}
+.bg-gradient-yellow {
+  background: linear-gradient(
+    90deg,
+    rgba(123, 214, 14, 1) 40%,
+    rgba(195, 183, 71, 1) 92%
+  );
+}
+.top-left-card {
+  position: absolute;
+  top: -17px;
+  left: -17px;
+}
+.bg-gradient-grey {
+  background: linear-gradient(
+    90deg,
+    rgba(109, 129, 129, 1) 51%,
+    rgba(87, 102, 99, 1) 92%
+  );
+}
+.card {
+  position: relative;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+  box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+  border: none;
+  margin-bottom: 30px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.bg-gradient-red {
+  background: linear-gradient(
+    90deg,
+    rgba(187, 25, 52, 0.623) 40%,
+    rgba(195, 71, 79, 0.637) 92%
+  );
+}
+.card .card-block {
+  padding: 25px;
+}
+
+.order-card i {
+  font-size: 26px;
+}
+
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
+}
+.bg-green {
+  background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
+}
+.bg-grey {
+  background-color: #f5f7fa6b;
 }

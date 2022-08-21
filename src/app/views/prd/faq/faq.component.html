@@ -71,7 +71,7 @@
           {{ item.answer }}
         </div>
         <div class="col-10 text-start">
-          <button (click)="addUpdate = item" class="btn btn-info mt-4">
+          <button (click)="addUpdate = item" class="btn btn-warning mt-4">
             ویرایش
           </button>
           <button
@@ -86,7 +86,7 @@
     </ng-template>
   </ngb-panel>
 </ngb-accordion>
-<div *ngIf="rows.length == 0" class="d-flex justify-content-center">
+<div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"

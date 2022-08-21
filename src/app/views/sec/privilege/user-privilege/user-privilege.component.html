@@ -1,1 +1,186 @@
-<p>user-privilege works!</p>
+<button
+  type="button"
+  class="btn btn-primary mb-4"
+  (click)="addorEdit(addUpdateModal, undefined)"
+>
+  ایجاد
+</button>
+<div class="separator-breadcrumb border-top"></div>
+<div class="row d-md-flex flex-row justify-content-md-start">
+  <div
+    class="col-lg-4 col-xl-3 col-md-6 col-sm-8 col-12"
+    *ngFor="
+      let item of rows
+        | paginate
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber,
+              currentPage: page.pageNumber,
+              totalItems: page.totalElements
+            }
+    "
+  >
+    <div class="card bg-gradient-grey order-card">
+      <i
+        ngbTooltip="ویرایش"
+        [openDelay]="100"
+        [closeDelay]="500"
+        (click)="addorEdit(addUpdateModal, item)"
+        class="i-Pen-5 top-left-card bg-gradient-yellow clickable-btn text-dark p-2 rounded-circle"
+      ></i>
+      <div class="card-block">
+        <div
+          class="d-flex flex-row justify-content-between m-b-0 align-items-center align-content-center"
+        >
+          <h5 class="bg-light p-1 rounded text-dark">شماره کاربر</h5>
+          <i
+            class="i-Administrator bg-green clickable-btn text-dark p-2 rounded-circle"
+          ></i>
+        </div>
+        <h6 class="text-white">{{ item.userID }}</h6>
+        <hr class="separator-breadcrumb border-top" />
+        <div
+          class="d-flex flex-row justify-content-between m-b-0 align-items-center align-content-center"
+        >
+          <h5 class="bg-grey p-1 rounded text-dark">نقش</h5>
+          <i class="i-Gear-2 text-dark bg-green p-2 rounded-circle"></i>
+        </div>
+        <h6 class="text-white">{{ item.role }}</h6>
+        <hr class="separator-breadcrumb border-top" />
+        <div
+          class="d-flex flex-row justify-content-between m-b-0 align-items-center align-content-center"
+        >
+          <h5 class="bg-light p-1 rounded text-dark">دسترسی</h5>
+          <i class="i-Key text-dark bg-green p-2 rounded-circle"></i>
+        </div>
+        <h6 class="text-white">{{ item.privilege }}</h6>
+      </div>
+      <div class="radius-zero">
+        <button
+          (click)="deleteUserPrivilege(item.id, deleteModal)"
+          class="btn d-block radius-zero w-100 bg-gradient-red text-white float-right"
+        >
+          حذف
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+  <pagination-controls
+    (pageChange)="setPage($event)"
+    previousLabel=""
+    nextLabel=""
+  ></pagination-controls>
+</div>
+<ng-template #addUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form action="" [formGroup]="addForm" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="role">نقش</label>
+          <select
+            class="form-control"
+            [(ngModel)]="addUpdate.roleID"
+            [formControl]="addForm.controls['roleID']"
+          >
+            <option *ngFor="let role of roles" value="{{ role.id }}">
+              {{ role.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="privilageID">امتیاز</label>
+          <select
+            class="form-control"
+            [(ngModel)]="addUpdate.privilageID"
+            [formControl]="addForm.controls['privilageID']"
+          >
+            <option
+              *ngFor="let privilege of privilages"
+              value="{{ privilege.id }}"
+            >
+              {{ privilege.key }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-warning btn-rounded mr-1"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id !== 0"
+    >
+      ویرایش
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-primary btn-rounded mr-1"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id === 0"
+    >
+      ایجاد
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.dismiss()"
+    >
+      انصراف
+    </button>
+  </div>
+</ng-template>
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">حذف محصول</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از حذف مطمئنید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
+    </button>
+  </div>
+</ng-template>

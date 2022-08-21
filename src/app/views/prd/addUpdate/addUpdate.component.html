@@ -1,6 +1,9 @@
 <ul ngbNav #nav="ngbNav" class="nav-tabs">
   <li ngbNavItem>
-    <a ngbNavLink>ایجاد یا ویرایش</a>
+    <a ngbNavLink
+      ><p *ngIf="addUpdate.id == 0">ایجاد</p>
+      <p *ngIf="addUpdate.id !== 0">ویرایش</p></a
+    >
     <ng-template ngbNavContent>
       <div class="row">
         <!-- cardImagePath img -->

@@ -1,6 +1,6 @@
 <button
   type="button"
-  class="btn btn-primary m-1"
+  class="btn btn-primary mb-4"
   (click)="usersEdit(addUpdateModal, undefined)"
 >
   ایجاد
@@ -108,7 +108,7 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
-                  class="btn btn-info"
+                  class="btn btn-warning"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="usersEdit(addUpdateModal, item)"
                 >
@@ -143,7 +143,7 @@
         <button
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          class="btn btn-outline-info col m-1"
+          class="btn btn-outline-warning col m-1"
           (click)="usersEdit(addUpdateModal, item)"
         >
           ویرایش
@@ -159,7 +159,7 @@
     ></pagination-controls>
   </div>
 </div>
-<div class="d-flex justify-content-center">
+<div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
@@ -243,7 +243,7 @@
       <button
         ngbAutofocus
         type="button"
-        class="btn btn-outline-primary btn-rounded mr-1"
+        class="btn btn-outline-dark btn-rounded mr-1"
         (click)="modal.close(true)"
         *ngIf="addUpdate.id !== 0"
       >
@@ -252,7 +252,7 @@
       <button
         ngbAutofocus
         type="button"
-        class="btn btn-outline-primary btn-rounded mr-1"
+        class="btn btn-outline-dark btn-rounded mr-1"
         (click)="modal.close(true)"
         *ngIf="addUpdate.id === 0"
       >

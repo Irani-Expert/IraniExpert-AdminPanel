@@ -60,7 +60,7 @@ export class GroupComponent implements OnInit {
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber;
+          this.page.pageNumber = res.data.pageNumber + 1;
         },
         (_error) => {
           this.toastr.error(

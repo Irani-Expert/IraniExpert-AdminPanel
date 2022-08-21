@@ -16,12 +16,14 @@ import { UserRoleService } from './user-role.service';
   styleUrls: ['./user-role.component.scss'],
 })
 export class UserRoleComponent implements OnInit {
+  userIdTracker: number;
   viewMode: 'list' | 'grid' = 'list';
   rows: UserRoleModel[] = new Array<UserRoleModel>();
   roles: RoleModel[] = new Array<RoleModel>();
   allSelected: boolean;
   page: Page = new Page();
-  addUpdate: UserRoleModel;
+  addUpdate: UserRoleModel = new UserRoleModel();
+
   addForm: FormGroup;
   constructor(
     private _roleService: RoleService,
@@ -39,7 +41,6 @@ export class UserRoleComponent implements OnInit {
       roleId: [null, Validators.compose([Validators.required])],
     });
   }
-  selectRole(_$event: any) {}
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
 
@@ -73,7 +74,7 @@ export class UserRoleComponent implements OnInit {
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber;
+          this.page.pageNumber = res.data.pageNumber + 1;
         },
         (_error) => {
           this.toastr.error(
@@ -89,9 +90,11 @@ export class UserRoleComponent implements OnInit {
   }
   userRoleEdit(content: any, row: UserRoleModel) {
     if (row === undefined) {
-      row = new UserRoleModel();
+      this.addUpdate = new UserRoleModel();
+    } else {
+      this.addUpdate = row;
+      this.userIdTracker = row.userId;
     }
-    this.addUpdate = row;
     this.modalService
       .open(content, {
         size: 'md',
@@ -101,7 +104,7 @@ export class UserRoleComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
-            this.addOrUpdate(this.addUpdate);
+            this.addOrUpdate(this.addUpdate, this.userIdTracker);
             this.addForm.reset();
           }
         },
@@ -111,84 +114,89 @@ export class UserRoleComponent implements OnInit {
         }
       );
   }
-  async addOrUpdate(row: UserRoleModel) {
-    this._userRoleService
-      .create(row, 'aspnetuserrole')
-      .toPromise()
-      .then(
-        (data) => {
-          if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.toastr.error(data.message, null, {
+  async addOrUpdate(row: UserRoleModel, _id: number) {
+    if (row.userId !== _id) {
+      await this._userRoleService
+        .create(row, 'aspnetuserrole')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (_error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (_error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      );
-    //  else {
-    //     await this._userRoleService
-    //       .update(row.userId, row, 'aspnetuserrole')
-    //       .toPromise()
-    //       .then(
-    //         (data) => {
-    //           if (data.success) {
-    //             this.toastr.success(data.message, null, {
-    //               closeButton: true,
-    //               positionClass: 'toast-top-left',
-    //             });
-    //           } else {
-    //             this.toastr.error(data.message, null, {
-    //               closeButton: true,
-    //               positionClass: 'toast-top-left',
-    //             });
-    //           }
-    //         },
-    //         (_error) => {
-    //           this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-    //             closeButton: true,
-    //             positionClass: 'toast-top-left',
-    //           });
-    //         }
-    //       );
-    //   }
-    this.getUserRoleList(this.page.pageNumber, this.page.size);
-  }
-  deleteUserRole(id: number, modal: any) {
-    this.modalService
-      .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then((result) => {
-        this._userRoleService
-          .delete(id, 'aspnetuserrole')
-          .toPromise()
-          .then((res) => {
-            if (res.success) {
-              this.toastr.success(
-                'فرایند حذف موفقیت آمیز بود',
-                'موفقیت آمیز!',
-                {
-                  timeOut: 3000,
-                  positionClass: 'toast-top-left',
-                }
-              );
+        );
+    } else {
+      await this._userRoleService
+        .update(row.userId, row, 'aspnetuserrole')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
             } else {
-              this.toastr.error('خطا در حذف', res.message, {
-                timeOut: 3000,
+              this.toastr.error(data.message, null, {
+                closeButton: true,
                 positionClass: 'toast-top-left',
               });
             }
-          });
-      });
+          },
+          (_error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    }
     this.getUserRoleList(this.page.pageNumber, this.page.size);
+  }
+  async deleteUserRole(userId: number, roleId: number, modal: any) {
+    await this.modalService
+      .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
+      .result.then(
+        (_result) => {
+          this._userRoleService
+            .deleteIt(userId, roleId, 'aspnetuserrole')
+            .toPromise()
+            .then((res) => {
+              if (res.success) {
+                this.toastr.success(
+                  'فرایند حذف موفقیت آمیز بود',
+                  'موفقیت آمیز!',
+                  {
+                    timeOut: 3000,
+                    positionClass: 'toast-top-left',
+                  }
+                );
+                this.getUserRoleList(this.page.pageNumber, this.page.size);
+              } else {
+                this.toastr.error('خطا در حذف', res.message, {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-left',
+                });
+                this.getUserRoleList(this.page.pageNumber, this.page.size);
+              }
+            });
+        },
+        (_error) => {}
+      );
   }
 }

@@ -87,8 +87,8 @@ export class NavigationService {
       icon: 'i-Administrator',
       sub: [
         {
-          icon: 'i-Add-UserStar',
-          name: 'دسترسی ها کاربران',
+          icon: 'i-Checked-User',
+          name: 'نقش  کاربران',
           state: '/sec/user-role',
           type: 'link',
         },
@@ -105,13 +105,13 @@ export class NavigationService {
           type: 'link',
         },
         {
-          icon: 'i-Surprise',
+          icon: 'i-Gears',
           name: '  دسترسی نقش ها ',
           state: '/sec/privilege',
           type: 'link',
         },
         {
-          icon: 'i-Business-Man',
+          icon: 'i-Add-UserStar',
           name: 'تخصیص دسترسی به کاربران',
           state: '/sec/user-privilege',
           type: 'link',

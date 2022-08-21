@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { RoleModel } from '../role-mangement/role.model';
+
 import { RoleService } from '../role-mangement/role.service';
 import { PrivilegeModel } from './privilege.model';
 import { PrivilegeService } from './privilege.service';
@@ -16,7 +16,7 @@ import { PrivilegeService } from './privilege.service';
   styleUrls: ['./privilege.component.scss'],
 })
 export class PrivilegeComponent implements OnInit {
-  roles: RoleModel[] = new Array<RoleModel>();
+  keys = ['Watch', 'Delete', 'Add', 'Edit', 'Full Premission'];
   rows: PrivilegeModel[] = new Array<PrivilegeModel>();
   allSelected: boolean;
   page: Page = new Page();
@@ -34,39 +34,21 @@ export class PrivilegeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRoleList();
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       key: [null, Validators.required],
       parentID: [null],
-      title: [null],
+      title: [null, Validators.required],
+      isActive: [null, Validators.required],
     });
   }
   setPage(pageInfo: number) {
+    debugger;
     this.page.pageNumber = pageInfo;
 
     this.getPrivilegeList(this.page.pageNumber, this.page.size);
   }
-  async getRoleList() {
-    this._roleService.get(0, 1000, 'ID', null, 'aspnetrole').subscribe(
-      (res: Result<Paginate<RoleModel[]>>) => {
-        this.roles = res.data.items;
-        this.page.totalElements = res.data.totalCount;
-        this.page.totalPages = res.data.totalPages - 1;
-        this.page.pageNumber = res.data.pageNumber;
-      },
-      (_error) => {
-        this.toastr.error(
-          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-          null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          }
-        );
-      }
-    );
-  }
+
   async getPrivilegeList(pageNumber: number, seedNumber: number) {
     this._privilegeService
       .get(
@@ -81,7 +63,7 @@ export class PrivilegeComponent implements OnInit {
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber;
+          this.page.pageNumber = res.data.pageNumber + 1;
         },
         (_error) => {
           this.toastr.error(
@@ -96,7 +78,7 @@ export class PrivilegeComponent implements OnInit {
       );
   }
   ///// -------------Delete A Privilege--------- //////
-  deleteGroup(id: number, modal: any) {
+  deletePrivilege(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
@@ -156,9 +138,8 @@ export class PrivilegeComponent implements OnInit {
             this.addForm.reset();
           }
         },
-        (reason) => {
+        (_error) => {
           this.addUpdate = row;
-          console.log('Err!', reason);
           this.addForm.reset();
         }
       );

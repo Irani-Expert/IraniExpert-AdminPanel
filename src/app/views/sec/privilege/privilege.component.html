@@ -1,14 +1,14 @@
 <button
   type="button"
-  class="btn btn-primary m-1"
+  class="btn btn-primary mb-4"
   (click)="addorEdit(addUpdateModal, undefined)"
 >
   ایجاد
 </button>
 <div class="separator-breadcrumb border-top"></div>
-<div class="row justify-content-lg-start justify-content-center">
+<div class="row d-md-flex flex-row justify-content-md-start">
   <div
-    class="col-lg-3 col-md-6 col-sm-8 col-12"
+    class="col-lg-4 col-xl-3 col-md-6 col-sm-8 col-12"
     *ngFor="
       let item of rows
         | paginate
@@ -20,43 +20,52 @@
             }
     "
   >
-    <div class="card bg-dark">
-      <div class="card-header text-center m-0 p-0">
-        <p class="text-white align-self-center mt-2">عنوان</p>
-      </div>
-      <div class="card-body radius-card bg-secondary text-center">
-        <div class="w-100 text-white mb-3">
-          {{ item.title }}
-        </div>
-        <div class="w-100 text-white mb-3">دسترسی به &nbsp;{{ item.key }}</div>
+    <div class="card bg-gradient-grey order-card">
+      <i
+        ngbTooltip="ویرایش"
+        [openDelay]="100"
+        [closeDelay]="500"
+        (click)="addorEdit(addUpdateModal, item)"
+        class="i-Pen-5 top-left-card bg-gradient-yellow clickable-btn text-dark p-2 rounded-circle"
+      ></i>
+      <div class="card-block">
         <div
-          class="d-flex justify-content-around align-content-center align-items-center mt-3"
+          class="d-flex flex-row justify-content-between m-b-0 align-items-center align-content-center"
         >
-          <button
-            class="col-5 btn btn-warning"
-            (click)="addorEdit(addUpdateModal, item)"
-          >
-            ویرایش
-          </button>
-          <button
-            class="col-5 btn btn-danger"
-            (click)="deleteRole(item.id, deleteModal)"
-          >
-            حذف
-          </button>
+          <h5 class="bg-light p-1 rounded text-dark">عنوان</h5>
+          <i
+            class="i-File bg-green clickable-btn text-dark p-2 rounded-circle"
+          ></i>
         </div>
+        <h6 class="text-white">{{ item.title }}</h6>
+        <hr class="separator-breadcrumb border-top" />
+        <div
+          class="d-flex flex-row justify-content-between m-b-0 align-items-center align-content-center"
+        >
+          <h5 class="bg-light p-1 rounded text-dark">دسترسی</h5>
+          <i class="i-Key text-dark bg-green p-2 rounded-circle"></i>
+        </div>
+        <h6 class="text-white">{{ item.key }}</h6>
+      </div>
+      <div class="">
+        <button
+          (click)="deletePrivilege(item.id, deleteModal)"
+          class="btn d-block w-100 text-white bg-gradient-red float-right"
+        >
+          حذف
+        </button>
       </div>
     </div>
   </div>
-  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
-    <pagination-controls
-      (pageChange)="setPage($event)"
-      previousLabel=""
-      nextLabel=""
-    ></pagination-controls>
-  </div>
 </div>
-<div *ngIf="rows.length == 0" class="d-flex justify-content-center">
+<div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+  <pagination-controls
+    (pageChange)="setPage($event)"
+    previousLabel=""
+    nextLabel=""
+  ></pagination-controls>
+</div>
+<div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
@@ -77,7 +86,7 @@
       class="close"
       aria-label="Close button"
       aria-describedby="modal-basic-title"
-      (click)="modal.close(false)"
+      (click)="modal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -94,37 +103,54 @@
             [(ngModel)]="addUpdate.title"
             [formControl]="addForm.controls['title']"
           />
+          <small
+            *ngIf="
+              addForm.controls['title'].hasError('required') &&
+              addForm.controls['title'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >نوشتن عنوان ضروری است</small
+          >
         </div>
         <div class="col-md-6 form-group mb-3 mt-3">
-          <label for="key">دسترسی</label>
-          <input
-            name="key"
-            id="key"
+          <label for="parentID">دسترسی</label>
+          <select
             class="form-control"
             [(ngModel)]="addUpdate.key"
             [formControl]="addForm.controls['key']"
-          />
+          >
+            <option
+              *ngFor="let key of keys"
+              value="{{ addUpdate.title }}-{{ key }}"
+            >
+              {{ key }}
+            </option>
+          </select>
         </div>
         <div class="col-md-6 form-group mb-3 mt-3">
           <label for="parentID">زیر مجموعه ای از</label>
           <select
             class="form-control"
-            (ngModelChange)="selectRole($event)"
-            [ngModel]="addUpdate.parentID"
+            [(ngModel)]="addUpdate.parentID"
             [formControl]="addForm.controls['parentID']"
           >
-            <option *ngFor="let role of roles" value="{{ role.value }}">
-              {{ role.name }}
+            <option *ngFor="let privilege of rows" value="{{ privilege.id }}">
+              {{ privilege.key }}
             </option>
           </select>
-          <!-- <small
-          *ngIf="
-            addForm.controls['roleId'].hasError('required') &&
-            addForm.controls['roleId'].touched
-          "
-          class="mat-text-warn m-t-negative"
-          >انتخاب نقش ضروری است</small
-        > -->
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label class="m-1">فعال</label>
+          <label class="switch switch-primary mr-2 m-2">
+            <span>غیرفعال</span>
+            <input
+              [(ngModel)]="addUpdate.isActive"
+              [formControl]="addForm.controls['isActive']"
+              type="checkbox"
+              id="isActive"
+            />
+            <span class="slider"></span>
+          </label>
         </div>
       </div>
     </form>
@@ -149,7 +175,7 @@
     <button
       type="button"
       class="btn btn-outline-dark btn-rounded"
-      (click)="modal.close(false)"
+      (click)="modal.dismiss()"
     >
       انصراف
     </button>

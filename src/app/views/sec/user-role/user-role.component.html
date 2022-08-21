@@ -1,7 +1,7 @@
 <button
   type="button"
-  class="btn btn-primary m-1"
-  (click)="userRoleEdit(addUpdate, undefined)"
+  class="btn btn-primary mb-4"
+  (click)="userRoleEdit(addUpdateModal, undefined)"
 >
   ایجاد
 </button>
@@ -109,9 +109,9 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
-                  class="btn btn-info"
+                  class="btn btn-warning"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="userRoleEdit(addUpdate, user.userId)"
+                  (click)="userRoleEdit(addUpdateModal, user)"
                 >
                   ویرایش
                 </button>
@@ -120,7 +120,9 @@
                 <button
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="deleteUserRole(item.id, deleteModal)"
+                  (click)="
+                    deleteUserRole(user.userId, user.roleId, deleteModal)
+                  "
                 >
                   حذف
                 </button>
@@ -137,15 +139,15 @@
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-danger col m-1"
-          (click)="deleteUserRole(item.id, deleteModal)"
+          (click)="deleteUserRole(user.userId, user.roleId, deleteModal)"
         >
           حذف
         </button>
         <button
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          class="btn btn-outline-info col m-1"
-          (click)="userRoleEdit(addUpdate, user.id)"
+          class="btn btn-outline-warning col m-1"
+          (click)="userRoleEdit(addUpdateModal, user)"
         >
           ویرایش
         </button>
@@ -160,19 +162,29 @@
     ></pagination-controls>
   </div>
 </div>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center" *ngIf="rows?.length == 0">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
     alt=""
   />
 </div>
-<ng-template #addUpdate let-modal>
+<ng-template #addUpdateModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">ایجاد</h4>
-    <!-- <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+    <h4
+      class="modal-title"
+      *ngIf="addUpdate.userId !== userIdTracker"
+      id="modal-basic-title"
+    >
+      ایجاد
+    </h4>
+    <h4
+      class="modal-title"
+      *ngIf="addUpdate.userId == userIdTracker"
+      id="modal-basic-title"
+    >
       ویرایش
-    </h4> -->
+    </h4>
 
     <button
       type="button"
@@ -189,7 +201,6 @@
         <div class="col-md-6 form-group mb-3 mt-3">
           <label for="title">شناسه کاربر</label>
           <input
-            [disabled]="addUpdate.userId !== 0"
             type="text"
             class="form-control form-control-rounded"
             [formControl]="addForm.controls['userId']"
@@ -209,11 +220,10 @@
           <label for="name">نام نقش</label>
           <select
             class="form-control form-control-rounded"
-            (ngModelChange)="selectRole($event)"
-            [ngModel]="addUpdate.roleId"
+            [(ngModel)]="addUpdate.roleId"
             [formControl]="addForm.controls['roleId']"
           >
-            <option *ngFor="let role of roles" value="{{ role.value }}">
+            <option *ngFor="let role of roles" value="{{ role.id }}">
               {{ role.name }}
             </option>
           </select>
@@ -229,15 +239,16 @@
       </div>
     </div>
     <div class="modal-footer">
-      <!-- <button
+      <button
         type="button"
         class="btn btn-outline-dark btn-rounded"
         (click)="modal.close(true)"
-        *ngIf="addUpdate.id !== 0"
+        *ngIf="addUpdate.userId == userIdTracker"
       >
         ویرایش
-      </button> -->
+      </button>
       <button
+        *ngIf="addUpdate.userId !== userIdTracker"
         type="button"
         class="btn btn-outline-dark btn-rounded"
         (click)="modal.close(true)"
@@ -246,4 +257,38 @@
       </button>
     </div>
   </form>
+</ng-template>
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">حذف محصول</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از حذف مطمئنید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-rounded mr-1"
+      (click)="modal.dismiss('cancel')"
+    >
+      خیر
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn btn-wide btn-danger btn-rounded"
+      (click)="modal.close('Ok')"
+    >
+      بله
+    </button>
+  </div>
 </ng-template>
