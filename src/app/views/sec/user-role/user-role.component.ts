@@ -16,7 +16,7 @@ import { UserRoleService } from './user-role.service';
   styleUrls: ['./user-role.component.scss'],
 })
 export class UserRoleComponent implements OnInit {
-  userIdTracker: number;
+  userIdTracker = 0;
   viewMode: 'list' | 'grid' = 'list';
   rows: UserRoleModel[] = new Array<UserRoleModel>();
   roles: RoleModel[] = new Array<RoleModel>();
@@ -90,6 +90,7 @@ export class UserRoleComponent implements OnInit {
   }
   userRoleEdit(content: any, row: UserRoleModel) {
     if (row === undefined) {
+      this.userIdTracker = 0;
       this.addUpdate = new UserRoleModel();
     } else {
       this.addUpdate = row;

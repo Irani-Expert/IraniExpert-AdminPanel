@@ -171,18 +171,10 @@
 </div>
 <ng-template #addUpdateModal let-modal>
   <div class="modal-header">
-    <h4
-      class="modal-title"
-      *ngIf="addUpdate.userId !== userIdTracker"
-      id="modal-basic-title"
-    >
+    <h4 class="modal-title" *ngIf="userIdTracker == 0" id="modal-basic-title">
       ایجاد
     </h4>
-    <h4
-      class="modal-title"
-      *ngIf="addUpdate.userId == userIdTracker"
-      id="modal-basic-title"
-    >
+    <h4 class="modal-title" *ngIf="userIdTracker !== 0" id="modal-basic-title">
       ویرایش
     </h4>
 
@@ -243,12 +235,12 @@
         type="button"
         class="btn btn-outline-dark btn-rounded"
         (click)="modal.close(true)"
-        *ngIf="addUpdate.userId == userIdTracker"
+        *ngIf="userIdTracker !== 0"
       >
         ویرایش
       </button>
       <button
-        *ngIf="addUpdate.userId !== userIdTracker"
+        *ngIf="userIdTracker == 0"
         type="button"
         class="btn btn-outline-dark btn-rounded"
         (click)="modal.close(true)"
