@@ -25,8 +25,6 @@ export class CommentService extends BaseService<CommentModel, 0> {
   GetByTableTypeAndRowId(
     pageIndex: number,
     pageSize: number,
-    pageOrder: string,
-    filter: string,
     articleId: number,
     tableType: number
   ): Observable<Result<Paginate<CommentModel[]>>> {
@@ -45,15 +43,7 @@ export class CommentService extends BaseService<CommentModel, 0> {
         '?pagIndex=' +
         pageIndex +
         '&pageSize=' +
-        pageSize +
-        '&pageOrder=' +
-        pageOrder +
-        '&filter=' +
-        filter +
-        '&articleId=' +
-        articleId +
-        '&tableType=' +
-        tableType,
+        pageSize,
       _options
     );
   }

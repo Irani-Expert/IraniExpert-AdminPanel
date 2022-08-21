@@ -42,8 +42,6 @@ export class CommentComponent implements OnInit {
       .GetByTableTypeAndRowId(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
-        'ID',
-        'comment',
         this.productId,
         this.tableType
       )
@@ -52,7 +50,7 @@ export class CommentComponent implements OnInit {
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber;
+          this.page.pageNumber = res.data.pageNumber + 1;
         },
         (error) => {
           this.toastr.error(

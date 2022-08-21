@@ -44,8 +44,6 @@ export class CommentComponent implements OnInit {
       .GetByTableTypeAndRowId(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
-        'ID',
-        'comment',
         this.articleId,
         1
       )
