@@ -16,4 +16,6 @@ export class UserInfoModel implements IUserInfo {
   subject: string;
   validFrom: string;
   validTo: string;
+  roles: number[];
+  privileges: string[];
 }

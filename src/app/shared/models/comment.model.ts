@@ -1,6 +1,5 @@
 import { Base } from 'src/app/shared/models/Base/base.model';
-import { ArticleModel } from '../article/article.model';
-import { IComment } from './comment.interface';
+import { IComment } from '../interfaces/comment.interface';
 
 export class CommentModel extends Base implements IComment {
   userID: number;
@@ -13,5 +12,4 @@ export class CommentModel extends Base implements IComment {
   rate: number;
   text: string;
   isAccepted: boolean;
-  
 }

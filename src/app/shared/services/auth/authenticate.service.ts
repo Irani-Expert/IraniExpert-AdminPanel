@@ -1,5 +1,7 @@
+import { state } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,7 +17,12 @@ export class AuthenticateService {
   private currentUserSubject: BehaviorSubject<UserInfoModel>;
   public currentUser: Observable<UserInfoModel>;
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
+    private toastr: ToastrService
+  ) {
     this.currentUserSubject = new BehaviorSubject<UserInfoModel>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
@@ -39,15 +46,11 @@ export class AuthenticateService {
             localStorage.setItem('currentUser', JSON.stringify(user.data));
             this.currentUserSubject.next(user.data);
             return user;
-          }else{
-            this.toastr.error(
-              'نام کاربری یا رمز عبور اشتباه است ',
-              null,
-              {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              }
-            );
+          } else {
+            this.toastr.error('نام کاربری یا رمز عبور اشتباه است ', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
             return null;
           }
         })
@@ -58,5 +61,6 @@ export class AuthenticateService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    this.router.navigate(['/sessions/signin']);
   }
 }

@@ -43,7 +43,6 @@ export class PrivilegeComponent implements OnInit {
     });
   }
   setPage(pageInfo: number) {
-    debugger;
     this.page.pageNumber = pageInfo;
 
     this.getPrivilegeList(this.page.pageNumber, this.page.size);

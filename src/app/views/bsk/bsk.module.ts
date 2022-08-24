@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LicenseComponent } from './license/license.component';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FileUploaderService } from 'src/app/shared/services/fileUploader.servic
     BskRoutingModule,
     NgxPaginationModule,
     SharedPipesModule,
+    PerfectScrollbarModule,
   ],
   providers: [FileUploaderService],
 })

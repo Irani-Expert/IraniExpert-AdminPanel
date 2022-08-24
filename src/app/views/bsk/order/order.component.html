@@ -1,4 +1,7 @@
 <!----------------------------------- Head Table  -->
+<div>
+  <button class="btn btn-danger" (click)="toggelSidebar()">یادداشت</button>
+</div>
 <div class="row list-horizontal">
   <div
     class="list-item"
@@ -190,3 +193,24 @@
     </button>
   </div>
 </ng-template>
+<div
+  [ngClass]="{ open: _orderService.sidebarState.sidenavOpen }"
+  class="notebar-left rtl-ps-none"
+  [perfectScrollbar]="{ suppressScrollX: true }"
+>
+  <ul class="aside-left">
+    <li class="aside-item lvl1">
+      <div class="aside-item-hold">
+        <div class="my-css w-75">
+          <div>
+            <div class="timeline-card card mt-2">
+              <div class="card-body bg-secondary">
+                <p class="text-white"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
