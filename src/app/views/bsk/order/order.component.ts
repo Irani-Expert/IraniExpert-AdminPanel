@@ -17,12 +17,14 @@ import { OrderService } from './order.service';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  toggled = false;
   rows: OrderModel[] = new Array<OrderModel>();
   viewMode: 'list' | 'grid' = 'list';
   page: Page = new Page();
   @ViewChildren(PerfectScrollbarDirective)
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
+  note: OrderModel;
   constructor(
     public router: Router,
     public _orderService: OrderService,
@@ -38,7 +40,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.setPage(this.page.pageNumber);
-    this.updateSidebar();
+    this.updateNotebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -108,7 +110,12 @@ export class OrderComponent implements OnInit {
           });
       });
   }
-  toggelSidebar() {
+  getNoteList(row: OrderModel) {
+    this.note = row;
+  }
+  toggleNotebar(item: OrderModel) {
+    this.getNoteList(item);
+    this.toggled = true;
     const state = this._orderService.sidebarState;
 
     if (state.sidenavOpen) {
@@ -118,7 +125,8 @@ export class OrderComponent implements OnInit {
       state.sidenavOpen = true;
     }
   }
-  updateSidebar() {
+  updateNotebar() {
+    this.toggled = false;
     if (Utils.isMobile()) {
       this._orderService.sidebarState.sidenavOpen = false;
     } else {

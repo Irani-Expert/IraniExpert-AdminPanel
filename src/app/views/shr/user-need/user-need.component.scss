@@ -1,5 +1,93 @@
 .gif-fluid {
-    object-fit: contain;
-    width: 100%;
-    height: 400px;
+  object-fit: contain;
+  width: 100%;
+  height: 400px;
+}
+@media screen and (max-width: 1463px) {
+  .margin-right {
+    margin-right: -1.94rem;
   }
+}
+.notebar-left {
+  position: fixed;
+  top: 80px;
+  height: calc(100vh - #{80px});
+  background: #fff;
+  box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.notebar-left {
+  left: calc(-#{400px} - #{20px});
+  z-index: 90;
+  transition: all 0.24s ease-in-out;
+  &.open {
+    left: 0;
+  }
+  .aside-left {
+    list-style: none;
+    text-align: center;
+    width: 400px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    .aside-item {
+      position: relative;
+      display: block;
+      width: 100%;
+      color: #000;
+      border-bottom: 1px solid #c7c7c7;
+      &:focus,
+      &:active {
+        outline: none;
+      }
+      &.lvl1 {
+        padding: 0 12px;
+        text-align: justify;
+      }
+      .aside-item-hold {
+        width: 100%;
+        padding: 0 0;
+        &:focus,
+        &:active {
+          outline: none;
+        }
+        .aside-text {
+          font-size: 13px;
+          display: block;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+:is(.my-css) .badge {
+  width: 80px !important;
+  padding: 4px 0;
+  font-size: 16px;
+}
+.clickable-btn {
+  cursor: pointer;
+  font-size: 25px !important;
+}
+.bg-gradient-grey {
+  background: linear-gradient(
+    90deg,
+    rgba(109, 129, 129, 1) 51%,
+    rgba(87, 102, 99, 1) 92%
+  );
+}
+.textarea-font {
+  font-size: 13px;
+  color: #fff;
+}
+.bg-green {
+  background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
+}
+.bg-grey {
+  background-color: #f5f7fa6b;
+}
+.rounded-4 {
+  border-radius: 14px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}

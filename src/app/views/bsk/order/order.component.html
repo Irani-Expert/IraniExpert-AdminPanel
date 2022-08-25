@@ -1,7 +1,4 @@
 <!----------------------------------- Head Table  -->
-<div>
-  <button class="btn btn-danger" (click)="toggelSidebar()">یادداشت</button>
-</div>
 <div class="row list-horizontal">
   <div
     class="list-item"
@@ -101,6 +98,15 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
+                  class="btn btn-success"
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                  (click)="toggleNotebar(item)"
+                >
+                  یادداشت
+                </button>
+              </div>
+              <div class="w-25 w-sm-100 mr-sm-2">
+                <button
                   class="btn btn-info"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   [routerLink]="'/bsk/invoice/' + item.id"
@@ -126,13 +132,13 @@
       >
         <h6 class="text-center">عملیات</h6>
         <button
-          type="button"
-          [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-danger col m-1"
-          (click)="deleteOrder(item.id, deleteModal)"
+          [ngClass]="{ 'd-none': viewMode === 'grid' }"
+          (click)="toggleNotebar(item)"
         >
-          حذف
+          یادداشت
         </button>
+
         <button
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
@@ -140,6 +146,14 @@
           [routerLink]="'/bsk/invoice/' + item.id"
         >
           فاکتور ها
+        </button>
+        <button
+          type="button"
+          [ngClass]="{ 'd-none': viewMode === 'grid' }"
+          class="btn btn-outline-danger col m-1"
+          (click)="deleteOrder(item.id, deleteModal)"
+        >
+          حذف
         </button>
       </div>
     </div>
@@ -193,19 +207,54 @@
     </button>
   </div>
 </ng-template>
+
 <div
   [ngClass]="{ open: _orderService.sidebarState.sidenavOpen }"
-  class="notebar-left rtl-ps-none"
+  class="notebar-left rtl-ps-none bg-gradient-grey rounded shadow-lg"
   [perfectScrollbar]="{ suppressScrollX: true }"
 >
+  <div class="mt-4 ml-3">
+    <i
+      (click)="updateNotebar()"
+      ngbTooltip="بستن"
+      [openDelay]="100"
+      [closeDelay]="500"
+      placement="bottom"
+      class="i-Close bg-white text-dark border-0 clickable-btn rounded-circle"
+    ></i>
+  </div>
+  <hr class="separator-breadcrumb mt-0 mb-1" />
+  <div class="ml-3">
+    <form action="">
+      <div class="row">
+        <div class="col-10 form-group mb-3 mt-3">
+          <label class="text-white" for="title">ایجاد یادداشت</label>
+          <textarea
+            name="title"
+            id="title"
+            type="text"
+            class="form-control bg-dark textarea-font"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+    <button type="button" class="btn btn-light mb-2">ایجاد</button>
+  </div>
+  <hr class="separator-breadcrumb mt-2 mb-1" />
+  <div class="p-2"><h4 class="pl-2 text-light">یادداشت ها</h4></div>
   <ul class="aside-left">
     <li class="aside-item lvl1">
       <div class="aside-item-hold">
-        <div class="my-css w-75">
+        <div class="my-css">
           <div>
             <div class="timeline-card card mt-2">
+              <div class="card-header bg-dark m-0 p-0">
+                <p class="text-white m-0 p-2">یادداشت شماره 1</p>
+              </div>
               <div class="card-body bg-secondary">
-                <p class="text-white"></p>
+                <p class="text-white" *ngIf="toggled == true">
+                  {{ note.plan }}
+                </p>
               </div>
             </div>
           </div>

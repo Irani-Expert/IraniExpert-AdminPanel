@@ -36,12 +36,12 @@
         outline: none;
       }
       &.lvl1 {
-        padding: 0 20px;
+        padding: 0 12px;
         text-align: justify;
       }
       .aside-item-hold {
         width: 100%;
-        padding: 26px 0;
+        padding: 0 0;
         &:focus,
         &:active {
           outline: none;
@@ -59,4 +59,25 @@
   width: 80px !important;
   padding: 4px 0;
   font-size: 16px;
+}
+.clickable-btn {
+  cursor: pointer;
+  font-size: 25px !important;
+}
+.bg-gradient-grey {
+  background: linear-gradient(
+    90deg,
+    rgba(109, 129, 129, 1) 51%,
+    rgba(87, 102, 99, 1) 92%
+  );
+}
+.textarea-font {
+  font-size: 13px;
+  color: #fff;
+}
+.bg-green {
+  background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
+}
+.bg-grey {
+  background-color: #f5f7fa6b;
 }

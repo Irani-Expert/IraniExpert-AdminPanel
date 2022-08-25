@@ -39,9 +39,16 @@
       </div>
       <div class="mb-3">
         <button
+          type="button"
+          class="btn btn-outline-success m-1"
+          (click)="toggleNotebar(item)"
+        >
+          یادداشت ها
+        </button>
+        <button
           (click)="deleteUserNeed(item.id, deleteModal)"
           type="button"
-          class="btn btn-danger btn-rounded m-1"
+          class="btn btn-danger m-1"
         >
           حذف درخواست
         </button>
@@ -90,3 +97,58 @@
     </button>
   </div>
 </ng-template>
+<div
+  [ngClass]="{ open: _UserNeedService.sidebarState.sidenavOpen }"
+  class="notebar-left rtl-ps-none bg-gradient-grey rounded-4 shadow-lg"
+  [perfectScrollbar]="{ suppressScrollX: true }"
+>
+  <div class="mt-4 ml-3">
+    <i
+      (click)="updateNotebar()"
+      ngbTooltip="بستن"
+      [openDelay]="100"
+      [closeDelay]="500"
+      placement="bottom"
+      class="i-Close bg-white text-dark border-0 clickable-btn rounded-circle"
+    ></i>
+  </div>
+  <hr class="separator-breadcrumb mt-0 mb-1" />
+  <div class="ml-3">
+    <form action="">
+      <div class="row">
+        <div class="col-10 form-group mb-3 mt-3">
+          <label class="text-white" for="title">ایجاد یادداشت</label>
+          <textarea
+            name="title"
+            id="title"
+            type="text"
+            class="form-control bg-dark textarea-font"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+    <button type="button" class="btn btn-light mb-2">ایجاد</button>
+  </div>
+  <hr class="separator-breadcrumb mt-2 mb-1" />
+  <div class="p-2"><h4 class="pl-2 text-light">یادداشت ها</h4></div>
+  <ul class="aside-left">
+    <li class="aside-item lvl1">
+      <div class="aside-item-hold">
+        <div class="my-css">
+          <div>
+            <div class="timeline-card card mt-2">
+              <div class="card-header bg-dark m-0 p-0">
+                <p class="text-white m-0 p-2">یادداشت شماره 1</p>
+              </div>
+              <div class="card-body bg-secondary">
+                <p class="text-white" *ngIf="toggled == true">
+                  {{ note.phoneNumber }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
