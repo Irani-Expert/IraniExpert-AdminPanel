@@ -1,6 +1,10 @@
-<div class="main-header">
+<div class="main-header bg-secondary">
   <div class="logo">
-    <img src="./assets/images/logo.jpg" class="logo-img" alt="" />
+    <img
+      src="../../../../../../assets/images/darklogo.png"
+      class="logo-img"
+      alt=""
+    />
   </div>
 
   <div style="margin: auto"></div>
@@ -13,19 +17,32 @@
     </div>
     <div ngbDropdown [placement]="'bottom-right'" class="user col">
       <div>
-        <i id="userDropdown" class="i-Male-21" style="font-size: 30px"></i>
-        <i id="userDropdown" ngbDropdownToggle style="font-size: 30px"></i>
+        <i
+          id="userDropdown"
+          class="i-Male-21"
+          style="font-size: 30px; color: #f3f4f6"
+        ></i>
+        <i
+          id="userDropdown"
+          ngbDropdownToggle
+          style="font-size: 30px; color: #f3f4f6"
+        ></i>
       </div>
 
       <div
         ngbDropdownMenu
         aria-labelledby="userDropdown"
-        class="header-account-dropdown"
+        class="header-account-dropdown bg-dark"
       >
         <div class="dropdown-header">
-          <i class="i-Lock-User mr-1"></i>
+          <i
+            class="i-Lock-User mr-1"
+            style="font-size: 15px; color: #f3f4f6"
+          ></i>
         </div>
-        <button class="dropdown-item" (click)="signout()">خروج</button>
+        <button class="dropdown-item text-white bg-icon" (click)="signout()">
+          خروج
+        </button>
       </div>
     </div>
   </div>

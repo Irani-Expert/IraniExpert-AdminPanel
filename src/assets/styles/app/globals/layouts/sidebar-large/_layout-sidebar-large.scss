@@ -54,7 +54,7 @@
         width: 100%;
         color: $heading;
         cursor: pointer;
-        border-bottom: 1px solid $gray-300;
+        border-bottom: 1px solid #44403c;
         &:focus,
         &:active {
           outline: none;
@@ -97,7 +97,7 @@
           bottom: 0;
           border-style: solid;
           border-width: 0 0 30px 30px;
-          border-color: transparent transparent $primary transparent;
+          border-color: transparent transparent #d6d3d1 transparent;
         }
       }
     }
@@ -134,7 +134,7 @@
           padding: 12px 24px;
           transition: 0.15s all ease-in;
           &:hover {
-            background: $gray-200;
+            background: #52495a;
           }
           &.open {
             color: $primary;

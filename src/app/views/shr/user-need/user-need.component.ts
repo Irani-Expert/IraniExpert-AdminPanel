@@ -1,4 +1,10 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
@@ -16,6 +22,7 @@ import { UserNeedService } from './user-need.service';
   styleUrls: ['./user-need.component.scss'],
 })
 export class UserNeedComponent implements OnInit {
+  // @ViewChild('addNoteElement') MyProp: HTMLElement;
   @ViewChildren(PerfectScrollbarDirective)
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
@@ -121,7 +128,7 @@ export class UserNeedComponent implements OnInit {
   getNoteList(row: UserNeedModel) {
     this.note = row;
   }
-  toggleNotebar(item: UserNeedModel) {
+  toggleNotebar(item: UserNeedModel, element: string) {
     this.getNoteList(item);
     this.toggled = true;
     const state = this._UserNeedService.sidebarState;
@@ -132,9 +139,14 @@ export class UserNeedComponent implements OnInit {
     if (!state.sidenavOpen) {
       state.sidenavOpen = true;
     }
+    this.scroll(element);
   }
   updateNotebar() {
     this.toggled = false;
     this._UserNeedService.sidebarState.sidenavOpen = false;
+  }
+  scroll(elementID: string) {
+    let el = document.getElementById(elementID);
+    el.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }
 }

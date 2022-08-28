@@ -41,7 +41,7 @@
         <button
           type="button"
           class="btn btn-outline-success m-1"
-          (click)="toggleNotebar(item)"
+          (click)="toggleNotebar(item, 'addNoteElement')"
         >
           یادداشت ها
         </button>
@@ -55,7 +55,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+  <div id="addNoteElement" class="col-md-12 mt-3" *ngIf="rows?.length > 0">
     <pagination-controls
       (pageChange)="setPage($event)"
       previousLabel=""
@@ -112,23 +112,7 @@
       class="i-Close bg-white text-dark border-0 clickable-btn rounded-circle"
     ></i>
   </div>
-  <hr class="separator-breadcrumb mt-0 mb-1" />
-  <div class="ml-3">
-    <form action="">
-      <div class="row">
-        <div class="col-10 form-group mb-3 mt-3">
-          <label class="text-white" for="title">ایجاد یادداشت</label>
-          <textarea
-            name="title"
-            id="title"
-            type="text"
-            class="form-control bg-dark textarea-font"
-          ></textarea>
-        </div>
-      </div>
-    </form>
-    <button type="button" class="btn btn-light mb-2">ایجاد</button>
-  </div>
+
   <hr class="separator-breadcrumb mt-2 mb-1" />
   <div class="p-2"><h4 class="pl-2 text-light">یادداشت ها</h4></div>
   <ul class="aside-left">
@@ -151,4 +135,19 @@
       </div>
     </li>
   </ul>
+  <hr class="separator-breadcrumb mt-0 mb-1" />
+  <div class="ml-3">
+    <form action="">
+      <div class="row">
+        <div class="col-10 form-group mb-3 mt-3">
+          <label class="text-white" for="title">ایجاد یادداشت</label>
+          <textarea
+            type="text"
+            class="form-control bg-dark textarea-font"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+    <button type="button" class="btn btn-light mb-2">ایجاد</button>
+  </div>
 </div>
