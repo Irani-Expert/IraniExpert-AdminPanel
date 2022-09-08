@@ -12,8 +12,7 @@ import { AuthenticateService } from '../services/auth/authenticate.service';
   selector: '[appCanAccess]',
 })
 export class CanAccessDirective implements OnInit {
-  @Input('appCanAccess')
-  role: string;
+  @Input('appCanAccess') privilege: string;
 
   constructor(
     private templateRef: TemplateRef<any>,
@@ -21,8 +20,10 @@ export class CanAccessDirective implements OnInit {
     private authenticationService: AuthenticateService
   ) {}
   ngOnInit(): void {
-    const isRoleValid = this.authenticationService.currentUserValue.subject;
-    if (isRoleValid == this.role) {
+    debugger;
+    const privileges = this.authenticationService.currentUserValue.privileges;
+    let isPrivilegeValid = privileges.find((item) => item == this.privilege);
+    if (isPrivilegeValid) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainer.clear();

@@ -6,15 +6,18 @@ import { UserWantsPipe } from 'src/app/shared/pipes/user-wants.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
+import { CommentComponent } from './comment/comment.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
-  declarations: [UserNeedComponent, UserWantsPipe],
+  declarations: [UserNeedComponent, UserWantsPipe, CommentComponent],
   imports: [
     CommonModule,
     ShrRoutingModule,
     NgbModule,
     NgxPaginationModule,
     SharedPipesModule,
+    PerfectScrollbarModule,
   ],
 })
 export class ShrModule {}

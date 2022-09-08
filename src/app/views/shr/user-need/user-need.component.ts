@@ -1,9 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { ToastrService } from 'ngx-toastr';
+import { filter } from 'rxjs/operators';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { Utils } from 'src/app/shared/utils';
 import { UserNeedModel } from './user-need.model';
 import { UserNeedService } from './user-need.service';
 @Component({
@@ -12,9 +22,16 @@ import { UserNeedService } from './user-need.service';
   styleUrls: ['./user-need.component.scss'],
 })
 export class UserNeedComponent implements OnInit {
+  // @ViewChild('addNoteElement') MyProp: HTMLElement;
+  @ViewChildren(PerfectScrollbarDirective)
+  psContainers: QueryList<PerfectScrollbarDirective>;
+  psContainerSecSidebar: PerfectScrollbarDirective;
+  toggled = false;
+  note: UserNeedModel;
   rows: UserNeedModel[] = new Array<UserNeedModel>();
   page: Page = new Page();
   constructor(
+    public router: Router,
     public _UserNeedService: UserNeedService,
     private toastr: ToastrService,
     private modalService: NgbModal
@@ -25,6 +42,14 @@ export class UserNeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.setPage(this.page.pageNumber);
+    this.updateNotebar();
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((routeChange) => {
+        if (Utils.isMobile()) {
+          this._UserNeedService.sidebarState.sidenavOpen = false;
+        }
+      });
   }
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
@@ -99,5 +124,29 @@ export class UserNeedComponent implements OnInit {
           });
         }
       );
+  }
+  getNoteList(row: UserNeedModel) {
+    this.note = row;
+  }
+  toggleNotebar(item: UserNeedModel, element: string) {
+    this.getNoteList(item);
+    this.toggled = true;
+    const state = this._UserNeedService.sidebarState;
+
+    if (state.sidenavOpen) {
+      return (state.sidenavOpen = false);
+    }
+    if (!state.sidenavOpen) {
+      state.sidenavOpen = true;
+    }
+    this.scroll(element);
+  }
+  updateNotebar() {
+    this.toggled = false;
+    this._UserNeedService.sidebarState.sidenavOpen = false;
+  }
+  scroll(elementID: string) {
+    let el = document.getElementById(elementID);
+    el.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }
 }

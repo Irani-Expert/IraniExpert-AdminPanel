@@ -1,14 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Result } from 'src/app/shared/models/Base/result.model';
-import { ArticleModel } from '../article/article.model';
-import { CommentService } from './comment.service';
-import { Route } from '@angular/compiler/src/core';
-import { ActivatedRoute } from '@angular/router';
-import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { Result } from 'src/app/shared/models/Base/result.model';
 import { CommentModel } from 'src/app/shared/models/comment.model';
+import { CommentService } from './comment.service';
 
 @Component({
   selector: 'app-comment',
@@ -16,19 +14,16 @@ import { CommentModel } from 'src/app/shared/models/comment.model';
   styleUrls: ['./comment.component.scss'],
 })
 export class CommentComponent implements OnInit {
-  rows: CommentModel[] = new Array<CommentModel>();
   replyText: string = null;
   parentComment: CommentModel = new CommentModel();
-  @Input() articleId: number;
+  rows: CommentModel[] = new Array<CommentModel>();
   page: Page = new Page();
   constructor(
-    public _commentService: CommentService,
     private toastr: ToastrService,
-    private modalService: NgbModal
-  ) {
-    this.page.pageNumber = 0;
-    this.page.size = 12;
-  }
+    private modalService: NgbModal,
+    private _formBuilder: FormBuilder,
+    private _commentService: CommentService
+  ) {}
 
   ngOnInit(): void {
     this.setPage(this.page.pageNumber);
@@ -36,16 +31,16 @@ export class CommentComponent implements OnInit {
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
 
-    this.getCommentListByArticleId(this.page.pageNumber, this.page.size);
+    this.getCommentList(this.page.pageNumber, this.page.size);
   }
-
-  async getCommentListByArticleId(pageNumber: number, seedNumber: number) {
+  async getCommentList(pageNumber: number, seedNumber: number) {
     this._commentService
-      .GetByTableTypeAndRowId(
+      .get(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
-        this.articleId,
-        1
+        'ID',
+        null,
+        'Comment'
       )
       .subscribe(
         (res: Result<Paginate<CommentModel[]>>) => {
@@ -66,12 +61,11 @@ export class CommentComponent implements OnInit {
         }
       );
   }
-
   deleteComment(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
-        (result) => {
+        (_result) => {
           this._commentService
             .delete(id, 'comment')
             .toPromise()
@@ -91,10 +85,7 @@ export class CommentComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getCommentListByArticleId(
-                this.page.pageNumber,
-                this.page.size
-              );
+              this.getCommentList(this.page.pageNumber, this.page.size);
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {
@@ -103,14 +94,10 @@ export class CommentComponent implements OnInit {
               });
             });
         },
-        (error) => {
-          this.toastr.error('انصراف از حذف', error.message, {
-            timeOut: 3000,
-            positionClass: 'toast-top-left',
-          });
-        }
+        (_error) => {}
       );
   }
+
   openSmall(content: any, row: CommentModel) {
     this.parentComment = new CommentModel();
     this.parentComment.parentID = row.id;
@@ -126,13 +113,13 @@ export class CommentComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
         (result) => {
-          if (result) this.acceptComment(row);
+          if (result) debugger;
+          this.acceptComment(row);
         },
-        (reason) => {
-          console.log('Err!', reason);
-        }
+        (_error) => {}
       );
   }
+
   acceptComment(row: CommentModel) {
     if (this.replyText !== null && this.replyText.length > 0) {
       this.parentComment.text = this.replyText;
@@ -165,14 +152,11 @@ export class CommentComponent implements OnInit {
       .then(
         (data) => {
           if (data.success) {
-            this.toastr.success(data.message, null, {
+            this.toastr.success('نظر پذیرفته شد', null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-            this.getCommentListByArticleId(
-              this.page.pageNumber,
-              this.page.size
-            );
+            this.getCommentList(this.page.pageNumber, this.page.size);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
@@ -180,7 +164,7 @@ export class CommentComponent implements OnInit {
             });
           }
         },
-        (error) => {
+        (_error) => {
           this.toastr.error('خطا مجدد تلاش فرمایید', null, {
             closeButton: true,
             positionClass: 'toast-top-left',

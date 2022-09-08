@@ -63,10 +63,9 @@
             <select
               [formControl]="addForm.controls['groupID']"
               class="form-control form-control-rounded"
-              (ngModelChange)="selectGroup($event)"
-              [ngModel]="addUpdate.groupID"
+              [(ngModel)]="addUpdate.groupID"
             >
-              <option *ngFor="let item of groupList" value="{{ item.value }}">
+              <option *ngFor="let item of groupList" value="{{ item.id }}">
                 {{ item.title }}
               </option>
             </select>
@@ -143,7 +142,7 @@
             </label>
           </div>
         </div>
-        <div class="row">
+        <div class="row" *appCanAccess="'Article-Full Premission'">
           <!-- *appCanAccess="'punisher' || 'hoas'" -->
           <button
             type="button"

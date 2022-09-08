@@ -21,7 +21,8 @@
       div {
         width: 24px;
         height: 1px;
-        background: $foreground;
+        background: #f3f4f6;
+        color: #f3f4f6;
         margin: 3px 0;
       }
     }
@@ -74,7 +75,7 @@
       border-radius: 8px;
       margin: 0 2px;
       &:hover {
-        background: $gray-100;
+        background: #52495a;
       }
       &.dropdown-toggle {
         &:after {
@@ -101,6 +102,7 @@
       .dropdown-item {
         display: flex;
         align-items: center;
+
         padding: 0;
         height: 72px;
         border-bottom: 1px solid $gray-300;

@@ -3,9 +3,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { CommentService } from './comment.service';
-import { CommentModel } from './comment.model';
+
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Page } from 'src/app/shared/models/Base/page';
+import { CommentModel } from 'src/app/shared/models/comment.model';
 
 @Component({
   selector: 'app-comment',

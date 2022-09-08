@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Route,
   Router,
   RouterStateSnapshot,
   UrlTree,
@@ -21,6 +22,9 @@ export class AuthGuard implements CanActivate {
   canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
     if (currentUser) {
+      // if (currentUser.privileges.find((item) => item !== privilege)) {
+      //   return false;
+      // }
       // logged in so return true
       return true;
     }

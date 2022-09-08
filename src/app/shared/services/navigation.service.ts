@@ -14,6 +14,7 @@ export interface IMenuItem {
   sub?: IChildItem[]; // Dropdown items
   badges?: IBadge[];
   active?: boolean;
+  privilege?: string;
 }
 export interface IChildItem {
   id?: string;
@@ -24,6 +25,7 @@ export interface IChildItem {
   icon?: string;
   sub?: IChildItem[];
   active?: boolean;
+  privilege?: string;
 }
 
 interface IBadge {
@@ -129,6 +131,7 @@ export class NavigationService {
       type: 'link',
       icon: 'i-File-Edit',
       state: '/cnt/article',
+      privilege: 'Article-Full Premission23',
     },
 
     {
@@ -142,6 +145,12 @@ export class NavigationService {
       type: 'link',
       icon: 'i-Love-User',
       state: '/shr/user-need',
+    },
+    {
+      name: 'نظرات',
+      type: 'link',
+      icon: 'i-Speach-Bubbles',
+      state: '/shr/comment',
     },
 
     // {
