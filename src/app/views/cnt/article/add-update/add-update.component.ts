@@ -17,6 +17,7 @@ import { GroupModel } from 'src/app/views/bas/group/group.model';
 import { GroupService } from 'src/app/views/bas/group/group.service';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { Base } from 'src/app/shared/models/Base/base.model';
 @Component({
   selector: 'app-add-update',
   templateUrl: './add-update.component.html',
@@ -30,7 +31,8 @@ export class AddUpdateComponent implements OnInit {
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
   addUpdate: ArticleModel = new ArticleModel();
-  groupList: GroupModel[] = new Array<GroupModel>();
+  groupList: any[] = new Array<any>();
+  group: any = new Object();
   addForm: FormGroup;
   ckeConfig: CKEDITOR.config;
   @ViewChild('myckeditor') ckeditor: CKEditorComponent;
@@ -142,6 +144,10 @@ export class AddUpdateComponent implements OnInit {
     await this._articleService.getOneByID(id, 'Article').subscribe(
       (res: Result<ArticleModel>) => {
         this.addUpdate = res.data;
+        debugger
+        this.group = this.groupList.find(
+          (item) => item.value === this.addUpdate.groupID
+        );
         //  this.page.totalElements = res.data.length;
       },
       (error) => {
@@ -161,8 +167,10 @@ export class AddUpdateComponent implements OnInit {
     await this._groupService
       .getTitleValues(0, 10000, 'ID', null, 'Group')
       .subscribe(
-        (res: Result<Paginate<GroupModel[]>>) => {
+        (res: Result<Paginate<any[]>>) => {
           this.groupList = res.data.items;
+          debugger
+          this.group=this.groupList.find(item=>item.value===this.addUpdate.groupID);
           //  this.page.totalElements = res.data.length;
         },
         (error) => {
@@ -182,7 +190,7 @@ export class AddUpdateComponent implements OnInit {
     // if (row.isActive) {
     //   row.publishDate = new Date();
     // }
-
+    // row.groupID = this.group.value;
     if (row.id === 0) {
       await this._articleService
         .create(row, 'article')

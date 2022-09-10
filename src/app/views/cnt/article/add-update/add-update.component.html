@@ -65,7 +65,7 @@
               class="form-control form-control-rounded"
               [(ngModel)]="addUpdate.groupID"
             >
-              <option *ngFor="let item of groupList" value="{{ item.id }}">
+              <option *ngFor="let item of groupList" value="{{ item.value }}">
                 {{ item.title }}
               </option>
             </select>
