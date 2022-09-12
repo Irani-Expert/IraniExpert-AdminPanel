@@ -18,8 +18,7 @@ import { LicenseService } from './license.service';
   styleUrls: ['./license.component.scss'],
 })
 export class LicenseComponent implements OnInit {
-  fullPath: any = '';
-  fileName: any = '';
+  isValidate = false;
   licenseFile: any = '';
   loading: boolean = false;
   viewMode: 'list' | 'grid' = 'list';
@@ -109,7 +108,6 @@ export class LicenseComponent implements OnInit {
       this.expireDate.day;
 
     this.licenseModel = item;
-    debugger;
     await this._licenseService
       .create(item, 'License')
       .toPromise()
@@ -165,23 +163,27 @@ export class LicenseComponent implements OnInit {
     // }
   }
   onFileChanged(event: any) {
-    this.fullPath = document.getElementById('upload');
-    this.fileName = this.fullPath.files[0].name;
-    this.licenseFile = event.target.files[0];
+    let fileType = event.target.files[0].type.split('/');
+    if (fileType[1] == 'x-zip-compressed') {
+      this.licenseFile = event.target.files[0];
+      this.isValidate = true;
+    } else {
+      this.isValidate = false;
+    }
   }
   uploadFile() {
     debugger;
-    this.loading = !this.loading;
+    this.loading = true;
     this._fileUploaderService
       .uploadLicence(this.licenseFile, 'licenses')
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
-          this.loading = false; // Flag variable
           this.licenseModel.filePath = res.data[0];
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
+          this.loading = false; // Flag variable
         } else {
           this.toastr.error(res.errors[0], 'خطا در آپلود فایل', {
             closeButton: true,

@@ -56,18 +56,22 @@ export class FileUploaderService {
       type: 'image/jpg',
     });
   }
-  uploadLicence(_file: any, folder: string): Observable<any> {
+  uploadLicence(_file: any, folder: string): Observable<Result<string[]>> {
     const formData = new FormData();
     formData.append('_file', _file, _file.name);
-    return this._http.post(this.url + '?folder=' + folder, formData, {
-      headers: new HttpHeaders({
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods':
-          'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-        'Access-Control-Allow-Headers':
-          'origin,X-Requested-With,content-type,accept',
-        'Access-Control-Allow-Credentials': 'true',
-      }),
-    });
+    return this._http.post<Result<string[]>>(
+      this.url + '?folder=' + folder,
+      formData,
+      {
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods':
+            'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+          'Access-Control-Allow-Headers':
+            'origin,X-Requested-With,content-type,accept',
+          'Access-Control-Allow-Credentials': 'true',
+        }),
+      }
+    );
   }
 }

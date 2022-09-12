@@ -157,8 +157,16 @@
             <strong for="file" class="mb-3">فایل لایسنس</strong>
             <input id="upload" type="file" (change)="onFileChanged($event)" />
           </div>
+          <strong class="text-danger col-12">فایل ارسالی باید zip باشد</strong>
           <div class="col-12 mt-2 mb-2">
-            <button class="btn btn-primary col-2" (click)="uploadFile()">
+            <button
+              class="btn btn-primary col-2"
+              (click)="uploadFile()"
+              [ngClass]="{
+                'd-none': isValidate === false,
+                'd-block': isValidate === true
+              }"
+            >
               آپلود
             </button>
           </div>
