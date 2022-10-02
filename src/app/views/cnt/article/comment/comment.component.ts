@@ -4,7 +4,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { ArticleModel } from '../article/article.model';
 import { CommentService } from './comment.service';
-import { Route } from '@angular/compiler/src/core';
 import { ActivatedRoute } from '@angular/router';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Page } from 'src/app/shared/models/Base/page';
