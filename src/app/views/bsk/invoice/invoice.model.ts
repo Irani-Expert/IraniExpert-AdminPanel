@@ -18,4 +18,5 @@ export class InvoiceModel extends Base implements IInvoice {
   backMethodType: number;
   isConfirmed: boolean;
   tableType: number;
+  userID:number;
 }
