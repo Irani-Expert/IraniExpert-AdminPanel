@@ -7,41 +7,45 @@
     <img src="./assets/images/logo.png" alt="" />
   </div>
   <ul class="navigation-left">
-    <li
-      [ngClass]="{ active: item.active }"
-      (click)="onClickChangeActiveFlag(item)"
-      class="nav-item lvl1"
-      *ngFor="let item of nav"
-    >
-      <div
-        class="nav-item-hold"
-        routerLink="{{ item.state }}"
-        (click)="closeChildNav()"
-        *ngIf="!item.disabled && item.type === 'link'"
+    <ng-container *ngFor="let item of nav">
+      <li
+        [ngClass]="{ active: item.active }"
+        (click)="onClickChangeActiveFlag(item)"
+        class="nav-item lvl1"
+        *appCanAccess="item.privilege"
       >
-        <i class="text-white" [class]="'nav-icon  ' + item.icon"></i>
-        <span class="nav-text text-white">{{ item.name }}</span>
-      </div>
-      <div
-        class="nav-item-hold"
-        (mouseenter)="selectItem(item)"
-        *ngIf="!item.disabled && item.type === 'dropDown'"
-      >
-        <i class="text-white" [class]="'nav-icon ' + item.icon"></i>
-        <span class="nav-text text-white">{{ item.name }}</span>
-      </div>
-      <div
-        class="nav-item-hold"
-        *ngIf="!item.disabled && item.type === 'extLink'"
-      >
-        <a [href]="item.state" target="_blank">
-          <i class="text-white" [class]="'nav-icon' + item.icon"></i>
+        <div
+          class="nav-item-hold"
+          routerLink="{{ item.state }}"
+          (click)="closeChildNav()"
+          *ngIf="!item.disabled && item.type === 'link'"
+      
+        >
+          <i class="text-white" [class]="'nav-icon  ' + item.icon"></i>
           <span class="nav-text text-white">{{ item.name }}</span>
-        </a>
-      </div>
-
-      <div class="triangle" *ngIf="!item.disabled"></div>
-    </li>
+        </div>
+        <div
+          class="nav-item-hold"
+          (mouseenter)="selectItem(item)"
+          *ngIf="!item.disabled && item.type === 'dropDown'"
+      
+        >
+          <i class="text-white" [class]="'nav-icon ' + item.icon"></i>
+          <span class="nav-text text-white">{{ item.name }}</span>
+        </div>
+        <div
+          class="nav-item-hold"
+          appCanAccess="''"
+          *ngIf="!item.disabled && item.type === 'extLink'"
+        >
+          <a [href]="item.state" target="_blank">
+            <i class="text-white" [class]="'nav-icon' + item.icon"></i>
+            <span class="nav-text text-white">{{ item.name }}</span>
+          </a>
+        </div>
+        <div class="triangle" *ngIf="!item.disabled"></div>
+      </li>
+    </ng-container>
   </ul>
 </div>
 
@@ -66,6 +70,7 @@
   <div class="">
     <ul class="childNav" appDropdown>
       <li *ngFor="let item of parentItem?.sub" appDropdownLink class="nav-item">
+        <ng-container *appCanAccess="item.privilege">
         <a
           routerLink="{{ item.state }}"
           *ngIf="item.type === 'link'"
@@ -97,10 +102,11 @@
             *ngTemplateOutlet="menuTemplate; context: { parentItem: item }"
           ></ng-container>
         </div>
+      </ng-container>
       </li>
     </ul>
   </div>
-</ng-template>
+</ng-template> 
 
 <div
   [ngClass]="{ open: navService.sidebarState.childnavOpen }"

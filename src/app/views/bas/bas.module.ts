@@ -5,6 +5,7 @@ import { BasRoutingModule } from './bas.routing';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
+import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 @NgModule({
   declarations: [
     GroupComponent,
@@ -16,8 +17,8 @@ import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
     ReactiveFormsModule,
        BasRoutingModule,
        NgxPaginationModule,
-       SharedPipesModule
-
+       SharedPipesModule,
+       SharedDirectivesModule
   ]
 })
 export class BasModule { }

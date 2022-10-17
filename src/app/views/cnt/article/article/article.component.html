@@ -1,4 +1,5 @@
 <button
+*appCanAccess="'Article-Add'"
   type="button"
   class="btn btn-primary mb-4"
   [routerLink]="'/cnt/article/addUpdate-article'"
@@ -124,6 +125,7 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
+                *appCanAccess="'Article-Edit'"
                   class="btn btn-warning"
                   [routerLink]="'/cnt/article/addUpdate-article/' + item.id"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
@@ -133,6 +135,7 @@
               </div>
               <div class="w-25 w-sm-100 ml-sm-2">
                 <button
+                *appCanAccess="'Article-Delete'"
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteArticle(item.id, deleteConfirmModal)"

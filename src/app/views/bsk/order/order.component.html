@@ -98,6 +98,7 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
+                *appCanAccess="'note-Full Premission'"
                   class="btn btn-success"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="toggleNotebar(item)"
@@ -107,6 +108,7 @@
               </div>
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
+                *appCanAccess="'invoice-Full Premission'"
                   class="btn btn-info"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   [routerLink]="'/bsk/invoice/' + item.id"
@@ -116,6 +118,7 @@
               </div>
               <div class="w-25 w-sm-100 ml-sm-2">
                 <button
+                *appCanAccess="'Product-Delete'"
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteOrder(item.id, deleteModal)"
@@ -140,6 +143,7 @@
         </button>
 
         <button
+        *appCanAccess="'invoice-Full Premission'"
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-info col m-1"
@@ -152,6 +156,7 @@
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-danger col m-1"
           (click)="deleteOrder(item.id, deleteModal)"
+        
         >
           حذف
         </button>
@@ -238,7 +243,7 @@
         </div>
       </div>
     </form>
-    <button type="button" class="btn btn-light mb-2">ایجاد</button>
+    <button type="button" class="btn btn-light mb-2" *appCanAccess="'note-Add'">ایجاد</button>
   </div>
   <hr class="separator-breadcrumb mt-2 mb-1" />
   <div class="p-2"><h4 class="pl-2 text-light">یادداشت ها</h4></div>

@@ -1,4 +1,6 @@
+
 <button
+*appCanAccess="'Banner-Add'"
   type="button"
   class="btn btn-create btn-primary mb-4"
   (click)="addorEdit(addUpdateModal, undefined)"
@@ -124,6 +126,7 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
+                *appCanAccess="'Banner-Edit'"
                   class="btn btn-warning"
                   (click)="addorEdit(addUpdateModal, item)"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
@@ -131,7 +134,8 @@
                   ویرایش
                 </button>
               </div>
-              <div class="w-25 w-sm-100 ml-sm-2">
+                <div class="w-25 w-sm-100 ml-sm-2"                 *appCanAccess="'Banner-Delete'"
+                >
                 <button
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"

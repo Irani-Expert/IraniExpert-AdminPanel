@@ -1,4 +1,5 @@
 <button
+*appCanAccess="'privilege-Add'"
   type="button"
   class="btn btn-primary mb-4"
   (click)="addorEdit(addUpdateModal, undefined)"
@@ -22,6 +23,7 @@
   >
     <div class="card bg-gradient-grey order-card">
       <i
+      *appCanAccess="'privilege-Edit'"
         ngbTooltip="ویرایش"
         [openDelay]="100"
         [closeDelay]="500"
@@ -49,6 +51,7 @@
       </div>
       <div class="">
         <button
+        *appCanAccess="'privilege-Delete'"
           (click)="deletePrivilege(item.id, deleteModal)"
           class="btn d-block w-100 text-white bg-gradient-red float-right"
         >

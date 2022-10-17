@@ -1,4 +1,5 @@
 <button
+*appCanAccess="'Roles-Add'"
   type="button"
   class="btn btn-primary mb-4"
   (click)="roleEdit(addUpdateModal, undefined)"
@@ -33,12 +34,14 @@
           class="d-flex justify-content-around align-content-center align-items-center mt-3"
         >
           <button
+          *appCanAccess="'Roles-Edit'"
             class="col-5 btn btn-warning"
             (click)="roleEdit(addUpdateModal, item)"
           >
             ویرایش
           </button>
           <button
+          *appCanAccess="'Roles-Delete '"
             class="col-5 btn btn-danger"
             (click)="deleteRole(item.id, deleteModal)"
           >

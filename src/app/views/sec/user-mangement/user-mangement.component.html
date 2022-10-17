@@ -1,4 +1,5 @@
 <button
+*appCanAccess="'Users-Add'"
   type="button"
   class="btn btn-primary mb-4"
   (click)="usersEdit(addUpdateModal, undefined)"
@@ -108,6 +109,7 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
+                *appCanAccess="'Users-Edit'"
                   class="btn btn-warning"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="usersEdit(addUpdateModal, item)"
@@ -117,6 +119,7 @@
               </div>
               <div class="w-25 w-sm-100 ml-sm-2">
                 <button
+                *appCanAccess="'Users-Delete'"
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteUser(item.id, deleteModal)"
@@ -133,6 +136,7 @@
       >
         <h6 class="text-center">عملیات</h6>
         <button
+        *appCanAccess="'Roles-Add'"
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-danger col m-1"
@@ -240,15 +244,20 @@
       </div>
     </div>
     <div class="modal-footer">
+      <ng-container  *ngIf="addUpdate.id !== 0">
       <button
+      *appCanAccess="'user-management-final-Edit'"
+
         ngbAutofocus
         type="button"
         class="btn btn-outline-dark btn-rounded mr-1"
         (click)="modal.close(true)"
-        *ngIf="addUpdate.id !== 0"
+       
+        
       >
         ویرایش
       </button>
+    </ng-container>
       <button
         ngbAutofocus
         type="button"

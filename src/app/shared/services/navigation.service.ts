@@ -57,29 +57,34 @@ export class NavigationService {
       type: 'link',
       icon: 'i-Dashboard',
       state: '/dashboard/v1',
+      privilege:'Dashboard-Full Premission'
     },
     {
       name: 'محصولات',
       type: 'link',
       icon: 'i-Checkout-Basket',
       state: '/prd/products-list',
+      privilege:'Product-Full Premission'
     },
     {
       name: 'سفارشات',
       type: 'dropDown',
       icon: 'i-File-Horizontal-Text',
+      privilege:'Orders-Full Premission',
       sub: [
         {
           icon: 'i-Sync',
           name: 'سفارش ها در حال بررسی',
           state: '/bsk/orders',
           type: 'link',
+          privilege:'CheckOrders-Full Premission'
         },
         {
           icon: 'i-Yes',
           name: 'سفارش های تأیید شده',
           state: '/bsk/license',
           type: 'link',
+          privilege:'ConfirmedOrders-Full Premission'
         },
       ],
     },
@@ -87,36 +92,42 @@ export class NavigationService {
       name: 'کاربران',
       type: 'dropDown',
       icon: 'i-Administrator',
+      privilege:'Users-Full Premission',
       sub: [
         {
           icon: 'i-Checked-User',
           name: 'نقش  کاربران',
           state: '/sec/user-role',
           type: 'link',
+          privilege:'UserPlane-Full Premission'
         },
         {
           icon: 'i-Gear',
           name: 'مدیریت نقش  ها ',
           state: '/sec/role-management',
           type: 'link',
+          privilege:'RoleManangment-Full Premission'
         },
         {
           icon: 'i-Business-Man',
           name: ' مدیریت کاربران ',
           state: '/sec/user-management',
           type: 'link',
+          privilege:'UserManangment-Full Premission'
         },
         {
           icon: 'i-Gears',
           name: '  دسترسی نقش ها ',
           state: '/sec/privilege',
           type: 'link',
+          privilege:'ControlRoles-Full Premission'
         },
         {
           icon: 'i-Add-UserStar',
           name: 'تخصیص دسترسی به کاربران',
           state: '/sec/user-privilege',
           type: 'link',
+          privilege:'AddUserRole-Full Premission'
         },
       ],
     },
@@ -125,13 +136,14 @@ export class NavigationService {
       type: 'link',
       icon: 'i-Tag-2',
       state: '/cnt/banner',
+      privilege:'Banner-Full Premission'
     },
     {
       name: 'مقالات',
       type: 'link',
       icon: 'i-File-Edit',
       state: '/cnt/article',
-      privilege: 'Article-Full Premission23',
+      privilege: 'Article-Full Premission',
     },
 
     {
@@ -139,18 +151,21 @@ export class NavigationService {
       type: 'link',
       icon: 'i-Double-Tap',
       state: '/bas/group',
+      privilege:'Group-Full Premission'
     },
     {
       name: 'درخواست مشتریان',
       type: 'link',
       icon: 'i-Love-User',
       state: '/shr/user-need',
+      privilege:'CustomerRequest-Full Premission '
     },
     {
       name: 'نظرات',
       type: 'link',
       icon: 'i-Speach-Bubbles',
       state: '/shr/comment',
+      privilege:'Comment-Full Premission'
     },
 
     // {

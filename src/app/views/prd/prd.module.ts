@@ -19,6 +19,8 @@ import { ProductTypePipe } from 'src/app/shared/pipes/product-type.pipe';
 import { PlanOptionComponent } from '../bas/plan-option/plan-option.component';
 import { FacilityComponent } from './facility/facility.component';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
+import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
+import { ProductModel } from './products-list/product.model';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
     NgbModule,
     ImageCropperModule,
     SharedPipesModule,
+    SharedDirectivesModule,
   ],
 
   providers: [FileUploaderService],

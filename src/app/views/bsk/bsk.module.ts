@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LicenseComponent } from './license/license.component';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
     NgxPaginationModule,
     SharedPipesModule,
     PerfectScrollbarModule,
+    SharedDirectivesModule,
   ],
   providers: [FileUploaderService],
 })

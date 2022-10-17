@@ -100,6 +100,7 @@
             <div class="text-center col-auto justify-content-around">
               <div class="w-25 w-sm-100">
                 <button
+                *appCanAccess="'Licence-Full Premission'"
                   class="btn btn-info"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="openModal(sendLicense, item)"

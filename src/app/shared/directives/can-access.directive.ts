@@ -12,7 +12,7 @@ import { AuthenticateService } from '../services/auth/authenticate.service';
   selector: '[appCanAccess]',
 })
 export class CanAccessDirective implements OnInit {
-  @Input('appCanAccess') privilege: string;
+  @Input('appCanAccess') privilege: any;
 
   constructor(
     private templateRef: TemplateRef<any>,

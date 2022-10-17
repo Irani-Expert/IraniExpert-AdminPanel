@@ -11,6 +11,7 @@ import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { PrivilegeComponent } from './privilege/privilege.component';
 import { UserPrivilegeComponent } from './privilege/user-privilege/user-privilege.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FormsModule,
     ReactiveFormsModule,
     SharedPipesModule,
+    SharedDirectivesModule
   ],
 })
 export class SecModule {}
