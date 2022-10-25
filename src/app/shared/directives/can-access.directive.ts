@@ -20,7 +20,6 @@ export class CanAccessDirective implements OnInit {
     private authenticationService: AuthenticateService
   ) {}
   ngOnInit(): void {
-    debugger;
     const privileges = this.authenticationService.currentUserValue.privileges;
     let isPrivilegeValid = privileges.find((item) => item == this.privilege);
     if (isPrivilegeValid) {

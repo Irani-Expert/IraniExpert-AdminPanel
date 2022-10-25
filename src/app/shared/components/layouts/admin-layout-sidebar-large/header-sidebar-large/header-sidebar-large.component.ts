@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { NavigationService } from '../../../../services/navigation.service';
 import { SearchService } from '../../../../services/search.service';
@@ -10,7 +11,7 @@ import { SearchService } from '../../../../services/search.service';
 })
 export class HeaderSidebarLargeComponent implements OnInit {
   notifications: any[];
-
+  user:UserInfoModel
   constructor(
     private navService: NavigationService,
     public searchService: SearchService,
@@ -63,7 +64,9 @@ export class HeaderSidebarLargeComponent implements OnInit {
     ];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.user=this.auth.currentUserValue
+  }
 
   toggelSidebar() {
     const state = this.navService.sidebarState;

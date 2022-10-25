@@ -16,6 +16,7 @@ import { LicenseComponent } from './license/license.component';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
+import { UserOrderComponent } from './user-order/user-order.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
     BankMethodPipe,
     IsConfirmedPipe,
     LicenseComponent,
+    UserOrderComponent,
   ],
   imports: [
     NgbModule,

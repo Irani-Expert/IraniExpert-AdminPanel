@@ -60,6 +60,14 @@ export class NavigationService {
       privilege:'Dashboard-Full Premission'
     },
     {
+      name: 'پروفایل من',
+      description: 'پروفایل',
+      type: 'link',
+      icon: 'i-Dashboard',
+      state: '/dashboard/user-profile',
+      privilege:'Dashboard-Full Premission'
+    },
+    {
       name: 'محصولات',
       type: 'link',
       icon: 'i-Checkout-Basket',
@@ -72,6 +80,13 @@ export class NavigationService {
       icon: 'i-File-Horizontal-Text',
       privilege:'Orders-Full Premission',
       sub: [
+        {
+          icon: 'i-Sync',
+          name: 'سفارشات من',
+          state: '/bsk/user-orders',
+          type: 'link',
+          privilege:'CheckOrders-Full Premission'
+        },
         {
           icon: 'i-Sync',
           name: 'سفارش ها در حال بررسی',
@@ -158,7 +173,7 @@ export class NavigationService {
       type: 'link',
       icon: 'i-Love-User',
       state: '/shr/user-need',
-      privilege:'CustomerRequest-Full Premission '
+      privilege:'CustomerRequest-Full Premission'
     },
     {
       name: 'نظرات',

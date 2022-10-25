@@ -100,7 +100,6 @@ export class BackTestComponent implements OnInit {
       .uploadFile(this.cropImagePreview, 'backTests')
       .subscribe(
         (res: Result<string[]>) => {
-          debugger;
           if (res.success) {
             this.addUpdate.cardImagePath = res.data[0];
             this.toastr.success('با موفقیت آپلود شد', null, {
@@ -140,7 +139,6 @@ export class BackTestComponent implements OnInit {
             .toPromise()
             .then((res) => {
               if (res.success) {
-                debugger;
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
                   'موفقیت آمیز!',
@@ -150,7 +148,6 @@ export class BackTestComponent implements OnInit {
                   }
                 );
               } else {
-                debugger;
 
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
@@ -165,10 +162,8 @@ export class BackTestComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             });
-          debugger;
         },
         (error) => {
-          debugger;
           this.toastr.error('خطا در حذف', error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -180,7 +175,6 @@ export class BackTestComponent implements OnInit {
   showvideo(content: BackTestModel, modal) {}
 
   addorEdit(content, row: BackTestModel) {
-    debugger;
     if (row === undefined) {
       row = new BackTestModel();
       row.productId = this.productId;
@@ -209,7 +203,6 @@ export class BackTestComponent implements OnInit {
   }
 
   async addOrUpdate(row: BackTestModel) {
-    debugger;
     if (row.id === 0) {
       await this._backtestService
         .create(row, 'BackTest')

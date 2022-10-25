@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
@@ -20,4 +21,35 @@ export class OrderService extends BaseService<OrderModel, 0> {
   public sidebarState: INoteSidebar = {
     sidenavOpen: true,
   };
+   /**
+   * درخواست دریافت همه
+   * @param route
+   * @returns all
+   */
+    getMyOrder(
+      pageIndex: number,
+      pageSize: number,
+      pageOrder: string,
+      filter: string,
+    ): Observable<Result<Paginate<OrderModel[]>>> {
+      let _options = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'bearer ' + environment.jwtToken,
+        }),
+      };
+      return this._http.get<Result<Paginate<OrderModel[]>>>(
+        this._base +
+          '/Orders/GetByUserID' +
+          '?pageIndex=' +
+          pageIndex +
+          '&pageSize=' +
+          pageSize +
+          '&pageOrder=' +
+          pageOrder +
+          '&filter=' +
+          filter,
+        _options
+      );
+    }
 }

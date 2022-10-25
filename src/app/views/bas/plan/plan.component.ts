@@ -92,7 +92,6 @@ export class PlanComponent implements OnInit {
             .toPromise()
             .then((res) => {
               if (res.success) {
-                debugger;
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
                   'موفقیت آمیز!',
@@ -102,7 +101,6 @@ export class PlanComponent implements OnInit {
                   }
                 );
               } else {
-                debugger;
 
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
@@ -137,7 +135,6 @@ export class PlanComponent implements OnInit {
             .toPromise()
             .then((res: { success: any; message: string }) => {
               if (res.success) {
-                debugger;
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
                   'موفقیت آمیز!',
@@ -147,7 +144,6 @@ export class PlanComponent implements OnInit {
                   }
                 );
               } else {
-                debugger;
 
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,

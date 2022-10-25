@@ -113,7 +113,7 @@ export class CommentComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
         (result) => {
-          if (result) debugger;
+          if (result)
           this.acceptComment(row);
         },
         (_error) => {}

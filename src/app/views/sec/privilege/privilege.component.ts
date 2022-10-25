@@ -111,7 +111,6 @@ export class PrivilegeComponent implements OnInit {
             });
         },
         (error) => {
-          debugger;
           this.toastr.error('انصراف از حذف', error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',

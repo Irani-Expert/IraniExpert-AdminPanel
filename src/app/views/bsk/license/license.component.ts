@@ -77,7 +77,6 @@ export class LicenseComponent implements OnInit {
       );
   }
   openModal(content: any, row: OrderModel) {
-    debugger;
     this.modalService
       .open(content, {
         size: 'lg',
@@ -172,7 +171,6 @@ export class LicenseComponent implements OnInit {
     }
   }
   uploadFile() {
-    debugger;
     this.loading = true;
     this._fileUploaderService
       .uploadLicence(this.licenseFile, 'licenses')

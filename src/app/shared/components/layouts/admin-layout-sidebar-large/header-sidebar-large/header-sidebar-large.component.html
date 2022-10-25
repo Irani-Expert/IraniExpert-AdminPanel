@@ -15,18 +15,24 @@
       <div></div>
       <div></div>
     </div>
-    <div ngbDropdown [placement]="'bottom-right'" class="user col">
+    <div ngbDropdown [placement]="'bottom-right'" class="user row">
       <div>
-        <i
+        <span class="text-white">
+          {{user.firstName}} {{user.lastName}} عزیز
+        </span>
+        <!-- <i
           id="userDropdown"
           class="i-Male-21"
-          style="font-size: 30px; color: #f3f4f6"
-        ></i>
-        <i
-          id="userDropdown"
           ngbDropdownToggle
           style="font-size: 30px; color: #f3f4f6"
-        ></i>
+        ></i> -->
+        <i
+        id="userDropdown"
+        ngbDropdownToggle
+        style="font-size: 30px; color: #f3f4f6"
+      ></i>
+
+
       </div>
 
       <div

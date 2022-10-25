@@ -70,7 +70,6 @@ export class ProductsListComponent implements OnInit {
             .toPromise()
             .then((res) => {
               if (res.success) {
-                debugger;
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
                   'موفقیت آمیز!',
@@ -80,7 +79,6 @@ export class ProductsListComponent implements OnInit {
                   }
                 );
               } else {
-                debugger;
 
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
@@ -95,10 +93,8 @@ export class ProductsListComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             });
-          debugger;
         },
         (error) => {
-          debugger;
           this.toastr.error('خطا در حذف', error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',

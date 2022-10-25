@@ -3,7 +3,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'relativeTime' })
 export class RelativeTimePipe implements PipeTransform {
   transform(value: Date): string {
-    debugger;
     if (!(value instanceof Date)) value = new Date(value);
 
     let seconds: number = Math.floor(

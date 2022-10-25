@@ -85,7 +85,6 @@ export class GroupComponent implements OnInit {
             .toPromise()
             .then((res) => {
               if (res.success) {
-                debugger;
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
                   'موفقیت آمیز!',
@@ -95,7 +94,6 @@ export class GroupComponent implements OnInit {
                   }
                 );
               } else {
-                debugger;
 
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
@@ -110,10 +108,8 @@ export class GroupComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             });
-          debugger;
         },
         (error) => {
-          debugger;
           this.toastr.error('خطا در حذف', error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -204,14 +200,12 @@ export class GroupComponent implements OnInit {
   }
 
   selectParent($event: any) {
-    debugger;
     if ($event != undefined) {
       if (parseInt($event) !== 0) this.addUpdate.parentID = parseInt($event);
       else this.addUpdate.parentID = null;
     }
   }
   selectType($event: any) {
-    debugger;
     if ($event != undefined) {
       this.addUpdate.type = parseInt($event);
     }

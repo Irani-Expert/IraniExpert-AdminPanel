@@ -82,14 +82,12 @@ export class FAQComponent implements OnInit {
         (result) => {
           this._FaqService.delete(id,"faq").toPromise().then((res) => {
             if(res.success){
-              debugger
               this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
                 timeOut: 3000,
               positionClass: 'toast-top-left',
 
               });
             }else{
-              debugger
 
               this.toastr.error('خطا در حذف',res.message, {
                 timeOut: 3000,
@@ -107,10 +105,8 @@ export class FAQComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           });
-          debugger
         },
         (error) => {
-          debugger
           this.toastr.error('خطا در حذف',error.message, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -131,7 +127,6 @@ export class FAQComponent implements OnInit {
       //TODO Order Id Must Fill From Input
       this.addUpdate.orderID=1;
     if(this.addUpdate.id===0){
-      debugger
       await this._FaqService.create(this.addUpdate,"FAQ").toPromise()
       .then(data => {
         if (data.success) {

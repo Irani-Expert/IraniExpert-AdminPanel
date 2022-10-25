@@ -7,6 +7,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 @NgModule({
@@ -24,7 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     DashboardRoutingModule,
 
   ],
-  declarations: [DashboadDefaultComponent],
+  declarations: [DashboadDefaultComponent, UserProfileComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 })
 export class DashboardModule { }

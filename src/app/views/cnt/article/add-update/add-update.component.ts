@@ -144,7 +144,6 @@ export class AddUpdateComponent implements OnInit {
     await this._articleService.getOneByID(id, 'Article').subscribe(
       (res: Result<ArticleModel>) => {
         this.addUpdate = res.data;
-        debugger
         this.group = this.groupList.find(
           (item) => item.value === this.addUpdate.groupID
         );
@@ -169,7 +168,6 @@ export class AddUpdateComponent implements OnInit {
       .subscribe(
         (res: Result<Paginate<any[]>>) => {
           this.groupList = res.data.items;
-          debugger
           this.group=this.groupList.find(item=>item.value===this.addUpdate.groupID);
           //  this.page.totalElements = res.data.length;
         },

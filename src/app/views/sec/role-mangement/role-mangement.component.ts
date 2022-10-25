@@ -83,7 +83,6 @@ export class RoleMangementComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result) {
-            debugger;
             this.addOrUpdate(this.addUpdate);
             this.addForm.reset();
           }
