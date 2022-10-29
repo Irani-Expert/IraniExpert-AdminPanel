@@ -8,6 +8,7 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared-compone
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,6 +22,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
       selectedMessage: 'انتخاب شده'
       }
       }),
+      FormsModule,
+      ReactiveFormsModule,
     NgbModule,
     DashboardRoutingModule,
 
