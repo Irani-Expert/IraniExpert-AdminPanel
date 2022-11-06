@@ -2,10 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
 import { UserInforamationModel } from 'src/app/shared/models/userInforamationModel';
 
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
+import { UserCountModel } from '../../dashboard/dashboad-default/userInfo.model';
 import { UpdatePasswordModel } from '../../dashboard/user-profile/UpdatePassword.model';
 import { UsersModel } from './users.model';
 
@@ -78,5 +80,19 @@ export class UsersService extends BaseService<UsersModel, 0> {
       _options
     );
   }
+
+
+  getUserInfo(): Observable<Result<UserCountModel>> {
+          let _options = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: 'bearer ' + environment.jwtToken,
+            }),
+          };
+          return this._http.get<Result<UserCountModel>>(
+            environment.api.baseUrl + '/AspNetUser/UserProfile' ,
+            _options
+          );
+        }
 
 }

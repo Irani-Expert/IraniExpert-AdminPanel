@@ -5,46 +5,61 @@
       کاربر گرامی به پرتال IRaniExpert خوش آمدید.
     </div>
 
-    <div class="col-md-12 col-lg-12 mt-3">
+    <div class="col-md-9 col-lg-9 mt-3">
       <div class="card">
-          <div class="card-body">
-              <div class="row">
-                  <div class="col-md-3 col-lg-3">
-                      <div class="ul-widget__content-v4 card-icon-bg">
-                          <i class="i-Eye text-success"></i>
-                          <h3 class="t-font-boldest">4,377</h3>
-                          <span>محصول خریداری شده</span>
-                      </div>
-                  </div>
-                  <div class="col-md-3 col-lg-3">
-                      <div class="ul-widget__content-v4 card-icon-bg">
-                          <i class="i-Like text-primary"></i>
-                          <h3 class="t-font-boldest">456</h3>
-                          <span>دانلود ها</span>
-                      </div>
-                  </div>
-
-                  <div class="col-md-3 col-lg-3">
-                      <div class="ul-widget__content-v4 card-icon-bg">
-                          <i class="i-File-Horizontal-Text text-info"></i>
-                          <h3 class="t-font-boldest">65</h3>
-                          <span>نظر</span>
-                      </div>
-                  </div>
-
-                  <div class="col-md-3 col-lg-3">
-                      <div class="ul-widget__content-v4 card-icon-bg">
-                          <i class="i-Business-Man    text-warning"></i>
-                          <h3 class="t-font-boldest">20K</h3>
-                          <span>درآمد شما</span>
-                      </div>
-                  </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3 col-lg-3 text-center">
+              <div class="ul-widget__content-v4 card-icon-bg">
+                <i class="i-Eye text-success"></i>
+                <h3 class="t-font-boldest">{{userprofile.orderCount}}</h3>
+                <span>کل سفارشات</span>
               </div>
+            </div>
+            <div class="col-md-3 col-lg-3 text-center">
+              <div class="ul-widget__content-v4 card-icon-bg">
+                <i class="i-Like text-primary"></i>
+                <h3 class="t-font-boldest">{{userprofile.licenseCount}}</h3>
+                <span>دانلود ها</span>
+              </div>
+            </div>
+
+            <div class="col-md-3 col-lg-3 text-center">
+              <div class="ul-widget__content-v4 card-icon-bg">
+                <i class="i-File-Horizontal-Text text-info"></i>
+                <h3 class="t-font-boldest">{{userprofile.commentCount}}</h3>
+                <span>نظر</span>
+              </div>
+            </div>
+
+            <div class="col-md-3 col-lg-3 text-center">
+              <div class="ul-widget__content-v4 card-icon-bg">
+                <i class="i-Business-Man    text-warning"></i>
+                <h3 class="t-font-boldest">${{userprofile.commission}}</h3>
+                <span>درآمد شما</span>
+              </div>
+            </div>
           </div>
+        </div>
       </div>
+    </div>
+    <div class="col-md-3 col-lg-3 mt-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="row text-center">
+            <div class="ul-widget__content-v4 card-icon-bg">
+              <i class="i-Money  text-success"></i>
+            <h6>کاربر گرامی با ارائه کد زیر به دوستان خود،در هر خرید از ما 10% پاداش کسب کنید.</h6>
+            <div class="  border-raduis-5 text-center py-3">
+             <h4 class="text-success"> کد شما : {{userModel.referralCode}}</h4>
+            </div>
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
-
-
-
-</div>
 </div>

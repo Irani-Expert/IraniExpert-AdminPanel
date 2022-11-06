@@ -7,6 +7,7 @@ import { RoleModel } from './roleModel';
  * مدل اطلاعات کاربر
  */
 export class UserInforamationModel {
+  id:number;
   username: string;
   firstName: string;
   lastName: string;

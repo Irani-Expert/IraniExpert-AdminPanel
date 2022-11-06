@@ -1,4 +1,6 @@
-<div class="row">
+
+<div class="card row">
+
   <form class="col-12 row mt-2 mb-3" [formGroup]="addForm">
     <!-- name -->
 
@@ -6,7 +8,7 @@
       <label for="firstName">نام</label>
       <input type="text" class="form-control form-control-rounded" id="firstName" placeholder="نام را وارد کنید "
         [formControl]="addForm.controls['firstName']" [(ngModel)]="addUpdate.firstName" maxlength="51" minlength="2"
-        [attr.disabled]="isEdit? true : null"/>
+        [attr.disabled]="isEdit? true : null" />
 
       <small *ngIf="
           addForm.controls['firstName'].hasError('required') &&
@@ -19,7 +21,7 @@
       <label for="lastName">نام خانوادگی</label>
       <input type="text" class="form-control form-control-rounded" id="lastName"
         placeholder="نام خانوادگی را وارد کنید " [formControl]="addForm.controls['lastName']"
-        [(ngModel)]="addUpdate.lastName" maxlength="51" minlength="2" [attr.disabled]="isEdit? true : null"  />
+        [(ngModel)]="addUpdate.lastName" maxlength="51" minlength="2" [attr.disabled]="isEdit? true : null" />
 
       <small *ngIf="
           addForm.controls['lastName'].hasError('required') &&
@@ -31,7 +33,7 @@
       <label for="username">نام کاربری</label>
       <input type="text" class="form-control form-control-rounded" id="username"
         placeholder="نام کاربری مورد نظر را وارد کنید " [formControl]="addForm.controls['username']"
-        [(ngModel)]="addUpdate.email" maxlength="51" minlength="2" [attr.disabled]="true"  />
+        [(ngModel)]="addUpdate.email" maxlength="51" minlength="2" [attr.disabled]="true" />
 
       <small *ngIf="
               addForm.controls['username'].hasError('required') &&
@@ -41,9 +43,9 @@
     <!-- email -->
     <div class="col-md-6 form-group mb-3">
       <label for="email">ایمیل</label>
-      <input type="email" class="form-control form-control-rounded" id="email"
-        placeholder="ایمیل را وارد کنید " [formControl]="addForm.controls['email']"
-        [(ngModel)]="addUpdate.email" maxlength="51" minlength="2" [attr.disabled]="true"  />
+      <input type="email" class="form-control form-control-rounded" id="email" placeholder="ایمیل را وارد کنید "
+        [formControl]="addForm.controls['email']" [(ngModel)]="addUpdate.email" maxlength="51" minlength="2"
+        [attr.disabled]="true" />
 
       <small *ngIf="
                 addForm.controls['email'].hasError('required') &&
@@ -55,7 +57,7 @@
       <label for="phoneNumber">شماره تماس</label>
       <input type="phoneNumber" class="form-control form-control-rounded" id="phoneNumber"
         placeholder="شماره تماس مورد نظر را وارد کنید " [formControl]="addForm.controls['phoneNumber']"
-        [(ngModel)]="addUpdate.phoneNumber" maxlength="51" minlength="2" [attr.disabled]="isEdit? true : null"  />
+        [(ngModel)]="addUpdate.phoneNumber" maxlength="51" minlength="2" [attr.disabled]="isEdit? true : null" />
 
       <small *ngIf="
                 addForm.controls['phoneNumber'].hasError('required') &&
@@ -67,28 +69,89 @@
       <label for="referralCode">کد معرف شما</label>
       <input type="referralCode" class="form-control form-control-rounded" id="referralCode"
         placeholder="کد معرف را وارد کنید " [formControl]="addForm.controls['referralCode']"
-        [(ngModel)]="addUpdate.referralCode" maxlength="51" minlength="2" [attr.disabled]="true"/>
+        [(ngModel)]="addUpdate.referralCode" maxlength="51" minlength="2" [attr.disabled]="true" />
 
       <small *ngIf="
                 addForm.controls['referralCode'].hasError('required') &&
                 addForm.controls['referralCode'].touched
               " class="mat-text-warn m-t-negative">کد معرف ضروری است</small>
     </div>
-    <button
-    type="button"
-    class="btn btn-outline-dark btn-rounded"
-    (click)="isEdit=false"
-    *ngIf="isEdit"
-  >
-    ویرایش
-  </button>
-  <button
-  type="button"
-  class="btn btn-outline-dark btn-rounded"
-  (click)="isEdit=false"
-  *ngIf="!isEdit"
->
-  ذخیر
-</button>
+    <button type="button" class="btn btn-outline-dark btn-rounded ml-2" (click)="isEdit=false" *ngIf="isEdit">
+      ویرایش پروفایل
+    </button>
+    <button type="button" class="btn btn-outline-dark btn-rounded ml-2" (click)="updateUser()" *ngIf="!isEdit">
+      ذخیره
+    </button>
+    <button type="button" class="btn btn-outline-dark btn-rounded ml-2" (click)="isEdit=true" *ngIf="!isEdit">
+     لغو
+    </button>
+    <button (click)="openPasswordModal(passwordModal)" type="button" class="btn btn-outline-primary btn-rounded ml-3">
+      تغییر رمز عبور
+    </button>
   </form>
 </div>
+
+
+<ng-template #passwordModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title"  id="modal-basic-title">
+     تغییر رمز عبور
+    </h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss(false)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="passwordForm" (ngSubmit)="submit()">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12 form-group mb-3 mt-3">
+          <label for="firstName ">رمز عبور قبلی</label>
+          <input
+            name="oldPassword"
+            id="oldPassword"
+            class="form-control form-control-rounded"
+            [(ngModel)]="password.oldPassword"
+            [formControl]="passwordForm.controls['oldPassword']"
+            type="password"
+          />
+        </div>
+        <div class="col-sm-12 form-group mb-3 mt-3">
+          <label for="firstName ">رمز عبور جدید </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="form-control form-control-rounded"
+            [(ngModel)]="password.password"
+            [formControl]="passwordForm.controls['password']"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <ng-container  >
+      <button
+        ngbAutofocus
+        type="button"
+        class="btn btn-outline-primary btn-rounded mr-1"
+        (click)="modal.close(true)"
+      >
+        تایید
+      </button>
+    </ng-container>
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="modal.close(false)"
+      >
+        لغو
+      </button>
+    </div>
+  </form>
+</ng-template>
