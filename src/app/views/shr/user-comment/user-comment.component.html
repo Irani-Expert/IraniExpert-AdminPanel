@@ -1,0 +1,63 @@
+<div class="my-css w-75">
+  <div
+    *ngFor="
+      let item of rows
+        | paginate
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber,
+              currentPage: page.pageNumber,
+              totalItems: page.totalElements
+            }
+    "
+  >
+    <div class="timeline-card card mt-4" *ngIf="item.parentID === null">
+      <div
+        class="card-header bg-dark d-flex justify-content-between align-items-center"
+      >
+        <div class="mb-1">
+          <strong class="mr-1 text-white">{{ item.name }}</strong>
+          <span
+            class="badge badge-warning mr-1 text-primary"
+            *ngIf="item.isAccepted === false"
+            >تایید نشده</span
+          >
+          <span
+            class="badge badge-success mr-1 text-white"
+            *ngIf="item.isAccepted === true"
+            >تایید شده</span
+          >
+          <p class="text-white-50">{{ item.createDate | relativeTime }}</p>
+        </div>
+        <div class="text-warning">امتیاز:5\{{ item.rate }}</div>
+      </div>
+      <div class="card-body bg-secondary">
+        <p class="text-white">
+          {{ item.text }}
+        </p>
+        <!-- <ng-component *ngIf="item.parentComment.text !== null">
+            <p class="bg-dark text-white ml-3">
+              پاسخ:{{ item.parentComment.text }}
+            </p>
+          </ng-component> -->
+      </div>
+      <div class="card-footer bg-secondary">
+
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="img-fluid w-50"
+    alt=""
+  />
+</div>
+<div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+  <pagination-controls
+    (pageChange)="setPage($event)"
+    previousLabel=""
+    nextLabel=""
+  ></pagination-controls>
+</div>

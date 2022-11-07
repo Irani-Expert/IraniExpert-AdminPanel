@@ -8,9 +8,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { CommentComponent } from './comment/comment.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { UserCommentComponent } from './user-comment/user-comment.component';
 
 @NgModule({
-  declarations: [UserNeedComponent, UserWantsPipe, CommentComponent],
+  declarations: [UserNeedComponent, UserWantsPipe, CommentComponent, UserCommentComponent],
   imports: [
     CommonModule,
     ShrRoutingModule,

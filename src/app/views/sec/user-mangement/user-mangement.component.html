@@ -6,7 +6,9 @@
 >
   ایجاد
 </button>
+
 <div class="separator-breadcrumb border-top"></div>
+
 <div class="row list-horizontal">
   <div
     class="list-item"
@@ -163,6 +165,7 @@
     ></pagination-controls>
   </div>
 </div>
+
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
@@ -170,6 +173,7 @@
     alt=""
   />
 </div>
+
 <ng-template #addUpdateModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
@@ -252,8 +256,8 @@
         type="button"
         class="btn btn-outline-dark btn-rounded mr-1"
         (click)="modal.close(true)"
-       
-        
+
+
       >
         ویرایش
       </button>

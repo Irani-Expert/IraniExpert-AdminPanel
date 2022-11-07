@@ -75,18 +75,19 @@ export class NavigationService {
       privilege:'Product-Full Premission'
     },
     {
+      icon: 'i-File-Horizontal-Text',
+      name: 'سفارشات من',
+      state: '/bsk/user-orders',
+      type: 'link',
+      privilege:'CheckOrders-Full Premission'
+    },
+    {
       name: 'سفارشات',
       type: 'dropDown',
       icon: 'i-File-Horizontal-Text',
       privilege:'Orders-Full Premission',
       sub: [
-        {
-          icon: 'i-Sync',
-          name: 'سفارشات من',
-          state: '/bsk/user-orders',
-          type: 'link',
-          privilege:'CheckOrders-Full Premission'
-        },
+
         {
           icon: 'i-Sync',
           name: 'سفارش ها در حال بررسی',
@@ -181,6 +182,13 @@ export class NavigationService {
       icon: 'i-Speach-Bubbles',
       state: '/shr/comment',
       privilege:'Comment-Full Premission'
+    },
+    {
+      name: 'نظرات من',
+      type: 'link',
+      icon: 'i-Speach-Bubbles',
+      state: '/shr/user-Comments',
+      privilege:'comment-user-Special-Premission'
     },
 
     // {
