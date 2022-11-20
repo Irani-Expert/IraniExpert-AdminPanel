@@ -87,7 +87,6 @@ export class NavigationService {
       icon: 'i-File-Horizontal-Text',
       privilege:'Orders-Full Premission',
       sub: [
-
         {
           icon: 'i-Sync',
           name: 'سفارش ها در حال بررسی',
@@ -99,6 +98,13 @@ export class NavigationService {
           icon: 'i-Yes',
           name: 'سفارش های تأیید شده',
           state: '/bsk/license',
+          type: 'link',
+          privilege:'ConfirmedOrders-Full Premission'
+        },
+        {
+          icon: 'i-Yes',
+          name: 'لایسنس ها',
+          state: '/bsk/license/updates',
           type: 'link',
           privilege:'ConfirmedOrders-Full Premission'
         },

@@ -9,6 +9,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginAsUserComponent } from './login-as-user/login-as-user.component';
 
 
 @NgModule({
@@ -26,9 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       ReactiveFormsModule,
     NgbModule,
     DashboardRoutingModule,
-
   ],
-  declarations: [DashboadDefaultComponent, UserProfileComponent],
+  declarations: [DashboadDefaultComponent, UserProfileComponent, LoginAsUserComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 })
 export class DashboardModule { }

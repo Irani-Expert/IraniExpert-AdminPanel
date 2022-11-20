@@ -36,4 +36,28 @@ export class LicenseService extends BaseService<LicenseModel, 0> {
       _options
     );
   }
+
+  getLicenses(
+    _pageIndex: number,
+    _pageSize: number,
+    _versionNumber:number=1
+  ): Observable<Result<Paginate<OrderModel[]>>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'bearer ' + environment.jwtToken,
+      }),
+    };
+    return this._http.get<Result<Paginate<OrderModel[]>>>(
+      this._base +
+        '/Orders/GetLicenses' +
+        '?pageIndex=' +
+        _pageIndex +
+        '&pageSize=' +
+        _pageSize+
+        '&versionNumber='+
+        _versionNumber,
+      _options
+    );
+  }
 }

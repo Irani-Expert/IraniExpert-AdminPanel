@@ -1,0 +1,164 @@
+<!----------------------------------- Head Table  -->
+<div class="row list-horizontal">
+  <div class="list-item" [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }">
+    <div class="card bg-dark mb-4 d-flex" [ngClass]="{
+        'flex-row': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }">
+      <div class="flex-grow-1" [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-block': viewMode === 'grid'
+        }">
+        <!-- <div class="list-thumb">
+               THUMBNAIL
+            </div> -->
+        <!-- ID -->
+        <div class="align-self-center text-white">ID</div>
+        <div class="card-body align-self-center d-flex align-items-lg-center text-center"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }">
+          <!-- OTHER DATA -->
+          <div class="m-0 col text-lg-center text-white">نام کاربر</div>
+
+          <div class="m-0 col text-lg-center text-white">شماره حساب</div>
+          <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
+          <div class="m-0 col text-lg-center text-white">هزینه</div>
+          <div class="m-0 col text-lg-center text-white">تاریخ انقضا</div>
+          <div class="m-0 col text-lg-center text-white">نسخه</div>
+          <div class="m-0 text-light d-md-block d-none col text-center">
+            عملیات
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Orders-List -->
+  <div class="list-item" [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }" *ngFor="
+      let item of rows
+        | paginate
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber,
+
+              currentPage: page.pageNumber,
+              totalItems: page.totalElements
+            }
+    ">
+    <div class="card mb-2 o-hidden d-flex" [ngClass]="{
+        'flex-row-2': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }">
+      <div class="flex-grow-1" [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-block': viewMode === 'grid'
+        }">
+        <div class="align-self-center">
+          {{ item.id }}
+        </div>
+        <div class="card-body align-self-center d-flex align-items-lg-center text-center row"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }">
+          <!-- OTHER DATA -->
+          <div class="col m-0">
+            {{ item.firstName }}&nbsp;{{ item.lastName }}
+          </div>
+          <div class="col m-0">
+            {{ item.accountNumber }}
+          </div>
+          <div class="col m-0">{{ item.product }}|{{ item.plan }}</div>
+          <div class="col m-0">
+            {{ item.price | currency }}
+          </div>
+          <div class="col m-0">
+            {{ item.expireDate }}
+          </div>
+          <div class="col m-0">
+            {{ item.versionNumber }}
+          </div>
+          <div class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">
+            <div class="text-center col-auto d-flex justify-content-around">
+              <div class="w-25 w-sm-100 mr-sm-2">
+                <a class="btn btn-info  text-white" href="https://iraniExpert.com/{{item.filePath}}">
+                  دانلود
+                </a>
+              </div>
+              <div class="w-25 w-sm-100 ml-sm-2">
+                <button class="btn btn-danger" [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                (click)="updateLicense(sendLicense,item)">
+                  تغییر
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none">
+        <h6 class="text-center">عملیات</h6>
+        <a class="btn btn-info  text-white" href="https://iraniExpert.com/{{item.filePath}}">
+          دانلود
+        </a>
+        <button
+        class="btn btn-danger"
+        [ngClass]="{ 'd-none': viewMode === 'grid' }"
+        (click)="updateLicense(sendLicense,item)"
+      >
+        تغییر
+      </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+    <pagination-controls (pageChange)="setPage($event)" previousLabel="" nextLabel=""></pagination-controls>
+  </div>
+</div>
+<!-- sendLicence Model -->
+<ng-template #sendLicense let-modal>
+  <div>
+    <div class="modal-header">
+      <h4 class="modal-title">ارسال لایسنس</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div class="row mt-2">
+          <div class="col-4 form-group mb-3">
+            <strong for="file" class="mb-3">فایل لایسنس</strong>
+            <input id="upload" type="file" (change)="onFileChanged($event)" />
+          </div>
+          <strong class="text-danger col-3">فایل ارسالی باید zip باشد</strong>
+          <div class="col-5 mt-2 mb-2">
+            <button class="btn btn-primary col-2" (click)="uploadFile()" [ngClass]="{
+                'd-none': isValidate === false,
+                'd-block': isValidate === true
+              }">
+              آپلود
+            </button>
+          </div>
+        </div>
+        <div class="row mt-2">
+            <strong for="expireDate" class="mb-3">شماره نسخه</strong>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="licenseModel.versionNumber"
+              [formControl]="addForm.controls['versionNumber']"
+            />
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close(true)">
+        ارسال
+      </button>
+    </div>
+  </div>
+</ng-template>
+<div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
+  <img src="../../../../../assets/images/97434-no-data-available.gif" class="img-fluid w-50" alt="" />
+</div>

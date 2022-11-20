@@ -6,6 +6,7 @@ import { LockscreenComponent } from './lockscreen/lockscreen.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { NgModule } from '@angular/core';
+import { LoginAsUserComponent } from '../dashboard/login-as-user/login-as-user.component';
 
  const SessionRoutes: Routes = [
   {
@@ -26,6 +27,7 @@ import { NgModule } from '@angular/core';
       path: 'signup',
       component: SignupComponent
     },
+
   ]
   }
 ];

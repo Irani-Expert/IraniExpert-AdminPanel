@@ -57,6 +57,31 @@ export class AuthenticateService {
       );
   }
 
+  checkUserPermission(token: string) {
+    return this.http
+      .post<Result<UserInfoModel>>(
+        `${environment.api.baseUrl}/auth/check-user-permission?token=${token}`,
+        undefined
+      )
+      .pipe(
+        map((user) => {
+          if (user.success) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(user.data));
+            this.currentUserSubject.next(user.data);
+            return true;
+          } else {
+            this.toastr.error('نام کاربری یا رمز عبور اشتباه است ', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+            return false;
+          }
+        })
+      );
+  }
+
+
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
