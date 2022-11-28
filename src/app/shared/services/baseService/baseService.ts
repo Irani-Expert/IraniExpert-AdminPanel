@@ -27,14 +27,14 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @param route
    * @returns insert
    */
-  create(t: object, route: string): Observable<Result<T>> {
+  create(t: object, route: string): Observable<Result<number>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.post<Result<T>>(this._base + '/' + route, t, _options);
+    return this._http.post<Result<number>>(this._base + '/' + route, t, _options);
   }
 
   /**

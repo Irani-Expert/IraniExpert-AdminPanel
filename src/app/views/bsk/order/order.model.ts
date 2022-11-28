@@ -20,4 +20,5 @@ export class OrderModel extends Base implements IOrder {
   versionNumber:number;
   filePath:string;
   licenseID:number;
+  clientId:number;
 }

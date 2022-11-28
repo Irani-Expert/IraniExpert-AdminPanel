@@ -163,6 +163,7 @@
             <button
               class="btn btn-primary col-2"
               (click)="uploadFile()"
+              *ngIf="clientId==null"
               [ngClass]="{
                 'd-none': isValidate === false,
                 'd-block': isValidate === true
@@ -236,6 +237,7 @@
     </div>
   </div>
 </ng-template>
+
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"

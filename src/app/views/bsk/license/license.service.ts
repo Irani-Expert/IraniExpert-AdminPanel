@@ -6,6 +6,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
 import { OrderModel } from '../order/order.model';
+import { CliamxLicenseModel, CliamxResponse } from './cliamaxLicense.model';
 import { LicenseModel } from './license.model';
 
 @Injectable({
@@ -40,7 +41,7 @@ export class LicenseService extends BaseService<LicenseModel, 0> {
   getLicenses(
     _pageIndex: number,
     _pageSize: number,
-    _versionNumber:number=1
+    _versionNumber: number = 1
   ): Observable<Result<Paginate<OrderModel[]>>> {
     let _options = {
       headers: new HttpHeaders({
@@ -54,10 +55,38 @@ export class LicenseService extends BaseService<LicenseModel, 0> {
         '?pageIndex=' +
         _pageIndex +
         '&pageSize=' +
-        _pageSize+
-        '&versionNumber='+
+        _pageSize +
+        '&versionNumber=' +
         _versionNumber,
       _options
+    );
+  }
+
+  sendLicenseToClimax(climaxLicenseModel:CliamxLicenseModel){
+    var model={
+      apiKey:"fkwm@kd723Cw(0dMk@dc$fmvJMkI2Ewu4R",
+      accountNumber:climaxLicenseModel.accountNumber,
+      activationDate:new Date(climaxLicenseModel.startDate).getTime()/1000,
+      expireDate:new Date(climaxLicenseModel.expireDate).getTime()/1000,
+      licenseNumber:climaxLicenseModel.licenseId.toString()
+    }
+    debugger
+    var fd = new FormData();
+    fd.append('files.licenseFile', climaxLicenseModel.file);
+    fd.append('data', JSON.stringify(model));
+    return this._http.put<CliamxResponse>(
+      'https://api-test.climaxprime.tools/users-promotions',
+      fd,
+      {
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods':
+            'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+          'Access-Control-Allow-Headers':
+            'origin,X-Requested-With,content-type,accept',
+          'Access-Control-Allow-Credentials': 'true',
+        }),
+      }
     );
   }
 }

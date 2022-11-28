@@ -9,6 +9,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { OrderModel } from '../order/order.model';
 import { OrderService } from '../order/order.service';
+import { CliamxLicenseModel, CliamxResponse } from './cliamaxLicense.model';
 import { LicenseModel } from './license.model';
 import { LicenseService } from './license.service';
 
@@ -28,6 +29,8 @@ export class LicenseComponent implements OnInit {
   addForm: FormGroup;
   startDate: any;
   expireDate: any;
+  clientId:number;
+  licenseId:number;
   constructor(
     private _fileUploaderService: FileUploaderService,
     public _licenseService: LicenseService,
@@ -77,6 +80,7 @@ export class LicenseComponent implements OnInit {
       );
   }
   openModal(content: any, row: OrderModel) {
+    this.clientId=row.clientId;
     this.modalService
       .open(content, {
         size: 'lg',
@@ -85,13 +89,37 @@ export class LicenseComponent implements OnInit {
       })
       .result.then((result: boolean) => {
         if (result != undefined) {
-          this.licenseModel.rowID = row.id;
-          this.addOrUpdate(this.licenseModel);
-          this.addForm.reset();
+          if(this.clientId==null){
+            this.licenseModel.rowID = row.id;
+            this.addOrUpdate(this.licenseModel,null);
+            this.addForm.reset();
+          }else{
+            let climax=new CliamxLicenseModel();
+            debugger;
+            climax.file=this.licenseFile;
+            climax.accountNumber=this.licenseModel.accountNumber.toString();
+            climax.expireDate= this.startDate.year +
+            '-' +
+            this.startDate.month +
+            '-' +
+            this.startDate.day;
+
+            climax.startDate=  this.expireDate.year +
+            '-' +
+            this.expireDate.month +
+            '-' +
+            this.expireDate.day;
+            this.licenseModel.rowID = row.id;
+            this.licenseModel.filePath="";
+            this.addOrUpdate(this.licenseModel,climax);
+            this.addForm.reset();
+
+          }
+
         }
       });
   }
-  async addOrUpdate(item: LicenseModel) {
+  async addOrUpdate(item: LicenseModel,climax:CliamxLicenseModel) {
     item.startDate =
       this.startDate.year +
       '-' +
@@ -113,6 +141,29 @@ export class LicenseComponent implements OnInit {
       .then(
         (data) => {
           if (data.success) {
+            if(climax!==null){
+              debugger
+              climax.licenseId=data.data;
+              this._licenseService.sendLicenseToClimax(climax).toPromise()
+              .then( (dt:CliamxResponse) => {
+                if(dt.statusCode!=200){
+                  this.toastr.error(dt.message[0], 'خطای Cliamax', {
+                    closeButton: true,
+                    positionClass: 'toast-top-left',
+                  });
+                }else{
+                  this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
+                    closeButton: true,
+                    positionClass: 'toast-top-left',
+                  });
+                }
+              }).catch((dt) => {
+                this.toastr.error(dt[0].message, 'خطای Cliamax', {
+                  closeButton: true,
+                  positionClass: 'toast-top-left',
+                });
+              });
+            }
             this.toastr.success(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
@@ -163,12 +214,9 @@ export class LicenseComponent implements OnInit {
   }
   onFileChanged(event: any) {
     let fileType = event.target.files[0].type.split('/');
-    if (fileType[1] == 'x-zip-compressed') {
       this.licenseFile = event.target.files[0];
       this.isValidate = true;
-    } else {
-      this.isValidate = false;
-    }
+
   }
   uploadFile() {
     this.loading = true;
