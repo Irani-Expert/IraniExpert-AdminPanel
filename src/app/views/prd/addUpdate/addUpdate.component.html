@@ -170,6 +170,12 @@
     </ng-template>
   </li>
   <li ngbNavItem [disabled]="productId == 0">
+    <a ngbNavLink>گالری تصاویر </a>
+    <ng-template ngbNavContent>
+      <app-gallery [productId]="productId"></app-gallery>
+    </ng-template>
+  </li>
+  <li ngbNavItem [disabled]="productId == 0">
     <a ngbNavLink>بک تست </a>
     <ng-template ngbNavContent>
       <app-back-test [productId]="productId"></app-back-test>

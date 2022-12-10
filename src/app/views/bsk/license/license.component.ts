@@ -98,13 +98,13 @@ export class LicenseComponent implements OnInit {
             debugger;
             climax.file=this.licenseFile;
             climax.accountNumber=this.licenseModel.accountNumber.toString();
-            climax.expireDate= this.startDate.year +
+            climax.startDate= this.startDate.year +
             '-' +
             this.startDate.month +
             '-' +
             this.startDate.day;
 
-            climax.startDate=  this.expireDate.year +
+            climax.expireDate=  this.expireDate.year +
             '-' +
             this.expireDate.month +
             '-' +
