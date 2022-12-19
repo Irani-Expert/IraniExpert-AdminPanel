@@ -29,6 +29,8 @@ import { LoaderInterceptor } from './shared/loader.interceptor';
     MatFormFieldModule,
     MatSelectModule,
     MatAutocompleteModule,
+    
+
     NgxDatatableModule.forRoot({
       messages: {
         emptyMessage: 'داده ای یافت نشد',

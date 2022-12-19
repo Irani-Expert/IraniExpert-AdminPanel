@@ -76,6 +76,7 @@ export class InvoiceComponent implements OnInit {
       );
   }
   openModal(content: any, item: InvoiceModel) {
+    debugger
     this.invoiceDetail = item;
     this.modalService
       .open(content, {

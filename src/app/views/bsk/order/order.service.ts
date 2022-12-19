@@ -5,6 +5,7 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
+import { referraluserModel } from '../../dashboard/referral-user/referral-user.model';
 import { OrderModel } from './order.model';
 interface INoteSidebar {
   sidenavOpen?: boolean;
@@ -49,6 +50,20 @@ export class OrderService extends BaseService<OrderModel, 0> {
           pageOrder +
           '&filter=' +
           filter,
+        _options
+      );
+    }
+    getreferralUser(referralCode:string){
+      let _options = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'bearer ' + environment.jwtToken,
+        }),
+      };
+      return this._http.get<Result<Paginate<referraluserModel[]>>>(
+        this._base +
+          '/Orders/GetOrdersByReffralCode/'+referralCode 
+       ,
         _options
       );
     }

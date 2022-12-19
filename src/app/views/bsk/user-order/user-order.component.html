@@ -130,7 +130,7 @@
         <button
           class="btn btn-outline-danger col m-1"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          (click)="addPay(item,PayModal)"
+          (click)="addPay(item)"
           *ngIf="item.transactionStatus==1"
         >
           ثبت پرداخت

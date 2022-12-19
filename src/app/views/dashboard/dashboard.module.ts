@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginAsUserComponent } from './login-as-user/login-as-user.component';
+import { ReferralUserComponent } from './referral-user/referral-user.component';
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import { LoginAsUserComponent } from './login-as-user/login-as-user.component';
     NgbModule,
     DashboardRoutingModule,
   ],
-  declarations: [DashboadDefaultComponent, UserProfileComponent, LoginAsUserComponent],
+  declarations: [DashboadDefaultComponent, UserProfileComponent, LoginAsUserComponent,  ReferralUserComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 })
 export class DashboardModule { }

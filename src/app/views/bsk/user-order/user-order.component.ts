@@ -10,6 +10,7 @@ import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { OrderModel } from '../order/order.model';
 import { OrderService } from '../order/order.service';
+import{AddPaymentComponent} from 'src/app/shared/components/add-payment/add-payment.component'
 
 @Component({
   selector: 'app-user-order',
@@ -47,7 +48,7 @@ export class UserOrderComponent implements OnInit {
 
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
-
+debugger
     this.getOrderList(this.page.pageNumber, this.page.size);
   }
   async getOrderList(pageNumber: number, seedNumber: number) {
@@ -105,4 +106,26 @@ export class UserOrderComponent implements OnInit {
           });
       });
   }
+  addPay(order:OrderModel){
+    
+    let ref= this.modalService.open(AddPaymentComponent, {
+      windowClass: 'radius-sm border-0 ',
+      size: 'sm',
+      ariaLabelledBy: 'modal-basic-title',
+      centered: true,
+      backdropClass: 'bg-dark',
+    });
+    
+    ref.componentInstance.order=order
+    
+    ref.result.then((result) =>  {
+ debugger
+ if(result){
+  this.setPage(0)
+ }
+    
+
+      });
+
+      }
 }

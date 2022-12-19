@@ -68,6 +68,13 @@ export class NavigationService {
       privilege:'Dashboard-Full Premission'
     },
     {
+      name: 'کاربران زیر مجموعه',
+      type: 'link',
+      icon: 'i-Add-UserStar',
+      state: '/dashboard/referral-user',
+      privilege:'Dashboard-Full Premission'
+    },
+    {
       name: 'محصولات',
       type: 'link',
       icon: 'i-Checkout-Basket',
@@ -196,7 +203,7 @@ export class NavigationService {
       state: '/shr/user-Comments',
       privilege:'comment-user-Special-Premission'
     },
-
+ 
     // {
     //     name: 'Data Tables',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
