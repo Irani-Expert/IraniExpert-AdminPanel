@@ -1,7 +1,7 @@
 import { Base } from 'src/app/shared/models/Base/base.model';
-import { Ireferraluser } from './referral-user.interface';
+import { IReferraluser } from './referral-user.interface';
 
-export class referraluserModel extends Base implements Ireferraluser {
+export class referraluserModel extends Base implements IReferraluser {
     firstName: string;
     lastName: string;
     phoneNumber: number;

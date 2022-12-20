@@ -73,4 +73,25 @@ export class CommentService extends BaseService<CommentModel, 0> {
         _options
       );
     }
+    GetAllComment(
+      pageIndex: number,
+      pageSize: number,
+     
+    ): Observable<Result<Paginate<CommentModel[]>>> {
+      let _options = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'bearer ' + environment.jwtToken,
+        }),
+      };
+      return this._http.get<Result<Paginate<CommentModel[]>>>(
+        this._base +
+          '/Comment' +
+          '?pagIndex=' +
+          pageIndex +
+          '&pageSize=' +
+          pageSize,
+        _options
+      );
+    }
 }

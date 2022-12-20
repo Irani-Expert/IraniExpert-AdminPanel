@@ -1,36 +1,32 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Result } from 'src/app/shared/models/Base/result.model';
-import { CommentService } from './comment.service';
-
-import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Page } from 'src/app/shared/models/Base/page';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { Result } from 'src/app/shared/models/Base/result.model';
 import { CommentModel } from 'src/app/shared/models/comment.model';
+import { CommentService } from 'src/app/views/prd/comment/comment.service';
 
 @Component({
-  selector: 'app-comment',
-  templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.scss'],
+  selector: 'app-all-comment',
+  templateUrl: './all-comment.component.html',
+  styleUrls: ['./all-comment.component.scss']
 })
-export class CommentComponent implements OnInit {
+export class AllCommentComponent implements OnInit {
   rows: CommentModel[] = new Array<CommentModel>();
-  @Input() productId: number;
-  @Input() tableType: number;
-  replyText: string = null;
   page: Page = new Page();
   parentComment: CommentModel = new CommentModel();
-  constructor(
-    public _commentService: CommentService,
+  replyText: string = null;
+
+  constructor(public _commentService: CommentService,
     private toastr: ToastrService,
     private modalService: NgbModal
-  ) {
-    this.page.pageNumber = 0;
-    this.page.size = 12;
-  }
+    ) {   this.page.pageNumber = 0;
+    this.page.size = 12;}
 
   ngOnInit(): void {
     this.setPage(this.page.pageNumber);
+
   }
 
   setPage(pageInfo: number) {
@@ -40,11 +36,10 @@ export class CommentComponent implements OnInit {
   }
   async getCommentListByProductId(pageNumber: number, seedNumber: number) {
     await this._commentService
-      .GetByTableTypeAndRowId(
+      .GetAllComment(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
-        this.productId,
-        this.tableType
+    
       )
       .subscribe(
         (res: Result<Paginate<CommentModel[]>>) => {
@@ -65,52 +60,6 @@ export class CommentComponent implements OnInit {
         }
       );
   }
-
-  deleteComment(id: number, modal: any) {
-    this.modalService
-      .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then(
-        (result) => {
-          this._commentService
-            .delete(id, 'comment')
-            .toPromise()
-            .then((res) => {
-              if (res.success) {
-                this.toastr.success(
-                  'فرایند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-              } else {
-                this.toastr.error('خطا در حذف', res.message, {
-                  timeOut: 3000,
-                  positionClass: 'toast-top-left',
-                });
-              }
-              this.getCommentListByProductId(
-                this.page.pageNumber,
-                this.page.size
-              );
-            })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
-            });
-        },
-        (error) => {
-          this.toastr.error('خطا در حذف', error.message, {
-            timeOut: 3000,
-            positionClass: 'toast-top-left',
-          });
-        }
-      );
-  }
-
   openSmall(content: any, row: CommentModel) {
     this.parentComment = new CommentModel();
     this.parentComment.parentID = row.id;
@@ -125,17 +74,17 @@ export class CommentComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
-        
         (result) => {
+          debugger
           if (result)
           this.acceptComment(row);
         },
         (reason) => {
+          debugger
           console.log('Err!', reason);
         }
       );
   }
-
   acceptComment(row: CommentModel) {
     if (this.replyText !== null && this.replyText.length > 0) {
       this.parentComment.text = this.replyText;

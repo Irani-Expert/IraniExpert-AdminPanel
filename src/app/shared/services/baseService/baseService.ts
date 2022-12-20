@@ -34,6 +34,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
+    debugger
     return this._http.post<Result<number>>(this._base + '/' + route, t, _options);
   }
 

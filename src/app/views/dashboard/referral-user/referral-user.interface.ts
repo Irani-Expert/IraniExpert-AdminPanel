@@ -1,6 +1,6 @@
 import { IBase } from 'src/app/shared/interfaces/Base/base.interface';
 
-export interface Ireferraluser extends IBase {
+export interface IReferraluser extends IBase {
     firstName: string;
     lastName: string;
     phoneNumber: number;

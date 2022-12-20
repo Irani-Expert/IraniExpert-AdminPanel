@@ -72,7 +72,7 @@ export class NavigationService {
       type: 'link',
       icon: 'i-Add-UserStar',
       state: '/dashboard/referral-user',
-      privilege:'Dashboard-Full Premission'
+      privilege:'Subuser-Full Premission'
     },
     {
       name: 'محصولات',
@@ -202,6 +202,13 @@ export class NavigationService {
       icon: 'i-Speach-Bubbles',
       state: '/shr/user-Comments',
       privilege:'comment-user-Special-Premission'
+    },
+    {
+      name: 'همه کامنت ها',
+      type: 'link',
+      icon: 'i-Speach-Bubbles',
+      state: '/shr/all-Comments',
+      privilege:'all-comment-user-Special-Premission'
     },
  
     // {

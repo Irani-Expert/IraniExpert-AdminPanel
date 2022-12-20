@@ -89,6 +89,7 @@ export class UserRoleComponent implements OnInit {
       );
   }
   userRoleEdit(content: any, row: UserRoleModel) {
+    debugger
     if (row === undefined) {
       this.userIdTracker = 0;
       this.addUpdate = new UserRoleModel();
@@ -116,6 +117,7 @@ export class UserRoleComponent implements OnInit {
       );
   }
   async addOrUpdate(row: UserRoleModel, _id: number) {
+    debugger
     if (row.userId !== _id) {
       await this._userRoleService
         .create(row, 'aspnetuserrole')
@@ -135,6 +137,7 @@ export class UserRoleComponent implements OnInit {
             }
           },
           (_error) => {
+            debugger
             this.toastr.error('خطا مجدد تلاش فرمایید', null, {
               closeButton: true,
               positionClass: 'toast-top-left',
@@ -142,6 +145,7 @@ export class UserRoleComponent implements OnInit {
           }
         );
     } else {
+      debugger
       await this._userRoleService
         .update(row.userId, row, 'aspnetuserrole')
         .toPromise()

@@ -63,6 +63,7 @@ export class PrivilegeComponent implements OnInit {
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
+          debugger
         },
         (_error) => {
           this.toastr.error(
