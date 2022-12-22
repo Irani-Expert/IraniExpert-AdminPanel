@@ -135,7 +135,7 @@ export class GalleryComponent implements OnInit {
           (res: Result<string[]>) => {
             if (res.success) {
               this.addUpdate=new FileModel();
-              this.addUpdate.filePath ="https://iraniexpert.com/"+ res.data[0];
+              this.addUpdate.filePath ="https://dl.iraniexpert.com/"+ res.data[0];
               this.toastr.success('با موفقیت آپلود شد', null, {
                 closeButton: true,
                 positionClass: 'toast-top-left',
