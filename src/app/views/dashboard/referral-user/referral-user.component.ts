@@ -45,7 +45,7 @@ refralcode:string;
   }
   subUsers(){
    
-    this._orderService.getreferralUser("1000").subscribe(
+    this._orderService.getreferralUser(this.refralcode).subscribe(
       (res: Result<Paginate<referraluserModel[]>>) => {
         
         this.rows = res.data.items;
