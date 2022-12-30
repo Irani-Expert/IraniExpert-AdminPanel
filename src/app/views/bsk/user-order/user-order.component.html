@@ -33,6 +33,7 @@
           <!-- OTHER DATA -->
           <div class="m-0 col text-lg-center text-white">نام کاربر</div>
           <div class="m-0 col text-lg-center text-white">شماره تماس</div>
+          <div class="m-0 col text-lg-center text-white">شماره حساب</div>
           <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
           <div class="m-0 col text-lg-center text-white">هزینه</div>
           <div class="m-0 col text-lg-center text-white">وضعیت</div>
@@ -85,6 +86,7 @@
             {{ item.firstName }}&nbsp;{{ item.lastName }}
           </div>
           <div class="col m-0">{{ item.phoneNumber }}</div>
+          <div class="col m-0">{{ item.accountNumber }}</div>
           <div class="col m-0">{{ item.product }}|{{ item.plan }}</div>
           <div class="col m-0">
             {{ item.price | currency }}
@@ -100,6 +102,10 @@
           >
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
+                <a  *ngIf="item.transactionStatus==2" class="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
+                  دانلود
+                </a>
+
                 <button
                   class="btn btn-info"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
@@ -127,6 +133,9 @@
         class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
       >
         <h6 class="text-center">عملیات</h6>
+        <a  *ngIf="item.transactionStatus==2" class="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
+          دانلود
+        </a>
         <button
           class="btn btn-outline-danger col m-1"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
