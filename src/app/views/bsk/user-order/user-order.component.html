@@ -133,7 +133,7 @@
         class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
       >
         <h6 class="text-center">عملیات</h6>
-        <a  *ngIf="item.transactionStatus==2" class="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
+        <a  *ngIf="item.transactionStatus==2 && item.filePath!=null" lass="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
           دانلود
         </a>
         <button
