@@ -23,12 +23,13 @@ refralcode:string;
 
   ngOnInit(): void {
     this.getUser();
-    this.subUsers();
+
   }
   getUser() {
     this._userService.getUserByToken().subscribe(
       (res: UserInforamationModel) => {
         this.refralcode = res.referralCode;
+        this.subUsers();
         debugger
       },
       (_error) => {
@@ -44,10 +45,10 @@ refralcode:string;
     );
   }
   subUsers(){
-   
+
     this._orderService.getreferralUser(this.refralcode).subscribe(
       (res: Result<Paginate<referraluserModel[]>>) => {
-        
+
         this.rows = res.data.items;
         debugger
       },
