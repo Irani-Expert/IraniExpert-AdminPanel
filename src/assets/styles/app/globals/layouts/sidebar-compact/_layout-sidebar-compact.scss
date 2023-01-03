@@ -53,6 +53,8 @@
       }
     }
     .navigation-left {
+      overflow: scroll;
+
       list-style: none;
       text-align: center;
       width: $sidebar-left-width;
