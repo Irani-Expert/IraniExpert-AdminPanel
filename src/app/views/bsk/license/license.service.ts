@@ -64,7 +64,7 @@ export class LicenseService extends BaseService<LicenseModel, 0> {
 
   sendLicenseToClimax(climaxLicenseModel:CliamxLicenseModel){
     var model={
-      apiKey:"fkwm@kd723Cw(0dMk@dc$fmvJMkI2Ewu4R",
+      apiKey:"fkwm@kdo23&#nd@dc$fmvJMkI2Ewu4R",
       accountNumber:climaxLicenseModel.accountNumber,
       activationDate:new Date(climaxLicenseModel.startDate).getTime()/1000,
       expireDate:new Date(climaxLicenseModel.expireDate).getTime()/1000,
@@ -75,7 +75,7 @@ export class LicenseService extends BaseService<LicenseModel, 0> {
     fd.append('files.licenseFile', climaxLicenseModel.file);
     fd.append('data', JSON.stringify(model));
     return this._http.put<CliamxResponse>(
-      'https://api-test.climaxprime.tools/users-promotions',
+      'https://api-main.climaxprime.tools/users-promotions',
       fd,
       {
         headers: new HttpHeaders({
