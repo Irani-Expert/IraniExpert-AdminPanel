@@ -13,6 +13,9 @@ export class UserWantsPipe implements PipeTransform {
       case 1:
         result = 'مشاوره';
         break;
+        case 2:
+          result = 'مشارکت در سود';
+          break;
     }
     return result;
   }
