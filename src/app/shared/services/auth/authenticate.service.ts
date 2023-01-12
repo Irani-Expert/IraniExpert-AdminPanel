@@ -32,7 +32,7 @@ export class AuthenticateService {
   public get currentUserValue(): UserInfoModel {
     return this.currentUserSubject.value;
   }
-
+ 
   login(user: UserModel) {
     return this.http
       .post<Result<UserInfoModel>>(
@@ -81,7 +81,7 @@ export class AuthenticateService {
       );
   }
 
-
+  
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');

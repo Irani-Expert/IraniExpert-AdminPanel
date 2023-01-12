@@ -146,7 +146,29 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
       _options
     );
   }
-
+  getUserPrivilegesByRoleID(id:number): Observable<Result<T[]>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'bearer ' + environment.jwtToken,
+      }),
+    };
+    return this._http.get<Result<T[]>>(
+      this._base +
+        '/' +
+        'UserPrivilege/GetUserPrivilegesByRoleID/'
+              + id +
+        '?pageIndex=' +
+        null +
+        '&pageSize=' +
+        null +
+        '&pageOrder=' +
+        null +
+        '&filter=' +
+        null,
+      _options
+    );}
+  
   /**
    * درخواست حذف
    * @param id
