@@ -141,4 +141,7 @@ export class AllCommentComponent implements OnInit {
         }
       );
   }
+  deleteComment(){
+
+  }
 }

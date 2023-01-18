@@ -105,7 +105,9 @@
                 <a  *ngIf="item.transactionStatus==2" class="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
                   دانلود
                 </a>
-
+                <a  *ngIf="item.transactionStatus==2&&item.filePath==null" class="btn btn-info  text-white" href="">
+                  در حال اپلود لایسنس
+                </a>
                 <button
                   class="btn btn-info"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
