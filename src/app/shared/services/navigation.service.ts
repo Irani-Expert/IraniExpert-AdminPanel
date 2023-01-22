@@ -196,6 +196,22 @@ export class NavigationService {
       state: '/shr/comment',
       privilege:'Comment-Full Premission'
     },
+    // {
+    //   name: 'مقالات',
+    //   type: 'dropDown',
+    //   icon: 'i-File-Horizontal-Text',
+    //   privilege:'Users-Full Premission',
+    //   sub: [
+    //     {
+    //       icon: 'i-File-Horizontal-Text',
+    //       name: 'لیست مقالات',
+    //       state: '/crt/List',
+    //       type: 'link',
+    //       privilege:'UserPlane-Full Premission'
+    //     },
+        
+    //   ],
+    // },
     {
       name: 'نظرات من',
       type: 'link',
@@ -210,7 +226,7 @@ export class NavigationService {
       state: '/shr/all-Comments',
       privilege:'all-comment-user-Special-Premission'
     },
- 
+   
     // {
     //     name: 'Data Tables',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',

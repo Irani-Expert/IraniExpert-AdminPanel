@@ -4,6 +4,7 @@ import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/aut
 import { AdminLayoutSidebarLargeComponent } from './shared/components/layouts/admin-layout-sidebar-large/admin-layout-sidebar-large.component';
 import { AuthGuard } from './shared/services/auth/auth.guard';
 import { LoginAsUserComponent } from './views/dashboard/login-as-user/login-as-user.component';
+import * as path from 'path';
 
 const adminRoutes: Routes = [
   {
@@ -44,6 +45,11 @@ const adminRoutes: Routes = [
     path: 'sec',
     loadChildren: () =>
       import('./views/sec/sec.module').then((m) => m.SecModule),
+  },
+  {
+    path: 'crt',
+    loadChildren: () =>
+      import('./views/crt/contract.module').then((m) => m.ContractModule),
   },
 ];
 
@@ -101,7 +107,16 @@ const routes: Routes = [
       },
     ],
   },
-
+  {
+    path: 'crt',
+    children: [
+      {
+        path: 'crt',
+        loadChildren: () =>
+          import('./views/crt/contract.module').then((m) => m.ContractModule),
+      },
+    ],
+  },
   {
     path: 'bsk',
     children: [

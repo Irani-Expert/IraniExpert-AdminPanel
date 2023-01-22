@@ -1,0 +1,221 @@
+<!----------------------------------- Head Table  -->
+
+<div class="mb-4 d-block">
+    <button class="btn btn-primary mb-4" type="button" (click)="openModal(newcontract)">ایجاد</button>
+  </div>
+  <div class="row list-horizontal">
+    <div
+      class="list-item"
+      [ngClass]="{
+        'col-md-12': viewMode === 'list',
+        'col-md-3': viewMode === 'grid'
+      }"
+    >
+      <div
+        class="card bg-dark mb-4 d-flex"
+        [ngClass]="{
+          'flex-row': viewMode === 'list',
+          'flex-column': viewMode === 'grid'
+        }"
+      >
+        <div
+          class="flex-grow-1"
+          [ngClass]="{
+            'pl-2 d-flex': viewMode === 'list',
+            'd-block': viewMode === 'grid'
+          }"
+        >
+          <!-- <div class="list-thumb">
+                 THUMBNAIL
+              </div> -->
+          <!-- ID -->
+          <div class="align-self-center text-white">ID</div>
+          <div
+            class="card-body align-self-center d-flex align-items-lg-center text-center"
+            [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+          >
+            <!-- OTHER DATA -->
+  
+            <div class="m-0 col text-lg-center text-white">عنوان</div>
+            <div class="m-0 col text-lg-center text-white">نوع</div>
+            <div class="m-0 col text-lg-center text-white">تاریخ شروع</div>
+            <div class="m-0 col text-lg-center text-white">تاریخ پایان</div>
+            <div class="m-0 col text-lg-center text-white">عملیات</div>
+            <div class="m-0 col text-lg-center text-white">درصد دریافتی</div>
+            <div class="m-0 col text-lg-center text-white">نام</div>
+            <div class="m-0 col text-lg-center text-white">نقش</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Orders-List -->
+    <div
+      class="list-item"
+      [ngClass]="{
+        'col-md-12': viewMode === 'list',
+        'col-md-3': viewMode === 'grid'
+      }"
+    >
+      <div
+        class="card mb-2 o-hidden d-flex"
+        [ngClass]="{
+          'flex-row-2': viewMode === 'list',
+          'flex-column': viewMode === 'grid'
+        }"
+      >
+        <div
+          class="flex-grow-1"
+          [ngClass]="{
+            'pl-2 d-flex': viewMode === 'list',
+            'd-block': viewMode === 'grid'
+          }"
+        >
+          <div class="align-self-center"></div>
+          <div
+            class="card-body align-self-center d-flex align-items-lg-center text-center row"
+            [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+          >
+            <!-- OTHER DATA -->
+  
+            <div class="col m-0">xxx</div>
+            <div class="col m-0">xxxx</div>
+            <div class="col m-0">2222</div>
+            <div class="col m-0">
+              <span>333</span>
+            </div>
+            <div class="col m-0">xxxx</div>
+            <div class="col m-0">xxxx</div>
+            <div class="col m-0">xxxx</div>
+            <div class="col m-0">xxxx</div>
+          </div>
+        </div>
+        <div
+          class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
+        ></div>
+      </div>
+    </div>
+  </div>
+  <!-- <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
+      <img
+        src="../../../../../assets/images/97434-no-data-available.gif"
+        class="img-fluid w-50"
+        alt=""
+      />
+    </div>
+     -->
+  <!----------------Details Modal -->
+<ng-template #newcontract let-modal>
+  <div>
+    <div class="modal-header">
+      <h4 class="modal-title">جزئیات و تغییر وضعیت</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="contractList">
+        <div class="row">
+       
+         
+          
+          <div class="col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">عنوان</strong>
+            <input
+              class="form-control mt-1"
+              id="totalPrice"
+              rows="1"
+              
+            />
+          </div>
+       
+          <div class="col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">نوع قرار داد</strong>
+            <select   class="form-control mt-1"  name="example">
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="-">Other</option>
+            </select>
+          </div>
+
+          <div class="col-md-4 form-group mb-3">
+            <strong for="discountPrice" class="mb-3">درصد دریافتی</strong>
+            <input
+              class="form-control mt-1"
+              id="discountPrice"
+              rows="1"
+              
+            />
+          </div>
+      
+
+
+          
+        </div>
+        <div class="row">
+       
+         
+          
+          <div class="col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">تاریخ شروع</strong>
+            <div class="row">
+              <ng-persian-datepicker   class="first-show position-absolute col-12">
+                <input    name="startDate"
+                 
+                  class="form-control mt-1 rounded Checkout_input p-2 " type="text" >
+              </ng-persian-datepicker>
+            </div>
+          </div>
+       
+          <div class="col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">تاریخ پایان</strong>
+            <div class="row">
+              <ng-persian-datepicker   class="position-absolute col-12">
+                <input    name="startDate"
+                 
+                  class="form-control mt-1 rounded Checkout_input p-2 " type="text" >
+              </ng-persian-datepicker>
+            </div>
+          </div>
+
+          <div class="col-md-4 form-group mb-3">
+            <strong for="discountPrice" class="mb-3">نقش کاربر</strong>
+            <select   class="form-control mt-1"  name="example">
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="-">Other</option>
+            </select>
+          </div>
+      
+
+
+          
+        </div>
+        <div class="row">
+          <div class="col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">کاربر</strong>
+            <select   class="form-control mt-1"  name="example">
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="-">Other</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="modal.close(true)"
+      >
+        ویرایش
+      </button>
+    </div>
+  </div>
+</ng-template>
