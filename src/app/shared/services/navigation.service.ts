@@ -196,22 +196,22 @@ export class NavigationService {
       state: '/shr/comment',
       privilege:'Comment-Full Premission'
     },
-    // {
-    //   name: 'مقالات',
-    //   type: 'dropDown',
-    //   icon: 'i-File-Horizontal-Text',
-    //   privilege:'Users-Full Premission',
-    //   sub: [
-    //     {
-    //       icon: 'i-File-Horizontal-Text',
-    //       name: 'لیست مقالات',
-    //       state: '/crt/List',
-    //       type: 'link',
-    //       privilege:'UserPlane-Full Premission'
-    //     },
+     {
+       name: 'مقالات',
+       type: 'dropDown',
+       icon: 'i-File-Horizontal-Text',
+       privilege:'Users-Full Premission',
+       sub: [
+         {
+           icon: 'i-File-Horizontal-Text',
+           name: 'لیست مقالات',
+           state: '/crt/List',
+           type: 'link',
+           privilege:'UserPlane-Full Premission'
+         },
         
-    //   ],
-    // },
+       ],
+     },
     {
       name: 'نظرات من',
       type: 'link',

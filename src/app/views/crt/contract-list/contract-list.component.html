@@ -1,7 +1,7 @@
 <!----------------------------------- Head Table  -->
 
 <div class="mb-4 d-block">
-    <button class="btn btn-primary mb-4" type="button" (click)="openModal(newcontract)">ایجاد</button>
+    <button class="btn btn-primary mb-4" type="button" (click)="openModal(newcontract,undefined)">ایجاد</button>
   </div>
   <div class="row list-horizontal">
     <div
@@ -37,12 +37,10 @@
             <!-- OTHER DATA -->
   
             <div class="m-0 col text-lg-center text-white">عنوان</div>
-            <div class="m-0 col text-lg-center text-white">نوع</div>
+            <div class="m-0 col text-lg-center text-white">نوع قرارداد</div>
             <div class="m-0 col text-lg-center text-white">تاریخ شروع</div>
             <div class="m-0 col text-lg-center text-white">تاریخ پایان</div>
-            <div class="m-0 col text-lg-center text-white">عملیات</div>
             <div class="m-0 col text-lg-center text-white">درصد دریافتی</div>
-            <div class="m-0 col text-lg-center text-white">نام</div>
             <div class="m-0 col text-lg-center text-white">نقش</div>
           </div>
         </div>
@@ -69,6 +67,8 @@
             'pl-2 d-flex': viewMode === 'list',
             'd-block': viewMode === 'grid'
           }"
+          *ngFor="let item of allContract"
+
         >
           <div class="align-self-center"></div>
           <div
@@ -77,16 +77,15 @@
           >
             <!-- OTHER DATA -->
   
-            <div class="col m-0">xxx</div>
-            <div class="col m-0">xxxx</div>
-            <div class="col m-0">2222</div>
+            <div class="col m-0">{{item.title}}</div>
+            <div class="col m-0">{{item.sellingTypeTitle}}</div>
+            <div class="col m-0">{{item.fromDate}}</div>
             <div class="col m-0">
-              <span>333</span>
+              <span>{{item.toDate}}</span>
             </div>
-            <div class="col m-0">xxxx</div>
-            <div class="col m-0">xxxx</div>
-            <div class="col m-0">xxxx</div>
-            <div class="col m-0">xxxx</div>
+            <div class="col m-0">{{item.prcentReward}}</div>
+            <div class="col m-0">{{item.roleID}}</div>
+
           </div>
         </div>
         <div
@@ -119,7 +118,7 @@
     </div>
 
     <div class="modal-body">
-      <form [formGroup]="contractList">
+      <form [formGroup]="contractList" (ngSubmit)="submit()" >
         <div class="row">
        
          
@@ -128,31 +127,37 @@
             <strong for="totalPrice" class="mb-3">عنوان</strong>
             <input
               class="form-control mt-1"
-              id="totalPrice"
-              rows="1"
-              
+              [formControl]="contractList.controls['title']" 
+              id="title"
+
+              [(ngModel)]="contractModel.title" 
             />
           </div>
        
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">نوع قرار داد</strong>
-            <select   class="form-control mt-1"  name="example">
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="-">Other</option>
+            <select   class="form-control mt-1"  
+            [formControl]="contractList.controls['sellingType']" 
+            [(ngModel)]="contractModel.sellingType" 
+            id="sellingType"
+            >
+              <option value=0>IB</option>
+              <option value=1>Invesment</option>
+              <option value=2>License</option>
             </select>
           </div>
 
           <div class="col-md-4 form-group mb-3">
-            <strong for="discountPrice" class="mb-3">درصد دریافتی</strong>
+            <strong for="totalPrice" class="mb-3">درصد دریافتی</strong>
             <input
+            type="number"
               class="form-control mt-1"
-              id="discountPrice"
-              rows="1"
-              
+              [formControl]="contractList.controls['prcentReward']" 
+              id="prcentReward"
+
+              [(ngModel)]="contractModel.prcentReward" 
             />
           </div>
-      
 
 
           
@@ -164,20 +169,23 @@
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">تاریخ شروع</strong>
             <div class="row">
-              <ng-persian-datepicker   class="first-show position-absolute col-12">
-                <input    name="startDate"
-                 
+              <ng-persian-datepicker   class="position-absolute col-12">
+                <input    
+                       [formControl]="contractList.controls['fromDate']" 
+                   [(ngModel)]="contractModel.fromDate" 
+                   id="fromDate"
                   class="form-control mt-1 rounded Checkout_input p-2 " type="text" >
               </ng-persian-datepicker>
             </div>
           </div>
-       
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">تاریخ پایان</strong>
             <div class="row">
               <ng-persian-datepicker   class="position-absolute col-12">
-                <input    name="startDate"
-                 
+                <input    
+                       [formControl]="contractList.controls['toDate']" 
+                   [(ngModel)]="contractModel.toDate" 
+                   id="toDate"
                   class="form-control mt-1 rounded Checkout_input p-2 " type="text" >
               </ng-persian-datepicker>
             </div>
@@ -185,10 +193,15 @@
 
           <div class="col-md-4 form-group mb-3">
             <strong for="discountPrice" class="mb-3">نقش کاربر</strong>
-            <select   class="form-control mt-1"  name="example">
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="-">Other</option>
+            <select   class="form-control mt-1"  
+          [formControl]="contractList.controls['roleID']" 
+          [(ngModel)]="contractModel.roleID" 
+          id="roleID"
+         (change)="userRole($event.target.value)"
+     >
+              <option    *ngFor="
+              let item of roles" ngValue={{item.id}}>{{item.name}}</option>
+             
             </select>
           </div>
       
@@ -199,10 +212,14 @@
         <div class="row">
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">کاربر</strong>
-            <select   class="form-control mt-1"  name="example">
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="-">Other</option>
+            <select   class="form-control mt-1"  
+            [formControl]="contractList.controls['userID']" 
+            [(ngModel)]="contractModel.userID" 
+           
+>
+              <option  *ngFor="
+              let item of userInfo" value={{item.userID}}>{{item.firstname}} {{item.lastName}}</option>
+              
             </select>
           </div>
         </div>
@@ -212,9 +229,9 @@
       <button
         type="button"
         class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(true)"
+        (click)="contractWith()"
       >
-        ویرایش
+        ثبت 
       </button>
     </div>
   </div>

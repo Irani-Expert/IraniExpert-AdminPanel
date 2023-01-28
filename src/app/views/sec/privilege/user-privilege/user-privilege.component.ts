@@ -235,6 +235,7 @@ showData() {
             this.PrivilageSaver.roleID=x.roleID
             this.PrivilageSaver.privilageID=x.privilageID
             this.ChangePrivilage.push(this.PrivilageSaver)
+            
           })
           
           this.privilages.forEach(it=>{
@@ -305,7 +306,6 @@ showData() {
   this.ChangePrivilage.push(this.PrivilageSaver)
   
 
-  
  }
  
  else{
@@ -320,13 +320,14 @@ showData() {
         
         
        
+ 
 
     
   }
  
   NewPrivilageList(){
     
-
+debugger
      this._userPrivilageService.addUpdateUserPrivilege(this.ChangePrivilage).subscribe(response=>{
        if(response.data==1){
         this.toastr.success("موفقیت امیز بود", null, {

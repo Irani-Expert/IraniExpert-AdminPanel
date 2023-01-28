@@ -19,7 +19,7 @@ export class LoaderInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     this.loader.show();
-
+this.checkUserPermission()
     return next.handle(req).pipe(
       delay(10),
       finalize(() => this.loader.hide())
