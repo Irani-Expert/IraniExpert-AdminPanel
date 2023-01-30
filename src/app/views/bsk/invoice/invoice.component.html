@@ -258,9 +258,12 @@
             <input
               class="form-control mt-1"
               id="discountPrice"
+  
+
               rows="1"
+              (change)="changeFinalPrice($event.target.value)"
               value="{{ invoiceDetail.discountPrice | currency }}"
-              disabled
+              
             />
           </div>
           <div class="col-md-3 form-group mb-3">
@@ -271,8 +274,8 @@
               class="form-control mt-1 bg-success text-white"
               id="toPayPrice"
               rows="1"
-              value="{{ invoiceDetail.toPayPrice | currency }}"
-              disabled
+              value="{{ toPayPrice| currency }}"
+              min=" {{invoiceDetail.totalPrice}}"
             />
           </div>
           <div class="col-md-3 form-group mb-3">

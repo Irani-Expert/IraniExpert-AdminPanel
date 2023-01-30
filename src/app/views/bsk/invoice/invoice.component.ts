@@ -23,6 +23,8 @@ export class InvoiceComponent implements OnInit {
   page: Page = new Page();
   invoiceDetail: InvoiceModel = new InvoiceModel();
   addForm: FormGroup;
+  toPayPrice:number=0;
+  discountPrice:number=3
   constructor(
     public _invoiceService: InvoiceService,
     private toastr: ToastrService,
@@ -76,8 +78,9 @@ export class InvoiceComponent implements OnInit {
       );
   }
   openModal(content: any, item: InvoiceModel) {
-    debugger
     this.invoiceDetail = item;
+    this.toPayPrice=this.invoiceDetail.toPayPrice-this.invoiceDetail.discountPrice 
+    debugger
     this.modalService
       .open(content, {
         size: 'lg',
@@ -92,6 +95,7 @@ export class InvoiceComponent implements OnInit {
       });
   }
   async addOrUpdate(item: InvoiceModel) {
+   item.toPayPrice=this.toPayPrice
     await this._invoiceService
       .update(item.id, item, 'invoice')
       .toPromise()
@@ -119,8 +123,14 @@ export class InvoiceComponent implements OnInit {
     this.getInvoiceListByOrderId(this.page.pageNumber, this.page.size);
   }
   selectStatus($event: any) {
+    debugger
     if ($event != undefined) {
       this.invoiceDetail.status = parseInt($event);
     }
+  }
+  changeFinalPrice(discount:string){
+    debugger
+    var number = Number(discount.replace(/[^0-9.-]+/g,""));
+    this.toPayPrice=this.invoiceDetail.toPayPrice-number
   }
 }

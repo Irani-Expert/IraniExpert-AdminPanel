@@ -197,14 +197,14 @@ export class NavigationService {
       privilege:'Comment-Full Premission'
     },
      {
-       name: 'مقالات',
+       name: 'قرار داد ها',
        type: 'dropDown',
        icon: 'i-File-Horizontal-Text',
        privilege:'Users-Full Premission',
        sub: [
          {
            icon: 'i-File-Horizontal-Text',
-           name: 'لیست مقالات',
+           name: 'لیست قرار دادها',
            state: '/crt/List',
            type: 'link',
            privilege:'UserPlane-Full Premission'

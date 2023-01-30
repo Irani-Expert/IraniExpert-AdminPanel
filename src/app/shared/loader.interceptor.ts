@@ -19,14 +19,14 @@ export class LoaderInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     this.loader.show();
-this.checkUserPermission()
+ //this.checkUserPermission()
     return next.handle(req).pipe(
       delay(10),
       finalize(() => this.loader.hide())
     );
   }
   checkUserPermission() {
-    
+    debugger
     let currentUser: UserInfoModel = JSON.parse(
       localStorage.getItem('currentUser') ?? '{}'
     );

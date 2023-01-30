@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContractModel } from './contract.model';
-import * as moment from 'moment';
+import * as moment from 'jalali-moment';
 import { RoleService } from '../../sec/role-mangement/role.service';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
@@ -57,20 +57,26 @@ pipe = new DatePipe('en-US');
     this.getContrtactList()
   }
   getContrtactList(){
+    debugger
     this._contractService.get(0, 100, 'ID', null, 'Contract').subscribe(
       (res: Result<Paginate<ContractModel[]>>) => {
-        debugger
+        
         this.allContract = res.data.items;
-        var shamsi = require('shamsi-date-converter');
-        let counter=0 
-        this.allContract.forEach(x=>
-          {
-            let arr=shamsi.gregorianToJalali(x.fromDate);
-            this.allContract[counter].fromDate=arr[0]+'/'+arr[1]+'/'+arr[2]
-            arr=shamsi.gregorianToJalali(x.toDate);
-            this.allContract[counter].toDate=arr[0]+'/'+arr[1]+'/'+arr[2]
-            counter++;
-          })
+       let  m = moment();
+        
+
+       // m = moment.from('01/1989/24', 'en', 'MM/YYYY/DD');
+       console.log(new Intl.DateTimeFormat('fa-IR').format());
+       
+
+         let counter=0 
+         this.allContract.forEach(x=>
+           {
+       
+             this.allContract[counter].fromDate=moment(this.allContract[counter].fromDate, 'JYYYY/JMM/JDD').locale('fa').format('YYYY/MM/DD');
+             this.allContract[counter].toDate=moment(this.allContract[counter].toDate, 'JYYYY/JMM/JDD').locale('fa').format('YYYY/MM/DD');
+             counter++;
+           })
         
         // this.allContract.forEach(x=>
         //   {
@@ -83,6 +89,8 @@ pipe = new DatePipe('en-US');
         
       },
       (_error) => {
+   
+        
         this.toastr.error(
           'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
           null,
@@ -120,17 +128,15 @@ pipe = new DatePipe('en-US');
     this.contractModel.userID=Number(this.contractModel.userID)
     this.contractModel.roleID=Number(this.contractModel.roleID)
 
-    const JDate = require('jalali-date');
-    //covert Date
-    let toDate = this.contractModel.toDate.split("/")
-    const jdateToDate = JDate.toGregorian(parseInt(toDate[0]),parseInt(toDate[1]), parseInt(toDate[2])) // => Gregorian Date object
-    this.contractModel.toDate=moment(jdateToDate).format()
-  //covert Date
-  
-    let fromDate = this.contractModel.fromDate.split("/")
-    const jdate = JDate.toGregorian(parseInt(fromDate[0]),parseInt(fromDate[1]), parseInt(fromDate[2])) // => Gregorian Date object
-    this.contractModel.fromDate=moment(jdate).format()
-    
+    debugger
+
+   
+    this.contractModel.toDate= moment.from(this.contractModel.toDate, 'fa', 'YYYY/MM/DD').format('YYYY/MM/DD');
+
+
+    this.contractModel.fromDate= moment.from(this.contractModel.fromDate, 'fa', 'YYYY/MM/DD').format('YYYY/MM/DD');
+
+    debugger
     this._contractService
     .create(this.contractModel, 'Contract')
     .toPromise()
