@@ -26,7 +26,7 @@ import { number } from 'echarts';
 export class ContractListComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'list';
   roles: RoleModel[] = new Array<RoleModel>();
-  allContract:ContractModel[]=new Array<ContractModel>
+  allContract:ContractModel[]=new Array<ContractModel>();
   contractList:FormGroup;
   page: Page = new Page();
 userInfo:UserBaseInfoModel[]=new Array<UserBaseInfoModel>();
@@ -62,7 +62,7 @@ pipe = new DatePipe('en-US');
         debugger
         this.allContract = res.data.items;
         var shamsi = require('shamsi-date-converter');
-        let counter=0 
+        let counter=0
         this.allContract.forEach(x=>
           {
             let arr=shamsi.gregorianToJalali(x.fromDate);
@@ -71,7 +71,7 @@ pipe = new DatePipe('en-US');
             this.allContract[counter].toDate=arr[0]+'/'+arr[1]+'/'+arr[2]
             counter++;
           })
-        
+
         // this.allContract.forEach(x=>
         //   {
         //     x.fromDate=
@@ -80,7 +80,7 @@ pipe = new DatePipe('en-US');
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber;
-        
+
       },
       (_error) => {
         this.toastr.error(
@@ -110,7 +110,7 @@ pipe = new DatePipe('en-US');
         (reason) => {
           debugger
           console.log('Err!', reason);
-       
+
         }
       );
     this.getRoleList();
@@ -126,11 +126,11 @@ pipe = new DatePipe('en-US');
     const jdateToDate = JDate.toGregorian(parseInt(toDate[0]),parseInt(toDate[1]), parseInt(toDate[2])) // => Gregorian Date object
     this.contractModel.toDate=moment(jdateToDate).format()
   //covert Date
-  
+
     let fromDate = this.contractModel.fromDate.split("/")
     const jdate = JDate.toGregorian(parseInt(fromDate[0]),parseInt(fromDate[1]), parseInt(fromDate[2])) // => Gregorian Date object
     this.contractModel.fromDate=moment(jdate).format()
-    
+
     this._contractService
     .create(this.contractModel, 'Contract')
     .toPromise()
@@ -157,18 +157,18 @@ pipe = new DatePipe('en-US');
       }
     );
 
- 
-    
+
+
   }
   getRoleList() {
     this._roleService.get(0, 100, 'ID', null, 'aspnetrole').subscribe(
       (res: Result<Paginate<RoleModel[]>>) => {
-        
+
         this.roles = res.data.items;
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber;
-        
+
       },
       (_error) => {
         this.toastr.error(
