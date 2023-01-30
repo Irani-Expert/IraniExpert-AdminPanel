@@ -26,7 +26,7 @@ import { number } from 'echarts';
 export class ContractListComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'list';
   roles: RoleModel[] = new Array<RoleModel>();
-  allContract:ContractModel[]=new Array<ContractModel>
+  allContract:ContractModel[]=new Array<ContractModel>();
   contractList:FormGroup;
   page: Page = new Page();
 userInfo:UserBaseInfoModel[]=new Array<UserBaseInfoModel>();
@@ -78,6 +78,7 @@ pipe = new DatePipe('en-US');
              counter++;
            })
         
+
         // this.allContract.forEach(x=>
         //   {
         //     x.fromDate=
@@ -86,7 +87,7 @@ pipe = new DatePipe('en-US');
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber;
-        
+
       },
       (_error) => {
    
@@ -118,7 +119,7 @@ pipe = new DatePipe('en-US');
         (reason) => {
           debugger
           console.log('Err!', reason);
-       
+
         }
       );
     this.getRoleList();
@@ -137,6 +138,7 @@ pipe = new DatePipe('en-US');
     this.contractModel.fromDate= moment.from(this.contractModel.fromDate, 'fa', 'YYYY/MM/DD').format('YYYY/MM/DD');
 
     debugger
+
     this._contractService
     .create(this.contractModel, 'Contract')
     .toPromise()
@@ -163,18 +165,18 @@ pipe = new DatePipe('en-US');
       }
     );
 
- 
-    
+
+
   }
   getRoleList() {
     this._roleService.get(0, 100, 'ID', null, 'aspnetrole').subscribe(
       (res: Result<Paginate<RoleModel[]>>) => {
-        
+
         this.roles = res.data.items;
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber;
-        
+
       },
       (_error) => {
         this.toastr.error(
