@@ -31,19 +31,20 @@ export class ContractListComponent implements OnInit {
   page: Page = new Page();
 userInfo:UserBaseInfoModel[]=new Array<UserBaseInfoModel>();
 contractModel:ContractModel;
-pipe = new DatePipe('en-US');
+
   constructor(  private modalService: NgbModal  ,
     private _formBuilder: FormBuilder ,
     public _roleService: RoleService,
     private toastr: ToastrService,
-    private _contractService:ContractService
+    private _contractService:ContractService,
+    
     ) {
       this.page.pageNumber = 0;
       this.page.size = 12;
     }
 
   ngOnInit(): void {
-
+ 
     this.contractList = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       sellingType: [null, Validators.compose([Validators.required])],
@@ -62,19 +63,17 @@ pipe = new DatePipe('en-US');
       (res: Result<Paginate<ContractModel[]>>) => {
         
         this.allContract = res.data.items;
-       let  m = moment();
         
 
-       // m = moment.from('01/1989/24', 'en', 'MM/YYYY/DD');
-       console.log(new Intl.DateTimeFormat('fa-IR').format());
+       
        
 
          let counter=0 
          this.allContract.forEach(x=>
            {
        
-             this.allContract[counter].fromDate=moment(this.allContract[counter].fromDate, 'JYYYY/JMM/JDD').locale('fa').format('YYYY/MM/DD');
-             this.allContract[counter].toDate=moment(this.allContract[counter].toDate, 'JYYYY/JMM/JDD').locale('fa').format('YYYY/MM/DD');
+             this.allContract[counter].fromDate=moment(this.allContract[counter].fromDate, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD');
+             this.allContract[counter].toDate=moment(this.allContract[counter].toDate, 'YYYY/MM/DD').locale('fa').format('YYYY/MM/DD');
              counter++;
            })
         
@@ -109,6 +108,7 @@ pipe = new DatePipe('en-US');
       row.id = 0;
       row.prcentReward = 0;
     }
+    debugger
     this.contractModel = row;
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' ,  size: 'lg', })
@@ -125,20 +125,12 @@ pipe = new DatePipe('en-US');
     this.getRoleList();
   }
   contractWith(){
+    debugger
     this.contractModel.sellingType=Number(this.contractModel.sellingType)
     this.contractModel.userID=Number(this.contractModel.userID)
     this.contractModel.roleID=Number(this.contractModel.roleID)
-
-    debugger
-
-   
-    this.contractModel.toDate= moment.from(this.contractModel.toDate, 'fa', 'YYYY/MM/DD').format('YYYY/MM/DD');
-
-
-    this.contractModel.fromDate= moment.from(this.contractModel.fromDate, 'fa', 'YYYY/MM/DD').format('YYYY/MM/DD');
-
-    debugger
-
+    this.contractModel.toDate= moment.from(this.contractModel.toDate, 'fa', 'YYYY-MM-DD').format('YYYY-MM-DD');
+    this.contractModel.fromDate= moment.from(this.contractModel.fromDate, 'fa', 'YYYY-MM-DD').format('YYYY-MM-DD');  
     this._contractService
     .create(this.contractModel, 'Contract')
     .toPromise()
@@ -166,7 +158,28 @@ pipe = new DatePipe('en-US');
     );
 
 
-
+  }
+  removeContract(Id:number){
+  this._contractService.delete(Id,'Contract').subscribe(
+    (res: Result<ContractModel>) => {
+      
+    let x=res.data
+    this.getContrtactList()
+    },
+    (_error) => {
+ 
+      
+      this.toastr.error(
+        'خطا در حذف :برای این قرار داد رسید ثبت شده ',
+        null,
+        {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        }
+      );
+    }
+  );
+    
   }
   getRoleList() {
     this._roleService.get(0, 100, 'ID', null, 'aspnetrole').subscribe(

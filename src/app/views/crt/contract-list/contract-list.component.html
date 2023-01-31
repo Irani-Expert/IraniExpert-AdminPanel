@@ -29,7 +29,6 @@
                  THUMBNAIL
               </div> -->
           <!-- ID -->
-          <div class="align-self-center text-white">ID</div>
           <div
             class="card-body align-self-center d-flex align-items-lg-center text-center"
             [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
@@ -42,6 +41,8 @@
             <div class="m-0 col text-lg-center text-white">تاریخ پایان</div>
             <div class="m-0 col text-lg-center text-white">درصد دریافتی</div>
             <div class="m-0 col text-lg-center text-white">نقش</div>
+            <div class="m-0 col text-lg-center text-white">حذف</div>
+
           </div>
         </div>
       </div>
@@ -85,8 +86,16 @@
             </div>
             <div class="col m-0">{{item.prcentReward}}</div>
             <div class="col m-0">{{item.roleID}}</div>
-
-          </div>
+            <div class="col m-0">
+              <button
+              class="btn btn-danger"
+              (click)="removeContract(item.id)"
+            >
+              حذف
+            </button>
+          
+            </div>
+            </div>
         </div>
         <div
           class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
@@ -171,9 +180,8 @@
             <div class="row">
               <ng-persian-datepicker   class="position-absolute col-12">
                 <input    
-                       [formControl]="contractList.controls['fromDate']" 
+                   [formControl]="contractList.controls['fromDate']" 
                    [(ngModel)]="contractModel.fromDate" 
-                   id="fromDate"
                   class="form-control mt-1 rounded Checkout_input p-2 " type="text" >
               </ng-persian-datepicker>
             </div>
@@ -183,9 +191,8 @@
             <div class="row">
               <ng-persian-datepicker   class="position-absolute col-12">
                 <input    
-                       [formControl]="contractList.controls['toDate']" 
-                   [(ngModel)]="contractModel.toDate" 
-                   id="toDate"
+                    [(ngModel)]="contractModel.toDate" 
+                    [formControl]="contractList.controls['toDate']" 
                   class="form-control mt-1 rounded Checkout_input p-2 " type="text" >
               </ng-persian-datepicker>
             </div>
