@@ -12,4 +12,5 @@ export class ContractModel extends Base implements IContract {
   prcentReward: number;
   userID: number;
   roleID: number;
+  conditions:number[]=new Array<number>();
 }

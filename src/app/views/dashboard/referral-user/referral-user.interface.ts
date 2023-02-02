@@ -1,10 +1,8 @@
 import { IBase } from 'src/app/shared/interfaces/Base/base.interface';
+import { HeaderModel } from 'src/app/shared/models/HeaderModel';
+import { ordersModel } from 'src/app/shared/models/ordersModel';
 
 export interface IReferraluser extends IBase {
-    firstName: string;
-    lastName: string;
-    phoneNumber: number;
-    expireDate:string;
-    commission:string;
-    RegisterduserNumber:number;
+        header:HeaderModel;
+        orders:ordersModel[];
 }

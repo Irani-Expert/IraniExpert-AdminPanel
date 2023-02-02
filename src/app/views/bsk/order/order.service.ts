@@ -53,16 +53,17 @@ export class OrderService extends BaseService<OrderModel, 0> {
         _options
       );
     }
-    getreferralUser(referralCode:string){
+    getBysellingTypeQuery(userId:string,sellingType:number){
+      debugger
       let _options = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           Authorization: 'bearer ' + environment.jwtToken,
         }),
       };
-      return this._http.get<Result<Paginate<referraluserModel[]>>>(
+      return this._http.get<Result<referraluserModel>>(
         this._base +
-          '/Orders/GetOrdersByReffralCode/'+referralCode 
+        '/Orders/GetCommissionByUserIDBySellingTypeQuery?userId='+userId+'&SellingType='+sellingType
        ,
         _options
       );

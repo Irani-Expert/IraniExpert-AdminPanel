@@ -4,13 +4,13 @@ import { ContractListComponent } from './contract-list/contract-list.component';
 import { CrtRoutingModule } from './contract.routing';
 import { NgPersianDatepickerModule } from 'ng-persian-datepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 @NgModule({
   declarations: [ContractListComponent],
-  imports: [CrtRoutingModule, CommonModule,NgPersianDatepickerModule,FormsModule,ReactiveFormsModule]
+  imports: [CrtRoutingModule, CommonModule,NgPersianDatepickerModule,
+    FormsModule,ReactiveFormsModule,    NgMultiSelectDropDownModule.forRoot()]
     ,
 })
 export class ContractModule {}

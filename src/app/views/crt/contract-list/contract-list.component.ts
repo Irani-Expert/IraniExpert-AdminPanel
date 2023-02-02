@@ -15,6 +15,10 @@ import { ProductModel } from '../../prd/products-list/product.model';
 import { ArticleModel } from '../../cnt/article/article/article.model';
 import { UserBaseInfoModel } from 'src/app/shared/models/userBaseInfoModel';
 import { number } from 'echarts';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { ConditionModel } from 'src/app/shared/models/ConditionModel';
+import { conditionService } from '../Condition.service';
+import { Condition } from 'selenium-webdriver';
 
 
 @Component({
@@ -24,6 +28,9 @@ import { number } from 'echarts';
 
 })
 export class ContractListComponent implements OnInit {
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings:IDropdownSettings;
   viewMode: 'list' | 'grid' = 'list';
   roles: RoleModel[] = new Array<RoleModel>();
   allContract:ContractModel[]=new Array<ContractModel>();
@@ -31,20 +38,32 @@ export class ContractListComponent implements OnInit {
   page: Page = new Page();
 userInfo:UserBaseInfoModel[]=new Array<UserBaseInfoModel>();
 contractModel:ContractModel;
-
+condition:ConditionModel[]=new Array<ConditionModel>();
   constructor(  private modalService: NgbModal  ,
     private _formBuilder: FormBuilder ,
     public _roleService: RoleService,
     private toastr: ToastrService,
     private _contractService:ContractService,
-    
+    private _conditionService:conditionService,
     ) {
       this.page.pageNumber = 0;
       this.page.size = 12;
     }
 
   ngOnInit(): void {
- 
+    
+   
+  
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 2,
+      allowSearchFilter: true
+    };
+  
     this.contractList = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       sellingType: [null, Validators.compose([Validators.required])],
@@ -53,12 +72,30 @@ contractModel:ContractModel;
       toDate: [null, Validators.compose([Validators.required])],
       roleID: [null, Validators.compose([Validators.required])],
       userID: [null, Validators.compose([Validators.required])],
-
+      condition: [null],
     });
     this.getContrtactList()
   }
+  onItemSelect(item: any) {
+    this.contractModel.conditions.push(item.item_id)
+  }
+  onDeSelect(item: any) {
+   let remove=this.contractModel.conditions.findIndex(x=>x==item.item_id)
+   this.contractModel.conditions.splice(remove,1);
+  }
+  onSelectAll(items: any) {
+    this.contractModel.conditions=[]
+     items.forEach(x=>{
+      this.contractModel.conditions.push(x.item_id)
+     })
+     
+
+  }
+  onDeSelectAll(item: any) {
+this.contractModel.conditions=[]
+debugger
+  }
   getContrtactList(){
-    debugger
     this._contractService.get(0, 100, 'ID', null, 'Contract').subscribe(
       (res: Result<Paginate<ContractModel[]>>) => {
         
@@ -108,24 +145,22 @@ contractModel:ContractModel;
       row.id = 0;
       row.prcentReward = 0;
     }
-    debugger
     this.contractModel = row;
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' ,  size: 'lg', })
       .result.then(
         (result ) => {
-         debugger
         },
         (reason) => {
-          debugger
+          
           console.log('Err!', reason);
 
         }
       );
     this.getRoleList();
+    this.getCondition();
   }
   contractWith(){
-    debugger
     this.contractModel.sellingType=Number(this.contractModel.sellingType)
     this.contractModel.userID=Number(this.contractModel.userID)
     this.contractModel.roleID=Number(this.contractModel.roleID)
@@ -149,7 +184,6 @@ contractModel:ContractModel;
         }
       },
       (error) => {
-        debugger
         this.toastr.error('خطا مجدد تلاش فرمایید', null, {
           closeButton: true,
           positionClass: 'toast-top-left',
@@ -211,7 +245,6 @@ userRole(val:any){
           (res: Result<UserBaseInfoModel[]>) => {
             //  this.page.totalElements = res.data.length;
 this.userInfo=res.data;
-debugger
           },
           (_error) => {
             this.toastr.error(
@@ -225,5 +258,35 @@ debugger
           }
         );
 }
+getCondition(){
+  
+  this._conditionService.get(0, 100, 'ID', null, 'Condition').subscribe(
+    (res: Result<Paginate<ConditionModel[]>>) => {
+   
 
+    res.data.items.forEach(x=>{
+      let finder=this.dropdownList.findIndex(index=>index.item_id==x.id)
+      if(finder==-1){
+        this.dropdownList.push({item_id: x.id, item_text: x.title})
+
+      }    })
+      this.page.totalElements = res.data.totalCount;
+      this.page.totalPages = res.data.totalPages - 1;
+      this.page.pageNumber = res.data.pageNumber;
+
+    },
+    (_error) => {
+ 
+      
+      this.toastr.error(
+        'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+        null,
+        {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        }
+      );
+    }
+  );
+}
 }

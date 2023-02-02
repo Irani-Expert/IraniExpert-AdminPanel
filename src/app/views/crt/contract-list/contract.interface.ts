@@ -11,4 +11,6 @@ export interface IContract extends IBase {
   prcentReward: number;
   userID: number;
   roleID: number;
+  conditions:number[];
+
 }

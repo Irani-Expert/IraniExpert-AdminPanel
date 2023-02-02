@@ -67,12 +67,34 @@ export class NavigationService {
       state: '/dashboard/user-profile',
       privilege:'Dashboard-Full Premission'
     },
+
     {
       name: 'کاربران زیر مجموعه',
-      type: 'link',
+      type: 'dropDown',
       icon: 'i-Add-UserStar',
-      state: '/dashboard/referral-user',
-      privilege:'Subuser-Full Premission'
+      privilege:'Subuser-Full Premission',
+      sub: [
+        {
+          icon: 'i-File-Horizontal-Text',
+          name: 'investor',
+          state: '/dashboard/referral-user',
+          type: 'link',
+          privilege:'Subuser-Full Premission'
+        },
+        {
+          icon: 'i-File-Horizontal-Text',
+          name: 'license',
+          state: '/dashboard/referral-user',
+          type: 'link',
+          privilege:'Subuser-Full Premission'
+        },
+        {
+          icon: 'i-File-Horizontal-Text',
+          name: 'IB',
+          state: '/dashboard/referral-user',
+          type: 'link',
+          privilege:'Subuser-Full Premission'
+        },]
     },
     {
       name: 'محصولات',

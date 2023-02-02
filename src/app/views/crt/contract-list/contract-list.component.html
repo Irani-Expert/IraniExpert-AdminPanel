@@ -198,6 +198,33 @@
             </div>
           </div>
 
+<div class="col-md-4 form-group mb-3">
+  <strong for="totalPrice" class="mb-3">شروط قرار داد</strong>
+  <div class="row">
+    <ng-multiselect-dropdown
+    [formControl]="contractList.controls['condition']"
+    [placeholder]="'       لیست شروط قرارداد  '"
+    [settings]="dropdownSettings"
+    [data]="dropdownList"
+    [(ngModel)]="selectedItems"
+    (onSelect)="onItemSelect($event)"
+    (onSelectAll)="onSelectAll($event)"
+    (onDeSelect)="onDeSelect($event)"
+    (onDeSelectAll)="onDeSelectAll($event)"
+
+class="col-12 mt-1"
+  >
+  </ng-multiselect-dropdown>
+
+  </div>
+</div>
+    
+      
+
+
+          
+        </div>
+        <div class="row">
           <div class="col-md-4 form-group mb-3">
             <strong for="discountPrice" class="mb-3">نقش کاربر</strong>
             <select   class="form-control mt-1"  
@@ -211,12 +238,6 @@
              
             </select>
           </div>
-      
-
-
-          
-        </div>
-        <div class="row">
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">کاربر</strong>
             <select   class="form-control mt-1"  
@@ -229,6 +250,7 @@
               
             </select>
           </div>
+         
         </div>
       </form>
     </div>

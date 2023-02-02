@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { OrderService } from 'src/app/views/bsk/order/order.service';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { ordersModel } from 'src/app/shared/models/ordersModel';
+import { HeaderModel } from 'src/app/shared/models/HeaderModel';
 
 @Component({
   selector: 'app-referral-user',
@@ -14,7 +16,9 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 })
 export class ReferralUserComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'list';
-  rows: referraluserModel[] = new Array<referraluserModel>();
+  rows: referraluserModel
+  orders:ordersModel[]=new Array<ordersModel>();
+  header:HeaderModel
 refralcode:string;
   constructor(private _userService:UsersService
     ,   private toastr:ToastrService,
@@ -28,9 +32,10 @@ refralcode:string;
   getUser() {
     this._userService.getUserByToken().subscribe(
       (res: UserInforamationModel) => {
-        this.refralcode = res.referralCode;
+        res.id=1148
+        this.refralcode = res.id.toString();
         this.subUsers();
-        debugger
+        
       },
       (_error) => {
         this.toastr.error(
@@ -46,13 +51,15 @@ refralcode:string;
   }
   subUsers(){
 
-    this._orderService.getreferralUser(this.refralcode).subscribe(
-      (res: Result<Paginate<referraluserModel[]>>) => {
-
-        this.rows = res.data.items;
+    this._orderService.getBysellingTypeQuery(this.refralcode,2).subscribe(
+      (res: Result<referraluserModel>) => {
         debugger
+        this.rows = res.data;
+       this.orders= this.rows.orders
+this.header=this.rows.header
       },
       (_error) => {
+        
         this.toastr.error(
           'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
           null,
