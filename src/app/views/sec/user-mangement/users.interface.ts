@@ -5,5 +5,5 @@ export interface IUsers extends IBase {
   firstName: string;
   lastName: string;
   email: string;
-  accountNumber: string;
+  phoneNumber: string;
 }

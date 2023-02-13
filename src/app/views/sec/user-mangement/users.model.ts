@@ -6,5 +6,5 @@ export class UsersModel extends Base implements IUsers {
   firstName: string;
   lastName: string;
   email: string;
-  accountNumber: string;
+  phoneNumber: string;
 }

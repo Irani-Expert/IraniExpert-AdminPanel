@@ -140,6 +140,7 @@ debugger
     );
   }
   openModal(content: any,row:ContractModel) {
+   this.getCondition();
     if (row === undefined) {
       row = new ContractModel();
       row.id = 0;
@@ -158,7 +159,6 @@ debugger
         }
       );
     this.getRoleList();
-    this.getCondition();
   }
   contractWith(){
     this.contractModel.sellingType=Number(this.contractModel.sellingType)
@@ -196,9 +196,13 @@ debugger
   removeContract(Id:number){
   this._contractService.delete(Id,'Contract').subscribe(
     (res: Result<ContractModel>) => {
-      
+      this.toastr.success('با موفقیت حذف شد',null, {
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      })
     let x=res.data
     this.getContrtactList()
+    debugger
     },
     (_error) => {
  
@@ -265,11 +269,8 @@ getCondition(){
    
 
     res.data.items.forEach(x=>{
-      let finder=this.dropdownList.findIndex(index=>index.item_id==x.id)
-      if(finder==-1){
         this.dropdownList.push({item_id: x.id, item_text: x.title})
-
-      }    })
+})
       this.page.totalElements = res.data.totalCount;
       this.page.totalPages = res.data.totalPages - 1;
       this.page.pageNumber = res.data.pageNumber;

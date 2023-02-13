@@ -32,7 +32,7 @@ refralcode:string;
   getUser() {
     this._userService.getUserByToken().subscribe(
       (res: UserInforamationModel) => {
-        res.id=1148
+        
         this.refralcode = res.id.toString();
         this.subUsers();
         

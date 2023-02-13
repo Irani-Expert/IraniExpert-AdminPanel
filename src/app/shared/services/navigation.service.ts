@@ -81,20 +81,21 @@ export class NavigationService {
           type: 'link',
           privilege:'Subuser-Full Premission'
         },
-        {
-          icon: 'i-File-Horizontal-Text',
-          name: 'license',
-          state: '/dashboard/referral-user',
-          type: 'link',
-          privilege:'Subuser-Full Premission'
-        },
-        {
-          icon: 'i-File-Horizontal-Text',
-          name: 'IB',
-          state: '/dashboard/referral-user',
-          type: 'link',
-          privilege:'Subuser-Full Premission'
-        },]
+        // {
+        //   icon: 'i-File-Horizontal-Text',
+        //   name: 'license',
+        //   state: '/dashboard/referral-user',
+        //   type: 'link',
+        //   privilege:'Subuser-Full Premission'
+        // },
+        // {
+        //   icon: 'i-File-Horizontal-Text',
+        //   name: 'IB',
+        //   state: '/dashboard/referral-user',
+        //   type: 'link',
+        //   privilege:'Subuser-Full Premission'
+        // },
+      ]
     },
     {
       name: 'محصولات',
@@ -225,7 +226,7 @@ export class NavigationService {
        privilege:'Users-Full Premission',
        sub: [
          {
-           icon: 'i-File-Horizontal-Text',
+           icon: 'i-File-Clipboard-File--Text',
            name: 'لیست قرار دادها',
            state: '/crt/List',
            type: 'link',
@@ -237,7 +238,7 @@ export class NavigationService {
     {
       name: 'نظرات من',
       type: 'link',
-      icon: 'i-Speach-Bubbles',
+      icon: 'i-Speach-Bubble-3',
       state: '/shr/user-Comments',
       privilege:'comment-user-Special-Premission'
     },

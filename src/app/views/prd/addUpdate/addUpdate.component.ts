@@ -117,6 +117,7 @@ export class AddUpdateComponent implements OnInit {
 
   async addOrUpdate(row: ProductModel) {
     if (row.id === 0) {
+      
       this._productsService
         .create(row, 'product')
         .toPromise()
@@ -142,6 +143,7 @@ export class AddUpdateComponent implements OnInit {
           }
         );
     } else {
+      
       this._productsService
         .update(row.id, row, 'product')
         .toPromise()
