@@ -76,14 +76,14 @@ export class NavigationService {
       sub: [
         {
           icon: 'i-File-Horizontal-Text',
-          name: 'investor',
+          name: 'license',
           state: '/dashboard/referral-user',
           type: 'link',
           privilege:'Subuser-Full Premission'
         },
         // {
         //   icon: 'i-File-Horizontal-Text',
-        //   name: 'license',
+        //   name: 'investor',
         //   state: '/dashboard/referral-user',
         //   type: 'link',
         //   privilege:'Subuser-Full Premission'
