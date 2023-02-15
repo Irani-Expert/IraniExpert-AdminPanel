@@ -219,6 +219,14 @@ export class NavigationService {
       state: '/shr/comment',
       privilege:'Comment-Full Premission'
     },
+    {
+      name: 'تخفیف ها',
+      type: 'link',
+      icon: 'i-Dollar-Sign',
+      state: '/dct/discount',
+      privilege:'all-comment-user-Special-Premission'
+    },
+  
      {
        name: 'قرار داد ها',
        type: 'dropDown',
@@ -249,7 +257,7 @@ export class NavigationService {
       state: '/shr/all-Comments',
       privilege:'all-comment-user-Special-Premission'
     },
-   
+  
     // {
     //     name: 'Data Tables',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',

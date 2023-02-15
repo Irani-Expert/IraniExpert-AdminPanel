@@ -51,6 +51,11 @@ const adminRoutes: Routes = [
     loadChildren: () =>
       import('./views/crt/contract.module').then((m) => m.ContractModule),
   },
+  {
+    path: 'dct',
+    loadChildren: () =>
+      import('./views/dct/discount.module').then((m) => m.DiscountModule),
+  },
 ];
 
 const routes: Routes = [
@@ -118,6 +123,16 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'dct',
+    children: [
+      {
+        path: 'dct',
+        loadChildren: () =>
+          import('./views/dct/discount.module').then((m) => m.DiscountModule),
+      },
+    ],
+  },
+  {
     path: 'bsk',
     children: [
       {
@@ -146,7 +161,9 @@ const routes: Routes = [
           import('./views/sec/sec.module').then((m) => m.SecModule),
       },
     ],
+
   },
+
   // {
   //   path: '',
   //   component: BlankLayoutComponent,

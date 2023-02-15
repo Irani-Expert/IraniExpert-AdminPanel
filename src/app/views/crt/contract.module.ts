@@ -9,7 +9,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [ContractListComponent],
-  imports: [CrtRoutingModule, CommonModule,NgPersianDatepickerModule,
+  imports: [CrtRoutingModule, CommonModule,NgPersianDatepickerModule,NgMultiSelectDropDownModule,
     FormsModule,ReactiveFormsModule]
     ,
 })
