@@ -56,6 +56,7 @@ export class OrderComponent implements OnInit {
     this.getOrderList(this.page.pageNumber, this.page.size);
   }
   async getOrderList(pageNumber: number, seedNumber: number) {
+    
     this._orderService
       .get(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,

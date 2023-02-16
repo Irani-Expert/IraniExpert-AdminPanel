@@ -7,7 +7,7 @@ export class DiscountModel extends Base implements IDiscount {
   createBy:string
   code: string;
   expireDate: string;
-  amount: number;
+  amount: number=0;
   count: number=0;
   percent: number=0;
 }

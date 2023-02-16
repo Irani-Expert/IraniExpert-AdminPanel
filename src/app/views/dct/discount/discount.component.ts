@@ -22,6 +22,7 @@ export class DiscountComponent implements OnInit {
   ShowModel:DiscountModel=new DiscountModel
   AddList:FormGroup;
 checkbox:boolean=false
+
 todayDate:string
 
   constructor(     private toastr: ToastrService,  private modalService: NgbModal ,private _formBuilder: FormBuilder ,private _discountService:discountService   ) { 
@@ -37,7 +38,7 @@ todayDate:string
       count: [null, Validators.compose([Validators.required])],
     });
    
-  this.getDiscountList()
+  this.getDiscountList( this.page.pageNumber )
   }
   deleteDiscount(id:number){
     this._discountService.delete(id,"Discount").toPromise()
@@ -52,7 +53,7 @@ todayDate:string
           }
         );
         this.rows=[]
-        this.getDiscountList()
+        this.getDiscountList(this.page.pageNumber)
       } else {
         debugger
         this.toastr.error('خطا در حذف', res.message, {
@@ -63,11 +64,20 @@ todayDate:string
     })
     
   }
-  getDiscountList(){
-    
-   this._discountService.get(0,100,"","","Discount").subscribe(
+  setPage(pageInfo: number) {
+
+debugger
+    this.getDiscountList(pageInfo);
+  }
+  getDiscountList(pageNumber:number){
+  
+    this.page.pageNumber=pageNumber
+   this._discountService.get(pageNumber !== 0 ? pageNumber - 1 : pageNumber,12 ,"","","Discount").subscribe(
     (res: Result<Paginate<DiscountModel[]>>) => {
-      
+      this.page.totalElements = res.data.totalCount;
+      this.page.totalPages = res.data.totalPages - 1;
+      this.page.pageNumber = res.data.pageNumber + 1;
+      debugger
       this.rows=res.data.items
       let counter=0 
       this.rows.forEach(x=>
@@ -115,7 +125,8 @@ this.checkbox=!this.checkbox
              positionClass: 'toast-top-left',
            });
            debugger
-           this.getDiscountList()
+           this.modalService.dismissAll();
+           this.getDiscountList(0)
          } else {
            this.toastr.error(data.message, null, {
              closeButton: true,
