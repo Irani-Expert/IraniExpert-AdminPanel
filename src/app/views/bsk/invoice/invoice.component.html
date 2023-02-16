@@ -181,7 +181,7 @@
       <form [formGroup]="addForm" (ngSubmit)="submit()">
         <div class="row">
           <div class="col col-md-4 form-group mb-3">
-            <label for="createDate">ایجاد شده در:</label>
+            <label for="createDate">تاریخ ثبت فاکتور:</label>
             <div
               for="createDate"
               class="mb-3 text-white rounded-left rounded-right bg-dark p-2"
@@ -215,7 +215,7 @@
           </div>    -->
           </div>
           <div class="col-md-5 form-group mb-3">
-            <strong for="totalPrice" class="mb-3">نام و پلن محصول</strong>
+            <strong for="totalPrice" class="mb-3">پلن انتخابی</strong>
             <input
               class="form-control mt-1"
               id="totalPrice"
@@ -254,7 +254,7 @@
           </div>
 
           <div class="col-md-3 form-group mb-3">
-            <strong for="discountPrice" class="mb-3">تخفیف اعمال شده</strong>
+            <strong for="discountPrice" class="mb-3">تخفیف</strong>
             <input
               class="form-control mt-1"
               id="discountPrice"
@@ -268,7 +268,7 @@
           </div>
           <div class="col-md-3 form-group mb-3">
             <strong for="toPayPrice" class="mb-3"
-              >قیمت نهایی برای پرداخت</strong
+              >پرداخت نهایی</strong
             >
             <input
               class="form-control mt-1 bg-success text-white"
@@ -290,7 +290,7 @@
           </div>
 
           <div class="col-md-4 form-group mb-3">
-            <strong for="status" class="mb-3">تغییر وضعیت</strong>
+            <strong for="status" class="mb-3">وضعیت پرداخت</strong>
             <select
               class="form-control mt-1 text-dark"
               id="status"
@@ -300,7 +300,7 @@
               [ngModel]="invoiceDetail.status"
             >
               <option value="3">پرداخت شده</option>
-              <option value="99">با خطا مواجه شده</option>
+              <option value="99">عدم پرداخت</option>
             </select>
           </div>
 

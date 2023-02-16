@@ -69,7 +69,7 @@ export class NavigationService {
     },
 
     {
-      name: 'کاربران زیر مجموعه',
+      name: 'مشتریان من',
       type: 'dropDown',
       icon: 'i-Add-UserStar',
       privilege:'Subuser-Full Premission',
@@ -119,21 +119,21 @@ export class NavigationService {
       sub: [
         {
           icon: 'i-Sync',
-          name: 'سفارش ها در حال بررسی',
+          name: 'درانتظار تایید',
           state: '/bsk/orders',
           type: 'link',
           privilege:'CheckOrders-Full Premission'
         },
         {
           icon: 'i-Yes',
-          name: 'سفارش های تأیید شده',
+          name: 'تأیید شده',
           state: '/bsk/license',
           type: 'link',
           privilege:'ConfirmedOrders-Full Premission'
         },
         {
           icon: 'i-Yes',
-          name: 'لایسنس ها',
+          name: 'کل لایسنس ها',
           state: '/bsk/license/updates',
           type: 'link',
           privilege:'ConfirmedOrders-Full Premission'
@@ -162,7 +162,7 @@ export class NavigationService {
         },
         {
           icon: 'i-Business-Man',
-          name: ' مدیریت کاربران ',
+          name: ' کل کاربران',
           state: '/sec/user-management',
           type: 'link',
           privilege:'UserManangment-Full Premission'
