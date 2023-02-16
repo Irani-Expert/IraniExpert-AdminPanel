@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgPersianDatepickerModule } from 'ng-persian-datepicker';
 import { dctRoutingModule } from './discount.routing';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { DatePipe } from '@angular/common'
 
 
 
@@ -14,7 +15,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
   ],
   imports: [
     CommonModule,NgPersianDatepickerModule,
-    FormsModule,ReactiveFormsModule,dctRoutingModule,NgxPaginationModule
+    FormsModule,ReactiveFormsModule,dctRoutingModule,NgxPaginationModule,DatePipe
   ]
 })
 export class DiscountModule { }

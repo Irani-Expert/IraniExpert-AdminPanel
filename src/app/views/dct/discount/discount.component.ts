@@ -9,6 +9,7 @@ import { discountService } from '../discount.service';
 import { ToastrService } from 'ngx-toastr';
 import { number } from 'echarts';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-discount',
@@ -25,7 +26,8 @@ checkbox:boolean=false
 
 todayDate:string
 
-  constructor(     private toastr: ToastrService,  private modalService: NgbModal ,private _formBuilder: FormBuilder ,private _discountService:discountService   ) { 
+  constructor(     private toastr: ToastrService,  private modalService: NgbModal ,private _formBuilder: FormBuilder 
+    ,private _discountService:discountService  ,public datepipe: DatePipe ) { 
     this.page.pageNumber = 0;
     this.page.size = 12;
   }
@@ -114,6 +116,8 @@ this.checkbox=!this.checkbox
        this.ShowModel.amount=Number(this.ShowModel.amount)    }
       if(this.ShowModel.percent!=null){
          this.ShowModel.percent=Number(this.ShowModel.percent)    }
+     this.ShowModel.createDate=this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+     this.ShowModel.updateDate=this.datepipe.transform(new Date(), 'yyyy-MM-dd');
      this._discountService
      .create(this.ShowModel, 'Discount')
      .toPromise()

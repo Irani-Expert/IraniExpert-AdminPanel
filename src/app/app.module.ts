@@ -16,6 +16,7 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { JwtInterceptor } from './shared/services/auth/jwt.interceptor';
 import { ErrorInterceptor } from './shared/services/auth/error.interceptor';
 import { LoaderInterceptor } from './shared/loader.interceptor';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -45,6 +46,8 @@ import { LoaderInterceptor } from './shared/loader.interceptor';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     GlobalService,
+    DatePipe,
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
