@@ -8,7 +8,7 @@
     }"
   >
     <div
-      class="card bg-dark mb-4 d-flex"
+      class="card o-hidden bg-dark mb-4 d-flex"
       [ngClass]="{
         'flex-row': viewMode === 'list',
         'flex-column': viewMode === 'grid'
@@ -25,18 +25,21 @@
              THUMBNAIL
           </div> -->
         <!-- ID -->
-        <div class="align-self-center text-white">ID</div>
+
         <div
-          class="card-body align-self-center d-flex align-items-lg-center text-center"
+          id="myHeader"
+          class="card-body align-self-center d-flex align-items-lg-center row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
-
-          <div class="m-0 col text-lg-center text-white">شماره حساب</div>
-          <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
-          <div class="m-0 col text-lg-center text-white">هزینه</div>
-          <div class="m-0 col text-lg-center text-white">وضعیت</div>
-          <div class="m-0 text-light d-md-block d-none col text-center">
+          <div class="m-0 text-white col text-lg-center">کد رهگیری</div>
+          <div class="m-0 text-white col text-lg-center">شماره حساب</div>
+          <div class="m-0 text-white col text-lg-center">نام و پلن محصول</div>
+          <div class="m-0 text-white col text-lg-center">مبلغ</div>
+          <div class="m-0 text-white col text-lg-center">وضعیت</div>
+          <div
+            class="m-0 col d-md-block text-light d-lg-block d-xl-block d-sm-none d-none text-lg-center"
+          >
             عملیات
           </div>
         </div>
@@ -62,9 +65,9 @@
     "
   >
     <div
-      class="card mb-2 o-hidden d-flex"
+      class="card o-hidden mb-2 d-flex"
       [ngClass]="{
-        'flex-row-2': viewMode === 'list',
+        'flex-row': viewMode === 'list',
         'flex-column': viewMode === 'grid'
       }"
     >
@@ -75,42 +78,90 @@
           'd-block': viewMode === 'grid'
         }"
       >
-        <div class="align-self-center">{{ item.id }}</div>
         <div
-          class="card-body align-self-center d-flex align-items-lg-center text-center row"
+          class="card-body align-self-center d-flex align-items-lg-center row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
-        
-          <div class="col m-0">{{ item.accountNumber }}</div>
-          <div class="col m-0">{{ item.product }}|{{ item.plan }}</div>
-          <div class="col m-0">
-            {{ item.price | currency }}
+          <div class="m-0 col text-lg-center">{{ item.code }}</div>
+          <div class="m-0 col text-lg-center">{{ item.accountNumber }}</div>
+          <div class="m-0 col text-lg-center">
+            {{ item.product }}&nbsp;|&nbsp;{{ item.plan }}
           </div>
-          <div class="col m-0">
-          <span *ngIf="item.transactionStatus==6 " [ngClass]="item.transactionStatus==6 ? 'wait-span':''">{{ item.transactionStatus | transactionStatus }}</span>
-          <span *ngIf="item.transactionStatus==2 " [ngClass]="item.transactionStatus==2 ? 'success-span':''">{{ item.transactionStatus | transactionStatus }}</span>
-          <span *ngIf="item.transactionStatus==1 "  [ngClass]="item.transactionStatus==1 ? 'new-span':''">{{ item.transactionStatus | transactionStatus }}</span>
-          <span *ngIf="item.transactionStatus!=2 && item.transactionStatus!=1 && item.transactionStatus!=6 "  [ngClass]="item.transactionStatus!=2  && item.transactionStatus!=1 && item.transactionStatus!=6 ? 'failed-span':''">{{ item.transactionStatus | transactionStatus }}</span>
+          <div class="m-0 col text-lg-center">
+            {{ item.toPayPrice | currency }}
           </div>
+
+          <div class="m-0 col text-lg-center">
+            <div
+              class="badge-pill w-75 text-center p-1 text-white"
+              *ngIf="item.transactionStatus == 6"
+              [ngClass]="item.transactionStatus == 6 ? 'wait-span' : ''"
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
+            <div
+              class="badge-pill w-75 text-center p-1 text-white"
+              *ngIf="item.transactionStatus == 2 && item.filePath != null"
+              [ngClass]="item.transactionStatus == 2 ? 'success-span' : ''"
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
+            <div
+              class="badge-pill w-75 text-center p-1 text-white"
+              *ngIf="item.transactionStatus == 1"
+              [ngClass]="item.transactionStatus == 1 ? 'new-span' : ''"
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
+            <div
+              class="badge-pill w-75 text-center p-1 text-white"
+              *ngIf="
+                item.transactionStatus != 2 &&
+                item.transactionStatus != 1 &&
+                item.transactionStatus != 6
+              "
+              [ngClass]="
+                item.transactionStatus != 2 &&
+                item.transactionStatus != 1 &&
+                item.transactionStatus != 6
+                  ? 'failed-span'
+                  : ''
+              "
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
+            <div
+              [ngClass]="{ 'd-none': viewMode === 'grid' }"
+              *ngIf="item.transactionStatus == 2 && item.filePath == null"
+              class="badge-pill w-75 badge-info text-center p-1 text-white"
+              href=""
+            >
+              در حال اپلود لایسنس
+            </div>
+          </div>
+
           <div
-            class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+            class="m-0 col d-md-block d-lg-block d-xl-block d-sm-none d-none text-lg-center"
           >
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
-                <a  *ngIf="item.transactionStatus==2 && item.filePath!=null" class="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
+                <a
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                  *ngIf="item.transactionStatus == 2 && item.filePath != null"
+                  class="btn btn-info text-white"
+                  href="https://dl.iraniExpert.com/{{ item.filePath }}"
+                >
                   دانلود
                 </a>
-                <a  *ngIf="item.transactionStatus==2 && item.filePath==null" class="btn btn-info  text-white" href="">
-                  در حال اپلود لایسنس
-                </a>
+
                 <button
                   class="btn btn-info"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="addPay(item,PayModal)"
-                  *ngIf="item.transactionStatus==1"
+                  (click)="addPay(item, PayModal)"
+                  *ngIf="item.transactionStatus == 1"
                 >
-                ثبت پرداخت
+                  ثبت پرداخت
                 </button>
               </div>
               <div class="w-25 w-sm-100 ml-sm-2">
@@ -118,7 +169,7 @@
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="cancelOrder(item, cancelModal)"
-                  *ngIf="item.transactionStatus<2"
+                  *ngIf="item.transactionStatus < 2"
                 >
                   لغو سفارش
                 </button>
@@ -131,26 +182,31 @@
         class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
       >
         <h6 class="text-center">عملیات</h6>
-        <a  *ngIf="item.transactionStatus==2 && item.filePath!=null" lass="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
+        <a
+          [ngClass]="{ 'd-none': viewMode === 'grid' }"
+          *ngIf="item.transactionStatus == 2 && item.filePath != null"
+          class="btn btn-outline-info text-white col m-1"
+          href="https://dl.iraniExpert.com/{{ item.filePath }}"
+        >
           دانلود
         </a>
         <button
-          class="btn btn-outline-danger col m-1"
+          type="button"
+          class="btn btn-outline-info col m-1"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           (click)="addPay(item)"
-          *ngIf="item.transactionStatus==1"
+          *ngIf="item.transactionStatus == 1"
         >
           ثبت پرداخت
         </button>
-
 
         <button
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-danger col m-1"
           (click)="cancelOrder(item, cancelModal)"
-          *ngIf="item.transactionStatus<2"
-          >
+          *ngIf="item.transactionStatus < 2"
+        >
           لغو سفارش
         </button>
       </div>
@@ -171,7 +227,6 @@
     alt=""
   />
 </div>
-
 
 <ng-template #cancelModal let-modal>
   <div class="modal-header">
