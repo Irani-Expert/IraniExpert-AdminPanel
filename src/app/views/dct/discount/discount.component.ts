@@ -57,7 +57,7 @@ todayDate:string
         this.rows=[]
         this.getDiscountList(this.page.pageNumber)
       } else {
-        debugger
+        
         this.toastr.error('خطا در حذف', res.message, {
           timeOut: 3000,
           positionClass: 'toast-top-left',
@@ -68,7 +68,7 @@ todayDate:string
   }
   setPage(pageInfo: number) {
 
-debugger
+
     this.getDiscountList(pageInfo);
   }
   getDiscountList(pageNumber:number){
@@ -79,7 +79,7 @@ debugger
       this.page.totalElements = res.data.totalCount;
       this.page.totalPages = res.data.totalPages - 1;
       this.page.pageNumber = res.data.pageNumber + 1;
-      debugger
+      
       this.rows=res.data.items
       let counter=0 
       this.rows.forEach(x=>
@@ -128,7 +128,7 @@ this.checkbox=!this.checkbox
              closeButton: true,
              positionClass: 'toast-top-left',
            });
-           debugger
+           
            this.modalService.dismissAll();
            this.getDiscountList(0)
          } else {

@@ -48,7 +48,6 @@ export class UserOrderComponent implements OnInit {
 
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
-debugger
     this.getOrderList(this.page.pageNumber, this.page.size);
   }
   async getOrderList(pageNumber: number, seedNumber: number) {
@@ -61,6 +60,7 @@ debugger
       )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
+          debugger
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
@@ -119,7 +119,6 @@ debugger
     ref.componentInstance.order=order
     
     ref.result.then((result) =>  {
- debugger
  if(result){
   this.setPage(0)
  }

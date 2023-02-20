@@ -29,7 +29,6 @@ export class AddPaymentComponent implements OnInit {
   this.getInvoiceListByOrderId()
   }
   async getInvoiceListByOrderId() {
-    debugger
     this._invoiceService
       .GetByTableTypeAndRowId(
        0,
@@ -65,7 +64,6 @@ export class AddPaymentComponent implements OnInit {
   }
   async addOrUpdate(item: InvoiceModel,code:string) {
     item.bankResponse=code;
-    debugger
      item.status=4
     await this._invoiceService
       .update(item.id, item, 'invoice')

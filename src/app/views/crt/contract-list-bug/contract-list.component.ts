@@ -41,10 +41,10 @@ contractModel:ContractModel;
       .open(content, { ariaLabelledBy: 'modal-basic-title' ,  size: 'lg', })
       .result.then(
         (result ) => {
-         debugger
+         
         },
         (reason) => {
-          debugger
+          
           console.log('Err!', reason);
        
         }
@@ -53,6 +53,6 @@ contractModel:ContractModel;
  async check(){
     
     console.log(this.contractModel.prcentReward)
-    debugger
+    
   }
 }

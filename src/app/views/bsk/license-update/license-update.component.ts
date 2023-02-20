@@ -90,7 +90,7 @@ export class LicenseUpdateComponent implements OnInit {
       .uploadLicence(this.licenseFile, 'licenses')
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
-          debugger
+          
           this.licenseModel.filePath = res.data[0];
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,

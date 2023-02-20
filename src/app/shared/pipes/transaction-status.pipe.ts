@@ -26,7 +26,7 @@ export class TransactionStatusPipe implements PipeTransform {
         result = 'خطا در پراخت';
         break;
       case 6:
-        result = 'در حال برسی پرداخت';
+        result = 'درانتظار تایید';
         break;
       case 7:
         result = 'خطا در اعتبارسنجی';

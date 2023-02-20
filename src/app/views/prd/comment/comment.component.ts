@@ -160,7 +160,7 @@ export class CommentComponent implements OnInit {
           }
         );
     }
-    debugger
+    
     row.isAccepted = true;
     row.isActive = true;
     this._commentService

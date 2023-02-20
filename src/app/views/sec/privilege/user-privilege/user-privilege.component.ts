@@ -155,7 +155,7 @@ showData() {
           
           
         })
-     debugger
+     
        
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
@@ -327,7 +327,7 @@ showData() {
  
   NewPrivilageList(){
     
-debugger
+
      this._userPrivilageService.addUpdateUserPrivilege(this.ChangePrivilage).subscribe(response=>{
        if(response.data==1){
         this.toastr.success("موفقیت امیز بود", null, {

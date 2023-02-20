@@ -75,12 +75,12 @@ export class AllCommentComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
         (result) => {
-          debugger
+          
           if (result)
           this.acceptComment(row);
         },
         (reason) => {
-          debugger
+          
           console.log('Err!', reason);
         }
       );
@@ -109,7 +109,7 @@ export class AllCommentComponent implements OnInit {
           }
         );
     }
-    debugger
+    
     row.isAccepted = true;
     row.isActive = true;
     this._commentService

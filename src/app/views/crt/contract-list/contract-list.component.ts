@@ -93,7 +93,7 @@ condition:ConditionModel[]=new Array<ConditionModel>();
   }
   onDeSelectAll(item: any) {
 this.contractModel.conditions=[]
-debugger
+
   }
   getContrtactList(){
     this._contractService.get(0, 100, 'ID', null, 'Contract').subscribe(
@@ -202,7 +202,7 @@ debugger
       })
     let x=res.data
     this.getContrtactList()
-    debugger
+    
     },
     (_error) => {
  

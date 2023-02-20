@@ -39,6 +39,7 @@ export class OrderService extends BaseService<OrderModel, 0> {
           Authorization: 'bearer ' + environment.jwtToken,
         }),
       };
+      debugger
       return this._http.get<Result<Paginate<OrderModel[]>>>(
         this._base +
           '/Orders/GetByUserID' +
@@ -54,7 +55,7 @@ export class OrderService extends BaseService<OrderModel, 0> {
       );
     }
     getBysellingTypeQuery(userId:string,sellingType:number){
-      debugger
+      
       let _options = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

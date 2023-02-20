@@ -95,7 +95,6 @@ export class LicenseComponent implements OnInit {
             this.addForm.reset();
           }else{
             let climax=new CliamxLicenseModel();
-            debugger;
             climax.file=this.licenseFile;
             climax.accountNumber=this.licenseModel.accountNumber.toString();
             climax.startDate= this.startDate.year +
@@ -142,7 +141,6 @@ export class LicenseComponent implements OnInit {
         (data) => {
           if (data.success) {
             if(climax!==null){
-              debugger
               climax.licenseId=data.data;
               this._licenseService.sendLicenseToClimax(climax).toPromise()
               .then( (dt:CliamxResponse) => {
@@ -239,7 +237,6 @@ export class LicenseComponent implements OnInit {
       });
   }
   // uploadFile() {
-  //   debugger;
 
   //   this._fileUploaderService
   //     .uploadFile(this.licenseFile, 'licenses')

@@ -26,7 +26,6 @@ export class LoaderInterceptor implements HttpInterceptor {
     );
   }
   checkUserPermission() {
-    debugger
     let currentUser: UserInfoModel = JSON.parse(
       localStorage.getItem('currentUser') ?? '{}'
     );

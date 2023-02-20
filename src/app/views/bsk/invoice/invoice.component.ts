@@ -80,7 +80,6 @@ export class InvoiceComponent implements OnInit {
   openModal(content: any, item: InvoiceModel) {
     this.invoiceDetail = item;
     this.toPayPrice=this.invoiceDetail.toPayPrice-this.invoiceDetail.discountPrice 
-    debugger
     this.modalService
       .open(content, {
         size: 'lg',
@@ -123,13 +122,11 @@ export class InvoiceComponent implements OnInit {
     this.getInvoiceListByOrderId(this.page.pageNumber, this.page.size);
   }
   selectStatus($event: any) {
-    debugger
     if ($event != undefined) {
       this.invoiceDetail.status = parseInt($event);
     }
   }
   changeFinalPrice(discount:string){
-    debugger
     var number = Number(discount.replace(/[^0-9.-]+/g,""));
     this.toPayPrice=this.invoiceDetail.toPayPrice-number
   }

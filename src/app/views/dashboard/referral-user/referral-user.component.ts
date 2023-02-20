@@ -53,7 +53,7 @@ refralcode:string;
 
     this._orderService.getBysellingTypeQuery(this.refralcode,2).subscribe(
       (res: Result<referraluserModel>) => {
-        debugger
+        
         this.rows = res.data;
        this.orders= this.rows.orders
 this.header=this.rows.header

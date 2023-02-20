@@ -68,7 +68,7 @@ export class GalleryComponent implements OnInit {
         .result.then(
           (result: boolean) => {
             if (result != undefined) {
-              debugger
+              
               this.addOrUpdate(this.addUpdate);
               this.addForm.reset();
             }

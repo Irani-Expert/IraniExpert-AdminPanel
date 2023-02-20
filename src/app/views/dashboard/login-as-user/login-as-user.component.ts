@@ -20,7 +20,7 @@ export class LoginAsUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger
+    
     this.auth.checkUserPermission(this.token).subscribe((res) => {
       if (res) this.router.navigateByUrl('/dashboard/v1');
       else if (!res) {
