@@ -98,10 +98,10 @@
           >
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
-                <a  *ngIf="item.transactionStatus==2" class="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
+                <a  *ngIf="item.transactionStatus==2 && item.filePath!=null" class="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
                   دانلود
                 </a>
-                <a  *ngIf="item.transactionStatus==2&&item.filePath==null" class="btn btn-info  text-white" href="">
+                <a  *ngIf="item.transactionStatus==2 && item.filePath==null" class="btn btn-info  text-white" href="">
                   در حال اپلود لایسنس
                 </a>
                 <button
