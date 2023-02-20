@@ -78,8 +78,9 @@ export class InvoiceComponent implements OnInit {
       );
   }
   openModal(content: any, item: InvoiceModel) {
+    
     this.invoiceDetail = item;
-    this.toPayPrice=this.invoiceDetail.toPayPrice-this.invoiceDetail.discountPrice 
+    // this.toPayPrice=this.invoiceDetail.toPayPrice-this.invoiceDetail.discountPrice 
     this.modalService
       .open(content, {
         size: 'lg',
@@ -94,7 +95,6 @@ export class InvoiceComponent implements OnInit {
       });
   }
   async addOrUpdate(item: InvoiceModel) {
-   item.toPayPrice=this.toPayPrice
     await this._invoiceService
       .update(item.id, item, 'invoice')
       .toPromise()

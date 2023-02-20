@@ -39,7 +39,6 @@ export class OrderService extends BaseService<OrderModel, 0> {
           Authorization: 'bearer ' + environment.jwtToken,
         }),
       };
-      debugger
       return this._http.get<Result<Paginate<OrderModel[]>>>(
         this._base +
           '/Orders/GetByUserID' +
