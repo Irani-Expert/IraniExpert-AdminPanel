@@ -12,4 +12,5 @@ export class DiscountModel extends Base implements IDiscount {
   amount: number=0;
   count: number=0;
   percent: number=0;
+  isUsed:boolean=false;
 }
