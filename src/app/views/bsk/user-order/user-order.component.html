@@ -67,7 +67,7 @@
     <div
       class="card o-hidden mb-2 d-flex"
       [ngClass]="{
-        'flex-row': viewMode === 'list',
+        'flex-row-2': viewMode === 'list',
         'flex-column': viewMode === 'grid'
       }"
     >
@@ -185,7 +185,7 @@
         <a
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           *ngIf="item.transactionStatus == 2 && item.filePath != null"
-          class="btn btn-outline-info text-white col m-1"
+          class="btn btn-outline-info text-dark col m-1"
           href="https://dl.iraniExpert.com/{{ item.filePath }}"
         >
           دانلود
