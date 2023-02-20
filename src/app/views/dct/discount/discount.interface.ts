@@ -11,4 +11,5 @@ export interface IDiscount extends IBase {
   amount: number,
   count: number,
   percent: number,
+  isUsed:boolean
 }
