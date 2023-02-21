@@ -1,5 +1,5 @@
 <button
-*appCanAccess="'Users-Add'"
+  *appCanAccess="'Users-Add'"
   type="button"
   class="btn btn-primary mb-4"
   (click)="usersEdit(addUpdateModal, undefined)"
@@ -111,7 +111,7 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
-                *appCanAccess="'Users-Edit'"
+                  *appCanAccess="'Users-Edit'"
                   class="btn btn-warning"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="usersEdit(addUpdateModal, item)"
@@ -121,7 +121,7 @@
               </div>
               <div class="w-25 w-sm-100 ml-sm-2">
                 <button
-                *appCanAccess="'Users-Delete'"
+                  *appCanAccess="'Users-Delete'"
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteUser(item.id, deleteModal)"
@@ -138,7 +138,7 @@
       >
         <h6 class="text-center">عملیات</h6>
         <button
-        *appCanAccess="'Roles-Add'"
+          *appCanAccess="'Roles-Add'"
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           class="btn btn-outline-danger col m-1"
@@ -187,7 +187,7 @@
       type="button"
       class="close"
       aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
+      (click)="modal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -248,20 +248,17 @@
       </div>
     </div>
     <div class="modal-footer">
-      <ng-container  *ngIf="addUpdate.id !== 0">
-      <button
-      *appCanAccess="'user-management-final-Edit'"
-
-        ngbAutofocus
-        type="button"
-        class="btn btn-outline-dark btn-rounded mr-1"
-        (click)="modal.close(true)"
-
-
-      >
-        ویرایش
-      </button>
-    </ng-container>
+      <ng-container *ngIf="addUpdate.id !== 0">
+        <button
+          *appCanAccess="'user-management-final-Edit'"
+          ngbAutofocus
+          type="button"
+          class="btn btn-outline-dark btn-rounded mr-1"
+          (click)="modal.close(true)"
+        >
+          ویرایش
+        </button>
+      </ng-container>
       <button
         ngbAutofocus
         type="button"
@@ -274,7 +271,7 @@
       <button
         type="button"
         class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(false)"
+        (click)="modal.dismiss()"
       >
         انصراف
       </button>
@@ -283,13 +280,13 @@
 </ng-template>
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">حذف محصول</h4>
+    <h4 class="modal-title" id="modal-title">حذف کاربر</h4>
     <button
       type="button"
       class="close"
       aria-label="Close button"
       aria-describedby="modal-basic-title"
-      (click)="modal.dismiss('Cross click')"
+      (click)="modal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -301,7 +298,7 @@
     <button
       type="button"
       class="btn btn-outline-secondary btn-rounded mr-1"
-      (click)="modal.close(false)"
+      (click)="modal.dismiss()"
     >
       خیر
     </button>

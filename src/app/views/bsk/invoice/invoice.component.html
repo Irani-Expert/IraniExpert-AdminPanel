@@ -104,7 +104,7 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 mr-sm-2">
                 <button
-                *appCanAccess="'invoice-Watch'"
+                  *appCanAccess="'invoice-Watch'"
                   class="btn btn-info"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="openModal(openDetails, item)"
@@ -114,7 +114,7 @@
               </div>
               <div class="w-25 ml-sm-2">
                 <button
-                *appCanAccess="'invoice-Delete'"
+                  *appCanAccess="'invoice-Delete'"
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                 >
@@ -186,7 +186,7 @@
               for="createDate"
               class="mb-3 text-white rounded-left rounded-right bg-dark p-2"
             >
-              {{ invoiceDetail.createDate | date: " d MMMM " }}
+              {{ invoiceDetail.createDate | date : " d MMMM " }}
             </div>
           </div>
           <div class="col col-md-4 form-group mb-3">
@@ -258,24 +258,19 @@
             <input
               class="form-control mt-1"
               id="discountPrice"
-  
-
               rows="1"
               (change)="changeFinalPrice($event.target.value)"
               value="{{ invoiceDetail.discountPrice | currency }}"
-              
             />
           </div>
           <div class="col-md-3 form-group mb-3">
-            <strong for="toPayPrice" class="mb-3"
-              >پرداخت نهایی</strong
-            >
+            <strong for="toPayPrice" class="mb-3">پرداخت نهایی</strong>
             <input
               class="form-control mt-1 bg-success text-white"
               id="toPayPrice"
               rows="1"
-              value="{{ invoiceDetail.toPayPrice| currency }}"
-              min=" {{invoiceDetail.totalPrice}}"
+              value="{{ invoiceDetail.toPayPrice | currency }}"
+              min=" {{ invoiceDetail.totalPrice }}"
             />
           </div>
           <div class="col-md-3 form-group mb-3">
@@ -343,7 +338,7 @@
         class="btn btn-outline-dark btn-rounded"
         (click)="modal.close(true)"
       >
-        ویرایش
+        تائید
       </button>
     </div>
   </div>

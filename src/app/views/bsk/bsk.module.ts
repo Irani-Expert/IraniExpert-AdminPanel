@@ -18,6 +18,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { UserOrderComponent } from './user-order/user-order.component';
 import { LicenseUpdateComponent } from './license-update/license-update.component';
+import { JalaliPipe } from 'src/app/shared/pipes/jalali-time.pipe';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { LicenseUpdateComponent } from './license-update/license-update.componen
     LicenseComponent,
     UserOrderComponent,
     LicenseUpdateComponent,
+    JalaliPipe,
   ],
   imports: [
     NgbModule,

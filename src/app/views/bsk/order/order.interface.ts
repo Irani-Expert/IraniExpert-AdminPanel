@@ -19,4 +19,5 @@ export interface IOrder extends IBase {
   filePath: string;
   licenseID: number;
   toPayPrice: number;
+  startDate: string;
 }

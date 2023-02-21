@@ -8,7 +8,7 @@
     }"
   >
     <div
-      class="card o-hidden bg-dark mb-4 d-flex"
+      class="card bg-dark mb-4 d-flex"
       [ngClass]="{
         'flex-row': viewMode === 'list',
         'flex-column': viewMode === 'grid'
@@ -65,7 +65,7 @@
     "
   >
     <div
-      class="card o-hidden mb-2 d-flex"
+      class="card mb-2 d-flex"
       [ngClass]="{
         'flex-row-2': viewMode === 'list',
         'flex-column': viewMode === 'grid'
@@ -94,28 +94,28 @@
 
           <div class="m-0 col text-lg-center">
             <div
-              class="badge-pill w-75 text-center p-1 text-white"
+              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
               *ngIf="item.transactionStatus == 6"
               [ngClass]="item.transactionStatus == 6 ? 'wait-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-75 text-center p-1 text-white"
-              *ngIf="item.transactionStatus == 2 && item.filePath != null"
+              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              *ngIf="item.transactionStatus == 2"
               [ngClass]="item.transactionStatus == 2 ? 'success-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-75 text-center p-1 text-white"
+              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
               *ngIf="item.transactionStatus == 1"
               [ngClass]="item.transactionStatus == 1 ? 'new-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-75 text-center p-1 text-white"
+              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
               *ngIf="
                 item.transactionStatus != 2 &&
                 item.transactionStatus != 1 &&
@@ -131,30 +131,43 @@
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
-            <div
-              [ngClass]="{ 'd-none': viewMode === 'grid' }"
-              *ngIf="item.transactionStatus == 2 && item.filePath == null"
-              class="badge-pill w-75 badge-info text-center p-1 text-white"
-              href=""
-            >
-              در حال اپلود لایسنس
-            </div>
           </div>
 
-          <div
-            class="m-0 col d-md-block d-lg-block d-xl-block d-sm-none d-none text-lg-center"
-          >
-            <div class="text-center col-auto d-flex justify-content-around">
-              <div class="w-25 w-sm-100 mr-sm-2">
+          <div class="m-0 col d-md-block d-none">
+            <div
+              class="flex-column d-flex justify-content-center align-items-center"
+            >
+              <div class="col-12 col-lg-auto mt-2 mb-2">
                 <a
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   *ngIf="item.transactionStatus == 2 && item.filePath != null"
-                  class="btn btn-info text-white"
+                  class="btn btn-warning text-dark w-100"
                   href="https://dl.iraniExpert.com/{{ item.filePath }}"
                 >
                   دانلود
                 </a>
-
+              </div>
+              <div class="col-12 col-lg-auto mb-2">
+                <button
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                  *ngIf="item.transactionStatus == 2 && item.filePath != null"
+                  class="btn btn-primary text-white w-100"
+                  (click)="showDetails(item, detailModal)"
+                >
+                  جزئیات
+                </button>
+              </div>
+              <div class="col-12 col-lg-auto mb-2">
+                <button
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                  *ngIf="item.transactionStatus == 2 && item.filePath == null"
+                  class="btn btn-outline-light text-dark w-100"
+                  disabled
+                >
+                  در انتظار لایسنس
+                </button>
+              </div>
+              <div class="col-12 col-lg-auto mb-2">
                 <button
                   class="btn btn-info"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
@@ -164,7 +177,29 @@
                   ثبت پرداخت
                 </button>
               </div>
+            </div>
+            <!-- <div class="text-center col m-0 d-flex justify-content-around">
+              <div class="w-25 w-sm-100 mr-sm-2">
+                <a
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                  *ngIf="item.transactionStatus == 2 && item.filePath != null"
+                  class="btn btn-warning text-dark"
+                  href="https://dl.iraniExpert.com/{{ item.filePath }}"
+                >
+                  دانلود
+                </a>
+
+               
+              </div>
               <div class="w-25 w-sm-100 ml-sm-2">
+                <button
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                  *ngIf="item.transactionStatus == 2 && item.filePath != null"
+                  class="btn btn-primary text-white"
+                  (click)="showDetails(item, detailModal)"
+                >
+                  جزئیات
+                </button>
                 <button
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
@@ -174,22 +209,28 @@
                   لغو سفارش
                 </button>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
-      <div
-        class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
-      >
+      <div class="text-center row m-5 d-block d-md-none">
         <h6 class="text-center">عملیات</h6>
         <a
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           *ngIf="item.transactionStatus == 2 && item.filePath != null"
-          class="btn btn-outline-info text-dark col m-1"
+          class="btn btn-outline-warning text-dark col m-1"
           href="https://dl.iraniExpert.com/{{ item.filePath }}"
         >
           دانلود
         </a>
+        <button
+          [ngClass]="{ 'd-none': viewMode === 'grid' }"
+          *ngIf="item.transactionStatus == 2 && item.filePath != null"
+          class="btn btn-outline-primary col text-warning m-1"
+          (click)="showDetails(item, detailModal)"
+        >
+          جزئیات
+        </button>
         <button
           type="button"
           class="btn btn-outline-info col m-1"
@@ -228,37 +269,96 @@
   />
 </div>
 
+<!--  Detail-Modal -->
+<ng-template #detailModal let-modal>
+  <div>
+    <div class="modal-header">
+      <h4 class="modal-title">جزئیات سفارش</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col col-md-4 form-group mb-3">
+          <label for="startDate">تاریخ شروع لایسنس</label>
+          <div
+            for="startDate"
+            class="mb-3 text-white rounded-left rounded-right bg-dark p-2"
+          >
+            {{ userOrderDetail.startDate | jalali }}
+          </div>
+        </div>
+        <div class="col col-md-4 form-group mb-3">
+          <label for="expireDate">تاریخ انقضاء لایسنس</label>
+          <div
+            for="expireDate"
+            class="mb-3 text-white rounded-left rounded-right bg-dark p-2"
+          >
+            {{ userOrderDetail.expireDate | jalali }}
+          </div>
+        </div>
+        <div class="col col-md-4 form-group mb-3">
+          <label for="versionNumber">نسخه لایسنس</label>
+          <div
+            for="versionNumber"
+            class="mb-3 text-white rounded-left rounded-right bg-dark p-2"
+          >
+            {{ userOrderDetail.versionNumber }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-rounded mr-1"
+        (click)="modal.dismiss()"
+      >
+        بستن
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Cancel-Modal -->
 <ng-template #cancelModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">لغو سفارش</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close button"
-      aria-describedby="modal-title"
-      (click)="modal.dismiss(false)"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p><strong>آیا از لغو سفارشتان مطمئنید؟</strong></p>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
-      (click)="modal.dismiss(false)"
-    >
-      خیر
-    </button>
-    <button
-      type="button"
-      ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
-      (click)="modal.close(true)"
-    >
-      بله
-    </button>
+  <div>
+    <div class="modal-header">
+      <h4 class="modal-title">لغو سفارش</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p><strong>آیا از لغو سفارشتان مطمئنید؟</strong></p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-rounded mr-1"
+        (click)="modal.dismiss()"
+      >
+        خیر
+      </button>
+      <button
+        type="button"
+        ngbAutofocus
+        class="btn btn-wide btn-danger btn-rounded"
+        (click)="modal.close(true)"
+      >
+        بله
+      </button>
+    </div>
   </div>
 </ng-template>

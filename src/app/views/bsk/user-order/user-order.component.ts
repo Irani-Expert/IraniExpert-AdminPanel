@@ -10,12 +10,13 @@ import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { OrderModel } from '../order/order.model';
 import { OrderService } from '../order/order.service';
-import{AddPaymentComponent} from 'src/app/shared/components/add-payment/add-payment.component'
+import { AddPaymentComponent } from 'src/app/shared/components/add-payment/add-payment.component';
+import * as moment from 'jalali-moment';
 
 @Component({
   selector: 'app-user-order',
   templateUrl: './user-order.component.html',
-  styleUrls: ['./user-order.component.scss']
+  styleUrls: ['./user-order.component.scss'],
 })
 export class UserOrderComponent implements OnInit {
   toggled = false;
@@ -26,7 +27,8 @@ export class UserOrderComponent implements OnInit {
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   note: OrderModel;
-  user:UserInfoModel
+  user: UserInfoModel;
+  userOrderDetail: OrderModel = new OrderModel();
   constructor(
     public router: Router,
     public _orderService: OrderService,
@@ -42,7 +44,7 @@ export class UserOrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user=this.auth.currentUserValue
+    this.user = this.auth.currentUserValue;
     this.setPage(this.page.pageNumber);
   }
 
@@ -56,11 +58,11 @@ export class UserOrderComponent implements OnInit {
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
         'ID',
-        null,
+        null
       )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
-          debugger
+          debugger;
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
@@ -78,24 +80,44 @@ export class UserOrderComponent implements OnInit {
         }
       );
   }
+  showDetails(item: OrderModel, content: any) {
+    this.userOrderDetail = item;
+
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+      centered: true,
+    });
+  }
+  addPay(order: OrderModel) {
+    let ref = this.modalService.open(AddPaymentComponent, {
+      windowClass: 'radius-sm border-0 ',
+      size: 'sm',
+      ariaLabelledBy: 'modal-basic-title',
+      centered: true,
+      backdropClass: 'bg-dark',
+    });
+
+    ref.componentInstance.order = order;
+
+    ref.result.then((result) => {
+      if (result) {
+        this.setPage(0);
+      }
+    });
+  }
   cancelOrder(order: OrderModel, modal: any) {
-    order.transactionStatus=9;
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then((result) => {
+      .result.then((_result) => {
         this._orderService
-          .update(order.id,order, 'orders')
+          .update(order.id, order, 'orders')
           .toPromise()
           .then((res) => {
             if (res.success) {
-              this.toastr.success(
-                'فرایند  موفقیت آمیز بود',
-                'موفقیت آمیز!',
-                {
-                  timeOut: 3000,
-                  positionClass: 'toast-top-left',
-                }
-              );
+              this.toastr.success('فرایند  موفقیت آمیز بود', 'موفقیت آمیز!', {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
             } else {
               this.toastr.error('خطا در کنسل کردن', res.message, {
                 timeOut: 3000,
@@ -106,25 +128,4 @@ export class UserOrderComponent implements OnInit {
           });
       });
   }
-  addPay(order:OrderModel){
-    
-    let ref= this.modalService.open(AddPaymentComponent, {
-      windowClass: 'radius-sm border-0 ',
-      size: 'sm',
-      ariaLabelledBy: 'modal-basic-title',
-      centered: true,
-      backdropClass: 'bg-dark',
-    });
-    
-    ref.componentInstance.order=order
-    
-    ref.result.then((result) =>  {
- if(result){
-  this.setPage(0)
- }
-    
-
-      });
-
-      }
 }
