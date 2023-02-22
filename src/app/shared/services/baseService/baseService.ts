@@ -31,7 +31,12 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        
+        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
         Authorization: 'bearer ' + environment.jwtToken,
+        
       }),
     };
     return this._http.post<Result<number>>(this._base + '/' + route, t, _options);
@@ -48,8 +53,12 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
+      
     };
     return this._http.put<Result<T>>(
       this._base + '/' + route + '/' + id,
@@ -68,6 +77,9 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
@@ -93,6 +105,9 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
@@ -127,6 +142,9 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
@@ -149,6 +167,9 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
@@ -178,6 +199,9 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
