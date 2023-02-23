@@ -102,8 +102,8 @@
             </div>
             <div
               class="badge-pill w-100 w-md-75 text-center p-1 text-white"
-              *ngIf="item.transactionStatus == 2"
-              [ngClass]="item.transactionStatus == 2 ? 'success-span' : ''"
+              *ngIf="item.transactionStatus == 8"
+              [ngClass]="item.transactionStatus == 8 ? 'success-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
@@ -115,16 +115,25 @@
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
+            class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+            *ngIf="item.transactionStatus == 2"
+            [ngClass]="item.transactionStatus == 2 ? 'last-span' : ''"
+          >
+            {{ item.transactionStatus | transactionStatus }}
+          </div>
+            <div
               class="badge-pill w-100 w-md-75 text-center p-1 text-white"
               *ngIf="
                 item.transactionStatus != 2 &&
                 item.transactionStatus != 1 &&
-                item.transactionStatus != 6
+                item.transactionStatus != 6 &&
+                item.transactionStatus != 8
               "
               [ngClass]="
                 item.transactionStatus != 2 &&
                 item.transactionStatus != 1 &&
-                item.transactionStatus != 6
+                item.transactionStatus != 6 &&
+                item.transactionStatus != 8
                   ? 'failed-span'
                   : ''
               "
@@ -140,7 +149,7 @@
               <div class="col-12 col-lg-auto mt-2 mb-2">
                 <a
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  *ngIf="item.transactionStatus == 2 && item.filePath != null"
+                  *ngIf="item.transactionStatus == 8 && item.filePath != null"
                   class="btn btn-warning text-dark w-100"
                   href="https://dl.iraniExpert.com/{{ item.filePath }}"
                 >
@@ -150,7 +159,7 @@
               <div class="col-12 col-lg-auto mb-2">
                 <button
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  *ngIf="item.transactionStatus == 2 && item.filePath != null"
+                  *ngIf="item.transactionStatus == 8 ||item.transactionStatus == 2 && item.filePath != null"
                   class="btn btn-primary text-white w-100"
                   (click)="showDetails(item, detailModal)"
                 >

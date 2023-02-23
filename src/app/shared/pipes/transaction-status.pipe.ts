@@ -14,7 +14,7 @@ export class TransactionStatusPipe implements PipeTransform {
         result = 'در انتظار پرداخت';
         break;
       case 2:
-        result = ' نهایی ';
+        result = ' تایید شده';
         break;
       case 3:
         result = 'لغو شده پس از پرداخت';
@@ -30,6 +30,9 @@ export class TransactionStatusPipe implements PipeTransform {
         break;
       case 7:
         result = 'خطا در اعتبارسنجی';
+        break;
+        case 8:
+        result = 'نهایی ';
         break;
       case 9:
         result = 'لغو شده';

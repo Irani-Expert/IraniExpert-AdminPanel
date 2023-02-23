@@ -69,4 +69,17 @@ export class OrderService extends BaseService<OrderModel, 0> {
       _options
     );
   }
+  getByStatus(pageSize: number, pageIndex: number, transactionStatus: number) {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'bearer ' + environment.jwtToken,
+      }),
+    };
+    return this._http.get<Result<Paginate<OrderModel[]>>>(
+      this._base +
+        '/Orders/GetByStatus?pageIndex='+pageIndex+'&pageSize='+pageSize+'&transactionStatus='+transactionStatus,
+      _options
+    );
+  }
 }

@@ -1,4 +1,31 @@
 <!----------------------------------- Head Table  -->
+<div class="tabs">
+<ul ngbNav #nav="ngbNav" class="nav-tabs p-0 nav mb-5 text-center">
+
+  <li ngbNavItem  class="col-2" (click)="getOrderbyStatus(null)">
+    <a ngbNavLink>همه </a>
+    
+  </li>
+  <li ngbNavItem class="col-2" (click)="getOrderbyStatus(1)">
+    <a ngbNavLink>درحال پرداخت</a>
+  </li>
+  <li ngbNavItem  class="col-2" (click)="getOrderbyStatus(6)">
+    <a ngbNavLink>در انتظار تایید</a>
+
+  </li>
+  <li ngbNavItem class="col-2" (click)="getOrderbyStatus(2)">
+    <a ngbNavLink>تایید شده</a>
+  </li>
+  <li ngbNavItem class="col-2" (click)="getOrderbyStatus(8)">
+    <a ngbNavLink>نهایی</a>
+  </li>
+  <li ngbNavItem class="col-2" (click)="getOrderbyStatus(5)">
+    <a ngbNavLink>رد شده</a>
+  </li>
+
+
+</ul>
+</div>
 <div class="row list-horizontal">
   <div
     class="list-item"
@@ -36,7 +63,7 @@
           <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
           <div class="m-0 col text-lg-center text-white">هزینه</div>
           <div class="m-0 col text-lg-center text-white">شماره حساب</div>
-          <div class="m-0 col text-lg-center text-white">وضعیت</div>
+          <div class="m-0 col text-lg-center text-white" *ngIf="status==null">وضعیت</div>
           <div class="m-0 text-light d-md-block d-none col text-center">
             عملیات
           </div>
@@ -91,8 +118,8 @@
             {{ item.price | currency }}
           </div>
           <div class="col m-0">{{ item.accountNumber }}</div>
-          <div class="col m-0">
-            {{ item.transactionStatus | transactionStatus }}
+          <div class="col m-0" *ngIf="status==null">
+            {{ item.transactionStatus| transactionStatus }}
           </div>
 
           <div

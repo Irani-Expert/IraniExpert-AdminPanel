@@ -25,6 +25,7 @@ export class OrderComponent implements OnInit {
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   note: OrderModel;
+  status:number=null
   constructor(
     public router: Router,
     public _orderService: OrderService,
@@ -52,8 +53,38 @@ export class OrderComponent implements OnInit {
   }
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
-
+    
     this.getOrderList(this.page.pageNumber, this.page.size);
+  }
+  getOrderbyStatus(status:number){
+    this.page.pageNumber=1
+    this.status=status
+    this._orderService
+    .getByStatus(
+      6,
+      this.page.pageNumber-1,
+      status 
+   )
+    .subscribe(
+      (res: Result<Paginate<OrderModel[]>>) => {
+        this.rows = res.data.items;
+        debugger
+        this.page.totalElements = res.data.totalCount;
+        this.page.totalPages = res.data.totalPages - 1;
+        this.page.pageNumber = res.data.pageNumber + 1;
+      },
+      (_error) => {
+        this.toastr.error(
+          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+          null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          }
+        );
+      }
+    );
+
   }
   async getOrderList(pageNumber: number, seedNumber: number) {
     
@@ -68,6 +99,7 @@ export class OrderComponent implements OnInit {
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
           this.rows = res.data.items;
+          debugger
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;

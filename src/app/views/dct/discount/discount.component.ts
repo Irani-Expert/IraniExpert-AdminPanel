@@ -104,6 +104,8 @@ export class DiscountComponent implements OnInit {
       });
   }
   changeCheckBox() {
+    this.ShowModel.amount=0
+    this.ShowModel.percent=0
     this.checkbox = !this.checkbox;
   }
   createDiscount() {
