@@ -62,7 +62,7 @@ export class UserOrderComponent implements OnInit {
       )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
-          debugger;
+          
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;

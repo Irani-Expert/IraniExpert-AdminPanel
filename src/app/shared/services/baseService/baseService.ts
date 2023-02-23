@@ -126,7 +126,6 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
       _options
     );
   }
-
   /**
    * درخواست دریافت همه
    * @param route
@@ -139,7 +138,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     filter: string,
     route: string
   ): Observable<Result<Paginate<T[]>>> {
-    debugger
+   
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
