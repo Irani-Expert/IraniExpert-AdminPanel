@@ -62,7 +62,7 @@ export class UserOrderComponent implements OnInit {
       )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
-          debugger;
+          
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
@@ -70,7 +70,7 @@ export class UserOrderComponent implements OnInit {
         },
         (_error) => {
           this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+            'خطاارتباط با سرور! لطفا با پشتیبانی تماس بگیرید.',
             null,
             {
               closeButton: true,
