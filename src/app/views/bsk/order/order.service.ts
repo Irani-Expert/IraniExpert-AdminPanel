@@ -73,7 +73,9 @@ export class OrderService extends BaseService<OrderModel, 0> {
     debugger
     let _options = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json','Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        'Pragma': 'no-cache',
+        'Expires': '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
