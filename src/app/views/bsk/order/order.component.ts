@@ -57,6 +57,7 @@ export class OrderComponent implements OnInit {
     this.getOrderList(this.page.pageNumber, this.page.size);
   }
   getOrderbyStatus(status:number){
+    debugger
     this.page.pageNumber=1
     this.status=status
     this._orderService
@@ -68,7 +69,6 @@ export class OrderComponent implements OnInit {
     .subscribe(
       (res: Result<Paginate<OrderModel[]>>) => {
         this.rows = res.data.items;
-        debugger
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber + 1;
@@ -99,7 +99,6 @@ export class OrderComponent implements OnInit {
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
           this.rows = res.data.items;
-          debugger
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
