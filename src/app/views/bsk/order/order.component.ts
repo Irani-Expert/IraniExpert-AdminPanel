@@ -25,7 +25,7 @@ export class OrderComponent implements OnInit {
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   note: OrderModel;
-  status:number=null
+  status: any;
   constructor(
     public router: Router,
     public _orderService: OrderService,
@@ -40,7 +40,7 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setPage(this.page.pageNumber);
+    this.setPage(this.page.pageNumber, null);
     this.updateNotebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
     this.router.events
@@ -51,55 +51,19 @@ export class OrderComponent implements OnInit {
         }
       });
   }
-  setPage(pageInfo: number) {
+  setPage(pageInfo: number, transactionStatus: any) {
     this.page.pageNumber = pageInfo;
-    
-    this.getOrderList(this.page.pageNumber, this.page.size);
-  }
-  getOrderbyStatus(status:number){
-    this.page.pageNumber=1
-    this.status=status
-    this._orderService
-    .getByStatus(
-      6,
-      this.page.pageNumber-1,
-      status 
-   )
-    .subscribe(
-      (res: Result<Paginate<OrderModel[]>>) => {
-        this.rows = res.data.items;
-        debugger
-        this.page.totalElements = res.data.totalCount;
-        this.page.totalPages = res.data.totalPages - 1;
-        this.page.pageNumber = res.data.pageNumber + 1;
-      },
-      (_error) => {
-        this.toastr.error(
-          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-          null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          }
-        );
-      }
-    );
 
+    this.getOrderbyStatus(transactionStatus);
   }
-  async getOrderList(pageNumber: number, seedNumber: number) {
-    
+  getOrderbyStatus(status: any) {
+    this.status = status;
+    this.page.pageNumber = 1;
     this._orderService
-      .get(
-        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
-        seedNumber,
-        'ID',
-        null,
-        'orders'
-      )
+      .getByStatus(6, this.page.pageNumber - 1, status)
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
           this.rows = res.data.items;
-          debugger
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
@@ -116,7 +80,38 @@ export class OrderComponent implements OnInit {
         }
       );
   }
+  // async getOrderList(pageNumber: number, seedNumber: number) {
+  //   this._orderService
+  //     .get(
+  //       pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+  //       seedNumber,
+  //       'ID',
+  //       null,
+  //       'orders'
+  //     )
+  //     .subscribe(
+  //       (res: Result<Paginate<OrderModel[]>>) => {
+  //         this.rows = res.data.items;
+  //         debugger;
+  //         this.page.totalElements = res.data.totalCount;
+  //         this.page.totalPages = res.data.totalPages - 1;
+  //         this.page.pageNumber = res.data.pageNumber + 1;
+  //       },
+  //       (_error) => {
+  //         this.toastr.error(
+  //           'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+  //           null,
+  //           {
+  //             closeButton: true,
+  //             positionClass: 'toast-top-left',
+  //           }
+  //         );
+  //       }
+  //     );
+  // }
   deleteOrder(id: number, modal: any) {
+    console.log(this.status);
+
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then((result) => {
@@ -139,7 +134,7 @@ export class OrderComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-            this.getOrderList(this.page.pageNumber, this.page.size);
+            this.getOrderbyStatus(this.status);
           });
       });
   }

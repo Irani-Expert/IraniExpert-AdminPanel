@@ -1,32 +1,45 @@
-<!----------------------------------- Head Table  -->
-<div class="tabs">
-<ul ngbNav #nav="ngbNav" class="nav-tabs p-0 nav mb-5 text-center">
+<!----------------------------------- Change The Showing Context  -->
 
-  <li ngbNavItem  class="col-2" (click)="getOrderbyStatus(null)">
-    <a ngbNavLink>همه </a>
-    
-  </li>
-  <li ngbNavItem class="col-2" (click)="getOrderbyStatus(1)">
-    <a ngbNavLink>درحال پرداخت</a>
-  </li>
-  <li ngbNavItem  class="col-2" (click)="getOrderbyStatus(6)">
-    <a ngbNavLink>در انتظار تایید</a>
+<div class="row g-0 p-0 m-0">
+  <div class="col-12 row g-0 p-0 flex-row mb-2">
+    <div class="col-auto">
+      <button class="btn btn-secondary" (click)="getOrderbyStatus(null)">
+        تمامی سفارشات
+      </button>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-primary" (click)="getOrderbyStatus(1)">
+        در انتظار پرداخت
+      </button>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-dark" (click)="getOrderbyStatus(6)">
+        در انتظار تائید
+      </button>
+    </div>
 
-  </li>
-  <li ngbNavItem class="col-2" (click)="getOrderbyStatus(2)">
-    <a ngbNavLink>تایید شده</a>
-  </li>
-  <li ngbNavItem class="col-2" (click)="getOrderbyStatus(8)">
-    <a ngbNavLink>نهایی</a>
-  </li>
-  <li ngbNavItem class="col-2" (click)="getOrderbyStatus(5)">
-    <a ngbNavLink>رد شده</a>
-  </li>
-
-
-</ul>
+    <div class="col-auto">
+      <button
+        class="btn btn-confirmed text-white"
+        (click)="getOrderbyStatus(2)"
+      >
+        تائید شده
+      </button>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-final text-white" (click)="getOrderbyStatus(8)">
+        نهایی
+      </button>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-rejected text-white" (click)="getOrderbyStatus(5)">
+        رد شده
+      </button>
+    </div>
+  </div>
 </div>
-<div class="row list-horizontal">
+<!----------------------------------- Head Table  -->
+<div class="row list-horizntal">
   <div
     class="list-item"
     [ngClass]="{
@@ -63,7 +76,9 @@
           <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
           <div class="m-0 col text-lg-center text-white">هزینه</div>
           <div class="m-0 col text-lg-center text-white">شماره حساب</div>
-          <div class="m-0 col text-lg-center text-white" *ngIf="status==null">وضعیت</div>
+          <div class="m-0 col text-lg-center text-white" *ngIf="status == null">
+            وضعیت
+          </div>
           <div class="m-0 text-light d-md-block d-none col text-center">
             عملیات
           </div>
@@ -71,6 +86,7 @@
       </div>
     </div>
   </div>
+
   <!-- Orders-List -->
   <div
     class="list-item"
@@ -118,8 +134,8 @@
             {{ item.price | currency }}
           </div>
           <div class="col m-0">{{ item.accountNumber }}</div>
-          <div class="col m-0" *ngIf="status==null">
-            {{ item.transactionStatus| transactionStatus }}
+          <div class="col m-0" *ngIf="status == null">
+            {{ item.transactionStatus | transactionStatus }}
           </div>
 
           <div
@@ -194,7 +210,7 @@
   </div>
   <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
     <pagination-controls
-      (pageChange)="setPage($event)"
+      (pageChange)="setPage($event, this.status)"
       previousLabel=""
       nextLabel=""
     ></pagination-controls>

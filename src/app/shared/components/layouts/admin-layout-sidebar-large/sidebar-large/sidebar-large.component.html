@@ -4,7 +4,7 @@
   [perfectScrollbar]="{ suppressScrollX: true }"
 >
   <div class="logo">
-    <img src="./assets/images/logo.png" alt="" />
+    <img src="./assets/images/logo.jpg" alt="" />
   </div>
   <ul class="navigation-left">
     <ng-container *ngFor="let item of nav">
@@ -19,7 +19,6 @@
           routerLink="{{ item.state }}"
           (click)="closeChildNav()"
           *ngIf="!item.disabled && item.type === 'link'"
-      
         >
           <i class="text-white" [class]="'nav-icon  ' + item.icon"></i>
           <span class="nav-text text-white">{{ item.name }}</span>
@@ -28,7 +27,6 @@
           class="nav-item-hold"
           (mouseenter)="selectItem(item)"
           *ngIf="!item.disabled && item.type === 'dropDown'"
-      
         >
           <i class="text-white" [class]="'nav-icon ' + item.icon"></i>
           <span class="nav-text text-white">{{ item.name }}</span>
@@ -71,23 +69,10 @@
     <ul class="childNav" appDropdown>
       <li *ngFor="let item of parentItem?.sub" appDropdownLink class="nav-item">
         <ng-container *appCanAccess="item.privilege">
-        <a
-          routerLink="{{ item.state }}"
-          *ngIf="item.type === 'link'"
-          class=""
-          routerLinkActive="open"
-        >
-          <i
-            class="text-white"
-            *ngIf="item.icon"
-            [class]="'nav-icon ' + item.icon"
-          ></i>
-          <span class="item-name lvl1 text-white">{{ item.name }}</span>
-        </a>
-        <div *ngIf="item.type === 'dropDown'">
           <a
-            appDropdownToggle
-            [ngClass]="{ open: item.active }"
+            routerLink="{{ item.state }}"
+            *ngIf="item.type === 'link'"
+            class=""
             routerLinkActive="open"
           >
             <i
@@ -95,18 +80,31 @@
               *ngIf="item.icon"
               [class]="'nav-icon ' + item.icon"
             ></i>
-            <span class="item-name text-white">{{ item.name }}</span>
-            <i class="dd-arrow i-Arrow-Down"></i>
+            <span class="item-name lvl1 text-white">{{ item.name }}</span>
           </a>
-          <ng-container
-            *ngTemplateOutlet="menuTemplate; context: { parentItem: item }"
-          ></ng-container>
-        </div>
-      </ng-container>
+          <div *ngIf="item.type === 'dropDown'">
+            <a
+              appDropdownToggle
+              [ngClass]="{ open: item.active }"
+              routerLinkActive="open"
+            >
+              <i
+                class="text-white"
+                *ngIf="item.icon"
+                [class]="'nav-icon ' + item.icon"
+              ></i>
+              <span class="item-name text-white">{{ item.name }}</span>
+              <i class="dd-arrow i-Arrow-Down"></i>
+            </a>
+            <ng-container
+              *ngTemplateOutlet="menuTemplate; context: { parentItem: item }"
+            ></ng-container>
+          </div>
+        </ng-container>
       </li>
     </ul>
   </div>
-</ng-template> 
+</ng-template>
 
 <div
   [ngClass]="{ open: navService.sidebarState.childnavOpen }"
