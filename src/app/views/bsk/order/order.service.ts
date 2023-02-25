@@ -70,6 +70,7 @@ export class OrderService extends BaseService<OrderModel, 0> {
     );
   }
   getByStatus(pageSize: number, pageIndex: number, transactionStatus: number) {
+    debugger
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json','Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',

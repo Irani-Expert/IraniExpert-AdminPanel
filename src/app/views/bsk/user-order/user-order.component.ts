@@ -70,7 +70,7 @@ export class UserOrderComponent implements OnInit {
         },
         (_error) => {
           this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+            'خطاارتباط با سرور! لطفا با پشتیبانی تماس بگیرید.',
             null,
             {
               closeButton: true,
