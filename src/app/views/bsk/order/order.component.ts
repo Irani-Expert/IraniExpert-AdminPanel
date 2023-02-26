@@ -148,7 +148,6 @@ export class OrderComponent implements OnInit {
   //     .subscribe(
   //       (res: Result<Paginate<OrderModel[]>>) => {
   //         this.rows = res.data.items;
-  //         debugger;
   //         this.page.totalElements = res.data.totalCount;
   //         this.page.totalPages = res.data.totalPages - 1;
   //         this.page.pageNumber = res.data.pageNumber + 1;
@@ -199,7 +198,6 @@ export class OrderComponent implements OnInit {
       })
       .result.then((result: boolean) => {
         if (result != undefined) {
-          debugger
           this.licenseModel.rowID = row.id;
           this.licenseModel.id=row.licenseID;
           console.log(this.licenseModel);
