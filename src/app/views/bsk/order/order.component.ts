@@ -39,7 +39,7 @@ export class OrderComponent implements OnInit {
   addForm: FormGroup;
   startDate: any;
   expireDate: any;
-
+  headerValue:string="ID";
   licenseFile: any = '';
   licenseModel: LicenseModel = new LicenseModel();
 
@@ -62,6 +62,7 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.page.pageNumber=1
     this.addForm = this._formBuilder.group({
       startDate: [null],
       expireDate: [null],
@@ -83,9 +84,20 @@ export class OrderComponent implements OnInit {
 
     this.getOrderbyStatus(transactionStatus);
   }
+  test(){
+    if(this.headerValue!="Code"){
+      this.headerValue="Code"
+    }
+    else{
+      this.headerValue="ID"
+    }
+    
+  }
   getOrderbyStatus(status: any) {
+    if(this.status!=status){
+      this.page.pageNumber=1
+    }
     this.status = status;
-    this.page.pageNumber = 1;
     this._orderService
       .getByStatus(6, this.page.pageNumber - 1, status)
       .subscribe(
@@ -154,7 +166,6 @@ export class OrderComponent implements OnInit {
   //     );
   // }
   openDetailModal(item:OrderModel,openDetails:any){
-    debugger
     this.orderDetail=item
     this.modalService
       .open(openDetails, {
@@ -165,7 +176,6 @@ export class OrderComponent implements OnInit {
       
   }
   openModal(item:OrderModel,openDetails:any){
-    debugger
     this.orderDetail=item
     this.modalService
       .open(openDetails, {

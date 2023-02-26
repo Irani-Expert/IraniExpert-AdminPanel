@@ -65,7 +65,7 @@
              THUMBNAIL
           </div> -->
         <!-- ID -->
-        <div class="align-self-center text-white">ID</div>
+        <div class="align-self-center text-white cursor-pointer" (click)="test()">{{headerValue}}</div>
         <div
           class="card-body align-self-center d-flex align-items-lg-center text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
@@ -119,7 +119,8 @@
           'd-block': viewMode === 'grid'
         }"
       >
-        <div class="align-self-center">{{ item.id }}</div>
+        <div class="align-self-center" *ngIf="headerValue=='ID'">{{ item.id }}</div>
+        <div class="align-self-center" *ngIf="headerValue=='Code'">{{ item.code }}</div>
         <div
           class="card-body align-self-center d-flex align-items-lg-center text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
@@ -141,8 +142,9 @@
           <div
             class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
           >
-            <div class="text-center col-auto d-flex justify-content-around">
-              <div class="w-25 w-sm-100 mr-sm-2">
+            <div class="row text-center col-auto d-flex justify-content-around">
+              <div class="row ">
+              <div class="col-5">
                 <button
                   *appCanAccess="'note-Full Premission'"
                   class="btn btn-success"
@@ -152,7 +154,7 @@
                   یادداشت
                 </button>
               </div>
-              <div class="w-25 w-sm-100 mr-sm-2">
+              <div class="col-5">
                 <button
                   *appCanAccess="'invoice-Full Premission'"
                   class="btn btn-info"
@@ -162,39 +164,42 @@
                   جزِئیات
                 </button>
               </div>
-              <div class="w-25 w-sm-100 ml-sm-2">
-                <button
-                  *appCanAccess="'Product-Delete'"
-                  class="btn btn-danger"
-                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="deleteOrder(item.id, deleteModal)"
-                >
-                  حذف
-                </button>
-              </div>
-              <div class="w-25 w-sm-100 ml-sm-2" *ngIf="item.transactionStatus==2">
-                <button
-                type="button"
-                [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                class="btn btn-outline-info col m-1"
-                (click)="openUpdateModal(sendLicense,item)"
-              >
-                ارسال لایسنس
-              </button>
-              
-              </div>
-              <div *ngIf="item.transactionStatus==8">             <div class="w-25 w-sm-100 mr-sm-2">
-                <a class="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
-                  دانلود
-                </a>
-              </div>
-              <!-- <div class="w-25 w-sm-100 ml-sm-2">
-                <button class="btn btn-danger" [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                (click)="updateLicense(licence,item)">
-                  تغییر
-                </button>
-              </div> -->
             </div>
+              <div class="row pt-2 p-0 container">
+
+                <div class="col-5">
+                  <button
+                    *appCanAccess="'Product-Delete'"
+                    class="btn btn-danger"
+                    [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                    (click)="deleteOrder(item.id, deleteModal)"
+                  >
+                    حذف
+                  </button>
+                </div>
+                <div class="col-5" *ngIf="item.transactionStatus==2">
+                  <button
+                  type="button"
+                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                  class="btn btn-outline-info col m-1"
+                  (click)="openUpdateModal(sendLicense,item)"
+                >
+                  ارسال لایسنس
+                </button>
+                
+                </div>
+                <div class="col-5" *ngIf="item.transactionStatus==8">
+                  <a class="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
+                    دانلود
+                  </a>
+                <!-- <div class="w-25 w-sm-100 ml-sm-2">
+                  <button class="btn btn-danger" [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                  (click)="updateLicense(licence,item)">
+                    تغییر
+                  </button>
+                </div> -->
+                 </div>
+              </div>
  
             </div>
           </div>
