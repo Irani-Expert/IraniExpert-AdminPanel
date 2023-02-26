@@ -18,9 +18,12 @@ export class OrderModel extends Base implements IOrder {
   userInfo: any;
   startDate: string;
   expireDate: string;
+  createDate: string;
   versionNumber: number;
   filePath: string;
   licenseID: number;
   clientId: number;
   toPayPrice: number;
+  
+  
 }
