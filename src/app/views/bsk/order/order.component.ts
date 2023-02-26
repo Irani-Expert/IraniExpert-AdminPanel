@@ -67,6 +67,7 @@ export class OrderComponent implements OnInit {
       startDate: [null],
       expireDate: [null],
       accountNumber: [null],
+      versionNumber: [null],
     });
     this.setPage(this.page.pageNumber, null);
     this.updateNotebar();

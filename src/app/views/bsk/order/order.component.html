@@ -76,6 +76,7 @@
           <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
           <div class="m-0 col text-lg-center text-white">هزینه</div>
           <div class="m-0 col text-lg-center text-white">زمان ثبت سفارش</div>
+          <div class="m-0 col text-lg-center text-white">maxBalance</div>
           <div class="m-0 col text-lg-center text-white" *ngIf="status == null">
             وضعیت
           </div>
@@ -135,6 +136,7 @@
             {{ item.price | currency }}
           </div>
           <div class="col m-0">{{ item.createDate }}</div>
+          <div class="col m-0">{{ item.maxBalance }}</div>
           <div class="col m-0" *ngIf="status == null">
             {{ item.transactionStatus | transactionStatus }}
           </div>
@@ -167,29 +169,34 @@
             </div>
               <div class="row pt-2 p-0 container">
 
-                <div class="col-5">
+                <div class="col-12">
                   <button
                     *appCanAccess="'Product-Delete'"
-                    class="btn btn-danger"
+                    class="btn btn-danger w-100"
                     [ngClass]="{ 'd-none': viewMode === 'grid' }"
                     (click)="deleteOrder(item.id, deleteModal)"
                   >
                     حذف
                   </button>
                 </div>
-                <div class="col-5" *ngIf="item.transactionStatus==2">
+                
+              </div>
+              <div class="row pt-2 p-0 container">
+
+                
+                <div class="col-12 d-flex justify-content-center" *ngIf="item.transactionStatus==2">
                   <button
                   type="button"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  class="btn btn-outline-info col m-1"
+                  class="btn btn-outline-info col w-100 m-1"
                   (click)="openUpdateModal(sendLicense,item)"
                 >
                   ارسال لایسنس
                 </button>
                 
                 </div>
-                <div class="col-5" *ngIf="item.transactionStatus==8">
-                  <a class="btn btn-info  text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
+                <div class="col-12 d-flex justify-content-center" *ngIf="item.transactionStatus==8">
+                  <a class="btn btn-info w-100 text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
                     دانلود
                   </a>
                 <!-- <div class="w-25 w-sm-100 ml-sm-2">
@@ -199,8 +206,8 @@
                   </button>
                 </div> -->
                  </div>
+                
               </div>
- 
             </div>
           </div>
         </div>
@@ -587,6 +594,21 @@
               #e="ngbDatepicker"
               [(ngModel)]="expireDate"
               [formControl]="addForm.controls['expireDate']"
+            />
+          </div>
+          <div class="col-md-3 form-group mb-3" dir="ltr">
+            <strong for="expireDate" class="mb-3">versionNumber</strong>
+            <!-- <button (click)="e.toggle()" class="mb-3 btn btn-primary">
+              تاریخ انقضا
+            </button> -->
+            <input
+              (click)="e.toggle()"
+              type="text"
+              class="form-control"
+              ngbDatepicker
+              #e="ngbDatepicker"
+              [(ngModel)]="versionNumber"
+              [formControl]="addForm.controls['versionNumber']"
             />
           </div>
           <div class="col-md-5 form-group mb-3" dir="ltr">
