@@ -21,7 +21,8 @@ export interface IOrder extends IBase {
   licenseID: number;
   toPayPrice: number;
   startDate: string;
-  bankResponse:string;
-  code:string;
-  maximumBalance:number;
+  bankResponse: string;
+  code: string;
+  maximumBalance: number;
+  referralCode: string;
 }

@@ -1,5 +1,5 @@
 <!----------------------------------- Head Table  -->
-<div class="row list-horizontal">
+<!-- <div class="row list-horizontal">
   <div
     class="list-item"
     [ngClass]="{
@@ -20,18 +20,18 @@
           'pl-2 d-flex': viewMode === 'list',
           'd-block': viewMode === 'grid'
         }"
-      >
-        <!-- <div class="list-thumb">
+      > -->
+<!-- <div class="list-thumb">
                THUMBNAIL
             </div> -->
-        <!-- ID -->
-        <div class="align-self-center text-white">ID</div>
+<!-- ID -->
+<!-- <div class="align-self-center text-white">ID</div>
         <div
           class="card-body align-self-center d-flex align-items-lg-center text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-        >
-          <!-- OTHER DATA -->
-          <div class="col text-lg-center w-25 text-white">
+        > -->
+<!-- OTHER DATA -->
+<!-- <div class="col text-lg-center w-25 text-white">
             زمان ایجاد فاکتور
           </div>
           <div class="col text-lg-center w-25 text-white">پاسخ بانک</div>
@@ -43,9 +43,9 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- Invoice - List -->
-  <div
+  </div> -->
+<!-- Invoice - List -->
+<!-- <div
     class="list-item"
     [ngClass]="{
       'col-md-12': viewMode === 'list',
@@ -75,18 +75,18 @@
           'pl-2 d-flex': viewMode === 'list',
           'd-block': viewMode === 'grid'
         }"
-      >
-        <!-- <div class="list-thumb">
+      > -->
+<!-- <div class="list-thumb">
                  THUMBNAIL
               </div> -->
-        <!-- ID -->
-        <div class="align-self-center">{{ item.id }}</div>
+<!-- ID -->
+<!-- <div class="align-self-center">{{ item.id }}</div>
         <div
           class="card-body align-self-center d-flex align-items-lg-center text-center row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-        >
-          <!-- OTHER DATA -->
-          <div class="col m-0">
+        > -->
+<!-- OTHER DATA -->
+<!-- <div class="col m-0">
             {{ item.createDate | relativeTime }}
           </div>
           <div class="col m-0 brief-text">
@@ -124,8 +124,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <div
+      </div> -->
+<!-- <div
         class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
       >
         <h6 class="text-center">عملیات</h6>
@@ -146,8 +146,8 @@
         </button>
       </div>
     </div>
-  </div>
-  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+  </div> -->
+<!-- <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
     <pagination-controls
       (pageChange)="setPage($event)"
       previousLabel=""
@@ -161,9 +161,9 @@
     class="img-fluid w-50"
     alt=""
   />
-</div>
+</div> -->
 <!----------------Details Modal -->
-<ng-template #openDetails let-modal>
+<!-- <ng-template #openDetails let-modal>
   <div>
     <div class="modal-header">
       <h4 class="modal-title">جزئیات و تغییر وضعیت</h4>
@@ -196,8 +196,8 @@
               class="mb-3 text-white rounded-left rounded-right bg-dark p-2"
             >
               {{ invoiceDetail.updateDate | relativeTime }}
-            </div>
-            <!-- <div class="col col-md-5 form-group mb-3">
+            </div> -->
+<!-- <div class="col col-md-5 form-group mb-3">
               <label for="Name">نام و نام خانوادگی</label>
               <div
               for="Name"
@@ -212,9 +212,9 @@
             class="mb-3 text-white rounded-left rounded-right bg-dark p-2">
             {{orderModel.userInfo.phoneNumber }}
             </div>
-          </div>    -->
-          </div>
-          <div class="col-md-5 form-group mb-3">
+          </div>   
+          </div> -->
+<!-- <div class="col-md-5 form-group mb-3">
             <strong for="totalPrice" class="mb-3">پلن انتخابی</strong>
             <input
               class="form-control mt-1"
@@ -234,8 +234,8 @@
               disabled
             >
             </textarea>
-          </div>
-          <div class="col-md-4 form-group mb-3 align-self-md-end">
+          </div> -->
+<!-- <div class="col-md-4 form-group mb-3 align-self-md-end">
             <strong for="bankResponseDate"
               >زمان پاسخ بانک :{{
                 invoiceDetail.createDate | relativeTime
@@ -297,9 +297,9 @@
               <option value="3">پرداخت شده</option>
               <option value="99">عدم پرداخت</option>
             </select>
-          </div>
+          </div> -->
 
-          <!-- <div class="col-md-3 form-group mb-3">
+<!-- <div class="col-md-3 form-group mb-3">
             <strong for="bankType" class="mb-3">نوع بانک</strong>
             <input
               class="form-control mt-1 bg-success text-white"
@@ -310,7 +310,7 @@
             />
 
           </div> -->
-          <!-- <div class="col-md-3 form-group mb-3">
+<!-- <div class="col-md-3 form-group mb-3">
             <strong for="backMethodType" class="mb-3">قیمت نهایی برای پرداخت</strong>
             <input
               class="form-control mt-1 bg-success text-white"
@@ -321,18 +321,18 @@
             />
 
           </div> -->
-          <!-- [ngClass]="{
+<!-- [ngClass]="{
             'bg-primary': invoiceDetail.status === 0 ,
             'bg-light text-dark': invoiceDetail.status === 1 ,
             'bg-info': invoiceDetail.status === 2 ,
             'bg-success': invoiceDetail.status === 3 ,
             'bg-info': invoiceDetail.status === 4 ,
             'bg-warning text-dark': invoiceDetail.status === 98 ,
-            'bg-danger': invoiceDetail.status === 99 }" -->
+            'bg-danger': invoiceDetail.status === 99 }"
         </div>
       </form>
-    </div>
-    <div class="modal-footer">
+    </div> -->
+<!-- <div class="modal-footer">
       <button
         type="button"
         class="btn btn-outline-dark btn-rounded"
@@ -342,4 +342,4 @@
       </button>
     </div>
   </div>
-</ng-template>
+</ng-template> -->

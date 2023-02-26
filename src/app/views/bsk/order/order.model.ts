@@ -24,8 +24,8 @@ export class OrderModel extends Base implements IOrder {
   licenseID: number;
   clientId: number;
   toPayPrice: number;
-  bankResponse:string;
-  code:string;
-  maximumBalance:number;
-  
+  bankResponse: string;
+  code: string;
+  maximumBalance: number;
+  referralCode: string;
 }

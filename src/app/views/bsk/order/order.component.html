@@ -65,7 +65,15 @@
              THUMBNAIL
           </div> -->
         <!-- ID -->
-        <div class="align-self-cente align-items-center text-white cursor-pointer d-flex justify-content-center" (click)="test()">{{headerValue}}<i class="text-white i-Sync nav-icon m-2 float-end p-2 text-dark syncIcon "></i></div>
+        <div
+          class="align-self-cente align-items-center text-white cursor-pointer d-flex justify-content-center"
+          (click)="changeHeaderValue()"
+        >
+          {{ headerValue
+          }}<i
+            class="text-white i-Sync nav-icon m-2 float-end p-2 text-dark syncIcon"
+          ></i>
+        </div>
         <div
           class="card-body align-self-center d-flex align-items-lg-center text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
@@ -120,8 +128,12 @@
           'd-block': viewMode === 'grid'
         }"
       >
-        <div class="align-self-center" *ngIf="headerValue=='ID'">{{ item.id }}</div>
-        <div class="align-self-center" *ngIf="headerValue=='Code'">{{ item.code }}</div>
+        <div class="align-self-center" *ngIf="headerValue == 'ID'">
+          {{ item.id }}
+        </div>
+        <div class="align-self-center" *ngIf="headerValue == 'Code'">
+          {{ item.code }}
+        </div>
         <div
           class="card-body align-self-center d-flex align-items-lg-center text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
@@ -145,30 +157,29 @@
             class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
           >
             <div class="row text-center col-auto d-flex justify-content-around">
-              <div class="row ">
-              <div class="col-5">
-                <button
-                  *appCanAccess="'note-Full Premission'"
-                  class="btn btn-success"
-                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="toggleNotebar(item)"
-                >
-                  یادداشت
-                </button>
+              <div class="row">
+                <div class="col-5">
+                  <button
+                    *appCanAccess="'note-Full Premission'"
+                    class="btn btn-success"
+                    [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                    (click)="toggleNotebar(item)"
+                  >
+                    یادداشت
+                  </button>
+                </div>
+                <div class="col-5">
+                  <button
+                    *appCanAccess="'invoice-Full Premission'"
+                    class="btn btn-info"
+                    [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                    (click)="openDetailModal(item, openDetails)"
+                  >
+                    جزِئیات
+                  </button>
+                </div>
               </div>
-              <div class="col-5">
-                <button
-                  *appCanAccess="'invoice-Full Premission'"
-                  class="btn btn-info"
-                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="openDetailModal(item,openDetails)"
-                >
-                  جزِئیات
-                </button>
-              </div>
-            </div>
               <div class="row pt-2 p-0 container">
-
                 <div class="col-12">
                   <button
                     *appCanAccess="'Product-Delete'"
@@ -179,34 +190,38 @@
                     حذف
                   </button>
                 </div>
-                
               </div>
               <div class="row pt-2 p-0 container">
-
-                
-                <div class="col-12 d-flex justify-content-center" *ngIf="item.transactionStatus==2">
-                  <button
-                  type="button"
-                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  class="btn btn-outline-info col w-100 m-1"
-                  (click)="openUpdateModal(sendLicense,item)"
+                <div
+                  class="col-12 d-flex justify-content-center"
+                  *ngIf="item.transactionStatus == 2"
                 >
-                  ارسال لایسنس
-                </button>
-                
+                  <button
+                    type="button"
+                    [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                    class="btn btn-outline-info col w-100 m-1"
+                    (click)="openUpdateModal(sendLicense, item)"
+                  >
+                    ارسال لایسنس
+                  </button>
                 </div>
-                <div class="col-12 d-flex justify-content-center" *ngIf="item.transactionStatus==8">
-                  <a class="btn btn-info w-100 text-white" href="https://dl.iraniExpert.com/{{item.filePath}}">
+                <div
+                  class="col-12 d-flex justify-content-center"
+                  *ngIf="item.transactionStatus == 8"
+                >
+                  <a
+                    class="btn btn-info w-100 text-white"
+                    href="https://dl.iraniExpert.com/{{ item.filePath }}"
+                  >
                     دانلود
                   </a>
-                <!-- <div class="w-25 w-sm-100 ml-sm-2">
+                  <!-- <div class="w-25 w-sm-100 ml-sm-2">
                   <button class="btn btn-danger" [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="updateLicense(licence,item)">
                     تغییر
                   </button>
                 </div> -->
-                 </div>
-                
+                </div>
               </div>
             </div>
           </div>
@@ -366,71 +381,93 @@
     </div>
 
     <div class="modal-body">
-      <form [formGroup]="addForm" (ngSubmit)="submit()">
+      <div>
         <div class="row">
           <div class="col col-md-4 form-group mb-3">
-            <label for="createDate">تاریخ ثبت فاکتور:</label>
-            <div
-              for="createDate"
-              class="mb-3 text-white rounded-left rounded-right bg-dark p-2"
-            >
-              {{ orderDetail.createDate | date : " d MMMM " }}
-            </div>
-          </div>
-          <div class="col col-md-4 form-group mb-3">
-            <label for="updateDate">آخرین به روزرسانی:</label>
-            <div
-              for="updateDate"
-              class="mb-3 text-white rounded-left rounded-right bg-dark p-2"
-            >
-              {{ orderDetail.updateDate | relativeTime }}
-            </div>
-            <!-- <div class="col col-md-5 form-group mb-3">
-              <label for="Name">نام و نام خانوادگی</label>
-              <div
-              for="Name"
-              class="mb-3 text-white rounded-left rounded-right bg-dark p-2">
-              {{invoiceDetail.userInfo.firstName }}&nbsp;{{invoiceDetail.userInfo.firstName }}
-              </div>
-            </div>
-            <div class="col col-md-5 form-group mb-3">
-            <label for="phoneNumber">شماره</label>
-            <div
-            for="phoneNumber"
-            class="mb-3 text-white rounded-left rounded-right bg-dark p-2">
-            {{orderModel.userInfo.phoneNumber }}
-            </div>
-          </div>    -->
-          </div>
-          <div class="col-md-5 form-group mb-3">
-            <strong for="totalPrice" class="mb-3">پلن انتخابی</strong>
+            <strong for="totalPrice" class="mb-3">زمان ثبت سفارش</strong>
             <input
               class="form-control mt-1"
               id="totalPrice"
               rows="1"
-              value="{{ orderDetail.price | currency }}"
+              value="{{ orderDetail.createDate }}"
               disabled
             />
           </div>
-          <!-- <div class="col-md-8 form-group mb-3">
-            <strong for="bankResponse" class="mb-3">پاسخ بانک</strong>
-            <textarea
+          <div class="col col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">نام کاربر</strong>
+            <input
               class="form-control mt-1"
-              id="bankResponse"
+              id="totalPrice"
               rows="1"
-              value="{{ invoiceDetail.bankResponse }}"
+              value="{{ orderDetail.firstName }}&nbsp;{{
+                orderDetail.lastName
+              }}"
               disabled
-            >
-            </textarea>
-          </div> -->
-          <div class="col-md-4 form-group mb-3 align-self-md-end">
-            <strong for="bankResponseDate"
-              >زمان پاسخ بانک :{{
-                orderDetail.createDate | relativeTime
-              }}</strong
-            >
+            />
           </div>
-          <div class="col-md-3 form-group mb-3">
+          <div class="col col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">شماره تماس</strong>
+            <input
+              class="form-control mt-1"
+              id="totalPrice"
+              rows="1"
+              value="{{ orderDetail.phoneNumber }}"
+              disabled
+            />
+          </div>
+          <div class="col col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">شماره حساب</strong>
+            <input
+              class="form-control mt-1"
+              id="totalPrice"
+              rows="1"
+              value="{{ orderDetail.accountNumber }}"
+              disabled
+            />
+          </div>
+          <div class="col col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">کد رهگیری</strong>
+            <input
+              class="form-control mt-1"
+              id="totalPrice"
+              rows="1"
+              value="{{ orderDetail.code }}"
+              disabled
+            />
+          </div>
+          <div class="col col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">کد معرف</strong>
+            <input
+              class="form-control mt-1"
+              id="totalPrice"
+              rows="1"
+              value="{{ orderDetail.referralCode }}"
+              disabled
+            />
+          </div>
+
+          <div class="col-md-8 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">پاسخ بانک</strong>
+            <input
+              class="form-control mt-1"
+              id="totalPrice"
+              rows="1"
+              value="{{ orderDetail.bankResponse }}"
+              disabled
+            />
+          </div>
+          <div class="col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">توضیحات کاربر</strong>
+            <input
+              class="form-control mt-1"
+              id="totalPrice"
+              rows="1"
+              value="{{ orderDetail.description }}"
+              disabled
+            />
+          </div>
+
+          <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">قیمت محصول</strong>
             <input
               class="form-control mt-1"
@@ -440,8 +477,7 @@
               disabled
             />
           </div>
-
-          <div class="col-md-3 form-group mb-3">
+          <div class="col-md-4 form-group mb-3">
             <strong for="discountPrice" class="mb-3">تخفیف</strong>
             <input
               class="form-control mt-1"
@@ -449,9 +485,10 @@
               rows="1"
               (change)="changeFinalPrice($event.target.value)"
               value="{{ orderDetail.discountPrice | currency }}"
+              disabled
             />
           </div>
-          <div class="col-md-3 form-group mb-3">
+          <div class="col-md-4 form-group mb-3">
             <strong for="toPayPrice" class="mb-3">پرداخت نهایی</strong>
             <input
               class="form-control mt-1 bg-success text-white"
@@ -473,14 +510,12 @@
           </div>
 
           <div class="col-md-4 form-group mb-3">
-            <strong for="status" class="mb-3">وضعیت پرداخت</strong>
+            <strong for="status" class="mb-3">تغییر وضعیت پرداخت</strong>
             <select
               class="form-control mt-1 text-dark"
               id="status"
-              placeholder="{{ invoiceDetail.status | paymentStatus }}"
-              [formControl]="addForm.controls['status']"
+              [ngModel]="invoiceDetail.status"
               (ngModelChange)="selectStatus($event)"
-              [ngModel]="orderDetail.transactionStatus"
             >
               <option value="3">پرداخت شده</option>
               <option value="99">عدم پرداخت</option>
@@ -518,7 +553,7 @@
             'bg-warning text-dark': invoiceDetail.status === 98 ,
             'bg-danger': invoiceDetail.status === 99 }" -->
         </div>
-      </form>
+      </div>
     </div>
     <div class="modal-footer">
       <button
@@ -649,7 +684,12 @@
   <div>
     <div class="modal-header">
       <h4 class="modal-title">ارسال لایسنس</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -662,27 +702,35 @@
           </div>
           <strong class="text-danger col-3">فایل ارسالی باید zip باشد</strong>
           <div class="col-5 mt-2 mb-2">
-            <button class="btn btn-primary col-2" (click)="uploadFile()" [ngClass]="{
+            <button
+              class="btn btn-primary col-2"
+              (click)="uploadFile()"
+              [ngClass]="{
                 'd-none': isValidate === false,
                 'd-block': isValidate === true
-              }">
+              }"
+            >
               آپلود
             </button>
           </div>
         </div>
         <div class="row mt-2">
-            <strong for="expireDate" class="mb-3">شماره نسخه</strong>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="licenseModel.versionNumber"
-              [formControl]="addForm.controls['versionNumber']"
-            />
+          <strong for="expireDate" class="mb-3">شماره نسخه</strong>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="licenseModel.versionNumber"
+            [formControl]="addForm.controls['versionNumber']"
+          />
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close(true)">
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="modal.close(true)"
+      >
         ارسال
       </button>
     </div>
