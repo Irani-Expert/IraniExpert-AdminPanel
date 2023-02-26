@@ -26,5 +26,6 @@ export class OrderModel extends Base implements IOrder {
   toPayPrice: number;
   bankResponse:string;
   code:string;
+  maximumBalance:number;
   
 }
