@@ -23,5 +23,5 @@ export interface IOrder extends IBase {
   startDate: string;
   bankResponse:string;
   code:string;
-  maxBalance:number;
+  maximumBalance:number;
 }

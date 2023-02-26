@@ -136,7 +136,7 @@
             {{ item.price | currency }}
           </div>
           <div class="col m-0">{{ item.createDate }}</div>
-          <div class="col m-0">{{ item.maxBalance }}</div>
+          <div class="col m-0">{{ item.maximumBalance }}</div>
           <div class="col m-0" *ngIf="status == null">
             {{ item.transactionStatus | transactionStatus }}
           </div>
