@@ -15,6 +15,7 @@ export interface IOrder extends IBase {
   lastName: string;
   accountNumber: number;
   expireDate: string;
+  createDate: string;
   versionNumber: number;
   filePath: string;
   licenseID: number;
