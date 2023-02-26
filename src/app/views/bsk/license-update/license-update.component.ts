@@ -124,7 +124,6 @@ export class LicenseUpdateComponent implements OnInit {
       });
   }
   async addOrUpdate(item: LicenseModel) {
-    debugger
     await this._licenseService
       .update(item.id,item, 'License')
       .toPromise()
