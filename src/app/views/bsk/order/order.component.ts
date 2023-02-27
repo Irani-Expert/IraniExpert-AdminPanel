@@ -67,7 +67,6 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.page.pageNumber = 1;
     this.addForm = this._formBuilder.group({
       startDate: [null],
       expireDate: [null],

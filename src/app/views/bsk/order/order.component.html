@@ -635,16 +635,13 @@
             />
           </div>
           <div class="col-md-3 form-group mb-3" dir="ltr">
-            <strong for="expireDate" class="mb-3">versionNumber</strong>
+            <strong for="versionNumber" class="mb-3">versionNumber</strong>
             <!-- <button (click)="e.toggle()" class="mb-3 btn btn-primary">
               تاریخ انقضا
             </button> -->
             <input
-              (click)="e.toggle()"
               type="text"
               class="form-control"
-              ngbDatepicker
-              #e="ngbDatepicker"
               [(ngModel)]="versionNumber"
               [formControl]="addForm.controls['versionNumber']"
             />
@@ -683,7 +680,7 @@
     </div>
   </div>
 </ng-template>
-<ng-template #licence let-modal>
+<!-- <ng-template #licence let-modal>
   <div>
     <div class="modal-header">
       <h4 class="modal-title">ارسال لایسنس</h4>
@@ -738,4 +735,4 @@
       </button>
     </div>
   </div>
-</ng-template>
+</ng-template> -->

@@ -18,21 +18,21 @@ const routes: Routes = [
     component: UserOrderComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'invoice/:orderId',
-    component: InvoiceComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'license',
-    component: LicenseComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'license/updates',
-    component: LicenseUpdateComponent,
-    canActivate: [AuthGuard],
-  },
+  // {
+  //   path: 'invoice/:orderId',
+  //   component: InvoiceComponent,
+  //   canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: 'license',
+  //   component: LicenseComponent,
+  //   canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: 'license/updates',
+  //   component: LicenseUpdateComponent,
+  //   canActivate: [AuthGuard],
+  // },
 ];
 
 @NgModule({

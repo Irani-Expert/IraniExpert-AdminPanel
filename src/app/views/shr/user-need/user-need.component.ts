@@ -48,19 +48,13 @@ export class UserNeedComponent implements OnInit {
   }
   setPage(pageInfo: number, userWant: any) {
     this.page.pageNumber = pageInfo;
-    this.getUserNeedByUserWant(userWant);
+    this.getUserNeedByUserWant(userWant, pageInfo);
   }
 
-  getUserNeedByUserWant(userWant: any) {
+  getUserNeedByUserWant(userWant: any, pageNumber: number) {
     this.userWant = userWant;
     this._UserNeedService
-      .getByStatus(
-        12,
-        this.page.pageNumber !== 0
-          ? this.page.pageNumber - 1
-          : this.page.pageNumber,
-        userWant
-      )
+      .getByStatus(12, pageNumber !== 0 ? pageNumber - 1 : pageNumber, userWant)
       .subscribe(
         (res: Result<Paginate<UserNeedModel[]>>) => {
           this.rows = res.data.items;

@@ -1,17 +1,20 @@
 <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
     <div class="col-auto mb-2">
-      <button class="btn btn-secondary" (click)="getUserNeedByUserWant(null)">
+      <button
+        class="btn btn-secondary"
+        (click)="getUserNeedByUserWant(null, 0)"
+      >
         آخرین درخواست ها
       </button>
     </div>
     <div class="col-auto mb-2">
-      <button class="btn btn-primary" (click)="getUserNeedByUserWant(0)">
+      <button class="btn btn-primary" (click)="getUserNeedByUserWant(0, 0)">
         دمو
       </button>
     </div>
     <div class="col-auto mb-2">
-      <button class="btn btn-dark" (click)="getUserNeedByUserWant(1)">
+      <button class="btn btn-dark" (click)="getUserNeedByUserWant(1, 0)">
         مشاوره
       </button>
     </div>
@@ -19,7 +22,7 @@
     <div class="col-auto mb-2">
       <button
         class="btn btn-dark-yellow text-white"
-        (click)="getUserNeedByUserWant(2)"
+        (click)="getUserNeedByUserWant(2, 0)"
       >
         مشارکت در سود
       </button>
@@ -27,7 +30,7 @@
     <div class="col-auto mb-2">
       <button
         class="btn btn-green text-white"
-        (click)="getUserNeedByUserWant(3)"
+        (click)="getUserNeedByUserWant(3, 0)"
       >
         نمایشگاه
       </button>
