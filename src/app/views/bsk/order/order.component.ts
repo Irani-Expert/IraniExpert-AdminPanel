@@ -45,7 +45,7 @@ export class OrderComponent implements OnInit {
   addForm: FormGroup;
   startDate: any;
   expireDate: any;
-  headerValue: string = 'ID';
+  headerValue: string = 'کد رهگیری';
   licenseFile: any = '';
   licenseModel: LicenseModel = new LicenseModel();
 
@@ -60,7 +60,7 @@ export class OrderComponent implements OnInit {
     public _invoiceService: InvoiceService
   ) {
     this.page.pageNumber = 0;
-    this.page.size = 12;
+    this.page.size = 6;
     setTimeout(() => {
       this.psContainerSecSidebar = this.psContainers.toArray()[1];
     });
@@ -88,7 +88,7 @@ export class OrderComponent implements OnInit {
   setPage(pageInfo: number, transactionStatus: any) {
     this.page.pageNumber = pageInfo;
 
-    this.getOrderbyStatus(transactionStatus);
+    this.getOrderbyStatus(transactionStatus, pageInfo);
   }
   changeHeaderValue() {
     if (this.headerValue != 'کد رهگیری') {
@@ -97,10 +97,14 @@ export class OrderComponent implements OnInit {
       this.headerValue = 'ID';
     }
   }
-  getOrderbyStatus(status: any) {
+  getOrderbyStatus(status: any, pageNumber: number) {
     this.status = status;
     this._orderService
-      .getByStatus(6, this.page.pageNumber - 1, status)
+      .getByStatus(
+        this.page.size,
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        status
+      )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
           this.rows = res.data.items;
@@ -202,7 +206,7 @@ export class OrderComponent implements OnInit {
         });
       }
     });
-    this.getOrderbyStatus(this.status);
+    this.getOrderbyStatus(this.status, this.page.pageNumber);
   }
   onFileChanged(event: any) {
     let fileType = event.target.files[0].type.split('/');
@@ -294,7 +298,7 @@ export class OrderComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-            this.getOrderbyStatus(this.status);
+            this.getOrderbyStatus(this.status, this.page.pageNumber);
           });
       });
   }

@@ -55,7 +55,7 @@ export class UserNeedComponent implements OnInit {
     this.userWant = userWant;
     this._UserNeedService
       .getByStatus(
-        10,
+        12,
         this.page.pageNumber !== 0
           ? this.page.pageNumber - 1
           : this.page.pageNumber,
