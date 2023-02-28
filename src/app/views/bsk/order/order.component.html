@@ -2,23 +2,23 @@
 
 <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
-    <div class="col-auto">
+    <div class="col-auto mb-2">
       <button class="btn btn-secondary" (click)="getOrderbyStatus(null, 0)">
         تمامی سفارشات
       </button>
     </div>
-    <div class="col-auto">
+    <div class="col-auto mb-2">
       <button class="btn btn-primary" (click)="getOrderbyStatus(1, 0)">
         در انتظار پرداخت
       </button>
     </div>
-    <div class="col-auto">
+    <div class="col-auto mb-2">
       <button class="btn btn-dark" (click)="getOrderbyStatus(6, 0)">
         در انتظار تائید
       </button>
     </div>
 
-    <div class="col-auto">
+    <div class="col-auto mb-2">
       <button
         class="btn btn-confirmed text-white"
         (click)="getOrderbyStatus(2, 0)"
@@ -26,12 +26,12 @@
         تائید شده
       </button>
     </div>
-    <div class="col-auto">
+    <div class="col-auto mb-2">
       <button class="btn btn-final text-white" (click)="getOrderbyStatus(8, 0)">
         نهایی
       </button>
     </div>
-    <div class="col-auto">
+    <div class="col-auto mb-2">
       <button
         class="btn btn-rejected text-white"
         (click)="getOrderbyStatus(5, 0)"
