@@ -1,5 +1,5 @@
 <button
-*appCanAccess="'Group-Add'"
+  *appCanAccess="'Group-Add'"
   _ngcontent-tco-c175=""
   type="button"
   class="btn btn-primary mb-4"
@@ -125,8 +125,8 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
-                *appCanAccess="'Group-Edit'"
-                class="btn btn-warning"
+                  *appCanAccess="'Group-Edit'"
+                  class="btn btn-warning"
                   (click)="addorEdit(addUpdateModal, item)"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                 >
@@ -135,7 +135,7 @@
               </div>
               <div class="w-25 w-sm-100 ml-sm-2">
                 <button
-                *appCanAccess="'Group-Delete'"
+                  *appCanAccess="'Group-Delete'"
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteGroup(item.id, deleteConfirmModal)"
@@ -184,6 +184,7 @@
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
+    style="opacity: 0.4"
     alt=""
   />
 </div>

@@ -115,12 +115,12 @@
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-            class="badge-pill w-100 w-md-75 text-center p-1 text-white"
-            *ngIf="item.transactionStatus == 2"
-            [ngClass]="item.transactionStatus == 2 ? 'last-span' : ''"
-          >
-            {{ item.transactionStatus | transactionStatus }}
-          </div>
+              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              *ngIf="item.transactionStatus == 2"
+              [ngClass]="item.transactionStatus == 2 ? 'last-span' : ''"
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
             <div
               class="badge-pill w-100 w-md-75 text-center p-1 text-white"
               *ngIf="
@@ -159,7 +159,10 @@
               <div class="col-12 col-lg-auto mb-2">
                 <button
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  *ngIf="item.transactionStatus == 8 ||item.transactionStatus == 2 && item.filePath != null"
+                  *ngIf="
+                    item.transactionStatus == 8 ||
+                    (item.transactionStatus == 2 && item.filePath != null)
+                  "
                   class="btn btn-primary text-white w-100"
                   (click)="showDetails(item, detailModal)"
                 >
@@ -274,6 +277,7 @@
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
+    style="opacity: 0.4"
     alt=""
   />
 </div>

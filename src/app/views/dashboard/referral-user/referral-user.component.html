@@ -1,107 +1,110 @@
 <div class="row">
   <div class="card w-100">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-3 col-lg-3 text-center">
-        <div class="ul-widget__content-v4 card-icon-bg">
-          <span>نام و نام خانوادگی</span>
-          <h3 class="t-font-boldest">{{header.firstName}}{{header.lastName}}</h3>
-
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3 col-lg-3 text-center">
+          <div class="ul-widget__content-v4 card-icon-bg">
+            <span>نام و نام خانوادگی</span>
+            <h3 class="t-font-boldest">
+              {{ header.firstName }}{{ header.lastName }}
+            </h3>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3 col-lg-3 text-center">
-        <div class="ul-widget__content-v4 card-icon-bg">
-          <span>عنوان</span>
-          <h3 class="t-font-boldest">{{header.title}}</h3>
+        <div class="col-md-3 col-lg-3 text-center">
+          <div class="ul-widget__content-v4 card-icon-bg">
+            <span>عنوان</span>
+            <h3 class="t-font-boldest">{{ header.title }}</h3>
+          </div>
         </div>
-      </div>
 
-      <div class="col-md-3 col-lg-3 text-center">
-        <div class="ul-widget__content-v4 card-icon-bg">
-          <span>رفرال کد</span>
-          <h3 class="t-font-boldest">{{header.referralCode}}</h3>
+        <div class="col-md-3 col-lg-3 text-center">
+          <div class="ul-widget__content-v4 card-icon-bg">
+            <span>رفرال کد</span>
+            <h3 class="t-font-boldest">{{ header.referralCode }}</h3>
+          </div>
         </div>
-      </div>
 
-      <div class="col-md-3 col-lg-3 text-center">
-        <div class="ul-widget__content-v4 card-icon-bg">
-          <span>کمیسیون</span>
-          <h3 class="t-font-boldest text-success">${{header.commission}}</h3>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<div class="row list-horizontal">
-    <div
-      class="list-item"
-      [ngClass]="{
-        'col-md-12': viewMode === 'list',
-        'col-md-3': viewMode === 'grid'
-      }"
-    >
-      <div
-        class="card bg-dark mb-4 d-flex"
-        [ngClass]="{
-          'flex-row': viewMode === 'list',
-          'flex-column': viewMode === 'grid'
-        }"
-      >
-        <div
-          class="flex-grow-1"
-          [ngClass]="{
-            'pl-2 d-flex': viewMode === 'list',
-            'd-block': viewMode === 'grid'
-          }"
-        >
-          <!-- <div class="list-thumb">
-               THUMBNAIL
-            </div> -->
-          <!-- ID -->
-          <div class="align-self-center text-white">ID</div>
-          <div
-            class="card-body align-self-center d-flex align-items-lg-center text-center"
-            [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-          >
-            <!-- OTHER DATA -->
-            <div class="m-0 col text-lg-center text-white">نام و نام خانوادگی</div>
-            <div class="m-0 col text-lg-center text-white">شماره اکانت</div>
-            <div class="m-0 col text-lg-center text-white">قیمت</div>
-            <div class="m-0 col text-lg-center text-white">شماره محصول</div>
-            <div class="m-0 col text-lg-center text-white">شماره پلن</div>
-            <div class="m-0 col text-lg-center text-white">تاریخ انقضا</div>
-
+        <div class="col-md-3 col-lg-3 text-center">
+          <div class="ul-widget__content-v4 card-icon-bg">
+            <span>کمیسیون</span>
+            <h3 class="t-font-boldest text-success">
+              ${{ header.commission }}
+            </h3>
           </div>
         </div>
       </div>
     </div>
-   <div class="col-12">   <!-- PAGINATION CONTROL -->
-  <div class="col-md-12 mt-3" *ngIf="rows.orders?.length > 0">
-    <pagination-controls
-      (pageChange)="setPage($event)"
-      previousLabel=""
-      nextLabel=""
-    ></pagination-controls>
   </div>
-<div *ngIf="rows.orders?.length == 0" class="d-flex justify-content-center">
-  <img
-    src="../../../../../assets/images/97434-no-data-available.gif"
-    class="img-fluid w-50"
-    alt=""
-  />
 </div>
-</div>
-    <div
+<div class="row list-horizontal">
+  <div
     class="list-item"
     [ngClass]="{
       'col-md-12': viewMode === 'list',
       'col-md-3': viewMode === 'grid'
     }"
-    *ngFor="
-      let item of orders
-        
-    "
+  >
+    <div
+      class="card bg-dark mb-4 d-flex"
+      [ngClass]="{
+        'flex-row': viewMode === 'list',
+        'flex-column': viewMode === 'grid'
+      }"
+    >
+      <div
+        class="flex-grow-1"
+        [ngClass]="{
+          'pl-2 d-flex': viewMode === 'list',
+          'd-block': viewMode === 'grid'
+        }"
+      >
+        <!-- <div class="list-thumb">
+               THUMBNAIL
+            </div> -->
+        <!-- ID -->
+        <div class="align-self-center text-white">ID</div>
+        <div
+          class="card-body align-self-center d-flex align-items-lg-center text-center"
+          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
+        >
+          <!-- OTHER DATA -->
+          <div class="m-0 col text-lg-center text-white">
+            نام و نام خانوادگی
+          </div>
+          <div class="m-0 col text-lg-center text-white">شماره اکانت</div>
+          <div class="m-0 col text-lg-center text-white">قیمت</div>
+          <div class="m-0 col text-lg-center text-white">شماره محصول</div>
+          <div class="m-0 col text-lg-center text-white">شماره پلن</div>
+          <div class="m-0 col text-lg-center text-white">تاریخ انقضا</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <!-- PAGINATION CONTROL -->
+    <div class="col-md-12 mt-3" *ngIf="rows.orders?.length > 0">
+      <pagination-controls
+        (pageChange)="setPage($event)"
+        previousLabel=""
+        nextLabel=""
+      ></pagination-controls>
+    </div>
+    <div *ngIf="rows.orders?.length == 0" class="d-flex justify-content-center">
+      <img
+        src="../../../../../assets/images/97434-no-data-available.gif"
+        class="img-fluid w-50"
+        style="opacity: 0.4"
+        alt=""
+      />
+    </div>
+  </div>
+  <div
+    class="list-item"
+    [ngClass]="{
+      'col-md-12': viewMode === 'list',
+      'col-md-3': viewMode === 'grid'
+    }"
+    *ngFor="let item of orders"
   >
     <div
       class="card mb-2 o-hidden d-flex"
@@ -132,13 +135,8 @@
           <div class="col m-0">{{ item.productID }}</div>
           <div class="col m-0">{{ item.planID }}</div>
           <div class="col m-0">{{ item.expireDate }}</div>
-
-       
-       
-        
         </div>
       </div>
-      
     </div>
   </div>
 </div>

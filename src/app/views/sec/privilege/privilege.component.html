@@ -1,5 +1,5 @@
 <button
-*appCanAccess="'privilege-Add'"
+  *appCanAccess="'privilege-Add'"
   type="button"
   class="btn btn-primary mb-4"
   (click)="addorEdit(addUpdateModal, undefined)"
@@ -23,7 +23,7 @@
   >
     <div class="card bg-gradient-grey order-card">
       <i
-      *appCanAccess="'privilege-Edit'"
+        *appCanAccess="'privilege-Edit'"
         ngbTooltip="ویرایش"
         [openDelay]="100"
         [closeDelay]="500"
@@ -51,7 +51,7 @@
       </div>
       <div class="">
         <button
-        *appCanAccess="'privilege-Delete'"
+          *appCanAccess="'privilege-Delete'"
           (click)="deletePrivilege(item.id, deleteModal)"
           class="btn d-block w-100 text-white bg-gradient-red float-right"
         >
@@ -72,6 +72,7 @@
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
+    style="opacity: 0.4"
     alt=""
   />
 </div>

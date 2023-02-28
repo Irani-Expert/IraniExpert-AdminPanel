@@ -360,7 +360,7 @@ export class OrderComponent implements OnInit {
   openConfirmationModal(item: CommentModel, content: any) {
     this.user = this.auth.currentUserValue;
     item.rate = 1;
-    item.email = this.user.username;
+    item.email = this.user.subject;
     item.name = this.user.firstName + ' ' + this.user.lastName;
     item.isActive = true;
     item.rowID = this.noteRowID;
