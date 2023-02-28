@@ -19,6 +19,21 @@
 .btn-rejected {
   background-color: #980404;
 }
+.success-span {
+  background-color: #4caf50 !important;
+}
+.new-span {
+  background-color: #5992c7 !important;
+}
+.failed-span {
+  background-color: #e24c4c !important;
+}
+.wait-span {
+  background-color: #a4d9a4 !important ;
+}
+.last-span {
+  background-color: #85e089 !important ;
+}
 .notebar-left {
   left: calc(-#{400px} - #{20px});
   z-index: 90;
@@ -63,11 +78,11 @@
     }
   }
 }
-:is(.my-css) .badge {
-  width: 80px !important;
-  padding: 4px 0;
-  font-size: 16px;
-}
+// :is(.my-css) .badge {
+//   width: 80px !important;
+//   padding: 4px 0;
+//   font-size: 16px;
+// }
 .clickable-btn {
   cursor: pointer;
   font-size: 25px !important;
@@ -90,7 +105,7 @@
   background-color: #f5f7fa6b;
 }
 .syncIcon {
-  font-weight: bold;
+  font-weight: bolder;
   border-radius: 50%;
   background: #f9f7fa;
 }

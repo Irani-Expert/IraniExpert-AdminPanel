@@ -52,10 +52,10 @@ export class NavigationService {
 
   defaultMenu: IMenuItem[] = [
     {
-      name: 'داشبورد',
+      name: 'صفحه اصلی',
       description: 'داشبورد مدیریتی ایرانی اکسپرت',
       type: 'link',
-      icon: 'i-Dashboard',
+      icon: 'i-Home1',
       state: '/dashboard/v1',
       privilege: 'Dashboard-Full Premission',
     },
@@ -63,40 +63,40 @@ export class NavigationService {
       name: 'پروفایل من',
       description: 'پروفایل',
       type: 'link',
-      icon: 'i-Dashboard',
+      icon: 'i-Administrator',
       state: '/dashboard/user-profile',
       privilege: 'Dashboard-Full Premission',
     },
 
-    {
-      name: 'مشتریان من',
-      type: 'dropDown',
-      icon: 'i-Add-UserStar',
-      privilege: 'Subuser-Full Premission',
-      sub: [
-        {
-          icon: 'i-File-Horizontal-Text',
-          name: 'license',
-          state: '/dashboard/referral-user',
-          type: 'link',
-          privilege: 'Subuser-Full Premission',
-        },
-        // {
-        //   icon: 'i-File-Horizontal-Text',
-        //   name: 'investor',
-        //   state: '/dashboard/referral-user',
-        //   type: 'link',
-        //   privilege:'Subuser-Full Premission'
-        // },
-        // {
-        //   icon: 'i-File-Horizontal-Text',
-        //   name: 'IB',
-        //   state: '/dashboard/referral-user',
-        //   type: 'link',
-        //   privilege:'Subuser-Full Premission'
-        // },
-      ],
-    },
+    // {
+    //   name: 'مشتریان من',
+    //   type: 'dropDown',
+    //   icon: 'i-Add-UserStar',
+    //   privilege: 'Subuser-Full Premission',
+    //   sub: [
+    //     {
+    //       icon: 'i-File-Horizontal-Text',
+    //       name: 'license',
+    //       state: '/dashboard/referral-user',
+    //       type: 'link',
+    //       privilege: 'Subuser-Full Premission',
+    //     },
+    //     // {
+    //     //   icon: 'i-File-Horizontal-Text',
+    //     //   name: 'investor',
+    //     //   state: '/dashboard/referral-user',
+    //     //   type: 'link',
+    //     //   privilege:'Subuser-Full Premission'
+    //     // },
+    //     // {
+    //     //   icon: 'i-File-Horizontal-Text',
+    //     //   name: 'IB',
+    //     //   state: '/dashboard/referral-user',
+    //     //   type: 'link',
+    //     //   privilege:'Subuser-Full Premission'
+    //     // },
+    //   ],
+    // },
     {
       name: 'محصولات',
       type: 'link',
@@ -105,23 +105,24 @@ export class NavigationService {
       privilege: 'Product-Full Premission',
     },
     {
-      icon: 'i-File-Horizontal-Text',
+      name: 'سفارشات',
+      type: 'link',
+      icon: 'i-Library',
+      privilege: 'Orders-Full Premission',
+      state: '/bsk/orders',
+    },
+    {
+      icon: 'i-ID-3',
       name: 'سفارشات من',
       state: '/bsk/user-orders',
       type: 'link',
       privilege: 'CheckOrders-Full Premission',
     },
-    {
-      name: 'سفارشات',
-      type: 'link',
-      icon: 'i-File-Horizontal-Text',
-      privilege: 'Orders-Full Premission',
-      state: '/bsk/orders',
-    },
+
     {
       name: 'کاربران',
       type: 'dropDown',
-      icon: 'i-Administrator',
+      icon: 'i-Business-ManWoman',
       privilege: 'Users-Full Premission',
       sub: [
         {
@@ -179,7 +180,7 @@ export class NavigationService {
     {
       name: 'گروه ها',
       type: 'link',
-      icon: 'i-Double-Tap',
+      icon: 'i-Dropbox',
       state: '/bas/group',
       privilege: 'Group-Full Premission',
     },

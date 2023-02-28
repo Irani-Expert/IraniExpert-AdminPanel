@@ -5,31 +5,26 @@ import { DashboadDefaultComponent } from './dashboad-default/dashboad-default.co
 import { ReferralUserComponent } from './referral-user/referral-user.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
-
 const routes: Routes = [
   {
     path: 'v1',
     component: DashboadDefaultComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'user-profile',
     component: UserProfileComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
-  {
-    path: 'referral-user',
-    component: ReferralUserComponent,
-    canActivate: [AuthGuard]
-  },
-  
+  // {
+  //   path: 'referral-user',
+  //   component: ReferralUserComponent,
+  //   canActivate: [AuthGuard]
+  // },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {}

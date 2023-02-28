@@ -9,9 +9,11 @@ import { filter } from 'rxjs/operators';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { CommentModel } from 'src/app/shared/models/comment.model';
 import { ordersModel } from 'src/app/shared/models/ordersModel';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Utils } from 'src/app/shared/utils';
+import { CommentService } from '../../prd/comment/comment.service';
 import { InvoiceModel } from '../invoice/invoice.model';
 import { InvoiceService } from '../invoice/invoice.service';
 import {
@@ -30,24 +32,35 @@ import { OrderService } from './order.service';
 })
 export class OrderComponent implements OnInit {
   invoiceDetail: InvoiceModel = new InvoiceModel();
-  toggled = false;
+  invoiceStatus: number;
+
   rows: OrderModel[] = new Array<OrderModel>();
-  viewMode: 'list' | 'grid' = 'list';
+  orderDetail: OrderModel;
+  status: any;
+
   page: Page = new Page();
+
+  viewMode: 'list' | 'grid' = 'list';
+
+  notes: CommentModel[] = new Array<CommentModel>();
+  note: CommentModel = new CommentModel();
+
+  licenseFile: any = '';
+  licenseModel: LicenseModel = new LicenseModel();
+  startDate: any;
+  expireDate: any;
+
+  addForm: FormGroup;
+
+  toggled = false;
+
   @ViewChildren(PerfectScrollbarDirective)
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
-  note: OrderModel;
-  status: any;
-  invoiceStatus: number;
-  orderDetail: OrderModel;
+
   clientId: number;
-  addForm: FormGroup;
-  startDate: any;
-  expireDate: any;
+
   headerValue: string = 'کد رهگیری';
-  licenseFile: any = '';
-  licenseModel: LicenseModel = new LicenseModel();
 
   constructor(
     public router: Router,
@@ -57,7 +70,8 @@ export class OrderComponent implements OnInit {
     private _fileUploaderService: FileUploaderService,
     private _formBuilder: FormBuilder,
     public _licenseService: LicenseService,
-    public _invoiceService: InvoiceService
+    public _invoiceService: InvoiceService,
+    public _commentService: CommentService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 6;
@@ -74,11 +88,12 @@ export class OrderComponent implements OnInit {
       versionNumber: [null],
     });
     this.setPage(this.page.pageNumber, null);
+
     this.updateNotebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((routeChange) => {
+      .subscribe((_routeChange) => {
         if (Utils.isMobile()) {
           this._orderService.sidebarState.sidenavOpen = false;
         }
@@ -108,7 +123,7 @@ export class OrderComponent implements OnInit {
         (res: Result<Paginate<OrderModel[]>>) => {
           this.rows = res.data.items;
           var counter = 0;
-          this.rows.forEach((x) => {
+          this.rows.forEach((_x) => {
             this.rows[counter].createDate = moment(
               this.rows[counter].createDate,
               'YYYY/MM/DD'
@@ -277,7 +292,7 @@ export class OrderComponent implements OnInit {
 
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then((result) => {
+      .result.then((_result) => {
         this._orderService
           .delete(id, 'orders')
           .toPromise()
@@ -301,12 +316,18 @@ export class OrderComponent implements OnInit {
           });
       });
   }
+  // ///////////// Note List
+  // Get Note List
 
-  getNoteList(row: OrderModel) {
-    this.note = row;
+  getNoteList(rowId: number) {
+    this._commentService
+      .GetByTableTypeAndRowId(0, 20, rowId, 8)
+      .subscribe((res: Result<Paginate<CommentModel[]>>) => {
+        this.notes = res.data.items;
+      });
   }
-  toggleNotebar(item: OrderModel) {
-    this.getNoteList(item);
+  toggleNotebar(rowId: number) {
+    this.getNoteList(rowId);
     this.toggled = true;
     const state = this._orderService.sidebarState;
 
@@ -325,6 +346,9 @@ export class OrderComponent implements OnInit {
       this._orderService.sidebarState.sidenavOpen = false;
     }
   }
+
+  // ///////////// Note List
+
   changeFinalPrice(discount: string) {
     var number = Number(discount.replace(/[^0-9.-]+/g, ''));
     this.orderDetail.toPayPrice = this.orderDetail.toPayPrice - number;

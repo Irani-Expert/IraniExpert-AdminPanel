@@ -2,23 +2,23 @@
 
 <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
-    <div class="col-auto mb-2">
+    <div class="col-auto">
       <button class="btn btn-secondary" (click)="getOrderbyStatus(null, 0)">
         تمامی سفارشات
       </button>
     </div>
-    <div class="col-auto mb-2">
+    <div class="col-auto">
       <button class="btn btn-primary" (click)="getOrderbyStatus(1, 0)">
         در انتظار پرداخت
       </button>
     </div>
-    <div class="col-auto mb-2">
+    <div class="col-auto">
       <button class="btn btn-dark" (click)="getOrderbyStatus(6, 0)">
         در انتظار تائید
       </button>
     </div>
 
-    <div class="col-auto mb-2">
+    <div class="col-auto">
       <button
         class="btn btn-confirmed text-white"
         (click)="getOrderbyStatus(2, 0)"
@@ -26,12 +26,12 @@
         تائید شده
       </button>
     </div>
-    <div class="col-auto mb-2">
+    <div class="col-auto">
       <button class="btn btn-final text-white" (click)="getOrderbyStatus(8, 0)">
         نهایی
       </button>
     </div>
-    <div class="col-auto mb-2">
+    <div class="col-auto">
       <button
         class="btn btn-rejected text-white"
         (click)="getOrderbyStatus(5, 0)"
@@ -69,7 +69,7 @@
           </div> -->
         <!-- ID -->
         <div
-          class="align-self-cente align-items-center text-white cursor-pointer d-flex justify-content-center"
+          class="align-self-center align-items-center text-white cursor-pointer d-flex justify-content-center"
           (click)="changeHeaderValue()"
         >
           {{ headerValue
@@ -131,29 +131,79 @@
           'd-block': viewMode === 'grid'
         }"
       >
-        <div class="align-self-center" *ngIf="headerValue == 'ID'">
-          {{ item.id }}
-        </div>
-        <div class="align-self-center" *ngIf="headerValue == 'کد رهگیری'">
-          {{ item.code }}
+        <div class="m-0 col align-self-center">
+          <div class="align-self-center" *ngIf="headerValue == 'ID'">
+            {{ item.id }}
+          </div>
+          <div class="align-self-center" *ngIf="headerValue == 'کد رهگیری'">
+            {{ item.code }}
+          </div>
         </div>
         <div
           class="card-body align-self-center d-flex align-items-lg-center text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
-          <div class="col m-0">
+          <div class="col m-0 text-lg-center">
             {{ item.firstName }}&nbsp;{{ item.lastName }}
           </div>
-          <div class="col m-0">{{ item.phoneNumber }}</div>
-          <div class="col m-0">{{ item.product }}|{{ item.plan }}</div>
-          <div class="col m-0">
+          <div class="col m-0 text-lg-center">{{ item.phoneNumber }}</div>
+          <div class="col m-0 text-lg-center">
+            {{ item.product }}|{{ item.plan }}
+          </div>
+          <div class="col m-0 text-lg-center">
             {{ item.price | currency }}
           </div>
-          <div class="col m-0">{{ item.createDate }}</div>
-          <div class="col m-0">{{ item.maximumBalance }}</div>
-          <div class="col m-0" *ngIf="status == null">
-            {{ item.transactionStatus | transactionStatus }}
+          <div class="col m-0 text-lg-center">{{ item.createDate }}</div>
+          <div class="col m-0 text-lg-center">{{ item.maximumBalance }}</div>
+          <div class="col m-0 text-lg-center" *ngIf="status == null">
+            <div
+              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              *ngIf="item.transactionStatus == 6"
+              [ngClass]="item.transactionStatus == 6 ? 'wait-span' : ''"
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
+            <div
+              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              *ngIf="item.transactionStatus == 8"
+              [ngClass]="item.transactionStatus == 8 ? 'success-span' : ''"
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
+            <div
+              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              *ngIf="item.transactionStatus == 1"
+              [ngClass]="item.transactionStatus == 1 ? 'new-span' : ''"
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
+            <div
+              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              *ngIf="item.transactionStatus == 2"
+              [ngClass]="item.transactionStatus == 2 ? 'last-span' : ''"
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
+            <div
+              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              *ngIf="
+                item.transactionStatus != 2 &&
+                item.transactionStatus != 1 &&
+                item.transactionStatus != 6 &&
+                item.transactionStatus != 8
+              "
+              [ngClass]="
+                item.transactionStatus != 2 &&
+                item.transactionStatus != 1 &&
+                item.transactionStatus != 6 &&
+                item.transactionStatus != 8
+                  ? 'failed-span'
+                  : ''
+              "
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
           </div>
 
           <div
@@ -178,14 +228,14 @@
                     [ngClass]="{ 'd-none': viewMode === 'grid' }"
                     (click)="openDetailModal(item, openDetails)"
                   >
-                    جزِئیات
+                    جزئیات
                   </button>
                 </div>
               </div>
               <div class="row pt-2 p-0 container">
                 <div class="col-12">
                   <button
-                    *appCanAccess="'Product-Delete'"
+                    *appCanAccess="'Orders-Full Premission'"
                     class="btn btn-danger w-100"
                     [ngClass]="{ 'd-none': viewMode === 'grid' }"
                     (click)="deleteOrder(item.id, deleteModal)"
@@ -200,6 +250,7 @@
                   *ngIf="item.transactionStatus == 2"
                 >
                   <button
+                    *appCanAccess="'Licence-Full Premission'"
                     type="button"
                     [ngClass]="{ 'd-none': viewMode === 'grid' }"
                     class="btn btn-outline-info col w-100 m-1"
@@ -312,63 +363,6 @@
   </div>
 </ng-template>
 
-<div
-  [ngClass]="{ open: _orderService.sidebarState.sidenavOpen }"
-  class="notebar-left rtl-ps-none bg-gradient-grey rounded shadow-lg"
-  [perfectScrollbar]="{ suppressScrollX: true }"
->
-  <div class="mt-4 ml-3">
-    <i
-      (click)="updateNotebar()"
-      ngbTooltip="بستن"
-      [openDelay]="100"
-      [closeDelay]="500"
-      placement="bottom"
-      class="i-Close bg-white text-dark border-0 clickable-btn rounded-circle"
-    ></i>
-  </div>
-  <hr class="separator-breadcrumb mt-0 mb-1" />
-  <div class="ml-3">
-    <form action="">
-      <div class="row">
-        <div class="col-10 form-group mb-3 mt-3">
-          <label class="text-white" for="title">ایجاد یادداشت</label>
-          <textarea
-            name="title"
-            id="title"
-            type="text"
-            class="form-control bg-dark textarea-font"
-          ></textarea>
-        </div>
-      </div>
-    </form>
-    <button type="button" class="btn btn-light mb-2" *appCanAccess="'note-Add'">
-      ایجاد
-    </button>
-  </div>
-  <hr class="separator-breadcrumb mt-2 mb-1" />
-  <div class="p-2"><h4 class="pl-2 text-light">یادداشت ها</h4></div>
-  <ul class="aside-left">
-    <li class="aside-item lvl1">
-      <div class="aside-item-hold">
-        <div class="my-css">
-          <div>
-            <div class="timeline-card card mt-2">
-              <div class="card-header bg-dark m-0 p-0">
-                <p class="text-white m-0 p-2">یادداشت شماره 1</p>
-              </div>
-              <div class="card-body bg-secondary">
-                <p class="text-white" *ngIf="toggled == true">
-                  {{ note.plan }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
 <ng-template #openDetails let-modal>
   <div>
     <div class="modal-header">
@@ -635,13 +629,16 @@
             />
           </div>
           <div class="col-md-3 form-group mb-3" dir="ltr">
-            <strong for="versionNumber" class="mb-3">versionNumber</strong>
+            <strong for="expireDate" class="mb-3">versionNumber</strong>
             <!-- <button (click)="e.toggle()" class="mb-3 btn btn-primary">
               تاریخ انقضا
             </button> -->
             <input
+              (click)="e.toggle()"
               type="text"
               class="form-control"
+              ngbDatepicker
+              #e="ngbDatepicker"
               [(ngModel)]="versionNumber"
               [formControl]="addForm.controls['versionNumber']"
             />
@@ -680,7 +677,7 @@
     </div>
   </div>
 </ng-template>
-<!-- <ng-template #licence let-modal>
+<ng-template #licence let-modal>
   <div>
     <div class="modal-header">
       <h4 class="modal-title">ارسال لایسنس</h4>
@@ -735,4 +732,66 @@
       </button>
     </div>
   </div>
-</ng-template> -->
+</ng-template>
+
+<!-- Note Model -->
+
+<div
+  [ngClass]="{ open: _orderService.sidebarState.sidenavOpen }"
+  class="notebar-left rtl-ps-none bg-secondary rounded shadow-lg"
+  [perfectScrollbar]="{ suppressScrollX: true }"
+>
+  <div class="mt-3 ml-3 mb-3">
+    <i
+      (click)="updateNotebar()"
+      ngbTooltip="بستن"
+      [openDelay]="100"
+      [closeDelay]="500"
+      placement="bottom"
+      class="i-Close bg-dark text-white border-0 clickable-btn rounded-circle"
+    ></i>
+  </div>
+  <hr class="separator-breadcrumb mt-0 mb-1" />
+  <div class="ml-3">
+    <form action="">
+      <div class="row">
+        <div class="col-10 form-group mb-3 mt-3">
+          <label class="text-white" for="title">ایجاد یادداشت</label>
+          <textarea
+            name="title"
+            id="title"
+            type="text"
+            [(ngModel)]="note.text"
+            class="form-control bg-dark textarea-font"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+    <button type="button" class="btn btn-light mb-2" *appCanAccess="'note-Add'">
+      ایجاد
+    </button>
+  </div>
+  <hr class="separator-breadcrumb mt-2 mb-1" />
+  <div class="p-2"><h4 class="pl-2 text-light">یادداشت ها</h4></div>
+  <ul class="aside-left">
+    <li class="aside-item lvl1">
+      <div class="aside-item-hold">
+        <div class="my-css">
+          <div>
+            <div class="timeline-card card mt-2">
+              <div class="card-header bg-dark m-0 p-0">
+                <p class="text-white m-0 p-2">یادداشت شماره 1</p>
+              </div>
+              <div class="card-body bg-secondary">
+                <p class="text-white" *ngIf="toggled == true">
+                  {{ note.plan }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+<!-- Note Model -->
