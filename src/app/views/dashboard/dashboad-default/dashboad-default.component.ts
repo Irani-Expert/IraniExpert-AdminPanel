@@ -17,10 +17,12 @@ import { UserInforamationModel } from 'src/app/shared/models/userInforamationMod
 export class DashboadDefaultComponent implements OnInit {
   breadCrumbList: BreadcrumbListModel = new BreadcrumbListModel();
   userprofile: UserCountModel = new UserCountModel();
-  userModel:UserInforamationModel=new UserInforamationModel();
+  userModel: UserInforamationModel = new UserInforamationModel();
 
-  constructor(private _userService:UsersService,
-    private toastr:ToastrService) {
+  constructor(
+    private _userService: UsersService,
+    private toastr: ToastrService
+  ) {
     this.breadCrumbList.title = 'خانه';
     this.breadCrumbList.breadcrumbs = new Array<BreadcrumbModel>();
     let breadCrumb = new BreadcrumbModel();
@@ -33,7 +35,7 @@ export class DashboadDefaultComponent implements OnInit {
     this.getUserInfo();
     this.getUser();
   }
-  getUserInfo(){
+  getUserInfo() {
     this._userService.getUserInfo().subscribe(
       (res: Result<UserCountModel>) => {
         this.userprofile = res.data;
@@ -55,7 +57,6 @@ export class DashboadDefaultComponent implements OnInit {
     this._userService.getUserByToken().subscribe(
       (res: UserInforamationModel) => {
         this.userModel = res;
-        
       },
       (_error) => {
         this.toastr.error(

@@ -11,6 +11,8 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { CommentModel } from 'src/app/shared/models/comment.model';
 import { ordersModel } from 'src/app/shared/models/ordersModel';
+import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Utils } from 'src/app/shared/utils';
 import { CommentService } from '../../prd/comment/comment.service';
@@ -42,6 +44,7 @@ export class OrderComponent implements OnInit {
 
   viewMode: 'list' | 'grid' = 'list';
 
+  noteRowID: number;
   notes: CommentModel[] = new Array<CommentModel>();
   note: CommentModel = new CommentModel();
 
@@ -62,6 +65,7 @@ export class OrderComponent implements OnInit {
 
   headerValue: string = 'کد رهگیری';
 
+  user: UserInfoModel;
   constructor(
     public router: Router,
     public _orderService: OrderService,
@@ -71,7 +75,8 @@ export class OrderComponent implements OnInit {
     private _formBuilder: FormBuilder,
     public _licenseService: LicenseService,
     public _invoiceService: InvoiceService,
-    public _commentService: CommentService
+    public _commentService: CommentService,
+    private auth: AuthenticateService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 6;
@@ -320,6 +325,7 @@ export class OrderComponent implements OnInit {
   // Get Note List
 
   getNoteList(rowId: number) {
+    this.notes = new Array<CommentModel>();
     this._commentService
       .GetByTableTypeAndRowId(0, 20, rowId, 8)
       .subscribe((res: Result<Paginate<CommentModel[]>>) => {
@@ -327,6 +333,7 @@ export class OrderComponent implements OnInit {
       });
   }
   toggleNotebar(rowId: number) {
+    this.noteRowID = rowId;
     this.getNoteList(rowId);
     this.toggled = true;
     const state = this._orderService.sidebarState;
@@ -346,6 +353,51 @@ export class OrderComponent implements OnInit {
       this._orderService.sidebarState.sidenavOpen = false;
     }
   }
+  // ConfirmModal and Add Note
+  clearNote() {
+    this.note = new CommentModel();
+  }
+  openConfirmationModal(item: CommentModel, content: any) {
+    this.user = this.auth.currentUserValue;
+    item.rate = 1;
+    item.email = this.user.username;
+    item.name = this.user.firstName + ' ' + this.user.lastName;
+    item.isActive = true;
+    item.rowID = this.noteRowID;
+    item.isAccepted = true;
+    item.tableType = 8;
+    item.parentID = null;
+
+    this.modalService
+      .open(content, {
+        ariaLabelledBy: 'modal-basic-title',
+        centered: true,
+      })
+      .result.then((_result: boolean) => {
+        if (_result === true) {
+          this._commentService
+            .create(item, 'Comment')
+            .toPromise()
+            .then((res) => {
+              if (res.success) {
+                this.toastr.success('یادداشت ایجاد شد', 'موفقیت آمیز!', {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-left',
+                });
+                this.notes.unshift(item);
+                this.note = new CommentModel();
+              } else {
+                this.toastr.error('خطا در ایجاد ', res.message, {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-left',
+                });
+              }
+            });
+        }
+      });
+  }
+
+  // ConfirmModal Add Note
 
   // ///////////// Note List
 
