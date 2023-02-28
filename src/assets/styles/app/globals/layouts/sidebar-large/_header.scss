@@ -17,9 +17,8 @@
       flex-direction: column;
       align-items: center;
       cursor: pointer;
-      margin-right: 12px;
       div {
-        width: 24px;
+        width: 24px !important;
         height: 1px;
         background: #f3f4f6;
         color: #f3f4f6;
@@ -87,7 +86,7 @@
       display: flex;
       align-items: center;
       .user {
-        margin-right: 2rem;
+        margin-right: 4rem;
         img {
           width: 36px;
           height: 36px;
@@ -137,7 +136,6 @@
       }
       .menu-toggle {
         width: 24px;
-        margin-right: 36px;
       }
     }
   }
@@ -158,7 +156,6 @@
     .main-header {
       .menu-toggle {
         width: 24px;
-        margin-right: 36px;
       }
     }
   }
@@ -199,4 +196,24 @@
       }
     }
   }
+}
+
+@media (min-width: 350px) {
+  .d-vsm-block {
+    display: block !important;
+  }
+}
+
+
+.header-dropdown-item:focus {
+  box-shadow: unset !important;
+}
+
+.header-dropdown-item:active {
+  background-color: rgb(82, 93, 110) !important;
+}
+
+.header-dropdown-item:hover {
+  background-color: rgb(82, 93, 110) !important;
+  color: white !important;
 }
