@@ -89,7 +89,7 @@
           <div class="m-0 col text-lg-center text-white">شماره حساب</div>
           <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
           <div class="m-0 col text-lg-center text-white">هزینه</div>
-          <div style="width: 3000px">سلام بیبی</div>
+
           <div
             class="m-0 col text-lg-center text-white align-self-center align-items-center cursor-pointer d-flex justify-content-around"
             (click)="changeDateValue()"
@@ -459,13 +459,13 @@
           </div>
           <div class="col-md-6 form-group mb-3">
             <strong for="totalPrice" class="mb-3">توضیحات کاربر</strong>
-            <input
+            <textarea
               class="form-control mt-1"
               id="totalPrice"
               rows="1"
               value="{{ orderDetail.description }}"
               disabled
-            />
+            ></textarea>
           </div>
 
           <div class="col-6 col-lg-4 form-group mb-3">
