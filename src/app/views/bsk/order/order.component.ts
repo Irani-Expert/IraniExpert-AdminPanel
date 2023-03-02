@@ -10,7 +10,6 @@ import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { CommentModel } from 'src/app/shared/models/comment.model';
-import { ordersModel } from 'src/app/shared/models/ordersModel';
 import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
@@ -52,8 +51,8 @@ export class OrderComponent implements OnInit {
   licenseModel: LicenseModel = new LicenseModel();
   startDate: any;
   expireDate: any;
-
-  addForm: FormGroup;
+  clientId: number;
+  versionNumber: number;
 
   toggled = false;
 
@@ -61,7 +60,6 @@ export class OrderComponent implements OnInit {
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   dateValue: string = 'تاریخ ثبت ';
-  clientId: number;
 
   headerValue: string = 'کد رهگیری';
 
@@ -86,12 +84,6 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addForm = this._formBuilder.group({
-      startDate: [null],
-      expireDate: [null],
-      accountNumber: [null],
-      versionNumber: [null],
-    });
     this.setPage(this.page.pageNumber, null);
 
     this.updateNotebar();
@@ -251,7 +243,7 @@ export class OrderComponent implements OnInit {
           this.licenseModel.id = row.licenseID;
           console.log(this.licenseModel);
           this.addOrUpdate2(this.licenseModel);
-          this.addForm.reset();
+          // this.addForm.reset();
         }
       });
   }
@@ -339,7 +331,6 @@ export class OrderComponent implements OnInit {
         this.notes = res.data.items;
         var counter = 0;
         this.notes.forEach((_x) => {
-          debugger;
           this.notes[counter].jalaliDate = moment(
             this.notes[counter].createDate,
             'YYYY/MM/DD'
@@ -402,7 +393,14 @@ export class OrderComponent implements OnInit {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
                 });
+                let date = new Date();
+                item.createDate = date;
+                item.jalaliDate = moment(item.createDate, 'YYYY/MM/DD')
+                  .locale('fa')
+                  .format('YYYY/MM/DD');
+                debugger;
                 this.notes.unshift(item);
+
                 this.note = new CommentModel();
               } else {
                 this.toastr.error('خطا در ایجاد ', res.message, {
@@ -436,7 +434,7 @@ export class OrderComponent implements OnInit {
           if (this.clientId == null) {
             this.licenseModel.rowID = row.id;
             this.addOrUpdate(this.licenseModel, null);
-            this.addForm.reset();
+            // this.addForm.reset();
           } else {
             let climax = new CliamxLicenseModel();
             climax.file = this.licenseFile;
@@ -457,13 +455,15 @@ export class OrderComponent implements OnInit {
             this.licenseModel.rowID = row.id;
             this.licenseModel.filePath = '';
             this.addOrUpdate(this.licenseModel, climax);
-            this.addForm.reset();
+            // this.addForm.reset();
           }
         }
       });
   }
 
   async addOrUpdate(item: LicenseModel, climax: CliamxLicenseModel) {
+    item.versionNumber = this.versionNumber;
+
     item.startDate =
       this.startDate.year +
       '-' +

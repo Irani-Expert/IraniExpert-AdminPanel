@@ -11,6 +11,6 @@ export interface IComment extends IBase {
   rate: number;
   text: string;
   isAccepted: boolean;
-  createDate: string;
+  createDate: Date;
   jalaliDate: string;
 }

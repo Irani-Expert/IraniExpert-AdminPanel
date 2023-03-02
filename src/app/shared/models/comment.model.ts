@@ -10,8 +10,8 @@ export class CommentModel extends Base implements IComment {
   name: string;
   email: string;
   rate: number;
-  text: string;
+  text: string = '';
   isAccepted: boolean;
   jalaliDate: string;
-  createDate: string;
+  createDate: Date;
 }

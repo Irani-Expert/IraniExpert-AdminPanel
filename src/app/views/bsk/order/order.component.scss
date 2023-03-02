@@ -118,3 +118,67 @@
 .padding-fixer {
   padding-left: 46px;
 }
+.updateNoteBar {
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: none;
+  display: block;
+  z-index: 89;
+  width: 100%;
+  overflow: visible;
+}
+.rounded-4 {
+  border-radius: 15px !important;
+}
+.rounded-alt {
+  border-radius: 15px !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+.bg-notes {
+  background-color: #c4ccd1;
+}
+.bg-notes-header {
+  background-color: #5c65b3;
+}
+// @media (min-width: 409px) {
+//   .updateNoteBar {
+
+//     width: 0%;
+
+//   }
+// }
+// @media (max-width: 576px) {
+//   .updateNoteBar {
+
+//     width: 23%;
+
+//   }
+// }
+// @media (max-width: 767px) {
+//   .updateNoteBar {
+
+//     width: 37%;
+
+//   }
+// }
+// }
+// @media (max-width: 991px) {
+//   .updateNoteBar {
+
+//     width: 42%;
+
+//   }
+// }
+// }
+// @media (max-width: 1024px) {
+//   .updateNoteBar {
+
+//     width: 42%;
+
+//   }
+// }
+// }
