@@ -51,7 +51,7 @@
     }"
   >
     <div
-      class="card o-hidden bg-dark mb-4 d-flex"
+      class="card bg-dark mb-4 d-flex"
       [ngClass]="{
         'flex-row': viewMode === 'list',
         'flex-column': viewMode === 'grid'
@@ -68,30 +68,42 @@
              THUMBNAIL
           </div> -->
         <!-- ID -->
+
         <div
-          class="align-self-center align-items-center text-white cursor-pointer d-flex justify-content-center"
-          (click)="changeHeaderValue()"
-        >
-          {{ headerValue
-          }}<i
-            class="text-white i-Sync nav-icon m-2 float-end p-2 text-dark syncIcon"
-          ></i>
-        </div>
-        <div
-          class="card-body align-self-center d-flex align-items-lg-center text-center"
+          id="myHeader"
+          class="card-body align-self-center d-flex align-items-lg-center row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
+          <div
+            class="m-0 col text-lg-center text-white align-self-center align-items-center text-white cursor-pointer d-flex justify-content-between"
+            (click)="changeHeaderValue()"
+          >
+            {{ headerValue
+            }}<i
+              class="text-white i-Sync nav-icon m-1 float-end p-2 text-dark syncIcon"
+            ></i>
+          </div>
           <!-- OTHER DATA -->
           <div class="m-0 col text-lg-center text-white">نام کاربر</div>
-          <div class="m-0 col text-lg-center text-white">شماره تماس</div>
+          <div class="m-0 col text-lg-center text-white">شماره حساب</div>
           <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
           <div class="m-0 col text-lg-center text-white">هزینه</div>
-          <div class="m-0 col text-lg-center text-white">زمان ثبت سفارش</div>
+          <div
+            class="m-0 col text-lg-center text-white align-self-center align-items-center cursor-pointer d-flex justify-content-between"
+            (click)="changeDateValue()"
+          >
+            {{ dateValue
+            }}<i
+              class="text-white i-Sync nav-icon m-1 float-end p-2 text-dark syncIcon"
+            ></i>
+          </div>
           <div class="m-0 col text-lg-center text-white">maxBalance</div>
           <div class="m-0 col text-lg-center text-white" *ngIf="status == null">
             وضعیت
           </div>
-          <div class="m-0 text-light d-md-block d-none col text-center">
+          <div
+            class="m-0 col d-md-block text-light d-lg-block d-xl-block d-sm-none d-none text-lg-center"
+          >
             عملیات
           </div>
         </div>
@@ -118,7 +130,7 @@
     "
   >
     <div
-      class="card mb-2 o-hidden d-flex"
+      class="card mb-2 d-flex"
       [ngClass]="{
         'flex-row-2': viewMode === 'list',
         'flex-column': viewMode === 'grid'
@@ -131,62 +143,76 @@
           'd-block': viewMode === 'grid'
         }"
       >
-        <div class="m-0 col align-self-center">
-          <div class="align-self-center" *ngIf="headerValue == 'ID'">
-            {{ item.id }}
-          </div>
-          <div class="align-self-center" *ngIf="headerValue == 'کد رهگیری'">
-            {{ item.code }}
-          </div>
-        </div>
         <div
-          class="card-body align-self-center d-flex align-items-lg-center text-center"
+          class="card-body align-self-center d-flex align-items-lg-center row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
           <!-- OTHER DATA -->
-          <div class="col m-0 text-lg-center">
+          <div class="m-0 col align-self-center text-small text-lg-center">
+            <div class="align-self-center" *ngIf="headerValue == 'ID'">
+              {{ item.id }}
+            </div>
+            <div class="align-self-center" *ngIf="headerValue == 'کد رهگیری'">
+              {{ item.code }}
+            </div>
+          </div>
+          <div class="col m-0 text-lg-center text-small text-lg-center">
             {{ item.firstName }}&nbsp;{{ item.lastName }}
           </div>
-          <div class="col m-0 text-lg-center">{{ item.phoneNumber }}</div>
-          <div class="col m-0 text-lg-center">
+          <div class="col m-0 text-lg-center text-small text-lg-center">
+            {{ item.accountNumber }}
+          </div>
+          <div class="col m-0 text-lg-center text-small text-lg-center">
             {{ item.product }}|{{ item.plan }}
           </div>
-          <div class="col m-0 text-lg-center">
+          <div class="col m-0 text-lg-center text-small text-lg-center">
             {{ item.price | currency }}
           </div>
-          <div class="col m-0 text-lg-center">{{ item.createDate }}</div>
-          <div class="col m-0 text-lg-center">{{ item.maximumBalance }}</div>
+          <div class="m-0 col text-lg-center text-small text-lg-center">
+            <div class="align-self-center" *ngIf="dateValue == 'تاریخ ثبت '">
+              {{ item.createDate | date : " YYYY d MMMM  " }}
+            </div>
+            <div
+              class="align-self-center"
+              *ngIf="dateValue == ' تاریخ ثبت به شمسی'"
+            >
+              {{ item.jalaliDate }}
+            </div>
+          </div>
+          <div class="col m-0 text-lg-center text-small text-lg-center">
+            {{ item.maximumBalance }}
+          </div>
           <div class="col m-0 text-lg-center" *ngIf="status == null">
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge badge-rounder w-100 w-md-50 text-center p-1 pt-2 pb-2 text-white"
               *ngIf="item.transactionStatus == 6"
               [ngClass]="item.transactionStatus == 6 ? 'wait-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge badge-rounder w-100 w-md-50 text-center p-1 pt-2 pb-2 text-white"
               *ngIf="item.transactionStatus == 8"
               [ngClass]="item.transactionStatus == 8 ? 'success-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge badge-rounder w-100 w-md-50 text-center p-1 pt-2 pb-2 text-white"
               *ngIf="item.transactionStatus == 1"
               [ngClass]="item.transactionStatus == 1 ? 'new-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge badge-rounder w-100 w-md-50 text-center p-1 pt-2 pb-2 text-white"
               *ngIf="item.transactionStatus == 2"
               [ngClass]="item.transactionStatus == 2 ? 'last-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge badge-rounder w-100 w-md-50 text-center p-1 pt-2 pb-2 text-white"
               *ngIf="
                 item.transactionStatus != 2 &&
                 item.transactionStatus != 1 &&
@@ -206,77 +232,51 @@
             </div>
           </div>
 
-          <div
-            class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
-          >
-            <div class="row text-center col-auto d-flex justify-content-around">
-              <div class="row">
-                <div class="col-5">
+          <div class="m-0 col d-md-block d-none">
+            <div class="row col-auto d-flex justify-content-around">
+              <div class="row g-0 p-0 m-0 d-flex justify-content-around">
+                <button
+                  *appCanAccess="'invoice-Full Premission'"
+                  class="btn text-small btn-info padding-fixer col-5"
+                  (click)="openDetailModal(item, openDetails)"
+                >
+                  جزئیات
+                </button>
+
+                <ng-container *ngIf="item.transactionStatus == 2">
+                  <button
+                    *appCanAccess="'Licence-Full Premission'"
+                    type="button"
+                    style="padding-right: 5px"
+                    [ngClass]="{ 'd-none': viewMode === 'grid' }"
+                    class="btn col-5 text-small btn-outline-info padding-fixer"
+                    (click)="openUpdateModal(sendLicense, item)"
+                  >
+                    لایسنس
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="item.transactionStatus == 8">
+                  <a
+                    class="btn col-5 text-small btn-outline-danger padding-fixer"
+                    href="https://dl.iraniExpert.com/{{ item.filePath }}"
+                  >
+                    دانلود
+                  </a>
+                </ng-container>
+              </div>
+              <div class="row pt-2 p-0 container">
+                <div class="col-12">
                   <button
                     *appCanAccess="'note-Full Premission'"
-                    class="btn btn-success"
+                    class="btn text-small btn-success"
                     [ngClass]="{ 'd-none': viewMode === 'grid' }"
                     (click)="toggleNotebar(item.id)"
                   >
                     یادداشت
                   </button>
                 </div>
-                <div class="col-5">
-                  <button
-                    *appCanAccess="'invoice-Full Premission'"
-                    class="btn btn-info"
-                    [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                    (click)="openDetailModal(item, openDetails)"
-                  >
-                    جزئیات
-                  </button>
-                </div>
               </div>
-              <div class="row pt-2 p-0 container">
-                <div class="col-12">
-                  <button
-                    *appCanAccess="'Orders-Full Premission'"
-                    class="btn btn-danger w-100"
-                    [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                    (click)="deleteOrder(item.id, deleteModal)"
-                  >
-                    حذف
-                  </button>
-                </div>
-              </div>
-              <div class="row pt-2 p-0 container">
-                <div
-                  class="col-12 d-flex justify-content-center"
-                  *ngIf="item.transactionStatus == 2"
-                >
-                  <button
-                    *appCanAccess="'Licence-Full Premission'"
-                    type="button"
-                    [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                    class="btn btn-outline-info col w-100 m-1"
-                    (click)="openUpdateModal(sendLicense, item)"
-                  >
-                    ارسال لایسنس
-                  </button>
-                </div>
-                <div
-                  class="col-12 d-flex justify-content-center"
-                  *ngIf="item.transactionStatus == 8"
-                >
-                  <a
-                    class="btn btn-info w-100 text-white"
-                    href="https://dl.iraniExpert.com/{{ item.filePath }}"
-                  >
-                    دانلود
-                  </a>
-                  <!-- <div class="w-25 w-sm-100 ml-sm-2">
-                  <button class="btn btn-danger" [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="updateLicense(licence,item)">
-                    تغییر
-                  </button>
-                </div> -->
-                </div>
-              </div>
+              <div class="row pt-2 p-0 container"></div>
             </div>
           </div>
         </div>
@@ -286,6 +286,7 @@
       >
         <h6 class="text-center">عملیات</h6>
         <button
+          *appCanAccess="'note-Full Premission'"
           class="btn btn-outline-danger col m-1"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
           (click)="toggleNotebar(item.id)"
@@ -738,7 +739,7 @@
 
 <div
   [ngClass]="{ open: _orderService.sidebarState.sidenavOpen }"
-  class="notebar-left rtl-ps-none bg-secondary rounded shadow-lg"
+  class="notebar-left rtl-ps-none bg-lightdark shadow-lg"
   [perfectScrollbar]="{ suppressScrollX: true }"
 >
   <div class="mt-3 ml-3 mb-3">
@@ -755,27 +756,29 @@
   <hr class="separator-breadcrumb mt-0 mb-1" />
   <div class="ml-3">
     <form action="">
-      <div class="row">
-        <div class="col-10 form-group mb-3 mt-3">
+      <div class="row g-0 p-0 m-0">
+        <div class="col-lg-12 col-md-11 col-10 form-group mb-3 mt-3">
           <label class="text-white" for="title">ایجاد یادداشت</label>
           <textarea
             name="title"
             id="title"
             type="text"
             [(ngModel)]="note.text"
-            class="form-control bg-dark textarea-font"
+            class="form-control bg-white text-dark textarea-font"
           ></textarea>
         </div>
       </div>
     </form>
-    <button
-      type="button"
-      (click)="openConfirmationModal(note, confirmationModal)"
-      class="btn btn-light mb-2"
-      *appCanAccess="'note-Add'"
-    >
-      ایجاد
-    </button>
+    <div class="d-flex justify-content-end mr-3">
+      <button
+        type="button"
+        (click)="openConfirmationModal(note, confirmationModal)"
+        class="btn btn-secondary mb-2"
+        *appCanAccess="'note-Add'"
+      >
+        ایجاد
+      </button>
+    </div>
   </div>
   <hr class="separator-breadcrumb mt-2 mb-1" />
   <div class="p-2"><h4 class="pl-2 text-light">یادداشت ها</h4></div>
@@ -789,18 +792,25 @@
                 class="timeline-card shadow-lg card mt-2"
                 *ngIf="toggled == true"
               >
-                <div class="card-header bg-dark m-0 p-0">
-                  <p class="text-white m-0 p-2">{{ item.email }}</p>
+                <div class="card-header bg-light m-0 p-0">
+                  <div class="d-flex justify-content-between">
+                    <p class="m-0 p-2">{{ item.email }}</p>
+                  </div>
                 </div>
                 <div class="card-body shadow-lg bg-secondary">
                   <p class="text-white">
                     {{ item.text }}
                   </p>
                   <div
-                    class="d-flex justify-content-center align-items-center text-white bg-dark radius-lg p-2"
+                    class="d-flex row g-0 m-0 justify-content-center align-items-center text-white bg-dark radius-lg p-1"
                   >
-                    <strong class="m-1">ایجاد شده توسط</strong
-                    ><strong class="m-1">{{ item.name }}</strong>
+                    <strong class="m-1">زمان ثبت یادداشت&nbsp; :</strong
+                    ><strong class="m-1"
+                      >{{
+                        item.createDate | date : "  h:mm , yy/M/d "
+                      }},</strong
+                    >
+                    <strong class="m-1">{{ item.jalaliDate }}</strong>
                   </div>
                 </div>
               </div>

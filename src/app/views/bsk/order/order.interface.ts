@@ -25,4 +25,5 @@ export interface IOrder extends IBase {
   code: string;
   maximumBalance: number;
   referralCode: string;
+  jalaliDate: string;
 }

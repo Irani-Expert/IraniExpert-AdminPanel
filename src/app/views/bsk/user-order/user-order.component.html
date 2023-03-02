@@ -94,35 +94,35 @@
 
           <div class="m-0 col text-lg-center">
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge-rounder w-100 w-md-75 text-center p-1 text-white"
               *ngIf="item.transactionStatus == 6"
               [ngClass]="item.transactionStatus == 6 ? 'wait-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge-rounder w-100 w-md-75 text-center p-1 text-white"
               *ngIf="item.transactionStatus == 8"
               [ngClass]="item.transactionStatus == 8 ? 'success-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge-rounder w-100 w-md-75 text-center p-1 text-white"
               *ngIf="item.transactionStatus == 1"
               [ngClass]="item.transactionStatus == 1 ? 'new-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge-rounder w-100 w-md-75 text-center p-1 text-white"
               *ngIf="item.transactionStatus == 2"
               [ngClass]="item.transactionStatus == 2 ? 'last-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge-rounder w-100 w-md-75 text-center p-1 text-white"
               *ngIf="
                 item.transactionStatus != 2 &&
                 item.transactionStatus != 1 &&

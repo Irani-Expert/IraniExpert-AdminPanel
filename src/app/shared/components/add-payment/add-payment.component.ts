@@ -6,38 +6,31 @@ import { InvoiceService } from 'src/app/views/bsk/invoice/invoice.service';
 import { OrderModel } from 'src/app/views/bsk/order/order.model';
 import { OrderService } from 'src/app/views/bsk/order/order.service';
 import { Result } from '../../models/Base/result.model';
-import{UserOrderComponent}from 'src/app/views/bsk/user-order/user-order.component'
+import { UserOrderComponent } from 'src/app/views/bsk/user-order/user-order.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-add-payment',
   templateUrl: './add-payment.component.html',
-  styleUrls: ['./add-payment.component.scss']
+  styleUrls: ['./add-payment.component.scss'],
 })
 export class AddPaymentComponent implements OnInit {
-  @Input() public order:OrderModel;
-  invoiceDetail!:InvoiceModel
+  @Input() public order: OrderModel;
+  invoiceDetail!: InvoiceModel;
 
-  constructor( public _invoiceService: InvoiceService,
-      public _orderService: OrderService,
-      public _activeModal:NgbActiveModal,
-    private toastr: ToastrService,
-
-    ) { }
+  constructor(
+    public _invoiceService: InvoiceService,
+    public _orderService: OrderService,
+    public _activeModal: NgbActiveModal,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.order)
-  this.getInvoiceListByOrderId()
+    console.log(this.order);
+    this.getInvoiceListByOrderId();
   }
   async getInvoiceListByOrderId() {
     this._invoiceService
-      .GetByTableTypeAndRowId(
-       0,
-        1000,
-        'ID',
-        'invoice',
-        this.order.id ,
-        8
-      )
+      .GetByTableTypeAndRowId(0, 1000, 'ID', 'invoice', this.order.id, 8)
       .subscribe(
         (res: Result<InvoiceModel[]>) => {
           this.invoiceDetail = res.data[0];
@@ -57,14 +50,14 @@ export class AddPaymentComponent implements OnInit {
         }
       );
   }
-  updateOrder(code:string) {
-    this.order.transactionStatus=1;
-   
-     this.addOrUpdateOrder(this.order,code)
+  updateOrder(code: string) {
+    this.order.transactionStatus = 1;
+
+    this.addOrUpdateOrder(this.order, code);
   }
-  async addOrUpdate(item: InvoiceModel,code:string) {
-    item.bankResponse=code;
-     item.status=4
+  async addOrUpdate(item: InvoiceModel, code: string) {
+    item.bankResponse = code;
+    item.status = 4;
     await this._invoiceService
       .update(item.id, item, 'invoice')
       .toPromise()
@@ -75,8 +68,7 @@ export class AddPaymentComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-            this._activeModal.close(true)
-
+            this._activeModal.close(true);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
@@ -92,14 +84,14 @@ export class AddPaymentComponent implements OnInit {
         }
       );
   }
-  async addOrUpdateOrder(order:OrderModel,code:string) {
+  async addOrUpdateOrder(order: OrderModel, code: string) {
     await this._orderService
       .update(order.id, order, 'Orders')
       .toPromise()
       .then(
         (data) => {
           if (data.success) {
-            this.addOrUpdate(this.invoiceDetail,code)
+            this.addOrUpdate(this.invoiceDetail, code);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,

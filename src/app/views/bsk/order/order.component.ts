@@ -60,7 +60,7 @@ export class OrderComponent implements OnInit {
   @ViewChildren(PerfectScrollbarDirective)
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
-
+  dateValue: string = 'تاریخ ثبت ';
   clientId: number;
 
   headerValue: string = 'کد رهگیری';
@@ -116,6 +116,13 @@ export class OrderComponent implements OnInit {
       this.headerValue = 'ID';
     }
   }
+  changeDateValue() {
+    if (this.dateValue != 'تاریخ ثبت ') {
+      this.dateValue = 'تاریخ ثبت ';
+    } else {
+      this.dateValue = ' تاریخ ثبت به شمسی';
+    }
+  }
   getOrderbyStatus(status: any, pageNumber: number) {
     this.status = status;
     this._orderService
@@ -129,7 +136,7 @@ export class OrderComponent implements OnInit {
           this.rows = res.data.items;
           var counter = 0;
           this.rows.forEach((_x) => {
-            this.rows[counter].createDate = moment(
+            this.rows[counter].jalaliDate = moment(
               this.rows[counter].createDate,
               'YYYY/MM/DD'
             )
@@ -330,6 +337,17 @@ export class OrderComponent implements OnInit {
       .GetByTableTypeAndRowId(0, 20, rowId, 8)
       .subscribe((res: Result<Paginate<CommentModel[]>>) => {
         this.notes = res.data.items;
+        var counter = 0;
+        this.notes.forEach((_x) => {
+          debugger;
+          this.notes[counter].jalaliDate = moment(
+            this.notes[counter].createDate,
+            'YYYY/MM/DD'
+          )
+            .locale('fa')
+            .format('YYYY/MM/DD');
+          counter++;
+        });
       });
   }
   toggleNotebar(rowId: number) {

@@ -12,4 +12,6 @@ export class CommentModel extends Base implements IComment {
   rate: number;
   text: string;
   isAccepted: boolean;
+  jalaliDate: string;
+  createDate: string;
 }

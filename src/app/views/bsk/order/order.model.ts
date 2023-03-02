@@ -28,4 +28,5 @@ export class OrderModel extends Base implements IOrder {
   code: string;
   maximumBalance: number;
   referralCode: string;
+  jalaliDate: string;
 }

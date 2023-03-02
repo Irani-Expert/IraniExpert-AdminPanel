@@ -5,42 +5,41 @@
  *
 */
 
-@import '~perfect-scrollbar/css/perfect-scrollbar.css';
-@import '~@swimlane/ngx-datatable/index.css';
-@import '~@swimlane/ngx-datatable/themes/material.css';
-@import '~@swimlane/ngx-datatable/assets/icons.css';
+@import "~perfect-scrollbar/css/perfect-scrollbar.css";
+@import "~@swimlane/ngx-datatable/index.css";
+@import "~@swimlane/ngx-datatable/themes/material.css";
+@import "~@swimlane/ngx-datatable/assets/icons.css";
 @import "toaster.scss";
-@import '~ngx-toastr/toastr.css';
+@import "~ngx-toastr/toastr.css";
 @import "~angular-calendar/css/angular-calendar.css";
-@import '~quill/dist/quill.core.css';
-@import '~quill/dist/quill.snow.css';
-@import '~highlight.js/styles/github.css';
-@import '~ladda/dist/ladda.min.css';
+@import "~quill/dist/quill.core.css";
+@import "~quill/dist/quill.snow.css";
+@import "~highlight.js/styles/github.css";
+@import "~ladda/dist/ladda.min.css";
 @import "../iconsmind/iconsmind.css";
-@import 'variables';
+@import "variables";
 
 // @import 'themes/lite-blue';
-@import 'themes/lite-purple';
-@import '../vendor/bootstrap/bootstrap.scss';
+@import "themes/lite-purple";
+@import "../vendor/bootstrap/bootstrap.scss";
 @import "bootstrap-rtl.scss";
-@import 'globals/globals';
+@import "globals/globals";
 
-
-.edit{
+.edit {
   font-size: 18px !important;
   color: rgb(185, 223, 17) !important;
 }
 
-.delete{
+.delete {
   font-size: 18px !important;
   color: rgb(187, 87, 62) !important;
 }
 
-.mat-text-warn{
-  color:red !important;
+.mat-text-warn {
+  color: red !important;
 }
 
-.empty-row{
+.empty-row {
   text-align: right !important;
 }
 
@@ -70,24 +69,23 @@
   margin: 4px;
 }
 
-.dp-day-calendar-container{
+.dp-day-calendar-container {
   z-index: 10530;
-    position: fixed;
+  position: fixed;
 }
 // .dp-material{
 //   position: fixed;
 //   left: 120px !important;
 // }
-.dp-time-select-controls{
+.dp-time-select-controls {
   position: fixed;
 }
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
 
-
 /* You can add global styles to this file, and also import other style files */
-.datatable-footer{
+.datatable-footer {
   direction: ltr;
 }
 
@@ -117,22 +115,17 @@
   margin: 4px;
 }
 
-
-.img-card{
+.img-card {
   object-fit: contain;
   width: 100%;
   height: 80px;
 }
 
-
-
-
 .gif-fluid {
   background-color: white;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
-
-
 
 .th-list div {
   color: black !important;
@@ -144,7 +137,7 @@
   height: 40px;
   padding: 10px 25px;
   border: 2px solid #000;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: 500;
   background: transparent;
   cursor: pointer;
@@ -153,82 +146,85 @@
   display: inline-block;
 }
 
-
 .btn-6 {
   background: #663399;
   border-radius: 12px;
- color: #fff;
- line-height: 42px;
- font-weight: bold;
- padding: 0;
- border: none;
+  color: #fff;
+  line-height: 42px;
+  font-weight: bold;
+  padding: 0;
+  border: none;
 }
 .btn-6 span {
- position: relative;
- display: block;
- width: 100%;
- height: 100%;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .btn-6:before,
 .btn-6:after {
- position: absolute;
- content: "";
- height: 0%;
- width: 2px;
- background: #000;
+  position: absolute;
+  content: "";
+  height: 0%;
+  width: 2px;
+  background: #000;
 }
 .btn-6:before {
- right: 0;
- top: 0;
- transition: all 500ms ease;
+  right: 0;
+  top: 0;
+  transition: all 500ms ease;
 }
 .btn-6:after {
- left: 0;
- bottom: 0;
- transition: all 500ms ease;
+  left: 0;
+  bottom: 0;
+  transition: all 500ms ease;
 }
-.btn-6:hover{
- color: #000;
- background: transparent;
+.btn-6:hover {
+  color: #000;
+  background: transparent;
 }
 .btn-6:hover:before {
- transition: all 500ms ease;
- height: 100%;
+  transition: all 500ms ease;
+  height: 100%;
 }
 .btn-6:hover:after {
- transition: all 500ms ease;
- height: 100%;
+  transition: all 500ms ease;
+  height: 100%;
 }
 .btn-6 span:before,
 .btn-6 span:after {
- position: absolute;
- content: "";
- background: #000;
+  position: absolute;
+  content: "";
+  background: #000;
 }
 .btn-6 span:before {
- left: 0;
- top: 0;
- width: 0%;
- height: 2px;
- transition: all 500ms ease;
+  left: 0;
+  top: 0;
+  width: 0%;
+  height: 2px;
+  transition: all 500ms ease;
 }
 .btn-6 span:after {
- right: 0;
- bottom: 0;
- width: 0%;
- height: 2px;
- transition: all 500ms ease;
+  right: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  transition: all 500ms ease;
 }
 .btn-6 span:hover:before {
- width: 100%;
+  width: 100%;
 }
 .btn-6 span:hover:after {
- width: 100%;
+  width: 100%;
 }
-
 
 .btn-create {
   display: inline-block;
 }
 
-
+.badge-rounder {
+  border-radius: 0.25rem !important;
+}
+.card-body {
+  padding: 0.8rem !important;
+}
