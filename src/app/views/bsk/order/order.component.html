@@ -41,6 +41,7 @@
     </div>
   </div>
 </div>
+
 <!----------------------------------- Head Table  -->
 <div class="row list-horizntal">
   <div
@@ -88,6 +89,7 @@
           <div class="m-0 col text-lg-center text-white">شماره حساب</div>
           <div class="m-0 col text-lg-center text-white">نام و پلن محصول</div>
           <div class="m-0 col text-lg-center text-white">هزینه</div>
+          <div style="width: 3000px">سلام بیبی</div>
           <div
             class="m-0 col text-lg-center text-white align-self-center align-items-center cursor-pointer d-flex justify-content-around"
             (click)="changeDateValue()"
@@ -321,6 +323,7 @@
     ></pagination-controls>
   </div>
 </div>
+
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
@@ -381,7 +384,7 @@
     <div class="modal-body">
       <div>
         <div class="row">
-          <div class="col col-md-4 form-group mb-3">
+          <div class="col-12 col-lg-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">زمان ثبت سفارش</strong>
             <input
               class="form-control mt-1"
@@ -391,7 +394,7 @@
               disabled
             />
           </div>
-          <div class="col col-md-4 form-group mb-3">
+          <div class="col-6 col-lg-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">نام کاربر</strong>
             <input
               class="form-control mt-1"
@@ -403,7 +406,7 @@
               disabled
             />
           </div>
-          <div class="col col-md-4 form-group mb-3">
+          <div class="col-6 col-lg-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">شماره تماس</strong>
             <input
               class="form-control mt-1"
@@ -413,7 +416,7 @@
               disabled
             />
           </div>
-          <div class="col col-md-4 form-group mb-3">
+          <div class="col-12 col-sm-6 col-lg-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">شماره حساب</strong>
             <input
               class="form-control mt-1"
@@ -423,7 +426,7 @@
               disabled
             />
           </div>
-          <div class="col col-md-4 form-group mb-3">
+          <div class="col-12 col-sm-6 col-lg-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">کد رهگیری</strong>
             <input
               class="form-control mt-1"
@@ -433,7 +436,7 @@
               disabled
             />
           </div>
-          <div class="col col-md-4 form-group mb-3">
+          <div class="col-6 col-lg-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">کد معرف</strong>
             <input
               class="form-control mt-1"
@@ -444,7 +447,7 @@
             />
           </div>
 
-          <div class="col-md-8 form-group mb-3">
+          <div class="col-6 form-group mb-3">
             <strong for="totalPrice" class="mb-3">پاسخ بانک</strong>
             <input
               class="form-control mt-1"
@@ -454,7 +457,7 @@
               disabled
             />
           </div>
-          <div class="col-md-4 form-group mb-3">
+          <div class="col-md-6 form-group mb-3">
             <strong for="totalPrice" class="mb-3">توضیحات کاربر</strong>
             <input
               class="form-control mt-1"
@@ -465,7 +468,7 @@
             />
           </div>
 
-          <div class="col-md-4 form-group mb-3">
+          <div class="col-6 col-lg-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">قیمت محصول</strong>
             <input
               class="form-control mt-1"
@@ -475,7 +478,7 @@
               disabled
             />
           </div>
-          <div class="col-md-4 form-group mb-3">
+          <div class="col-6 col-md-4 form-group mb-3">
             <strong for="discountPrice" class="mb-3">تخفیف</strong>
             <input
               class="form-control mt-1"
@@ -486,7 +489,7 @@
               disabled
             />
           </div>
-          <div class="col-md-4 form-group mb-3">
+          <div class="col-sm-6 col-md-4 form-group mb-3">
             <strong for="toPayPrice" class="mb-3">پرداخت نهایی</strong>
             <input
               class="form-control mt-1 bg-success text-white"
@@ -496,7 +499,7 @@
               min=" {{ orderDetail.price }}"
             />
           </div>
-          <div class="col-md-3 form-group mb-3">
+          <div class="col-sm-6 col-md-4 form-group mb-3">
             <strong for="status" class="mb-3">وضعیت</strong>
             <input
               class="form-control mt-1 bg-success text-white"
