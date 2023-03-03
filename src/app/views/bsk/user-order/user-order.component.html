@@ -229,7 +229,7 @@
         <h6 class="text-center">عملیات</h6>
         <a
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          *ngIf="item.transactionStatus == 2 && item.filePath != null"
+          *ngIf="item.transactionStatus == 8 && item.filePath != null"
           class="btn btn-outline-warning text-dark col m-1"
           href="https://dl.iraniExpert.com/{{ item.filePath }}"
         >
@@ -237,7 +237,10 @@
         </a>
         <button
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          *ngIf="item.transactionStatus == 2 && item.filePath != null"
+          *ngIf="
+            item.transactionStatus == 8 ||
+            (item.transactionStatus == 2 && item.filePath != null)
+          "
           class="btn btn-outline-primary col text-warning m-1"
           (click)="showDetails(item, detailModal)"
         >
