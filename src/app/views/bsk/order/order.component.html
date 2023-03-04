@@ -389,8 +389,7 @@
             <input
               class="form-control mt-1"
               id="totalPrice"
-              rows="1"
-              value="{{ orderDetail.createDate }}"
+              value="{{ orderDetail.createDate | date : 'h:mm , yyyy/M/d' }}"
               disabled
             />
           </div>
@@ -447,25 +446,52 @@
             />
           </div>
 
-          <div class="col-6 form-group mb-3">
+          <div class="col-md-7 form-group mb-3">
             <strong for="totalPrice" class="mb-3">پاسخ بانک</strong>
-            <input
-              class="form-control mt-1"
+            <textarea
+              dir="ltr"
+              class="form-control mt-1 text-small"
               id="totalPrice"
-              rows="1"
+              rows="2"
               value="{{ orderDetail.bankResponse }}"
               disabled
-            />
+            ></textarea>
           </div>
-          <div class="col-md-6 form-group mb-3">
+          <div class="col-md-5 form-group mb-3">
             <strong for="totalPrice" class="mb-3">توضیحات کاربر</strong>
             <textarea
               class="form-control mt-1"
               id="totalPrice"
-              rows="1"
+              rows="2"
               value="{{ orderDetail.description }}"
               disabled
             ></textarea>
+          </div>
+          <div class="col-12 row" *ngIf="orderDetail.transactionStatus == 8">
+            <div class="col-4 col-lg-3 form-group mb-3">
+              <strong class="mb-3">تاریخ شروع لایسنس</strong>
+              <input
+                class="form-control mt-1"
+                value="{{ orderDetail.startDate | date : 'yy/M/d' }}"
+                disabled
+              />
+            </div>
+            <div class="col-4 col-lg-3 form-group mb-3">
+              <strong class="mb-3">تاریخ پایان لایسنس</strong>
+              <input
+                class="form-control mt-1"
+                value="{{ orderDetail.expireDate | date : 'yy/M/d' }}"
+                disabled
+              />
+            </div>
+            <div class="col-4 col-lg-3 form-group mb-3">
+              <strong class="mb-3">ورژن محصول</strong>
+              <input
+                class="form-control mt-1"
+                value="{{ orderDetail.versionNumber }}"
+                disabled
+              />
+            </div>
           </div>
           <div class="col-6 col-lg-3 form-group mb-3">
             <strong for="totalPrice" class="mb-3">محصول و پلن آن</strong>
@@ -744,7 +770,7 @@
               >
                 <div class="rounded-alt bg-notes-header m-0 p-0">
                   <div class="d-flex justify-content-between">
-                    <p class="m-0 p-2">{{ item.email }}</p>
+                    <p class="m-0 p-2">{{ item.name }}</p>
                   </div>
                 </div>
                 <div class="card-body">
