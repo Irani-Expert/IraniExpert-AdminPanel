@@ -224,7 +224,7 @@ export class NavigationService {
       type: 'link',
       icon: 'i-Dollar-Sign',
       state: '/dct/discount',
-      privilege:'all-comment-user-Special-Premission'
+      privilege:'allCommentUser-Special-Premission'
     },
   
      {
@@ -255,7 +255,7 @@ export class NavigationService {
       type: 'link',
       icon: 'i-Speach-Bubbles',
       state: '/shr/all-Comments',
-      privilege:'all-comment-user-Special-Premission'
+      privilege:'allCommentUser-Special-Premission'
     },
   
     // {
