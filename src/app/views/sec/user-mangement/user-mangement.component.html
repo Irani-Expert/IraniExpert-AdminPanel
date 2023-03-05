@@ -9,6 +9,38 @@
 
 <div class="separator-breadcrumb border-top"></div>
 -->
+<div class="row g-0 p-0 m-0">
+  <div class="col-12 row g-0 p-0 flex-row mb-2">
+    <div class="col-auto mb-2">
+      <button class="btn btn-secondary" (click)="getUsersList(1, page.size,null)">
+       تمامی کابران   
+      </button>
+    </div>
+    <div class="col-auto mb-2">
+      <button class="btn btn-primary" (click)="getUsersList(1, page.size,1)">
+       ادمین
+      </button>
+    </div>
+    <div class="col-auto mb-2">
+      <button class="btn btn-dark" (click)="getUsersList(page.pageNumber, page.size,14)">
+      کاربران
+      </button>
+    </div>
+    <div class="col-auto mb-2">
+      <button class="btn btn-danger" (click)="getUsersList(page.pageNumber, page.size,15)">
+      فروشنده
+      </button>
+    </div>
+    <div class="col-auto mb-2">
+      <button class="btn btn-warning" (click)="getUsersList(page.pageNumber, page.size,13)">
+      نویسنده
+      </button>
+    </div>
+  
+   
+  
+  </div>
+</div>
 <div class="row list-horizontal">
   <div
     class="list-item"
@@ -45,7 +77,8 @@
           <div class="m-0 col text-lg-center text-white">
             نام و نام خانوادگی
           </div>
-          <div class="m-0 col text-lg-center text-white">ایمیل</div>
+          <div class="m-0 col text-lg-center text-white">
+شماره حساب          </div>
           <div class="m-0 col text-lg-center text-white">شماره تماس</div>
           <div class="m-0 text-light d-md-block d-none col text-center">
             عملیات
@@ -100,8 +133,9 @@
             {{ item.firstName }}&nbsp;{{ item.lastName }}
           </div>
           <div class="col m-0">
-            {{ item.email }}
+            {{ item.accountNumber }}
           </div>
+         
           <div class="col m-0">
             {{ item.phoneNumber }}
           </div>
@@ -170,6 +204,7 @@
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
+    style="opacity: 0.4"
     alt=""
   />
 </div>
@@ -249,7 +284,7 @@
           <label for="accountNumber ">دسترسی ها</label>
           <ng-multiselect-dropdown
            [formControl]="addForm.controls['permision']"
-           [placeholder]="'       لیست شروط قرارداد  '"
+           [placeholder]="' لیست دسترسی ها '"
            [settings]="dropdownSettings"
            [data]="dropdownList"
            [(ngModel)]="selectedItems"

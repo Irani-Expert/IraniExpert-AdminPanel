@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
@@ -27,6 +21,7 @@ export class UserNeedComponent implements OnInit {
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   toggled = false;
+  userWant: any = null;
   note: UserNeedModel;
   rows: UserNeedModel[] = new Array<UserNeedModel>();
   page: Page = new Page();
@@ -41,7 +36,7 @@ export class UserNeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setPage(this.page.pageNumber);
+    this.setPage(this.page.pageNumber, null);
     this.updateNotebar();
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -51,10 +46,33 @@ export class UserNeedComponent implements OnInit {
         }
       });
   }
-  setPage(pageInfo: number) {
+  setPage(pageInfo: number, userWant: any) {
     this.page.pageNumber = pageInfo;
+    this.getUserNeedByUserWant(userWant, pageInfo);
+  }
 
-    this.getUserNeedById(this.page.pageNumber, this.page.size);
+  getUserNeedByUserWant(userWant: any, pageNumber: number) {
+    this.userWant = userWant;
+    this._UserNeedService
+      .getByStatus(12, pageNumber !== 0 ? pageNumber - 1 : pageNumber, userWant)
+      .subscribe(
+        (res: Result<Paginate<UserNeedModel[]>>) => {
+          this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber + 1;
+        },
+        (_error) => {
+          this.toastr.error(
+            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+            null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+        }
+      );
   }
   async getUserNeedById(pageNumber: number, seedNumber: number) {
     this._UserNeedService
@@ -118,7 +136,7 @@ export class UserNeedComponent implements OnInit {
             });
         },
         (error) => {
-          this.toastr.error('خطا در حذف', error.message, {
+          this.toastr.error('انصراف از حذف', error.message, {
             timeOut: 2000,
             positionClass: 'toast-top-left',
           });

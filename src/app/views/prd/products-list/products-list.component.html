@@ -5,7 +5,7 @@ class="btn btn-primary m-1"
 ایجاد
 </button> -->
 <button
-*appCanAccess="'Product-Add'"
+  *appCanAccess="'Product-Add'"
   type="button"
   [routerLink]="'/prd/addUpdate'"
   class="btn btn-primary mb-4"
@@ -116,13 +116,13 @@ class="btn btn-primary m-1"
           <div class="col">
             <div
               *ngIf="item.isActive === false"
-              class="badge badge-dark badge-pill text-center p-2"
+              class="badge badge-dark badge-rounder text-center p-2"
             >
               غیر فعال
             </div>
             <div
               *ngIf="item.isActive === true"
-              class="badge badge-success badge-pill text-center p-2"
+              class="badge badge-success badge-rounder text-center p-2"
             >
               فعال
             </div>
@@ -133,7 +133,7 @@ class="btn btn-primary m-1"
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
-                *appCanAccess="'Product-Edit'"
+                  *appCanAccess="'Product-Edit'"
                   class="btn btn-info"
                   [routerLink]="'/prd/addUpdate/' + item.id"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
@@ -142,8 +142,8 @@ class="btn btn-primary m-1"
                 </button>
               </div>
               <div class="w-25 w-sm-100 ml-sm-2">
-                <button 
-                *appCanAccess="'Product-Delete'"
+                <button
+                  *appCanAccess="'Product-Delete'"
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteProduct(item.id, deleteConfirmModal)"
@@ -192,6 +192,7 @@ class="btn btn-primary m-1"
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
+    style="opacity: 0.4"
     alt=""
   />
 </div>

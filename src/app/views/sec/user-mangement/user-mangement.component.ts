@@ -28,6 +28,7 @@ export class UserMangementComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
   roleKeeper=[];
+  roleIdSaver:number
   dropdownSettings:IDropdownSettings;
   roleModel:UserRolesModel[]=new Array<UserRolesModel>();
   constructor(
@@ -65,14 +66,15 @@ export class UserMangementComponent implements OnInit {
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
 
-    this.getUsersList(this.page.pageNumber, this.page.size);
+    this.getUsersList(this.page.pageNumber, this.page.size,this.roleIdSaver);
   }
-  async getUsersList(pageNumber: number, seedNumber: number) {
+  async getUsersList(pageNumber: number, seedNumber: number,roleId:number) {
+    this.roleIdSaver=roleId
     this._usersService
       .getUserByRoleID(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
-        null,
+        roleId,
               )
       .subscribe(
         (res: Result<Paginate<UsersModel[]>>) => {
@@ -111,7 +113,6 @@ export class UserMangementComponent implements OnInit {
 
   this.roleKeeper=this.selectedItems;
   }   
-  
   this.addUpdate = row;
     this.modalService
       .open(content, {
@@ -158,7 +159,7 @@ export class UserMangementComponent implements OnInit {
             });
           }
         );
-      this.getUsersList(this.page.pageNumber, this.page.size);
+      this.getUsersList(this.page.pageNumber, this.page.size,this.roleIdSaver);
     } else {
       var counter=0
       
@@ -168,7 +169,6 @@ export class UserMangementComponent implements OnInit {
           this.roleModel[counter]=new UserRolesModel()
           this.roleModel[counter].userId=row.id
           this.roleModel[counter].roleId=x.item_id
-          this.roleModel[counter].id=0
           counter+=1;
 
         })
@@ -232,7 +232,7 @@ export class UserMangementComponent implements OnInit {
                 });
               }
             });
-        this.getUsersList(this.page.pageNumber, this.page.size);
+        this.getUsersList(this.page.pageNumber, this.page.size,this.roleIdSaver);
       });
   }
   async getRoleList(pageNumber: number, seedNumber: number) {
@@ -288,7 +288,6 @@ export class UserMangementComponent implements OnInit {
   }
   updateRoleId(){
     
- 
     this._usersService
         .updateUserRole(this.roleModel)
         .toPromise()

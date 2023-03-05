@@ -102,7 +102,6 @@ export class UserRoleComponent implements OnInit {
       );
   }
   userRoleEdit(content: any, row: UserRoleModel) { 
-    debugger
     if (row === undefined) {
       this.userIdTracker = 0;
       this.addUpdate = new UserRoleModel();

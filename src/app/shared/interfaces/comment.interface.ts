@@ -3,7 +3,7 @@ import { IBase } from 'src/app/shared/interfaces/Base/base.interface';
 export interface IComment extends IBase {
   userID: number;
   parentID: number;
-  parentComment:IComment[];
+  parentComment: IComment[];
   tableType: number;
   rowID: number;
   name: string;
@@ -11,4 +11,6 @@ export interface IComment extends IBase {
   rate: number;
   text: string;
   isAccepted: boolean;
+  createDate: Date;
+  jalaliDate: string;
 }

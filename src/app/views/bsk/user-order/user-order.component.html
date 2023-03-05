@@ -94,35 +94,35 @@
 
           <div class="m-0 col text-lg-center">
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge-rounder w-100 w-md-75 text-center p-1 text-white"
               *ngIf="item.transactionStatus == 6"
               [ngClass]="item.transactionStatus == 6 ? 'wait-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge-rounder w-100 w-md-75 text-center p-1 text-white"
               *ngIf="item.transactionStatus == 8"
               [ngClass]="item.transactionStatus == 8 ? 'success-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge-rounder w-100 w-md-75 text-center p-1 text-white"
               *ngIf="item.transactionStatus == 1"
               [ngClass]="item.transactionStatus == 1 ? 'new-span' : ''"
             >
               {{ item.transactionStatus | transactionStatus }}
             </div>
             <div
-            class="badge-pill w-100 w-md-75 text-center p-1 text-white"
-            *ngIf="item.transactionStatus == 2"
-            [ngClass]="item.transactionStatus == 2 ? 'last-span' : ''"
-          >
-            {{ item.transactionStatus | transactionStatus }}
-          </div>
+              class="badge-rounder w-100 w-md-75 text-center p-1 text-white"
+              *ngIf="item.transactionStatus == 2"
+              [ngClass]="item.transactionStatus == 2 ? 'last-span' : ''"
+            >
+              {{ item.transactionStatus | transactionStatus }}
+            </div>
             <div
-              class="badge-pill w-100 w-md-75 text-center p-1 text-white"
+              class="badge-rounder w-100 w-md-75 text-center p-1 text-white"
               *ngIf="
                 item.transactionStatus != 2 &&
                 item.transactionStatus != 1 &&
@@ -159,7 +159,10 @@
               <div class="col-12 col-lg-auto mb-2">
                 <button
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  *ngIf="item.transactionStatus == 8 ||item.transactionStatus == 2 && item.filePath != null"
+                  *ngIf="
+                    item.transactionStatus == 8 ||
+                    (item.transactionStatus == 2 && item.filePath != null)
+                  "
                   class="btn btn-primary text-white w-100"
                   (click)="showDetails(item, detailModal)"
                 >
@@ -226,7 +229,7 @@
         <h6 class="text-center">عملیات</h6>
         <a
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          *ngIf="item.transactionStatus == 2 && item.filePath != null"
+          *ngIf="item.transactionStatus == 8 && item.filePath != null"
           class="btn btn-outline-warning text-dark col m-1"
           href="https://dl.iraniExpert.com/{{ item.filePath }}"
         >
@@ -234,7 +237,10 @@
         </a>
         <button
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          *ngIf="item.transactionStatus == 2 && item.filePath != null"
+          *ngIf="
+            item.transactionStatus == 8 ||
+            (item.transactionStatus == 2 && item.filePath != null)
+          "
           class="btn btn-outline-primary col text-warning m-1"
           (click)="showDetails(item, detailModal)"
         >
@@ -274,6 +280,7 @@
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
+    style="opacity: 0.4"
     alt=""
   />
 </div>

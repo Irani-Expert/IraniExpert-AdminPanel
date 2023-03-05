@@ -8,5 +8,6 @@ export class UsersModel extends Base implements IUsers {
   lastName: string;
   email: string;
   phoneNumber: string;
+  accountNumber:string;
   roles:RoleModel[]
 }

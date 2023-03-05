@@ -32,7 +32,6 @@
         flex-direction: column;
         align-items: center;       
         cursor: pointer;
-        margin-right: 12px;
         div {
             width: 24px;
             height: 1px;
@@ -146,8 +145,8 @@
             display: none;
         }
         .menu-toggle {
-            width: 24px;
-            margin: 0 36px;       
+            width: 24px; 
+            margin-right: 36px;      
         }
         .header-part-right {
             .user {
@@ -163,8 +162,7 @@
             display: none;
         }
         .menu-toggle {
-            width: 24px;
-            margin-right: 36px;       
+            width: 24px;       
         }
     }
 }
@@ -179,6 +177,7 @@
         
         .menu-toggle {
             width: 60px;
+            margin-right: 0;
         }
         .header-part-right {
             .user {

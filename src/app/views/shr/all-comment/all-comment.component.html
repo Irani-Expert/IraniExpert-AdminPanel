@@ -1,48 +1,48 @@
-<div class="my-css w-75">
-    <div *ngFor="let item of rows">
-      <div class="timeline-card card mt-4">
-        <!-- *ngIf="item.parentID === null" -->
-        <div
-          class="card-header bg-dark d-flex justify-content-between align-items-center"
-        >
-          <div class="mb-1">
-            <strong class="mr-1 text-white">{{ item.name }}</strong>
-            <span
-              class="badge badge-warning mr-1 text-primary"
-              *ngIf="item.isAccepted === false"
-              >تایید نشده</span
-            >
-            <span
-              class="badge badge-success mr-1 text-white"
-              *ngIf="item.isAccepted === true"
-              >تایید شده</span
-            >
-            <p class="text-white-50">{{ item.createDate | relativeTime }}</p>
-          </div>
-          <div class="text-warning">امتیاز:5\{{ item.rate }}</div>
+<div class="my-css d-flex flex-wrap w-100">
+  <div *ngFor="let item of rows" class="col-xl-6">
+    <div class="timeline-card card mt-4">
+      <!-- *ngIf="item.parentID === null" -->
+      <div
+        class="card-header bg-light-dark d-flex justify-content-between align-items-center"
+      >
+        <div class="mb-1">
+          <strong class="mr-1 text-white">{{ item.name }}</strong>
+          <span
+            class="badge badge-warning mr-1 text-primary"
+            *ngIf="item.isAccepted === false"
+            >تایید نشده</span
+          >
+          <span
+            class="badge badge-success mr-1 text-white"
+            *ngIf="item.isAccepted === true"
+            >تایید شده</span
+          >
+          <p class="text-white-50">{{ item.createDate | relativeTime }}</p>
         </div>
-        <div class="card-body bg-secondary">
-          <p class="text-white">
-            {{ item.text }}
-          </p>
-          <!-- <ng-component *ngIf="item.parentID !== null">
+        <div class="text-warning">امتیاز:5\{{ item.rate }}</div>
+      </div>
+      <div class="card-body bg-gray">
+        <p class="text-white">
+          {{ item.text }}
+        </p>
+        <!-- <ng-component *ngIf="item.parentID !== null">
             <p class="bg-dark text-white ml-3">
               پاسخ:{{ item.parentComment.text }}
             </p>
           </ng-component> -->
+      </div>
+      <div class="card-footer bg-gray">
+        <div class="mb-2">
+          <button
+            type="button"
+            class="btn btn-rounded m-1"
+            *ngIf="item.isAccepted === false"
+            (click)="openSmall(modalSmall, item)"
+          >
+            پذیرفتن
+          </button>
         </div>
-        <div class="card-footer bg-secondary">
-          <div class="mb-2">
-            <button
-              type="button"
-              class="btn btn-rounded m-1"
-              *ngIf="item.isAccepted === false"
-              (click)="openSmall(modalSmall, item)"
-            >
-              پذیرفتن
-            </button>
-          </div>
-          <!-- <div class="mb-2">
+        <!-- <div class="mb-2">
             <button
               type="button"
               *ngIf="item.isAccepted === true"
@@ -52,85 +52,85 @@
               حذف پیام
             </button>
           </div> -->
-        </div>
       </div>
     </div>
   </div>
-  <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
-    <img
-      src="../../../../../assets/images/97434-no-data-available.gif"
-      class="img-fluid w-50"
-      alt=""
-    />
+</div>
+
+<div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="img-fluid w-50"
+    alt=""
+  />
+</div>
+<ng-template #modalSmall let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      آیا از پذیرش پیام مطمئن هستید
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss(false)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-  <ng-template #modalSmall let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">
-        آیا از پذیرش پیام مطمئن هستید
-      </h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss(false)"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <label class="text-black-50 mb-2"
-        >درصورت نیاز یا علاقه پاسخ این نظر را بدهید</label
-      >
-      <textarea [(ngModel)]="replyText" class="form-control"></textarea>
-    </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(true)"
-      >
-        بله
-      </button>
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(cancel)"
-      >
-        خیر
-      </button>
-    </div>
-  </ng-template>
-  
-  <ng-template #deleteModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">
-        آیا از حذف نظر مطمئن هستید
-      </h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss(false)"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(true)"
-      >
-        بله
-      </button>
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(cancel)"
-      >
-        خیر
-      </button>
-    </div>
-  </ng-template>
-  
+  <div class="modal-body">
+    <label class="text-black-50 mb-2"
+      >درصورت نیاز یا علاقه پاسخ این نظر را بدهید</label
+    >
+    <textarea [(ngModel)]="replyText" class="form-control"></textarea>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+    >
+      بله
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(cancel)"
+    >
+      خیر
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      آیا از حذف نظر مطمئن هستید
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss(false)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+    >
+      بله
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(cancel)"
+    >
+      خیر
+    </button>
+  </div>
+</ng-template>

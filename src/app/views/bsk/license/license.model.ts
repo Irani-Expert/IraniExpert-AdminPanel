@@ -10,5 +10,5 @@ export class LicenseModel extends Base implements ILicense {
   expireDate: string;
   rowID: number;
   accountNumber: number;
-  versionNumber:number;
+  versionNumber: number;
 }

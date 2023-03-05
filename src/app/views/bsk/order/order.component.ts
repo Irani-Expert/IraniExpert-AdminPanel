@@ -9,11 +9,18 @@ import { filter } from 'rxjs/operators';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { ordersModel } from 'src/app/shared/models/ordersModel';
+import { CommentModel } from 'src/app/shared/models/comment.model';
+import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Utils } from 'src/app/shared/utils';
+import { CommentService } from '../../prd/comment/comment.service';
+import { InvoiceModel } from '../invoice/invoice.model';
 import { InvoiceService } from '../invoice/invoice.service';
-import { CliamxLicenseModel, CliamxResponse } from '../license/cliamaxLicense.model';
+import {
+  CliamxLicenseModel,
+  CliamxResponse,
+} from '../license/cliamaxLicense.model';
 import { LicenseModel } from '../license/license.model';
 import { LicenseService } from '../license/license.service';
 import { OrderModel } from './order.model';
@@ -25,25 +32,38 @@ import { OrderService } from './order.service';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
-  toggled = false;
+  invoiceDetail: InvoiceModel = new InvoiceModel();
+  invoiceStatus: number;
+
   rows: OrderModel[] = new Array<OrderModel>();
-  viewMode: 'list' | 'grid' = 'list';
+  orderDetail: OrderModel;
+  status: any;
+
   page: Page = new Page();
+
+  viewMode: 'list' | 'grid' = 'list';
+
+  noteRowID: number;
+  notes: CommentModel[] = new Array<CommentModel>();
+  note: CommentModel = new CommentModel();
+
+  licenseFile: any = '';
+  licenseModel: LicenseModel = new LicenseModel();
+  startDate: any;
+  expireDate: any;
+  clientId: number;
+  versionNumber: number;
+
+  toggled = false;
+
   @ViewChildren(PerfectScrollbarDirective)
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
-  note: OrderModel;
-  status: any;
-  orderDetail:OrderModel;
-  clientId:number;
-  addForm: FormGroup;
-  startDate: any;
-  expireDate: any;
-  headerValue:string="ID";
-  licenseFile: any = '';
-  licenseModel: LicenseModel = new LicenseModel();
+  dateValue: string = 'تاریخ ثبت ';
 
+  headerValue: string = 'کد رهگیری';
 
+  user: UserInfoModel;
   constructor(
     public router: Router,
     public _orderService: OrderService,
@@ -52,29 +72,25 @@ export class OrderComponent implements OnInit {
     private _fileUploaderService: FileUploaderService,
     private _formBuilder: FormBuilder,
     public _licenseService: LicenseService,
-
+    public _invoiceService: InvoiceService,
+    public _commentService: CommentService,
+    private auth: AuthenticateService
   ) {
     this.page.pageNumber = 0;
-    this.page.size = 12;
+    this.page.size = 6;
     setTimeout(() => {
       this.psContainerSecSidebar = this.psContainers.toArray()[1];
     });
   }
 
   ngOnInit(): void {
-    this.page.pageNumber=1
-    this.addForm = this._formBuilder.group({
-      startDate: [null],
-      expireDate: [null],
-      accountNumber: [null],
-      versionNumber: [null],
-    });
     this.setPage(this.page.pageNumber, null);
+
     this.updateNotebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((routeChange) => {
+      .subscribe((_routeChange) => {
         if (Utils.isMobile()) {
           this._orderService.sidebarState.sidenavOpen = false;
         }
@@ -83,44 +99,49 @@ export class OrderComponent implements OnInit {
   setPage(pageInfo: number, transactionStatus: any) {
     this.page.pageNumber = pageInfo;
 
-    this.getOrderbyStatus(transactionStatus);
+    this.getOrderbyStatus(transactionStatus, pageInfo);
   }
-  test(){
-    if(this.headerValue!="Code"){
-      this.headerValue="Code"
+  changeHeaderValue() {
+    if (this.headerValue != 'کد رهگیری') {
+      this.headerValue = 'کد رهگیری';
+    } else {
+      this.headerValue = 'ID';
     }
-    else{
-      this.headerValue="ID"
-    }
-    
   }
-  getOrderbyStatus(status: any) {
-    if(this.status!=status){
-      this.page.pageNumber=1
+  changeDateValue() {
+    if (this.dateValue != 'تاریخ ثبت ') {
+      this.dateValue = 'تاریخ ثبت ';
+    } else {
+      this.dateValue = ' تاریخ ثبت به شمسی';
     }
+  }
+  getOrderbyStatus(status: any, pageNumber: number) {
     this.status = status;
     this._orderService
-      .getByStatus(6, this.page.pageNumber - 1, status)
+      .getByStatus(
+        this.page.size,
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        status
+      )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
           this.rows = res.data.items;
-          var counter=0
-          this.rows.forEach(x=>{
-           
-            this.rows[counter].createDate=moment(
+          var counter = 0;
+          this.rows.forEach((_x) => {
+            this.rows[counter].jalaliDate = moment(
               this.rows[counter].createDate,
               'YYYY/MM/DD'
             )
               .locale('fa')
               .format('YYYY/MM/DD');
-            this.rows[counter].updateDate=moment(
+            this.rows[counter].updateDate = moment(
               this.rows[counter].updateDate,
               'YYYY/MM/DD'
             )
               .locale('fa')
               .format('YYYY/MM/DD');
-              counter++
-          })
+            counter++;
+          });
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
@@ -165,30 +186,49 @@ export class OrderComponent implements OnInit {
   //       }
   //     );
   // }
-  openDetailModal(item:OrderModel,openDetails:any){
-    this.orderDetail=item
+  openDetailModal(item: OrderModel, openDetails: any) {
+    this.orderDetail = item;
+    this._invoiceService
+      .GetByTableTypeAndRowId(0, 2, 'ID', 'invoice', item.id, 8)
+      .subscribe((res: Result<InvoiceModel[]>) => {
+        this.invoiceDetail = res.data[0];
+      });
     this.modalService
       .open(openDetails, {
         size: 'lg',
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
       })
-      
+      .result.then((result: boolean) => {
+        if (result === true) {
+          this.changePaymentStatus(this.invoiceDetail);
+        }
+      });
   }
-  openModal(item:OrderModel,openDetails:any){
-    this.orderDetail=item
-    this.modalService
-      .open(openDetails, {
-        size: 'lg',
-        ariaLabelledBy: 'modal-basic-title',
-        centered: true,
-      })
-      
+  selectStatus($event: any) {
+    if ($event != undefined) {
+      this.invoiceDetail.status = parseInt($event);
+    }
+  }
+  changePaymentStatus(item: InvoiceModel) {
+    this._invoiceService.update(item.id, item, 'invoice').subscribe((data) => {
+      if (data.success) {
+        this.toastr.success(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      } else {
+        this.toastr.error(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    });
+    this.getOrderbyStatus(this.status, this.page.pageNumber);
   }
   onFileChanged(event: any) {
     let fileType = event.target.files[0].type.split('/');
-      this.licenseFile = event.target.files[0];
-
+    this.licenseFile = event.target.files[0];
   }
   updateLicense(content: any, row: OrderModel) {
     this.modalService
@@ -200,17 +240,16 @@ export class OrderComponent implements OnInit {
       .result.then((result: boolean) => {
         if (result != undefined) {
           this.licenseModel.rowID = row.id;
-          this.licenseModel.id=row.licenseID;
+          this.licenseModel.id = row.licenseID;
           console.log(this.licenseModel);
           this.addOrUpdate2(this.licenseModel);
-          this.addForm.reset();
+          // this.addForm.reset();
         }
       });
   }
   async addOrUpdate2(item: LicenseModel) {
-    
     await this._licenseService
-      .update(item.id,item, 'License')
+      .update(item.id, item, 'License')
       .toPromise()
       .then(
         (data) => {
@@ -257,7 +296,7 @@ export class OrderComponent implements OnInit {
 
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then((result) => {
+      .result.then((_result) => {
         this._orderService
           .delete(id, 'orders')
           .toPromise()
@@ -277,16 +316,34 @@ export class OrderComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-            this.getOrderbyStatus(this.status);
+            this.getOrderbyStatus(this.status, this.page.pageNumber);
           });
       });
   }
+  // ///////////// Note List
+  // Get Note List
 
-  getNoteList(row: OrderModel) {
-    this.note = row;
+  getNoteList(rowId: number) {
+    this.notes = new Array<CommentModel>();
+    this._commentService
+      .GetByTableTypeAndRowId(0, 20, rowId, 8)
+      .subscribe((res: Result<Paginate<CommentModel[]>>) => {
+        this.notes = res.data.items;
+        var counter = 0;
+        this.notes.forEach((_x) => {
+          this.notes[counter].jalaliDate = moment(
+            this.notes[counter].createDate,
+            'YYYY/MM/DD'
+          )
+            .locale('fa')
+            .format('YYYY/MM/DD');
+          counter++;
+        });
+      });
   }
-  toggleNotebar(item: OrderModel) {
-    this.getNoteList(item);
+  toggleNotebar(rowId: number) {
+    this.noteRowID = rowId;
+    this.getNoteList(rowId);
     this.toggled = true;
     const state = this._orderService.sidebarState;
 
@@ -305,12 +362,66 @@ export class OrderComponent implements OnInit {
       this._orderService.sidebarState.sidenavOpen = false;
     }
   }
-  changeFinalPrice(discount:string){
-    var number = Number(discount.replace(/[^0-9.-]+/g,""));
-    this.orderDetail.toPayPrice=this.orderDetail.toPayPrice-number
+  // ConfirmModal and Add Note
+  clearNote() {
+    this.note = new CommentModel();
+  }
+  openConfirmationModal(item: CommentModel, content: any) {
+    this.user = this.auth.currentUserValue;
+    item.rate = 1;
+    item.email = this.user.subject;
+    item.name = this.user.firstName + ' ' + this.user.lastName;
+    item.isActive = true;
+    item.rowID = this.noteRowID;
+    item.isAccepted = true;
+    item.tableType = 8;
+    item.parentID = null;
+
+    this.modalService
+      .open(content, {
+        ariaLabelledBy: 'modal-basic-title',
+        centered: true,
+      })
+      .result.then((_result: boolean) => {
+        if (_result === true) {
+          this._commentService
+            .create(item, 'Comment')
+            .toPromise()
+            .then((res) => {
+              if (res.success) {
+                this.toastr.success('یادداشت ایجاد شد', 'موفقیت آمیز!', {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-left',
+                });
+                let date = new Date();
+                item.createDate = date;
+                item.jalaliDate = moment(item.createDate, 'YYYY/MM/DD')
+                  .locale('fa')
+                  .format('YYYY/MM/DD');
+                this.notes.unshift(item);
+
+                this.note = new CommentModel();
+              } else {
+                this.toastr.error('خطا در ایجاد ', res.message, {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-left',
+                });
+              }
+            });
+        }
+      });
+  }
+
+  // ConfirmModal Add Note
+
+  // ///////////// Note List
+
+  changeFinalPrice(discount: string) {
+    var number = Number(discount.replace(/[^0-9.-]+/g, ''));
+    this.orderDetail.toPayPrice = this.orderDetail.toPayPrice - number;
   }
   openUpdateModal(content: any, row: OrderModel) {
-    this.clientId=row.clientId;
+    this.clientId = row.clientId;
     this.modalService
       .open(content, {
         size: 'lg',
@@ -319,37 +430,39 @@ export class OrderComponent implements OnInit {
       })
       .result.then((result: boolean) => {
         if (result != undefined) {
-          if(this.clientId==null){
+          if (this.clientId == null) {
             this.licenseModel.rowID = row.id;
-            this.addOrUpdate(this.licenseModel,null);
-            this.addForm.reset();
-          }else{
-            let climax=new CliamxLicenseModel();
-            climax.file=this.licenseFile;
-            climax.accountNumber=this.licenseModel.accountNumber.toString();
-            climax.startDate= this.startDate.year +
-            '-' +
-            this.startDate.month +
-            '-' +
-            this.startDate.day;
+            this.addOrUpdate(this.licenseModel, null);
+            // this.addForm.reset();
+          } else {
+            let climax = new CliamxLicenseModel();
+            climax.file = this.licenseFile;
+            climax.accountNumber = this.licenseModel.accountNumber.toString();
+            climax.startDate =
+              this.startDate.year +
+              '-' +
+              this.startDate.month +
+              '-' +
+              this.startDate.day;
 
-            climax.expireDate=  this.expireDate.year +
-            '-' +
-            this.expireDate.month +
-            '-' +
-            this.expireDate.day;
+            climax.expireDate =
+              this.expireDate.year +
+              '-' +
+              this.expireDate.month +
+              '-' +
+              this.expireDate.day;
             this.licenseModel.rowID = row.id;
-            this.licenseModel.filePath="";
-            this.addOrUpdate(this.licenseModel,climax);
-            this.addForm.reset();
-
+            this.licenseModel.filePath = '';
+            this.addOrUpdate(this.licenseModel, climax);
+            // this.addForm.reset();
           }
-
         }
       });
   }
-  
-  async addOrUpdate(item: LicenseModel,climax:CliamxLicenseModel) {
+
+  async addOrUpdate(item: LicenseModel, climax: CliamxLicenseModel) {
+    item.versionNumber = this.versionNumber;
+
     item.startDate =
       this.startDate.year +
       '-' +
@@ -371,27 +484,30 @@ export class OrderComponent implements OnInit {
       .then(
         (data) => {
           if (data.success) {
-            if(climax!==null){
-              climax.licenseId=data.data;
-              this._licenseService.sendLicenseToClimax(climax).toPromise()
-              .then( (dt:CliamxResponse) => {
-                if(dt.statusCode!=200){
-                  this.toastr.error(dt.message[0], 'خطای Cliamax', {
+            if (climax !== null) {
+              climax.licenseId = data.data;
+              this._licenseService
+                .sendLicenseToClimax(climax)
+                .toPromise()
+                .then((dt: CliamxResponse) => {
+                  if (dt.statusCode != 200) {
+                    this.toastr.error(dt.message[0], 'خطای Cliamax', {
+                      closeButton: true,
+                      positionClass: 'toast-top-left',
+                    });
+                  } else {
+                    this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
+                      closeButton: true,
+                      positionClass: 'toast-top-left',
+                    });
+                  }
+                })
+                .catch((dt) => {
+                  this.toastr.error(dt[0].message, 'خطای Cliamax', {
                     closeButton: true,
                     positionClass: 'toast-top-left',
                   });
-                }else{
-                  this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
-                    closeButton: true,
-                    positionClass: 'toast-top-left',
-                  });
-                }
-              }).catch((dt) => {
-                this.toastr.error(dt[0].message, 'خطای Cliamax', {
-                  closeButton: true,
-                  positionClass: 'toast-top-left',
                 });
-              });
             }
             this.toastr.success(data.message, null, {
               closeButton: true,

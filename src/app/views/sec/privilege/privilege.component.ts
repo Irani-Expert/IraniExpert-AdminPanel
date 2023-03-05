@@ -149,7 +149,6 @@ export class PrivilegeComponent implements OnInit {
       );
   }
   async addOrUpdate(row: PrivilegeModel) {
-    debugger
     if (row.id === 0) {
       await this._privilegeService
         .create(row, 'Privilege')

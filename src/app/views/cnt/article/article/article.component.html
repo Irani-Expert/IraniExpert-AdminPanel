@@ -1,5 +1,5 @@
 <button
-*appCanAccess="'Article-Add'"
+  *appCanAccess="'Article-Add'"
   type="button"
   class="btn btn-primary mb-4"
   [routerLink]="'/cnt/article/addUpdate-article'"
@@ -108,13 +108,13 @@
           <div class="col">
             <div
               *ngIf="item.isActive === false"
-              class="badge badge-dark badge-pill text-center p-2"
+              class="badge badge-dark badge-rounder text-center p-2"
             >
               غیر فعال
             </div>
             <div
               *ngIf="item.isActive === true"
-              class="badge badge-success badge-pill text-center p-2"
+              class="badge badge-success badge-rounder text-center p-2"
             >
               فعال
             </div>
@@ -125,7 +125,7 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
-                *appCanAccess="'Article-Edit'"
+                  *appCanAccess="'Article-Edit'"
                   class="btn btn-warning"
                   [routerLink]="'/cnt/article/addUpdate-article/' + item.id"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
@@ -135,7 +135,7 @@
               </div>
               <div class="w-25 w-sm-100 ml-sm-2">
                 <button
-                *appCanAccess="'Article-Delete'"
+                  *appCanAccess="'Article-Delete'"
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteArticle(item.id, deleteConfirmModal)"
@@ -185,6 +185,7 @@
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
+    style="opacity: 0.4"
     alt=""
   />
 </div>

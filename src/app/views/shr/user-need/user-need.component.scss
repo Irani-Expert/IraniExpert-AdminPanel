@@ -27,7 +27,7 @@
     list-style: none;
     text-align: center;
     width: 400px;
-    height: 100%;
+    // height: 100%;
     margin: 0;
     padding: 0;
     .aside-item {
@@ -76,6 +76,9 @@
     rgba(87, 102, 99, 1) 92%
   );
 }
+.bg-light-dark {
+  background-color: rgba(63, 67, 67, 0.9411764706);
+}
 .textarea-font {
   font-size: 13px;
   color: #fff;
@@ -90,4 +93,10 @@
   border-radius: 14px;
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
+}
+.btn-dark-yellow {
+  background-color: #cb9800;
+}
+.btn-green {
+  background-color: #6e6446;
 }

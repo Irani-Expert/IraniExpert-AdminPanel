@@ -9,7 +9,7 @@ import { IUserRoles } from '../interfaces/userRoles.interface';
  * مدل اطلاعات کاربر
  */
 export class UserRolesModel implements IUserRoles {
-  id: number;
+  id: number=0;
   updateDate: string;
   createDate:string;
   userId: number;

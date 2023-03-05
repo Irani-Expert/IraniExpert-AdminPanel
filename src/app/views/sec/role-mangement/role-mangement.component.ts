@@ -94,7 +94,6 @@ export class RoleMangementComponent implements OnInit {
       );
   }
   async addOrUpdate(row: RoleModel) {
-    debugger
     if (row.id === 0) {
       await this._roleService
         .create(row, 'aspnetrole')

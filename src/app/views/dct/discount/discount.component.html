@@ -4,12 +4,12 @@ class="btn btn-primary m-1"
 >
 ایجاد
 </button> -->
-<button 
-class="btn btn-primary m-1"
-[ngClass]="{ 'd-none': viewMode === 'grid' }"
-(click)="OpenModal( AddDiscount)"
-  >
-ایجاد
+<button
+  class="btn btn-primary m-1"
+  [ngClass]="{ 'd-none': viewMode === 'grid' }"
+  (click)="OpenModal(AddDiscount)"
+>
+  ایجاد
 </button>
 
 <div class="separator-breadcrumb border-top"></div>
@@ -43,10 +43,12 @@ class="btn btn-primary m-1"
           class="card-body align-self-center d-flex align-items-lg-center row text-center"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
- <!-- OTHER DATA  -->
+          <!-- OTHER DATA  -->
 
           <div class="m-0 text-white col text-lg-center">ایجاد کننده</div>
-          <div class="m-0 text-white col text-lg-center">درصد یا میزان تخفیف</div>
+          <div class="m-0 text-white col text-lg-center">
+            درصد یا میزان تخفیف
+          </div>
           <div class="m-0 text-white col text-lg-center">تاریخ ایجاد</div>
           <div class="m-0 text-white col text-lg-center">تاریخ انقضا</div>
           <div class="m-0 text-white col text-lg-center">کد</div>
@@ -61,7 +63,7 @@ class="btn btn-primary m-1"
     </div>
   </div>
 
-<!-- SINGLE LIST ITEM  -->
+  <!-- SINGLE LIST ITEM  -->
   <div
     *ngFor="
       let item of rows
@@ -100,39 +102,34 @@ class="btn btn-primary m-1"
           class="card-body align-self-center text-center d-flex align-items-lg-center row"
           [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
         >
-      <!-- OTHER DATA  -->
+          <!-- OTHER DATA  -->
 
-      <p class="m-0 col">
-        {{ item.createBy }}
-      </p>
-          <p class="m-0 col" *ngIf="item.percent!=0">
-            %{{ item.percent }}
+          <p class="m-0 col">
+            {{ item.createBy }}
           </p>
-          <p class="m-0 col"*ngIf="item.percent==0">
-            ${{ item.amount }}
+          <p class="m-0 col" *ngIf="item.percent != 0">%{{ item.percent }}</p>
+          <p class="m-0 col" *ngIf="item.percent == 0">${{ item.amount }}</p>
+          <p class="m-0 col">
+            {{ item.createDate }}
           </p>
           <p class="m-0 col">
-            {{ item.createDate  }}
+            {{ item.expireDate }}
           </p>
-          <p class="m-0 col">
-            {{ item.expireDate  }}
-          </p>
-         
-          
-          <div class="card  bg-warning bg-gradient
-          text-white text-center p-3 col">
-              <p class="m-0 ">
-                {{ item.code  }}
-              </p>
+
+          <div
+            class="card bg-warning bg-gradient text-white text-center p-3 col"
+          >
+            <p class="m-0">
+              {{ item.code }}
+            </p>
           </div>
-        
+
           <div
             class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
           >
             <div class="text-center col-auto d-flex justify-content-around">
-             
               <div class="w-50 w-sm-100 ml-sm-2">
-                <button 
+                <button
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="deleteDiscount(item.id)"
@@ -181,9 +178,10 @@ class="btn btn-primary m-1"
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
     class="img-fluid w-50"
+    style="opacity: 0.4"
     alt=""
   />
-</div> 
+</div>
 
 <ng-template #AddDiscount let-modal>
   <div class="modal-header">
@@ -198,49 +196,53 @@ class="btn btn-primary m-1"
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body ">
+  <div class="modal-body">
     <form
-    class="g-0 p-0 m-0 d-flex row justify-content-md-around justify-content-center align-items-center"
-    [formGroup]="AddList"
-  >
-      <div class="col-11 ">
-        <div class=" pb-4 form-group mb-3">
+      class="g-0 p-0 m-0 d-flex row justify-content-md-around justify-content-center align-items-center"
+      [formGroup]="AddList"
+    >
+      <div class="col-11">
+        <div class="pb-4 form-group mb-3">
           <div>
             <strong for="" class="text--secondary mb-2">تعداد تخفیف</strong>
             <input
-            type="text"
+              type="text"
               class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
-              [(ngModel)]="ShowModel.count" 
-              [formControl]="AddList.controls['count']" 
+              [(ngModel)]="ShowModel.count"
+              [formControl]="AddList.controls['count']"
               required
             />
-        </div>
+          </div>
           <strong for="totalPrice" class="mb-3">تاریخ انقضاء</strong>
           <div class="row">
-            <ng-persian-datepicker   class="position-absolute w-100 Left-0 UpperIndex">
-              <input    
-                 [(ngModel)]="ShowModel.expireDate" 
-                 [formControl]="AddList.controls['expireDate']" 
-                 class="form-control mt-1 rounded Checkout_input p-2 " type="text" >
+            <ng-persian-datepicker
+              class="position-absolute w-100 Left-0 UpperIndex"
+            >
+              <input
+                [(ngModel)]="ShowModel.expireDate"
+                [formControl]="AddList.controls['expireDate']"
+                class="form-control mt-1 rounded Checkout_input p-2"
+                type="text"
+              />
             </ng-persian-datepicker>
           </div>
         </div>
         <hr class="hr mb-3" />
         <div *ngIf="!checkbox">
-            <strong for="" class="text--secondary mb-2">درصد تخفیف</strong>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">%</span>
-              </div>
-              <input
+          <strong for="" class="text--secondary mb-2">درصد تخفیف</strong>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">%</span>
+            </div>
+            <input
               type="text"
-                class="form-control  " 
-                [(ngModel)]="ShowModel.percent" 
-                [formControl]="AddList.controls['percent']" 
-                required
-                value=""
-              />            </div>
-          
+              class="form-control"
+              [(ngModel)]="ShowModel.percent"
+              [formControl]="AddList.controls['percent']"
+              required
+              value=""
+            />
+          </div>
         </div>
         <div *ngIf="checkbox">
           <strong for="" class="text--secondary mb-2">میزان تخفیف</strong>
@@ -249,27 +251,43 @@ class="btn btn-primary m-1"
               <span class="input-group-text" id="basic-addon1">$</span>
             </div>
             <input
-            type="text"
-              class="form-control "
-              [(ngModel)]="ShowModel.amount" 
-              [formControl]="AddList.controls['amount']" 
+              type="text"
+              class="form-control"
+              [(ngModel)]="ShowModel.amount"
+              [formControl]="AddList.controls['amount']"
               required
-            />          </div>
-       
+            />
+          </div>
+        </div>
+
+        <div class="row container">
+          <strong for="" class="text--secondary mb-2"
+            >تخفیف بر اساس مبلغ</strong
+          >
+          <div class="d-flex col-7">
+            <input
+              class="p-2"
+              type="checkbox"
+              id="switch"
+              (change)="changeCheckBox()"
+            />
+            <label
+              class="d-flex align-items-center justify-content-start padr"
+              for="switch"
+              *ngIf="!checkbox"
+              >{{ ShowModel.percent }}%</label
+            >
+            <label
+              class="d-flex align-items-center justify-content-end padl"
+              for="switch"
+              *ngIf="checkbox"
+              >{{ ShowModel.amount }}</label
+            >
+          </div>
+        </div>
       </div>
 
-      <div class="row container ">
-        <strong for="" class="text--secondary mb-2">تخفیف بر اساس  مبلغ</strong>
-        <div class="d-flex col-7">
-        <input class="p-2" type="checkbox" id="switch" (change)="changeCheckBox()"/>
-        <label class="d-flex align-items-center justify-content-start  padr " for="switch"*ngIf="!checkbox">{{ShowModel.percent}}%</label>
-        <label class="d-flex align-items-center justify-content-end padl   "  for="switch"*ngIf="checkbox">{{ShowModel.amount}}</label>
-
-      </div>
-      </div>
-    </div>
-
-    <!-- <div class="col-11">
+      <!-- <div class="col-11">
       <label for="" class="text--secondary mb-2">درصد تخفیف</label>
       <input
       type="text"
@@ -290,13 +308,7 @@ class="btn btn-primary m-1"
         required
       />
        </div> -->
-  
-
-
-
-
-
-  </form>
+    </form>
   </div>
   <div class="modal-footer">
     <button

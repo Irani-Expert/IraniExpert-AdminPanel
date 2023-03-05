@@ -52,143 +52,101 @@ export class NavigationService {
 
   defaultMenu: IMenuItem[] = [
     {
-      name: 'داشبورد',
+      name: 'صفحه اصلی',
       description: 'داشبورد مدیریتی ایرانی اکسپرت',
       type: 'link',
-      icon: 'i-Dashboard',
+      icon: 'i-Home1',
       state: '/dashboard/v1',
-      privilege:'Dashboard-Full Premission'
+      privilege: 'Dashboard-Full Premission',
     },
     {
       name: 'پروفایل من',
       description: 'پروفایل',
       type: 'link',
-      icon: 'i-Dashboard',
+      icon: 'i-Administrator',
       state: '/dashboard/user-profile',
-      privilege:'Dashboard-Full Premission'
+      privilege: 'Dashboard-Full Premission',
     },
 
-    {
-      name: 'مشتریان من',
-      type: 'dropDown',
-      icon: 'i-Add-UserStar',
-      privilege:'Subuser-Full Premission',
-      sub: [
-        {
-          icon: 'i-File-Horizontal-Text',
-          name: 'license',
-          state: '/dashboard/referral-user',
-          type: 'link',
-          privilege:'Subuser-Full Premission'
-        },
-        // {
-        //   icon: 'i-File-Horizontal-Text',
-        //   name: 'investor',
-        //   state: '/dashboard/referral-user',
-        //   type: 'link',
-        //   privilege:'Subuser-Full Premission'
-        // },
-        // {
-        //   icon: 'i-File-Horizontal-Text',
-        //   name: 'IB',
-        //   state: '/dashboard/referral-user',
-        //   type: 'link',
-        //   privilege:'Subuser-Full Premission'
-        // },
-      ]
-    },
+    // {
+    //   name: 'مشتریان من',
+    //   type: 'dropDown',
+    //   icon: 'i-Add-UserStar',
+    //   privilege: 'Subuser-Full Premission',
+    //   sub: [
+    //     {
+    //       icon: 'i-File-Horizontal-Text',
+    //       name: 'license',
+    //       state: '/dashboard/referral-user',
+    //       type: 'link',
+    //       privilege: 'Subuser-Full Premission',
+    //     },
+    //     // {
+    //     //   icon: 'i-File-Horizontal-Text',
+    //     //   name: 'investor',
+    //     //   state: '/dashboard/referral-user',
+    //     //   type: 'link',
+    //     //   privilege:'Subuser-Full Premission'
+    //     // },
+    //     // {
+    //     //   icon: 'i-File-Horizontal-Text',
+    //     //   name: 'IB',
+    //     //   state: '/dashboard/referral-user',
+    //     //   type: 'link',
+    //     //   privilege:'Subuser-Full Premission'
+    //     // },
+    //   ],
+    // },
     {
       name: 'محصولات',
       type: 'link',
       icon: 'i-Checkout-Basket',
       state: '/prd/products-list',
-      privilege:'Product-Full Premission'
-    },
-    {
-      icon: 'i-File-Horizontal-Text',
-      name: 'سفارشات من',
-      state: '/bsk/user-orders',
-      type: 'link',
-      privilege:'CheckOrders-Full Premission'
+      privilege: 'Product-Full Premission',
     },
     {
       name: 'سفارشات',
-      type: 'dropDown',
-      icon: 'i-File-Horizontal-Text',
-      privilege:'Orders-Full Premission',
-      sub: [
-        {
-          icon: 'i-Sync',
-          name: 'درانتظار تایید',
-          state: '/bsk/orders',
-          type: 'link',
-          privilege:'CheckOrders-Full Premission'
-        },
-        {
-          icon: 'i-Yes',
-          name: 'تأیید شده',
-          state: '/bsk/license',
-          type: 'link',
-          privilege:'ConfirmedOrders-Full Premission'
-        },
-        {
-          icon: 'i-Yes',
-          name: 'کل لایسنس ها',
-          state: '/bsk/license/updates',
-          type: 'link',
-          privilege:'ConfirmedOrders-Full Premission'
-        },
-      ],
+      type: 'link',
+      icon: 'i-Library',
+      privilege: 'Orders-Full Premission',
+      state: '/bsk/orders',
+    },
+    {
+      icon: 'i-ID-3',
+      name: 'سفارشات من',
+      state: '/bsk/user-orders',
+      type: 'link',
+      privilege: 'CheckOrders-Full Premission',
+    },
+
+  
+    {
+      name: 'تخصیص دسترسی به کاربران',
+      type: 'link',
+      icon: 'i-Add-UserStar',
+      state: '/sec/user-privilege',
+      privilege: 'AddUserRole-Full Premission',
+    },
+    {
+      name: '  دسترسی نقش ها ',
+      type: 'link',
+      icon: 'i-Gears',
+      state: '/sec/privilege',
+      privilege: 'ControlRoles-Full Premission',
     },
     {
       name: 'کاربران',
-      type: 'dropDown',
-      icon: 'i-Administrator',
-      privilege:'Users-Full Premission',
-      sub: [
-        {
-          icon: 'i-Checked-User',
-          name: 'نقش  کاربران',
-          state: '/sec/user-role',
-          type: 'link',
-          privilege:'UserPlane-Full Premission'
-        },
-        {
-          icon: 'i-Gear',
-          name: 'مدیریت نقش  ها ',
-          state: '/sec/role-management',
-          type: 'link',
-          privilege:'RoleManangment-Full Premission'
-        },
-        {
-          icon: 'i-Business-Man',
-          name: ' کل کاربران',
-          state: '/sec/user-management',
-          type: 'link',
-          privilege:'UserManangment-Full Premission'
-        },
-        {
-          icon: 'i-Gears',
-          name: '  دسترسی نقش ها ',
-          state: '/sec/privilege',
-          type: 'link',
-          privilege:'ControlRoles-Full Premission'
-        },
-        {
-          icon: 'i-Add-UserStar',
-          name: 'تخصیص دسترسی به کاربران',
-          state: '/sec/user-privilege',
-          type: 'link',
-          privilege:'AddUserRole-Full Premission'
-        },
-      ],
+      type: 'link',
+      icon: 'i-Business-ManWoman',
+      state: '/sec/user-management',
+      privilege: 'UserManangment-Full Premission',
     },
     {
       name: 'بنرها',
       type: 'link',
       icon: 'i-Tag-2',
       state: '/cnt/banner',
-      privilege:'Banner-Full Premission'
+      privilege: 'Banner-Full Premission',
     },
     {
       name: 'مقالات',
@@ -201,63 +159,62 @@ export class NavigationService {
     {
       name: 'گروه ها',
       type: 'link',
-      icon: 'i-Double-Tap',
+      icon: 'i-Dropbox',
       state: '/bas/group',
-      privilege:'Group-Full Premission'
+      privilege: 'Group-Full Premission',
     },
     {
       name: 'درخواست مشتریان',
       type: 'link',
       icon: 'i-Love-User',
       state: '/shr/user-need',
-      privilege:'CustomerRequest-Full Premission'
+      privilege: 'CustomerRequest-Full Premission',
     },
     {
       name: 'نظرات',
       type: 'link',
       icon: 'i-Speach-Bubbles',
       state: '/shr/comment',
-      privilege:'Comment-Full Premission'
+      privilege: 'Comment-Full Premission',
     },
     {
       name: 'تخفیف ها',
       type: 'link',
       icon: 'i-Dollar-Sign',
       state: '/dct/discount',
-      privilege:'allCommentUser-Special-Premission'
+      privilege: 'all-comment-user-Full Premission',
     },
-  
-     {
-       name: 'قرار داد ها',
-       type: 'dropDown',
-       icon: 'i-File-Horizontal-Text',
-       privilege:'Users-Full Premission',
-       sub: [
-         {
-           icon: 'i-File-Clipboard-File--Text',
-           name: 'لیست قرار دادها',
-           state: '/crt/List',
-           type: 'link',
-           privilege:'UserPlane-Full Premission'
-         },
-        
-       ],
-     },
+
+    {
+      name: 'قرار داد ها',
+      type: 'dropDown',
+      icon: 'i-File-Horizontal-Text',
+      privilege: 'Users-Full Premission',
+      sub: [
+        {
+          icon: 'i-File-Clipboard-File--Text',
+          name: 'لیست قرار دادها',
+          state: '/crt/List',
+          type: 'link',
+          privilege: 'UserPlane-Full Premission',
+        },
+      ],
+    },
     {
       name: 'نظرات من',
       type: 'link',
       icon: 'i-Speach-Bubble-3',
       state: '/shr/user-Comments',
-      privilege:'comment-user-Special-Premission'
+      privilege: 'comment-user-Special-Premission',
     },
     {
       name: 'همه کامنت ها',
       type: 'link',
       icon: 'i-Speach-Bubbles',
       state: '/shr/all-Comments',
-      privilege:'allCommentUser-Special-Premission'
+      privilege: 'all-comment-user-Full Premission',
     },
-  
+
     // {
     //     name: 'Data Tables',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',

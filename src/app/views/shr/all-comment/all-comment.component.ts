@@ -10,7 +10,7 @@ import { CommentService } from 'src/app/views/prd/comment/comment.service';
 @Component({
   selector: 'app-all-comment',
   templateUrl: './all-comment.component.html',
-  styleUrls: ['./all-comment.component.scss']
+  styleUrls: ['./all-comment.component.scss'],
 })
 export class AllCommentComponent implements OnInit {
   rows: CommentModel[] = new Array<CommentModel>();
@@ -18,15 +18,17 @@ export class AllCommentComponent implements OnInit {
   parentComment: CommentModel = new CommentModel();
   replyText: string = null;
 
-  constructor(public _commentService: CommentService,
+  constructor(
+    public _commentService: CommentService,
     private toastr: ToastrService,
     private modalService: NgbModal
-    ) {   this.page.pageNumber = 0;
-    this.page.size = 12;}
+  ) {
+    this.page.pageNumber = 0;
+    this.page.size = 1000;
+  }
 
   ngOnInit(): void {
     this.setPage(this.page.pageNumber);
-
   }
 
   setPage(pageInfo: number) {
@@ -36,14 +38,21 @@ export class AllCommentComponent implements OnInit {
   }
   async getCommentListByProductId(pageNumber: number, seedNumber: number) {
     await this._commentService
-      .GetAllComment(
-        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
-        seedNumber,
-    
-      )
+      .GetAllComment(pageNumber !== 0 ? pageNumber - 1 : pageNumber, seedNumber)
       .subscribe(
         (res: Result<Paginate<CommentModel[]>>) => {
-          this.rows = res.data.items;
+          var counter = 0;
+          res.data.items.forEach((_x) => {
+            if (
+              res.data.items[counter].tableType !== 8 &&
+              res.data.items[counter].tableType !== 10
+            ) {
+              this.rows.push(res.data.items[counter]);
+            }
+            counter++;
+          });
+          console.log(this.rows);
+
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
@@ -75,12 +84,9 @@ export class AllCommentComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
         (result) => {
-          
-          if (result)
-          this.acceptComment(row);
+          if (result) this.acceptComment(row);
         },
         (reason) => {
-          
           console.log('Err!', reason);
         }
       );
@@ -109,7 +115,7 @@ export class AllCommentComponent implements OnInit {
           }
         );
     }
-    
+
     row.isAccepted = true;
     row.isActive = true;
     this._commentService
@@ -141,7 +147,5 @@ export class AllCommentComponent implements OnInit {
         }
       );
   }
-  deleteComment(){
-
-  }
+  deleteComment() {}
 }

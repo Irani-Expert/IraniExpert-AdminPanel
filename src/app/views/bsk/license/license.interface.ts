@@ -9,4 +9,5 @@ export interface ILicense extends IBase {
   expireDate: string;
   rowID: number;
   accountNumber: number;
+  versionNumber: number;
 }
