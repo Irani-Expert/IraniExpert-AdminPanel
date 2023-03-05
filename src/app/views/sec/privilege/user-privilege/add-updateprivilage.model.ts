@@ -3,7 +3,7 @@ import { IAddUpdateprivilage } from './add-updateprivilage.interface';
 import { IUserPrivilege } from './user-privilege.interface';
 export class AddUpdateprivilage extends Base implements IAddUpdateprivilage{
     id: number=0;
-    userID: number=0;
+    userID: number=null;
     roleID: number=0;
     privilageID: number=0;
 }

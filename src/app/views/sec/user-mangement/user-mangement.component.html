@@ -1,14 +1,14 @@
-<button
+<!-- <button
   *appCanAccess="'Users-Add'"
   type="button"
   class="btn btn-primary mb-4"
   (click)="usersEdit(addUpdateModal, undefined)"
 >
   ایجاد
-</button>
+</button> 
 
 <div class="separator-breadcrumb border-top"></div>
-
+-->
 <div class="row list-horizontal">
   <div
     class="list-item"
@@ -244,6 +244,23 @@
             [(ngModel)]="addUpdate.accountNumber"
             [formControl]="addForm.controls['accountNumber']"
           />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="accountNumber ">دسترسی ها</label>
+          <ng-multiselect-dropdown
+           [formControl]="addForm.controls['permision']"
+           [placeholder]="'       لیست شروط قرارداد  '"
+           [settings]="dropdownSettings"
+           [data]="dropdownList"
+           [(ngModel)]="selectedItems"
+           (onSelect)="onItemSelect($event)"
+           (onSelectAll)="onSelectAll($event)"
+           (onDeSelect)="onDeSelect($event)"
+           (onDeSelectAll)="onDeSelectAll($event)"
+
+class="col-12 mt-1"
+  >
+  </ng-multiselect-dropdown>
         </div>
       </div>
     </div>

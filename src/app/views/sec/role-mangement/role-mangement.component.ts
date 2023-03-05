@@ -68,7 +68,7 @@ export class RoleMangementComponent implements OnInit {
         }
       );
   }
-  roleEdit(content: any, row: RoleModel) {
+  roleEdit(content: any, row: RoleModel) { 
     if (row === undefined) {
       row = new RoleModel();
       row.id = 0;
@@ -94,6 +94,7 @@ export class RoleMangementComponent implements OnInit {
       );
   }
   async addOrUpdate(row: RoleModel) {
+    debugger
     if (row.id === 0) {
       await this._roleService
         .create(row, 'aspnetrole')

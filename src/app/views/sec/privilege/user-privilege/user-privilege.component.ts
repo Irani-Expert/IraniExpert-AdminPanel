@@ -40,7 +40,8 @@ export class UserPrivilegeComponent implements OnInit {
   rolesaver:string
   removeItem:number[]=new Array<number>
   rowCounter:number=0
-  element :boolean=false
+  element :boolean=false;
+  UpdateRole: RoleModel = new RoleModel();
   constructor(
     public _roleService: RoleService,
     private toastr: ToastrService,
@@ -155,7 +156,6 @@ showData() {
           
           
         })
-     
        
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
@@ -231,11 +231,12 @@ showData() {
           this.roleIdSaver=roleId
           this.rows = res.data;
           this.rolesaver=this.rows[0].role
+          this.ChangePrivilage=[]
+          this.PrivilageSaver=new AddUpdateprivilage;
           this.rows.forEach(x=>{
             this.PrivilageSaver.roleID=x.roleID
             this.PrivilageSaver.privilageID=x.privilageID
             this.ChangePrivilage.push(this.PrivilageSaver)
-            
           })
           
           this.privilages.forEach(it=>{
@@ -243,7 +244,7 @@ showData() {
             it.selected=index!=-1 ? true:false
           })
           this.privilages=this.privilages
-        
+          console.log(this.ChangePrivilage)
         },
         (_error) => {
           this.toastr.error(
@@ -279,8 +280,7 @@ showData() {
   }
   AddOrRemovepermision(situation:boolean,item:PrivilegeModel){
    if(item.parentID==null){
-    if(situation==true){
-
+    if(situation){
 
       item.child.forEach(it=>{
         it.selected=true
@@ -298,15 +298,15 @@ showData() {
         this.privilages[index].selected=false  
     }
 
-    console.log(this.ChangePrivilage.length)
     
  if(situation){
+  this.PrivilageSaver=new AddUpdateprivilage;
   this.PrivilageSaver.privilageID=item.id
   this.PrivilageSaver.roleID=this.roleIdSaver
   this.ChangePrivilage.push(this.PrivilageSaver)
+  console.log(this.ChangePrivilage);
   
-
- }
+   }
  
  else{
   let indexfinder=this.ChangePrivilage.findIndex(x=>{
@@ -315,19 +315,17 @@ showData() {
   this.ChangePrivilage.splice(indexfinder,1)
   
  }
- console.log(this.ChangePrivilage.length)
 
         
         
        
- 
+    
 
     
   }
  
-  NewPrivilageList(){
+    NewPrivilageList(){
     
-
      this._userPrivilageService.addUpdateUserPrivilege(this.ChangePrivilage).subscribe(response=>{
        if(response.data==1){
         this.toastr.success("موفقیت امیز بود", null, {
@@ -347,7 +345,86 @@ showData() {
     ShowBuyyon(item:PrivilegeModel){
 item.childerendisplay=!item.childerendisplay
     }
-      
+   async createOrUpdateRole(row: RoleModel){
+    row.title="mohammad"
+    if (row.id === 0) {
+      await this._roleService
+        .create(row, 'aspnetrole')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (_error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    } else {
+      await this._roleService
+        .update(row.id, row, 'aspnetrole')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (_error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    }
+
+   }
+   roleNameEdit(content: any, row: RoleModel) { 
+    if (row === undefined) {
+      row = new RoleModel();
+      row.id = 0;
+    }
+    this.UpdateRole = row;
+    this.modalService
+      .open(content, {
+        size: 'sm',
+        ariaLabelledBy: 'modal-basic-title',
+        centered: true,
+      })
+      .result.then(
+        (result: boolean) => {
+          if (result) {
+            this.createOrUpdateRole(this.UpdateRole);
+            this.addForm.reset();
+          }
+        },
+        (reason) => {
+          console.log('Err!', reason);
+          this.addForm.reset();
+        }
+      );
+  }
     //   )
   }
   // todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];

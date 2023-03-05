@@ -1,4 +1,11 @@
-
+<button
+*appCanAccess="'Roles-Add'"
+  type="button"
+  class="btn btn-primary mb-4"
+  (click)="roleNameEdit(addUpdateModal, undefined)"
+>
+  ایجاد
+</button>
 <div class="separator-breadcrumb border-top"></div>
 <div class="row justify-content-lg-start justify-content-center">
   <div
@@ -8,8 +15,19 @@
     "
   >
     <div class="card bg-dark">
-      <div class="card-header text-center m-0 p-0">
-        <p class="text-white align-self-center mt-2">نقش</p>
+      <div class="flex-row  d-flex card-header text-center m-0 p-0">
+        <div class="col-2 d-flex justify-content-center align-items-center">
+          <button
+        *appCanAccess="'Roles-Edit'"
+          class=" btn btn-primary m-1 pt-2"
+          (click)="roleNameEdit(addUpdateModal, item)"
+        >
+       <i class="text-white i-Pen-5 h-5 nav-icon"></i>
+      </button>
+        </div>
+        
+        <p class="text-white col-9 align-self-center mt-2">نقش</p>
+  
       </div>
       <div class="card-body radius-card bg-secondary text-center">
         <div class="w-100 text-white mb-3">
@@ -59,22 +77,22 @@
   <div class="modal-body scrollbarModel">
     <ng-container >
     
-     <div class="p-2 ">
-      <div *ngFor="let item of privilages">
-   <div class="row p-3">
-    <input class="form-check-input" type="checkbox" value=""  [checked]="item.selected" (change)="item.selected=!item.selected;AddOrRemovepermision(item.selected,item)">
-    <label class="form-check-label h3" for="flexCheckDefault">
-    {{item.key}}      
+     <div class="p-2 pt-0 pb-0">
+    <div *ngFor="let item of privilages">
+   <div class="row p-3 m-0">
+    <label class="form-check-label h6" for="flexCheckDefault">
+      <input class="form-check-input" type="checkbox" value=""  [checked]="item.selected" (change)="item.selected=!item.selected;AddOrRemovepermision(item.selected,item)">
+      {{item.title}}      
   </label> 
 
-  <i  id="userDropdown"  class="dropdown-toggle" style="font-size: 30px; color: #000000; " (click)="ShowBuyyon(item)"></i>
+  <!-- <i  id="userDropdown"  class="dropdown-toggle" style="font-size: 30px; color: #000000; " (click)="ShowBuyyon(item)"></i> -->
    </div>
-   <div *ngIf="item.childerendisplay"> 
-      <div class=" col-auto" *ngFor="let x of item.child" >
-        <input class="form-check-input " type="checkbox" value=""  [checked]="x.selected" (change)="x.selected=!x.selected;AddOrRemovepermision(x.selected,x)">{{x.key}}  <br>
+   <div class="pr-5" > 
+      <div class=" col-auto " *ngFor="let x of item.child" >
+        <input class="form-check-input " type="checkbox" value=""  [checked]="x.selected" (change)="x.selected=!x.selected;AddOrRemovepermision(x.selected,x)">{{x.title}}  <br>
       </div>
   </div>
-    <hr/>
+    <hr class="p-0 dotted mb-0 mt-0"/>
   </div>
 </div>
     </ng-container>
@@ -97,4 +115,114 @@
   </div>
 </ng-template>
 <!-------- Delete -->
-
+<ng-template #addUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="UpdateRole.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="UpdateRole.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form action=""  (ngSubmit)="submit()">
+      <label for="name">نقش</label>
+      <input
+        name="name"
+        id="name"
+        class="form-control"
+        [(ngModel)]="UpdateRole.name"
+      />
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-warning btn-rounded mr-1"
+      (click)="modal.close(true)"
+      *ngIf="UpdateRole.id !== 0"
+    >
+      ویرایش
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-primary btn-rounded mr-1"
+      (click)="modal.close(true)"
+      *ngIf="UpdateRole.id === 0"
+    >
+      ایجاد
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+    >
+      انصراف
+    </button>
+  </div>
+</ng-template>
+<ng-template #addUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
+      ایجاد
+    </h4>
+    <h4 class="modal-title" *ngIf="addUpdate.id !== 0" id="modal-basic-title">
+      ویرایش
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form action="" [formGroup]="addForm" (ngSubmit)="submit()">
+      <label for="name">نقش</label>
+      <input
+        name="name"
+        id="name"
+        class="form-control"
+        [(ngModel)]="addUpdate.name"
+        [formControl]="addForm.controls['name']"
+      />
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-warning btn-rounded mr-1"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id !== 0"
+    >
+      ویرایش
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-primary btn-rounded mr-1"
+      (click)="modal.close(true)"
+      *ngIf="addUpdate.id === 0"
+    >
+      ایجاد
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(false)"
+    >
+      انصراف
+    </button>
+  </div>
+</ng-template>

@@ -5,9 +5,11 @@ export class RoleModel extends Base implements IRole {
   
   id: number;
   name: string = '';
+  title:string;
   concurrencyStamp: string;
   updateDate: string;
   updateBy: number;
   createDate: string;
-  createBy: number;
+  createBy: number; 
+  value:number;
 }

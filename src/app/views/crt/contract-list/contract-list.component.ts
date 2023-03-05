@@ -51,9 +51,9 @@ condition:ConditionModel[]=new Array<ConditionModel>();
     }
 
   ngOnInit(): void {
-    
+    this.getCondition();
    
-  
+
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -151,6 +151,7 @@ this.contractModel.conditions=[]
       .open(content, { ariaLabelledBy: 'modal-basic-title' ,  size: 'lg', })
       .result.then(
         (result ) => {
+          this.getCondition()
         },
         (reason) => {
           
@@ -270,11 +271,12 @@ getCondition(){
 
     res.data.items.forEach(x=>{
         this.dropdownList.push({item_id: x.id, item_text: x.title})
+        
 })
       this.page.totalElements = res.data.totalCount;
       this.page.totalPages = res.data.totalPages - 1;
       this.page.pageNumber = res.data.pageNumber;
-
+      
     },
     (_error) => {
  

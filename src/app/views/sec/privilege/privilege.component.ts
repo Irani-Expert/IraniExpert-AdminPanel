@@ -22,6 +22,9 @@ export class PrivilegeComponent implements OnInit {
   page: Page = new Page();
   addUpdate: PrivilegeModel = new PrivilegeModel();
   addForm: FormGroup;
+  keyValue:string;
+  keyType:string;
+  allPrivilageData :PrivilegeModel[] = new Array<PrivilegeModel>();
   constructor(
     public _roleService: RoleService,
     private toastr: ToastrService,
@@ -33,10 +36,13 @@ export class PrivilegeComponent implements OnInit {
     this.page.size = 12;
   }
 
+  
   ngOnInit(): void {
+    this.allPrivilage()
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
-      key: [null, Validators.required],
+      keyValue: [null, Validators.required],
+      keyType: [null, Validators.required],
       parentID: [null],
       title: [null, Validators.required],
       isActive: [null, Validators.required],
@@ -132,18 +138,18 @@ export class PrivilegeComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (result: boolean) => {
-          if (result != undefined) {
+          if (result==true) {
+            this.addUpdate.key=this.keyValue+this.keyType
             this.addOrUpdate(this.addUpdate);
-            this.addForm.reset();
+          
           }
         },
         (_error) => {
-          this.addUpdate = row;
-          this.addForm.reset();
         }
       );
   }
   async addOrUpdate(row: PrivilegeModel) {
+    debugger
     if (row.id === 0) {
       await this._privilegeService
         .create(row, 'Privilege')
@@ -198,4 +204,33 @@ export class PrivilegeComponent implements OnInit {
 
     this.getPrivilegeList(this.page.pageNumber, this.page.size);
   }
+ allPrivilage(){
+  this._privilegeService
+      .get(
+        0,
+        500,
+        'ID',
+        null,
+        'Privilege'
+      )
+      .subscribe(
+        (res: Result<Paginate<PrivilegeModel[]>>) => {
+          this.allPrivilageData = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber + 1;
+          
+        },
+        (_error) => {
+          this.toastr.error(
+            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+            null,
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+        }
+      );
+ }
 }

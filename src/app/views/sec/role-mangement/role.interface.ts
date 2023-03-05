@@ -8,4 +8,7 @@ export interface IRole extends IBase {
   updateBy: number;
   createDate: string;
   createBy: number;
+  value:number;
+  title:string
+
 }

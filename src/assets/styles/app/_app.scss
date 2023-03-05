@@ -84,6 +84,10 @@
 .cursor-pointer{
   cursor: pointer;
 }
+.datepicker-outer-container{
+  z-index: 100;
+  position: relative !important;
+}
 
 
 /* You can add global styles to this file, and also import other style files */

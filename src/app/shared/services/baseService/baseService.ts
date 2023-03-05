@@ -39,6 +39,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
         
       }),
     };
+    
     return this._http.post<Result<number>>(this._base + '/' + route, t, _options);
   }
 
@@ -138,6 +139,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     filter: string,
     route: string
   ): Observable<Result<Paginate<T[]>>> {
+    debugger
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -148,6 +150,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
       }),
     };
     return this._http.get<Result<Paginate<T[]>>>(
+      
       this._base +
         '/' +
         route +

@@ -7,6 +7,8 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { RoleModel } from '../role-mangement/role.model';
 import { RoleService } from '../role-mangement/role.service';
+import { UsersModel } from '../user-mangement/users.model';
+import { UsersService } from '../user-mangement/users.service';
 import { UserRoleModel } from './user-role.model';
 import { UserRoleService } from './user-role.service';
 
@@ -25,12 +27,16 @@ export class UserRoleComponent implements OnInit {
   addUpdate: UserRoleModel = new UserRoleModel();
 
   addForm: FormGroup;
+  signUpForm:FormGroup;
+  signUpModel:UsersModel=new UsersModel();
   constructor(
     private _roleService: RoleService,
     public _userRoleService: UserRoleService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    public _usersService: UsersService,
+
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +45,13 @@ export class UserRoleComponent implements OnInit {
     this.addForm = this._formBuilder.group({
       userId: [null, Validators.compose([Validators.required])],
       roleId: [null, Validators.compose([Validators.required])],
+    });
+    this.signUpForm = this._formBuilder.group({
+      accountNumber: [null, Validators.compose([Validators.required])],
+      firstName: [null, Validators.compose([Validators.required])],
+      lastName: [null, Validators.compose([Validators.required])],
+      email: [null, Validators.compose([Validators.required])],
+      phoneNumber: [null, Validators.compose([Validators.required])],
     });
   }
   setPage(pageInfo: number) {
@@ -88,15 +101,12 @@ export class UserRoleComponent implements OnInit {
         }
       );
   }
-  userRoleEdit(content: any, row: UserRoleModel) {
-    
+  userRoleEdit(content: any, row: UserRoleModel) { 
+    debugger
     if (row === undefined) {
       this.userIdTracker = 0;
       this.addUpdate = new UserRoleModel();
-    } else {
-      this.addUpdate = row;
-      this.userIdTracker = row.userId;
-    }
+    } 
     this.modalService
       .open(content, {
         size: 'md',
@@ -105,6 +115,7 @@ export class UserRoleComponent implements OnInit {
       })
       .result.then(
         (result: boolean) => {
+
           if (result != undefined) {
             this.addOrUpdate(this.addUpdate, this.userIdTracker);
             this.addForm.reset();
@@ -204,4 +215,48 @@ export class UserRoleComponent implements OnInit {
         (_error) => {}
       );
   }
+  openSignupModal(modal:any){
+    
+    this.modalService
+    .open(modal, {
+      size: 'md',
+      ariaLabelledBy: 'modal-basic-title',
+      centered: true,
+    })
+    .result.then(
+      (result: boolean) => {
+       this.signUpModel.userName=this.signUpModel.email
+        this._usersService
+        .create(this.signUpModel, 'aspnetuser')
+        .toPromise()
+        .then(
+          (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          },
+          (_error) => {
+            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        );
+    
+      },
+      (reason) => {
+      
+      }
+    );
+   } 
+ 
+
 }

@@ -1,4 +1,5 @@
 import { IBase } from 'src/app/shared/interfaces/Base/base.interface';
+import { RoleModel } from '../role-mangement/role.model';
 
 export interface IUsers extends IBase {
   userName: string;
@@ -6,4 +7,5 @@ export interface IUsers extends IBase {
   lastName: string;
   email: string;
   phoneNumber: string;
+  roles:RoleModel[]
 }

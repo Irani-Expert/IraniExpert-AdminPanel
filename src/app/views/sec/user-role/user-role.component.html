@@ -2,12 +2,13 @@
 *appCanAccess="'Users-Add'"
   type="button"
   class="btn btn-primary mb-4"
-  (click)="userRoleEdit(addUpdateModal, undefined)"
+  (click)="openSignupModal(signUpModal)"
 >
   ایجاد
 </button>
 <div class="separator-breadcrumb border-top"></div>
 <div class="row list-horizontal">
+  
   <div
     class="list-item"
     [ngClass]="{
@@ -174,9 +175,7 @@
 </div>
 <ng-template #addUpdateModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" *ngIf="userIdTracker == 0" id="modal-basic-title">
-      ایجاد
-    </h4>
+
     <h4 class="modal-title" *ngIf="userIdTracker !== 0" id="modal-basic-title">
       ویرایش
     </h4>
@@ -286,4 +285,95 @@
       بله
     </button>
   </div>
+</ng-template>
+<ng-template #signUpModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title"  id="modal-basic-title">
+      ایجاد
+    </h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="signUpForm" (ngSubmit)="submit()">
+    <div class="modal-body">
+      <div class="row">
+     
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="firstName ">نام </label>
+          <input
+            name="firstName"
+            id="firstName"
+            class="form-control"
+            [(ngModel)]="signUpModel.firstName"
+            [formControl]="signUpForm.controls['firstName']"
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="lastName">نام خانواگی</label>
+          <input
+            name="lastName"
+            id="lastName"
+            class="form-control"
+            [(ngModel)]="signUpModel.lastName"
+            [formControl]="signUpForm.controls['lastName']"
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="email ">ایمیل</label>
+          <input
+            name="email"
+            id="email"
+            class="form-control"
+            [(ngModel)]="signUpModel.email"
+            [formControl]="signUpForm.controls['email']"
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="accountNumber ">شماره حساب</label>
+          <input
+            name="accountNumber"
+            id="accountNumber"
+            class="form-control"
+            [(ngModel)]="signUpModel.accountNumber"
+            [formControl]="signUpForm.controls['accountNumber']"
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="firstName ">شماره تلفن</label>
+          <input
+            name="userName"
+            id="userName"
+            class="form-control"
+            [(ngModel)]="signUpModel.phoneNumber"
+            [formControl]="signUpForm.controls['phoneNumber']"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+
+      <button
+        ngbAutofocus
+        type="button"
+        class="btn btn-outline-dark btn-rounded mr-1"
+        (click)="modal.close(true)"
+      >
+        ایجاد
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="modal.dismiss()"
+      >
+        انصراف
+      </button>
+    </div>
+  </form>
 </ng-template>

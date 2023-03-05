@@ -12,6 +12,7 @@ import { PrivilegeComponent } from './privilege/privilege.component';
 import { UserPrivilegeComponent } from './privilege/user-privilege/user-privilege.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
     FormsModule,
     ReactiveFormsModule,
     SharedPipesModule,
-    SharedDirectivesModule
+    SharedDirectivesModule,
+    NgMultiSelectDropDownModule
   ],
 })
 export class SecModule {}

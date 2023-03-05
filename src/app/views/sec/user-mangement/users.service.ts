@@ -1,14 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
 import { UserInforamationModel } from 'src/app/shared/models/userInforamationModel';
+import { UserRolesModel } from 'src/app/shared/models/userRoles';
 
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
 import { UserCountModel } from '../../dashboard/dashboad-default/userInfo.model';
 import { UpdatePasswordModel } from '../../dashboard/user-profile/UpdatePassword.model';
+import { RoleModel } from '../role-mangement/role.model';
+import { UserRoleModel } from '../user-role/user-role.model';
 import { UsersModel } from './users.model';
 
 @Injectable({
@@ -37,6 +41,34 @@ export class UsersService extends BaseService<UsersModel, 0> {
     return this._http.put<Result<boolean>>(
       environment.api.baseUrl + '/AspNetUser/ChangePassword' ,
       t,
+      _options
+    );
+  }
+  getUserByRoleID(pageIndex:number,pageSize:number,roleID:number): Observable<Result<Paginate<UsersModel[]>>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'bearer ' + environment.jwtToken,
+      }),
+    };
+    return this._http.get<Result<Paginate<UsersModel[]>>>(
+      environment.api.baseUrl + '/AspNetUser/GetUsersByRoleID?pageIndex='+pageIndex+'&pageSize='+pageSize+'&roleID='+roleID ,
+      
+      _options
+    );
+  }
+  updateUserRole(roles:UserRolesModel[]): Observable<Result<Paginate<UserRolesModel[]>>> {
+
+    debugger
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'bearer ' + environment.jwtToken,
+      }),
+    };
+    return this._http.post<Result<Paginate<UserRolesModel[]>>>(
+      environment.api.baseUrl + "/AspNetUserRole/AddUpdateUserRoles",
+      roles[0],
       _options
     );
   }

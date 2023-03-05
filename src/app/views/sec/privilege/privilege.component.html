@@ -116,32 +116,52 @@
           >
         </div>
         <div class="col-md-6 form-group mb-3 mt-3">
-          <label for="parentID">دسترسی</label>
-          <select
-            class="form-control"
-            [(ngModel)]="addUpdate.key"
-            [formControl]="addForm.controls['key']"
-          >
-            <option
-              *ngFor="let key of keys"
-              value="{{ addUpdate.title }}-{{ key }}"
-            >
-              {{ key }}
-            </option>
-          </select>
-        </div>
-        <div class="col-md-6 form-group mb-3 mt-3">
           <label for="parentID">زیر مجموعه ای از</label>
           <select
             class="form-control"
             [(ngModel)]="addUpdate.parentID"
             [formControl]="addForm.controls['parentID']"
           >
-            <option *ngFor="let privilege of rows" value="{{ privilege.id }}">
+            <option *ngFor="let privilege of allPrivilageData" value="{{ privilege.id }}">
               {{ privilege.key }}
             </option>
           </select>
         </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="title">نام کلید</label>
+          <input
+            name="keyValue"
+            id="keyValue"
+            class="form-control"
+            [(ngModel)]="keyValue"
+            [formControl]="addForm.controls['keyValue']"
+          />
+          <small
+            *ngIf="
+              addForm.controls['keyValue'].hasError('required') &&
+              addForm.controls['keyValue'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >نوشتن عنوان ضروری است</small
+          >
+        </div>
+        
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="parentID">دسترسی</label>
+          <select
+            class="form-control"
+            [(ngModel)]="keyType"
+            [formControl]="addForm.controls['keyType']"
+          >
+            <option
+              *ngFor="let key of keys"
+              value="-{{ key }}"
+            >
+              {{ key }}
+            </option>
+          </select>
+        </div>
+        
         <div class="col-md-6 form-group mb-3 mt-3">
           <label class="m-1">فعال</label>
           <label class="switch switch-primary mr-2 m-2">
@@ -193,7 +213,7 @@
       class="close"
       aria-label="Close button"
       aria-describedby="modal-basic-title"
-      (click)="modal.dismiss('Cross click')"
+      (click)="modal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -213,7 +233,7 @@
       type="button"
       ngbAutofocus
       class="btn btn-wide btn-danger btn-rounded"
-      (click)="modal.close('Ok')"
+      (click)="modal.close()"
     >
       بله
     </button>

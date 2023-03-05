@@ -179,11 +179,12 @@
             <strong for="totalPrice" class="mb-3">تاریخ شروع</strong>
             <div class="row">
               <ng-persian-datepicker   class="position-absolute col-12">
-                <input    
+                <div>                <input    
                    [formControl]="contractList.controls['fromDate']" 
                    [(ngModel)]="contractModel.fromDate" 
                   class="form-control mt-1 rounded Checkout_input p-2 " type="text" >
-              </ng-persian-datepicker>
+                </div>
+                </ng-persian-datepicker>
             </div>
           </div>
           <div class="col-md-4 form-group mb-3">
