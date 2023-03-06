@@ -24,6 +24,7 @@ export class UserPrivilegeService extends BaseService<UserPrivilegeModel, 0> {
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
+    debugger
     return this._http.post<Result<number>>(
       this._base +
         '/UserPrivilege/AddUpdateUserPrivilege'
