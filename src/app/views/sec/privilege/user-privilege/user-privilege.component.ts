@@ -145,7 +145,7 @@ showData() {
           
           it.child=new Array<PrivilegeModel>();
           it.child.push(... res.data.items.filter(index=>index.parentID==it.id))
-          let x=res.data.items.findIndex(index=>index.parentID==it.id)
+          //let x=res.data.items.findIndex(index=>index.parentID==it.id)
          it.child.forEach(y=>{
           this.privilages.splice(this.privilages.findIndex(ide=>ide.id==y.id),1)
           
@@ -156,6 +156,8 @@ showData() {
           
           
         })
+
+        
        
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
@@ -220,7 +222,6 @@ showData() {
 
   roleEdit(content: any, roleId: number) {
 
-    this.PrivilageSaver.roleID=roleId;
     this._userPrivilageService
       .getUserPrivilegesByRoleID(
       
@@ -228,23 +229,30 @@ showData() {
       )
       .subscribe(
         (res: Result<UserPrivilegeModel[]>) => {
+          
           this.roleIdSaver=roleId
           this.rows = res.data;
           this.rolesaver=this.rows[0].role
           this.ChangePrivilage=[]
           this.PrivilageSaver=new AddUpdateprivilage;
+          this.PrivilageSaver.roleID=roleId;
           this.rows.forEach(x=>{
+            this.PrivilageSaver=new AddUpdateprivilage;
             this.PrivilageSaver.roleID=x.roleID
             this.PrivilageSaver.privilageID=x.privilageID
             this.ChangePrivilage.push(this.PrivilageSaver)
           })
-          
           this.privilages.forEach(it=>{
+            it.selected=false;
             let index=this.rows.findIndex(a=>a.privilageID==it.id)
+            it.child.forEach(childeren=>{
+            var   indexChild=this.rows.findIndex(a=>a.privilageID==childeren.id)
+              childeren.selected=indexChild!=-1 ? true:false
+            
+            })
+           
             it.selected=index!=-1 ? true:false
           })
-          this.privilages=this.privilages
-          console.log(this.ChangePrivilage)
         },
         (_error) => {
           this.toastr.error(
@@ -279,7 +287,41 @@ showData() {
       );
   }
   AddOrRemovepermision(situation:boolean,item:PrivilegeModel){
-   if(item.parentID==null){
+debugger
+
+    
+ if(situation){
+  this.PrivilageSaver=new AddUpdateprivilage;
+  this.PrivilageSaver.privilageID=item.id
+  this.PrivilageSaver.roleID=this.roleIdSaver
+  var checkIfExist=true
+ this.ChangePrivilage.forEach((idfinder)=>
+ {
+ if(idfinder.id==this.PrivilageSaver.privilageID){
+    checkIfExist=false
+ }
+ })
+ if(checkIfExist){
+  this.ChangePrivilage.push(this.PrivilageSaver)
+
+ }
+
+  
+   }
+ 
+ else{
+  
+  let counter=0
+  this.ChangePrivilage.forEach((x) =>{
+    
+    if(x.privilageID==item.id){
+      this.ChangePrivilage.splice(counter,1)
+      }
+      counter++
+  })
+  debugger
+}
+  if(item.parentID==null){
     if(situation){
 
       item.child.forEach(it=>{
@@ -296,36 +338,28 @@ showData() {
      if(item.selected==false && item.parentID!=null){
         let index=this.privilages.findIndex(idfinder=>idfinder.id==item.parentID)
         this.privilages[index].selected=false  
+        let counter=0
+        this.ChangePrivilage.forEach((x) =>{
+          
+          if(x.privilageID==item.parentID){
+            this.ChangePrivilage.splice(counter,1)
+            }
+            counter++;
+        })
     }
-
-    
- if(situation){
-  this.PrivilageSaver=new AddUpdateprivilage;
-  this.PrivilageSaver.privilageID=item.id
-  this.PrivilageSaver.roleID=this.roleIdSaver
-  this.ChangePrivilage.push(this.PrivilageSaver)
-  console.log(this.ChangePrivilage);
-  
-   }
  
- else{
-  let indexfinder=this.ChangePrivilage.findIndex(x=>{
-    x.privilageID==item.id
-  })
-  this.ChangePrivilage.splice(indexfinder,1)
-  
- }
 
         
         
-       
+
     
 
     
   }
  
     NewPrivilageList(){
-    
+
+    debugger
      this._userPrivilageService.addUpdateUserPrivilege(this.ChangePrivilage).subscribe(response=>{
        if(response.data==1){
         this.toastr.success("موفقیت امیز بود", null, {
@@ -340,7 +374,7 @@ showData() {
         });
        }
     })
-    
+    this.ChangePrivilage=[]
     }
     ShowBuyyon(item:PrivilegeModel){
 item.childerendisplay=!item.childerendisplay
