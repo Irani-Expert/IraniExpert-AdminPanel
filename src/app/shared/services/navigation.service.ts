@@ -119,7 +119,6 @@ export class NavigationService {
       privilege: 'CheckOrders-Full Premission',
     },
 
-  
     {
       name: 'تخصیص دسترسی به کاربران',
       type: 'link',
@@ -182,7 +181,7 @@ export class NavigationService {
       type: 'link',
       icon: 'i-Dollar-Sign',
       state: '/dct/discount',
-      privilege: 'all-comment-user-Full Premission',
+      privilege: 'Comment-Full Premission',
     },
 
     {
