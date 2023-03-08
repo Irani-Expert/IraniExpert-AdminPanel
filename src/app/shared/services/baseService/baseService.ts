@@ -31,16 +31,20 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        
-        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-      'Pragma': 'no-cache',
-      'Expires': '0',
+
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
         Authorization: 'bearer ' + environment.jwtToken,
-        
       }),
     };
-    
-    return this._http.post<Result<number>>(this._base + '/' + route, t, _options);
+
+    return this._http.post<Result<number>>(
+      this._base + '/' + route,
+      t,
+      _options
+    );
   }
 
   /**
@@ -54,12 +58,12 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-      'Pragma': 'no-cache',
-      'Expires': '0',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
-      
     };
     return this._http.put<Result<T>>(
       this._base + '/' + route + '/' + id,
@@ -78,9 +82,10 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-      'Pragma': 'no-cache',
-      'Expires': '0',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
@@ -106,9 +111,10 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-      'Pragma': 'no-cache',
-      'Expires': '0',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
@@ -142,14 +148,14 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-      'Pragma': 'no-cache',
-      'Expires': '0',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.get<Result<Paginate<T[]>>>(
-      
       this._base +
         '/' +
         route +
@@ -164,21 +170,22 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
       _options
     );
   }
-  getUserPrivilegesByRoleID(id:number): Observable<Result<T[]>> {
+  getUserPrivilegesByRoleID(id: number): Observable<Result<T[]>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-      'Pragma': 'no-cache',
-      'Expires': '0',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.get<Result<T[]>>(
       this._base +
         '/' +
-        'UserPrivilege/GetUserPrivilegesByRoleID/'
-              + id +
+        'UserPrivilege/GetUserPrivilegesByRoleID/' +
+        id +
         '?pageIndex=' +
         null +
         '&pageSize=' +
@@ -188,8 +195,9 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
         '&filter=' +
         null,
       _options
-    );}
-  
+    );
+  }
+
   /**
    * درخواست حذف
    * @param id
@@ -200,9 +208,10 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-      'Pragma': 'no-cache',
-      'Expires': '0',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };

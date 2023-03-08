@@ -27,20 +27,20 @@ import { UserPrivilegeService } from './user-privilege.service';
 })
 export class UserPrivilegeComponent implements OnInit {
   roles: RoleModel[] = new Array<RoleModel>();
-  rows: UserPrivilegeModel[] ;
-  ChangePrivilage:AddUpdateprivilage[]=new Array<AddUpdateprivilage>();
-  PrivilageSaver:AddUpdateprivilage=new AddUpdateprivilage;
+  rows: UserPrivilegeModel[];
+  ChangePrivilage: AddUpdateprivilage[] = new Array<AddUpdateprivilage>();
+  PrivilageSaver: AddUpdateprivilage = new AddUpdateprivilage();
   privilages: PrivilegeModel[] = new Array<PrivilegeModel>();
 
   allSelected: boolean;
   page: Page = new Page();
   addUpdate: UserPrivilegeModel;
   addForm: FormGroup;
-  roleIdSaver:number
-  rolesaver:string
-  removeItem:number[]=new Array<number>
-  rowCounter:number=0
-  element :boolean=false;
+  roleIdSaver: number;
+  rolesaver: string;
+  removeItem: number[] = new Array<number>();
+  rowCounter: number = 0;
+  element: boolean = false;
   UpdateRole: RoleModel = new RoleModel();
   constructor(
     public _roleService: RoleService,
@@ -65,7 +65,6 @@ export class UserPrivilegeComponent implements OnInit {
   // }
 
   ngOnInit(): void {
- 
     this.getPrivilageList();
 
     this.setPage(this.page.pageNumber);
@@ -75,15 +74,13 @@ export class UserPrivilegeComponent implements OnInit {
       roleID: [null],
     });
   }
-showData() {
+  showData() {
     return (this.element = true);
   }
   hideData() {
     return (this.element = false);
   }
   async addOrUpdate(row: UserPrivilegeModel) {
-
-
     if (row.id === 0) {
       await this._userPrivilageService
         .create(row, 'UserPrivilege')
@@ -109,7 +106,7 @@ showData() {
             });
           }
         );
-    } 
+    }
   }
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
@@ -140,25 +137,22 @@ showData() {
   async getPrivilageList() {
     this._privilegeService.get(0, 100, 'ID', null, 'Privilege').subscribe(
       (res: Result<Paginate<PrivilegeModel[]>>) => {
-        this.privilages=[];
-        res.data.items.forEach(it=>{
-          
-          it.child=new Array<PrivilegeModel>();
-          it.child.push(... res.data.items.filter(index=>index.parentID==it.id))
+        this.privilages = [];
+        res.data.items.forEach((it) => {
+          it.child = new Array<PrivilegeModel>();
+          it.child.push(
+            ...res.data.items.filter((index) => index.parentID == it.id)
+          );
           //let x=res.data.items.findIndex(index=>index.parentID==it.id)
-         it.child.forEach(y=>{
-          this.privilages.splice(this.privilages.findIndex(ide=>ide.id==y.id),1)
-          
-         })
-          this.privilages.push(it)
-          
-          
-          
-          
-        })
+          it.child.forEach((y) => {
+            this.privilages.splice(
+              this.privilages.findIndex((ide) => ide.id == y.id),
+              1
+            );
+          });
+          this.privilages.push(it);
+        });
 
-        
-       
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber + 1;
@@ -221,58 +215,51 @@ showData() {
   ///// -------------Add A Privilege--------- //////
 
   roleEdit(content: any, roleId: number) {
+    this._userPrivilageService.getUserPrivilegesByRoleID(roleId).subscribe(
+      (res: Result<UserPrivilegeModel[]>) => {
+        this.roleIdSaver = roleId;
+        this.rows = res.data;
+        this.rolesaver = this.rows[0].role;
+        this.ChangePrivilage = [];
+        this.PrivilageSaver = new AddUpdateprivilage();
+        this.PrivilageSaver.roleID = roleId;
+        this.rows.forEach((x) => {
+          this.PrivilageSaver = new AddUpdateprivilage();
+          this.PrivilageSaver.roleID = x.roleID;
+          this.PrivilageSaver.privilageID = x.privilageID;
+          this.ChangePrivilage.push(this.PrivilageSaver);
+        });
+        this.privilages.forEach((it) => {
+          it.selected = false;
+          let index = this.rows.findIndex((a) => a.privilageID == it.id);
+          it.child.forEach((childeren) => {
+            var indexChild = this.rows.findIndex(
+              (a) => a.privilageID == childeren.id
+            );
+            childeren.selected = indexChild != -1 ? true : false;
+          });
 
-    this._userPrivilageService
-      .getUserPrivilegesByRoleID(
-      
-        roleId
-      )
-      .subscribe(
-        (res: Result<UserPrivilegeModel[]>) => {
-          
-          this.roleIdSaver=roleId
-          this.rows = res.data;
-          this.rolesaver=this.rows[0].role
-          this.ChangePrivilage=[]
-          this.PrivilageSaver=new AddUpdateprivilage;
-          this.PrivilageSaver.roleID=roleId;
-          this.rows.forEach(x=>{
-            this.PrivilageSaver=new AddUpdateprivilage;
-            this.PrivilageSaver.roleID=x.roleID
-            this.PrivilageSaver.privilageID=x.privilageID
-            this.ChangePrivilage.push(this.PrivilageSaver)
-          })
-          this.privilages.forEach(it=>{
-            it.selected=false;
-            let index=this.rows.findIndex(a=>a.privilageID==it.id)
-            it.child.forEach(childeren=>{
-            var   indexChild=this.rows.findIndex(a=>a.privilageID==childeren.id)
-              childeren.selected=indexChild!=-1 ? true:false
-            
-            })
-           
-            it.selected=index!=-1 ? true:false
-          })
-        },
-        (_error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
-        }
-      );
+          it.selected = index != -1 ? true : false;
+        });
+      },
+      (_error) => {
+        this.toastr.error(
+          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+          null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          }
+        );
+      }
+    );
 
-   // this.addUpdate = row;
+    // this.addUpdate = row;
     this.modalService
       .open(content, {
         size: 'lg',
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
-     
       })
       .result.then(
         (result: boolean) => {
@@ -286,101 +273,80 @@ showData() {
         }
       );
   }
-  AddOrRemovepermision(situation:boolean,item:PrivilegeModel){
-debugger
-
-    
- if(situation){
-  this.PrivilageSaver=new AddUpdateprivilage;
-  this.PrivilageSaver.privilageID=item.id
-  this.PrivilageSaver.roleID=this.roleIdSaver
-  var checkIfExist=true
- this.ChangePrivilage.forEach((idfinder)=>
- {
- if(idfinder.id==this.PrivilageSaver.privilageID){
-    checkIfExist=false
- }
- })
- if(checkIfExist){
-  this.ChangePrivilage.push(this.PrivilageSaver)
-
- }
-
-  
-   }
- 
- else{
-  
-  let counter=0
-  this.ChangePrivilage.forEach((x) =>{
-    
-    if(x.privilageID==item.id){
-      this.ChangePrivilage.splice(counter,1)
+  AddOrRemovepermision(situation: boolean, item: PrivilegeModel) {
+    if (situation) {
+      this.PrivilageSaver = new AddUpdateprivilage();
+      this.PrivilageSaver.privilageID = item.id;
+      this.PrivilageSaver.roleID = this.roleIdSaver;
+      var checkIfExist = true;
+      this.ChangePrivilage.forEach((idfinder) => {
+        if (idfinder.id == this.PrivilageSaver.privilageID) {
+          checkIfExist = false;
+        }
+      });
+      if (checkIfExist) {
+        this.ChangePrivilage.push(this.PrivilageSaver);
       }
-      counter++
-  })
-  debugger
-}
-  if(item.parentID==null){
-    if(situation){
-
-      item.child.forEach(it=>{
-        it.selected=true
-        this.AddOrRemovepermision(true,it)
-      })
+    } else {
+      let counter = 0;
+      this.ChangePrivilage.forEach((x) => {
+        if (x.privilageID == item.id) {
+          this.ChangePrivilage.splice(counter, 1);
+        }
+        counter++;
+      });
     }
-    else{
-      item.child.forEach(it=>{
-        it.selected=false
-        this.AddOrRemovepermision(false,it)
-      })
-    }}
-     if(item.selected==false && item.parentID!=null){
-        let index=this.privilages.findIndex(idfinder=>idfinder.id==item.parentID)
-        this.privilages[index].selected=false  
-        let counter=0
-        this.ChangePrivilage.forEach((x) =>{
-          
-          if(x.privilageID==item.parentID){
-            this.ChangePrivilage.splice(counter,1)
-            }
-            counter++;
-        })
-    }
- 
-
-        
-        
-
-    
-
-    
-  }
- 
-    NewPrivilageList(){
-
-    debugger
-     this._userPrivilageService.addUpdateUserPrivilege(this.ChangePrivilage).subscribe(response=>{
-       if(response.data==1){
-        this.toastr.success("موفقیت امیز بود", null, {
-           closeButton: true,
-           positionClass: 'toast-top-left',
-         });
-       }
-     else{
-        this.toastr.error("شکست خورد", null, {
-          closeButton: true,
-         positionClass: 'toast-top-left',
+    if (item.parentID == null) {
+      if (situation) {
+        item.child.forEach((it) => {
+          it.selected = true;
+          this.AddOrRemovepermision(true, it);
         });
-       }
-    })
-    this.ChangePrivilage=[]
+      } else {
+        item.child.forEach((it) => {
+          it.selected = false;
+          this.AddOrRemovepermision(false, it);
+        });
+      }
     }
-    ShowBuyyon(item:PrivilegeModel){
-item.childerendisplay=!item.childerendisplay
+    if (item.selected == false && item.parentID != null) {
+      let index = this.privilages.findIndex(
+        (idfinder) => idfinder.id == item.parentID
+      );
+      this.privilages[index].selected = false;
+      let counter = 0;
+      this.ChangePrivilage.forEach((x) => {
+        if (x.privilageID == item.parentID) {
+          this.ChangePrivilage.splice(counter, 1);
+        }
+        counter++;
+      });
     }
-   async createOrUpdateRole(row: RoleModel){
-    row.title="mohammad"
+  }
+
+  NewPrivilageList() {
+    this._userPrivilageService
+      .addUpdateUserPrivilege(this.ChangePrivilage)
+      .subscribe((response) => {
+        if (response.data == 1) {
+          this.toastr.success('موفقیت امیز بود', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error('شکست خورد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
+    this.ChangePrivilage = [];
+  }
+  ShowBuyyon(item: PrivilegeModel) {
+    item.childerendisplay = !item.childerendisplay;
+  }
+  async createOrUpdateRole(row: RoleModel) {
+    row.title = 'mohammad';
     if (row.id === 0) {
       await this._roleService
         .create(row, 'aspnetrole')
@@ -432,9 +398,8 @@ item.childerendisplay=!item.childerendisplay
           }
         );
     }
-
-   }
-   roleNameEdit(content: any, row: RoleModel) { 
+  }
+  roleNameEdit(content: any, row: RoleModel) {
     if (row === undefined) {
       row = new RoleModel();
       row.id = 0;
@@ -459,26 +424,25 @@ item.childerendisplay=!item.childerendisplay
         }
       );
   }
-    //   )
-  }
-  // todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+  //   )
+}
+// todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
 
-  // done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+// done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
 
-  // drop(event: CdkDragDrop<string[]>) {
-  //   if (event.previousContainer === event.container) {
-  //     moveItemInArray(
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   } else {
-  //     transferArrayItem(
-  //       event.previousContainer.data,
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   }
-  // }
-
+// drop(event: CdkDragDrop<string[]>) {
+//   if (event.previousContainer === event.container) {
+//     moveItemInArray(
+//       event.container.data,
+//       event.previousIndex,
+//       event.currentIndex
+//     );
+//   } else {
+//     transferArrayItem(
+//       event.previousContainer.data,
+//       event.container.data,
+//       event.previousIndex,
+//       event.currentIndex
+//     );
+//   }
+// }

@@ -17,21 +17,17 @@ export class UserPrivilegeService extends BaseService<UserPrivilegeModel, 0> {
     super(_http, environment.api.baseUrl);
   }
 
-  addUpdateUserPrivilege(Updateprivilege:AddUpdateprivilage[]){
+  addUpdateUserPrivilege(Updateprivilege: AddUpdateprivilage[]) {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    debugger
     return this._http.post<Result<number>>(
-      this._base +
-        '/UserPrivilege/AddUpdateUserPrivilege'
-     ,Updateprivilege
-     , _options
+      this._base + '/UserPrivilege/AddUpdateUserPrivilege',
+      Updateprivilege,
+      _options
     );
-    
   }
-  }
-
+}

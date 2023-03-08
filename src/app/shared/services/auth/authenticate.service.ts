@@ -32,7 +32,7 @@ export class AuthenticateService {
   public get currentUserValue(): UserInfoModel {
     return this.currentUserSubject.value;
   }
- 
+
   login(user: UserModel) {
     return this.http
       .post<Result<UserInfoModel>>(
@@ -44,6 +44,7 @@ export class AuthenticateService {
           if (user.success) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user.data));
+
             this.currentUserSubject.next(user.data);
             return user;
           } else {
@@ -58,6 +59,7 @@ export class AuthenticateService {
   }
 
   checkUserPermission(token: string) {
+    localStorage.setItem('token', token);
     return this.http
       .post<Result<UserInfoModel>>(
         `${environment.api.baseUrl}/auth/check-user-permission?token=${token}`,
@@ -80,11 +82,14 @@ export class AuthenticateService {
         })
       );
   }
+  getAuthToken(): string {
+    return localStorage.getItem('token');
+  }
 
-  
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
     this.currentUserSubject.next(null);
     this.router.navigate(['/sessions/signin']);
   }

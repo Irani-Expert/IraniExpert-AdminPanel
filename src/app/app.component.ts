@@ -20,10 +20,8 @@ export class AppComponent implements OnInit {
       /** spinner ends after 1 seconds */
       this.spinner.hide();
     }, 1000);
-    
   }
   checkUserPermission() {
-    
     let currentUser: UserInfoModel = JSON.parse(
       localStorage.getItem('currentUser') ?? '{}'
     );
@@ -33,7 +31,7 @@ export class AppComponent implements OnInit {
         .subscribe((res) => {
           if (!res) {
             localStorage.clear();
-            this._authService.logout()
+            this._authService.logout();
           }
         });
     }
