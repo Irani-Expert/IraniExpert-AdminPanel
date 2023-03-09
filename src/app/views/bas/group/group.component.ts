@@ -55,24 +55,12 @@ export class GroupComponent implements OnInit {
         null,
         'Group'
       )
-      .subscribe(
-        (res: Result<Paginate<GroupModel[]>>) => {
-          this.rows = res.data.items;
-          this.page.totalElements = res.data.totalCount;
-          this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber + 1;
-        },
-        (_error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
-        }
-      );
+      .subscribe((res: Result<Paginate<GroupModel[]>>) => {
+        this.rows = res.data.items;
+        this.page.totalElements = res.data.totalCount;
+        this.page.totalPages = res.data.totalPages - 1;
+        this.page.pageNumber = res.data.pageNumber + 1;
+      });
   }
 
   deleteGroup(item: GroupModel, modal: any) {
@@ -95,7 +83,7 @@ export class GroupComponent implements OnInit {
                   }
                 );
                 this.rows.forEach((element, index) => {
-                  if (element.id == id) this.rows.splice(index, 1);
+                  if (element.id == id) this.rows.splice(index);
                 });
               } else {
                 this.toastr.error('خطا در حذف', res.message, {
@@ -146,9 +134,8 @@ export class GroupComponent implements OnInit {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
-          let lastElement = this.rows[0].id;
 
-          row.id = this.rows[lastElement].id + 1;
+          row.id = this.rows[0].id + 1;
           this.rows.unshift(row);
           this.addForm.reset;
         } else {
@@ -177,8 +164,8 @@ export class GroupComponent implements OnInit {
     }
   }
   updateArray(item: any) {
-    let rowForUpdate = this.rows.findIndex((row) => row.id === item.id);
-    this.rows[rowForUpdate] = item;
+    let rowIndexForUpdate = this.rows.findIndex((row) => row.id === item.id);
+    this.rows[rowIndexForUpdate] = item;
   }
   selectParent($event: any) {
     if ($event != undefined) {
