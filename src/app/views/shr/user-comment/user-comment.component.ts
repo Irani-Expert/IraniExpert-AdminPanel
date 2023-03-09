@@ -9,12 +9,15 @@ import { CommentService } from '../../prd/comment/comment.service';
 @Component({
   selector: 'app-user-comment',
   templateUrl: './user-comment.component.html',
-  styleUrls: ['./user-comment.component.scss']
+  styleUrls: ['./user-comment.component.scss'],
 })
 export class UserCommentComponent implements OnInit {
   rows: CommentModel[] = new Array<CommentModel>();
   page: Page = new Page();
-  constructor(private _commentService:CommentService,private toastr:ToastrService) { }
+  constructor(
+    private _commentService: CommentService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.setPage(this.page.pageNumber);
@@ -29,7 +32,7 @@ export class UserCommentComponent implements OnInit {
     this._commentService
       .GetByTableTypeAndRowIdAndUserId(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
-        seedNumber,
+        seedNumber
       )
       .subscribe(
         (res: Result<Paginate<CommentModel[]>>) => {
@@ -50,5 +53,4 @@ export class UserCommentComponent implements OnInit {
         }
       );
   }
-
 }

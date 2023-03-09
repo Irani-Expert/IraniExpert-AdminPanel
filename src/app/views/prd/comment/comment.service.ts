@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
 import { CommentModel } from '../../../shared/models/comment.model';
@@ -12,8 +13,9 @@ import { CommentModel } from '../../../shared/models/comment.model';
 })
 export class CommentService extends BaseService<CommentModel, 0> {
   userGuid = environment.jwtToken;
+  userId: number;
 
-  constructor(public _http: HttpClient) {
+  constructor(public _http: HttpClient, private _auth: AuthenticateService) {
     super(_http, environment.api.baseUrl);
   }
 
@@ -57,6 +59,7 @@ export class CommentService extends BaseService<CommentModel, 0> {
     pageIndex: number,
     pageSize: number
   ): Observable<Result<Paginate<CommentModel[]>>> {
+    this.userId = this._auth.currentUserValue.userID;
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -69,7 +72,9 @@ export class CommentService extends BaseService<CommentModel, 0> {
         '?pagIndex=' +
         pageIndex +
         '&pageSize=' +
-        pageSize,
+        pageSize +
+        '&userID=' +
+        this.userId,
       _options
     );
   }

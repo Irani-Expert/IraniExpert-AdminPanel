@@ -18,4 +18,5 @@ export class UserInfoModel implements IUserInfo {
   validTo: string;
   roles: number[];
   privileges: string[];
+  userID: number;
 }

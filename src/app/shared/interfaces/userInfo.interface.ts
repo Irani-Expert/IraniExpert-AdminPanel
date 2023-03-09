@@ -13,4 +13,5 @@ export interface IUserInfo {
   firstName: string;
   lastName: string;
   username: string;
+  userID: number;
 }
