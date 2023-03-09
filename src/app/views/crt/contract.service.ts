@@ -8,7 +8,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { ContractModel } from './contract-list/contract.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ContractService extends BaseService<ContractModel, number> {
   userGuid = environment.jwtToken;
@@ -16,18 +16,20 @@ export class ContractService extends BaseService<ContractModel, number> {
   constructor(public _http: HttpClient) {
     super(_http, environment.api.baseUrl);
   }
-  getUserInfiById(id: number, route: string): Observable<Result<UserBaseInfoModel[]>> {
+  getUserInfiById(
+    id: number,
+    route: string
+  ): Observable<Result<UserBaseInfoModel[]>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'bearer ' + environment.jwtToken,
+        // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.get<Result<UserBaseInfoModel[]>>(
-      this._base + '/' + route +'?roleID='+id,
-      
+      this._base + '/' + route + '?roleID=' + id,
+
       _options
     );
   }
-
 }

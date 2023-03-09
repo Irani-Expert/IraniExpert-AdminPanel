@@ -31,73 +31,86 @@ export class UsersService extends BaseService<UsersModel, 0> {
    * @param route
    * @returns update
    */
-   changePassword( t: UpdatePasswordModel): Observable<Result<boolean>> {
+  changePassword(t: UpdatePasswordModel): Observable<Result<boolean>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'bearer ' + environment.jwtToken,
+        // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.put<Result<boolean>>(
-      environment.api.baseUrl + '/AspNetUser/ChangePassword' ,
+      environment.api.baseUrl + '/AspNetUser/ChangePassword',
       t,
       _options
     );
   }
-  getUserByRoleID(pageIndex:number,pageSize:number,roleID:number): Observable<Result<Paginate<UsersModel[]>>> {
+  getUserByRoleID(
+    pageIndex: number,
+    pageSize: number,
+    roleID: number
+  ): Observable<Result<Paginate<UsersModel[]>>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'bearer ' + environment.jwtToken,
+        // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.get<Result<Paginate<UsersModel[]>>>(
-      environment.api.baseUrl + '/AspNetUser/GetUsersByRoleID?pageIndex='+pageIndex+'&pageSize='+pageSize+'&roleID='+roleID ,
-      
+      environment.api.baseUrl +
+        '/AspNetUser/GetUsersByRoleID?pageIndex=' +
+        pageIndex +
+        '&pageSize=' +
+        pageSize +
+        '&roleID=' +
+        roleID,
+
       _options
     );
   }
-  updateUserRole(roles:UserRolesModel[]): Observable<Result<UserRolesModel[]>> {
-
+  updateUserRole(
+    roles: UserRolesModel[]
+  ): Observable<Result<UserRolesModel[]>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-      'Pragma': 'no-cache',
-      'Expires': '0',
-        Authorization: 'bearer ' + environment.jwtToken,
+        // 'Cache-Control':
+        //   'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        // Pragma: 'no-cache',
+        // Expires: '0',
+        // Authorization: 'bearer ' + environment.jwtToken,
       }),
-      
     };
     return this._http.post<Result<UserRolesModel[]>>(
-      environment.api.baseUrl + "/AspNetUserRole/AddUpdateUserRoles",
+      environment.api.baseUrl + '/AspNetUserRole/AddUpdateUserRoles',
       roles,
       _options
     );
   }
-   /**
+  /**
    * درخواست  آپدیت
    * @param id
    * @param t
    * @param route
    * @returns update
    */
-    updateUser(id:number, t: UserInforamationModel): Observable<Result<boolean>> {
-      let _options = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: 'bearer ' + environment.jwtToken,
-        }),
-      };
-      return this._http.put<Result<boolean>>(
-        environment.api.baseUrl + '/AspNetUser/UpdateUser/'+id ,
-        t,
-        _options
-      );
+  updateUser(
+    id: number,
+    t: UserInforamationModel
+  ): Observable<Result<boolean>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // Authorization: 'bearer ' + environment.jwtToken,
+      }),
+    };
+    return this._http.put<Result<boolean>>(
+      environment.api.baseUrl + '/AspNetUser/UpdateUser/' + id,
+      t,
+      _options
+    );
+  }
 
-    }
-
-      /**
+  /**
    * درخواست دریافت یک رکورد بر اساس آیدی
    * @param t
    * @param route
@@ -107,27 +120,25 @@ export class UsersService extends BaseService<UsersModel, 0> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'bearer ' + environment.jwtToken,
+        // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.get<UserInforamationModel>(
-      environment.api.baseUrl + '/AspNetUser/GetUserByToken' ,
+      environment.api.baseUrl + '/AspNetUser/GetUserByToken',
       _options
     );
   }
 
-
   getUserInfo(): Observable<Result<UserCountModel>> {
-          let _options = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              Authorization: 'bearer ' + environment.jwtToken,
-            }),
-          };
-          return this._http.get<Result<UserCountModel>>(
-            environment.api.baseUrl + '/AspNetUser/UserProfile' ,
-            _options
-          );
-        }
-
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // Authorization: 'bearer ' + environment.jwtToken,
+      }),
+    };
+    return this._http.get<Result<UserCountModel>>(
+      environment.api.baseUrl + '/AspNetUser/UserProfile',
+      _options
+    );
+  }
 }

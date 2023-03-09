@@ -25,11 +25,11 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        Pragma: 'no-cache',
-        Expires: '0',
-        Authorization: 'bearer ' + environment.jwtToken,
+        // 'Cache-Control':
+        //   'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        // Pragma: 'no-cache',
+        // Expires: '0',
+        // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.get<Result<Paginate<UserNeedModel[]>>>(

@@ -21,7 +21,7 @@ export class UserPrivilegeService extends BaseService<UserPrivilegeModel, 0> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'bearer ' + environment.jwtToken,
+        // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.post<Result<number>>(

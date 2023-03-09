@@ -27,7 +27,7 @@ export class LearnService  extends BaseService<LearnModel, 0> {
       let _options = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Authorization': 'bearer '+environment.jwtToken
+          // 'Authorization': 'bearer '+environment.jwtToken
         }),
       };
       return this._http.get<Result<LearnModel[]>>(this._base + "/Learn/GetByProductID/" + productId +

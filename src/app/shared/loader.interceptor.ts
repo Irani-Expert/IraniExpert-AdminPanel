@@ -22,19 +22,19 @@ export class LoaderInterceptor implements HttpInterceptor {
       finalize(() => this.loader.hide())
     );
   }
-  checkUserPermission() {
-    let currentUser: UserInfoModel = JSON.parse(
-      localStorage.getItem('currentUser') ?? '{}'
-    );
-    if (currentUser.token != undefined) {
-      this._authService
-        .checkUserPermission(currentUser.token)
-        .subscribe((res) => {
-          if (!res) {
-            localStorage.clear();
-            this._authService.logout();
-          }
-        });
-    }
-  }
+  // checkUserPermission() {
+  //   let currentUser: UserInfoModel = JSON.parse(
+  //     localStorage.getItem('currentUser') ?? '{}'
+  //   );
+  //   if (currentUser.token != undefined) {
+  //     this._authService
+  //       .checkUserPermission(currentUser.token)
+  //       .subscribe((res) => {
+  //         if (!res) {
+  //           localStorage.clear();
+  //           this._authService.logout();
+  //         }
+  //       });
+  //   }
+  // }
 }

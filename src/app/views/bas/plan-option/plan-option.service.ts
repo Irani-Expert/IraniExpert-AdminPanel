@@ -25,7 +25,7 @@ export class PlanOptionService extends BaseService<PlanOptionModel, 0> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'bearer ' + environment.jwtToken,
+        // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.get<Result<Paginate<PlanOptionModel[]>>>(

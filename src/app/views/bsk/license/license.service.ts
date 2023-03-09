@@ -24,7 +24,7 @@ export class LicenseService extends BaseService<LicenseModel, 0> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'bearer ' + environment.jwtToken,
+        // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.get<Result<Paginate<OrderModel[]>>>(
@@ -46,7 +46,7 @@ export class LicenseService extends BaseService<LicenseModel, 0> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'bearer ' + environment.jwtToken,
+        // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
     return this._http.get<Result<Paginate<OrderModel[]>>>(
@@ -62,14 +62,14 @@ export class LicenseService extends BaseService<LicenseModel, 0> {
     );
   }
 
-  sendLicenseToClimax(climaxLicenseModel:CliamxLicenseModel){
-    var model={
-      apiKey:"fkwm@kdo23&#nd@dc$fmvJMkI2Ewu4R",
-      accountNumber:climaxLicenseModel.accountNumber,
-      activationDate:new Date(climaxLicenseModel.startDate).getTime()/1000,
-      expireDate:new Date(climaxLicenseModel.expireDate).getTime()/1000,
-      licenseNumber:climaxLicenseModel.licenseId.toString()
-    }
+  sendLicenseToClimax(climaxLicenseModel: CliamxLicenseModel) {
+    var model = {
+      apiKey: 'fkwm@kdo23&#nd@dc$fmvJMkI2Ewu4R',
+      accountNumber: climaxLicenseModel.accountNumber,
+      activationDate: new Date(climaxLicenseModel.startDate).getTime() / 1000,
+      expireDate: new Date(climaxLicenseModel.expireDate).getTime() / 1000,
+      licenseNumber: climaxLicenseModel.licenseId.toString(),
+    };
     var fd = new FormData();
     fd.append('files.licenseFile', climaxLicenseModel.file);
     fd.append('data', JSON.stringify(model));

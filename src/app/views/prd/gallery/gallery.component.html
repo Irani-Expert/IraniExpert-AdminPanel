@@ -92,8 +92,9 @@
                 <button
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="deleteLearn(item.id, deleteConfirmModal)"
+                 
                 >
+                 <!-- (click)="deletePicture(item.id, deleteConfirmModal)" -->
                   حذف
                 </button>
               </div>
@@ -108,9 +109,10 @@
         <button
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          (click)="deleteLearn(item.id, deleteConfirmModal)"
+         
           class="btn btn-outline-danger col-6 m-1"
         >
+        <!-- (click)="deletePicture(item.id, deleteConfirmModal)" -->
           حذف
         </button>
         <button
