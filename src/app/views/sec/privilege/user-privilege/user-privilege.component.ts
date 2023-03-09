@@ -346,8 +346,8 @@ export class UserPrivilegeComponent implements OnInit {
     item.childerendisplay = !item.childerendisplay;
   }
   async createOrUpdateRole(row: RoleModel) {
-    row.title = 'mohammad';
     if (row.id === 0) {
+      row.title = row.name;
       await this._roleService
         .create(row, 'aspnetrole')
         .toPromise()
@@ -358,6 +358,10 @@ export class UserPrivilegeComponent implements OnInit {
                 closeButton: true,
                 positionClass: 'toast-top-left',
               });
+
+              row.id = this.roles[0].id + 1;
+              this.roles.unshift(row);
+              this.addForm.reset();
             } else {
               this.toastr.error(data.message, null, {
                 closeButton: true,
@@ -373,6 +377,7 @@ export class UserPrivilegeComponent implements OnInit {
           }
         );
     } else {
+      row.title = row.name;
       await this._roleService
         .update(row.id, row, 'aspnetrole')
         .toPromise()
@@ -383,6 +388,11 @@ export class UserPrivilegeComponent implements OnInit {
                 closeButton: true,
                 positionClass: 'toast-top-left',
               });
+
+              let rowIndexForUpdate = this.roles.findIndex(
+                (item) => item.id === row.id
+              );
+              this.roles[rowIndexForUpdate] = row;
             } else {
               this.toastr.error(data.message, null, {
                 closeButton: true,
@@ -415,7 +425,6 @@ export class UserPrivilegeComponent implements OnInit {
         (result: boolean) => {
           if (result) {
             this.createOrUpdateRole(this.UpdateRole);
-            this.addForm.reset();
           }
         },
         (reason) => {

@@ -25,8 +25,8 @@
       <i
         *appCanAccess="'privilege-Edit'"
         ngbTooltip="ویرایش"
-        [openDelay]="100"
-        [closeDelay]="500"
+        [openDelay]="0"
+        [closeDelay]="50"
         (click)="addorEdit(addUpdateModal, item)"
         class="i-Pen-5 top-left-card bg-gradient-yellow clickable-btn text-dark p-2 rounded-circle"
       ></i>
@@ -123,7 +123,10 @@
             [(ngModel)]="addUpdate.parentID"
             [formControl]="addForm.controls['parentID']"
           >
-            <option *ngFor="let privilege of allPrivilageData" value="{{ privilege.id }}">
+            <option
+              *ngFor="let privilege of allPrivilageData"
+              value="{{ privilege.id }}"
+            >
               {{ privilege.key }}
             </option>
           </select>
@@ -146,7 +149,7 @@
             >نوشتن عنوان ضروری است</small
           >
         </div>
-        
+
         <div class="col-md-6 form-group mb-3 mt-3">
           <label for="parentID">دسترسی</label>
           <select
@@ -154,15 +157,12 @@
             [(ngModel)]="keyType"
             [formControl]="addForm.controls['keyType']"
           >
-            <option
-              *ngFor="let key of keys"
-              value="-{{ key }}"
-            >
+            <option *ngFor="let key of keys" value="-{{ key }}">
               {{ key }}
             </option>
           </select>
         </div>
-        
+
         <div class="col-md-6 form-group mb-3 mt-3">
           <label class="m-1">فعال</label>
           <label class="switch switch-primary mr-2 m-2">
