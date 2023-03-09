@@ -138,7 +138,7 @@
                   *appCanAccess="'Group-Delete'"
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="deleteGroup(item.id, deleteConfirmModal)"
+                  (click)="deleteGroup(item, deleteConfirmModal)"
                 >
                   حذف
                 </button>
@@ -154,7 +154,7 @@
         <button
           type="button"
           [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          (click)="deleteGroup(item.id, deleteConfirmModal)"
+          (click)="deleteGroup(item, deleteConfirmModal)"
           class="btn btn-outline-danger col m-1"
         >
           حذف
@@ -197,7 +197,7 @@
       class="close"
       aria-label="Close button"
       aria-describedby="modal-title"
-      (click)="modal.dismiss('Cross click')"
+      (click)="modal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -209,7 +209,7 @@
     <button
       type="button"
       class="btn btn-outline-secondary btn-rounded mr-1"
-      (click)="modal.dismiss('cancel')"
+      (click)="modal.dismiss()"
     >
       خیر
     </button>
@@ -237,7 +237,7 @@
       type="button"
       class="close"
       aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
+      (click)="modal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -337,7 +337,7 @@
     <button
       type="button"
       class="btn btn-outline-dark btn-rounded"
-      (click)="modal.close(false)"
+      (click)="modal.close(true)"
       *ngIf="addUpdate.id === 0"
       [disabled]="!addForm.valid"
     >

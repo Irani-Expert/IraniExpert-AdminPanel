@@ -1,5 +1,9 @@
 <div class="card row">
-  <form class="col-12 row mt-2 mb-3" [formGroup]="addForm">
+  <form
+    class="col-12 row mt-2 mb-3"
+    [formGroup]="addForm"
+    *ngIf="isDataFetched"
+  >
     <!-- name -->
 
     <div class="col-md-6 form-group mb-3">
@@ -59,7 +63,7 @@
         id="username"
         placeholder="نام کاربری مورد نظر را وارد کنید "
         [formControl]="addForm.controls['username']"
-        [(ngModel)]="addUpdate.email"
+        [(ngModel)]="addUpdate.subject"
         maxlength="51"
         minlength="2"
         [attr.disabled]="true"

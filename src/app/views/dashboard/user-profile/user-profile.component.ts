@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Result } from 'src/app/shared/models/Base/result.model';
 import { UserInforamationModel } from 'src/app/shared/models/userInforamationModel';
 import { UsersService } from '../../sec/user-mangement/users.service';
 import { UpdatePasswordModel } from './UpdatePassword.model';
@@ -12,6 +13,7 @@ import { UpdatePasswordModel } from './UpdatePassword.model';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
+  isDataFetched: boolean = false;
   addForm: FormGroup;
   passwordForm: FormGroup;
   addUpdate: UserInforamationModel;
@@ -22,10 +24,7 @@ export class UserProfileComponent implements OnInit {
     private _userService: UsersService,
     private toastr: ToastrService,
     private modalService: NgbModal
-  ) {}
-
-  ngOnInit(): void {
-    this.getUser();
+  ) {
     this.addForm = this._formBuilder.group({
       lastName: [null, Validators.compose([Validators.required])],
       firstName: [null, Validators.compose([Validators.required])],
@@ -38,23 +37,18 @@ export class UserProfileComponent implements OnInit {
       password: [null, Validators.compose([Validators.required])],
     });
   }
+
+  ngOnInit(): void {
+    this.getUser();
+  }
   getUser() {
-    this._userService.getUserByToken().subscribe(
-      (res: UserInforamationModel) => {
-        this.addUpdate = res;
+    this._userService
+      .getUserByToken()
+      .subscribe((res: Result<UserInforamationModel>) => {
+        this.addUpdate = res.data;
         this.isEdit = true;
-      },
-      (_error) => {
-        this.toastr.error(
-          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-          null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          }
-        );
-      }
-    );
+        this.isDataFetched = true;
+      });
   }
   async updateUser() {
     await this._userService

@@ -7,13 +7,14 @@ import { RoleModel } from './roleModel';
  * مدل اطلاعات کاربر
  */
 export class UserInforamationModel {
-  id:number;
+  id: number;
   username: string;
   firstName: string;
   lastName: string;
-  phoneNumber:string;
-  email:string;
-  referralCode:string;
-  accountNumber:string;
-  password:string;
+  phoneNumber: string;
+  email: string;
+  referralCode: string;
+  accountNumber: string;
+  password: string;
+  subject: string;
 }

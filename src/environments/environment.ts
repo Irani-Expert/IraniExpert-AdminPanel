@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  jwtToken: localStorage.getItem('token') ?? 'anonymous',
+  jwtToken: localStorage.getItem('token'),
 };
 
 /*

@@ -29,10 +29,10 @@ export class FileService extends BaseService<FileModel, 0> {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         // Authorization: 'bearer ' + environment.jwtToken,
-        // 'Cache-Control':
-        //   'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        // Pragma: 'no-cache',
-        // Expires: '0',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
       }),
     };
     return this._http.get<Result<FileModel[]>>(

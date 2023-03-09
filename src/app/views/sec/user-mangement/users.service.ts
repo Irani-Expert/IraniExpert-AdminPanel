@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
 import { UserInforamationModel } from 'src/app/shared/models/userInforamationModel';
 import { UserRolesModel } from 'src/app/shared/models/userRoles';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
@@ -73,10 +74,10 @@ export class UsersService extends BaseService<UsersModel, 0> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        // 'Cache-Control':
-        //   'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        // Pragma: 'no-cache',
-        // Expires: '0',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
         // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
@@ -116,20 +117,29 @@ export class UsersService extends BaseService<UsersModel, 0> {
    * @param route
    * @returns one by id
    */
-  getUserByToken(): Observable<UserInforamationModel> {
+  getUserByToken(): Observable<Result<UserInforamationModel>> {
+    let token = localStorage.getItem('token');
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    return this._http.get<UserInforamationModel>(
-      environment.api.baseUrl + '/AspNetUser/GetUserByToken',
-      _options
-    );
+    return this._http
+      .post<Result<UserInforamationModel>>(
+        `${environment.api.baseUrl}/auth/check-user-permission?token=${token}`,
+        undefined,
+        _options
+      )
+      .pipe(
+        map((user) => {
+          return user;
+        })
+      );
   }
 
   getUserInfo(): Observable<Result<UserCountModel>> {
+    let token = localStorage.getItem('token');
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -137,7 +147,7 @@ export class UsersService extends BaseService<UsersModel, 0> {
       }),
     };
     return this._http.get<Result<UserCountModel>>(
-      environment.api.baseUrl + '/AspNetUser/UserProfile',
+      environment.api.baseUrl + '/AspNetUser/UserProfile?token=' + token,
       _options
     );
   }

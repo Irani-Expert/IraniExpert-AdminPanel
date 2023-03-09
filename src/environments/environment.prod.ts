@@ -6,5 +6,5 @@ export const environment = {
     apiVersion: '1.0.0',
   },
   uploadUrl: 'https://dl.iraniexpert.com/fileUploader',
-  jwtToken: localStorage.getItem('token') ?? 'anonymous',
+  jwtToken: localStorage.getItem('token'),
 };

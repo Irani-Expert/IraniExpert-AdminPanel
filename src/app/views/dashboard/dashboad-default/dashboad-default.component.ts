@@ -55,8 +55,8 @@ export class DashboadDefaultComponent implements OnInit {
 
   getUser() {
     this._userService.getUserByToken().subscribe(
-      (res: UserInforamationModel) => {
-        this.userModel = res;
+      (res: Result<UserInforamationModel>) => {
+        this.userModel = res.data;
       },
       (_error) => {
         this.toastr.error(

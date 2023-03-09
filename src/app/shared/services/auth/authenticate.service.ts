@@ -44,8 +44,9 @@ export class AuthenticateService {
           if (user.success) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user.data));
-
+            localStorage.setItem('token', user.data.token);
             this.currentUserSubject.next(user.data);
+
             return user;
           } else {
             this.toastr.error('نام کاربری یا رمز عبور اشتباه است ', null, {

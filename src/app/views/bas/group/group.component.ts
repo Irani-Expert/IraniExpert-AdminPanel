@@ -75,7 +75,8 @@ export class GroupComponent implements OnInit {
       );
   }
 
-  deleteGroup(id: number, modal: any) {
+  deleteGroup(item: GroupModel, modal: any) {
+    let id = item.id;
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
@@ -93,14 +94,15 @@ export class GroupComponent implements OnInit {
                     positionClass: 'toast-top-left',
                   }
                 );
+                this.rows.forEach((element, index) => {
+                  if (element.id == id) this.rows.splice(index, 1);
+                });
               } else {
-
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getGroupList(this.page.pageNumber, this.page.size);
             })
             .catch((err) => {
               this.toastr.error('خطا در حذف', err.message, {
@@ -128,77 +130,56 @@ export class GroupComponent implements OnInit {
     this.addUpdate = row;
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result: boolean) => {
-          if (result != undefined) {
-            this.addOrUpdate(this.addUpdate);
-            this.addForm.reset();
-          }
-        },
-        (reason) => {
-          console.log('Err!', reason);
-          this.addForm.reset();
+      .result.then((result: boolean) => {
+        if (result === true) {
+          this.addOrUpdate(this.addUpdate);
         }
-      );
+      });
   }
 
-  async addOrUpdate(row: GroupModel) {
+  addOrUpdate(row: GroupModel) {
     row.type = 0;
     if (row.id === 0) {
-      await this._groupService
-        .create(row, 'Group')
-        .toPromise()
-        .then(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        );
+      this._groupService.create(row, 'Group').subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          let lastElement = this.rows[0].id;
+
+          row.id = this.rows[lastElement].id + 1;
+          this.rows.unshift(row);
+          this.addForm.reset;
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     } else {
-      await this._groupService
-        .update(row.id, row, 'Group')
-        .toPromise()
-        .then(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        );
+      this._groupService.update(row.id, row, 'Group').subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.updateArray(row);
+          this.addForm.reset;
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     }
-
-    this.getGroupList(this.page.pageNumber, this.page.size);
   }
-
+  updateArray(item: any) {
+    let rowForUpdate = this.rows.findIndex((row) => row.id === item.id);
+    this.rows[rowForUpdate] = item;
+  }
   selectParent($event: any) {
     if ($event != undefined) {
       if (parseInt($event) !== 0) this.addUpdate.parentID = parseInt($event);
