@@ -67,8 +67,9 @@ export class ProductsListComponent implements OnInit {
         (_result) => {
           this._productService
             .delete(id, 'Product')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
+              var finder=this.rows.findIndex((row) => row.id === id);
+              this.rows.splice(finder, 1);
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -85,20 +86,8 @@ export class ProductsListComponent implements OnInit {
                   positionClass: 'toast-top-left',
                 });
               }
-              this.getProductList(this.page.pageNumber, this.page.size);
             })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
-            });
-        },
-        (error) => {
-          this.toastr.error('خطا در حذف', error.message, {
-            timeOut: 3000,
-            positionClass: 'toast-top-left',
-          });
+    
         }
       );
   }

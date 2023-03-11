@@ -43,6 +43,7 @@ export class GalleryComponent implements OnInit {
   async getFileByProductId(rowId: number, tableType: number) {
     this._fileService.getFilesByRowIdAndTableType(rowId, tableType).subscribe(
       (res: Result<FileModel[]>) => {
+        
         this.rows = res.data;
       },
       (_error) => {
@@ -60,6 +61,7 @@ export class GalleryComponent implements OnInit {
 
   //Add OR Edit!!!!!!!!!!!!!!!
   addorEdit(content: any, row: FileModel) {
+    debugger
     this.addUpdate = row;
     this.modalService
       .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })

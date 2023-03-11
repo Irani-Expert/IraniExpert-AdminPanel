@@ -60,16 +60,7 @@ export class AddUpdateComponent implements OnInit {
             //  this.page.totalElements = res.data.length;
           },
 
-          (_error) => {
-            this.toastr.error(
-              'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-              null,
-              {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              }
-            );
-          }
+    
         );
   }
   onFileChanged(event: any) {
@@ -116,6 +107,7 @@ export class AddUpdateComponent implements OnInit {
   }
 
   async addOrUpdate(row: ProductModel) {
+    debugger
     if (row.id === 0) {
       
       this._productsService
