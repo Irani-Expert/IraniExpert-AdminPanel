@@ -129,32 +129,36 @@
 
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded ml-2"
+      class="btn btn-outline-dark btn-rounded ml-2 my-auto p-2"
       (click)="isEdit = false"
       *ngIf="isEdit"
+      style="height: fit-content"
     >
       ویرایش پروفایل
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded ml-2"
+      class="btn btn-outline-dark btn-rounded ml-2 my-auto p-2"
       (click)="updateUser()"
       *ngIf="!isEdit"
+      style="height: fit-content"
     >
       ذخیره
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded ml-2"
+      class="btn btn-outline-dark btn-rounded ml-2 my-auto p-2"
       (click)="isEdit = true"
       *ngIf="!isEdit"
+      style="height: fit-content"
     >
       لغو
     </button>
     <button
       (click)="openPasswordModal(passwordModal)"
       type="button"
-      class="btn btn-outline-primary btn-rounded ml-3"
+      class="btn btn-outline-primary btn-rounded ml-3 my-auto p-2"
+      style="height: fit-content"
     >
       تغییر رمز عبور
     </button>
