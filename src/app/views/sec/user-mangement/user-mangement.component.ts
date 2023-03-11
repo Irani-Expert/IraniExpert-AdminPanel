@@ -28,6 +28,7 @@ export class UserMangementComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
   roleKeeper=[];
+  removeIndexFromList:number
   roleIdSaver:number
   dropdownSettings:IDropdownSettings;
   roleModel:UserRolesModel[]=new Array<UserRolesModel>();
@@ -124,7 +125,6 @@ export class UserMangementComponent implements OnInit {
         (result: boolean) => {
           if (result != undefined) {
             this.addOrUpdate(this.addUpdate);
-            this.addForm.reset();
           }
         },
         (reason) => {
@@ -134,7 +134,12 @@ export class UserMangementComponent implements OnInit {
       );
   }
   async addOrUpdate(row: UsersModel) {
+    var indexFinder=this.rows.findIndex((rows) => rows.id === row.id);
+
     if (row.id === 0) {
+
+      
+      
       await this._usersService
         .create(row, 'aspnetuser')
         .toPromise()
@@ -145,6 +150,7 @@ export class UserMangementComponent implements OnInit {
                 closeButton: true,
                 positionClass: 'toast-top-left',
               });
+              
             } else {
               this.toastr.error(data.message, null, {
                 closeButton: true,
@@ -159,11 +165,11 @@ export class UserMangementComponent implements OnInit {
             });
           }
         );
-      this.getUsersList(this.page.pageNumber, this.page.size,this.roleIdSaver);
     } else {
       var counter=0
       
-
+      
+            this.roleModel=[]
       this.roleKeeper.forEach(x=>
         {
           this.roleModel[counter]=new UserRolesModel()
@@ -189,6 +195,8 @@ export class UserMangementComponent implements OnInit {
                 closeButton: true,
                 positionClass: 'toast-top-left',
               });
+              this.rows.splice(indexFinder, 1);
+              this.rows.unshift(row)
             } else {
               this.toastr.error(data.message, null, {
                 closeButton: true,
@@ -216,6 +224,8 @@ export class UserMangementComponent implements OnInit {
             .delete(id, 'aspnetuser')
             .toPromise()
             .then((res) => {
+              var indexFinder=this.rows.findIndex((rows) => rows.id === id);
+              this.rows.splice(indexFinder, 1);
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -271,8 +281,8 @@ export class UserMangementComponent implements OnInit {
     this.roleKeeper.push(item)
   }
   onDeSelect(item: any) {
-   let remove= this.roleKeeper.findIndex(x=>x==item.item_id)
-    this.roleKeeper.splice(remove,1);
+    this.removeIndexFromList= this.roleKeeper.findIndex(x=>x.item_id==item.item_id)
+    this.roleKeeper.splice(    this.removeIndexFromList,1);
   }
   onSelectAll(items: any) {
     this.roleKeeper=[]
@@ -287,14 +297,13 @@ export class UserMangementComponent implements OnInit {
 
   }
   updateRoleId(){
-    
+    debugger
     this._usersService
         .updateUserRole(this.roleModel)
         .toPromise()
         .then(
           (data) => {
-            
-            if (data.success) {
+            this.getUsersList(this.page.pageNumber, this.page.size,this.roleIdSaver);            if (data.success) {
               this.toastr.success(data.message, null, {
                 closeButton: true,
                 positionClass: 'toast-top-left',

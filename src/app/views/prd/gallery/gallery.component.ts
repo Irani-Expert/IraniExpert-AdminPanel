@@ -96,6 +96,7 @@ export class GalleryComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
+         this.rows.push(row);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,

@@ -138,6 +138,7 @@ export class GroupComponent implements OnInit {
           row.id = this.rows[0].id + 1;
           this.rows.unshift(row);
           this.addForm.reset;
+ 
         } else {
           this.toastr.error(data.message, null, {
             closeButton: true,
@@ -152,8 +153,10 @@ export class GroupComponent implements OnInit {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
+
           this.updateArray(row);
           this.addForm.reset;
+
         } else {
           this.toastr.error(data.message, null, {
             closeButton: true,
