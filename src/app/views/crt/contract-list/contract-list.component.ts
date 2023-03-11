@@ -30,6 +30,7 @@ import { Condition } from 'selenium-webdriver';
 export class ContractListComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
+  sellingTypeTitle=['IB','Invesment','License']
   dropdownSettings:IDropdownSettings;
   viewMode: 'list' | 'grid' = 'list';
   roles: RoleModel[] = new Array<RoleModel>();
@@ -162,6 +163,7 @@ this.contractModel.conditions=[]
     this.getRoleList();
   }
   contractWith(){
+    var sellingTypeSaver=this.contractModel.sellingTypeTitle
     this.contractModel.sellingType=Number(this.contractModel.sellingType)
     this.contractModel.userID=Number(this.contractModel.userID)
     this.contractModel.roleID=Number(this.contractModel.roleID)
@@ -172,7 +174,11 @@ this.contractModel.conditions=[]
     .toPromise()
     .then(
       (data) => {
+          
         if (data.success) {
+          var indexFinder=this.allContract.findIndex((rows) => rows.id === this.contractModel.id);
+
+          this.allContract.unshift(this.contractModel)
           this.toastr.success(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
