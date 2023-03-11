@@ -16,15 +16,22 @@ import { PrivilegeService } from './privilege.service';
   styleUrls: ['./privilege.component.scss'],
 })
 export class PrivilegeComponent implements OnInit {
-  keys = ['Watch', 'Delete', 'Add', 'Edit', 'Full Premission','Special-Premission'];
+  keys = [
+    'Watch',
+    'Delete',
+    'Add',
+    'Edit',
+    'Full Premission',
+    'Special-Premission',
+  ];
   rows: PrivilegeModel[] = new Array<PrivilegeModel>();
   allSelected: boolean;
   page: Page = new Page();
   addUpdate: PrivilegeModel = new PrivilegeModel();
   addForm: FormGroup;
-  keyValue:string;
-  keyType:string;
-  allPrivilageData :PrivilegeModel[] = new Array<PrivilegeModel>();
+  keyValue: string;
+  keyType: string;
+  allPrivilageData: PrivilegeModel[] = new Array<PrivilegeModel>();
   constructor(
     public _roleService: RoleService,
     private toastr: ToastrService,
@@ -36,9 +43,8 @@ export class PrivilegeComponent implements OnInit {
     this.page.size = 12;
   }
 
-  
   ngOnInit(): void {
-    this.allPrivilage()
+    this.allPrivilage();
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       keyValue: [null, Validators.required],
@@ -69,7 +75,6 @@ export class PrivilegeComponent implements OnInit {
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
-          
         },
         (_error) => {
           this.toastr.error(
@@ -138,14 +143,12 @@ export class PrivilegeComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (result: boolean) => {
-          if (result==true) {
-            this.addUpdate.key=this.keyValue+this.keyType
+          if (result == true) {
+            this.addUpdate.key = this.keyValue + this.keyType;
             this.addOrUpdate(this.addUpdate);
-          
           }
         },
-        (_error) => {
-        }
+        (_error) => {}
       );
   }
   async addOrUpdate(row: PrivilegeModel) {
@@ -160,6 +163,10 @@ export class PrivilegeComponent implements OnInit {
                 closeButton: true,
                 positionClass: 'toast-top-left',
               });
+
+              row.id = this.rows[0].id + 1;
+              this.rows.unshift(row);
+              this.addForm.reset();
             } else {
               this.toastr.error(data.message, null, {
                 closeButton: true,
@@ -185,6 +192,11 @@ export class PrivilegeComponent implements OnInit {
                 closeButton: true,
                 positionClass: 'toast-top-left',
               });
+
+              let rowIndexForUpdate = this.rows.findIndex(
+                (item) => item.id === row.id
+              );
+              this.rows[rowIndexForUpdate] = row;
             } else {
               this.toastr.error(data.message, null, {
                 closeButton: true,
@@ -201,35 +213,26 @@ export class PrivilegeComponent implements OnInit {
         );
     }
 
-    this.getPrivilegeList(this.page.pageNumber, this.page.size);
+    // this.getPrivilegeList(this.page.pageNumber, this.page.size);
   }
- allPrivilage(){
-  this._privilegeService
-      .get(
-        0,
-        500,
-        'ID',
-        null,
-        'Privilege'
-      )
-      .subscribe(
-        (res: Result<Paginate<PrivilegeModel[]>>) => {
-          this.allPrivilageData = res.data.items;
-          this.page.totalElements = res.data.totalCount;
-          this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber + 1;
-          
-        },
-        (_error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
-        }
-      );
- }
+  allPrivilage() {
+    this._privilegeService.get(0, 500, 'ID', null, 'Privilege').subscribe(
+      (res: Result<Paginate<PrivilegeModel[]>>) => {
+        this.allPrivilageData = res.data.items;
+        this.page.totalElements = res.data.totalCount;
+        this.page.totalPages = res.data.totalPages - 1;
+        this.page.pageNumber = res.data.pageNumber + 1;
+      },
+      (_error) => {
+        this.toastr.error(
+          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+          null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          }
+        );
+      }
+    );
+  }
 }
