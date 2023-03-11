@@ -20,6 +20,25 @@
     <ng-template ngbNavContent>
       <form class="card container p-4">
         <div class="row">
+          <ng-container *ngIf="addUpdate.cardImagePath !== null">
+            <div
+              class="d-flex justify-content-end align-items-end col-md-3 col-5 mb-5 mt-1"
+            >
+              <img
+                class="align-self-center w-100 radius-md"
+                [src]="'https://dl.iraniexpert.com/' + addUpdate.cardImagePath"
+                [alt]="addUpdate.title"
+              />
+            </div>
+            <div class="col-md-6 col-5">
+              <button
+                class="btn-danger btn border-dark border-1 shadow"
+                (click)="deleteImg(addUpdate.cardImagePath)"
+              >
+                حذف
+              </button>
+            </div>
+          </ng-container>
           <div class="col-md-6">
             <label for="title">عنوان</label>
             <input
@@ -78,43 +97,45 @@
               >انتخاب نوع گروه ضروری است</small
             >
           </div>
-          <div class="col-md-7 mt-4">
-            <input type="file" (change)="onFileChanged($event)" />
 
-            <div>
-              <image-cropper
-                [imageChangedEvent]="imgChangeEvt"
-                [maintainAspectRatio]="false"
-                format="webp"
-                [resizeToWidth]="1280"
-                (imageCropped)="cropImg($event)"
-                (imageLoaded)="imgLoad()"
-                (cropperReady)="initCropper()"
-                (loadImageFailed)="imgFailed()"
+          <ng-container *ngIf="addUpdate.cardImagePath == ''">
+            <div class="col-md-7 mt-4">
+              <input type="file" (change)="onFileChanged($event)" />
+              <div>
+                <image-cropper
+                  [imageChangedEvent]="imgChangeEvt"
+                  [maintainAspectRatio]="false"
+                  format="webp"
+                  [resizeToWidth]="1280"
+                  (imageCropped)="cropImg($event)"
+                  (imageLoaded)="imgLoad()"
+                  (cropperReady)="initCropper()"
+                  (loadImageFailed)="imgFailed()"
+                >
+                </image-cropper>
+              </div>
+              <div class="float-left w-25">
+                <img [src]="cropImagePreview" alt="" />
+              </div>
+            </div>
+            <div class="col-12 mt-1 mb-2">
+              <button
+                type="button"
+                class="btn btn-rounded btn-outline-dark"
+                (click)="uploadFile()"
               >
-              </image-cropper>
+                آپلود کن
+              </button>
             </div>
-            <div class="float-left w-25">
-              <img [src]="cropImagePreview" alt="" />
-            </div>
-          </div>
-          <div class="col-12 mt-1 mb-2">
-            <button
-              type="button"
-              class="btn btn-rounded btn-outline-dark"
-              (click)="uploadFile()"
-            >
-              آپلود کن
-            </button>
-          </div>
-          <div class="col-md-12 form-group mb-3">
+          </ng-container>
+          <div class="col-md-12 form-group mb-3 mt-3">
             <ckeditor
               [formControl]="addForm.controls['description']"
               [(ngModel)]="addUpdate.description"
               name="myckeditor"
               required
               [config]="ckeConfig"
-              debounce="500"
+              debounce="60000"
               (paste)="onPasteEditor($event)"
               (change)="onChangeEditor($event)"
             >

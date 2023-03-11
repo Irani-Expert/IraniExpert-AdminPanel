@@ -7,9 +7,21 @@ import { Result } from '../models/Base/result.model';
 
 @Injectable()
 export class FileUploaderService {
-  // public static BASE_API_URL = 'http://192.168.2.171:2233/api';
-  url = environment.uploadUrl;
-
+  uploardUrl = environment.uploadUrl;
+  mainUrl = environment.api.baseUrl;
+  _httpOptions = {
+    headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+      'Access-Control-Allow-Headers':
+        'origin,X-Requested-With,content-type,accept',
+      'Access-Control-Allow-Credentials': 'true',
+      'Cache-Control':
+        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      Pragma: 'no-cache',
+      Expires: '0',
+    }),
+  };
   constructor(public _http: HttpClient) {}
   /**
    *  درخواست ایجاد
@@ -22,18 +34,24 @@ export class FileUploaderService {
     var myFile: Blob = this.dataURItoBlob(t);
     payload.append('file', myFile, 'banner.jpg');
     return this._http.post<Result<string[]>>(
-      this.url + '?folder=' + folder,
+      this.uploardUrl + '?folder=' + folder,
       payload,
-      {
-        headers: new HttpHeaders({
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods':
-            'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-          'Access-Control-Allow-Headers':
-            'origin,X-Requested-With,content-type,accept',
-          'Access-Control-Allow-Credentials': 'true',
-        }),
-      }
+      this._httpOptions
+    );
+  }
+
+  // Delete Request
+  deleteFile(filePath: string, folder: string, fileTableType: string) {
+    return this._http.post<Result<string[]>>(
+      this.mainUrl +
+        '/Files/Delete?filePath=uploads/' +
+        folder +
+        '/' +
+        fileTableType +
+        '/' +
+        filePath,
+      undefined,
+      this._httpOptions
     );
   }
 
@@ -59,18 +77,9 @@ export class FileUploaderService {
     const formData = new FormData();
     formData.append('_file', _file, _file.name);
     return this._http.post<Result<string[]>>(
-      this.url + '?folder=' + folder,
+      this.uploardUrl + '?folder=' + folder,
       formData,
-      {
-        headers: new HttpHeaders({
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods':
-            'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-          'Access-Control-Allow-Headers':
-            'origin,X-Requested-With,content-type,accept',
-          'Access-Control-Allow-Credentials': 'true',
-        }),
-      }
+      this._httpOptions
     );
   }
 }
