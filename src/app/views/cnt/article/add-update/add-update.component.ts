@@ -105,83 +105,70 @@ export class AddUpdateComponent implements OnInit {
   imgFailed() {
     alert('image Failed to Show');
   }
-
+  deleteImg(filePath: string) {
+    this._fileUploaderService
+      .deleteFile(filePath, 'images', 'articles')
+      .subscribe((res: Result<string[]>) => {
+        if (res.success) {
+          this.addUpdate.cardImagePath = res.data[0];
+          this.toastr.success('با موفقیت حذف شد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          //TODO Delete Set AddUpdate.cardImagePAth
+          this.addUpdate.cardImagePath = res.errors[0];
+          this.toastr.error(res.errors[0], 'خطا در حذف تصویر', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
+  }
   uploadFile() {
     this._fileUploaderService
       .uploadFile(this.cropImagePreview, 'articles')
-      .subscribe(
-        (res: Result<string[]>) => {
-          if (res.success) {
-            this.addUpdate.cardImagePath = res.data[0];
-            this.toastr.success('با موفقیت آپلود شد', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            //TODO Delete Set AddUpdate.cardImagePAth
-            this.addUpdate.cardImagePath = res.errors[0];
-            this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-          //Todo Image={}
-        },
-        (error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
+      .subscribe((res: Result<string[]>) => {
+        if (res.success) {
+          this.addUpdate.cardImagePath = res.data[0];
+          this.toastr.success('با موفقیت آپلود شد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          //TODO Delete Set AddUpdate.cardImagePAth
+          this.addUpdate.cardImagePath = res.errors[0];
+          this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
         }
-      );
+        //Todo Image={}
+      });
   }
 
   async getArticleById(id: number) {
-    await this._articleService.getOneByID(id, 'Article').subscribe(
-      (res: Result<ArticleModel>) => {
+    this._articleService
+      .getOneByID(id, 'Article')
+      .subscribe((res: Result<ArticleModel>) => {
         this.addUpdate = res.data;
         this.group = this.groupList.find(
           (item) => item.value === this.addUpdate.groupID
         );
         //  this.page.totalElements = res.data.length;
-      },
-      (error) => {
-        this.toastr.error(
-          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-          null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          }
-        );
-      }
-    );
+      });
   }
 
   async getGroupList() {
-    await this._groupService
+    this._groupService
       .getTitleValues(0, 10000, 'ID', null, 'Group')
-      .subscribe(
-        (res: Result<Paginate<any[]>>) => {
-          this.groupList = res.data.items;
-          this.group=this.groupList.find(item=>item.value===this.addUpdate.groupID);
-          //  this.page.totalElements = res.data.length;
-        },
-        (error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
-        }
-      );
+      .subscribe((res: Result<Paginate<any[]>>) => {
+        this.groupList = res.data.items;
+        this.group = this.groupList.find(
+          (item) => item.value === this.addUpdate.groupID
+        );
+        //  this.page.totalElements = res.data.length;
+      });
   }
 
   async addOrUpdate(row: ArticleModel) {
@@ -190,55 +177,39 @@ export class AddUpdateComponent implements OnInit {
     // }
     // row.groupID = this.group.value;
     if (row.id === 0) {
-      await this._articleService
+      this._articleService
         .create(row, 'article')
-        .toPromise()
-        .then(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
           }
-        );
+        });
     } else {
-      await this._articleService
+      this._articleService
         .update(row.id, row, 'article')
-        .toPromise()
-        .then(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
           }
-        );
+        });
     }
 
     this._router.navigate(['/cnt/article']);

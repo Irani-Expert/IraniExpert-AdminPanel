@@ -26,6 +26,7 @@ export class BannerComponent implements OnInit {
   image: any;
   cropperSettings: CropperSettings;
   addUpdate: BannerModel;
+  
   addForm: FormGroup;
   constructor(
     public _bannerService: BannerService,
@@ -152,6 +153,8 @@ export class BannerComponent implements OnInit {
       row.tableType = null;
     }
     this.addUpdate = row;
+    debugger
+    // /this.addUpdate.filePath=row.filePath.substring(row.filePath.indexOf('com/')+4)
     this.modalService
       .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
       .result.then(
@@ -169,6 +172,7 @@ export class BannerComponent implements OnInit {
   }
 
   async addOrUpdate(row: BannerModel) {
+    
     if (row.id === 0) {
       await this._bannerService
         .create(row, 'Banner')
@@ -195,6 +199,12 @@ export class BannerComponent implements OnInit {
           }
         );
     } else {
+      console.log(row.filePath.indexOf('com/'));
+      
+      if(row.filePath.indexOf('com/')!=-1){
+      row.filePath=row.filePath.substring(row.filePath.indexOf('com/')+4)
+     debugger
+      }
       await this._bannerService
         .update(row.id, row, 'Banner')
         .toPromise()
@@ -252,6 +262,7 @@ export class BannerComponent implements OnInit {
         (res: Result<string[]>) => {
           if (res.success) {
             this.addUpdate.filePath = res.data[0];
+
             this.toastr.success('با موفقیت آپلود شد', null, {
               closeButton: true,
               positionClass: 'toast-top-left',

@@ -61,7 +61,6 @@ export class GalleryComponent implements OnInit {
 
   //Add OR Edit!!!!!!!!!!!!!!!
   addorEdit(content: any, row: FileModel) {
-    debugger
     this.addUpdate = row;
     this.modalService
       .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
