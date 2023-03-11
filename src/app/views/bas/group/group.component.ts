@@ -67,45 +67,24 @@ export class GroupComponent implements OnInit {
     let id = item.id;
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then(
-        (result) => {
-          this._groupService
-            .delete(id, 'Group')
-            .toPromise()
-            .then((res) => {
-              if (res.success) {
-                this.toastr.success(
-                  'فرایند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-                this.rows.forEach((element, index) => {
-                  if (element.id == id) this.rows.splice(index);
-                });
-              } else {
-                this.toastr.error('خطا در حذف', res.message, {
-                  timeOut: 3000,
-                  positionClass: 'toast-top-left',
-                });
-              }
-            })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
+      .result.then((_result) => {
+        this._groupService.delete(id, 'Group').subscribe((res) => {
+          if (res.success) {
+            this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
+              timeOut: 3000,
+              positionClass: 'toast-top-left',
             });
-        },
-        (error) => {
-          this.toastr.error('خطا در حذف', error.message, {
-            timeOut: 3000,
-            positionClass: 'toast-top-left',
-          });
-        }
-      );
+            this.rows.forEach((element, index) => {
+              if (element.id == id) this.rows.splice(index, 1);
+            });
+          } else {
+            this.toastr.error('خطا در حذف', res.message, {
+              timeOut: 3000,
+              positionClass: 'toast-top-left',
+            });
+          }
+        });
+      });
   }
 
   addorEdit(content: any, row: GroupModel) {
@@ -135,7 +114,6 @@ export class GroupComponent implements OnInit {
             positionClass: 'toast-top-left',
           });
 
-          row.id = this.rows[0].id + 1;
           this.rows.unshift(row);
           this.addForm.reset;
  
