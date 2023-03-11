@@ -211,12 +211,25 @@ export class OrderComponent implements OnInit {
     }
   }
   changePaymentStatus(item: InvoiceModel) {
+    var finder=this.rows.findIndex((row) => row.code === item.code);
     this._invoiceService.update(item.id, item, 'invoice').subscribe((data) => {
       if (data.success) {
         this.toastr.success(data.message, null, {
           closeButton: true,
           positionClass: 'toast-top-left',
         });
+        if(item.status==99){
+          this.rows[finder].transactionStatus=5
+          if(this.status==2 || this.status==8){
+            this.rows.splice(finder, 1);
+           }
+        }
+      else  if(item.status==3 ){
+    
+        this.rows[finder].transactionStatus=2
+      
+      }
+        
       } else {
         this.toastr.error(data.message, null, {
           closeButton: true,
@@ -224,7 +237,6 @@ export class OrderComponent implements OnInit {
         });
       }
     });
-    this.getOrderbyStatus(this.status, this.page.pageNumber);
   }
   onFileChanged(event: any) {
     let fileType = event.target.files[0].type.split('/');
@@ -376,7 +388,6 @@ export class OrderComponent implements OnInit {
     item.isAccepted = true;
     item.tableType = 8;
     item.parentID = null;
-
     this.modalService
       .open(content, {
         ariaLabelledBy: 'modal-basic-title',
@@ -461,6 +472,7 @@ export class OrderComponent implements OnInit {
   }
 
   async addOrUpdate(item: LicenseModel, climax: CliamxLicenseModel) {
+    
     item.versionNumber = this.versionNumber;
 
     item.startDate =
@@ -508,7 +520,12 @@ export class OrderComponent implements OnInit {
                     positionClass: 'toast-top-left',
                   });
                 });
+
             }
+            var finder=this.rows.findIndex((row) => row.id === item.rowID);
+            this.rows[finder].transactionStatus=8
+            // this.rows[finder].accountNumber=item.accountNumber
+            //this.rows.splice(finder, 1);
             this.toastr.success(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',

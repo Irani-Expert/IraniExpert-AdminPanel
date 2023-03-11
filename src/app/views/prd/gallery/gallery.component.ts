@@ -43,6 +43,7 @@ export class GalleryComponent implements OnInit {
   async getFileByProductId(rowId: number, tableType: number) {
     this._fileService.getFilesByRowIdAndTableType(rowId, tableType).subscribe(
       (res: Result<FileModel[]>) => {
+        
         this.rows = res.data;
       },
       (_error) => {
@@ -96,6 +97,7 @@ export class GalleryComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
+         this.rows.push(row);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
