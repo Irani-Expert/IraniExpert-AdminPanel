@@ -11,11 +11,6 @@ export class FileUploaderService {
   mainUrl = environment.api.baseUrl;
   _httpOptions = {
     headers: new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-      'Access-Control-Allow-Headers':
-        'origin,X-Requested-With,content-type,accept',
-      'Access-Control-Allow-Credentials': 'true',
       'Cache-Control':
         'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
       Pragma: 'no-cache',

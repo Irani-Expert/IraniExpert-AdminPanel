@@ -32,7 +32,10 @@ export class FaqService extends BaseService<FaqModel, 0> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        // 'Authorization': 'bearer '+environment.jwtToken
+        'Cache-Control':
+        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      Pragma: 'no-cache',
+      Expires: '0',
       }),
     };
     return this._http.get<Result<FaqModel[]>>(
