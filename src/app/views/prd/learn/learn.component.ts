@@ -77,7 +77,7 @@ export class LearnComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (_result) => {
-          this._learnService.delete(id,"learn").toPromise().then((res) => {
+          this._learnService.delete(id,"learn").subscribe((res) => {
             if(res.success){
 
               this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
@@ -98,11 +98,7 @@ export class LearnComponent implements OnInit {
               this.pageIndex,
               this.pageSize
             );
-          }).catch(err=>{
-            this.toastr.error('خطا در حذف',err.message, {
-              timeOut: 3000,
-              positionClass: 'toast-top-left',
-            });
+        
           });
 
         },
@@ -147,8 +143,7 @@ export class LearnComponent implements OnInit {
     if (row.id === 0) {
       await this._learnService
         .create(row, 'learn')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {

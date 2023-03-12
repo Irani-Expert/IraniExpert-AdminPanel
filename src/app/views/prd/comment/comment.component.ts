@@ -73,8 +73,7 @@ export class CommentComponent implements OnInit {
         (result) => {
           this._commentService
             .delete(id, 'comment')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -94,12 +93,7 @@ export class CommentComponent implements OnInit {
                 this.page.pageNumber,
                 this.page.size
               );
-            })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
+
             });
         },
         (error) => {
@@ -141,8 +135,8 @@ export class CommentComponent implements OnInit {
       this.parentComment.text = this.replyText;
       this._commentService
         .create(this.parentComment, 'comment')
-        .toPromise()
-        .then(
+
+        .subscribe(
           (data) => {
             if (data.success) {
             } else {
@@ -151,12 +145,6 @@ export class CommentComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     }
@@ -165,8 +153,7 @@ export class CommentComponent implements OnInit {
     row.isActive = true;
     this._commentService
       .update(row.id, row, 'comment')
-      .toPromise()
-      .then(
+      .subscribe(
         (data) => {
           if (data.success) {
             this.toastr.success(data.message, null, {

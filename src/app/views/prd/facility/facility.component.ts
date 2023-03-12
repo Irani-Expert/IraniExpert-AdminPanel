@@ -85,8 +85,7 @@ export class FacilityComponent implements OnInit {
         (_result) => {
           this._facilityService
             .delete(id, 'Facility')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -103,12 +102,7 @@ export class FacilityComponent implements OnInit {
                 });
               }
               this.getFacilityByProductId(this.pageIndex, this.pageSize);
-            })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
+    
             });
         },
         (error) => {
@@ -149,8 +143,8 @@ export class FacilityComponent implements OnInit {
     if (row.id === 0) {
       await this._facilityService
         .create(row, 'Facility')
-        .toPromise()
-        .then(
+
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -163,19 +157,12 @@ export class FacilityComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     } else {
       await this._facilityService
         .update(row.id, row, 'Facility')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -188,12 +175,6 @@ export class FacilityComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     }

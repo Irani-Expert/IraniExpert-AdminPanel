@@ -80,7 +80,7 @@ export class FAQComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._FaqService.delete(id,"faq").toPromise().then((res) => {
+          this._FaqService.delete(id,"faq").subscribe((res) => {
             if(res.success){
               this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
                 timeOut: 3000,
@@ -99,11 +99,7 @@ export class FAQComponent implements OnInit {
               this.pageIndex,
               this.pageSize
             );
-          }).catch(err=>{
-            this.toastr.error('خطا در حذف',err.message, {
-              timeOut: 3000,
-              positionClass: 'toast-top-left',
-            });
+          
           });
         },
         (error) => {
@@ -127,8 +123,7 @@ export class FAQComponent implements OnInit {
       //TODO Order Id Must Fill From Input
       this.addUpdate.orderID=1;
     if(this.addUpdate.id===0){
-      await this._FaqService.create(this.addUpdate,"FAQ").toPromise()
-      .then(data => {
+      await this._FaqService.create(this.addUpdate,"FAQ").subscribe(data => {
         if (data.success) {
           this.toastr.success(data.message, null,
             {
@@ -143,18 +138,10 @@ export class FAQComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
         }
-      },
-        error => {
-          this.toastr.error("خطا مجدد تلاش فرمایید", null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-        }
+      }
       );
     }else{
-      await this._FaqService.update(this.addUpdate.id,this.addUpdate,"FAQ").toPromise()
-      .then(data => {
+      await this._FaqService.update(this.addUpdate.id,this.addUpdate,"FAQ").subscribe(data => {
         if (data.success) {
           this.toastr.success(data.message, null,
             {
@@ -170,14 +157,7 @@ export class FAQComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
         }
-      },
-        error => {
-          this.toastr.error("خطا مجدد تلاش فرمایید", null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-        }
+      }
       );
     }
     this.addForm.reset();
