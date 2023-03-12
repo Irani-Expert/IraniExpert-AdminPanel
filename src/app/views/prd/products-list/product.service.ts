@@ -8,32 +8,32 @@ import { environment } from 'src/environments/environment.prod';
 import { ProductModel } from './product.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ProductService  extends BaseService<ProductModel, 0> {
+export class ProductService extends BaseService<ProductModel, 0> {
   userGuid = environment.jwtToken;
 
   constructor(public _http: HttpClient) {
-
     super(_http, environment.api.baseUrl);
-   }
+  }
 
-
-
-   getOneByID(productId: number , route:string): Observable<Result<ProductModel>> {
+  getOneByID(
+    productId: number,
+    route: string
+  ): Observable<Result<ProductModel>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        // 'Authorization': 'bearer '+environment.jwtToken
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
       }),
     };
-    return this._http.get<Result<ProductModel>>(this._base + "/" + route+"/"+productId
+    return this._http.get<Result<ProductModel>>(
+      this._base + '/' + route + '/' + productId,
 
-    ,_options);
+      _options
+    );
   }
-
-
-
-
 }
-

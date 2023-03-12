@@ -20,6 +20,7 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Base } from 'src/app/shared/models/Base/base.model';
 import { CliamxLicenseModel } from 'src/app/views/bsk/license/cliamaxLicense.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
+import { async } from 'rxjs';
 @Component({
   selector: 'app-add-update',
   templateUrl: './add-update.component.html',
@@ -112,26 +113,31 @@ export class AddUpdateComponent implements OnInit {
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
-          this.toastr.success('با موفقیت حذف شد', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-          debugger;
-          this.addUpdate.cardImagePath = '';
-          this._articleService.update(
-            this.addUpdate.id,
-            this.addUpdate,
-            'article'
-          );
+          this.addUpdate.cardImagePath = 'undefined';
         } else {
-          //TODO Delete Set AddUpdate.cardImagePAth
-
           this.toastr.error(res.message, 'خطا در حذف تصویر', {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
         }
       });
+    if (this.addUpdate.cardImagePath == 'undefined') {
+      this._articleService
+        .update(this.addUpdate.id, this.addUpdate, 'article')
+        .subscribe((res) => {
+          if (res.success) {
+            this.toastr.success('با موفقیت حذف شد', null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error(res.message, 'خطا در حذف تصویر', {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        });
+    }
   }
   uploadFile() {
     this._fileUploaderService
