@@ -136,8 +136,8 @@ export class BackTestComponent implements OnInit {
         (result) => {
           this._backtestService
             .delete(id, 'backtest')
-            .toPromise()
-            .then((res) => {
+
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -156,12 +156,6 @@ export class BackTestComponent implements OnInit {
               }
               this.getBackTestListByProductId(this.pageIndex, this.pageSize);
             })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
-            });
         },
         (error) => {
           this.toastr.error('خطا در حذف', error.message, {
@@ -206,8 +200,7 @@ export class BackTestComponent implements OnInit {
     if (row.id === 0) {
       await this._backtestService
         .create(row, 'BackTest')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -221,18 +214,11 @@ export class BackTestComponent implements OnInit {
               });
             }
           },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
         );
     } else {
       await this._backtestService
         .update(row.id, row, 'BackTest')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -245,12 +231,6 @@ export class BackTestComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     }

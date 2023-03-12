@@ -60,8 +60,7 @@ export class AddPaymentComponent implements OnInit {
     item.status = 4;
     await this._invoiceService
       .update(item.id, item, 'invoice')
-      .toPromise()
-      .then(
+      .subscribe(
         (data) => {
           if (data.success) {
             this.toastr.success(data.message, null, {
@@ -75,20 +74,13 @@ export class AddPaymentComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
         }
       );
   }
   async addOrUpdateOrder(order: OrderModel, code: string) {
     await this._orderService
       .update(order.id, order, 'Orders')
-      .toPromise()
-      .then(
+      .subscribe(
         (data) => {
           if (data.success) {
             this.addOrUpdate(this.invoiceDetail, code);
@@ -98,12 +90,6 @@ export class AddPaymentComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
         }
       );
   }

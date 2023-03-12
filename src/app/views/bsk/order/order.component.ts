@@ -262,8 +262,7 @@ export class OrderComponent implements OnInit {
   async addOrUpdate2(item: LicenseModel) {
     await this._licenseService
       .update(item.id, item, 'License')
-      .toPromise()
-      .then(
+      .subscribe(
         (data) => {
           if (data.success) {
             this.toastr.success(data.message, null, {
@@ -276,12 +275,6 @@ export class OrderComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (_error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
         }
       );
   }
@@ -311,8 +304,7 @@ export class OrderComponent implements OnInit {
       .result.then((_result) => {
         this._orderService
           .delete(id, 'orders')
-          .toPromise()
-          .then((res) => {
+          .subscribe((res) => {
             if (res.success) {
               this.toastr.success(
                 'فرایند حذف موفقیت آمیز بود',
@@ -397,8 +389,7 @@ export class OrderComponent implements OnInit {
         if (_result === true) {
           this._commentService
             .create(item, 'Comment')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success('یادداشت ایجاد شد', 'موفقیت آمیز!', {
                   timeOut: 3000,
@@ -492,16 +483,14 @@ export class OrderComponent implements OnInit {
     this.licenseModel = item;
     await this._licenseService
       .create(item, 'License')
-      .toPromise()
-      .then(
+      .subscribe(
         (data) => {
           if (data.success) {
             if (climax !== null) {
               climax.licenseId = data.data;
               this._licenseService
                 .sendLicenseToClimax(climax)
-                .toPromise()
-                .then((dt: CliamxResponse) => {
+                .subscribe((dt: CliamxResponse) => {
                   if (dt.statusCode != 200) {
                     this.toastr.error(dt.message[0], 'خطای Cliamax', {
                       closeButton: true,
@@ -513,12 +502,7 @@ export class OrderComponent implements OnInit {
                       positionClass: 'toast-top-left',
                     });
                   }
-                })
-                .catch((dt) => {
-                  this.toastr.error(dt[0].message, 'خطای Cliamax', {
-                    closeButton: true,
-                    positionClass: 'toast-top-left',
-                  });
+              
                 });
 
             }
@@ -536,12 +520,6 @@ export class OrderComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (_error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
         }
       );
 

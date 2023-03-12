@@ -111,8 +111,7 @@ export class UserOrderComponent implements OnInit {
       .result.then((_result) => {
         this._orderService
           .update(order.id, order, 'orders')
-          .toPromise()
-          .then((res) => {
+          .subscribe((res) => {
             if (res.success) {
               this.toastr.success('فرایند  موفقیت آمیز بود', 'موفقیت آمیز!', {
                 timeOut: 3000,

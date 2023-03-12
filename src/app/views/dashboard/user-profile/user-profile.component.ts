@@ -53,8 +53,7 @@ export class UserProfileComponent implements OnInit {
   async updateUser() {
     await this._userService
       .updateUser(this.addUpdate.id, this.addUpdate)
-      .toPromise()
-      .then(
+      .subscribe(
         (data) => {
           if (data.success) {
             this.toastr.success(data.message, null, {
@@ -67,12 +66,6 @@ export class UserProfileComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (_error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
         }
       );
     this.getUser();
@@ -102,8 +95,7 @@ export class UserProfileComponent implements OnInit {
     password.id = this.addUpdate.id;
     await this._userService
       .changePassword(this.password)
-      .toPromise()
-      .then(
+      .subscribe(
         (data) => {
           if (data.success) {
             this.toastr.success(data.message, null, {
@@ -116,12 +108,6 @@ export class UserProfileComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (_error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
         }
       );
   }

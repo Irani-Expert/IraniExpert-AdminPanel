@@ -41,8 +41,7 @@ export class PlanOptionComponent implements OnInit {
     if (item.id === 0) {
       await this._planOptionService
         .create(item, 'PlanOption')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -57,20 +56,12 @@ export class PlanOptionComponent implements OnInit {
               });
               this.addForm.reset();
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-            this.addForm.reset();
           }
         );
     } else {
       await this._planOptionService
         .update(item.id, item, 'PlanOption')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -85,13 +76,6 @@ export class PlanOptionComponent implements OnInit {
               });
               this.addForm.reset();
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-            this.addForm.reset();
           }
         );
     }

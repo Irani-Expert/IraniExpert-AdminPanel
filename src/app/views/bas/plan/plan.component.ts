@@ -89,8 +89,7 @@ export class PlanComponent implements OnInit {
         (_result) => {
           this._planService
             .delete(id, 'plan')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -108,12 +107,8 @@ export class PlanComponent implements OnInit {
                 });
               }
               this.getPlanListByProductId();
-            })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
+  
+           
             });
         },
         (error) => {
@@ -132,8 +127,7 @@ export class PlanComponent implements OnInit {
         (_result) => {
           this._planOptionService
             .delete(id, 'planOption')
-            .toPromise()
-            .then((res: { success: any; message: string }) => {
+            .subscribe((res: { success: any; message: string }) => {
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -151,12 +145,7 @@ export class PlanComponent implements OnInit {
                 });
               }
             })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
-            });
+          
         },
         (error) => {
           this.toastr.error('انصراف از حذف', error.message, {
@@ -200,8 +189,8 @@ export class PlanComponent implements OnInit {
     if (row.id === 0) {
       await this._planService
         .create(row, 'plan')
-        .toPromise()
-        .then(
+
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -214,19 +203,12 @@ export class PlanComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     } else {
       await this._planService
         .update(row.id, row, 'plan')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -239,12 +221,6 @@ export class PlanComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     }

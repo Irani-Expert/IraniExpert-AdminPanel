@@ -50,8 +50,7 @@ export class DiscountComponent implements OnInit {
   deleteDiscount(id: number) {
     this._discountService
       .delete(id, 'Discount')
-      .toPromise()
-      .then((res) => {
+      .subscribe((res) => {
         if (res.success) {
           this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
             timeOut: 3000,
@@ -142,8 +141,7 @@ export class DiscountComponent implements OnInit {
       );
       this._discountService
         .create(this.ShowModel, 'Discount')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -159,12 +157,6 @@ export class DiscountComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
       this.ShowModel.expireDate = dateKeeper;

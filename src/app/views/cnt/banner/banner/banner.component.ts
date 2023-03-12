@@ -108,8 +108,7 @@ export class BannerComponent implements OnInit {
         (result) => {
           this._bannerService
             .delete(id, 'Banner')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -126,12 +125,6 @@ export class BannerComponent implements OnInit {
                 });
               }
               this.getBannerList(this.page.pageNumber, this.page.size);
-            })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
             });
         },
         (error) => {

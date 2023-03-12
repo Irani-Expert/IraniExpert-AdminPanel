@@ -89,8 +89,8 @@ export class GalleryComponent implements OnInit {
 
     this._fileService
       .create(row, 'Files')
-      .toPromise()
-      .then(
+
+      .subscribe(
         (data) => {
           if (data.success) {
             this.toastr.success(data.message, null, {
@@ -104,12 +104,6 @@ export class GalleryComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
         }
       );
   }

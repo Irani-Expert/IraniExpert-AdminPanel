@@ -126,8 +126,7 @@ export class LicenseUpdateComponent implements OnInit {
   async addOrUpdate(item: LicenseModel) {
     await this._licenseService
       .update(item.id,item, 'License')
-      .toPromise()
-      .then(
+       .subscribe(
         (data) => {
           if (data.success) {
             this.toastr.success(data.message, null, {
@@ -141,12 +140,6 @@ export class LicenseUpdateComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (_error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
         }
       );
   }

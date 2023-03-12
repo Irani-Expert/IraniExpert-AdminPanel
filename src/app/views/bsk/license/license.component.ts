@@ -136,8 +136,7 @@ export class LicenseComponent implements OnInit {
     this.licenseModel = item;
     await this._licenseService
       .create(item, 'License')
-      .toPromise()
-      .then(
+      .subscribe(
         (data) => {
           if (data.success) {
             if(climax!==null){
@@ -155,12 +154,7 @@ export class LicenseComponent implements OnInit {
                     positionClass: 'toast-top-left',
                   });
                 }
-              }).catch((dt) => {
-                this.toastr.error(dt[0].message, 'خطای Cliamax', {
-                  closeButton: true,
-                  positionClass: 'toast-top-left',
-                });
-              });
+              })
             }
             this.toastr.success(data.message, null, {
               closeButton: true,

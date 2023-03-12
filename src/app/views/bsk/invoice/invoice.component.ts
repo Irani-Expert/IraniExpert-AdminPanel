@@ -96,8 +96,7 @@ export class InvoiceComponent implements OnInit {
   async addOrUpdate(item: InvoiceModel) {
     await this._invoiceService
       .update(item.id, item, 'invoice')
-      .toPromise()
-      .then(
+      .subscribe(
         (data) => {
           if (data.success) {
             this.toastr.success(data.message, null, {
@@ -110,12 +109,6 @@ export class InvoiceComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
         }
       );
     this.getInvoiceListByOrderId(this.page.pageNumber, this.page.size);

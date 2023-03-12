@@ -171,8 +171,7 @@ this.contractModel.conditions=[]
     this.contractModel.fromDate= moment.from(this.contractModel.fromDate, 'fa', 'YYYY-MM-DD').format('YYYY-MM-DD');  
     this._contractService
     .create(this.contractModel, 'Contract')
-    .toPromise()
-    .then(
+    .subscribe(
       (data) => {
           
         if (data.success) {
@@ -189,12 +188,6 @@ this.contractModel.conditions=[]
             positionClass: 'toast-top-left',
           });
         }
-      },
-      (error) => {
-        this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
       }
     );
 
