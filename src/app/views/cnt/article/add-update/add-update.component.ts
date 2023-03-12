@@ -121,23 +121,6 @@ export class AddUpdateComponent implements OnInit {
           });
         }
       });
-    if (this.addUpdate.cardImagePath == 'undefined') {
-      this._articleService
-        .update(this.addUpdate.id, this.addUpdate, 'article')
-        .subscribe((res) => {
-          if (res.success) {
-            this.toastr.success('با موفقیت حذف شد', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.toastr.error(res.message, 'خطا در حذف تصویر', {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        });
-    }
   }
   uploadFile() {
     this._fileUploaderService
