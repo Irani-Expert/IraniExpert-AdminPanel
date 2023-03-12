@@ -70,6 +70,7 @@ export class LicenseService extends BaseService<LicenseModel, 0> {
       expireDate: new Date(climaxLicenseModel.expireDate).getTime() / 1000,
       licenseNumber: climaxLicenseModel.licenseId.toString(),
     };
+
     var fd = new FormData();
     fd.append('files.licenseFile', climaxLicenseModel.file);
     fd.append('data', JSON.stringify(model));

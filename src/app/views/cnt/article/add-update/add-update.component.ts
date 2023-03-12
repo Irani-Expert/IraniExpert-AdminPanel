@@ -18,6 +18,8 @@ import { GroupService } from 'src/app/views/bas/group/group.service';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Base } from 'src/app/shared/models/Base/base.model';
+import { CliamxLicenseModel } from 'src/app/views/bsk/license/cliamaxLicense.model';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 @Component({
   selector: 'app-add-update',
   templateUrl: './add-update.component.html',
@@ -27,6 +29,7 @@ export class AddUpdateComponent implements OnInit {
   articleId: number = parseInt(
     this._route.snapshot.paramMap.get('articleId') ?? '0'
   );
+
   tableType: number = 1;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
@@ -43,12 +46,11 @@ export class AddUpdateComponent implements OnInit {
     private _route: ActivatedRoute,
     private modalService: NgbModal,
     private _router: Router,
+    private _auth: AuthenticateService,
     private _fileUploaderService: FileUploaderService,
     private toastr: ToastrService,
     private _groupService: GroupService
-  ) {
-    console.log(this.articleId);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getGroupList();
@@ -70,11 +72,11 @@ export class AddUpdateComponent implements OnInit {
       extraPlugins: 'divarea,smiley,justify,indentblock,colordialog',
     };
     this.addForm = this._formBuilder.group({
-      title: [null, Validators.compose([Validators.required])],
-      brief: [null, Validators.compose([Validators.required])],
-      groupID: [null, Validators.compose([Validators.required])],
+      title: [null, Validators.required],
+      brief: [null, Validators.required],
+      groupID: [null, Validators.required],
       isActive: [null],
-      description: [null, Validators.compose([Validators.required])],
+      description: [null, Validators.required],
       publishDate: [null],
     });
   }
@@ -107,18 +109,24 @@ export class AddUpdateComponent implements OnInit {
   }
   deleteImg(filePath: string) {
     this._fileUploaderService
-      .deleteFile(filePath, 'images', 'articles')
+      .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
-          this.addUpdate.cardImagePath = res.data[0];
           this.toastr.success('با موفقیت حذف شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
+          debugger;
+          this.addUpdate.cardImagePath = '';
+          this._articleService.update(
+            this.addUpdate.id,
+            this.addUpdate,
+            'article'
+          );
         } else {
           //TODO Delete Set AddUpdate.cardImagePAth
-          this.addUpdate.cardImagePath = res.errors[0];
-          this.toastr.error(res.errors[0], 'خطا در حذف تصویر', {
+
+          this.toastr.error(res.message, 'خطا در حذف تصویر', {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
@@ -186,6 +194,7 @@ export class AddUpdateComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
+            this._router.navigate(['/cnt/article']);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
@@ -194,6 +203,11 @@ export class AddUpdateComponent implements OnInit {
           }
         });
     } else {
+      if (row.cardImagePath.indexOf('com/') != -1) {
+        row.cardImagePath = row.cardImagePath.substring(
+          row.cardImagePath.indexOf('com/') + 4
+        );
+      }
       this._articleService
         .update(row.id, row, 'article')
 
@@ -203,6 +217,7 @@ export class AddUpdateComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
+            this._router.navigate(['/cnt/article']);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
@@ -211,7 +226,5 @@ export class AddUpdateComponent implements OnInit {
           }
         });
     }
-
-    this._router.navigate(['/cnt/article']);
   }
 }

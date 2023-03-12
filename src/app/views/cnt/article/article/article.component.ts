@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { ArticleModel } from './article.model';
 import { ArticleService } from './article.service';
 
@@ -87,7 +88,6 @@ export class ArticleComponent implements OnInit {
                   }
                 );
               } else {
-
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',

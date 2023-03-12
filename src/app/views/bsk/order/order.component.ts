@@ -211,25 +211,21 @@ export class OrderComponent implements OnInit {
     }
   }
   changePaymentStatus(item: InvoiceModel) {
-    var finder=this.rows.findIndex((row) => row.code === item.code);
+    var finder = this.rows.findIndex((row) => row.code === item.code);
     this._invoiceService.update(item.id, item, 'invoice').subscribe((data) => {
       if (data.success) {
         this.toastr.success(data.message, null, {
           closeButton: true,
           positionClass: 'toast-top-left',
         });
-        if(item.status==99){
-          this.rows[finder].transactionStatus=5
-          if(this.status==2 || this.status==8){
+        if (item.status == 99) {
+          this.rows[finder].transactionStatus = 5;
+          if (this.status == 2 || this.status == 8) {
             this.rows.splice(finder, 1);
-           }
+          }
+        } else if (item.status == 3) {
+          this.rows[finder].transactionStatus = 2;
         }
-      else  if(item.status==3 ){
-    
-        this.rows[finder].transactionStatus=2
-      
-      }
-        
       } else {
         this.toastr.error(data.message, null, {
           closeButton: true,
@@ -422,7 +418,7 @@ export class OrderComponent implements OnInit {
     var number = Number(discount.replace(/[^0-9.-]+/g, ''));
     this.orderDetail.toPayPrice = this.orderDetail.toPayPrice - number;
   }
-  openUpdateModal(content: any, row: OrderModel) {
+  openUpdateModal(content: NgbModal, row: OrderModel) {
     this.clientId = row.clientId;
     this.modalService
       .open(content, {
@@ -455,6 +451,7 @@ export class OrderComponent implements OnInit {
               this.expireDate.day;
             this.licenseModel.rowID = row.id;
             this.licenseModel.filePath = '';
+
             this.addOrUpdate(this.licenseModel, climax);
             // this.addForm.reset();
           }
@@ -463,7 +460,6 @@ export class OrderComponent implements OnInit {
   }
 
   async addOrUpdate(item: LicenseModel, climax: CliamxLicenseModel) {
-    
     item.versionNumber = this.versionNumber;
 
     item.startDate =
@@ -504,10 +500,9 @@ export class OrderComponent implements OnInit {
                   }
               
                 });
-
             }
-            var finder=this.rows.findIndex((row) => row.id === item.rowID);
-            this.rows[finder].transactionStatus=8
+            var finder = this.rows.findIndex((row) => row.id === item.rowID);
+            this.rows[finder].transactionStatus = 8;
             // this.rows[finder].accountNumber=item.accountNumber
             //this.rows.splice(finder, 1);
             this.toastr.success(data.message, null, {
