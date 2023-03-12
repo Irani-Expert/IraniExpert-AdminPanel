@@ -97,8 +97,7 @@ export class RoleMangementComponent implements OnInit {
     if (row.id === 0) {
       await this._roleService
         .create(row, 'aspnetrole')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -112,19 +111,12 @@ export class RoleMangementComponent implements OnInit {
               });
             }
             this.getRoleList(this.page.pageNumber, this.page.size);
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     } else {
       await this._roleService
         .update(row.id, row, 'aspnetrole')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -138,12 +130,6 @@ export class RoleMangementComponent implements OnInit {
               });
             }
             this.getRoleList(this.page.pageNumber, this.page.size);
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     }
@@ -154,8 +140,7 @@ export class RoleMangementComponent implements OnInit {
       .result.then((result) => {
         this._roleService
           .delete(id, 'aspnetrole')
-          .toPromise()
-          .then((res) => {
+          .subscribe((res) => {
             if (res.success) {
               this.toastr.success(
                 'فرایند حذف موفقیت آمیز بود',

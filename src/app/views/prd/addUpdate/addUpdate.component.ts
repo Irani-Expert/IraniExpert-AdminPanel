@@ -112,8 +112,7 @@ export class AddUpdateComponent implements OnInit {
       
       this._productsService
         .create(row, 'product')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -127,19 +126,12 @@ export class AddUpdateComponent implements OnInit {
               });
             }
           },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
         );
     } else {
       
       this._productsService
         .update(row.id, row, 'product')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             row.id = 0;
             if (data.success) {
@@ -155,12 +147,6 @@ export class AddUpdateComponent implements OnInit {
               });
             }
           },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
         );
     }
   }

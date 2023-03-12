@@ -142,8 +142,7 @@ export class UserMangementComponent implements OnInit {
       
       await this._usersService
         .create(row, 'aspnetuser')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -157,12 +156,6 @@ export class UserMangementComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     } else {
@@ -187,8 +180,7 @@ export class UserMangementComponent implements OnInit {
       this.updateRoleId()
        await this._usersService
         .update(row.id, row, 'aspnetuser')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -203,12 +195,6 @@ export class UserMangementComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
        
@@ -222,8 +208,7 @@ export class UserMangementComponent implements OnInit {
         if (_result)
           this._usersService
             .delete(id, 'aspnetuser')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               var indexFinder=this.rows.findIndex((rows) => rows.id === id);
               this.rows.splice(indexFinder, 1);
               if (res.success) {
@@ -300,8 +285,7 @@ export class UserMangementComponent implements OnInit {
     debugger
     this._usersService
         .updateUserRole(this.roleModel)
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             this.getUsersList(this.page.pageNumber, this.page.size,this.roleIdSaver);            if (data.success) {
               this.toastr.success(data.message, null, {

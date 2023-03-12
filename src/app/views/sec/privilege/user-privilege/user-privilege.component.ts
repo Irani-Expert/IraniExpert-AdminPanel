@@ -84,8 +84,7 @@ export class UserPrivilegeComponent implements OnInit {
     if (row.id === 0) {
       await this._userPrivilageService
         .create(row, 'UserPrivilege')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -98,12 +97,6 @@ export class UserPrivilegeComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     }
@@ -178,8 +171,7 @@ export class UserPrivilegeComponent implements OnInit {
         (_result) => {
           this._userPrivilageService
             .delete(id, 'UserPrivilege')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -196,12 +188,7 @@ export class UserPrivilegeComponent implements OnInit {
                 });
               }
               //this.getUserPrivilegeList(this.page.pageNumber, this.page.size);
-            })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
+            
             });
         },
         (error) => {
@@ -350,8 +337,7 @@ export class UserPrivilegeComponent implements OnInit {
       row.title = row.name;
       await this._roleService
         .create(row, 'aspnetrole')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -368,20 +354,13 @@ export class UserPrivilegeComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     } else {
       row.title = row.name;
       await this._roleService
         .update(row.id, row, 'aspnetrole')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -399,12 +378,6 @@ export class UserPrivilegeComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     }

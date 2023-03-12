@@ -109,8 +109,7 @@ export class UserNeedComponent implements OnInit {
         (result) => {
           this._UserNeedService
             .delete(id, 'UserNeed')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success(
                   'فرآیند حذف موفقیت آمیز بود',
@@ -127,12 +126,6 @@ export class UserNeedComponent implements OnInit {
                 });
               }
               this.getUserNeedById(this.page.pageNumber, this.page.size);
-            })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 2000,
-                positionClass: 'toast-top-left',
-              });
             });
         },
         (error) => {

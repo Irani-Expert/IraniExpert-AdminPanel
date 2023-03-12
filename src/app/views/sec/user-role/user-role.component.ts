@@ -131,8 +131,7 @@ export class UserRoleComponent implements OnInit {
     if (row.userId !== _id) {
       await this._userRoleService
         .create(row, 'aspnetuserrole')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -145,21 +144,13 @@ export class UserRoleComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (_error) => {
-            
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     } else {
       
       await this._userRoleService
         .update(row.userId, row, 'aspnetuserrole')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -173,12 +164,6 @@ export class UserRoleComponent implements OnInit {
               });
             }
           },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
         );
     }
     this.getUserRoleList(this.page.pageNumber, this.page.size);
@@ -190,8 +175,7 @@ export class UserRoleComponent implements OnInit {
         (_result) => {
           this._userRoleService
             .deleteIt(userId, roleId, 'aspnetuserrole')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -227,8 +211,7 @@ export class UserRoleComponent implements OnInit {
        this.signUpModel.userName=this.signUpModel.email
         this._usersService
         .create(this.signUpModel, 'aspnetuser')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -241,12 +224,6 @@ export class UserRoleComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     

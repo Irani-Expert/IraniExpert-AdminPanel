@@ -168,8 +168,7 @@ export class BannerComponent implements OnInit {
     if (row.id === 0) {
       await this._bannerService
         .create(row, 'Banner')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -182,12 +181,6 @@ export class BannerComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     } else {
@@ -197,8 +190,7 @@ export class BannerComponent implements OnInit {
 
       await this._bannerService
         .update(row.id, row, 'Banner')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -211,12 +203,6 @@ export class BannerComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     }

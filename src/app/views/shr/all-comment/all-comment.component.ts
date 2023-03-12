@@ -96,8 +96,7 @@ export class AllCommentComponent implements OnInit {
       this.parentComment.text = this.replyText;
       this._commentService
         .create(this.parentComment, 'comment')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
             } else {
@@ -107,12 +106,7 @@ export class AllCommentComponent implements OnInit {
               });
             }
           },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
+       
         );
     }
 
@@ -120,8 +114,8 @@ export class AllCommentComponent implements OnInit {
     row.isActive = true;
     this._commentService
       .update(row.id, row, 'comment')
-      .toPromise()
-      .then(
+
+      .subscribe(
         (data) => {
           if (data.success) {
             this.toastr.success(data.message, null, {
@@ -138,12 +132,6 @@ export class AllCommentComponent implements OnInit {
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
         }
       );
   }

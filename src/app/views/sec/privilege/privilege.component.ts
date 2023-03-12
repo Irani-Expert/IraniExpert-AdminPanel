@@ -96,8 +96,7 @@ export class PrivilegeComponent implements OnInit {
         (_result) => {
           this._privilegeService
             .delete(id, 'Privilege')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -114,12 +113,7 @@ export class PrivilegeComponent implements OnInit {
                 });
               }
               this.getPrivilegeList(this.page.pageNumber, this.page.size);
-            })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
+            
             });
         },
         (error) => {
@@ -155,8 +149,7 @@ export class PrivilegeComponent implements OnInit {
     if (row.id === 0) {
       await this._privilegeService
         .create(row, 'Privilege')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -174,18 +167,11 @@ export class PrivilegeComponent implements OnInit {
               });
             }
           },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
         );
     } else {
       await this._privilegeService
         .update(row.id, row, 'Privilege')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -203,12 +189,6 @@ export class PrivilegeComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     }

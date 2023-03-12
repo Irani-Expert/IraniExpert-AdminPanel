@@ -156,19 +156,12 @@ export class LearnComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (_error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     } else {
       await this._learnService
         .update(row.id, row, 'learn')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
               this.toastr.success(data.message, null, {
@@ -181,12 +174,6 @@ export class LearnComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
           }
         );
     }

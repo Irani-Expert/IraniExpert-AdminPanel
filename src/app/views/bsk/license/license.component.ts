@@ -141,8 +141,8 @@ export class LicenseComponent implements OnInit {
           if (data.success) {
             if(climax!==null){
               climax.licenseId=data.data;
-              this._licenseService.sendLicenseToClimax(climax).toPromise()
-              .then( (dt:CliamxResponse) => {
+              this._licenseService.sendLicenseToClimax(climax)
+              .subscribe( (dt:CliamxResponse) => {
                 if(dt.statusCode!=200){
                   this.toastr.error(dt.message[0], 'خطای Cliamax', {
                     closeButton: true,

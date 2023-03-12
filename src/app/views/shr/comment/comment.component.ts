@@ -68,8 +68,7 @@ export class CommentComponent implements OnInit {
         (_result) => {
           this._commentService
             .delete(id, 'comment')
-            .toPromise()
-            .then((res) => {
+            .subscribe((res) => {
               if (res.success) {
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
@@ -87,12 +86,7 @@ export class CommentComponent implements OnInit {
               }
               this.getCommentList(this.page.pageNumber, this.page.size);
             })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
-            });
+         
         },
         (_error) => {}
       );
@@ -125,8 +119,7 @@ export class CommentComponent implements OnInit {
       this.parentComment.text = this.replyText;
       this._commentService
         .create(this.parentComment, 'comment')
-        .toPromise()
-        .then(
+        .subscribe(
           (data) => {
             if (data.success) {
             } else {
@@ -136,20 +129,13 @@ export class CommentComponent implements OnInit {
               });
             }
           },
-          (error) => {
-            this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
         );
     }
     row.isAccepted = true;
     row.isActive = true;
     this._commentService
       .update(row.id, row, 'comment')
-      .toPromise()
-      .then(
+      .subscribe(
         (data) => {
           if (data.success) {
             this.toastr.success('نظر پذیرفته شد', null, {
@@ -164,12 +150,6 @@ export class CommentComponent implements OnInit {
             });
           }
         },
-        (_error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
       );
   }
 }
