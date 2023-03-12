@@ -20,7 +20,9 @@
     <ng-template ngbNavContent>
       <form class="card container p-4">
         <div class="row">
-          <ng-container *ngIf="addUpdate.cardImagePath !== null">
+          <ng-container
+            *ngIf="addUpdate.id !== 0 && addUpdate.cardImagePath !== undefined"
+          >
             <div
               class="d-flex justify-content-end align-items-end col-md-3 col-5 mb-5 mt-1"
             >
@@ -98,7 +100,9 @@
             >
           </div>
 
-          <ng-container *ngIf="addUpdate.cardImagePath == ''">
+          <ng-container
+            *ngIf="addUpdate.id == 0 && addUpdate.cardImagePath == undefined"
+          >
             <div class="col-md-7 mt-4">
               <input type="file" (change)="onFileChanged($event)" />
               <div>
@@ -135,7 +139,7 @@
               name="myckeditor"
               required
               [config]="ckeConfig"
-              debounce="60000"
+              debounce="100"
               (paste)="onPasteEditor($event)"
               (change)="onChangeEditor($event)"
             >
@@ -168,7 +172,6 @@
           <button
             type="button"
             class="btn btn-outline-dark btn-rounded col-auto m-1"
-            (click)="modal.close(true)"
             *ngIf="addUpdate.id !== 0"
             [disabled]="!addForm.valid"
             (click)="addOrUpdate(addUpdate)"
@@ -179,7 +182,6 @@
             type="button"
             class="btn btn-outline-dark btn-rounded col-auto m-1"
             *ngIf="addUpdate.id === 0"
-            [disabled]="!addForm.valid"
             (click)="addOrUpdate(addUpdate)"
           >
             ذخیره

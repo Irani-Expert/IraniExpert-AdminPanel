@@ -41,15 +41,9 @@ export class FileUploaderService {
   }
 
   // Delete Request
-  deleteFile(filePath: string, folder: string, fileTableType: string) {
+  deleteFile(filePath: string) {
     return this._http.post<Result<string[]>>(
-      this.mainUrl +
-        '/Files/Delete?filePath=uploads/' +
-        folder +
-        '/' +
-        fileTableType +
-        '/' +
-        filePath,
+      this.mainUrl + '/Files/Delete?filePath=' + filePath,
       undefined,
       this._httpOptions
     );
