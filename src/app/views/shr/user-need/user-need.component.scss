@@ -100,3 +100,29 @@
 .btn-green {
   background-color: #6e6446;
 }
+.add-comment-header-border{
+  border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+.comment-header-border{
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+.comment-scroll{
+  height: 250px;
+  overflow-y: scroll;
+}
+    #scrollbar2::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        #scrollbar2::-webkit-scrollbar-track {
+            border-radius: 8px;
+
+        }
+        
+        #scrollbar2::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            background-color: #363636!important;
+        }
+       

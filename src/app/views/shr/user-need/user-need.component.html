@@ -37,72 +37,161 @@
     </div>
   </div>
 </div>
-
-<div class="my-css">
+<div class=" my-css d-flex flex-wrap w-100">
+ 
   <div
-    class="timeline-card shadow-lg card mt-4"
-    *ngFor="
-      let item of rows
-        | paginate
-          : {
-              itemsPerPage: page.size,
-              page: page.pageNumber,
-              currentPage: page.pageNumber,
-              totalItems: page.totalElements
-            }
-    "
+  class="col-xl-8 "
+>
+<div
+class="my-2  "
+*ngFor="
+let item of rows
+  | paginate
+    : {
+        itemsPerPage: page.size,
+        page: page.pageNumber,
+        currentPage: page.pageNumber,
+        totalItems: page.totalElements
+      }
+"
+>
+<div class="timeline-card card mt-4" >
+  <div
+    class="card-header bg-light-dark d-flex justify-content-between align-items-center comment-header-border"
   >
-    <div class="card-body">
-      <div class="mb-1 row g-0">
-        <div class="col-6">
-          <div>
-            <label for="FullName" class="text-muted">نام و نام خانوادگی:</label>
-            <strong class="mr-1"
-              >&nbsp;{{ item.firstName }}&nbsp;{{ item.lastName }}
-            </strong>
-          </div>
-          <div *ngIf="userWant === null">
-            <label for="FullName" class="text-muted">درخواست:</label>
-            <strong class="mr-1">&nbsp;{{ item.userWant | userWants }} </strong>
-          </div>
-        </div>
-        <div class="col-6">
-          <label for="FullName" class="text-muted d-block"
-            >ایمیل و شماره تماس</label
-          >
-          <strong class="mr-1"
-            >{{ item.email }}<br />{{ item.phoneNumber }}
-          </strong>
-          <br />
-          <strong class="mr-1">{{ item.createDate | relativeTime }} </strong>
-        </div>
-      </div>
-      <div class="mb-3">
-        <button
-          type="button"
-          class="btn btn-outline-success m-1"
-          (click)="toggleNotebar(item, 'addNoteElement')"
-        >
-          یادداشت ها
-        </button>
-        <button
-          (click)="deleteUserNeed(item.id, deleteModal)"
-          type="button"
-          class="btn btn-danger m-1"
-        >
-          حذف درخواست
-        </button>
-      </div>
+    <div class="mb-1">
+      <strong class="mr-1 text-white">&nbsp;{{ item.firstName }}&nbsp;{{ item.lastName }}</strong>
+    
+      <p class="text-white-50">&nbsp;{{ item.userWant | userWants }}</p>
     </div>
   </div>
-  <div id="addNoteElement" class="col-md-12 mt-3" *ngIf="rows?.length > 0">
-    <pagination-controls
-      (pageChange)="setPage($event, userWant)"
-      previousLabel=""
-      nextLabel=""
-    ></pagination-controls>
+  <div class="card-body bg-gray">
+    <div class="row p-3">
+      <div class="col-md-6">
+        <label for="FullName" class="text-white d-block"
+        >ایمیل و شماره تماس</label
+      >
+      <strong class="mr-1 text-white"
+        >{{ item.email }}<br />{{ item.phoneNumber }}
+      </strong>
+      </div> 
+      <div class="col-md-6">
+        <label for="FullName" class="text-white d-block"
+        >تاریخ ایجاد</label
+      >
+        <strong class="mr-1 text-white">{{ item.createDate }} </strong>
+      </div> 
+     
+
+   </div>
+   
+  </div>
+  <div class="card-footer bg-gray">
+ 
+    <div class="mb-2 d-flex justify-content-end">
+      <button
+      type="button"
+      class="btn btn-rounded m-1  "
+      (click)="toggleNotebar(item, 'addNoteElement')"
+    >
+      یاداشت ها
+    </button>
+      <button
+        type="button"
+        (click)="deleteUserNeed(item.id, deleteModal)"
+        class="btn btn-danger btn-rounded m-1"
+
+      >
+        حذف پیام
+      </button>
+    </div>
   </div>
 </div>
+</div>
+</div>
+
+<div
+class="col-xl-4 my-2 "
+
+
+
+>
+<!-- 
+<div class="card">
+  <div class="card-header bg-light-dark  pl-0 add-comment-header-border">
+    <div class="p-2"><h4 class="pl-2 text-white">یادداشت ها</h4></div>
+  </div>
+  <div class="card-body comment-scroll bg-gray" id="scrollbar2">
+    <div class="my-css">
+      <div>
+        <div class="timeline-card card mt-2">
+          <div class="card-header bg-dark m-0 p-0">
+            <p class="text-white m-0 p-2">یادداشت شماره 1</p>
+          </div>
+          <div class="card-body bg-secondary">
+            <p class="text-white" >
+            000
+            </p>
+          </div>
+        </div>
+        <div class="timeline-card card mt-2">
+          <div class="card-header bg-dark m-0 p-0">
+            <p class="text-white m-0 p-2">یادداشت شماره 1</p>
+          </div>
+          <div class="card-body bg-secondary">
+            <p class="text-white" >
+            000
+            </p>
+          </div>
+        </div>
+        <div class="timeline-card card mt-2">
+          <div class="card-header bg-dark m-0 p-0">
+            <p class="text-white m-0 p-2">یادداشت شماره 1</p>
+          </div>
+          <div class="card-body bg-secondary">
+            <p class="text-white" >
+            000
+            </p>
+          </div>
+        </div>
+        <div class="timeline-card card mt-2">
+          <div class="card-header bg-dark m-0 p-0">
+            <p class="text-white m-0 p-2">یادداشت شماره 1</p>
+          </div>
+          <div class="card-body bg-secondary">
+            <p class="text-white" >
+            000
+            </p>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  <div class="card-footer bg-gray">
+    <div class="ml-3">
+      <form action="">
+        <div class="row">
+          <div class="col-10 form-group mb-3 mt-3">
+            <label class="text-white" for="title">ایجاد یادداشت</label>
+            <textarea
+              type="text"
+              class="form-control bg-dark textarea-font"
+            ></textarea>
+          </div>
+        </div>
+      </form>
+      <button type="button" class="btn btn-light mb-2">ایجاد</button>
+    </div>
+  </div>
+  
+       
+  
+
+</div> -->
+
+</div>
+</div>
+
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
@@ -143,12 +232,12 @@
     </button>
   </div>
 </ng-template>
-<div
+<!-- <div
   [ngClass]="{ open: _UserNeedService.sidebarState.sidenavOpen }"
   class="notebar-left rtl-ps-none bg-light-dark rounded-4 shadow-lg"
   [perfectScrollbar]="{ suppressScrollX: true }"
 >
-  <div class="mt-4 ml-3">
+ <div class="mt-4 ml-3">
     <i
       (click)="updateNotebar()"
       ngbTooltip="بستن"
@@ -196,4 +285,4 @@
     </form>
     <button type="button" class="btn btn-light mb-2">ایجاد</button>
   </div>
-</div>
+</div> -->
