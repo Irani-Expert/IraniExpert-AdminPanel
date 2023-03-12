@@ -21,7 +21,9 @@
       <form class="card container p-4">
         <div class="row">
           <ng-container
-            *ngIf="addUpdate.id !== 0 && addUpdate.cardImagePath !== undefined"
+            *ngIf="
+              addUpdate.id !== 0 && addUpdate.cardImagePath !== 'undefined'
+            "
           >
             <div
               class="d-flex justify-content-end align-items-end col-md-3 col-5 mb-5 mt-1"
@@ -101,9 +103,10 @@
           </div>
 
           <ng-container
-            *ngIf="addUpdate.id == 0 && addUpdate.cardImagePath == undefined"
+            *ngIf="addUpdate.id == 0 || addUpdate.cardImagePath == 'undefined'"
           >
             <div class="col-md-7 mt-4">
+              <label class="d-block" for="picker1">انتخاب تصویر</label>
               <input type="file" (change)="onFileChanged($event)" />
               <div>
                 <image-cropper
@@ -125,6 +128,7 @@
             <div class="col-12 mt-1 mb-2">
               <button
                 type="button"
+                [disabled]="!cropImagePreview"
                 class="btn btn-rounded btn-outline-dark"
                 (click)="uploadFile()"
               >
