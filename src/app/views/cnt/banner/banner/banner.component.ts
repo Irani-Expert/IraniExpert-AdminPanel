@@ -106,26 +106,24 @@ export class BannerComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._bannerService
-            .delete(id, 'Banner')
-            .subscribe((res) => {
-              if (res.success) {
-                this.toastr.success(
-                  'فرایند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-              } else {
-                this.toastr.error('خطا در حذف', res.message, {
+          this._bannerService.delete(id, 'Banner').subscribe((res) => {
+            if (res.success) {
+              this.toastr.success(
+                'فرایند حذف موفقیت آمیز بود',
+                'موفقیت آمیز!',
+                {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
-                });
-              }
-              this.getBannerList(this.page.pageNumber, this.page.size);
-            });
+                }
+              );
+            } else {
+              this.toastr.error('خطا در حذف', res.message, {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+            }
+            this.getBannerList(this.page.pageNumber, this.page.size);
+          });
         },
         (error) => {
           this.toastr.error('خطا در حذف', error.message, {
@@ -146,7 +144,7 @@ export class BannerComponent implements OnInit {
       row.tableType = null;
     }
     this.addUpdate = row;
-    debugger;
+
     // /this.addUpdate.filePath=row.filePath.substring(row.filePath.indexOf('com/')+4)
     this.modalService
       .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
@@ -166,23 +164,19 @@ export class BannerComponent implements OnInit {
 
   async addOrUpdate(row: BannerModel) {
     if (row.id === 0) {
-      await this._bannerService
-        .create(row, 'Banner')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          }
-        );
+      await this._bannerService.create(row, 'Banner').subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     } else {
       if (row.filePath.indexOf('com/') != -1) {
         row.filePath = row.filePath.substring(row.filePath.indexOf('com/') + 4);
@@ -190,21 +184,19 @@ export class BannerComponent implements OnInit {
 
       await this._bannerService
         .update(row.id, row, 'Banner')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
           }
-        );
+        });
     }
 
     this.getBannerList(this.page.pageNumber, this.page.size);
