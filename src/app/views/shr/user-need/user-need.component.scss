@@ -125,4 +125,31 @@
             border-radius: 8px;
             background-color: #363636!important;
         }
-       
+.position-sm{
+  position: static;
+  @media  (min-width: 499px) {
+  
+      position: fixed !important;
+
+     
+
+}}
+
+@media screen and (max-height: 750px) {
+  .position-sm{
+    bottom: 110px;
+    
+  }
+  .comment-scroll{
+    height: 150px !important;
+
+  }
+}
+
+.noteWidth{
+  @media  (max-width: 499px) {
+
+    width: 100%;
+
+}
+}

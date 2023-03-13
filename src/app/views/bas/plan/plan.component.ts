@@ -129,6 +129,8 @@ export class PlanComponent implements OnInit {
             .delete(id, 'planOption')
             .subscribe((res: { success: any; message: string }) => {
               if (res.success) {
+                var finder = this.rows.findIndex((rows) => rows.id === id);
+                this.rows.splice(finder,1)
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
                   'موفقیت آمیز!',
@@ -154,10 +156,12 @@ export class PlanComponent implements OnInit {
           });
         }
       );
-    this.getPlanListByProductId();
+   
   }
   //__________________Add Or Edit
   addorEdit(content: any, row: PlanModel) {
+    this.addForm.reset();
+
     if (row === undefined) {
       row = new PlanModel();
       row.id = 0;
@@ -175,7 +179,7 @@ export class PlanComponent implements OnInit {
         (result: boolean) => {
           if (result != undefined) {
             this.addOrUpdate(this.addUpdate);
-            this.addForm.reset();
+            
           }
         },
         (reason) => {
@@ -193,15 +197,18 @@ export class PlanComponent implements OnInit {
         .subscribe(
           (data) => {
             if (data.success) {
+              this.rows.push(row)
               this.toastr.success(data.message, null, {
                 closeButton: true,
                 positionClass: 'toast-top-left',
               });
+              this.addForm.reset();
             } else {
               this.toastr.error(data.message, null, {
                 closeButton: true,
                 positionClass: 'toast-top-left',
               });
+              this.addForm.reset();
             }
           }
         );
@@ -211,6 +218,9 @@ export class PlanComponent implements OnInit {
         .subscribe(
           (data) => {
             if (data.success) {
+              var finder = this.rows.findIndex((rows) => rows.id === row.id);
+              this.rows[finder]=row
+
               this.toastr.success(data.message, null, {
                 closeButton: true,
                 positionClass: 'toast-top-left',
@@ -221,11 +231,12 @@ export class PlanComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
+            
           }
         );
+
     }
 
-    this.getPlanListByProductId();
   }
   selectType($event: any) {
     if ($event != undefined) {

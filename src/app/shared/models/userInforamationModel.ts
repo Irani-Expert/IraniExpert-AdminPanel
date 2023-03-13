@@ -13,7 +13,6 @@ export class UserInforamationModel {
   lastName: string;
   phoneNumber: string;
   email: string;
-  referralCode: string;
   accountNumber: string;
   password: string;
   subject: string;

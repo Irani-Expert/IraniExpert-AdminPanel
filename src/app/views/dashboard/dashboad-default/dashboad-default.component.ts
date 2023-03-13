@@ -56,17 +56,8 @@ export class DashboadDefaultComponent implements OnInit {
   getUser() {
     this._userService.getUserByToken().subscribe(
       (res: Result<UserInforamationModel>) => {
+        debugger
         this.userModel = res.data;
-      },
-      (_error) => {
-        this.toastr.error(
-          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-          null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          }
-        );
       }
     );
   }

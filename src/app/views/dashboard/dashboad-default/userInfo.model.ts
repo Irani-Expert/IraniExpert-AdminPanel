@@ -3,4 +3,5 @@ export class UserCountModel{
   licenseCount:number;
   commentCount:number;
   commission:number;
+  referralCode: string;
 }

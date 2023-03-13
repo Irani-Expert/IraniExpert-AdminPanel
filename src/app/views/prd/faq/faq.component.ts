@@ -143,6 +143,7 @@ export class FAQComponent implements OnInit {
     }else{
       await this._FaqService.update(this.addUpdate.id,this.addUpdate,"FAQ").subscribe(data => {
         if (data.success) {
+          this.rows.push(this.addUpdate)
           this.toastr.success(data.message, null,
             {
               closeButton: true,
