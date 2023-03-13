@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { CommentModel } from 'src/app/shared/models/comment.model';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
 import { UserNeedModel } from './user-need.model';
@@ -14,7 +15,16 @@ interface INoteSidebar {
 })
 export class UserNeedService extends BaseService<UserNeedModel, 0> {
   userGuid = environment.jwtToken;
-
+  _options = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Cache-Control':
+        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      Pragma: 'no-cache',
+      Expires: '0',
+      // Authorization: 'bearer ' + environment.jwtToken,
+    }),
+  };
   constructor(public _http: HttpClient) {
     super(_http, environment.api.baseUrl);
   }
@@ -22,16 +32,7 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
     sidenavOpen: true,
   };
   getByStatus(pageSize: number, pageIndex: number, userWant: number) {
-    let _options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        Pragma: 'no-cache',
-        Expires: '0',
-        // Authorization: 'bearer ' + environment.jwtToken,
-      }),
-    };
+  
     return this._http.get<Result<Paginate<UserNeedModel[]>>>(
       this._base +
         '/UserNeed/GetByUserWant?pageIndex=' +
@@ -40,7 +41,15 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
         pageSize +
         '&userWant=' +
         userWant,
-      _options
+      this._options
+    );
+  }
+  getCommentByRowid(rowID:number){
+    debugger
+      return this._http.get<Result<Paginate<CommentModel[]>>>(
+      this._base +
+     "/Comment/GetByTableTypeAndRowId/"+rowID+"/10?pageIndex=0&pageSize=100",
+      this._options
     );
   }
 }

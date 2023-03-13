@@ -7,6 +7,9 @@ import { filter } from 'rxjs/operators';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { CommentModel } from 'src/app/shared/models/comment.model';
+import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { Utils } from 'src/app/shared/utils';
 import { UserNeedModel } from './user-need.model';
 import { UserNeedService } from './user-need.service';
@@ -21,21 +24,28 @@ export class UserNeedComponent implements OnInit {
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   toggled = false;
-  userWant: any = null;
+  userWant: any = null;  
+  userInfo: UserInfoModel;
   note: UserNeedModel;
   rows: UserNeedModel[] = new Array<UserNeedModel>();
+  commentRows:CommentModel[] = new Array<CommentModel>();
+  addCommentRows:CommentModel=new CommentModel;
+  addComentText:string
   page: Page = new Page();
+  rowIdKeeper:number=null
   constructor(
     public router: Router,
     public _UserNeedService: UserNeedService,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private auth: AuthenticateService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 12;
   }
 
   ngOnInit(): void {
+    this.userInfo = this.auth.currentUserValue;    
     this.setPage(this.page.pageNumber, null);
     this.updateNotebar();
     this.router.events
@@ -89,16 +99,6 @@ export class UserNeedComponent implements OnInit {
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
-        },
-        (_error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
         }
       );
   }
@@ -138,6 +138,58 @@ export class UserNeedComponent implements OnInit {
   }
   getNoteList(row: UserNeedModel) {
     this.note = row;
+  }
+  addComent(){
+    this.addCommentRows.text=this.addComentText
+    this.addCommentRows.rate=0
+    this.addCommentRows.email=this.userInfo.subject
+    this.addCommentRows.name=this.userInfo.firstName+" "+this.userInfo.lastName
+    this.addCommentRows.rowID=this.rowIdKeeper
+    this.addCommentRows.isAccepted=true
+    this.addCommentRows.tableType=10
+    this.addCommentRows.parentID=null
+   
+
+    
+  
+  
+
+    this._UserNeedService
+    .create(this.addCommentRows, 'Comment')
+
+    .subscribe(
+      (data) => {
+        if (data.success) {
+          this.commentRows.unshift(this.addCommentRows)
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      }
+    );
+  }
+  getComment(item: UserNeedModel){
+    this.rowIdKeeper=item.id
+    this._UserNeedService
+    .getCommentByRowid(
+      item.id)
+    .subscribe(
+      (res: Result<Paginate<CommentModel[]>>) => {
+        this.commentRows = res.data.items;
+        debugger
+        console.log(this.commentRows);
+        
+        this.page.totalElements = res.data.totalCount;
+        this.page.totalPages = res.data.totalPages - 1;
+        this.page.pageNumber = res.data.pageNumber + 1;
+      }
+    );
   }
   toggleNotebar(item: UserNeedModel, element: string) {
     this.getNoteList(item);

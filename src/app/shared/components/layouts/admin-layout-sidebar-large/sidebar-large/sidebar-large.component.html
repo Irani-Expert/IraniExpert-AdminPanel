@@ -1,7 +1,11 @@
 <div
   [ngClass]="{ open: navService.sidebarState.sidenavOpen }"
   class="sidebar-left rtl-ps-none rounded-4 bg-lightdark shadow-lg"
-  [perfectScrollbar]="{ suppressScrollX: true }"
+  [perfectScrollbar]="{
+    suppressScrollX: true,
+    wheelPropagation: true,
+    useBothWheelAxix: true
+  }"
 >
   <div class="logo">
     <img src="./assets/images/logo.jpg" alt="" />
@@ -50,7 +54,10 @@
 <div
   [ngClass]="{ open: navService.sidebarState.childnavOpen }"
   class="sidebar-left-secondary rtl-ps-none bg-dark rounded-4"
-  [perfectScrollbar]="{ suppressScrollX: true }"
+  [perfectScrollbar]="{
+    suppressScrollX: true,
+    wheelPropagation: true
+  }"
   (mouseleave)="closeChildNav()"
 >
   <header>

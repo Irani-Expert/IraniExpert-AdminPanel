@@ -9,7 +9,10 @@ import { RouterModule } from '@angular/router';
 import { SharedPipesModule } from '../../pipes/shared-pipes.module';
 import { SearchModule } from '../search/search.module';
 import { SidebarLargeComponent } from './admin-layout-sidebar-large/sidebar-large/sidebar-large.component';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import {
+  PerfectScrollbarModule,
+  PERFECT_SCROLLBAR_CONFIG,
+} from 'ngx-perfect-scrollbar';
 import { FooterComponent } from '../footer/footer.component';
 import { SharedDirectivesModule } from '../../directives/shared-directives.module';
 import { FormsModule } from '@angular/forms';
@@ -41,5 +44,8 @@ const components = [
   declarations: components,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: components,
+  providers: [
+    { provide: PERFECT_SCROLLBAR_CONFIG, useValue: PERFECT_SCROLLBAR_CONFIG },
+  ],
 })
 export class LayoutsModule {}

@@ -10,6 +10,7 @@ import { CommentComponent } from './comment/comment.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { UserCommentComponent } from './user-comment/user-comment.component';
 import { AllCommentComponent } from './all-comment/all-comment.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [UserNeedComponent, UserWantsPipe, CommentComponent, UserCommentComponent, AllCommentComponent],
@@ -20,6 +21,7 @@ import { AllCommentComponent } from './all-comment/all-comment.component';
     NgxPaginationModule,
     SharedPipesModule,
     PerfectScrollbarModule,
+    FormsModule
   ],
 })
 export class ShrModule {}
