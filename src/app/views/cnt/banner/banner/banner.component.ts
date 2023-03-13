@@ -144,7 +144,7 @@ export class BannerComponent implements OnInit {
       row.tableType = null;
     }
     this.addUpdate = row;
-    debugger;
+
     // /this.addUpdate.filePath=row.filePath.substring(row.filePath.indexOf('com/')+4)
     this.modalService
       .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
