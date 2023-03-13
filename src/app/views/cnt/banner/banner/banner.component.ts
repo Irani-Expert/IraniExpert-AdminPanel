@@ -106,26 +106,24 @@ export class BannerComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._bannerService
-            .delete(id, 'Banner')
-            .subscribe((res) => {
-              if (res.success) {
-                this.toastr.success(
-                  'فرایند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-              } else {
-                this.toastr.error('خطا در حذف', res.message, {
+          this._bannerService.delete(id, 'Banner').subscribe((res) => {
+            if (res.success) {
+              this.toastr.success(
+                'فرایند حذف موفقیت آمیز بود',
+                'موفقیت آمیز!',
+                {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
-                });
-              }
-              this.getBannerList(this.page.pageNumber, this.page.size);
-            });
+                }
+              );
+            } else {
+              this.toastr.error('خطا در حذف', res.message, {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+            }
+            this.getBannerList(this.page.pageNumber, this.page.size);
+          });
         },
         (error) => {
           this.toastr.error('خطا در حذف', error.message, {
@@ -146,7 +144,7 @@ export class BannerComponent implements OnInit {
       row.tableType = null;
     }
     this.addUpdate = row;
-    debugger;
+
     // /this.addUpdate.filePath=row.filePath.substring(row.filePath.indexOf('com/')+4)
     this.modalService
       .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
@@ -166,45 +164,37 @@ export class BannerComponent implements OnInit {
 
   async addOrUpdate(row: BannerModel) {
     if (row.id === 0) {
-      await this._bannerService
-        .create(row, 'Banner')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          }
-        );
+      this._bannerService.create(row, 'Banner').subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     } else {
       if (row.filePath.indexOf('com/') != -1) {
         row.filePath = row.filePath.substring(row.filePath.indexOf('com/') + 4);
       }
 
-      await this._bannerService
-        .update(row.id, row, 'Banner')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          }
-        );
+      this._bannerService.update(row.id, row, 'Banner').subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     }
 
     this.getBannerList(this.page.pageNumber, this.page.size);
@@ -234,32 +224,21 @@ export class BannerComponent implements OnInit {
   uploadFile() {
     this._fileUploaderService
       .uploadFile(this.cropImagePreview, 'banners')
-      .subscribe(
-        (res: Result<string[]>) => {
-          if (res.success) {
-            this.addUpdate.filePath = res.data[0];
+      .subscribe((res: Result<string[]>) => {
+        if (res.success) {
+          debugger;
+          this.addUpdate.filePath = res.data[0];
 
-            this.toastr.success('با موفقیت آپلود شد', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        },
-        (error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
+          this.toastr.success('با موفقیت آپلود شد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
         }
-      );
+      });
   }
 }

@@ -49,8 +49,7 @@ import { JalaliPipe } from 'src/app/shared/pipes/jalali-time.pipe';
     SharedDirectivesModule,
   ],
   providers: [
-    FileUploaderService,
-    { provide: PERFECT_SCROLLBAR_CONFIG, useValue: PERFECT_SCROLLBAR_CONFIG },
+    FileUploaderService
   ],
 })
 export class BskModule {}

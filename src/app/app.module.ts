@@ -17,6 +17,7 @@ import { JwtInterceptor } from './shared/services/auth/jwt.interceptor';
 import { ErrorInterceptor } from './shared/services/auth/error.interceptor';
 import { LoaderInterceptor } from './shared/loader.interceptor';
 import { DatePipe } from '@angular/common';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,6 +45,7 @@ import { DatePipe } from '@angular/common';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+
     GlobalService,
     DatePipe,
   ],
