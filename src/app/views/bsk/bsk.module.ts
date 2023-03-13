@@ -14,7 +14,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LicenseComponent } from './license/license.component';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import {
+  PerfectScrollbarModule,
+  PERFECT_SCROLLBAR_CONFIG,
+} from 'ngx-perfect-scrollbar';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { UserOrderComponent } from './user-order/user-order.component';
 import { LicenseUpdateComponent } from './license-update/license-update.component';
@@ -45,6 +48,9 @@ import { JalaliPipe } from 'src/app/shared/pipes/jalali-time.pipe';
     PerfectScrollbarModule,
     SharedDirectivesModule,
   ],
-  providers: [FileUploaderService],
+  providers: [
+    FileUploaderService,
+    { provide: PERFECT_SCROLLBAR_CONFIG, useValue: PERFECT_SCROLLBAR_CONFIG },
+  ],
 })
 export class BskModule {}

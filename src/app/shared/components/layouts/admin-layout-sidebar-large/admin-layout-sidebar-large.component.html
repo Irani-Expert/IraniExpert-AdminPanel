@@ -8,7 +8,10 @@
   <div
     class="main-content-wrap d-flex flex-column"
     [ngClass]="{ 'sidenav-open': navService.sidebarState.sidenavOpen }"
-    [perfectScrollbar]="{ suppressScrollX: true }"
+    [perfectScrollbar]="{
+      suppressScrollX: true,
+      suppressScrollY: false
+    }"
   >
     <router-outlet></router-outlet>
     <div class="flex-grow-1"></div>
