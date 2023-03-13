@@ -92,7 +92,7 @@ let item of rows
       <button
       type="button"
       class="btn btn-rounded m-1  "
-      (click)="toggleNotebar(item, 'addNoteElement')"
+      (click)="getComment(item)"
     >
       یادداشت ها
     </button>
@@ -110,57 +110,22 @@ let item of rows
 </div>
 </div>
 
-<div
-class="col-xl-4 my-2 "
-
-
-
->
-<!-- 
-<div class="card">
+<div>
+ <div class="col-4 p-0" style="position: fixed;">
+<div class=" col-10 p-0"  >
   <div class="card-header bg-light-dark  pl-0 add-comment-header-border">
     <div class="p-2"><h4 class="pl-2 text-white">یادداشت ها</h4></div>
   </div>
   <div class="card-body comment-scroll bg-gray" id="scrollbar2">
     <div class="my-css">
       <div>
-        <div class="timeline-card card mt-2">
+        <div class="timeline-card card mt-2" *ngFor="let item of commentRows">
           <div class="card-header bg-dark m-0 p-0">
-            <p class="text-white m-0 p-2">یادداشت شماره 1</p>
+            <p class="text-white m-0 p-2">{{item.name}}</p>
           </div>
           <div class="card-body bg-secondary">
             <p class="text-white" >
-            000
-            </p>
-          </div>
-        </div>
-        <div class="timeline-card card mt-2">
-          <div class="card-header bg-dark m-0 p-0">
-            <p class="text-white m-0 p-2">یادداشت شماره 1</p>
-          </div>
-          <div class="card-body bg-secondary">
-            <p class="text-white" >
-            000
-            </p>
-          </div>
-        </div>
-        <div class="timeline-card card mt-2">
-          <div class="card-header bg-dark m-0 p-0">
-            <p class="text-white m-0 p-2">یادداشت شماره 1</p>
-          </div>
-          <div class="card-body bg-secondary">
-            <p class="text-white" >
-            000
-            </p>
-          </div>
-        </div>
-        <div class="timeline-card card mt-2">
-          <div class="card-header bg-dark m-0 p-0">
-            <p class="text-white m-0 p-2">یادداشت شماره 1</p>
-          </div>
-          <div class="card-body bg-secondary">
-            <p class="text-white" >
-            000
+              {{item.text}}
             </p>
           </div>
         </div>
@@ -176,19 +141,22 @@ class="col-xl-4 my-2 "
             <textarea
               type="text"
               class="form-control bg-dark textarea-font"
+              [(ngModel)]="addComentText"
+              name="addComentToUserNeed"
             ></textarea>
           </div>
         </div>
       </form>
-      <button type="button" class="btn btn-light mb-2">ایجاد</button>
+      <button type="button" class="btn btn-light mb-2" (click)="addComent()"
+      [disabled]="addComentText=='' || rowIdKeeper==null " >ایجاد</button>
     </div>
   </div>
   
        
   
 
-</div> -->
-
+</div> 
+</div>
 </div>
 </div>
 
