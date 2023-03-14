@@ -109,7 +109,8 @@
   border-top-right-radius: 0.75rem;
 }
 .comment-scroll{
-  height: 250px;
+  height: 350px;
+  
   overflow-y: scroll;
 }
     #scrollbar2::-webkit-scrollbar {
@@ -127,29 +128,49 @@
         }
 .position-sm{
   position: static;
-  @media  (min-width: 499px) {
+ }
+ .card-body {
+  padding-bottom: 0px!important;
+ }
+ @media  (min-width: 499px) {
+  .auther-start {
+    position: absolute !important;
+    min-width: 450px;
+  }
+  .minimum-height{
+    min-height: 500px;
+  }
+  .afterScroll{
+    position: fixed !important;
+    top: 90px !important;
+
+    min-width: 450px;
+  }
   
-      position: fixed !important;
 
-     
+.auther-end{
+  position: absolute !important;
+  min-width: 450px;
+  bottom: 0 !important;
+}
 
-}}
+}
 
 @media screen and (max-height: 750px) {
-  .position-sm{
-    bottom: 110px;
-    
+
+
+  .afterScroll{
+  bottom: 100px;
   }
   .comment-scroll{
-    height: 150px !important;
-
+    height: 250px !important;
+    
   }
 }
 
 .noteWidth{
   @media  (max-width: 499px) {
-
-    width: 100%;
+    
 
 }
 }
