@@ -22,7 +22,7 @@
         <div class="row">
           <ng-container
             *ngIf="
-              addUpdate.id !== 0 && addUpdate.cardImagePath !== 'undefined'
+              addUpdate.id !== 0 || addUpdate.cardImagePath !== 'undefined'
             "
           >
             <div

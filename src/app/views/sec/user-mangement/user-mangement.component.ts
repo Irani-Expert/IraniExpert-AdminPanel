@@ -27,33 +27,33 @@ export class UserMangementComponent implements OnInit {
   addForm: FormGroup;
   dropdownList = [];
   selectedItems = [];
-  roleKeeper=[];
-  removeIndexFromList:number
-  roleIdSaver:number
-  dropdownSettings:IDropdownSettings;
-  roleModel:UserRolesModel[]=new Array<UserRolesModel>();
+  roleKeeper = [];
+  removeIndexFromList: number;
+  roleIdSaver: number;
+  dropdownSettings: IDropdownSettings;
+  roleModel: UserRolesModel[] = new Array<UserRolesModel>();
   constructor(
     public _usersService: UsersService,
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
-    public _roleService: RoleService,
+    public _roleService: RoleService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 12;
   }
 
   ngOnInit(): void {
-  this.getRoleList(0,100)
-  this.dropdownSettings = {
-    singleSelection: false,
-    idField: 'item_id',
-    textField: 'item_text',
-    selectAllText: 'Select All',
-    unSelectAllText: 'UnSelect All',
-    itemsShowLimit: 2,
-    allowSearchFilter: true
-  };
+    this.getRoleList(0, 100);
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 2,
+      allowSearchFilter: true,
+    };
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       userName: [null, Validators.compose([Validators.required])],
@@ -67,16 +67,16 @@ export class UserMangementComponent implements OnInit {
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
 
-    this.getUsersList(this.page.pageNumber, this.page.size,this.roleIdSaver);
+    this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver);
   }
-  async getUsersList(pageNumber: number, seedNumber: number,roleId:number) {
-    this.roleIdSaver=roleId
+  async getUsersList(pageNumber: number, seedNumber: number, roleId: number) {
+    this.roleIdSaver = roleId;
     this._usersService
       .getUserByRoleID(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
-        roleId,
-              )
+        roleId
+      )
       .subscribe(
         (res: Result<Paginate<UsersModel[]>>) => {
           this.rows = res.data.items;
@@ -101,20 +101,16 @@ export class UserMangementComponent implements OnInit {
     if (row === undefined) {
       row = new UsersModel();
       row.id = 0;
-    }
-    
-   else
-   {    
-    this.selectedItems=[{item_id:11,item_text:"ss"}]
-      row.roles.forEach(x=>{
-        
-        this.selectedItems.push({item_id: x.value, item_text:x.title })
-   })
-   this.selectedItems.splice(0,1)
+    } else {
+      this.selectedItems = [{ item_id: 11, item_text: 'ss' }];
+      row.roles.forEach((x) => {
+        this.selectedItems.push({ item_id: x.value, item_text: x.title });
+      });
+      this.selectedItems.splice(0, 1);
 
-  this.roleKeeper=this.selectedItems;
-  }   
-  this.addUpdate = row;
+      this.roleKeeper = this.selectedItems;
+    }
+    this.addUpdate = row;
     this.modalService
       .open(content, {
         size: 'md',
@@ -134,71 +130,56 @@ export class UserMangementComponent implements OnInit {
       );
   }
   async addOrUpdate(row: UsersModel) {
-    var indexFinder=this.rows.findIndex((rows) => rows.id === row.id);
+    var indexFinder = this.rows.findIndex((rows) => rows.id === row.id);
 
     if (row.id === 0) {
-
-      
-      
-      await this._usersService
-        .create(row, 'aspnetuser')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-              
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          }
-        );
+      await this._usersService.create(row, 'aspnetuser').subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     } else {
-      var counter=0
-      
-      
-            this.roleModel=[]
-      this.roleKeeper.forEach(x=>
-        {
-          this.roleModel[counter]=new UserRolesModel()
-          this.roleModel[counter].userId=row.id
-          this.roleModel[counter].roleId=x.item_id
-          counter+=1;
+      var counter = 0;
 
-        })
+      this.roleModel = [];
+      this.roleKeeper.forEach((x) => {
+        this.roleModel[counter] = new UserRolesModel();
+        this.roleModel[counter].userId = row.id;
+        this.roleModel[counter].roleId = x.item_id;
+        counter += 1;
+      });
 
       //   const convert_list_to_object = (list: any[]) => new (...list);
       //   let list_of_objects = [];s
       //   for (let list of this.roleKeeper ) {
       //     list_of_objects.push(convert_list_to_object(list));
       // }
-      this.updateRoleId()
-       await this._usersService
+      this.updateRoleId();
+      await this._usersService
         .update(row.id, row, 'aspnetuser')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-              this.rows.splice(indexFinder, 1);
-              this.rows.unshift(row)
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+            this.rows.splice(indexFinder, 1);
+            this.rows.unshift(row);
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
           }
-        );
-       
-      
+        });
     }
   }
   deleteUser(id: number, modal: any) {
@@ -206,28 +187,30 @@ export class UserMangementComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then((_result) => {
         if (_result)
-          this._usersService
-            .delete(id, 'aspnetuser')
-            .subscribe((res) => {
-              var indexFinder=this.rows.findIndex((rows) => rows.id === id);
-              this.rows.splice(indexFinder, 1);
-              if (res.success) {
-                this.toastr.success(
-                  'فرایند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-              } else {
-                this.toastr.error('خطا در حذف', res.message, {
+          this._usersService.delete(id, 'aspnetuser').subscribe((res) => {
+            var indexFinder = this.rows.findIndex((rows) => rows.id === id);
+            this.rows.splice(indexFinder, 1);
+            if (res.success) {
+              this.toastr.success(
+                'فرایند حذف موفقیت آمیز بود',
+                'موفقیت آمیز!',
+                {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
-                });
-              }
-            });
-        this.getUsersList(this.page.pageNumber, this.page.size,this.roleIdSaver);
+                }
+              );
+            } else {
+              this.toastr.error('خطا در حذف', res.message, {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+            }
+          });
+        this.getUsersList(
+          this.page.pageNumber,
+          this.page.size,
+          this.roleIdSaver
+        );
       });
   }
   async getRoleList(pageNumber: number, seedNumber: number) {
@@ -241,11 +224,10 @@ export class UserMangementComponent implements OnInit {
       )
       .subscribe(
         (res: Result<Paginate<RoleModel[]>>) => {
-    res.data.items.forEach(x=>{
-      this.dropdownList.push({item_id: x.id, item_text: x.name})
-      
-})
-          
+          res.data.items.forEach((x) => {
+            this.dropdownList.push({ item_id: x.id, item_text: x.name });
+          });
+
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
@@ -263,42 +245,38 @@ export class UserMangementComponent implements OnInit {
       );
   }
   onItemSelect(item: RoleModel) {
-    this.roleKeeper.push(item)
+    this.roleKeeper.push(item);
   }
   onDeSelect(item: any) {
-    this.removeIndexFromList= this.roleKeeper.findIndex(x=>x.item_id==item.item_id)
-    this.roleKeeper.splice(    this.removeIndexFromList,1);
+    this.removeIndexFromList = this.roleKeeper.findIndex(
+      (x) => x.item_id == item.item_id
+    );
+    this.roleKeeper.splice(this.removeIndexFromList, 1);
   }
   onSelectAll(items: any) {
-    this.roleKeeper=[]
-     items.forEach(x=>{
-      this.roleKeeper.push(x.item_id)
-     })
-     
-
+    this.roleKeeper = [];
+    items.forEach((x) => {
+      this.roleKeeper.push(x.item_id);
+    });
   }
   onDeSelectAll(item: any) {
-    this.roleKeeper=[]
-
+    this.roleKeeper = [];
   }
-  updateRoleId(){
-    debugger
-    this._usersService
-        .updateUserRole(this.roleModel)
-        .subscribe(
-          (data) => {
-            this.getUsersList(this.page.pageNumber, this.page.size,this.roleIdSaver);            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-           });
-           this.roleKeeper=[]
-          }
+  updateRoleId() {
+    this._usersService.updateUserRole(this.roleModel).subscribe((data) => {
+      this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver);
+      if (data.success) {
+        this.toastr.success(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      } else {
+        this.toastr.error(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    });
+    this.roleKeeper = [];
+  }
 }

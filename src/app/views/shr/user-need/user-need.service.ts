@@ -32,7 +32,6 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
     sidenavOpen: true,
   };
   getByStatus(pageSize: number, pageIndex: number, userWant: number) {
-  
     return this._http.get<Result<Paginate<UserNeedModel[]>>>(
       this._base +
         '/UserNeed/GetByUserWant?pageIndex=' +
@@ -44,11 +43,12 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
       this._options
     );
   }
-  getCommentByRowid(rowID:number){
-    debugger
-      return this._http.get<Result<Paginate<CommentModel[]>>>(
+  getCommentByRowid(rowID: number) {
+    return this._http.get<Result<Paginate<CommentModel[]>>>(
       this._base +
-     "/Comment/GetByTableTypeAndRowId/"+rowID+"/10?pageIndex=0&pageSize=100",
+        '/Comment/GetByTableTypeAndRowId/' +
+        rowID +
+        '/10?pageIndex=0&pageSize=100',
       this._options
     );
   }

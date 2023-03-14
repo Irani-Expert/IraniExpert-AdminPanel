@@ -226,7 +226,6 @@ export class BannerComponent implements OnInit {
       .uploadFile(this.cropImagePreview, 'banners')
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
-          debugger;
           this.addUpdate.filePath = res.data[0];
 
           this.toastr.success('با موفقیت آپلود شد', null, {

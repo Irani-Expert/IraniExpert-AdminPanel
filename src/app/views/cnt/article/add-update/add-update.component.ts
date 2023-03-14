@@ -108,7 +108,7 @@ export class AddUpdateComponent implements OnInit {
   imgFailed() {
     alert('image Failed to Show');
   }
-  deleteImg(filePath: string) {
+  async deleteImg(filePath: string) {
     this._fileUploaderService
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
@@ -121,6 +121,9 @@ export class AddUpdateComponent implements OnInit {
           });
         }
       });
+    if (this.addUpdate.cardImagePath === 'undefined') {
+      this._articleService.update(this.addUpdate.id, this.addUpdate, 'article');
+    }
   }
   uploadFile() {
     this._fileUploaderService

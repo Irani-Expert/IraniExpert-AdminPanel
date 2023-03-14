@@ -138,7 +138,6 @@ export class UsersService extends BaseService<UsersModel, 0> {
         Expires: '0',
       }),
     };
-    debugger
     return this._http
       .post<Result<UserInforamationModel>>(
         `${environment.api.baseUrl}/auth/check-user-permission?token=${token}`,
@@ -163,7 +162,7 @@ export class UsersService extends BaseService<UsersModel, 0> {
         Expires: '0',
       }),
     };
-    
+
     return this._http.get<Result<UserCountModel>>(
       environment.api.baseUrl + '/AspNetUser/UserProfile?token=' + token,
       _options

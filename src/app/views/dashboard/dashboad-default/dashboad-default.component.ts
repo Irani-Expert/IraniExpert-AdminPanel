@@ -54,11 +54,10 @@ export class DashboadDefaultComponent implements OnInit {
   }
 
   getUser() {
-    this._userService.getUserByToken().subscribe(
-      (res: Result<UserInforamationModel>) => {
-        debugger
+    this._userService
+      .getUserByToken()
+      .subscribe((res: Result<UserInforamationModel>) => {
         this.userModel = res.data;
-      }
-    );
+      });
   }
 }

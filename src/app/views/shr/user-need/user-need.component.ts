@@ -24,15 +24,15 @@ export class UserNeedComponent implements OnInit {
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   toggled = false;
-  userWant: any = null;  
+  userWant: any = null;
   userInfo: UserInfoModel;
   note: UserNeedModel;
   rows: UserNeedModel[] = new Array<UserNeedModel>();
-  commentRows:CommentModel[] = new Array<CommentModel>();
-  addCommentRows:CommentModel=new CommentModel;
-  addComentText:string
+  commentRows: CommentModel[] = new Array<CommentModel>();
+  addCommentRows: CommentModel = new CommentModel();
+  addComentText: string;
   page: Page = new Page();
-  rowIdKeeper:number=null
+  rowIdKeeper: number = null;
   constructor(
     public router: Router,
     public _UserNeedService: UserNeedService,
@@ -45,7 +45,7 @@ export class UserNeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userInfo = this.auth.currentUserValue;    
+    this.userInfo = this.auth.currentUserValue;
     this.setPage(this.page.pageNumber, null);
     this.updateNotebar();
     this.router.events
@@ -93,40 +93,36 @@ export class UserNeedComponent implements OnInit {
         null,
         'UserNeed'
       )
-      .subscribe(
-        (res: Result<Paginate<UserNeedModel[]>>) => {
-          this.rows = res.data.items;
-          this.page.totalElements = res.data.totalCount;
-          this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber + 1;
-        }
-      );
+      .subscribe((res: Result<Paginate<UserNeedModel[]>>) => {
+        this.rows = res.data.items;
+        this.page.totalElements = res.data.totalCount;
+        this.page.totalPages = res.data.totalPages - 1;
+        this.page.pageNumber = res.data.pageNumber + 1;
+      });
   }
   deleteUserNeed(id: any, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._UserNeedService
-            .delete(id, 'UserNeed')
-            .subscribe((res) => {
-              if (res.success) {
-                this.toastr.success(
-                  'فرآیند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 2000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-              } else {
-                this.toastr.error('خطا در حذف', res.message, {
+          this._UserNeedService.delete(id, 'UserNeed').subscribe((res) => {
+            if (res.success) {
+              this.toastr.success(
+                'فرآیند حذف موفقیت آمیز بود',
+                'موفقیت آمیز!',
+                {
                   timeOut: 2000,
                   positionClass: 'toast-top-left',
-                });
-              }
-              this.getUserNeedById(this.page.pageNumber, this.page.size);
-            });
+                }
+              );
+            } else {
+              this.toastr.error('خطا در حذف', res.message, {
+                timeOut: 2000,
+                positionClass: 'toast-top-left',
+              });
+            }
+            this.getUserNeedById(this.page.pageNumber, this.page.size);
+          });
         },
         (error) => {
           this.toastr.error('انصراف از حذف', error.message, {
@@ -139,28 +135,23 @@ export class UserNeedComponent implements OnInit {
   getNoteList(row: UserNeedModel) {
     this.note = row;
   }
-  addComent(){
-    this.addCommentRows.text=this.addComentText
-    this.addCommentRows.rate=0
-    this.addCommentRows.email=this.userInfo.subject
-    this.addCommentRows.name=this.userInfo.firstName+" "+this.userInfo.lastName
-    this.addCommentRows.rowID=this.rowIdKeeper
-    this.addCommentRows.isAccepted=true
-    this.addCommentRows.tableType=10
-    this.addCommentRows.parentID=null
-   
-
-    
-  
-  
+  addComent() {
+    this.addCommentRows.text = this.addComentText;
+    this.addCommentRows.rate = 0;
+    this.addCommentRows.email = this.userInfo.subject;
+    this.addCommentRows.name =
+      this.userInfo.firstName + ' ' + this.userInfo.lastName;
+    this.addCommentRows.rowID = this.rowIdKeeper;
+    this.addCommentRows.isAccepted = true;
+    this.addCommentRows.tableType = 10;
+    this.addCommentRows.parentID = null;
 
     this._UserNeedService
-    .create(this.addCommentRows, 'Comment')
+      .create(this.addCommentRows, 'Comment')
 
-    .subscribe(
-      (data) => {
+      .subscribe((data) => {
         if (data.success) {
-          this.commentRows.unshift(this.addCommentRows)
+          this.commentRows.unshift(this.addCommentRows);
           this.toastr.success(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -171,25 +162,20 @@ export class UserNeedComponent implements OnInit {
             positionClass: 'toast-top-left',
           });
         }
-      }
-    );
+      });
   }
-  getComment(item: UserNeedModel){
-    this.rowIdKeeper=item.id
+  getComment(item: UserNeedModel) {
+    this.rowIdKeeper = item.id;
     this._UserNeedService
-    .getCommentByRowid(
-      item.id)
-    .subscribe(
-      (res: Result<Paginate<CommentModel[]>>) => {
+      .getCommentByRowid(item.id)
+      .subscribe((res: Result<Paginate<CommentModel[]>>) => {
         this.commentRows = res.data.items;
-        debugger
         console.log(this.commentRows);
-        
+
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber + 1;
-      }
-    );
+      });
   }
   toggleNotebar(item: UserNeedModel, element: string) {
     this.getNoteList(item);
