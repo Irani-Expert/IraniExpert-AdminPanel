@@ -211,21 +211,22 @@ export class OrderComponent implements OnInit {
     }
   }
   changePaymentStatus(item: InvoiceModel) {
-    var finder = this.rows.findIndex((row) => row.code === item.code);
+    // var finder = this.rows.findIndex((row) => row.code === item.code);
     this._invoiceService.update(item.id, item, 'invoice').subscribe((data) => {
       if (data.success) {
         this.toastr.success(data.message, null, {
           closeButton: true,
           positionClass: 'toast-top-left',
         });
-        if (item.status == 99) {
-          this.rows[finder].transactionStatus = 5;
-          if (this.status == 2 || this.status == 8) {
-            this.rows.splice(finder, 1);
-          }
-        } else if (item.status == 3) {
-          this.rows[finder].transactionStatus = 2;
-        }
+        this.getOrderbyStatus(this.status, this.page.pageNumber);
+        // if (item.status == 99) {
+        //   this.rows[finder].transactionStatus = 5;
+        //   if (this.status == 2 || this.status == 8) {
+        //     this.rows.splice(finder, 1);
+        //   }
+        // } else if (item.status == 3) {
+        //   this.rows[finder].transactionStatus = 2;
+        // }
       } else {
         this.toastr.error(data.message, null, {
           closeButton: true,
@@ -258,21 +259,19 @@ export class OrderComponent implements OnInit {
   async addOrUpdate2(item: LicenseModel) {
     await this._licenseService
       .update(item.id, item, 'License')
-      .subscribe(
-        (data) => {
-          if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
+      .subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
         }
-      );
+      });
   }
   uploadFile() {
     this._fileUploaderService
@@ -298,26 +297,20 @@ export class OrderComponent implements OnInit {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then((_result) => {
-        this._orderService
-          .delete(id, 'orders')
-          .subscribe((res) => {
-            if (res.success) {
-              this.toastr.success(
-                'فرایند حذف موفقیت آمیز بود',
-                'موفقیت آمیز!',
-                {
-                  timeOut: 3000,
-                  positionClass: 'toast-top-left',
-                }
-              );
-            } else {
-              this.toastr.error('خطا در حذف', res.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
-            }
-            this.getOrderbyStatus(this.status, this.page.pageNumber);
-          });
+        this._orderService.delete(id, 'orders').subscribe((res) => {
+          if (res.success) {
+            this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
+              timeOut: 3000,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error('خطا در حذف', res.message, {
+              timeOut: 3000,
+              positionClass: 'toast-top-left',
+            });
+          }
+          this.getOrderbyStatus(this.status, this.page.pageNumber);
+        });
       });
   }
   // ///////////// Note List
@@ -383,29 +376,27 @@ export class OrderComponent implements OnInit {
       })
       .result.then((_result: boolean) => {
         if (_result === true) {
-          this._commentService
-            .create(item, 'Comment')
-            .subscribe((res) => {
-              if (res.success) {
-                this.toastr.success('یادداشت ایجاد شد', 'موفقیت آمیز!', {
-                  timeOut: 3000,
-                  positionClass: 'toast-top-left',
-                });
-                let date = new Date();
-                item.createDate = date;
-                item.jalaliDate = moment(item.createDate, 'YYYY/MM/DD')
-                  .locale('fa')
-                  .format('YYYY/MM/DD');
-                this.notes.unshift(item);
+          this._commentService.create(item, 'Comment').subscribe((res) => {
+            if (res.success) {
+              this.toastr.success('یادداشت ایجاد شد', 'موفقیت آمیز!', {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+              let date = new Date();
+              item.createDate = date;
+              item.jalaliDate = moment(item.createDate, 'YYYY/MM/DD')
+                .locale('fa')
+                .format('YYYY/MM/DD');
+              this.notes.unshift(item);
 
-                this.note = new CommentModel();
-              } else {
-                this.toastr.error('خطا در ایجاد ', res.message, {
-                  timeOut: 3000,
-                  positionClass: 'toast-top-left',
-                });
-              }
-            });
+              this.note = new CommentModel();
+            } else {
+              this.toastr.error('خطا در ایجاد ', res.message, {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+            }
+          });
         }
       });
   }
@@ -477,46 +468,41 @@ export class OrderComponent implements OnInit {
       this.expireDate.day;
 
     this.licenseModel = item;
-    await this._licenseService
-      .create(item, 'License')
-      .subscribe(
-        (data) => {
-          if (data.success) {
-            if (climax !== null) {
-              climax.licenseId = data.data;
-              this._licenseService
-                .sendLicenseToClimax(climax)
-                .subscribe((dt: CliamxResponse) => {
-                  if (dt.statusCode != 200) {
-                    this.toastr.error(dt.message[0], 'خطای Cliamax', {
-                      closeButton: true,
-                      positionClass: 'toast-top-left',
-                    });
-                  } else {
-                    this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
-                      closeButton: true,
-                      positionClass: 'toast-top-left',
-                    });
-                  }
-              
+    await this._licenseService.create(item, 'License').subscribe((data) => {
+      if (data.success) {
+        if (climax !== null) {
+          climax.licenseId = data.data;
+          this._licenseService
+            .sendLicenseToClimax(climax)
+            .subscribe((dt: CliamxResponse) => {
+              if (dt.statusCode != 200) {
+                this.toastr.error(dt.message[0], 'خطای Cliamax', {
+                  closeButton: true,
+                  positionClass: 'toast-top-left',
                 });
-            }
-            var finder = this.rows.findIndex((row) => row.id === item.rowID);
-            this.rows[finder].transactionStatus = 8;
-            // this.rows[finder].accountNumber=item.accountNumber
-            //this.rows.splice(finder, 1);
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
+              } else {
+                this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
+                  closeButton: true,
+                  positionClass: 'toast-top-left',
+                });
+              }
             });
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
         }
-      );
+        var finder = this.rows.findIndex((row) => row.id === item.rowID);
+        this.rows[finder].transactionStatus = 8;
+        // this.rows[finder].accountNumber=item.accountNumber
+        //this.rows.splice(finder, 1);
+        this.toastr.success(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      } else {
+        this.toastr.error(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    });
 
     // } else {
     //   await this._licenseService

@@ -43,7 +43,6 @@ export class GalleryComponent implements OnInit {
   async getFileByProductId(rowId: number, tableType: number) {
     this._fileService.getFilesByRowIdAndTableType(rowId, tableType).subscribe(
       (res: Result<FileModel[]>) => {
-        
         this.rows = res.data;
       },
       (_error) => {
@@ -90,22 +89,20 @@ export class GalleryComponent implements OnInit {
     this._fileService
       .create(row, 'Files')
 
-      .subscribe(
-        (data) => {
-          if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-         this.rows.push(row);
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
+      .subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.rows.push(row);
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
         }
-      );
+      });
   }
 
   onFileChanged(event: any) {
@@ -127,8 +124,7 @@ export class GalleryComponent implements OnInit {
         (res: Result<string[]>) => {
           if (res.success) {
             this.addUpdate = new FileModel();
-            this.addUpdate.filePath =
-              'https://dl.iraniexpert.com/' + res.data[0];
+            this.addUpdate.filePath = res.data[0];
             this.toastr.success('با موفقیت آپلود شد', null, {
               closeButton: true,
               positionClass: 'toast-top-left',

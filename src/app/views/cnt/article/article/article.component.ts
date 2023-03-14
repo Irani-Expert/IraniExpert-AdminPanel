@@ -72,42 +72,28 @@ export class ArticleComponent implements OnInit {
   deleteArticle(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then(
-        (result) => {
-          this._articleService
-            .delete(id, 'Article')
-            .toPromise()
-            .then((res) => {
-              if (res.success) {
-                this.toastr.success(
-                  'فرایند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-              } else {
-                this.toastr.error('خطا در حذف', res.message, {
+      .result.then((result) => {
+        this._articleService
+          .delete(id, 'Article')
+
+          .subscribe((res) => {
+            if (res.success) {
+              this.toastr.success(
+                'فرایند حذف موفقیت آمیز بود',
+                'موفقیت آمیز!',
+                {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
-                });
-              }
-              this.getArticleList(this.page.pageNumber, this.page.size);
-            })
-            .catch((err) => {
-              this.toastr.error('خطا در حذف', err.message, {
+                }
+              );
+            } else {
+              this.toastr.error('خطا در حذف', res.message, {
                 timeOut: 3000,
                 positionClass: 'toast-top-left',
               });
-            });
-        },
-        (error) => {
-          this.toastr.error('خطا در حذف', error.message, {
-            timeOut: 3000,
-            positionClass: 'toast-top-left',
+            }
+            this.getArticleList(this.page.pageNumber, this.page.size);
           });
-        }
-      );
+      });
   }
 }

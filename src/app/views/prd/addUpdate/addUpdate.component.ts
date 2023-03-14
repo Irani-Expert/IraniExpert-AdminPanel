@@ -54,14 +54,10 @@ export class AddUpdateComponent implements OnInit {
     if (this.productId !== 0)
       await this._productsService
         .getOneByID(this.productId, 'Product')
-        .subscribe(
-          (res: Result<ProductModel>) => {
-            this.addUpdate = res.data;
-            //  this.page.totalElements = res.data.length;
-          },
-
-    
-        );
+        .subscribe((res: Result<ProductModel>) => {
+          this.addUpdate = res.data;
+          //  this.page.totalElements = res.data.length;
+        });
   }
   onFileChanged(event: any) {
     this.imgChangeEvt = event;
@@ -107,47 +103,36 @@ export class AddUpdateComponent implements OnInit {
   }
 
   async addOrUpdate(row: ProductModel) {
-    debugger
     if (row.id === 0) {
-      
-      this._productsService
-        .create(row, 'product')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-        );
+      this._productsService.create(row, 'product').subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     } else {
-      
-      this._productsService
-        .update(row.id, row, 'product')
-        .subscribe(
-          (data) => {
-            row.id = 0;
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-              this._router.navigate(['prd/addUpdate/' + data.data]);
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-        );
+      this._productsService.update(row.id, row, 'product').subscribe((data) => {
+        row.id = 0;
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this._router.navigate(['prd/addUpdate/' + data.data]);
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     }
   }
 

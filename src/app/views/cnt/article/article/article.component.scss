@@ -3,6 +3,7 @@
   overflow: hidden;
   white-space: nowrap;
 }
+
 .no-response {
   font-size: large;
   padding: 12px 0;
@@ -11,7 +12,21 @@
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   color: black;
 }
-
+.card-sm-text-desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-width: 200px !important;
+  max-width: 300px !important;
+}
+.height-700 {
+  min-height: 650px !important;
+  max-height: 700px !important;
+}
 .gif-fluid {
   object-fit: contain;
   width: 100%;
