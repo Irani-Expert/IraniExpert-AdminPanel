@@ -30,7 +30,7 @@ export class AddUpdateComponent implements OnInit {
   articleId: number = parseInt(
     this._route.snapshot.paramMap.get('articleId') ?? '0'
   );
-
+  oldCardImagePath: string;
   tableType: number = 1;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
@@ -108,12 +108,16 @@ export class AddUpdateComponent implements OnInit {
   imgFailed() {
     alert('image Failed to Show');
   }
-  async deleteImg(filePath: string) {
+  deleteImg(filePath: string) {
+    this.oldCardImagePath = filePath;
     this._fileUploaderService
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
-          this.addUpdate.cardImagePath = 'undefined';
+          this.toastr.success('با موفقیت حذف شد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
         } else {
           this.toastr.error(res.message, 'خطا در حذف تصویر', {
             closeButton: true,
@@ -121,10 +125,8 @@ export class AddUpdateComponent implements OnInit {
           });
         }
       });
-    if (this.addUpdate.cardImagePath === 'undefined') {
-      this._articleService.update(this.addUpdate.id, this.addUpdate, 'article');
-    }
   }
+
   uploadFile() {
     this._fileUploaderService
       .uploadFile(this.cropImagePreview, 'articles')

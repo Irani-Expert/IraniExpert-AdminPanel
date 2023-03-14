@@ -1,16 +1,16 @@
-<span>
+<!-- <span>
   <a
     class="menu-btn"
     ngbTooltip="  ابزار سئو برای مقالات"
     [openDelay]="100"
     [closeDelay]="500"
   >
-    <!-- (click)="toggelSidebar()" -->
+    (click)="toggelSidebar()"
     <div></div>
     <div></div>
     <div></div>
   </a>
-</span>
+</span> -->
 <ul ngbNav #nav="ngbNav" class="nav-tabs">
   <li ngbNavItem>
     <a ngbNavLink
@@ -22,7 +22,10 @@
         <div class="row">
           <ng-container
             *ngIf="
-              addUpdate.id !== 0 || addUpdate.cardImagePath !== 'undefined'
+              (addUpdate.id !== 0 && addUpdate.cardImagePath !== 'undefined') ||
+              (addUpdate.cardImagePath !== null &&
+                addUpdate.cardImagePath !== undefined) ||
+              (addUpdate.id == undefined && addUpdate.id == null)
             "
           >
             <div
