@@ -45,12 +45,10 @@ export class AddUpdateComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _articleService: ArticleService,
     private _route: ActivatedRoute,
-    private modalService: NgbModal,
-    private _router: Router,
-    private _auth: AuthenticateService,
     private _fileUploaderService: FileUploaderService,
     private toastr: ToastrService,
-    private _groupService: GroupService
+    private _groupService: GroupService,
+    private _user: AuthenticateService
   ) {}
 
   ngOnInit(): void {
@@ -82,14 +80,14 @@ export class AddUpdateComponent implements OnInit {
     });
   }
 
-  selectGroup($event) {}
+  selectGroup() {}
 
-  onChangeEditor($event: any): void {
+  onChangeEditor(): void {
     console.log('onChange');
     //this.log += new Date() + "<br />";
   }
 
-  onPasteEditor($event: any): void {
+  onPasteEditor(): void {
     console.log('onPaste');
     //this.log += new Date() + "<br />";
   }
@@ -178,6 +176,7 @@ export class AddUpdateComponent implements OnInit {
   }
 
   async addOrUpdate(row: ArticleModel) {
+    row.updateBy = this._user.currentUserValue.userID;
     // if (row.isActive) {
     //   row.publishDate = new Date();
     // }
@@ -192,7 +191,6 @@ export class AddUpdateComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-            this._router.navigate(['/cnt/article']);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
@@ -215,7 +213,6 @@ export class AddUpdateComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-            this._router.navigate(['/cnt/article']);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,

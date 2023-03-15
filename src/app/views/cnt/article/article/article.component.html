@@ -17,6 +17,7 @@
         <th>عکس</th>
         <th>عنوان</th>
         <th>پیش گفتار</th>
+        <th>نویسنده</th>
         <th>وضعیت</th>
         <th class="rounded--left">عملیات</th>
       </tr>
@@ -47,6 +48,22 @@
         </td>
         <td>{{ item.title }}</td>
         <td class="text-wrap card-sm-text-desc">{{ item.brief }}</td>
+        <td>
+          <ng-container
+            *ngIf="
+              item.updatedByFirstName == null && item.updatedByLastName == null
+            "
+            >lpln hldk psdk fd'd</ng-container
+          ><ng-container
+            *ngIf="
+              item.updatedByFirstName !== null &&
+              item.updatedByLastName !== null
+            "
+            >{{ item.updatedByFirstName }}&nbsp;{{
+              item.updatedByLastName
+            }}</ng-container
+          >
+        </td>
         <td *ngIf="item.isActive === false">غیر فعال</td>
         <td *ngIf="item.isActive === true">فعال</td>
         <td class="td-oprate">
