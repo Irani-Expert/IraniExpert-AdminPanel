@@ -40,7 +40,7 @@ export class UserMangementComponent implements OnInit {
     public _roleService: RoleService
   ) {
     this.page.pageNumber = 0;
-    this.page.size = 12;
+    this.page.size = 8;
   }
 
   ngOnInit(): void {

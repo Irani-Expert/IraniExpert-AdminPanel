@@ -1,9 +1,3 @@
-<!-- <button
-
-class="btn btn-primary m-1"
->
-ایجاد
-</button> -->
 <button
   class="btn btn-primary m-1"
   [ngClass]="{ 'd-none': viewMode === 'grid' }"
@@ -14,166 +8,62 @@ class="btn btn-primary m-1"
 
 <div class="separator-breadcrumb border-top"></div>
 
-<!-- DATA LIST -->
-<div class="row list-horizontal">
-  <div
-    class="list-item"
-    [ngClass]="{
-      'col-md-12': viewMode === 'list',
-      'col-md-3': viewMode === 'grid'
-    }"
-  >
-    <div
-      class="card bg-dark o-hidden mb-4 d-flex"
-      [ngClass]="{
-        'flex-row': viewMode === 'list',
-        'flex-column': viewMode === 'grid'
-      }"
-    >
-      <div
-        class="flex-grow-1"
-        [ngClass]="{
-          'pl-2 d-flex': viewMode === 'list',
-          'd-block': viewMode === 'grid'
-        }"
+<section class="main-table">
+  <table class="table">
+    <thead class="bg-dark text-white">
+      <tr>
+        <th class="rounded--right">ID</th>
+        <th>ایجاد کننده</th>
+        <th>درصد یا میزان تخفیف</th>
+        <th>تاریخ ایجاد</th>
+        <th>تاریخ انقضا</th>
+        <th>کد</th>
+        <th class="rounded--left">عملیات</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr
+        *ngFor="
+          let item of rows
+            | paginate
+              : {
+                  itemsPerPage: page.size,
+                  page: page.pageNumber,
+                  currentPage: page.pageNumber,
+                  totalItems: page.totalElements
+                }
+        "
       >
-        <div class="align-self-center text-white">ID</div>
-        <div
-          id="myHeader"
-          class="card-body align-self-center d-flex align-items-lg-center row text-center"
-          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-        >
-          <!-- OTHER DATA  -->
-
-          <div class="m-0 text-white col text-lg-center">ایجاد کننده</div>
-          <div class="m-0 text-white col text-lg-center">
-            درصد یا میزان تخفیف
+        <td>{{ item.id }}</td>
+        <td>{{ item.createBy }}</td>
+        <td *ngIf="item.percent != 0">%{{ item.percent }}</td>
+        <td *ngIf="item.percent == 0">${{ item.amount }}</td>
+        <td>{{ item.createDate }}</td>
+        <td>{{ item.expireDate }}</td>
+        <td>
+          <div class="card bg-warning bg-gradient text-white text-center p-3">
+            {{ item.code }}
           </div>
-          <div class="m-0 text-white col text-lg-center">تاریخ ایجاد</div>
-          <div class="m-0 text-white col text-lg-center">تاریخ انقضا</div>
-          <div class="m-0 text-white col text-lg-center">کد</div>
+        </td>
+        <td class="td-oprate">
+          <button class="btn btn-danger" (click)="deleteDiscount(item.id)">
+            حذف
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
 
-          <div
-            class="m-0 col d-md-block text-light d-lg-block d-xl-block d-sm-none d-none text-lg-center"
-          >
-            عملیات
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SINGLE LIST ITEM  -->
-  <div
-    *ngFor="
-      let item of rows
-        | paginate
-          : {
-              itemsPerPage: page.size,
-              page: page.pageNumber,
-              currentPage: page.pageNumber,
-              totalItems: page.totalElements
-            }
-    "
-    class="list-item"
-    [ngClass]="{
-      'col-md-12': viewMode === 'list',
-      'col-md-3': viewMode === 'grid'
-    }"
-  >
-    <div
-      class="card o-hidden mb-2 d-flex"
-      [ngClass]="{
-        'flex-row-2': viewMode === 'list',
-        'flex-column': viewMode === 'grid'
-      }"
-    >
-      <div
-        class="flex-grow-1"
-        [ngClass]="{
-          'pl-2 d-flex': viewMode === 'list',
-          'd-block': viewMode === 'grid'
-        }"
-      >
-        <div class="align-self-center">
-          {{ item.id }}
-        </div>
-        <div
-          class="card-body align-self-center text-center d-flex align-items-lg-center row"
-          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-        >
-          <!-- OTHER DATA  -->
-
-          <p class="m-0 col">
-            {{ item.createBy }}
-          </p>
-          <p class="m-0 col" *ngIf="item.percent != 0">%{{ item.percent }}</p>
-          <p class="m-0 col" *ngIf="item.percent == 0">${{ item.amount }}</p>
-          <p class="m-0 col">
-            {{ item.createDate }}
-          </p>
-          <p class="m-0 col">
-            {{ item.expireDate }}
-          </p>
-
-          <div
-            class="card bg-warning bg-gradient text-white text-center p-3 col"
-          >
-            <p class="m-0">
-              {{ item.code }}
-            </p>
-          </div>
-
-          <div
-            class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
-          >
-            <div class="text-center col-auto d-flex justify-content-around">
-              <div class="w-50 w-sm-100 ml-sm-2">
-                <button
-                  class="btn btn-danger"
-                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="deleteDiscount(item.id)"
-                >
-                  حذف
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
-      >
-        <h6 class="text-center">عملیات</h6>
-        <button
-          type="button"
-          [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          (click)="deleteProduct(item.id, deleteConfirmModal)"
-          class="btn btn-outline-danger col m-1"
-        >
-          حذف
-        </button>
-        <button
-          type="button"
-          [routerLink]="'/prd/addUpdate/' + item.id"
-          [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          class="btn btn-outline-info col m-1"
-        >
-          جزئیات
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- PAGINATION CONTROL -->
-  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
-    <pagination-controls
-      (pageChange)="setPage($event)"
-      previousLabel=""
-      nextLabel=""
-    ></pagination-controls>
-  </div>
+<div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+  <pagination-controls
+    (pageChange)="setPage($event)"
+    previousLabel=""
+    nextLabel=""
+  ></pagination-controls>
 </div>
+
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
