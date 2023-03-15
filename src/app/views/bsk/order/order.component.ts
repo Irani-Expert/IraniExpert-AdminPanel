@@ -501,6 +501,8 @@ export class OrderComponent implements OnInit {
   addOrUpdate(item: LicenseModel, climax: CliamxLicenseModel) {
     item = new LicenseModel();
     item.rowID = this.licenseModel.rowID;
+    item.expireDate = this.licenseModel.expireDate;
+    item.startDate = this.licenseModel.startDate;
     item.filePath = this.licenseModel.filePath;
     item.versionNumber = this.versionNumber;
     if (this.startDate.year !== undefined) {

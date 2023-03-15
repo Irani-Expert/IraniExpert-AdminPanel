@@ -534,11 +534,7 @@
             <button
               class="btn btn-primary col-2"
               (click)="uploadFile()"
-              *ngIf="clientId == null"
-              [ngClass]="{
-                'd-none': isValidate === false,
-                'd-block': isValidate === true
-              }"
+              *ngIf="isValidate"
             >
               آپلود
             </button>
