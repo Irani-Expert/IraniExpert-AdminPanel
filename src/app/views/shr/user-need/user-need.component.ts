@@ -76,7 +76,6 @@ export class UserNeedComponent implements OnInit {
       scroller?.classList.add('afterScroll');
       scroller?.classList.remove('auther-start');
     } else {
-      debugger;
       scroller?.classList.add('auther-start');
 
       scroller?.classList.remove('afterScroll');

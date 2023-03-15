@@ -9,7 +9,7 @@
 
 <div class="separator-breadcrumb border-top"></div>
 
-<section class="main-table height-700">
+<section class="main-table">
   <table class="table">
     <thead class="bg-dark text-white">
       <tr>
@@ -46,7 +46,11 @@
           </a>
         </td>
         <td>{{ item.title }}</td>
-        <td class="text-wrap card-sm-text-desc">{{ item.brief }}</td>
+        <td>
+          <p class="text-wrap card-sm-text-desc max-w-300 mx-auto">
+            {{ item.brief }}
+          </p>
+        </td>
         <td *ngIf="item.isActive === false">غیر فعال</td>
         <td *ngIf="item.isActive === true">فعال</td>
         <td class="td-oprate">

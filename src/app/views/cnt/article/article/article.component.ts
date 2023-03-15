@@ -27,7 +27,7 @@ export class ArticleComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.page.pageNumber = 0;
-    this.page.size = 12;
+    this.page.size = 6;
   }
 
   ngOnInit(): void {

@@ -1,117 +1,45 @@
-<!----------------------------------- Head Table  -->
+<button
+  class="btn btn-primary mb-4"
+  type="button"
+  (click)="openModal(newcontract, undefined)"
+>
+  ایجاد
+</button>
+<div class="separator-breadcrumb border-top"></div>
 
-<div class="mb-4 d-block">
-    <button class="btn btn-primary mb-4" type="button" (click)="openModal(newcontract,undefined)">ایجاد</button>
-  </div>
-  <div class="row list-horizontal">
-    <div
-      class="list-item"
-      [ngClass]="{
-        'col-md-12': viewMode === 'list',
-        'col-md-3': viewMode === 'grid'
-      }"
-    >
-      <div
-        class="card bg-dark mb-4 d-flex"
-        [ngClass]="{
-          'flex-row': viewMode === 'list',
-          'flex-column': viewMode === 'grid'
-        }"
-      >
-        <div
-          class="flex-grow-1"
-          [ngClass]="{
-            'pl-2 d-flex': viewMode === 'list',
-            'd-block': viewMode === 'grid'
-          }"
-        >
-          <!-- <div class="list-thumb">
-                 THUMBNAIL
-              </div> -->
-          <!-- ID -->
-          <div
-            class="card-body align-self-center d-flex align-items-lg-center text-center"
-            [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-          >
-            <!-- OTHER DATA -->
-  
-            <div class="m-0 col text-lg-center text-white">عنوان</div>
-            <div class="m-0 col text-lg-center text-white">نوع قرارداد</div>
-            <div class="m-0 col text-lg-center text-white">تاریخ شروع</div>
-            <div class="m-0 col text-lg-center text-white">تاریخ پایان</div>
-            <div class="m-0 col text-lg-center text-white">درصد دریافتی</div>
-            <div class="m-0 col text-lg-center text-white">نقش</div>
-            <div class="m-0 col text-lg-center text-white">حذف</div>
+<section class="main-table">
+  <table class="table">
+    <thead class="bg-dark text-white">
+      <tr>
+        <th class="rounded--right">عنوان</th>
+        <th>نوع قرارداد</th>
+        <th>تاریخ شروع</th>
+        <th>تاریخ پایان</th>
+        <th>درصد دریافتی</th>
+        <th>نقش</th>
+        <th class="rounded--left">حذف</th>
+      </tr>
+    </thead>
 
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Orders-List -->
-    <div
-      class="list-item"
-      [ngClass]="{
-        'col-md-12': viewMode === 'list',
-        'col-md-3': viewMode === 'grid'
-      }"
-    >
-      <div
-        class="card mb-2 o-hidden d-flex"
-        [ngClass]="{
-          'flex-row-2': viewMode === 'list',
-          'flex-column': viewMode === 'grid'
-        }"
-      >
-        <div
-          class="flex-grow-1"
-          [ngClass]="{
-            'pl-2 d-flex': viewMode === 'list',
-            'd-block': viewMode === 'grid'
-          }"
-          *ngFor="let item of allContract"
+    <tbody>
+      <tr *ngFor="let item of allContract">
+        <td>{{ item.title }}</td>
+        <td>{{ sellingTypeTitle[item.sellingType] }}</td>
+        <td>{{ item.fromDate }}</td>
+        <td>{{ item.toDate }}</td>
+        <td>{{ item.prcentReward }}</td>
+        <td>{{ item.roleID }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="removeContract(item.id)">
+            حذف
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
 
-        >
-          <div class="align-self-center"></div>
-          <div
-            class="card-body align-self-center d-flex align-items-lg-center text-center row"
-            [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-          >
-            <!-- OTHER DATA -->
-  
-            <div class="col m-0">{{item.title}}</div>
-            <div class="col m-0">{{sellingTypeTitle[item.sellingType]}}</div>
-            <div class="col m-0">{{item.fromDate}}</div>
-            <div class="col m-0">
-              <span>{{item.toDate}}</span>
-            </div>
-            <div class="col m-0">{{item.prcentReward}}</div>
-            <div class="col m-0">{{item.roleID}}</div>
-            <div class="col m-0">
-              <button
-              class="btn btn-danger"
-              (click)="removeContract(item.id)"
-            >
-              حذف
-            </button>
-          
-            </div>
-            </div>
-        </div>
-        <div
-          class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
-        ></div>
-      </div>
-    </div>
-  </div>
-  <!-- <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
-      <img
-        src="../../../../../assets/images/97434-no-data-available.gif"
-        class="img-fluid w-50"
-        alt=""
-      />
-    </div>
-     -->
-  <!----------------Details Modal -->
+<!----------------Details Modal -->
 <ng-template #newcontract let-modal>
   <div>
     <div class="modal-header">
@@ -127,131 +55,119 @@
     </div>
 
     <div class="modal-body">
-      <form [formGroup]="contractList" (ngSubmit)="submit()" >
+      <form [formGroup]="contractList" (ngSubmit)="submit()">
         <div class="row">
-       
-         
-          
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">عنوان</strong>
             <input
               class="form-control mt-1"
-              [formControl]="contractList.controls['title']" 
+              [formControl]="contractList.controls['title']"
               id="title"
-
-              [(ngModel)]="contractModel.title" 
+              [(ngModel)]="contractModel.title"
             />
           </div>
-       
+
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">نوع قرار داد</strong>
-            <select   class="form-control mt-1"  
-            [formControl]="contractList.controls['sellingType']" 
-            [(ngModel)]="contractModel.sellingType" 
-            id="sellingType"
+            <select
+              class="form-control mt-1"
+              [formControl]="contractList.controls['sellingType']"
+              [(ngModel)]="contractModel.sellingType"
+              id="sellingType"
             >
-              <option value=0>IB</option>
-              <option value=1>Invesment</option>
-              <option value=2>License</option>
+              <option value="0">IB</option>
+              <option value="1">Invesment</option>
+              <option value="2">License</option>
             </select>
           </div>
 
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">درصد دریافتی</strong>
             <input
-            type="number"
+              type="number"
               class="form-control mt-1"
-              [formControl]="contractList.controls['prcentReward']" 
+              [formControl]="contractList.controls['prcentReward']"
               id="prcentReward"
-
-              [(ngModel)]="contractModel.prcentReward" 
+              [(ngModel)]="contractModel.prcentReward"
             />
           </div>
-
-
-          
         </div>
         <div class="row">
-       
-         
-          
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">تاریخ شروع</strong>
             <div class="row">
-              <ng-persian-datepicker   class="position-absolute col-12">
-                <div>                <input    
-                   [formControl]="contractList.controls['fromDate']" 
-                   [(ngModel)]="contractModel.fromDate" 
-                  class="form-control mt-1 rounded Checkout_input p-2 " type="text" >
+              <ng-persian-datepicker class="position-absolute col-12">
+                <div>
+                  <input
+                    [formControl]="contractList.controls['fromDate']"
+                    [(ngModel)]="contractModel.fromDate"
+                    class="form-control mt-1 rounded Checkout_input p-2"
+                    type="text"
+                  />
                 </div>
-                </ng-persian-datepicker>
+              </ng-persian-datepicker>
             </div>
           </div>
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">تاریخ پایان</strong>
             <div class="row">
-              <ng-persian-datepicker   class="position-absolute col-12">
-                <input    
-                    [(ngModel)]="contractModel.toDate" 
-                    [formControl]="contractList.controls['toDate']" 
-                  class="form-control mt-1 rounded Checkout_input p-2 " type="text" >
+              <ng-persian-datepicker class="position-absolute col-12">
+                <input
+                  [(ngModel)]="contractModel.toDate"
+                  [formControl]="contractList.controls['toDate']"
+                  class="form-control mt-1 rounded Checkout_input p-2"
+                  type="text"
+                />
               </ng-persian-datepicker>
             </div>
           </div>
 
-<div class="col-md-4 form-group mb-3">
-  <strong for="totalPrice" class="mb-3">شروط قرار داد</strong>
-  <div class="row">
-    <ng-multiselect-dropdown
-    [formControl]="contractList.controls['condition']"
-    [placeholder]="'       لیست شروط قرارداد  '"
-    [settings]="dropdownSettings"
-    [data]="dropdownList"
-    [(ngModel)]="selectedItems"
-    (onSelect)="onItemSelect($event)"
-    (onSelectAll)="onSelectAll($event)"
-    (onDeSelect)="onDeSelect($event)"
-    (onDeSelectAll)="onDeSelectAll($event)"
-
-class="col-12 mt-1"
-  >
-  </ng-multiselect-dropdown>
-
-  </div>
-</div>
-    
-      
-
-
-          
+          <div class="col-md-4 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">شروط قرار داد</strong>
+            <div class="row">
+              <ng-multiselect-dropdown
+                [formControl]="contractList.controls['condition']"
+                [placeholder]="'       لیست شروط قرارداد  '"
+                [settings]="dropdownSettings"
+                [data]="dropdownList"
+                [(ngModel)]="selectedItems"
+                (onSelect)="onItemSelect($event)"
+                (onSelectAll)="onSelectAll($event)"
+                (onDeSelect)="onDeSelect($event)"
+                (onDeSelectAll)="onDeSelectAll($event)"
+                class="col-12 mt-1"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
         </div>
         <div class="row">
           <div class="col-md-4 form-group mb-3">
             <strong for="discountPrice" class="mb-3">نقش کاربر</strong>
-            <select   class="form-control mt-1"  
-          [formControl]="contractList.controls['roleID']" 
-          [(ngModel)]="contractModel.roleID" 
-          id="roleID"
-         (change)="userRole($event.target.value)"
-     >
-              <option    *ngFor="
-              let item of roles" ngValue={{item.id}}>{{item.name}}</option>
-             
+            <select
+              class="form-control mt-1"
+              [formControl]="contractList.controls['roleID']"
+              [(ngModel)]="contractModel.roleID"
+              id="roleID"
+              (change)="userRole($event.target.value)"
+            >
+              <option *ngFor="let item of roles" ngValue="{{ item.id }}">
+                {{ item.name }}
+              </option>
             </select>
           </div>
           <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">کاربر</strong>
-            <select   class="form-control mt-1"  
-            [formControl]="contractList.controls['userID']" 
-            [(ngModel)]="contractModel.userID" 
-           
->
-              <option  *ngFor="
-              let item of userInfo" value={{item.userID}}>{{item.firstname}} {{item.lastName}}</option>
-              
+            <select
+              class="form-control mt-1"
+              [formControl]="contractList.controls['userID']"
+              [(ngModel)]="contractModel.userID"
+            >
+              <option *ngFor="let item of userInfo" value="{{ item.userID }}">
+                {{ item.firstname }} {{ item.lastName }}
+              </option>
             </select>
           </div>
-         
         </div>
       </form>
     </div>
@@ -261,7 +177,7 @@ class="col-12 mt-1"
         class="btn btn-outline-dark btn-rounded"
         (click)="contractWith()"
       >
-        ثبت 
+        ثبت
       </button>
     </div>
   </div>
