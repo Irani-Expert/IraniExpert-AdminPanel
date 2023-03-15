@@ -287,7 +287,7 @@ export class OrderComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.licenseModel.filePath = res.data[0];
-          this.isOrderHaveLicense = true;
+          this.licenseModel.fileExists = true;
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -423,19 +423,16 @@ export class OrderComponent implements OnInit {
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
-          this.isOrderHaveLicense = false;
+          this.licenseModel.fileExists = false;
           this.toastr.success('با موفقیت حذف شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
-        }
-        if (!res.success && res.message == 'فایل واردشده وجود ندارد.') {
-          this.toastr.success('با موفقیت حذف شد', null, {
+        } else {
+          this.toastr.success(res.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
-          this.isOrderHaveLicense = false;
-          this.licenseModel.filePath = null;
         }
       });
   }

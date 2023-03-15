@@ -500,7 +500,7 @@
           class="col-12 row d-flex flex-row align-items-center form-group mb-3"
         >
           <strong for="file" class="mb-3 ml-2">فایل لایسنس</strong>
-          <ng-container *ngIf="isOrderHaveLicense">
+          <ng-container *ngIf="licenseModel.fileExists">
             <div class="col-md-2 col-5 mb-5 mt-1">
               <img
                 class="align-self-center w-100 radius-md"
@@ -524,11 +524,11 @@
           <input
             id="upload"
             type="file"
-            *ngIf="!isOrderHaveLicense"
+            *ngIf="!licenseModel.fileExists"
             (change)="onFileChanged($event)"
           />
         </div>
-        <ng-container *ngIf="!isOrderHaveLicense">
+        <ng-container *ngIf="!licenseModel.fileExists">
           <strong class="text-danger col-12">فایل ارسالی باید zip باشد</strong>
           <div class="col-12 mt-2 mb-2">
             <button
