@@ -167,7 +167,9 @@
             جزئیات
           </button>
 
-          <ng-container *ngIf="item.transactionStatus == 2">
+          <ng-container
+            *ngIf="item.transactionStatus == 2 || item.transactionStatus == 8"
+          >
             <button
               *appCanAccess="'Licence-Full Premission'"
               type="button"
@@ -178,14 +180,6 @@
             >
               لایسنس
             </button>
-          </ng-container>
-          <ng-container *ngIf="item.transactionStatus == 8">
-            <a
-              class="btn text-small btn-outline-danger"
-              href="https://dl.iraniExpert.com/{{ item.filePath }}"
-            >
-              دانلود
-            </a>
           </ng-container>
           <button
             *appCanAccess="'note-Full Premission'"
@@ -502,24 +496,54 @@
     </div>
     <div class="modal-body">
       <div class="row mt-2">
-        <div class="col-md-3 form-group mb-3">
-          <strong for="file" class="mb-3">فایل لایسنس</strong>
-          <input id="upload" type="file" (change)="onFileChanged($event)" />
+        <div
+          class="col-12 row d-flex flex-row align-items-center form-group mb-3"
+        >
+          <strong for="file" class="mb-3 ml-2">فایل لایسنس</strong>
+          <ng-container *ngIf="isOrderHaveLicense">
+            <div class="col-md-2 col-5 mb-5 mt-1">
+              <img
+                class="align-self-center w-100 radius-md"
+                src="assets/images/zip-file-icon.png"
+              />
+            </div>
+            <div class="col-md-6 col-5">
+              <button
+                class="btn btn-danger m-1"
+                (click)="deleteFile(licenseModel.filePath)"
+              >
+                حذف
+              </button>
+              <a
+                class="btn btn-primary m-1"
+                href="https://dl.iraniExpert.com/{{ licenseModel.filePath }}"
+                >دانلود</a
+              >
+            </div>
+          </ng-container>
+          <input
+            id="upload"
+            type="file"
+            *ngIf="!isOrderHaveLicense"
+            (change)="onFileChanged($event)"
+          />
         </div>
-        <strong class="text-danger col-12">فایل ارسالی باید zip باشد</strong>
-        <div class="col-12 mt-2 mb-2">
-          <button
-            class="btn btn-primary col-2"
-            (click)="uploadFile()"
-            *ngIf="clientId == null"
-            [ngClass]="{
-              'd-none': isValidate === false,
-              'd-block': isValidate === true
-            }"
-          >
-            آپلود
-          </button>
-        </div>
+        <ng-container *ngIf="!isOrderHaveLicense">
+          <strong class="text-danger col-12">فایل ارسالی باید zip باشد</strong>
+          <div class="col-12 mt-2 mb-2">
+            <button
+              class="btn btn-primary col-2"
+              (click)="uploadFile()"
+              *ngIf="clientId == null"
+              [ngClass]="{
+                'd-none': isValidate === false,
+                'd-block': isValidate === true
+              }"
+            >
+              آپلود
+            </button>
+          </div>
+        </ng-container>
 
         <div class="col-md-3 form-group mb-3" dir="ltr">
           <strong for="startDate" class="mb-3">تاریخ شروع</strong>
@@ -550,22 +574,18 @@
           />
         </div>
         <div class="col-md-3 form-group mb-3" dir="ltr">
-          <strong for="expireDate" class="mb-3">Version Number</strong>
+          <strong for="versionNumber" class="mb-3">Version Number</strong>
           <!-- <button (click)="e.toggle()" class="mb-3 btn btn-primary">
               تاریخ انقضا
             </button> -->
           <input type="text" class="form-control" [(ngModel)]="versionNumber" />
         </div>
         <div class="col-md-5 form-group mb-3" dir="ltr">
-          <strong for="expireDate" class="mb-3">شماره حساب کاربر</strong>
+          <strong for="accountNumber" class="mb-3">شماره حساب کاربر</strong>
           <!-- <button (click)="e.toggle()" class="mb-3 btn btn-primary">
               تاریخ انقضا
             </button> -->
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="licenseModel.accountNumber"
-          />
+          <input type="text" class="form-control" [(ngModel)]="accountNumber" />
         </div>
         <!-- <div class="col-md-3 form-group mb-3">
             <strong for="rowID" class="mb-3">شماره سفارش</strong>

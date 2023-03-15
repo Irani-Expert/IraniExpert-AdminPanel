@@ -20,7 +20,7 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Base } from 'src/app/shared/models/Base/base.model';
 import { CliamxLicenseModel } from 'src/app/views/bsk/license/cliamaxLicense.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
-import { async } from 'rxjs';
+import { async, lastValueFrom } from 'rxjs';
 @Component({
   selector: 'app-add-update',
   templateUrl: './add-update.component.html',
@@ -30,7 +30,7 @@ export class AddUpdateComponent implements OnInit {
   articleId: number = parseInt(
     this._route.snapshot.paramMap.get('articleId') ?? '0'
   );
-  oldCardImagePath: string;
+  imageFound: boolean = false;
   tableType: number = 1;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
@@ -109,11 +109,13 @@ export class AddUpdateComponent implements OnInit {
     alert('image Failed to Show');
   }
   deleteImg(filePath: string) {
-    this.oldCardImagePath = filePath;
     this._fileUploaderService
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
+          this.imageFound = true;
+          this.addUpdate.cardImagePath = undefined;
+
           this.toastr.success('با موفقیت حذف شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -133,6 +135,7 @@ export class AddUpdateComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.cardImagePath = res.data[0];
+          this.imageFound = true;
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -154,6 +157,7 @@ export class AddUpdateComponent implements OnInit {
       .getOneByID(id, 'Article')
       .subscribe((res: Result<ArticleModel>) => {
         this.addUpdate = res.data;
+        this.imageFound = true;
         this.group = this.groupList.find(
           (item) => item.value === this.addUpdate.groupID
         );

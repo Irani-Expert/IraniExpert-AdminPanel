@@ -37,6 +37,7 @@ export class JwtInterceptor implements HttpInterceptor {
     if (isLoggedIn && isApiUrl) {
       request = request.clone({
         setHeaders: {
+          'Access-Control-Allow-Origin': '*',
           // 'Content-Type': 'application/json',
           Authorization: 'Bearer anonymous',
         },

@@ -32,6 +32,9 @@ import { OrderService } from './order.service';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  licenseID: number;
+  // accountNumber: number;
+  isOrderHaveLicense: boolean = false;
   invoiceDetail: InvoiceModel = new InvoiceModel();
   invoiceStatus: number;
 
@@ -108,6 +111,7 @@ export class OrderComponent implements OnInit {
       this.headerValue = 'ID';
     }
   }
+
   changeDateValue() {
     if (this.dateValue != 'تاریخ ثبت ') {
       this.dateValue = 'تاریخ ثبت ';
@@ -257,21 +261,19 @@ export class OrderComponent implements OnInit {
       });
   }
   async addOrUpdate2(item: LicenseModel) {
-    await this._licenseService
-      .update(item.id, item, 'License')
-      .subscribe((data) => {
-        if (data.success) {
-          this.toastr.success(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
+    this._licenseService.update(item.id, item, 'License').subscribe((data) => {
+      if (data.success) {
+        this.toastr.success(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      } else {
+        this.toastr.error(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    });
   }
   uploadFile() {
     this._fileUploaderService
@@ -279,6 +281,7 @@ export class OrderComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.licenseModel.filePath = res.data[0];
+          this.isOrderHaveLicense = true;
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -409,8 +412,46 @@ export class OrderComponent implements OnInit {
     var number = Number(discount.replace(/[^0-9.-]+/g, ''));
     this.orderDetail.toPayPrice = this.orderDetail.toPayPrice - number;
   }
+  deleteFile(filePath: string) {
+    this._fileUploaderService
+      .deleteFile(filePath)
+      .subscribe((res: Result<string[]>) => {
+        if (res.success) {
+          this.isOrderHaveLicense = false;
+          this.toastr.success('با موفقیت حذف شد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+        if (!res.success && res.message == 'فایل واردشده وجود ندارد.') {
+          this.toastr.success('با موفقیت حذف شد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.isOrderHaveLicense = false;
+          this.licenseModel.filePath = null;
+        }
+      });
+  }
   openUpdateModal(content: NgbModal, row: OrderModel) {
+    this.licenseModel = new LicenseModel();
     this.clientId = row.clientId;
+    this.licenseID = row.licenseID;
+    if (this.licenseID !== null)
+      this._licenseService
+        .getOneByID(this.licenseID, 'License')
+        .subscribe((res) => {
+          if (res.success) {
+            if (res.data.filePath !== null) {
+              this.isOrderHaveLicense = true;
+            }
+            this.licenseModel = res.data;
+            this.expireDate = res.data.expireDate;
+            this.startDate = res.data.startDate;
+            this.versionNumber = res.data.versionNumber;
+          }
+        });
+
     this.modalService
       .open(content, {
         size: 'lg',
@@ -423,113 +464,155 @@ export class OrderComponent implements OnInit {
             this.licenseModel.rowID = row.id;
             this.addOrUpdate(this.licenseModel, null);
             // this.addForm.reset();
-          } else {
-            let climax = new CliamxLicenseModel();
-            climax.file = this.licenseFile;
-            climax.accountNumber = this.licenseModel.accountNumber.toString();
-            climax.startDate =
-              this.startDate.year +
-              '-' +
-              this.startDate.month +
-              '-' +
-              this.startDate.day;
-
-            climax.expireDate =
-              this.expireDate.year +
-              '-' +
-              this.expireDate.month +
-              '-' +
-              this.expireDate.day;
-            this.licenseModel.rowID = row.id;
-            this.licenseModel.filePath = '';
-
-            this.addOrUpdate(this.licenseModel, climax);
-            // this.addForm.reset();
           }
+          // else {
+          //   let climax = new CliamxLicenseModel();
+          //   climax.file = this.licenseFile;
+          //   climax.accountNumber = this.licenseModel.accountNumber.toString();
+          //   climax.startDate =
+          //     this.startDate.year +
+          //     '-' +
+          //     this.startDate.month +
+          //     '-' +
+          //     this.startDate.day;
+
+          //   climax.expireDate =
+          //     this.expireDate.year +
+          //     '-' +
+          //     this.expireDate.month +
+          //     '-' +
+          //     this.expireDate.day;
+          //   this.licenseModel.rowID = row.id;
+          //   this.licenseModel.filePath = '';
+
+          //   this.addOrUpdate(this.licenseModel, climax);
+          //   // this.addForm.reset();
+          // }
         }
       });
   }
 
   async addOrUpdate(item: LicenseModel, climax: CliamxLicenseModel) {
     item.versionNumber = this.versionNumber;
-
-    item.startDate =
-      this.startDate.year +
-      '-' +
-      this.startDate.month +
-      '-' +
-      this.startDate.day;
-
-    item.expireDate =
-      this.expireDate.year +
-      '-' +
-      this.expireDate.month +
-      '-' +
-      this.expireDate.day;
-
-    this.licenseModel = item;
-    await this._licenseService.create(item, 'License').subscribe((data) => {
-      if (data.success) {
-        if (climax !== null) {
-          climax.licenseId = data.data;
-          this._licenseService
-            .sendLicenseToClimax(climax)
-            .subscribe((dt: CliamxResponse) => {
-              if (dt.statusCode != 200) {
-                this.toastr.error(dt.message[0], 'خطای Cliamax', {
-                  closeButton: true,
-                  positionClass: 'toast-top-left',
-                });
-              } else {
-                this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
-                  closeButton: true,
-                  positionClass: 'toast-top-left',
-                });
-              }
-            });
+    if (this.startDate.year !== undefined) {
+      item.startDate =
+        this.startDate.year +
+        '-' +
+        this.startDate.month +
+        '-' +
+        this.startDate.day;
+    }
+    if (this.expireDate.year !== undefined) {
+      item.expireDate =
+        this.expireDate.year +
+        '-' +
+        this.expireDate.month +
+        '-' +
+        this.expireDate.day;
+    }
+    if (this.licenseID == null) {
+      this._licenseService.create(item, 'License').subscribe((data) => {
+        if (data.success) {
+          // if (climax !== null) {
+          //   climax.licenseId = data.data;
+          //   this._licenseService
+          //     .sendLicenseToClimax(climax)
+          //     .subscribe((dt: CliamxResponse) => {
+          //       if (dt.statusCode != 200) {
+          //         this.toastr.error(dt.message[0], 'خطای Cliamax', {
+          //           closeButton: true,
+          //           positionClass: 'toast-top-left',
+          //         });
+          //       } else {
+          //         this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
+          //           closeButton: true,
+          //           positionClass: 'toast-top-left',
+          //         });
+          //       }
+          //     });
+          // }
+          // var finder = this.rows.findIndex((row) => row.id === item.rowID);
+          // this.rows[finder].transactionStatus = 8;
+          // this.rows[finder].accountNumber=item.accountNumber
+          //this.rows.splice(finder, 1);
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.getOrderbyStatus(this.status, this.page.pageNumber);
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
         }
-        var finder = this.rows.findIndex((row) => row.id === item.rowID);
-        this.rows[finder].transactionStatus = 8;
-        // this.rows[finder].accountNumber=item.accountNumber
-        //this.rows.splice(finder, 1);
-        this.toastr.success(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
+      });
+    }
+    if (this.licenseID !== null || this.licenseID !== 0) {
+      this._licenseService
+        .update(this.licenseID, item, 'License')
+        .subscribe((data) => {
+          if (data.success) {
+            // if ((climax.licenseId = data.data.id)) {
+            //   this._licenseService
+            //     .sendLicenseToClimax(climax)
+            //     .subscribe((dt: CliamxResponse) => {
+            //       if (dt.statusCode != 200) {
+            //         this.toastr.error(dt.message[0], 'خطای Cliamax', {
+            //           closeButton: true,
+            //           positionClass: 'toast-top-left',
+            //         });
+            //       } else {
+            //         this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
+            //           closeButton: true,
+            //           positionClass: 'toast-top-left',
+            //         });
+            //         this.getOrderbyStatus(this.status, this.page.pageNumber);
+            //       }
+            //     });
+            // }
+            // var finder = this.rows.findIndex((row) => row.id === item.rowID);
+            // this.rows[finder].transactionStatus = 8;
+            // this.rows[finder].accountNumber=item.accountNumber
+            //this.rows.splice(finder, 1);
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
         });
-      } else {
-        this.toastr.error(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-      }
-    });
-
-    // } else {
-    //   await this._licenseService
-    //     .update(item.id, item, 'License')
-    //     .toPromise()
-    //     .then(
-    //       (data) => {
-    //         if (data.success) {
-    //           this.toastr.success(data.message, null, {
-    //             closeButton: true,
-    //             positionClass: 'toast-top-left',
-    //           });
-    //         } else {
-    //           this.toastr.error(data.message, null, {
-    //             closeButton: true,
-    //             positionClass: 'toast-top-left',
-    //           });
-    //         }
-    //       },
-    //       (_error) => {
-    //         this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-    //           closeButton: true,
-    //           positionClass: 'toast-top-left',
-    //         });
-    //       }
-    //     );
-    //   this.getOrdersIsPaid(this.page.pageNumber, this.page.size);
-    // }
+    }
   }
+  // } else {
+  //   await this._licenseService
+  //     .update(item.id, item, 'License')
+  //     .toPromise()
+  //     .then(
+  //       (data) => {
+  //         if (data.success) {
+  //           this.toastr.success(data.message, null, {
+  //             closeButton: true,
+  //             positionClass: 'toast-top-left',
+  //           });
+  //         } else {
+  //           this.toastr.error(data.message, null, {
+  //             closeButton: true,
+  //             positionClass: 'toast-top-left',
+  //           });
+  //         }
+  //       },
+  //       (_error) => {
+  //         this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //       }
+  //     );
+  //   this.getOrdersIsPaid(this.page.pageNumber, this.page.size);
+  // }
 }
