@@ -498,7 +498,8 @@ export class OrderComponent implements OnInit {
       });
   }
 
-  addOrUpdate(item: any, climax: CliamxLicenseModel) {
+  addOrUpdate(item: LicenseModel, climax: CliamxLicenseModel) {
+    item = new LicenseModel();
     item.rowID = this.licenseModel.rowID;
     item.filePath = this.licenseModel.filePath;
     item.versionNumber = this.versionNumber;
@@ -518,7 +519,14 @@ export class OrderComponent implements OnInit {
         '-' +
         this.expireDate.day;
     }
-    this._licenseService.create(item, 'License').subscribe((data) => {
+    let sendLicense = {
+      rowID: item.rowID,
+      filePath: item.filePath,
+      versionNumber: item.versionNumber,
+      startDate: item.startDate,
+      expireDate: item.expireDate,
+    };
+    this._licenseService.create(sendLicense, 'License').subscribe((data) => {
       if (data.success) {
         // if (climax !== null) {
         //   climax.licenseId = data.data;
