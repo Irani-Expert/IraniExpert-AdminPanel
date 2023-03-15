@@ -6,4 +6,5 @@ export interface ILicense {
   expireDate: string;
   rowID: number;
   versionNumber: number;
+  fileExists: boolean;
 }
