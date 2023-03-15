@@ -14,7 +14,7 @@ import { OrderService } from '../order/order.service';
 @Component({
   selector: 'app-license-update',
   templateUrl: './license-update.component.html',
-  styleUrls: ['./license-update.component.scss']
+  styleUrls: ['./license-update.component.scss'],
 })
 export class LicenseUpdateComponent implements OnInit {
   licenseFile: any = '';
@@ -24,16 +24,18 @@ export class LicenseUpdateComponent implements OnInit {
   page: Page = new Page();
   licenseModel: LicenseModel = new LicenseModel();
   addForm: FormGroup;
-  versionNumber:number=1;
-  isValidate:boolean=false;
-  constructor(  private _fileUploaderService: FileUploaderService,
+  versionNumber: number = 1;
+  isValidate: boolean = false;
+  constructor(
+    private _fileUploaderService: FileUploaderService,
     public _licenseService: LicenseService,
     public _orderService: OrderService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _formBuilder: FormBuilder) {
-      this.page.size=10
-    }
+    private _formBuilder: FormBuilder
+  ) {
+    this.page.size = 10;
+  }
 
   ngOnInit(): void {
     this.setPage(this.page.pageNumber);
@@ -90,7 +92,6 @@ export class LicenseUpdateComponent implements OnInit {
       .uploadLicence(this.licenseFile, 'licenses')
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
-          
           this.licenseModel.filePath = res.data[0];
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
@@ -106,41 +107,41 @@ export class LicenseUpdateComponent implements OnInit {
       });
   }
 
-  updateLicense(content: any, row: OrderModel) {
-    this.modalService
-      .open(content, {
-        size: 'lg',
-        ariaLabelledBy: 'modal-basic-title',
-        centered: true,
-      })
-      .result.then((result: boolean) => {
-        if (result != undefined) {
-          this.licenseModel.rowID = row.id;
-          this.licenseModel.id=row.licenseID;
-          console.log(this.licenseModel);
-          this.addOrUpdate(this.licenseModel);
-          this.addForm.reset();
-        }
-      });
-  }
-  async addOrUpdate(item: LicenseModel) {
-    await this._licenseService
-      .update(item.id,item, 'License')
-       .subscribe(
-        (data) => {
-          if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-            this.setPage(0);
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        }
-      );
-  }
+  // updateLicense(content: any, row: OrderModel) {
+  //   this.modalService
+  //     .open(content, {
+  //       size: 'lg',
+  //       ariaLabelledBy: 'modal-basic-title',
+  //       centered: true,
+  //     })
+  //     .result.then((result: boolean) => {
+  //       if (result != undefined) {
+  //         this.licenseModel.rowID = row.id;
+  //         this.licenseModel.id=row.licenseID;
+  //         console.log(this.licenseModel);
+  //         this.addOrUpdate(this.licenseModel);
+  //         this.addForm.reset();
+  //       }
+  //     });
+  // }
+  // async addOrUpdate(item: LicenseModel) {
+  //   await this._licenseService
+  //     .update(item.id,item, 'License')
+  //      .subscribe(
+  //       (data) => {
+  //         if (data.success) {
+  //           this.toastr.success(data.message, null, {
+  //             closeButton: true,
+  //             positionClass: 'toast-top-left',
+  //           });
+  //           this.setPage(0);
+  //         } else {
+  //           this.toastr.error(data.message, null, {
+  //             closeButton: true,
+  //             positionClass: 'toast-top-left',
+  //           });
+  //         }
+  //       }
+  //     );
+  // }
 }

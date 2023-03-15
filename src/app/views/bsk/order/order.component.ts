@@ -33,6 +33,7 @@ import { OrderService } from './order.service';
 })
 export class OrderComponent implements OnInit {
   licenseID: number;
+  isValidate: boolean;
   // accountNumber: number;
   isOrderHaveLicense: boolean = false;
   invoiceDetail: InvoiceModel = new InvoiceModel();
@@ -241,40 +242,45 @@ export class OrderComponent implements OnInit {
   }
   onFileChanged(event: any) {
     let fileType = event.target.files[0].type.split('/');
-    this.licenseFile = event.target.files[0];
+    if (fileType[1] == 'x-zip-compressed') {
+      this.licenseFile = event.target.files[0];
+      this.isValidate = true;
+    } else {
+      this.isValidate = false;
+    }
   }
-  updateLicense(content: any, row: OrderModel) {
-    this.modalService
-      .open(content, {
-        size: 'lg',
-        ariaLabelledBy: 'modal-basic-title',
-        centered: true,
-      })
-      .result.then((result: boolean) => {
-        if (result != undefined) {
-          this.licenseModel.rowID = row.id;
-          this.licenseModel.id = row.licenseID;
-          console.log(this.licenseModel);
-          this.addOrUpdate2(this.licenseModel);
-          // this.addForm.reset();
-        }
-      });
-  }
-  async addOrUpdate2(item: LicenseModel) {
-    this._licenseService.update(item.id, item, 'License').subscribe((data) => {
-      if (data.success) {
-        this.toastr.success(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-      } else {
-        this.toastr.error(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-      }
-    });
-  }
+  // updateLicense(content: any, row: OrderModel) {
+  //   this.modalService
+  //     .open(content, {
+  //       size: 'lg',
+  //       ariaLabelledBy: 'modal-basic-title',
+  //       centered: true,
+  //     })
+  //     .result.then((result: boolean) => {
+  //       if (result != undefined) {
+  //         this.licenseModel.rowID = row.id;
+  //         this.licenseModel.id = row.licenseID;
+  //         console.log(this.licenseModel);
+  //         this.addOrUpdate2(this.licenseModel);
+  //         // this.addForm.reset();
+  //       }
+  //     });
+  // }
+  // async addOrUpdate2(item: LicenseModel) {
+  //   this._licenseService.update(item.id, item, 'License').subscribe((data) => {
+  //     if (data.success) {
+  //       this.toastr.success(data.message, null, {
+  //         closeButton: true,
+  //         positionClass: 'toast-top-left',
+  //       });
+  //     } else {
+  //       this.toastr.error(data.message, null, {
+  //         closeButton: true,
+  //         positionClass: 'toast-top-left',
+  //       });
+  //     }
+  //   });
+  // }
   uploadFile() {
     this._fileUploaderService
       .uploadLicence(this.licenseFile, 'licenses')
@@ -492,7 +498,9 @@ export class OrderComponent implements OnInit {
       });
   }
 
-  async addOrUpdate(item: LicenseModel, climax: CliamxLicenseModel) {
+  addOrUpdate(item: any, climax: CliamxLicenseModel) {
+    item.rowID = this.licenseModel.rowID;
+    item.filePath = this.licenseModel.filePath;
     item.versionNumber = this.versionNumber;
     if (this.startDate.year !== undefined) {
       item.startDate =
@@ -510,83 +518,82 @@ export class OrderComponent implements OnInit {
         '-' +
         this.expireDate.day;
     }
-    if (this.licenseID == null) {
-      this._licenseService.create(item, 'License').subscribe((data) => {
-        if (data.success) {
-          // if (climax !== null) {
-          //   climax.licenseId = data.data;
-          //   this._licenseService
-          //     .sendLicenseToClimax(climax)
-          //     .subscribe((dt: CliamxResponse) => {
-          //       if (dt.statusCode != 200) {
-          //         this.toastr.error(dt.message[0], 'خطای Cliamax', {
-          //           closeButton: true,
-          //           positionClass: 'toast-top-left',
-          //         });
-          //       } else {
-          //         this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
-          //           closeButton: true,
-          //           positionClass: 'toast-top-left',
-          //         });
-          //       }
-          //     });
-          // }
-          // var finder = this.rows.findIndex((row) => row.id === item.rowID);
-          // this.rows[finder].transactionStatus = 8;
-          // this.rows[finder].accountNumber=item.accountNumber
-          //this.rows.splice(finder, 1);
-          this.toastr.success(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-          this.getOrderbyStatus(this.status, this.page.pageNumber);
-        } else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
-    }
-    if (this.licenseID !== null || this.licenseID !== 0) {
-      this._licenseService
-        .update(this.licenseID, item, 'License')
-        .subscribe((data) => {
-          if (data.success) {
-            // if ((climax.licenseId = data.data.id)) {
-            //   this._licenseService
-            //     .sendLicenseToClimax(climax)
-            //     .subscribe((dt: CliamxResponse) => {
-            //       if (dt.statusCode != 200) {
-            //         this.toastr.error(dt.message[0], 'خطای Cliamax', {
-            //           closeButton: true,
-            //           positionClass: 'toast-top-left',
-            //         });
-            //       } else {
-            //         this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
-            //           closeButton: true,
-            //           positionClass: 'toast-top-left',
-            //         });
-            //         this.getOrderbyStatus(this.status, this.page.pageNumber);
-            //       }
-            //     });
-            // }
-            // var finder = this.rows.findIndex((row) => row.id === item.rowID);
-            // this.rows[finder].transactionStatus = 8;
-            // this.rows[finder].accountNumber=item.accountNumber
-            //this.rows.splice(finder, 1);
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
+    this._licenseService.create(item, 'License').subscribe((data) => {
+      if (data.success) {
+        // if (climax !== null) {
+        //   climax.licenseId = data.data;
+        //   this._licenseService
+        //     .sendLicenseToClimax(climax)
+        //     .subscribe((dt: CliamxResponse) => {
+        //       if (dt.statusCode != 200) {
+        //         this.toastr.error(dt.message[0], 'خطای Cliamax', {
+        //           closeButton: true,
+        //           positionClass: 'toast-top-left',
+        //         });
+        //       } else {
+        //         this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
+        //           closeButton: true,
+        //           positionClass: 'toast-top-left',
+        //         });
+        //       }
+        //     });
+        // }
+        // var finder = this.rows.findIndex((row) => row.id === item.rowID);
+        // this.rows[finder].transactionStatus = 8;
+        // this.rows[finder].accountNumber=item.accountNumber
+        //this.rows.splice(finder, 1);
+        this.toastr.success(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
         });
-    }
+        this.getOrderbyStatus(this.status, this.page.pageNumber);
+      } else {
+        this.toastr.error(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    });
+
+    // if (this.licenseID !== null || this.licenseID !== 0) {
+    //   this._licenseService
+    //     .update(this.licenseID, item, 'License')
+    //     .subscribe((data) => {
+    //       if (data.success) {
+    //         // if ((climax.licenseId = data.data.id)) {
+    //         //   this._licenseService
+    //         //     .sendLicenseToClimax(climax)
+    //         //     .subscribe((dt: CliamxResponse) => {
+    //         //       if (dt.statusCode != 200) {
+    //         //         this.toastr.error(dt.message[0], 'خطای Cliamax', {
+    //         //           closeButton: true,
+    //         //           positionClass: 'toast-top-left',
+    //         //         });
+    //         //       } else {
+    //         //         this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
+    //         //           closeButton: true,
+    //         //           positionClass: 'toast-top-left',
+    //         //         });
+    //         //         this.getOrderbyStatus(this.status, this.page.pageNumber);
+    //         //       }
+    //         //     });
+    //         // }
+    //         // var finder = this.rows.findIndex((row) => row.id === item.rowID);
+    //         // this.rows[finder].transactionStatus = 8;
+    //         // this.rows[finder].accountNumber=item.accountNumber
+    //         //this.rows.splice(finder, 1);
+    //         this.toastr.success(data.message, null, {
+    //           closeButton: true,
+    //           positionClass: 'toast-top-left',
+    //         });
+    //       } else {
+    //         this.toastr.error(data.message, null, {
+    //           closeButton: true,
+    //           positionClass: 'toast-top-left',
+    //         });
+    //       }
+    //     });
+    // }
   }
   // } else {
   //   await this._licenseService
