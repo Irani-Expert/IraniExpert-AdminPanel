@@ -8,4 +8,5 @@ export class UserNeedModel extends Base implements IUserNeed {
   phoneNumber: string;
   text: string;
   userWant: number;
+  createDate:string;
 }

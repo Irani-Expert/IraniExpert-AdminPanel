@@ -7,4 +7,5 @@ export interface IUserNeed extends IBase {
   phoneNumber: string;
   text: string;
   userWant: number;
+  createDate:string;
 }
