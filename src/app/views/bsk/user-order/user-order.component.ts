@@ -62,7 +62,6 @@ export class UserOrderComponent implements OnInit {
       )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
-          
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
@@ -91,7 +90,7 @@ export class UserOrderComponent implements OnInit {
   addPay(order: OrderModel) {
     let ref = this.modalService.open(AddPaymentComponent, {
       windowClass: 'radius-sm border-0 ',
-      size: 'sm',
+      size: 'md',
       ariaLabelledBy: 'modal-basic-title',
       centered: true,
       backdropClass: 'bg-dark',
