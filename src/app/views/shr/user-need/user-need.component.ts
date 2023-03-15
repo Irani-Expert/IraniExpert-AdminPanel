@@ -1,4 +1,10 @@
-import { Component, OnInit, QueryList, ViewChildren ,HostListener} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  QueryList,
+  ViewChildren,
+  HostListener,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
@@ -46,12 +52,7 @@ export class UserNeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-<<<<<<< HEAD
-  
-    this.userInfo = this.auth.currentUserValue;    
-=======
     this.userInfo = this.auth.currentUserValue;
->>>>>>> 660e637b32779c89c44d7196311250e9b467be80
     this.setPage(this.page.pageNumber, null);
     this.updateNotebar();
     this.router.events
@@ -66,40 +67,31 @@ export class UserNeedComponent implements OnInit {
     this.page.pageNumber = pageInfo;
     this.getUserNeedByUserWant(userWant, pageInfo);
   }
- 
 
-  @HostListener("window:scroll", [])
+  @HostListener('window:scroll', [])
   onWindowScroll() {
     var scroller = document.getElementById('scrollPart');
-  
 
-    if (document.documentElement.scrollTop > 150 ) {
-			scroller?.classList.add('afterScroll');
+    if (document.documentElement.scrollTop > 150) {
+      scroller?.classList.add('afterScroll');
       scroller?.classList.remove('auther-start');
-  
-     
-		} else {
-      debugger
+    } else {
+      debugger;
       scroller?.classList.add('auther-start');
-   
-			scroller?.classList.remove('afterScroll');
 
-
-		
-		}
+      scroller?.classList.remove('afterScroll');
+    }
     var comments = document.getElementById('comments');
 
-		if (document.documentElement.scrollTop +600 > comments!.offsetHeight) {
-			scroller?.classList.remove('afterScroll');
+    if (document.documentElement.scrollTop + 600 > comments!.offsetHeight) {
+      scroller?.classList.remove('afterScroll');
       scroller?.classList.remove('auther-start');
       scroller?.classList.add('auther-end');
-		} else {
-			scroller?.classList.remove('auther-end');
-		}
-
-
+    } else {
+      scroller?.classList.remove('auther-end');
+    }
   }
-  
+
   getUserNeedByUserWant(userWant: any, pageNumber: number) {
     this.userWant = userWant;
     this._UserNeedService
@@ -110,16 +102,16 @@ export class UserNeedComponent implements OnInit {
           var scrollPart = document.getElementById('scrollPart');
 
           var counter = 0;
-          this.rows.forEach(x=>{
-           this.rows[counter].createDate = moment(
-             this.rows[counter].createDate,
-             'YYYY/MM/DD'
-           )
-             .locale('fa')
-             .format('YYYY/MM/DD');
-        
-             counter++;
-          })
+          this.rows.forEach((x) => {
+            this.rows[counter].createDate = moment(
+              this.rows[counter].createDate,
+              'YYYY/MM/DD'
+            )
+              .locale('fa')
+              .format('YYYY/MM/DD');
+
+            counter++;
+          });
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
@@ -145,28 +137,12 @@ export class UserNeedComponent implements OnInit {
         null,
         'UserNeed'
       )
-<<<<<<< HEAD
-      .subscribe(
-        (res: Result<Paginate<UserNeedModel[]>>) => {
-
-          this.rows = res.data.items;
-         
-        
-        
-    
-          this.page.totalElements = res.data.totalCount;
-          this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber + 1;
-        }
-      );
-=======
       .subscribe((res: Result<Paginate<UserNeedModel[]>>) => {
         this.rows = res.data.items;
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber + 1;
       });
->>>>>>> 660e637b32779c89c44d7196311250e9b467be80
   }
   deleteUserNeed(id: any, modal: any) {
     this.modalService
@@ -203,37 +179,24 @@ export class UserNeedComponent implements OnInit {
   getNoteList(row: UserNeedModel) {
     this.note = row;
   }
-  addComent(){
-    this.addCommentRows.text=this.addComentText
-    this.addCommentRows.rate=0
-    this.addCommentRows.email=this.userInfo.subject
-    this.addCommentRows.name=this.userInfo.firstName+" "+this.userInfo.lastName
-    this.addCommentRows.rowID=this.rowIdKeeper
-    this.addCommentRows.isAccepted=true
-    this.addCommentRows.tableType=10
-    this.addCommentRows.parentID=null
-    this.addCommentRows.createDate=new Date()
-   
-
-    
-  
+  addComent() {
+    this.addCommentRows.text = this.addComentText;
+    this.addCommentRows.rate = 0;
+    this.addCommentRows.email = this.userInfo.subject;
+    this.addCommentRows.name =
+      this.userInfo.firstName + ' ' + this.userInfo.lastName;
+    this.addCommentRows.rowID = this.rowIdKeeper;
+    this.addCommentRows.isAccepted = true;
+    this.addCommentRows.tableType = 10;
+    this.addCommentRows.parentID = null;
+    this.addCommentRows.createDate = new Date();
 
     this._UserNeedService
       .create(this.addCommentRows, 'Comment')
 
       .subscribe((data) => {
         if (data.success) {
-<<<<<<< HEAD
-          this.addCommentRows.jalaliDate = moment(
-            this.addCommentRows.createDate,
-            'YYYY/MM/DD'
-          )
-            .locale('fa')
-            .format('YYYY/MM/DD');
-          this.commentRows.push(this.addCommentRows)
-=======
           this.commentRows.unshift(this.addCommentRows);
->>>>>>> 660e637b32779c89c44d7196311250e9b467be80
           this.toastr.success(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -246,32 +209,6 @@ export class UserNeedComponent implements OnInit {
         }
       });
   }
-<<<<<<< HEAD
-  getComment(item: UserNeedModel){
-    this.onWindowScroll()
-    this.rowIdKeeper=item.id
-    
-    this._UserNeedService
-    .getCommentByRowid(
-      item.id)
-    .subscribe(
-      (res: Result<Paginate<CommentModel[]>>) => {
-        var scrollbar = document.getElementById('scrollbar2');
-        scrollbar?.classList.remove('minimum-height');
-        this.commentRows = res.data.items;
-        var counter=0;
-        this.commentRows.forEach(x=>{
-          this.commentRows[counter].jalaliDate = moment(
-            this.commentRows[counter].createDate,
-            'YYYY/MM/DD'
-          )
-            .locale('fa')
-            .format('YYYY/MM/DD');
-            
-            counter++;
-         })
-        
-=======
   getComment(item: UserNeedModel) {
     this.rowIdKeeper = item.id;
     this._UserNeedService
@@ -280,7 +217,6 @@ export class UserNeedComponent implements OnInit {
         this.commentRows = res.data.items;
         console.log(this.commentRows);
 
->>>>>>> 660e637b32779c89c44d7196311250e9b467be80
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber + 1;
@@ -311,4 +247,3 @@ export class UserNeedComponent implements OnInit {
 function testFunctio() {
   throw new Error('Function not implemented.');
 }
-
