@@ -15,16 +15,16 @@ import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.s
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Utils } from 'src/app/shared/utils';
 import { CommentService } from '../../prd/comment/comment.service';
-import { InvoiceModel } from '../invoice/invoice.model';
-import { InvoiceService } from '../invoice/invoice.service';
+import { InvoiceModel } from './models/invoice.model';
+import { InvoiceService } from './services/invoice.service';
 import {
   CliamxLicenseModel,
   CliamxResponse,
-} from '../license/cliamaxLicense.model';
-import { LicenseModel } from '../license/license.model';
-import { LicenseService } from '../license/license.service';
-import { OrderModel } from './order.model';
-import { OrderService } from './order.service';
+} from './models/cliamaxLicense.model';
+import { LicenseModel } from './models/license.model';
+import { LicenseService } from './services/license.service';
+import { OrderModel } from './models/order.model';
+import { OrderService } from './services/order.service';
 
 @Component({
   selector: 'app-order',

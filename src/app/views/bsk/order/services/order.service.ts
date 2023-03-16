@@ -6,8 +6,8 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
-import { referraluserModel } from '../../dashboard/referral-user/referral-user.model';
-import { OrderModel } from './order.model';
+import { referraluserModel } from '../../../dashboard/referral-user/referral-user.model';
+import { OrderModel } from '../models/order.model';
 interface INoteSidebar {
   sidenavOpen?: boolean;
 }

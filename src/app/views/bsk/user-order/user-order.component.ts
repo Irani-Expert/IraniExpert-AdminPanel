@@ -8,8 +8,8 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
-import { OrderModel } from '../order/order.model';
-import { OrderService } from '../order/order.service';
+import { OrderModel } from '../order/models/order.model';
+import { OrderService } from '../order/services/order.service';
 import { AddPaymentComponent } from 'src/app/shared/components/add-payment/add-payment.component';
 import * as moment from 'jalali-moment';
 
@@ -89,8 +89,9 @@ export class UserOrderComponent implements OnInit {
   }
   addPay(order: OrderModel) {
     let ref = this.modalService.open(AddPaymentComponent, {
-      windowClass: 'radius-sm border-0 ',
+      windowClass: 'border-0 ',
       size: 'md',
+      backdrop: true,
       ariaLabelledBy: 'modal-basic-title',
       centered: true,
       backdropClass: 'bg-dark',

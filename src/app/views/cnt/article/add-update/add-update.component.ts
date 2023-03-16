@@ -18,7 +18,7 @@ import { GroupService } from 'src/app/views/bas/group/group.service';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Base } from 'src/app/shared/models/Base/base.model';
-import { CliamxLicenseModel } from 'src/app/views/bsk/license/cliamaxLicense.model';
+import { CliamxLicenseModel } from 'src/app/views/bsk/order/models/cliamaxLicense.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { async, lastValueFrom } from 'rxjs';
 @Component({

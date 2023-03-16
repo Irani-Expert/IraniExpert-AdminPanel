@@ -211,6 +211,9 @@
     alt=""
   />
 </div>
+
+<!------------------------------------------------- Delete Modal -->
+
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-title">حذف امکان</h4>
@@ -246,6 +249,7 @@
   </div>
 </ng-template>
 
+<!------------------------------------------------- Details Modal -->
 <ng-template #openDetails let-modal>
   <div>
     <div class="modal-header">
@@ -436,37 +440,6 @@
               <option value="99">عدم پرداخت</option>
             </select>
           </div>
-
-          <!-- <div class="col-md-3 form-group mb-3">
-            <strong for="bankType" class="mb-3">نوع بانک</strong>
-            <input
-              class="form-control mt-1 bg-success text-white"
-              id="bankType"
-              rows="1"
-              value="{{invoiceDetail.bankType|bankType}}"
-              disabled
-            />
-
-          </div> -->
-          <!-- <div class="col-md-3 form-group mb-3">
-            <strong for="backMethodType" class="mb-3">قیمت نهایی برای پرداخت</strong>
-            <input
-              class="form-control mt-1 bg-success text-white"
-              id="backMethodType"
-              rows="1"
-              value="{{invoiceDetail.backMethodType|bankMethod}}"
-              disabled
-            />
-
-          </div> -->
-          <!-- [ngClass]="{
-            'bg-primary': invoiceDetail.status === 0 ,
-            'bg-light text-dark': invoiceDetail.status === 1 ,
-            'bg-info': invoiceDetail.status === 2 ,
-            'bg-success': invoiceDetail.status === 3 ,
-            'bg-info': invoiceDetail.status === 4 ,
-            'bg-warning text-dark': invoiceDetail.status === 98 ,
-            'bg-danger': invoiceDetail.status === 99 }" -->
         </div>
       </div>
     </div>
@@ -481,6 +454,9 @@
     </div>
   </div>
 </ng-template>
+
+<!------------------------------------------------- sendLicense Modal -->
+
 <ng-template #sendLicense let-modal>
   <div>
     <div class="modal-header">
@@ -543,24 +519,26 @@
 
         <div class="col-md-3 form-group mb-3" dir="ltr">
           <strong for="startDate" class="mb-3">تاریخ شروع</strong>
-          <!-- <button (click)="s.toggle()" class="mb-3 btn btn-primary">
-              تاریخ شروع
-            </button> -->
+
           <input
             (click)="s.toggle()"
             type="text"
             class="form-control"
             ngbDatepicker
+            placeholder="{{
+              licenceModel.startDate | date : 'h:mm , yyyy/M/d'
+            }}"
             #s="ngbDatepicker"
             [(ngModel)]="startDate"
           />
         </div>
         <div class="col-md-3 form-group mb-3" dir="ltr">
           <strong for="expireDate" class="mb-3">تاریخ انقضا</strong>
-          <!-- <button (click)="e.toggle()" class="mb-3 btn btn-primary">
-              تاریخ انقضا
-            </button> -->
+
           <input
+            placeholder="{{
+              licenceModel.expireDate | date : 'h:mm , yyyy/M/d'
+            }}"
             (click)="e.toggle()"
             type="text"
             class="form-control"
@@ -571,26 +549,14 @@
         </div>
         <div class="col-md-3 form-group mb-3" dir="ltr">
           <strong for="versionNumber" class="mb-3">Version Number</strong>
-          <!-- <button (click)="e.toggle()" class="mb-3 btn btn-primary">
-              تاریخ انقضا
-            </button> -->
+
           <input type="text" class="form-control" [(ngModel)]="versionNumber" />
         </div>
         <div class="col-md-5 form-group mb-3" dir="ltr">
           <strong for="accountNumber" class="mb-3">شماره حساب کاربر</strong>
-          <!-- <button (click)="e.toggle()" class="mb-3 btn btn-primary">
-              تاریخ انقضا
-            </button> -->
+
           <input type="text" class="form-control" [(ngModel)]="accountNumber" />
         </div>
-        <!-- <div class="col-md-3 form-group mb-3">
-            <strong for="rowID" class="mb-3">شماره سفارش</strong>
-            <input
-              type="text"
-              class="form-control"
-              disabled
-            />
-          </div> -->
       </div>
     </div>
     <div class="modal-footer">

@@ -1,5 +1,5 @@
 import { Base } from 'src/app/shared/models/Base/base.model';
-import { OrderModel } from '../order/order.model';
+import { OrderModel } from './order.model';
 import { IInvoice } from './invoice.interface';
 
 export class InvoiceModel extends Base implements IInvoice {
@@ -18,5 +18,5 @@ export class InvoiceModel extends Base implements IInvoice {
   backMethodType: number;
   isConfirmed: boolean;
   tableType: number;
-  userID:number;
+  userID: number;
 }

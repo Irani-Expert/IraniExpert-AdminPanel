@@ -1,6 +1,6 @@
 import { IBase } from 'src/app/shared/interfaces/Base/base.interface';
-import { IOrder } from '../order/order.interface';
-import { OrderModel } from '../order/order.model';
+import { IOrder } from './order.interface';
+import { OrderModel } from './order.model';
 
 export interface IInvoice extends IBase {
   updateDate: Date;
