@@ -2,9 +2,7 @@
   [ngClass]="{ open: navService.sidebarState.sidenavOpen }"
   class="sidebar-left rtl-ps-none rounded-4 bg-lightdark shadow-lg"
   [perfectScrollbar]="{
-    suppressScrollX: true,
-    wheelPropagation: true,
-    useBothWheelAxix: true
+    suppressScrollX: true
   }"
 >
   <div class="logo">
@@ -55,8 +53,7 @@
   [ngClass]="{ open: navService.sidebarState.childnavOpen }"
   class="sidebar-left-secondary rtl-ps-none bg-dark rounded-4"
   [perfectScrollbar]="{
-    suppressScrollX: true,
-    wheelPropagation: true
+    suppressScrollX: true
   }"
   (mouseleave)="closeChildNav()"
 >

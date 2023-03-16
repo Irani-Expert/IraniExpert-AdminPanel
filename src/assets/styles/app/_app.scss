@@ -238,3 +238,12 @@
 .bg-gray {
   background-color: rgb(100, 100, 100);
 }
+
+.bg--primary {
+  background: linear-gradient(
+    169deg,
+    rgba(36, 213, 111, 1) 0%,
+    rgba(102, 226, 174, 1) 48%,
+    rgba(109, 190, 172, 1) 89%
+  );
+}

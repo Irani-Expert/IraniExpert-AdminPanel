@@ -28,7 +28,7 @@ export class GroupComponent implements OnInit {
     private _formBuilder: FormBuilder
   ) {
     this.page.pageNumber = 0;
-    this.page.size = 12;
+    this.page.size = 8;
   }
 
   ngOnInit() {
@@ -116,7 +116,6 @@ export class GroupComponent implements OnInit {
 
           this.rows.unshift(row);
           this.addForm.reset;
- 
         } else {
           this.toastr.error(data.message, null, {
             closeButton: true,
@@ -134,7 +133,6 @@ export class GroupComponent implements OnInit {
 
           this.updateArray(row);
           this.addForm.reset;
-
         } else {
           this.toastr.error(data.message, null, {
             closeButton: true,

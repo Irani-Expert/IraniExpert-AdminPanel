@@ -10,176 +10,72 @@
 
 <div class="separator-breadcrumb border-top"></div>
 
-<div class="row list-horizontal">
-  <div
-    class="list-item"
-    [ngClass]="{
-      'col-md-12': viewMode === 'list',
-      'col-md-3': viewMode === 'grid'
-    }"
-  >
-    <div
-      class="card bg-dark o-hidden mb-4 d-flex"
-      [ngClass]="{
-        'flex-row': viewMode === 'list',
-        'flex-column': viewMode === 'grid'
-      }"
-    >
-      <div
-        class="flex-grow-1"
-        [ngClass]="{
-          'pl-2 d-flex': viewMode === 'list',
-          'd-block': viewMode === 'grid'
-        }"
-      >
-        <div class="align-self-center text-white">ID</div>
-        <div
-          id="myHeader"
-          class="card-body align-self-center d-flex align-items-lg-center row text-center"
-          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-        >
-          <!-- OTHER DATA -->
-          <div class="m-0 text-white col text-lg-center">عنوان</div>
-          <div class="m-0 text-white col text-lg-center">عنوان مجموعه اصلی</div>
-          <div class="m-0 text-white col text-lg-center">وضعیت</div>
+<section class="main-table">
+  <table class="table">
+    <thead class="bg-dark text-white">
+      <tr>
+        <th class="rounded--right">ID</th>
+        <th>عنوان</th>
+        <th>عنوان مجموعه اصلی</th>
+        <th>وضعیت</th>
+        <th class="rounded--left">عملیات</th>
+      </tr>
+    </thead>
 
-          <div
-            class="m-0 col d-md-block text-light d-lg-block d-xl-block d-sm-none d-none text-lg-center"
-          >
-            عملیات
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- SINGLE LIST ITEM -->
-  <div
-    *ngFor="
-      let item of rows
-        | paginate
-          : {
-              itemsPerPage: page.size,
-              page: page.pageNumber,
-              currentPage: page.pageNumber,
-              totalItems: page.totalElements
-            }
-    "
-    class="list-item"
-    [ngClass]="{
-      'col-md-12': viewMode === 'list',
-      'col-md-3': viewMode === 'grid'
-    }"
-  >
-    <div
-      class="card o-hidden mb-4 d-flex"
-      [ngClass]="{
-        'flex-row-2': viewMode === 'list',
-        'flex-column': viewMode === 'grid'
-      }"
-    >
-      <div class="list-thumb">
-        <!-- TUMBNAIL -->
-      </div>
-      <div
-        class="flex-grow-1"
-        [ngClass]="{
-          'pl-2 d-flex': viewMode === 'list',
-          'd-block': viewMode === 'grid'
-        }"
+    <tbody>
+      <tr
+        *ngFor="
+          let item of rows
+            | paginate
+              : {
+                  itemsPerPage: page.size,
+                  page: page.pageNumber,
+                  currentPage: page.pageNumber,
+                  totalItems: page.totalElements
+                }
+        "
       >
-        <div class="align-self-center">{{ item.id }}</div>
-        <div
-          class="card-body align-self-center text-center d-flex align-items-lg-center row"
-          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-        >
-          <!-- OTHER DATA -->
-          <div class="m-0 col briefed-text">
-            {{ item.title }}
-          </div>
-          <p class="m-0 col briefed-text">
-            {{ item.parentGroupTitle }}
-          </p>
-          <div
-            class="m-0 text-white col briefed-text"
-            *ngIf="item.parentGroupTitle === null"
+        <td>{{ item.id }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.parentGroupTitle }}</td>
+        <td *ngIf="item.parentGroupTitle === null">ندارد</td>
+        <td *ngIf="item.isActive === false">
+          <span class="badge badge-dark badge-rounder p-2">غیر فعال<</span>
+        </td>
+        <td *ngIf="item.isActive === true">
+          <span class="badge badge-success badge-rounder text-center p-2"
+            >فعال</span
           >
-            ندارد
-          </div>
-          <div class="col">
-            <div
-              *ngIf="item.isActive === false"
-              class="badge badge-dark badge-rounder text-center p-2"
-            >
-              غیر فعال
-            </div>
-            <div
-              *ngIf="item.isActive === true"
-              class="badge badge-success badge-rounder text-center p-2"
-            >
-              فعال
-            </div>
-          </div>
-          <div
-            class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+        </td>
+        <td class="td-oprate">
+          <button
+            *appCanAccess="'Group-Edit'"
+            class="btn btn-warning"
+            (click)="addorEdit(addUpdateModal, item)"
           >
-            <div class="text-center col-auto d-flex justify-content-around">
-              <div class="w-25 w-sm-100 mr-sm-2">
-                <button
-                  *appCanAccess="'Group-Edit'"
-                  class="btn btn-warning"
-                  (click)="addorEdit(addUpdateModal, item)"
-                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                >
-                  ویرایش
-                </button>
-              </div>
-              <div class="w-25 w-sm-100 ml-sm-2">
-                <button
-                  *appCanAccess="'Group-Delete'"
-                  class="btn btn-danger"
-                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="deleteGroup(item, deleteConfirmModal)"
-                >
-                  حذف
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
-      >
-        <h6 class="text-center">عملیات</h6>
-        <button
-          type="button"
-          [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          (click)="deleteGroup(item, deleteConfirmModal)"
-          class="btn btn-outline-danger col m-1"
-        >
-          حذف
-        </button>
-        <button
-          (click)="addorEdit(addUpdateModal, item)"
-          type="button"
-          [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          class="btn btn-outline-warning col m-1"
-        >
-          ویرایش
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- PAGINATION CONTROL -->
+            ویرایش
+          </button>
+          <button
+            *appCanAccess="'Group-Delete'"
+            class="btn btn-danger"
+            (click)="deleteGroup(item, deleteConfirmModal)"
+          >
+            حذف
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
 
-  <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
-    <pagination-controls
-      (pageChange)="setPage($event)"
-      previousLabel=""
-      nextLabel=""
-    ></pagination-controls>
-  </div>
+<div class="mt-3" *ngIf="rows?.length > 0">
+  <pagination-controls
+    (pageChange)="setPage($event)"
+    previousLabel=""
+    nextLabel=""
+  ></pagination-controls>
 </div>
+
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
     src="../../../../../assets/images/97434-no-data-available.gif"
