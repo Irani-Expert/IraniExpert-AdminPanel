@@ -120,6 +120,14 @@ export class NavigationService {
     },
 
     {
+      icon: 'i-Dollar-Sign-2',
+      name: 'پورسانت',
+      state: '/bsk/commission',
+      type: 'link',
+      privilege: 'CheckOrders-Full Premission',
+    },
+
+    {
       name: 'تخصیص دسترسی به کاربران',
       type: 'link',
       icon: 'i-Add-UserStar',

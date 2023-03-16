@@ -17,7 +17,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'user-orders',
+    path: 'commission',
     component: CommissionComponent,
     canActivate: [AuthGuard],
   },

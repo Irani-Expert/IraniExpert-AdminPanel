@@ -1,0 +1,48 @@
+.border_main {
+  border: 2px dashed rgb(146, 122, 122);
+}
+.bg_purple {
+  background-color: purple;
+}
+.rounded--title {
+  border-radius: 10px;
+}
+.max-w-300 {
+  max-width: 300px !important;
+}
+
+// table
+// ***
+// **
+
+.main-table {
+  overflow-x: scroll;
+}
+.main-table {
+  .table {
+    margin: 0 auto;
+  }
+}
+table th,
+td {
+  min-width: 150px;
+  // border: 1px solid black;
+  padding: 20px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: unset !important;
+}
+.rounded--right {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.rounded--left {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.td-oprate > button,
+a {
+  margin: 0 5px;
+}
