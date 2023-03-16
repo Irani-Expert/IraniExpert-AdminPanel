@@ -203,7 +203,6 @@ export class UserNeedComponent implements OnInit {
           )
             .locale('fa')
             .format('YYYY/MM/DD');
-          this.commentRows.push(this.addCommentRows)
           this.commentRows.unshift(this.addCommentRows);
           this.toastr.success(data.message, null, {
             closeButton: true,
