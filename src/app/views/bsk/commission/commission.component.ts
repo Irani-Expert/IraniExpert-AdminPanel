@@ -13,8 +13,9 @@ export class CommissionComponent implements OnInit {
 
   page = {
     size: 6,
-    pageNumber: 1,
+    pageToGo: 3,
     totalElements: 0,
+    currentPage: 1,
   };
   constructor(private _commission: CommissionService) {}
 
@@ -25,7 +26,7 @@ export class CommissionComponent implements OnInit {
       this.page.totalElements = thing.data.orders.length;
     });
   }
-  setPage(pageNumber: number) {
-    this.page.pageNumber += 1;
+  setPage(_pageNumber: number) {
+    this.page.currentPage = _pageNumber;
   }
 }

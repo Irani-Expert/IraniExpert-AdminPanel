@@ -6,6 +6,7 @@ export interface ICommission extends IBase {
     {
       contractID: number;
       commission: number;
+      contractTitle: string;
     }
   ];
   orders: [
