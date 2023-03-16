@@ -1,7 +1,7 @@
 .gif-fluid {
   object-fit: contain;
   width: 100%;
-  height: 400px;
+  // height: 400px;
 }
 @media screen and (max-width: 1463px) {
   .margin-right {
@@ -11,7 +11,7 @@
 .notebar-left {
   position: fixed;
   top: 80px;
-  height: calc(100vh - #{80px});
+  // height: calc(100vh - #{80px});
   background: #fff;
   box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.08);
 }
@@ -101,6 +101,7 @@
   background-color: #6e6446;
 }
 .add-comment-header-border{
+  height: 15%;
   border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
 }
@@ -109,7 +110,7 @@
   border-top-right-radius: 0.75rem;
 }
 .comment-scroll{
-  height: 350px;
+  // height: 350px;
   
   overflow-y: scroll;
 }
@@ -128,49 +129,61 @@
         }
 .position-sm{
   position: static;
+  height:500px;
  }
  .card-body {
   padding-bottom: 0px!important;
  }
  @media  (min-width: 499px) {
+  .note-height{
+    width: 450px;
+    }
   .auther-start {
     position: absolute !important;
-    min-width: 450px;
   }
   .minimum-height{
-    min-height: 500px;
+   height: 70%;
   }
   .afterScroll{
     position: fixed !important;
     top: 90px !important;
 
-    min-width: 450px;
+
+ 
   }
   
 
 .auther-end{
   position: absolute !important;
-  min-width: 450px;
+ 
   bottom: 0 !important;
 }
 
 }
-
+.comment-scroll{
+  height: 65% !important;
+ 
+}
+.note-footer{
+  height: 35%;
+}
 @media screen and (max-height: 750px) {
 
 
   .afterScroll{
   bottom: 100px;
+
+
   }
-  .comment-scroll{
-    height: 250px !important;
-    
-  }
+
 }
 
 .noteWidth{
   @media  (max-width: 499px) {
     
-
 }
+}
+.note-height{
+
+  height: inherit;
 }

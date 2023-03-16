@@ -37,7 +37,7 @@
     </div>
   </div>
 </div>
-<div class=" my-css d-flex flex-wrap w-100" >
+<div class=" my-css d-flex flex-wrap w-100 pb-5" >
  
   <div
   class="col-xl-8 "
@@ -112,63 +112,64 @@ let item of rows
 </div>
 
 <div class="col-md-4 noteWidth " *ngIf="rows?.length != 0">
- <div class="  p-0  position-sm" id="scrollPart"  >
-<div class=" p-0"  >
-  <div class="card-header bg-light-dark  pl-0 add-comment-header-border">
-    <div class="p-2"><h4 class="pl-2 text-white">یادداشت ها</h4></div>
-  </div>
-  <div class="card-body comment-scroll bg-gray minimum-height" id="scrollbar2">
-    <div class="my-css">
-      <div>
-        <div class="timeline-card card mt-2" *ngFor="let item of commentRows">
-          <div class="card-header bg-dark m-0 p-0">
-            <p class="text-white m-0 p-2">{{item.name}}</p>
+    <div class="  p-0  position-sm auther-start " id="scrollPart"  >
+      <div class=" p-0 note-height"   >
+        <div class="card-header bg-light-dark  pl-0 add-comment-header-border">
+          <div class="p-2"><h4 class="pl-2 text-white">یادداشت ها</h4></div>
+        </div>
+        <div class="card-body comment-scroll bg-gray minimum-height" id="scrollbar2">
+          <div class="my-css">
+            <div>
+              <div class="timeline-card card mt-2" *ngFor="let item of commentRows">
+                <div class="card-header bg-dark m-0 p-0">
+                  <p class="text-white m-0 p-2">{{item.name}}</p>
+                </div>
+                <div class="card-body bg-secondary">
+                  <p class="text-white" >
+                    {{item.text}}
+                  </p>
+                  <div class="row
+                  ">
+                  <div class="col">
+                    <p class="text-white" maxlength="5">{{item.createDate | date : "   yyyy/M/d, h:mm "}}</p>
+                  </div>
+                  <div class="col d-flex justify-content-end">
+                    <p class="text-white" maxlength="5">{{item.jalaliDate}}</p>
+                  </div>
+                  </div>
+                  
+                </div>
+              
+              </div>
+            </div>
+        </div>
+        </div>
+        <div class="card-footer bg-gray note-footer">
+          <div class="ml-3" *ngIf="rowIdKeeper!=null ">
+            <form action="">
+              <div class="row">
+                <div class="col-10 form-group mb-3 mt-3">
+                  <label class="text-white" for="title">ایجاد یادداشت</label>
+                  <textarea
+                    type="text"
+                    class="form-control bg-dark textarea-font"
+                    [(ngModel)]="addComentText"
+                    name="addComentToUserNeed"
+                  ></textarea>
+                </div>
+              </div>
+            </form>
+            <button type="button" class="btn btn-light mb-2" (click)="addComent()"
+            [disabled]="addComentText=='' || rowIdKeeper==null " >ایجاد</button>
           </div>
-          <div class="card-body bg-secondary">
-            <p class="text-white" >
-              {{item.text}}
-            </p>
-            <div class="row
-            ">
-            <div class="col">
-              <p class="text-white" maxlength="5">{{item.createDate | date : "   yyyy/M/d, h:mm "}}</p>
-            </div>
-            <div class="col d-flex justify-content-end">
-              <p class="text-white" maxlength="5">{{item.jalaliDate}}</p>
-            </div>
-            </div>
-            
-          </div>
+        </div>
         
-        </div>
+             
+        
+      
+      </div> 
       </div>
-  </div>
-  </div>
-  <div class="card-footer bg-gray">
-    <div class="ml-3" *ngIf="rowIdKeeper!=null ">
-      <form action="">
-        <div class="row">
-          <div class="col-10 form-group mb-3 mt-3">
-            <label class="text-white" for="title">ایجاد یادداشت</label>
-            <textarea
-              type="text"
-              class="form-control bg-dark textarea-font"
-              [(ngModel)]="addComentText"
-              name="addComentToUserNeed"
-            ></textarea>
-          </div>
-        </div>
-      </form>
-      <button type="button" class="btn btn-light mb-2" (click)="addComent()"
-      [disabled]="addComentText=='' || rowIdKeeper==null " >ایجاد</button>
-    </div>
-  </div>
-  
-       
-  
 
-</div> 
-</div>
 <div></div>
 </div>
 </div>
