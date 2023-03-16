@@ -63,7 +63,7 @@ export class OrderComponent implements OnInit {
   @ViewChildren(PerfectScrollbarDirective)
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
-  dateValue: string = 'تاریخ ثبت ';
+  dateValue: string = 'تاریخ ثبت به میلادی';
 
   headerValue: string = 'کد رهگیری';
 
@@ -114,8 +114,8 @@ export class OrderComponent implements OnInit {
   }
 
   changeDateValue() {
-    if (this.dateValue != 'تاریخ ثبت ') {
-      this.dateValue = 'تاریخ ثبت ';
+    if (this.dateValue != 'تاریخ ثبت به میلادی') {
+      this.dateValue = 'تاریخ ثبت به میلادی';
     } else {
       this.dateValue = ' تاریخ ثبت به شمسی';
     }

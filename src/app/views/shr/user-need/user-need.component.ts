@@ -82,8 +82,9 @@ export class UserNeedComponent implements OnInit {
       scroller?.classList.remove('afterScroll');
     }
     var comments = document.getElementById('comments');
-
-    if (document.documentElement.scrollTop + 600 > comments!.offsetHeight) {
+     console.log(window.innerHeight);
+     
+    if (document.documentElement.scrollTop + 400 > comments!.offsetHeight) {
       scroller?.classList.remove('afterScroll');
       scroller?.classList.remove('auther-start');
       scroller?.classList.add('auther-end');
@@ -202,7 +203,6 @@ export class UserNeedComponent implements OnInit {
           )
             .locale('fa')
             .format('YYYY/MM/DD');
-          this.commentRows.push(this.addCommentRows)
           this.commentRows.unshift(this.addCommentRows);
           this.toastr.success(data.message, null, {
             closeButton: true,

@@ -92,7 +92,7 @@
         <td>{{ item.accountNumber }}</td>
         <td>{{ item.product }}|{{ item.plan }}</td>
         <td>{{ item.price | currency }}</td>
-        <td *ngIf="dateValue == 'تاریخ ثبت '">
+        <td *ngIf="dateValue == 'تاریخ ثبت به میلادی'">
           {{ item.createDate | date : " YYYY d MMMM " }}
         </td>
         <td *ngIf="dateValue == ' تاریخ ثبت به شمسی'">
@@ -504,8 +504,8 @@
             (change)="onFileChanged($event)"
           />
         </div>
-        <ng-container *ngIf="!licenseModel.fileExists">
-          <strong class="text-danger col-12">فایل ارسالی باید zip باشد</strong>
+        <ng-container >
+          <strong *ngIf="!licenseModel.fileExists" class="text-danger col-12">فایل ارسالی باید zip باشد</strong>
           <div class="col-12 mt-2 mb-2">
             <button
               class="btn btn-primary col-2"
@@ -525,9 +525,7 @@
             type="text"
             class="form-control"
             ngbDatepicker
-            placeholder="{{
-              licenceModel.startDate | date : 'h:mm , yyyy/M/d'
-            }}"
+           
             #s="ngbDatepicker"
             [(ngModel)]="startDate"
           />
@@ -536,9 +534,7 @@
           <strong for="expireDate" class="mb-3">تاریخ انقضا</strong>
 
           <input
-            placeholder="{{
-              licenceModel.expireDate | date : 'h:mm , yyyy/M/d'
-            }}"
+           
             (click)="e.toggle()"
             type="text"
             class="form-control"
