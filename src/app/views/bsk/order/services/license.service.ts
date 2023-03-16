@@ -5,9 +5,12 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
-import { OrderModel } from '../order/order.model';
-import { CliamxLicenseModel, CliamxResponse } from './cliamaxLicense.model';
-import { LicenseModel } from './license.model';
+import { OrderModel } from '../models/order.model';
+import {
+  CliamxLicenseModel,
+  CliamxResponse,
+} from '../models/cliamaxLicense.model';
+import { LicenseModel } from '../models/license.model';
 
 @Injectable({
   providedIn: 'root',

@@ -5,7 +5,7 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
-import { InvoiceModel } from './invoice.model';
+import { InvoiceModel } from '../models/invoice.model';
 
 @Injectable({
   providedIn: 'root',

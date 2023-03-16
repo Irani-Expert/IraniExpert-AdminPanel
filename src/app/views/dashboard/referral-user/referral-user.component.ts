@@ -3,7 +3,7 @@ import { UserInforamationModel } from 'src/app/shared/models/userInforamationMod
 import { UsersService } from '../../sec/user-mangement/users.service';
 import { referraluserModel } from './referral-user.model';
 import { ToastrService } from 'ngx-toastr';
-import { OrderService } from 'src/app/views/bsk/order/order.service';
+import { OrderService } from 'src/app/views/bsk/order/services/order.service';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { ordersModel } from 'src/app/shared/models/ordersModel';

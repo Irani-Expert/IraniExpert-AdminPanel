@@ -1,7 +1,11 @@
-import { IBase } from 'src/app/shared/interfaces/Base/base.interface';
-import { IInvoice } from '../invoice/invoice.interface';
+import { Base } from 'src/app/shared/models/Base/base.model';
+import { IOrder } from './order.interface';
 
-export interface IOrder extends IBase {
+export class OrderModel extends Base implements IOrder {
+  phoneNumber: number;
+  firstName: string;
+  lastName: string;
+  accountNumber: number;
   plan: string;
   planID: number;
   price: number;
@@ -10,17 +14,15 @@ export interface IOrder extends IBase {
   transactionStatus: number;
   updateDate: string;
   userID: number;
-  phoneNumber: number;
-  firstName: string;
-  lastName: string;
-  accountNumber: number;
+  userInfo: any;
+  startDate: string;
   expireDate: string;
   createDate: string;
   versionNumber: number;
   filePath: string;
   licenseID: number;
+  clientId: number;
   toPayPrice: number;
-  startDate: string;
   bankResponse: string;
   code: string;
   maximumBalance: number;
