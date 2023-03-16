@@ -52,7 +52,8 @@ export class UserNeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userInfo = this.auth.currentUserValue;
+  
+    this.userInfo = this.auth.currentUserValue;    
     this.setPage(this.page.pageNumber, null);
     this.updateNotebar();
     this.router.events
@@ -195,6 +196,13 @@ export class UserNeedComponent implements OnInit {
 
       .subscribe((data) => {
         if (data.success) {
+          this.addCommentRows.jalaliDate = moment(
+            this.addCommentRows.createDate,
+            'YYYY/MM/DD'
+          )
+            .locale('fa')
+            .format('YYYY/MM/DD');
+          this.commentRows.push(this.addCommentRows)
           this.commentRows.unshift(this.addCommentRows);
           this.toastr.success(data.message, null, {
             closeButton: true,
@@ -208,14 +216,30 @@ export class UserNeedComponent implements OnInit {
         }
       });
   }
-  getComment(item: UserNeedModel) {
-    this.rowIdKeeper = item.id;
+  getComment(item: UserNeedModel){
+    this.onWindowScroll()
+    this.rowIdKeeper=item.id
+    
     this._UserNeedService
-      .getCommentByRowid(item.id)
-      .subscribe((res: Result<Paginate<CommentModel[]>>) => {
+    .getCommentByRowid(
+      item.id)
+    .subscribe(
+      (res: Result<Paginate<CommentModel[]>>) => {
+        var scrollbar = document.getElementById('scrollbar2');
+        scrollbar?.classList.remove('minimum-height');
         this.commentRows = res.data.items;
-        console.log(this.commentRows);
-
+        var counter=0;
+        this.commentRows.forEach(x=>{
+          this.commentRows[counter].jalaliDate = moment(
+            this.commentRows[counter].createDate,
+            'YYYY/MM/DD'
+          )
+            .locale('fa')
+            .format('YYYY/MM/DD');
+            
+            counter++;
+         })
+        
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber + 1;
