@@ -17,7 +17,7 @@ import { UserBaseInfoModel } from 'src/app/shared/models/userBaseInfoModel';
 import { number } from 'echarts';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ConditionModel } from 'src/app/shared/models/ConditionModel';
-import { conditionService } from '../Condition.service';
+import { conditionService } from '../condition-service.service';
 import { Condition } from 'selenium-webdriver';
 
 
