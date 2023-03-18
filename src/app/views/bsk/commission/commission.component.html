@@ -1,38 +1,34 @@
-<div *ngIf="isLoaded" class="mb-3">
-  <div class="d-flex flex-wrap">
-    <div
-      class="d-flex flex-column flex-sm-row p-3 bg_purple text-white rounded--title mt-sm-0 mt-3"
-      *ngFor="let item of data.header"
-    >
-      <div>
-        <span class="mr-2">شماره قرارداد &nbsp;:</span>
-        <span>{{ item.contractID }}</span>
-      </div>
-      <div class="ml-sm-4">
-        <span class="mr-2">عنوان قرارداد &nbsp;:</span>
-        <span>{{ item.contractTitle }}</span>
-      </div>
-      <div class="ml-sm-4">
-        <span class="mr-2">پورسانت قرارداد &nbsp;:</span>
-        <span>{{ item.commission | number: '1.2-2'}}&nbsp;$ </span>
-      </div>
-    </div>
+<div class="d-flex flex-column flex-sm-row mb-5 flex-sm-wrap" *ngIf="isLoaded">
+  <div class="bg_pink rounded--title p-3 mt-3 mt-sm-0">
+    <span class="mr-2">شماره قرارداد &nbsp;:</span>
+    <span>{{ data.header.contractID }}</span>
+  </div>
+  <div class="ml-sm-4 bg_pink rounded--title p-3 mt-3 mt-sm-0">
+    <span class="mr-2">عنوان قرارداد &nbsp;:</span>
+    <span>{{ data.header.contractTitle }}</span>
+  </div>
+  <div class="ml-sm-4 bg_pink rounded--title p-3 mt-3 mt-sm-0">
+    <span class="mr-2">پورسانت قرارداد &nbsp;:</span>
+    <span>{{ data.header.allCommission | number : "1.2-2" }}&nbsp;$ </span>
   </div>
 </div>
 
-<span *ngIf="isLoaded" class="p-2 d-inline-flex mb-2  text-white px-4 bg_purple rounded--right rounded--left">سفارشات تیم فروش شما</span>
+<span
+  *ngIf="isLoaded"
+  class="p-2 d-inline-flex mb-2 text-white px-4 bg_purple rounded--right rounded--left"
+  >سفارشات تیم فروش شما</span
+>
 
-<section  class="main-table" >
+<section class="main-table">
   <table class="table">
     <thead class="bg-dark text-white">
       <tr>
         <th class="rounded--right">ID</th>
         <th>نام مشتری</th>
+        <th>محصول و پلن</th>
         <th>شماره حساب</th>
         <th>قیمت</th>
         <th>مبلغ پرداختی</th>
-        <th>شماره حساب</th>
-        <th>محصول و پلن</th>
         <th class="rounded--left">تاریخ انقضا</th>
       </tr>
     </thead>
@@ -52,10 +48,10 @@
       >
         <td>{{ row.id }}</td>
         <td>{{ row.firstName + " " + row.lastName }}</td>
+        <td>{{ row.productTitle + " " + row.planTitle }}</td>
         <td>{{ row.accountNumber }}</td>
         <td>{{ row.price | currency }}</td>
-        <td>{{ row.toPayPrice  | currency }}</td>
-        <td>{{ row.planID }}&nbsp;{{row.productID}}</td>
+        <td>{{ row.toPayPrice | currency }}</td>
         <td>{{ row.expireDate | jalali }}</td>
       </tr>
     </tbody>

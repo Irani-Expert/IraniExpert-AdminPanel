@@ -219,7 +219,7 @@ export class NavigationService {
       type: 'link',
       icon: 'i-Speach-Bubbles',
       state: '/shr/all-Comments',
-      privilege: 'all-comment-user-Full Premission',
+      privilege: 'Comment-Full Premission',
     },
 
     // {
