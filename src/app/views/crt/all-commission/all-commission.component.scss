@@ -1,0 +1,45 @@
+.main-table {
+    overflow-x: scroll;
+  }
+  .main-table {
+    .table {
+      margin: 0 auto;
+    }
+  }
+  table th,
+td {
+  min-width: 150px;
+  // border: 1px solid black;
+  padding: 20px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: unset !important;
+}
+.rounded--right {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  
+  .rounded--left {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  .btn-dark-yellow {
+    background-color: #cb9800;
+  }
+  .modal-table{
+    table-layout: fixed;  
+    overflow-x: scroll;
+    display: block;
+    height: 400px;}
+    .description-border{
+        border: 2px solid black;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 0.5rem;
+        border-color: #a39c9c;
+    }
+   
+ #description{
+    height: 70px;
+ }
