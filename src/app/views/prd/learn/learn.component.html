@@ -9,157 +9,53 @@
   </button>
 </div>
 <div class="separator-breadcrumb border-top"></div>
-<!-- SINGLE LIST ITEM -->
-<!----------------------------------- Head Table  -->
-<div class="row list-horizontal">
-  <div
-    class="list-item"
-    [ngClass]="{
-      'col-md-12': viewMode === 'list',
-      'col-md-3': viewMode === 'grid'
-    }"
-  >
-    <div
-      class="card bg-dark o-hidden mb-4 d-flex"
-      [ngClass]="{
-        'flex-row': viewMode === 'list',
-        'flex-column': viewMode === 'grid'
-      }"
-    >
-      <div
-        class="flex-grow-1"
-        [ngClass]="{
-          'pl-2 d-flex': viewMode === 'list',
-          'd-bock': viewMode === 'grid'
-        }"
-      >
-        <div class="align-self-center text-white">ID</div>
-        <div
-          id="myHeader"
-          class="card-body align-self-center d-flex align-items-lg-center row text-center"
-          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-        >
-          <!-- OTHER DATA -->
-          <div class="m-0 col text-white text-lg-center">عنوان</div>
-          <div class="m-0 col text-white text-lg-center">توضیحات</div>
-          <div class="m-0 col text-white text-lg-center">آدرس فایل</div>
-          <div class="m-0 col text-white text-lg-center">active</div>
-          <div
-            class="m-0 col d-md-block text-light d-lg-block d-xl-block d-sm-none d-none text-lg-center"
-          >
-            عملیات
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- SINGLE LIST ITEM -->
-  <div
-    *ngFor="let item of rows"
-    class="list-item"
-    [ngClass]="{
-      'col-md-12': viewMode === 'list',
-      'col-md-3': viewMode === 'grid'
-    }"
-  >
-    <div
-      class="card o-hidden mb-4 d-flex"
-      [ngClass]="{
-        'flex-row-2': viewMode === 'list',
-        'flex-column': viewMode === 'grid'
-      }"
-    >
-      <!-- <div class="list-thumb">
-          <img [src]="item.filePath" width="100px" height="50px" alt="تصویری وجود ندارد">
-        </div> -->
-      <div
-        class=""
-        [ngClass]="{
-          'pl-2 d-flex': viewMode === 'list',
-          'd-block': viewMode === 'grid'
-        }"
-      >
-        <div class="align-self-center">{{ item.id }}</div>
-        <div
-          class="card-body align-self-center text-center d-flex align-items-lg-center row"
-          [ngClass]="{ 'flex-lg-row': viewMode === 'list' }"
-        >
-          <!-- OTHER DATA -->
-          <a href="" class="col">
-            <div class="item-title">{{ item.title }}</div>
-          </a>
-          <div class="m-0 col">
-            {{ item.description }}
-          </div>
-          <div class="m-0 col">
-            {{ item.fileUrl }}
-          </div>
-          <div class="m-0 col">
-            <div
-              *ngIf="item.isActive === false"
-              class="badge badge-dark badge-rounder text-center p-2"
-            >
-              غیر فعال
-            </div>
-            <div
-              *ngIf="item.isActive === true"
-              class="badge badge-success badge-rounder text-center p-2"
-            >
-              فعال
-            </div>
-          </div>
+<!--
+  -
+  -
+   SINGLE LIST ITEM 
+  -
+  -
+-->
+<section class="main-table">
+  <table class="table">
+    <thead class="bg-dark text-white">
+      <tr>
+        <th class="rounded--right">ID</th>
+        <th>عنوان</th>
+        <th>توضیحات</th>
+        <th>آدرس فایل</th>
+        <th>فعالیت</th>
+        <th class="rounded--left">عملیات</th>
+      </tr>
+    </thead>
 
-          <div
-            class="col d-sm-none d-none d-md-inline-block d-lg-inline-block d-xl-inline-block"
+    <tbody>
+      <tr *ngFor="let item of rows">
+        <td>{{ item.id }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.fileUrl }}</td>
+        <td *ngIf="item.isActive === false">غیر فعال</td>
+        <td *ngIf="item.isActive === true">فعال</td>
+        <td>
+          <button
+            class="btn btn-warning"
+            (click)="addorEdit(addUpdateModal, item)"
           >
-            <div class="text-center col-auto d-flex justify-content-around">
-              <div class="m-0 w-25 w-sm-100 mr-sm-2">
-                <button
-                  class="btn btn-warning"
-                  (click)="addorEdit(addUpdateModal, item)"
-                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                >
-                  ویرایش
-                </button>
-              </div>
-              <div class="m-0 w-25 w-sm-100 ml-sm-2">
-                <button
-                  class="btn btn-danger"
-                  [ngClass]="{ 'd-none': viewMode === 'grid' }"
-                  (click)="deleteLearn(item.id, deleteConfirmModal)"
-                >
-                  حذف
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="text-center row m-5 d-sm-block d-block d-md-none d-lg-none d-xl-none"
-      >
-        <h6 class="text-center">عملیات</h6>
-        <button
-          type="button"
-          [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          (click)="deleteLearn(item.id, deleteConfirmModal)"
-          class="btn btn-outline-danger col-6 m-1"
-        >
-          حذف
-        </button>
-        <button
-          type="button"
-          (click)="addorEdit(addUpdateModal, item)"
-          [ngClass]="{ 'd-none': viewMode === 'grid' }"
-          class="btn btn-outline-warning col-6 m-1"
-        >
-          ویرایش
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+            ویرایش
+          </button>
+          <button
+            class="btn btn-danger"
+            (click)="deleteLearn(item.id, deleteConfirmModal)"
+          >
+            حذف
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
 
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
