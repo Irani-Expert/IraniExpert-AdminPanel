@@ -149,13 +149,11 @@ export class GalleryComponent implements OnInit {
         }
       );
   }
-  // deletePicture(_id:number , _content: any) {
-  //   this.modalService
-  //   .open(_content, { ariaLabelledBy: 'modal-basic-title', centered: true })
-  //   .result.then(
-  //     (_result) => {
-  //       this._fileService.delete(_id , '')
-  //     }
-  //   )
-  // }
+  deletePicture(_id: number, _content: any) {
+    this.modalService
+      .open(_content, { ariaLabelledBy: 'modal-basic-title', centered: true })
+      .result.then((_result) => {
+        // this._fileUploaderService.deleteFile(filePath);
+      });
+  }
 }
