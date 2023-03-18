@@ -5,6 +5,7 @@ import { AdminLayoutSidebarLargeComponent } from './shared/components/layouts/ad
 import { AuthGuard } from './shared/services/auth/auth.guard';
 import { LoginAsUserComponent } from './views/dashboard/login-as-user/login-as-user.component';
 import * as path from 'path';
+import { NotFoundComponent } from './views/session/not-found/not-found.component';
 
 const adminRoutes: Routes = [
   {
@@ -161,7 +162,6 @@ const routes: Routes = [
           import('./views/sec/sec.module').then((m) => m.SecModule),
       },
     ],
-
   },
 
   // {
@@ -183,7 +183,7 @@ const routes: Routes = [
 
   {
     path: '**',
-    redirectTo: 'session/404',
+    component: NotFoundComponent,
   },
 ];
 

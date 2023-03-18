@@ -1,27 +1,39 @@
-import { Component, OnInit, HostListener, ViewChildren, QueryList } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
 import {
   NavigationService,
   IMenuItem,
-  IChildItem
+  IChildItem,
 } from '../../../../services/navigation.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 
 import { filter } from 'rxjs/operators';
 import { Utils } from '../../../../utils';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sidebar-large',
   templateUrl: './sidebar-large.component.html',
-  styleUrls: ['./sidebar-large.component.scss']
+  styleUrls: ['./sidebar-large.component.scss'],
 })
 export class SidebarLargeComponent implements OnInit {
   selectedItem: IMenuItem;
   nav: IMenuItem[];
-  @ViewChildren(PerfectScrollbarDirective) psContainers:QueryList<PerfectScrollbarDirective>;
+  @ViewChildren(PerfectScrollbarDirective)
+  psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
 
-  constructor(public router: Router, public navService: NavigationService) {
+  constructor(
+    public router: Router,
+    public navService: NavigationService,
+    private toastr: ToastrService
+  ) {
     setTimeout(() => {
       this.psContainerSecSidebar = this.psContainers.toArray()[1];
     });
@@ -31,15 +43,15 @@ export class SidebarLargeComponent implements OnInit {
     this.updateSidebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(routeChange => {
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((routeChange) => {
         this.closeChildNav();
         if (Utils.isMobile()) {
           this.navService.sidebarState.sidenavOpen = false;
         }
       });
 
-    this.navService.menuItems$.subscribe(items => {
+    this.navService.menuItems$.subscribe((items) => {
       this.nav = items;
       this.setActiveFlag();
     });
@@ -65,30 +77,36 @@ export class SidebarLargeComponent implements OnInit {
     this.setActiveMainItem(item);
   }
   setActiveMainItem(item) {
-    this.nav.forEach(i => {
+    this.nav.forEach((i) => {
       i.active = false;
     });
     item.active = true;
   }
-
+  // toastrForCommingSoon(item: IMenuItem) {
+  //   if (item.name == 'مشتریان من')
+  //     this.toastr.show('', 'به زودی !', {
+  //       positionClass: 'toast-top-left',
+  //       toastClass: 'bg-primary',
+  //     });
+  // }
   setActiveFlag() {
     if (window && window.location) {
       const activeRoute = window.location.hash || window.location.pathname;
-      this.nav.forEach(item => {
+      this.nav.forEach((item) => {
         item.active = false;
         if (activeRoute.indexOf(item.state) !== -1) {
           this.navService.selectedItem = item;
           item.active = true;
         }
         if (item.sub) {
-          item.sub.forEach(subItem => {
+          item.sub.forEach((subItem) => {
             subItem.active = false;
             if (activeRoute.indexOf(subItem.state) !== -1) {
               this.navService.selectedItem = item;
               item.active = true;
             }
             if (subItem.sub) {
-              subItem.sub.forEach(subChildItem => {
+              subItem.sub.forEach((subChildItem) => {
                 if (activeRoute.indexOf(subChildItem.state) !== -1) {
                   this.navService.selectedItem = item;
                   item.active = true;

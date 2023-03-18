@@ -53,7 +53,7 @@
             class="text-white i-Sync nav-icon m-1 float-end p-2 text-dark syncIcon"
           ></i>
         </th>
-        <th>نام کابر</th>
+        <th>نام کاربر</th>
         <th>شماره ی حساب</th>
         <th>نام و پلن محصول</th>
         <th>هزینه</th>
@@ -63,14 +63,14 @@
             class="text-white i-Sync nav-icon m-1 float-end p-2 text-dark syncIcon"
           ></i>
         </th>
-        <th>maxBalance</th>
+        <th>Max Balance</th>
         <th *ngIf="status == null">وضعیت</th>
         <th class="rounded--left">عملیات</th>
       </tr>
     </thead>
     <tbody>
       <tr
-        class="border-bottom border-3"
+        class="p-3 shadow-sm border-bottom border-3"
         *ngFor="
           let item of rows
             | paginate
@@ -504,8 +504,10 @@
             (change)="onFileChanged($event)"
           />
         </div>
-        <ng-container >
-          <strong *ngIf="!licenseModel.fileExists" class="text-danger col-12">فایل ارسالی باید zip باشد</strong>
+        <ng-container>
+          <strong *ngIf="!licenseModel.fileExists" class="text-danger col-12"
+            >فایل ارسالی باید zip باشد</strong
+          >
           <div class="col-12 mt-2 mb-2">
             <button
               class="btn btn-primary col-2"
@@ -525,7 +527,6 @@
             type="text"
             class="form-control"
             ngbDatepicker
-           
             #s="ngbDatepicker"
             [(ngModel)]="startDate"
           />
@@ -534,7 +535,6 @@
           <strong for="expireDate" class="mb-3">تاریخ انقضا</strong>
 
           <input
-           
             (click)="e.toggle()"
             type="text"
             class="form-control"
