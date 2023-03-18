@@ -5,8 +5,8 @@ export interface IMenuItem {
   id?: string;
   title?: string;
   description?: string;
-  type: string; // Possible values: link/dropDown/extLink
-  name?: string; // Used as display text for item and title for separator type
+  navType: string; // Possible values: link/dropDown/extLink
+  name?: string; // Used as display text for item and title for separator navType
   state?: string; // Router state
   icon?: string; // Material icon name
   tooltip?: string; // Tooltip text
@@ -19,7 +19,7 @@ export interface IMenuItem {
 export interface IChildItem {
   id?: string;
   parentId?: string;
-  type?: string;
+  navType?: string;
   name: string; // Display text
   state?: string; // Router state
   icon?: string;
@@ -54,7 +54,7 @@ export class NavigationService {
     {
       name: 'صفحه اصلی',
       description: 'داشبورد مدیریتی ایرانی اکسپرت',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Home1',
       state: '/dashboard/v1',
       privilege: 'Dashboard-Full Premission',
@@ -62,7 +62,7 @@ export class NavigationService {
     {
       name: 'پروفایل من',
       description: 'پروفایل',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Administrator',
       state: '/dashboard/user-profile',
       privilege: 'Dashboard-Full Premission',
@@ -70,7 +70,7 @@ export class NavigationService {
 
     // {
     //   name: 'مشتریان من',
-    //   type: 'dropDown',
+    //   navType: 'dropDown',
     //   icon: 'i-Add-UserStar',
     //   privilege: 'Subuser-Full Premission',
     //   sub: [
@@ -78,35 +78,35 @@ export class NavigationService {
     //       icon: 'i-File-Horizontal-Text',
     //       name: 'license',
     //       state: '/dashboard/referral-user',
-    //       type: 'link',
+    //       navType: 'link',
     //       privilege: 'Subuser-Full Premission',
     //     },
     //     // {
     //     //   icon: 'i-File-Horizontal-Text',
     //     //   name: 'investor',
     //     //   state: '/dashboard/referral-user',
-    //     //   type: 'link',
+    //     //   navType: 'link',
     //     //   privilege:'Subuser-Full Premission'
     //     // },
     //     // {
     //     //   icon: 'i-File-Horizontal-Text',
     //     //   name: 'IB',
     //     //   state: '/dashboard/referral-user',
-    //     //   type: 'link',
+    //     //   navType: 'link',
     //     //   privilege:'Subuser-Full Premission'
     //     // },
     //   ],
     // },
     {
       name: 'محصولات',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Checkout-Basket',
       state: '/prd/products-list',
       privilege: 'Product-Full Premission',
     },
     {
       name: 'سفارشات',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Library',
       privilege: 'Orders-Full Premission',
       state: '/bsk/orders',
@@ -115,7 +115,7 @@ export class NavigationService {
       icon: 'i-ID-3',
       name: 'سفارشات من',
       state: '/bsk/user-orders',
-      type: 'link',
+      navType: 'link',
       privilege: 'CheckOrders-Full Premission',
     },
 
@@ -123,41 +123,47 @@ export class NavigationService {
       icon: 'i-Dollar-Sign-2',
       name: 'پورسانت',
       state: '/bsk/commission',
-      type: 'link',
+      navType: 'link',
       privilege: 'CheckOrders-Full Premission',
     },
-
+    {
+      name: 'پورسانت ها',
+      navType: 'link',
+      icon: 'i-Dollar',
+      state: '/crt/all-comission',
+      privilege: 'Comment-Full Premission',
+    },
     {
       name: 'تخصیص دسترسی به کاربران',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Add-UserStar',
       state: '/sec/user-privilege',
       privilege: 'AddUserRole-Full Premission',
     },
     {
       name: '  دسترسی نقش ها ',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Gears',
       state: '/sec/privilege',
       privilege: 'ControlRoles-Full Premission',
     },
     {
       name: 'کاربران',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Business-ManWoman',
       state: '/sec/user-management',
       privilege: 'UserManangment-Full Premission',
     },
     {
       name: 'بنرها',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Tag-2',
       state: '/cnt/banner',
       privilege: 'Banner-Full Premission',
     },
     {
       name: 'مقالات',
-      type: 'link',
+      navType: 'link',
       icon: 'i-File-Edit',
       state: '/cnt/article',
       privilege: 'Article-Full Premission',
@@ -165,42 +171,36 @@ export class NavigationService {
 
     {
       name: 'گروه ها',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Dropbox',
       state: '/bas/group',
       privilege: 'Group-Full Premission',
     },
     {
       name: 'درخواست مشتریان',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Love-User',
       state: '/shr/user-need',
       privilege: 'CustomerRequest-Full Premission',
     },
     {
       name: 'نظرات',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Speach-Bubbles',
       state: '/shr/comment',
       privilege: 'Comment-Full Premission',
     },
     {
       name: 'تخفیف ها',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Dollar-Sign',
       state: '/dct/discount',
       privilege: 'Comment-Full Premission',
     },
-    {
-      name: 'پورسانت ها',
-      type: 'link',
-      icon: 'i-Dollar',
-      state: '/crt/all-comission',
-      privilege: 'Comment-Full Premission',
-    },
+
     {
       name: 'قرار داد ها',
-      type: 'dropDown',
+      navType: 'dropDown',
       icon: 'i-File-Horizontal-Text',
       privilege: 'Users-Full Premission',
       sub: [
@@ -208,21 +208,21 @@ export class NavigationService {
           icon: 'i-File-Clipboard-File--Text',
           name: 'لیست قرار دادها',
           state: '/crt/List',
-          type: 'link',
+          navType: 'link',
           privilege: 'UserPlane-Full Premission',
         },
       ],
     },
     {
       name: 'نظرات من',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Speach-Bubble-3',
       state: '/shr/user-Comments',
       privilege: 'comment-user-Special-Premission',
     },
     {
       name: 'همه کامنت ها',
-      type: 'link',
+      navType: 'link',
       icon: 'i-Speach-Bubbles',
       state: '/shr/all-Comments',
       privilege: 'Comment-Full Premission',
@@ -231,54 +231,54 @@ export class NavigationService {
     // {
     //     name: 'Data Tables',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-    //     type: 'dropDown',
+    //     navType: 'dropDown',
     //     icon: 'i-File-Horizontal-Text',
     //     sub: [
-    //         { icon: 'i-File-Horizontal-Text', name: 'List', state: '/tables/list', type: 'link' },
-    //         { icon: 'i-Full-View-Window', name: 'Fullscreen', state: '/tables/full', type: 'link' },
-    //         { icon: 'i-Code-Window', name: 'Paging', state: '/tables/paging', type: 'link' },
-    //         { icon: 'i-Filter-2', name: 'Filter', state: '/tables/filter', type: 'link' },
+    //         { icon: 'i-File-Horizontal-Text', name: 'List', state: '/tables/list', navType: 'link' },
+    //         { icon: 'i-Full-View-Window', name: 'Fullscreen', state: '/tables/full', navType: 'link' },
+    //         { icon: 'i-Code-Window', name: 'Paging', state: '/tables/paging', navType: 'link' },
+    //         { icon: 'i-Filter-2', name: 'Filter', state: '/tables/filter', navType: 'link' },
     //     ]
     // },
     // {
     //     name: 'Sessions',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-    //     type: 'dropDown',
+    //     navType: 'dropDown',
     //     icon: 'i-Administrator',
     //     sub: [
-    //         { icon: 'i-Add-User', name: 'Sign up', state: '/sessions/signup', type: 'link' },
-    //         { icon: 'i-Checked-User', name: 'Sign in', state: '/sessions/signin', type: 'link' },
-    //         { icon: 'i-Find-User', name: 'Forgot', state: '/sessions/forgot', type: 'link' }
+    //         { icon: 'i-Add-User', name: 'Sign up', state: '/sessions/signup', navType: 'link' },
+    //         { icon: 'i-Checked-User', name: 'Sign in', state: '/sessions/signin', navType: 'link' },
+    //         { icon: 'i-Find-User', name: 'Forgot', state: '/sessions/forgot', navType: 'link' }
     //     ]
     // },
     // {
     //     name: 'Pages',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-    //     type: 'dropDown',
+    //     navType: 'dropDown',
     //     icon: 'i-Windows-2',
     //     sub: [
-    //         { icon: 'i-Male', name: 'User Profile', state: '/pages/profile', type: 'link' }
+    //         { icon: 'i-Male', name: 'User Profile', state: '/pages/profile', navType: 'link' }
     //     ]
     // },
     // {
     //     name: 'Icons',
     //     description: '600+ premium icons',
-    //     type: 'link',
+    //     navType: 'link',
     //     icon: 'i-Cloud-Sun',
     //     state: '/icons/iconsmind'
     // },
     // {
     //     name: 'Others',
     //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-    //     type: 'dropDown',
+    //     navType: 'dropDown',
     //     icon: 'i-Double-Tap',
     //     sub: [
-    //         { icon: 'i-Error-404-Window', name: 'Not found', state: '/others/404', type: 'link' }
+    //         { icon: 'i-Error-404-Window', name: 'Not found', state: '/others/404', navType: 'link' }
     //     ]
     // },
     // {
     //     name: 'Doc',
-    //     type: 'extLink',
+    //     navType: 'extLink',
     //     tooltip: 'Documentation',
     //     icon: 'i-Safe-Box1',
     //     state: 'http://demos.ui-lib.com/gull-doc'
@@ -291,9 +291,9 @@ export class NavigationService {
   menuItems$ = this.menuItems.asObservable();
 
   // You can customize this method to supply different menu for
-  // different user type.
-  // publishNavigationChange(menuType: string) {
-  //   switch (userType) {
+  // different user navType.
+  // publishNavigationChange(menunavType: string) {
+  //   switch (usernavType) {
   //     case 'admin':
   //       this.menuItems.next(this.adminMenu);
   //       break;
