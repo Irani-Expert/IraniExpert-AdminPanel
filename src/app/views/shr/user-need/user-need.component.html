@@ -37,115 +37,115 @@
     </div>
   </div>
 </div>
-<div class=" my-css d-flex flex-wrap w-100 pb-5" >
- 
-  <div
-  class="col-xl-8 "
-  id="comments"
->
-<div
-class="my-2  "
-*ngFor="
-let item of rows
-  | paginate
-    : {
-        itemsPerPage: page.size,
-        page: page.pageNumber,
-        currentPage: page.pageNumber,
-        totalItems: page.totalElements
-      }
-"
->
-<div class="timeline-card card mt-4" >
-  <div
-    class="card-header bg-light-dark d-flex justify-content-between align-items-center comment-header-border"
-  >
-    <div class="mb-1">
-      <strong class="mr-1 text-white">&nbsp;{{ item.firstName }}&nbsp;{{ item.lastName }}</strong>
-    
-      <p class="text-white-50">&nbsp;{{ item.userWant | userWants }}</p>
-    </div>
-  </div>
-  <div class="card-body bg-gray">
-    <div class="row p-3">
-      <div class="col-md-6">
-        <label for="FullName" class="text-white d-block"
-        >ایمیل و شماره تماس</label
-      >
-      <strong class="mr-1 text-white"
-        >{{ item.email }}<br />{{ item.phoneNumber }}
-      </strong>
-      </div> 
-      <div class="col-md-6">
-        <label for="FullName" class="text-white d-block"
-        >تاریخ ایجاد</label
-      >
-        <strong class="mr-1 text-white">{{ item.createDate }} </strong>
-      </div> 
-     
-
-   </div>
-   
-  </div>
-  <div class="card-footer bg-gray">
- 
-    <div class="mb-2 d-flex justify-content-end">
-      <button
-      type="button"
-      class="btn btn-rounded m-1  "
-      (click)="getComment(item)"
+<div class="my-css d-flex flex-wrap w-100 pb-5">
+  <div class="col-xl-8" id="comments">
+    <div
+      class="my-2"
+      *ngFor="
+        let item of rows
+          | paginate
+            : {
+                itemsPerPage: page.size,
+                page: page.pageNumber,
+                currentPage: page.pageNumber,
+                totalItems: page.totalElements
+              }
+      "
     >
-      یادداشت ها
-    </button>
-      <button
-        type="button"
-        (click)="deleteUserNeed(item.id, deleteModal)"
-        class="btn btn-danger btn-rounded m-1"
+      <div class="timeline-card card mt-4">
+        <div
+          class="card-header bg-light-dark d-flex justify-content-between align-items-center comment-header-border"
+        >
+          <div class="mb-1">
+            <strong class="mr-1 text-white"
+              >&nbsp;{{ item.firstName }}&nbsp;{{ item.lastName }}</strong
+            >
 
-      >
-        حذف پیام
-      </button>
+            <p class="text-white-50">&nbsp;{{ item.userWant | userWants }}</p>
+          </div>
+        </div>
+        <div class="card-body bg-gray">
+          <div class="row p-3">
+            <div class="col-md-6">
+              <label for="FullName" class="text-white d-block"
+                >ایمیل و شماره تماس</label
+              >
+              <strong class="mr-1 text-white"
+                >{{ item.email }}<br />{{ item.phoneNumber }}
+              </strong>
+            </div>
+            <div class="col-md-6">
+              <label for="FullName" class="text-white d-block"
+                >تاریخ ایجاد</label
+              >
+              <strong class="mr-1 text-white">{{ item.createDate }} </strong>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-gray">
+          <div class="mb-2 d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-rounded m-1"
+              (click)="getComment(item)"
+            >
+              یادداشت ها
+            </button>
+            <button
+              type="button"
+              (click)="deleteUserNeed(item.id, deleteModal)"
+              class="btn btn-danger btn-rounded m-1"
+            >
+              حذف پیام
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
-</div>
 
-<div class="col-md-4 noteWidth p-0 " *ngIf="rows?.length != 0">
-    <div class="  p-0  position-sm auther-start " id="scrollPart"  >
-      <div class=" p-0 note-height"   >
-        <div class="card-header bg-light-dark  pl-0 add-comment-header-border">
+  <div class="col-md-4 noteWidth p-0 mt-4" *ngIf="rows?.length != 0">
+    <div class="p-0 position-sm auther-start" id="scrollPart">
+      <div class="p-0 note-height">
+        <div class="card-header bg-light-dark pl-0 add-comment-header-border">
           <div class="p-2"><h4 class="pl-2 text-white">یادداشت ها</h4></div>
         </div>
-        <div class="card-body comment-scroll bg-gray minimum-height" id="scrollbar2">
+        <div
+          class="card-body comment-scroll bg-gray minimum-height"
+          id="scrollbar2"
+        >
           <div class="my-css">
             <div>
-              <div class="timeline-card card mt-2" *ngFor="let item of commentRows">
+              <div
+                class="timeline-card card mt-2"
+                *ngFor="let item of commentRows"
+              >
                 <div class="card-header bg-dark m-0 p-0">
-                  <p class="text-white m-0 p-2">{{item.name}}</p>
+                  <p class="text-white m-0 p-2">{{ item.name }}</p>
                 </div>
                 <div class="card-body bg-secondary">
-                  <p class="text-white" >
-                    {{item.text}}
+                  <p class="text-white">
+                    {{ item.text }}
                   </p>
-                  <div class="row
-                  ">
-                  <div class="col">
-                    <p class="text-white" maxlength="5">{{item.createDate | date : "   yyyy/M/d, h:mm "}}</p>
+                  <div class="row">
+                    <div class="col">
+                      <p class="text-white" maxlength="5">
+                        {{ item.createDate | date : "   yyyy/M/d, h:mm " }}
+                      </p>
+                    </div>
+                    <div class="col d-flex justify-content-end">
+                      <p class="text-white" maxlength="5">
+                        {{ item.jalaliDate }}
+                      </p>
+                    </div>
                   </div>
-                  <div class="col d-flex justify-content-end">
-                    <p class="text-white" maxlength="5">{{item.jalaliDate}}</p>
-                  </div>
-                  </div>
-                  
                 </div>
-              
               </div>
             </div>
-        </div>
+          </div>
         </div>
         <div class="card-footer bg-gray note-footer">
-          <div class="ml-3" *ngIf="rowIdKeeper!=null ">
+          <div class="ml-3" *ngIf="rowIdKeeper != null">
             <form action="">
               <div class="row">
                 <div class="col-10 form-group mb-3 mt-3">
@@ -159,19 +159,21 @@ let item of rows
                 </div>
               </div>
             </form>
-            <button type="button" class="btn btn-light mb-2" (click)="addComent()"
-            [disabled]="addComentText=='' || rowIdKeeper==null " >ایجاد</button>
+            <button
+              type="button"
+              class="btn btn-light mb-2"
+              (click)="addComent()"
+              [disabled]="addComentText == '' || rowIdKeeper == null"
+            >
+              ایجاد
+            </button>
           </div>
         </div>
-        
-             
-        
-      
-      </div> 
       </div>
+    </div>
 
-<div></div>
-</div>
+    <div></div>
+  </div>
 </div>
 
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">

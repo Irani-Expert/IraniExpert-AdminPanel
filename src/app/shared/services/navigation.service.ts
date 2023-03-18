@@ -191,7 +191,13 @@ export class NavigationService {
       state: '/dct/discount',
       privilege: 'Comment-Full Premission',
     },
-
+    {
+      name: 'پورسانت ها',
+      type: 'link',
+      icon: 'i-Dollar',
+      state: '/crt/all-comission',
+      privilege: 'Comment-Full Premission',
+    },
     {
       name: 'قرار داد ها',
       type: 'dropDown',
