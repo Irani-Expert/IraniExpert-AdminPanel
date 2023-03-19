@@ -61,7 +61,7 @@
           <button
             class="btn btn-danger"
             *appCanAccess="'Banner-Delete'"
-            (click)="deleteBanner(item.id, deleteConfirmModal)"
+            (click)="deleteModal(item, 0, deleteConfirmModal)"
           >
             حذف
           </button>
@@ -90,37 +90,39 @@
 </div>
 
 <ng-template #deleteConfirmModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">حذف محصول</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close button"
-      aria-describedby="modal-title"
-      (click)="modal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p><strong>آیا از حذف مطمئنید؟</strong></p>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
-      (click)="modal.dismiss('cancel')"
-    >
-      خیر
-    </button>
-    <button
-      type="button"
-      ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
-      (click)="modal.close('Ok')"
-    >
-      بله
-    </button>
+  <div class="shadow-lg">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">حذف</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close button"
+        aria-describedby="modal-title"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p><strong>آیا از حذف مطمئنید؟</strong></p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-rounded mr-1"
+        (click)="modal.dismiss('cancel')"
+      >
+        خیر
+      </button>
+      <button
+        type="button"
+        ngbAutofocus
+        class="btn btn-wide btn-danger btn-rounded"
+        (click)="modal.close('Ok')"
+      >
+        بله
+      </button>
+    </div>
   </div>
 </ng-template>
 
@@ -146,7 +148,7 @@
     <form [formGroup]="addForm" (ngSubmit)="submit()">
       <div class="row">
         <!-- title -->
-        <div class="col-md-6 form-group mb-3">
+        <div class="col-md-4 form-group mb-3">
           <label for="title">نام</label>
           <input
             type="text"
@@ -166,12 +168,11 @@
           >
         </div>
 
-        <div class="col-md-12 form-group mb-3">
+        <div class="col-md-8 form-group mb-3">
           <label for="description">توضیحات</label>
           <textarea
             name=""
-            cols="30"
-            rows="10"
+            rows="1"
             type="text"
             class="form-control form-control-rounded"
             id="description"
@@ -235,7 +236,7 @@
         </div>
 
         <!-- linkType -->
-        <div class="col-md-6 form-group mb-3">
+        <div class="col-md-4 form-group mb-3">
           <label for="linkType">خارجی داخلی </label>
           <select
             [formControl]="addForm.controls['linkType']"
@@ -250,84 +251,7 @@
             >
           </select>
         </div>
-        <!-- filePath img -->
-        <div
-          class="col-12"
-          *ngIf="addUpdate.fileType === 0 && addUpdate.fileType !== null"
-        >
-          <div class="row form-group mb-3">
-            <div class="col-6 text-start">
-              <img
-                *ngIf="addUpdate?.cardImagePath"
-                [src]="bannerModel?.filePath"
-                [formControl]="addForm.controls['filePath']"
-                [(ngModel)]="addUpdate.filePath"
-              />
-            </div>
-            <div class="col-md-7 mt-4">
-              <input type="file" (change)="onFileChanged($event)" />
-
-              <div>
-                <image-cropper
-                  [imageChangedEvent]="imgChangeEvt"
-                  [maintainAspectRatio]="true"
-                  [aspectRatio]="16 / 9"
-                  format="webp"
-                  [resizeToWidth]="1280"
-                  (imageCropped)="cropImg($event)"
-                  (imageLoaded)="imgLoad()"
-                  (cropperReady)="initCropper()"
-                  (loadImageFailed)="imgFailed()"
-                >
-                </image-cropper>
-              </div>
-              <div class="float-left w-25">
-                <img [src]="cropImagePreview" alt="" />
-              </div>
-            </div>
-
-            <div class="col-12 mt-2">
-              <button class="btn btn-primary col-2" (click)="uploadFile()">
-                آپلود
-              </button>
-            </div>
-            <small
-              *ngIf="
-                addForm.controls['filePath'].hasError('required') &&
-                addForm.controls['filePath'].touched
-              "
-              class="mat-text-warn m-t-negative"
-              >انتخاب یک مورد و آپلود ضروری است</small
-            >
-          </div>
-        </div>
-
-        <!-- Url -->
-
-        <!-- filePath vidoe -->
-        <div
-          class="col-md-12 form-group mb-3"
-          *ngIf="addUpdate.fileType !== 0 && addUpdate.fileType !== null"
-        >
-          <input
-            type="text"
-            class="form-control form-control-rounded"
-            id="filePath"
-            placeholder="آدرس URL  ویدیو خود را وارد کنید"
-            [formControl]="addForm.controls['filePath']"
-            [(ngModel)]="addUpdate.filePath"
-          />
-          <small
-            *ngIf="
-              addForm.controls['filePath'].hasError('required') &&
-              addForm.controls['filePath'].touched
-            "
-            class="mat-text-warn m-t-negative"
-            >آدرس URL ضروری است
-          </small>
-        </div>
-
-        <div class="col-md-6 form-group mb-3">
+        <div class="col-md-4 form-group mb-3">
           <label for="url">url</label>
           <input
             type="text"
@@ -370,14 +294,107 @@
             >انتخاب نوع گروه ضروری است</small
           >
         </div>
+        <hr class="d-block w-100" />
+        <!-- filePath img -->
+        <div
+          class="col-12"
+          *ngIf="addUpdate.fileType === 0 && addUpdate.fileType !== null"
+        >
+          <div class="row">
+            <ng-container *ngIf="imageFound">
+              <div
+                class="d-flex justify-content-end align-items-end col-md-4 col-5 mb-5 mt-1"
+              >
+                <img
+                  (error)="imageFound = false"
+                  class="align-self-center w-100 radius-md"
+                  [src]="'https://dl.iraniexpert.com/' + addUpdate.filePath"
+                  [alt]="addUpdate.title"
+                />
+              </div>
+              <div class="col-md-6 col-5">
+                <button
+                  class="btn-danger btn border-dark border-1 shadow"
+                  (click)="deleteModal(addUpdate, 1, deleteConfirmModal)"
+                >
+                  حذف
+                </button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!imageFound">
+              <div class="col-md-7 mt-4">
+                <input type="file" (change)="onFileChanged($event)" />
+                <div>
+                  <image-cropper
+                    [imageChangedEvent]="imgChangeEvt"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="16 / 9"
+                    format="webp"
+                    [resizeToWidth]="1280"
+                    (imageCropped)="cropImg($event)"
+                    (imageLoaded)="imgLoad()"
+                    (cropperReady)="initCropper()"
+                    (loadImageFailed)="imgFailed()"
+                  >
+                  </image-cropper>
+                </div>
+                <div class="float-left w-25">
+                  <img [src]="cropImagePreview" alt="" />
+                </div>
+              </div>
+              <div class="col-12 mt-2">
+                <button
+                  class="btn btn-primary col-2"
+                  [disabled]="!cropImagePreview"
+                  (click)="uploadFile()"
+                >
+                  آپلود
+                </button>
+              </div>
+              <small
+                *ngIf="
+                  addForm.controls['filePath'].hasError('required') &&
+                  addForm.controls['filePath'].touched
+                "
+                class="mat-text-warn m-t-negative"
+                >انتخاب یک مورد و آپلود ضروری است</small
+              >
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Url -->
+
+        <!-- filePath vidoe -->
+        <div
+          class="col-md-12 form-group mb-3"
+          *ngIf="addUpdate.fileType !== 0 && addUpdate.fileType !== null"
+        >
+          <input
+            type="text"
+            class="form-control form-control-rounded"
+            id="filePath"
+            placeholder="آدرس URL  ویدیو خود را وارد کنید"
+            [formControl]="addForm.controls['filePath']"
+            [(ngModel)]="addUpdate.filePath"
+          />
+          <small
+            *ngIf="
+              addForm.controls['filePath'].hasError('required') &&
+              addForm.controls['filePath'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >آدرس URL ضروری است
+          </small>
+        </div>
+
         <!-- isActive -->
-        <div class="col-md-6 form-group mb-3 mt-3">
+        <div class="col-md-6 form-group mb-3 mt-1">
           <label class="m-1">فعال</label>
           <label class="switch switch-primary mr-2 m-2">
             <span>غیرفعال</span>
             <input
               [(ngModel)]="addUpdate.isActive"
-              [formControl]="addForm.controls['isActive']"
               type="checkbox"
               id="isActive"
             />

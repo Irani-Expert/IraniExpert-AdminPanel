@@ -1,9 +1,7 @@
 <div
   [ngClass]="{ open: navService.sidebarState.sidenavOpen }"
   class="sidebar-left rtl-ps-none rounded-4 bg-lightdark shadow-lg"
-  [perfectScrollbar]="{
-    suppressScrollX: true
-  }"
+  style="overflow: auto"
 >
   <div class="logo">
     <img src="./assets/images/logo.jpg" alt="" />
@@ -20,7 +18,7 @@
           class="nav-item-hold"
           routerLink="{{ item.state }}"
           (click)="closeChildNav()"
-          *ngIf="!item.disabled && item.type === 'link'"
+          *ngIf="!item.disabled && item.navType === 'link'"
         >
           <i class="text-white" [class]="'nav-icon  ' + item.icon"></i>
           <span class="nav-text text-white">{{ item.name }}</span>
@@ -28,7 +26,7 @@
         <div
           class="nav-item-hold"
           (mouseenter)="selectItem(item)"
-          *ngIf="!item.disabled && item.type === 'dropDown'"
+          *ngIf="!item.disabled && item.navType === 'dropDown'"
         >
           <i class="text-white" [class]="'nav-icon ' + item.icon"></i>
           <span class="nav-text text-white">{{ item.name }}</span>
@@ -36,7 +34,7 @@
         <div
           class="nav-item-hold"
           appCanAccess="''"
-          *ngIf="!item.disabled && item.type === 'extLink'"
+          *ngIf="!item.disabled && item.navType === 'extLink'"
         >
           <a [href]="item.state" target="_blank">
             <i class="text-white" [class]="'nav-icon' + item.icon"></i>
@@ -75,7 +73,7 @@
         <ng-container *appCanAccess="item.privilege">
           <a
             routerLink="{{ item.state }}"
-            *ngIf="item.type === 'link'"
+            *ngIf="item.navType === 'link'"
             class=""
             routerLinkActive="open"
           >
@@ -86,7 +84,7 @@
             ></i>
             <span class="item-name lvl1 text-white">{{ item.name }}</span>
           </a>
-          <div *ngIf="item.type === 'dropDown'">
+          <div *ngIf="item.navType === 'dropDown'">
             <a
               appDropdownToggle
               [ngClass]="{ open: item.active }"

@@ -4,12 +4,12 @@ import { ICommission } from './commission.interface';
 export class CommissionModel extends Base implements ICommission {
   commission: number;
   contractID: number;
-  header: [{ contractID: number; commission: number,contractTitle:string }];
+  header: { contractID: number; allCommission: number; contractTitle: string };
   orders: [
     {
       id: number;
-      productID: number;
-      planID: number;
+      productTitle: number;
+      planTitle: number;
       price: number;
       toPayPrice: number;
       accountNumber: string;

@@ -15,8 +15,20 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
   selector: 'app-banner',
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.scss'],
+  // styles: [
+  //   `
+  //     .dark-modal .modal-content {
+  //       background-color: #292b2c;
+  //       color: white;
+  //     }
+  //     .dark-modal .close {
+  //       color: white;
+  //     }
+  //   `,
+  // ],
 })
 export class BannerComponent implements OnInit {
+  imageFound: boolean = true;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
   rows: BannerModel[] = new Array<BannerModel>();
@@ -26,7 +38,6 @@ export class BannerComponent implements OnInit {
   image: any;
   cropperSettings: CropperSettings;
   addUpdate: BannerModel;
-
   addForm: FormGroup;
   constructor(
     public _bannerService: BannerService,
@@ -47,7 +58,6 @@ export class BannerComponent implements OnInit {
       type: [null, Validators.compose([Validators.required])],
       linkType: [null, Validators.compose([Validators.required])],
       fileType: [null, Validators.compose([Validators.required])],
-      isActive: [null, Validators.compose([Validators.required])],
       url: [null],
       filePath: [null],
       fileInfo: [null],
@@ -61,9 +71,28 @@ export class BannerComponent implements OnInit {
 
     this.getBannerList(this.page.pageNumber, this.page.size);
   }
+  deleteImg(filePath: string) {
+    this._fileUploaderService
+      .deleteFile(filePath)
+      .subscribe((res: Result<string[]>) => {
+        if (res.success) {
+          this.imageFound = false;
+          this.addUpdate.filePath = null;
 
+          this.toastr.success('با موفقیت حذف شد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(res.message, 'خطا در حذف تصویر', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
+  }
   async getBannerList(pageNumber: number, seedNumber: number) {
-    await this._bannerService
+    this._bannerService
       .get(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
         seedNumber,
@@ -101,39 +130,44 @@ export class BannerComponent implements OnInit {
   imgFailed() {
     alert('image Failed to Show');
   }
-  deleteBanner(id, modal) {
+  deleteModal(item: BannerModel, type: number, modal: any) {
     this.modalService
-      .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
+      .open(modal, {
+        centered: true,
+      })
       .result.then(
-        (result) => {
-          this._bannerService.delete(id, 'Banner').subscribe((res) => {
-            if (res.success) {
-              this.toastr.success(
-                'فرایند حذف موفقیت آمیز بود',
-                'موفقیت آمیز!',
-                {
-                  timeOut: 3000,
-                  positionClass: 'toast-top-left',
-                }
-              );
-            } else {
-              this.toastr.error('خطا در حذف', res.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
-            }
-            this.getBannerList(this.page.pageNumber, this.page.size);
-          });
+        (_result) => {
+          if (type == 0) {
+            this.deleteBanner(item.id);
+          }
+          if (type == 1) {
+            this.deleteImg(item.filePath);
+          }
         },
-        (error) => {
-          this.toastr.error('خطا در حذف', error.message, {
+        (_error) => {
+          this.toastr.error('انصراف از حذف', null, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
           });
         }
       );
   }
-
+  deleteBanner(id: number) {
+    this._bannerService.delete(id, 'Banner').subscribe((res) => {
+      if (res.success) {
+        this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
+          timeOut: 3000,
+          positionClass: 'toast-top-left',
+        });
+      } else {
+        this.toastr.error('خطا در حذف', res.message, {
+          timeOut: 3000,
+          positionClass: 'toast-top-left',
+        });
+      }
+      this.getBannerList(this.page.pageNumber, this.page.size);
+    });
+  }
   addorEdit(content: any, row: BannerModel) {
     if (row === undefined) {
       row = new BannerModel();
@@ -143,11 +177,22 @@ export class BannerComponent implements OnInit {
       row.linkType = null;
       row.tableType = null;
     }
+    let filePathKeeper = row.filePath;
     this.addUpdate = row;
 
     // /this.addUpdate.filePath=row.filePath.substring(row.filePath.indexOf('com/')+4)
     this.modalService
-      .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
+      .open(content, {
+        size: 'lg',
+        ariaLabelledBy: 'modal-basic-title',
+        beforeDismiss: () => {
+          if (filePathKeeper !== this.addUpdate.filePath) {
+            return false;
+          } else {
+            return this.imageFound;
+          }
+        },
+      })
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
@@ -157,11 +202,9 @@ export class BannerComponent implements OnInit {
         },
         (reason) => {
           console.log('Err!', reason);
-          this.addForm.reset();
         }
       );
   }
-
   async addOrUpdate(row: BannerModel) {
     if (row.id === 0) {
       this._bannerService.create(row, 'Banner').subscribe((data) => {
@@ -178,10 +221,6 @@ export class BannerComponent implements OnInit {
         }
       });
     } else {
-      if (row.filePath.indexOf('com/') != -1) {
-        row.filePath = row.filePath.substring(row.filePath.indexOf('com/') + 4);
-      }
-
       this._bannerService.update(row.id, row, 'Banner').subscribe((data) => {
         if (data.success) {
           this.toastr.success(data.message, null, {
@@ -227,6 +266,7 @@ export class BannerComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.filePath = res.data[0];
+          this.imageFound = true;
 
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
