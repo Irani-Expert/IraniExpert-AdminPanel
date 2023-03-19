@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { CommissionModel } from './commission.model';
 import { CommissionService } from './commission.service';
 
@@ -11,16 +13,23 @@ export class CommissionComponent implements OnInit {
   data: CommissionModel;
   isLoaded: boolean = false;
 
+  user: UserInfoModel;
+
   page = {
     size: 6,
     pageToGo: 3,
     totalElements: 0,
     currentPage: 1,
   };
-  constructor(private _commission: CommissionService) {}
+  constructor(
+    private _commission: CommissionService,
+    private auth: AuthenticateService
+  ) {
+    this.user = this.auth.currentUserValue;
+  }
 
   ngOnInit(): void {
-    this._commission.getMyCommission(1148, 2).subscribe((thing) => {
+    this._commission.getMyCommission(this.user.userID, 4).subscribe((thing) => {
       this.data = thing.data;
       this.isLoaded = true;
       this.page.totalElements = thing.data.orders.length;
