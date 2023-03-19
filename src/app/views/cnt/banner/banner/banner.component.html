@@ -88,7 +88,7 @@
     alt=""
   />
 </div>
-
+<!--                                   DELETE MODAL                  -->
 <ng-template #deleteConfirmModal let-modal>
   <div class="shadow-lg">
     <div class="modal-header">
@@ -98,7 +98,7 @@
         class="close"
         aria-label="Close button"
         aria-describedby="modal-title"
-        (click)="modal.dismiss('Cross click')"
+        (click)="modal.dismiss()"
       >
         <span aria-hidden="true">&times;</span>
       </button>
@@ -110,7 +110,7 @@
       <button
         type="button"
         class="btn btn-outline-secondary btn-rounded mr-1"
-        (click)="modal.dismiss('cancel')"
+        (click)="modal.dismiss()"
       >
         خیر
       </button>
@@ -118,7 +118,7 @@
         type="button"
         ngbAutofocus
         class="btn btn-wide btn-danger btn-rounded"
-        (click)="modal.close('Ok')"
+        (click)="modal.close(true)"
       >
         بله
       </button>
@@ -126,6 +126,7 @@
   </div>
 </ng-template>
 
+<!--                                   ADD UPDATE MODAL                  -->
 <ng-template #addUpdateModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
@@ -139,7 +140,7 @@
       type="button"
       class="close"
       aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
+      (click)="modal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -155,7 +156,7 @@
             class="form-control form-control-rounded"
             id="title"
             placeholder="نام مورد نظر را وارد کنید "
-            [formControl]="addForm.controls['title']"
+            formControlName="title"
             [(ngModel)]="addUpdate.title"
           />
           <small
@@ -171,12 +172,12 @@
         <div class="col-md-8 form-group mb-3">
           <label for="description">توضیحات</label>
           <textarea
+            formControlName="description"
             name=""
             rows="1"
             type="text"
             class="form-control form-control-rounded"
             id="description"
-            [formControl]="addForm.controls['description']"
             [(ngModel)]="addUpdate.description"
             maxlength="501"
           >
@@ -192,7 +193,7 @@
         <div class="col-md-6 form-group mb-3">
           <label for="type">جایگاه را مشخص کنید</label>
           <select
-            [formControl]="addForm.controls['type']"
+            formControlName="type"
             class="form-control form-control-rounded"
             [ngModel]="addUpdate.type"
             (ngModelChange)="selectType($event)"
@@ -217,7 +218,7 @@
           <label for="fileType">نوع فایل</label>
           <select
             class="form-control form-control-rounded"
-            [formControl]="addForm.controls['fileType']"
+            formControlName="fileType"
             (ngModelChange)="selectPath($event)"
             [ngModel]="addUpdate.fileType"
           >
@@ -239,7 +240,7 @@
         <div class="col-md-4 form-group mb-3">
           <label for="linkType">خارجی داخلی </label>
           <select
-            [formControl]="addForm.controls['linkType']"
+            formControlName="linkType"
             class="form-control form-control-rounded"
             [ngModel]="addUpdate.linkType"
             (ngModelChange)="selectlinkType($event)"
@@ -258,7 +259,7 @@
             class="form-control form-control-rounded"
             id="url"
             placeholder="عنوان را وارد نمایید."
-            [formControl]="addForm.controls['url']"
+            formControlName="url"
             [(ngModel)]="addUpdate.url"
           />
           <small
@@ -274,7 +275,7 @@
         <div class="col-md-4 form-group mb-3">
           <label for="orderID">اولویت را مشخص کنید</label>
           <select
-            [formControl]="addForm.controls['orderID']"
+            formControlName="orderID"
             class="form-control form-control-rounded"
             [ngModel]="addUpdate.orderID"
             (ngModelChange)="selectOrderId($event)"
@@ -375,7 +376,7 @@
             class="form-control form-control-rounded"
             id="filePath"
             placeholder="آدرس URL  ویدیو خود را وارد کنید"
-            [formControl]="addForm.controls['filePath']"
+            formControlName="filePath"
             [(ngModel)]="addUpdate.filePath"
           />
           <small
@@ -394,6 +395,7 @@
           <label class="switch switch-primary mr-2 m-2">
             <span>عدم نمایش</span>
             <input
+              formControlName="isActive"
               [(ngModel)]="addUpdate.isActive"
               type="checkbox"
               id="isActive"
@@ -419,7 +421,7 @@
     <button
       type="button"
       class="btn btn-outline-dark btn-rounded"
-      (click)="modal.close(false)"
+      (click)="modal.close(true)"
       *ngIf="addUpdate.id === 0"
       [disabled]="!addForm.valid"
     >
@@ -428,7 +430,7 @@
   </div>
 </ng-template>
 
-<ng-template #modalCropper let-modal>
+<!-- <ng-template #modalCropper let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">آپلود و ویرایش تصویر</h4>
     <button
@@ -450,4 +452,4 @@
       آپلود کن
     </button>
   </div>
-</ng-template>
+</ng-template> -->

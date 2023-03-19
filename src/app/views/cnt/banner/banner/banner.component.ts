@@ -59,6 +59,7 @@ export class BannerComponent implements OnInit {
       linkType: [null, Validators.compose([Validators.required])],
       fileType: [null, Validators.compose([Validators.required])],
       url: [null],
+      isActive: [null],
       filePath: [null],
       fileInfo: [null],
       rowID: [null],
@@ -194,15 +195,13 @@ export class BannerComponent implements OnInit {
         },
       })
       .result.then(
-        (result: boolean) => {
-          if (result != undefined) {
+        (result) => {
+          if (result === true) {
             this.addOrUpdate(this.addUpdate);
             this.addForm.reset();
           }
         },
-        (reason) => {
-          console.log('Err!', reason);
-        }
+        (reason) => {}
       );
   }
   async addOrUpdate(row: BannerModel) {
