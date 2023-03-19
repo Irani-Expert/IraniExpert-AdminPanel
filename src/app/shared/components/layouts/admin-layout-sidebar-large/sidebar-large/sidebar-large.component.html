@@ -1,9 +1,7 @@
 <div
   [ngClass]="{ open: navService.sidebarState.sidenavOpen }"
   class="sidebar-left rtl-ps-none rounded-4 bg-lightdark shadow-lg"
-  [perfectScrollbar]="{
-    suppressScrollX: true
-  }"
+  style="overflow: auto"
 >
   <div class="logo">
     <img src="./assets/images/logo.jpg" alt="" />
