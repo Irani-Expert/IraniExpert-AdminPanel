@@ -6,3 +6,11 @@
 .bg-lightdark {
   background-color: #535e5d;
 }
+
+.my-webKit::-webkit-scrollbar {
+  display: none;
+}
+.my-webKit {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
