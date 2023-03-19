@@ -1,4 +1,20 @@
-<section class="main-table">
+
+<div class="row g-0 p-0 m-0">
+  <div class="col-12 row g-0 p-0 flex-row mb-2">
+    <div class="col-auto mb-2">
+      <button class="btn btn-secondary" (click)="getAllCommission(3)">
+بازار یاب 
+      </button>
+    </div>
+  </div>
+  <div class="col-12 row g-0 p-0 flex-row mb-2">
+    <div class="col-auto mb-2">
+      <button class="btn btn-secondary" (click)="getAllCommission(3)">
+        unknown
+      </button>
+    </div>
+  </div>
+</div><section class="main-table">
     <table class="table">
       <thead class="bg-dark text-white">
         <tr>
@@ -17,7 +33,7 @@
             <td>{{item.firstName}}</td>
             <td>{{item.lastName}}</td>
             <td>{{item.commission}}</td>
-            <td>{{item.lastName}}</td>
+            <td>{{item.remainCommission}}</td>
   
        
   
@@ -25,7 +41,7 @@
       
           <td class="td-oprate">
             <button
-            (click)="openModal( addReceiptModal,'lg')"
+            (click)="openModal( addReceiptModal,'lg',item.contractID)"
               class="btn btn-dark-yellow text-white"
                     type="button"
 
@@ -64,26 +80,32 @@
       <thead class="bg-dark text-white">
         <tr>
 
-          <th>نام</th>
-          <th>نام خانوادگی</th>
-          <th>کمیسیون</th>
-          <th>باقی مانده</th>
+          <th>شماره سریال</th>
+          <th>تاریخ</th>
+          <th>هزینه</th>
           <th>مرحله پرداخت</th>
-          <th>یاداشت ها</th>
+          <th>توضیحات</th>
     
         </tr>
       </thead>
   
       <tbody>
-        <tr >
-          <td>محمد</td>
-          <td>طرقی</td>
-          <td>140</td>
-          <td>50</td>
-          <td>2</td>
+        <tr *ngFor="
+        let item of Receipt | paginate
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber-1,
+              currentPage: page.pageNumber-1,
+              totalItems: page.totalElements
+            }" >
+          <td>{{item.serialNumber}}</td>
+          <td>{{item.paymentDate}}</td>
+          <td>{{item.price}}</td>
+          <td>{{item.paymentStep}}</td>
+       
   
           <td>  <button
-            (click)="openModal( description,'md')"
+            (click)="descriptionfunc(description,item.description)"
               class="btn btn-info text-white"
                     type="button"
 
@@ -94,32 +116,21 @@
   
       
         </tr>
-        <tr >
-            <td>محمد</td>
-            <td>طرقی</td>
-            <td>140</td>
-            <td>50</td>
-            <td>2</td>
-    
-            <td>  <button
-              (click)="openModal( description,'md')"
-                class="btn btn-info text-white"
-                      type="button"
-  
-              >
-                دیدن توضیحات
-              </button></td>
-    
-    
-        
-          </tr>
+       
         
        
       </tbody>
     </table>
     </div>
-    <div class="modal-footer">
     
+    <div class="modal-footer">
+      <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+        <pagination-controls
+          (pageChange)="setPage($event)"
+          previousLabel=""
+          nextLabel=""
+        ></pagination-controls>
+      </div>
     </div>
   </ng-template>
   <ng-template #openDetails let-modal>
@@ -137,12 +148,15 @@
       </div>
   
       <div class="modal-body">
+        <form [formGroup]="addRedeiptForm" >
           <div class="row">
             <div class="col-12 col-lg-6 form-group mb-3">
                 <strong for="totalPrice" class="mb-3">میزان پرداخت</strong>
                 <input
                   class="form-control"
                   id="totalPrice"
+                  [(ngModel)]="price"
+                  [formControl]="addRedeiptForm.controls['price']"
                 />
               </div>
               <div class="col-md-6 form-group mb-3" dir="ltr">
@@ -155,10 +169,13 @@
                   class="form-control"
                   ngbDatepicker
                   #e="ngbDatepicker"
-                  [(ngModel)]="Date"
+                  [(ngModel)]="addDate"
+                  [formControl]="addRedeiptForm.controls['paymentDate']"
+
                 />
               </div>         
         </div>
+      </form>
         <div class="col-12 form-group mb-3" dir="ltr">
             <strong for="expireDate" class="mb-3">توضیحات</strong>
             <textarea
@@ -168,8 +185,10 @@
             type="text"
             class="form-control "
             id="description"
-       
-            maxlength="250"
+            [(ngModel)]="addReceiptModel.description"
+            [formControl]="addRedeiptForm.controls['description']"
+
+            maxlength="500"
           >
           </textarea>
           </div>
@@ -177,7 +196,7 @@
         <button
           type="button"
           class="btn btn-outline-dark btn-rounded"
-          (click)="addReceipt()"
+          (click)="addNewReceipt()"
 
         >
           تائید
@@ -202,7 +221,7 @@
       </div>
   
       <div class="modal-body">
-       <p class="description-border">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+       <p class="description-border">{{descriptionText}}</p>
       <div class="modal-footer">
         
       </div>
