@@ -63,10 +63,10 @@ export class SidebarLargeComponent implements OnInit {
     this.setActiveMainItem(item);
 
     // Scroll to top secondary sidebar
-    setTimeout(() => {
-      this.psContainerSecSidebar.update();
-      this.psContainerSecSidebar.scrollToTop(0, 400);
-    });
+    // setTimeout(() => {
+    //   this.psContainerSecSidebar.update();
+    //   this.psContainerSecSidebar.scrollToTop(0, 400);
+    // });
   }
   closeChildNav() {
     this.navService.sidebarState.childnavOpen = false;
