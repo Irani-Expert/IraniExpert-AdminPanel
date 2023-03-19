@@ -5,10 +5,11 @@ import { IReceipt } from './Receipt.interface';
 export class ReceiptModel extends Base implements IReceipt {
   contractID: number;
   paymentDate:string;
-  serialNumber: string;
-  price: 0;
+  serialNumber: string=null;
+  price: number=0;
   companyPaid: true;
   paymentStep: number;
   description: string;
+
 
 }

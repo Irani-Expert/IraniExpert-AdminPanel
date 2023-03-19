@@ -8,11 +8,12 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AllCommissionComponent } from './all-commission/all-commission.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [ContractListComponent, AllCommissionComponent],
   imports: [CrtRoutingModule, CommonModule,NgPersianDatepickerModule,NgMultiSelectDropDownModule,
-    FormsModule,ReactiveFormsModule,NgbModule]
+    FormsModule,ReactiveFormsModule,NgbModule,NgxPaginationModule]
     ,
 })
 export class ContractModule {}

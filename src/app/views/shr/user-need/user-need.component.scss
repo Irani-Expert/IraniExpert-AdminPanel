@@ -138,26 +138,31 @@
   .note-height{
     width: 400px;
     }
-  .auther-start {
-    position: absolute !important;
-  }
+
   .minimum-height{
    height: 70%;
   }
+  @media only screen and (min-width: 1200px) {
   .afterScroll{
-    position: fixed !important;
-    top: 90px !important;
+   
+      position: fixed !important;
+      top: 90px !important;
+    }
+    
+    .auther-start {
+      position: absolute !important;
+    }
 
 
+    .auther-end{
+      position: absolute !important;
+     
+      bottom: 0 !important;
+    }
  
   }
   
 
-.auther-end{
-  position: absolute !important;
- 
-  bottom: 0 !important;
-}
 
 }
 .comment-scroll{
@@ -178,11 +183,7 @@
 
 }
 
-.noteWidth{
-  @media  (max-width: 499px) {
-    
-}
-}
+
 .note-height{
 
   height: inherit;

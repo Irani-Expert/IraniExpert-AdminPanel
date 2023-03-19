@@ -9,6 +9,7 @@ import { ContractModel } from './contract-list/contract.model';
 import { ConditionModel } from 'src/app/shared/models/ConditionModel';
 import { allComissionModel } from './all-commission/allComission.model';
 import { ReceiptModel } from '../bsk/order/models/Receipt.model';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,41 @@ export class allcommissionService extends BaseService<ConditionModel, number> {
   constructor(public _http: HttpClient) {
     super(_http, environment.api.baseUrl);
   }
-  // AddReceipt(Receipt:ReceiptModel){
+  addReceipt(data:ReceiptModel){
+    debugger
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      }),
+    };    
+    return this._http.post<Result<ReceiptModel>>(
+      this._base + '/Receipt',
+      data ,
+      _options
+    );
+  }
+  getReceipt(
+    ContractID:number,pageSize:number,pageIndex:number
+  ): Observable<Result<Paginate<ReceiptModel[]>>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      }),
+    };
+    return this._http.get<Result<Paginate<ReceiptModel[]>>>(
+      this._base + '/Receipt?'+ pageIndex+'=0&'+pageSize+'=100&ContractID='+ContractID,
+      _options
+    );
+  }
+  // getReceipt(ContractID:number,pageSize:number,pageIndex:number): Observable<Paginate<Result<ReceiptModel>>>{
   //   let _options = {
   //     headers: new HttpHeaders({
   //       'Content-Type': 'application/json',
@@ -29,9 +64,8 @@ export class allcommissionService extends BaseService<ConditionModel, number> {
   //       Expires: '0',
   //     }),
   //   };    
-  //   return this._http.post<Result<number>>(
-  //     this._base + '/Receipt',
-  //     re,
+  //   return this._http.get<Paginate<Result<ReceiptModel>>>(
+  //     'https://dev.iraniexpert.com/api/Receipt?'+pageIndex+'=0&'+pageSize+'=100&ContractID='+ContractID,
   //     _options
   //   );
   // }
