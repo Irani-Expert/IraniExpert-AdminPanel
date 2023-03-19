@@ -4,7 +4,7 @@ export interface IReceipt extends IBase {
   contractID: number;
   paymentDate:string,
   serialNumber: string,
-  price: 0,
+  price: number,
   companyPaid: true,
   paymentStep: number,
   description: string,
