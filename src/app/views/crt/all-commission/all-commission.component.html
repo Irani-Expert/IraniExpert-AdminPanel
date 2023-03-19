@@ -1,231 +1,211 @@
-
 <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
     <div class="col-auto mb-2">
       <button class="btn btn-secondary" (click)="getAllCommission(3)">
-بازار یاب 
+        بازار یاب
       </button>
     </div>
   </div>
   <div class="col-12 row g-0 p-0 flex-row mb-2">
     <div class="col-auto mb-2">
-      <button class="btn btn-secondary" (click)="getAllCommission(3)">
+      <button class="btn btn-secondary" (click)="getAllCommission(2)">
         unknown
       </button>
     </div>
   </div>
-</div><section class="main-table">
-    <table class="table">
+</div>
+<section class="main-table">
+  <table class="table">
+    <thead class="bg-dark text-white">
+      <tr>
+        <th>نام</th>
+        <th>نام خانوادگی</th>
+        <th>کمیسیون</th>
+        <th>باقی مانده</th>
+        <th class="rounded--left">رسید ها</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of rows">
+        <td>{{ item.firstName }}</td>
+        <td>{{ item.lastName }}</td>
+        <td>{{ item.commission }}</td>
+        <td>{{ item.remainCommission }}</td>
+
+        <td class="td-oprate">
+          <button
+            (click)="openModal(addReceiptModal, 'lg', item.contractID)"
+            class="btn btn-dark-yellow text-white"
+            type="button"
+          >
+            افزودن رسید پرداخت
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<ng-template #addReceiptModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">رسید</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-title"
+      (click)="modal.close()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <button
+      (click)="openModal(openDetails, 'md')"
+      class="btn btn-success text-white m-2"
+      type="button"
+    >
+      افزودن رسید
+    </button>
+    <table class="table modal-table">
       <thead class="bg-dark text-white">
         <tr>
-          <th>نام</th>
-          <th>نام خانوادگی</th>
-          <th>کمیسیون</th>
-          <th>باقی مانده</th>
-          <th class="rounded--left">رسید ها</th>
-        </tr>
-      </thead>
-  
-      <tbody>
-          <tr  *ngFor="
-          let item of rows
-        ">
-            <td>{{item.firstName}}</td>
-            <td>{{item.lastName}}</td>
-            <td>{{item.commission}}</td>
-            <td>{{item.remainCommission}}</td>
-  
-       
-  
-  
-      
-          <td class="td-oprate">
-            <button
-            (click)="openModal( addReceiptModal,'lg',item.contractID)"
-              class="btn btn-dark-yellow text-white"
-                    type="button"
-
-            >
-              افزودن رسید پرداخت
-            </button>
-        
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-  <ng-template #addReceiptModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-title">رسید</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close button"
-        aria-describedby="modal-title"
-        (click)="modal.close()"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <button
-        (click)="openModal( openDetails,'md')"
-          class="btn btn-success text-white m-2"
-                type="button"
-
-        >
-          افزودن رسید
-        </button>
-       <table class="table modal-table">
-      <thead class="bg-dark text-white">
-        <tr>
-
           <th>شماره سریال</th>
           <th>تاریخ</th>
           <th>هزینه</th>
           <th>مرحله پرداخت</th>
           <th>توضیحات</th>
-    
         </tr>
       </thead>
-  
-      <tbody>
-        <tr *ngFor="
-        let item of Receipt | paginate
-          : {
-              itemsPerPage: page.size,
-              page: page.pageNumber-1,
-              currentPage: page.pageNumber-1,
-              totalItems: page.totalElements
-            }" >
-          <td>{{item.serialNumber}}</td>
-          <td>{{item.paymentDate}}</td>
-          <td>{{item.price}}</td>
-          <td>{{item.paymentStep}}</td>
-       
-  
-          <td>  <button
-            (click)="descriptionfunc(description,item.description)"
-              class="btn btn-info text-white"
-                    type="button"
 
+      <tbody>
+        <tr
+          *ngFor="
+            let item of Receipt
+              | paginate
+                : {
+                    itemsPerPage: page.size,
+                    page: page.pageNumber - 1,
+                    currentPage: page.pageNumber - 1,
+                    totalItems: page.totalElements
+                  }
+          "
+        >
+          <td>{{ item.serialNumber }}</td>
+          <td>{{ item.paymentDate }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.paymentStep }}</td>
+
+          <td>
+            <button
+              (click)="descriptionfunc(description, item.description)"
+              class="btn btn-info text-white"
+              type="button"
             >
               دیدن توضیحات
-            </button></td>
-  
-  
-      
+            </button>
+          </td>
         </tr>
-       
-        
-       
       </tbody>
     </table>
-    </div>
-    
-    <div class="modal-footer">
-      <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
-        <pagination-controls
-          (pageChange)="setPage($event)"
-          previousLabel=""
-          nextLabel=""
-        ></pagination-controls>
-      </div>
-    </div>
-  </ng-template>
-  <ng-template #openDetails let-modal>
-    <div>
-      <div class="modal-header">
-        <h4 class="modal-title">افزودن رسید</h4>
-        <button
-          type="button"
-          class="close"
-          aria-label="Close"
-          (click)="modal.dismiss('Cross click')"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-  
-      <div class="modal-body">
-        <form [formGroup]="addRedeiptForm" >
-          <div class="row">
-            <div class="col-12 col-lg-6 form-group mb-3">
-                <strong for="totalPrice" class="mb-3">میزان پرداخت</strong>
-                <input
-                  class="form-control"
-                  id="totalPrice"
-                  [(ngModel)]="price"
-                  [formControl]="addRedeiptForm.controls['price']"
-                />
-              </div>
-              <div class="col-md-6 form-group mb-3" dir="ltr">
-                <strong for="expireDate" class="mb-3">تاریخ</strong>
-      
-                <input
-                 
-                  (click)="e.toggle()"
-                  type="text"
-                  class="form-control"
-                  ngbDatepicker
-                  #e="ngbDatepicker"
-                  [(ngModel)]="addDate"
-                  [formControl]="addRedeiptForm.controls['paymentDate']"
+  </div>
 
-                />
-              </div>         
+  <div class="modal-footer">
+    <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+      <pagination-controls
+        (pageChange)="setPage($event)"
+        previousLabel=""
+        nextLabel=""
+      ></pagination-controls>
+    </div>
+  </div>
+</ng-template>
+<ng-template #openDetails let-modal>
+  <div>
+    <div class="modal-header">
+      <h4 class="modal-title">افزودن رسید</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="addRedeiptForm">
+        <div class="row">
+          <div class="col-12 col-lg-6 form-group mb-3">
+            <strong for="totalPrice" class="mb-3">میزان پرداخت</strong>
+            <input
+              class="form-control"
+              id="totalPrice"
+              [(ngModel)]="price"
+              [formControl]="addRedeiptForm.controls['price']"
+            />
+          </div>
+          <div class="col-md-6 form-group mb-3" dir="ltr">
+            <strong for="expireDate" class="mb-3">تاریخ</strong>
+
+            <input
+              (click)="e.toggle()"
+              type="text"
+              class="form-control"
+              ngbDatepicker
+              #e="ngbDatepicker"
+              [(ngModel)]="addDate"
+              [formControl]="addRedeiptForm.controls['paymentDate']"
+            />
+          </div>
         </div>
       </form>
-        <div class="col-12 form-group mb-3" dir="ltr">
-            <strong for="expireDate" class="mb-3">توضیحات</strong>
-            <textarea
-            name=""
-            cols="30"
-            rows="4"
-            type="text"
-            class="form-control "
-            id="description"
-            [(ngModel)]="addReceiptModel.description"
-            [formControl]="addRedeiptForm.controls['description']"
-
-            maxlength="500"
-          >
-          </textarea>
-          </div>
+      <div class="col-12 form-group mb-3" dir="ltr">
+        <strong for="expireDate" class="mb-3">توضیحات</strong>
+        <textarea
+          name=""
+          cols="30"
+          rows="4"
+          type="text"
+          class="form-control"
+          id="description"
+          [(ngModel)]="addReceiptModel.description"
+          [formControl]="addRedeiptForm.controls['description']"
+          maxlength="500"
+        >
+        </textarea>
+      </div>
       <div class="modal-footer">
         <button
           type="button"
           class="btn btn-outline-dark btn-rounded"
           (click)="addNewReceipt()"
-
         >
           تائید
         </button>
       </div>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #description let-modal>
+  <div>
+    <div class="modal-header">
+      <h4 class="modal-title">توضیحات</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-  </ng-template>
-  
-  <ng-template #description let-modal>
-    <div>
-      <div class="modal-header">
-        <h4 class="modal-title">توضیحات</h4>
-        <button
-          type="button"
-          class="close"
-          aria-label="Close"
-          (click)="modal.dismiss('Cross click');"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-  
-      <div class="modal-body">
-       <p class="description-border">{{descriptionText}}</p>
-      <div class="modal-footer">
-        
-      </div>
+
+    <div class="modal-body">
+      <p class="description-border">{{ descriptionText }}</p>
+      <div class="modal-footer"></div>
     </div>
-    </div>
-  </ng-template>
-  
+  </div>
+</ng-template>
