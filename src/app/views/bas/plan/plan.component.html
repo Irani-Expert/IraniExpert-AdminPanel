@@ -29,8 +29,9 @@
         <div class="bg-secondary w-100 rounded-top rounded-bottom">
           <h4 class="p-2 pt-3 mb-1 mr-1 text-white">پلن : {{ item.title }}</h4>
         </div>
+        <div class="text-white my-3">قیمت: {{ item.price | currency }}</div>
         <div class="bg-transparent w-100">
-          <label for="description" class="text-white-50 mt-3">توضیحات</label>
+          <label for="description" class="text-white-50">توضیحات</label>
           <h5 class="p-2 pt-3 mb-1 mr-1 text-white brief-text">
             {{ item.description }}
           </h5>
@@ -50,18 +51,10 @@
           </div>
         </div>
         <p class="mt-2 text-white">اولویت:{{ item.orderID | orderID }}</p>
-        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+        <ngb-accordion #acc="ngbAccordion">
           <ngb-panel>
             <ng-template ngbPanelTitle>
-              <div class="row d-xl-flex justify-content-xl-between">
-                <strong class="col-12 col-xl-6 text-center"
-                  >قیمت: {{ item.price | currency }}</strong
-                >
-                <div class="col-12 col-xl-6 text-center">
-                  <strong class="mr-2">امکانات</strong>
-                  <i class="i-Arrow-Down-in-Circle"></i>
-                </div>
-              </div>
+              <strong>امکانات</strong>
             </ng-template>
             <ng-template ngbPanelContent>
               <span>
