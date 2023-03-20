@@ -212,3 +212,10 @@ td {
 .td-oprate > button {
   margin: 0 5px;
 }
+.my-webKit::-webkit-scrollbar {
+  display: none;
+}
+.my-webKit {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

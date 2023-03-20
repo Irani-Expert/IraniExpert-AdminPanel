@@ -72,26 +72,7 @@ export class BannerComponent implements OnInit {
 
     this.getBannerList(this.page.pageNumber, this.page.size);
   }
-  deleteImg(filePath: string) {
-    this._fileUploaderService
-      .deleteFile(filePath)
-      .subscribe((res: Result<string[]>) => {
-        if (res.success) {
-          this.imageFound = false;
-          this.addUpdate.filePath = null;
 
-          this.toastr.success('با موفقیت حذف شد', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          this.toastr.error(res.message, 'خطا در حذف تصویر', {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
-  }
   async getBannerList(pageNumber: number, seedNumber: number) {
     this._bannerService
       .get(
@@ -152,6 +133,26 @@ export class BannerComponent implements OnInit {
           });
         }
       );
+  }
+  deleteImg(filePath: string) {
+    this._fileUploaderService
+      .deleteFile(filePath)
+      .subscribe((res: Result<string[]>) => {
+        if (res.success) {
+          this.imageFound = false;
+          this.addUpdate.filePath = null;
+
+          this.toastr.success('با موفقیت حذف شد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(res.message, 'خطا در حذف تصویر', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
   }
   deleteBanner(id: number) {
     this._bannerService.delete(id, 'Banner').subscribe((res) => {

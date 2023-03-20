@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
-import { CntModule } from '../../cnt.module';
 import { BannerModel } from './banner.model';
 
 @Injectable({

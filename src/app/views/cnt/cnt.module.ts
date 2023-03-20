@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CntRoutingModule } from './cnt.routing';
-import { BannerComponent } from './banner/banner/banner.component';
+import { BannerComponent } from './banner/banner.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ArticleComponent } from './article/article/article.component';
 import { AddUpdateComponent } from './article/add-update/add-update.component';

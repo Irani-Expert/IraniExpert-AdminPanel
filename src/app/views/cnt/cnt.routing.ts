@@ -4,7 +4,7 @@ import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { AddUpdateComponent } from './article/add-update/add-update.component';
 import { ArticleComponent } from './article/article/article.component';
 import { CommentComponent } from './article/comment/comment.component';
-import { BannerComponent } from './banner/banner/banner.component';
+import { BannerComponent } from './banner/banner.component';
 
 const routes: Routes = [
   {

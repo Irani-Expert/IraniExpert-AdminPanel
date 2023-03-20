@@ -35,7 +35,6 @@ export class OrderComponent implements OnInit {
   licenseID: number;
   isValidate: boolean;
   // accountNumber: number;
-  isOrderHaveLicense: boolean = false;
   invoiceDetail: InvoiceModel = new InvoiceModel();
   invoiceStatus: number;
 
@@ -300,28 +299,27 @@ export class OrderComponent implements OnInit {
         }
       });
   }
-  deleteOrder(id: number, modal: any) {
-    console.log(this.status);
+  // deleteOrder(id: number, modal: any) {
+  //   this.modalService
+  //     .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
+  //     .result.then((_result) => {
+  //       this._orderService.delete(id, 'orders').subscribe((res) => {
+  //         if (res.success) {
+  //           this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
+  //             timeOut: 3000,
+  //             positionClass: 'toast-top-left',
+  //           });
+  //         } else {
+  //           this.toastr.error('خطا در حذف', res.message, {
+  //             timeOut: 3000,
+  //             positionClass: 'toast-top-left',
+  //           });
+  //         }
+  //         this.getOrderbyStatus(this.status, this.page.pageNumber);
+  //       });
+  //     });
+  // }
 
-    this.modalService
-      .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then((_result) => {
-        this._orderService.delete(id, 'orders').subscribe((res) => {
-          if (res.success) {
-            this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
-              timeOut: 3000,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.toastr.error('خطا در حذف', res.message, {
-              timeOut: 3000,
-              positionClass: 'toast-top-left',
-            });
-          }
-          this.getOrderbyStatus(this.status, this.page.pageNumber);
-        });
-      });
-  }
   // ///////////// Note List
   // Get Note List
 
@@ -438,6 +436,7 @@ export class OrderComponent implements OnInit {
   }
   openUpdateModal(content: NgbModal, row: OrderModel) {
     this.licenseModel = new LicenseModel();
+    let filePathKeeper = this.licenseModel.filePath;
     this.clientId = row.clientId;
     this.licenseID = row.licenseID;
     if (this.licenseID !== null)
@@ -445,10 +444,8 @@ export class OrderComponent implements OnInit {
         .getOneByID(this.licenseID, 'License')
         .subscribe((res) => {
           if (res.success) {
-            if (res.data.filePath !== null) {
-              this.isOrderHaveLicense = true;
-            }
             this.licenseModel = res.data;
+            filePathKeeper = res.data.filePath;
             this.expireDate = res.data.expireDate;
             this.startDate = res.data.startDate;
             this.versionNumber = res.data.versionNumber;
@@ -460,9 +457,16 @@ export class OrderComponent implements OnInit {
         size: 'lg',
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
+        beforeDismiss: () => {
+          if (filePathKeeper !== this.licenseModel.filePath) {
+            return false;
+          } else {
+            return this.licenseModel.fileExists;
+          }
+        },
       })
       .result.then((result: boolean) => {
-        if (result != undefined) {
+        if (result == true) {
           if (this.clientId == null) {
             this.licenseModel.rowID = row.id;
             this.addOrUpdate(this.licenseModel, null);
