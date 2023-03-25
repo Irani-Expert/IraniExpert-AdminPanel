@@ -22,22 +22,32 @@
   <table class="table">
     <thead class="bg-dark text-white">
       <tr>
-        <th class="rounded--right">ID</th>
         <th>تصویر</th>
         <th class="rounded--left">عملیات</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let item of rows">
-        <td>{{ item.id }}</td>
-        <td>
-          <img src="{{ item.filePath }}" width="100" height="100" />
-        </td>
-        <td>
-          <button class="btn btn-danger">حذف</button>
-        </td>
-      </tr>
+      <ng-container *ngFor="let item of rows">
+        <tr *ngIf="pageLoad">
+          <td>
+            <img
+              (error)="splitRow(item)"
+              [src]="'https://dl.iraniexpert.com/' + item.filePath"
+              width="100"
+              height="100"
+            />
+          </td>
+          <td>
+            <button
+              class="btn btn-danger"
+              (click)="deleteImg(item, deleteConfirmModal)"
+            >
+              حذف
+            </button>
+          </td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
 </section>
@@ -101,7 +111,7 @@
     <button
       type="button"
       class="btn btn-outline-dark btn-rounded"
-      (click)="modal.close(false)"
+      (click)="modal.close(true)"
     >
       ایجاد
     </button>
@@ -145,12 +155,13 @@
 </ng-template>
 
 <!-- PAGINATION CONTROL -->
-<div class="col-md-12 mt-3" *ngIf="rows?.length">
+
+<!-- <div class="col-md-12 mt-3" *ngIf="rows?.length">
   <pagination-controls
     (pageChange)="page = $event"
     previousLabel=""
     nextLabel=""
   ></pagination-controls>
-</div>
+</div> -->
 
 <!-- (click)="deletePicture(item.id, deleteConfirmModal)" -->

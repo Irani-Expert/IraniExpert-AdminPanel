@@ -12,7 +12,7 @@ import { ReceiptModel } from '../bsk/order/models/Receipt.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class allcommissionService extends BaseService<ConditionModel, number> {
   userGuid = environment.jwtToken;
@@ -20,8 +20,7 @@ export class allcommissionService extends BaseService<ConditionModel, number> {
   constructor(public _http: HttpClient) {
     super(_http, environment.api.baseUrl);
   }
-  addReceipt(data:ReceiptModel){
-    debugger
+  addReceipt(data: ReceiptModel) {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -30,15 +29,17 @@ export class allcommissionService extends BaseService<ConditionModel, number> {
         Pragma: 'no-cache',
         Expires: '0',
       }),
-    };    
+    };
     return this._http.post<Result<ReceiptModel>>(
       this._base + '/Receipt',
-      data ,
+      data,
       _options
     );
   }
   getReceipt(
-    ContractID:number,pageSize:number,pageIndex:number
+    ContractID: number,
+    pageSize: number,
+    pageIndex: number
   ): Observable<Result<Paginate<ReceiptModel[]>>> {
     let _options = {
       headers: new HttpHeaders({
@@ -50,7 +51,13 @@ export class allcommissionService extends BaseService<ConditionModel, number> {
       }),
     };
     return this._http.get<Result<Paginate<ReceiptModel[]>>>(
-      this._base + '/Receipt?'+ pageIndex+'=0&'+pageSize+'=100&ContractID='+ContractID,
+      this._base +
+        '/Receipt?' +
+        pageIndex +
+        '=0&' +
+        pageSize +
+        '=100&ContractID=' +
+        ContractID,
       _options
     );
   }
@@ -63,15 +70,14 @@ export class allcommissionService extends BaseService<ConditionModel, number> {
   //       Pragma: 'no-cache',
   //       Expires: '0',
   //     }),
-  //   };    
+  //   };
   //   return this._http.get<Paginate<Result<ReceiptModel>>>(
   //     'https://dev.iraniexpert.com/api/Receipt?'+pageIndex+'=0&'+pageSize+'=100&ContractID='+ContractID,
   //     _options
   //   );
   // }
   getCommissionAllUser(
-    sellingType: number,
-
+    sellingType: number
   ): Observable<Result<allComissionModel[]>> {
     let _options = {
       headers: new HttpHeaders({
@@ -81,11 +87,13 @@ export class allcommissionService extends BaseService<ConditionModel, number> {
         Pragma: 'no-cache',
         Expires: '0',
       }),
-    };    
+    };
     return this._http.get<Result<allComissionModel[]>>(
-      this._base + '/Orders/GetCommissionAllUserBySellingType'+'?sellingType=' + sellingType,
+      this._base +
+        '/Orders/GetCommissionAllUserBySellingType' +
+        '?sellingType=' +
+        sellingType,
       _options
     );
   }
-
 }

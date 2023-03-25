@@ -13,8 +13,7 @@
   <table class="table">
     <thead class="bg-dark text-white">
       <tr>
-        <th class="rounded--right">ID</th>
-        <th>عکس</th>
+        <th class="rounded--right">عکس</th>
         <th>عنوان</th>
         <th>اولویت</th>
         <th>وضعیت</th>
@@ -35,12 +34,14 @@
                 }
         "
       >
-        <td>{{ item.id }}</td>
         <td>
-          <a href="" class="m-0">
+          <a
+            href="{{ 'https://dl.iraniexpert.com/' + item.filePath }}"
+            class="m-0"
+          >
             <img
               src="{{ 'https://dl.iraniexpert.com/' + item.filePath }}"
-              class="img-card m-0"
+              class="m-0 img-card"
               alt=""
             />
           </a>

@@ -6,10 +6,10 @@ export class OrderModel extends Base implements IOrder {
   firstName: string;
   lastName: string;
   accountNumber: number;
-  plan: string;
+  planTitle: string;
   planID: number;
   price: number;
-  product: string;
+  productTitle: string;
   productID: number;
   transactionStatus: number;
   updateDate: string;

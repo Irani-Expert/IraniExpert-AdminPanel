@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IBaseService } from './baseService.interface';
 import { catchError, delay } from 'rxjs/operators';
 import { Result } from '../../models/Base/result.model';
-import { Filter } from '../../models/Base/filter.model';
+import { FilterModel } from '../../models/Base/filter.model';
 import { environment } from 'src/environments/environment.prod';
 import { Paginate } from '../../models/Base/paginate.model';
 

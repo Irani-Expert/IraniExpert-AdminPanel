@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { FileModel } from './file.model';
@@ -15,31 +16,29 @@ import { FileService } from './file.service';
 })
 export class GalleryComponent implements OnInit {
   @Input() productId: number;
+  pageLoad: boolean = true;
   addUpdate: FileModel = new FileModel();
   addForm: FormGroup;
   viewMode: 'list' | 'grid' = 'list';
   allSelected: boolean;
-  pageIndex = 1;
-  products: any[] = [];
-  pageSize = 12;
   rows: FileModel[];
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
   constructor(
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _formBuilder: FormBuilder,
     private _fileService: FileService,
     private _fileUploaderService: FileUploaderService
   ) {}
 
   ngOnInit(): void {
     this.getFileByProductId(this.productId, 6);
-    this.addForm = this._formBuilder.group({
-      cardImagePath: [null],
-    });
   }
-
+  splitRow(item: FileModel) {
+    var finder = this.rows.findIndex((row) => row.id === item.id);
+    this.rows.splice(finder, 1);
+    this.pageLoad = true;
+  }
   async getFileByProductId(rowId: number, tableType: number) {
     this._fileService.getFilesByRowIdAndTableType(rowId, tableType).subscribe(
       (res: Result<FileModel[]>) => {
@@ -95,7 +94,7 @@ export class GalleryComponent implements OnInit {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
-          this.rows.push(row);
+          this.rows.unshift(row);
         } else {
           this.toastr.error(data.message, null, {
             closeButton: true,
@@ -149,11 +148,33 @@ export class GalleryComponent implements OnInit {
         }
       );
   }
-  deletePicture(_id: number, _content: any) {
+  deleteImg(item: FileModel, _content: NgbModal) {
     this.modalService
       .open(_content, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then((_result) => {
-        // this._fileUploaderService.deleteFile(filePath);
-      });
+      .result.then(
+        (_result) => {
+          this._fileUploaderService
+            .deleteFile(item.filePath)
+            .subscribe((result) => {
+              if (result.success) {
+                this.toastr.success('با موفقیت حذف  شد', null, {
+                  closeButton: true,
+                  positionClass: 'toast-top-left',
+                });
+                var finder = this.rows.findIndex((row) => row.id === item.id);
+                this.rows.splice(finder, 1);
+              } else {
+                this.toastr.error(result.message, 'خطا در حذف تصویر', {
+                  closeButton: true,
+                  timeOut: 2000,
+                  positionClass: 'toast-top-left',
+                });
+              }
+            });
+        },
+        (_reason) => {
+          console.log('dismiss');
+        }
+      );
   }
 }

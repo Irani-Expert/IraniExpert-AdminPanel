@@ -5,5 +5,4 @@ export class FileModel extends Base implements IFile {
   rowID: number;
   tableType: number;
   filePath: string;
-  isFileExist: boolean = false;
 }

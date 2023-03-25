@@ -1,20 +1,29 @@
 <!----------------------------------- Change The Showing Context  -->
-<div class="updateNoteBar" *ngIf="toggled" (click)="updateNotebar()"></div>
+<div
+  class="updateNoteBar"
+  *ngIf="toggled"
+  (click)="clearNote()"
+  (click)="updateNotebar()"
+></div>
 
 <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
     <div class="col-auto mb-2">
-      <button class="btn btn-secondary" (click)="getOrderbyStatus(null, 0)">
-        تمامی سفارشات
+      <button
+        class="btn btn-final text-white"
+        (click)="getOrders(8, 0, filter)"
+      >
+        نهایی
       </button>
     </div>
+
     <div class="col-auto mb-2">
-      <button class="btn btn-primary" (click)="getOrderbyStatus(1, 0)">
+      <button class="btn btn-primary" (click)="getOrders(1, 0, filter)">
         در انتظار پرداخت
       </button>
     </div>
     <div class="col-auto mb-2">
-      <button class="btn btn-dark" (click)="getOrderbyStatus(6, 0)">
+      <button class="btn btn-dark" (click)="getOrders(6, 0, filter)">
         در انتظار تائید
       </button>
     </div>
@@ -22,20 +31,16 @@
     <div class="col-auto mb-2">
       <button
         class="btn btn-confirmed text-white"
-        (click)="getOrderbyStatus(2, 0)"
+        (click)="getOrders(2, 0, filter)"
       >
         تائید شده
       </button>
     </div>
-    <div class="col-auto mb-2">
-      <button class="btn btn-final text-white" (click)="getOrderbyStatus(8, 0)">
-        نهایی
-      </button>
-    </div>
+
     <div class="col-auto mb-2">
       <button
         class="btn btn-rejected text-white"
-        (click)="getOrderbyStatus(5, 0)"
+        (click)="getOrders(5, 0, filter)"
       >
         رد شده
       </button>
@@ -90,7 +95,7 @@
         </td>
         <td>{{ item.firstName }}&nbsp;{{ item.lastName }}</td>
         <td>{{ item.accountNumber }}</td>
-        <td>{{ item.product }}|{{ item.plan }}</td>
+        <td>{{ item.productTitle }}|{{ item.planTitle }}</td>
         <td>{{ item.price | currency }}</td>
         <td *ngIf="dateValue == 'تاریخ ثبت به میلادی'">
           {{ item.createDate | date : " YYYY d MMMM " }}
@@ -214,43 +219,8 @@
 
 <!------------------------------------------------- Delete Modal -->
 
-<ng-template #deleteModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">حذف امکان</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close button"
-      aria-describedby="modal-title"
-      (click)="modal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p><strong>آیا از حذف مطمئنید؟</strong></p>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
-      (click)="modal.dismiss('cancel')"
-    >
-      خیر
-    </button>
-    <button
-      type="button"
-      ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
-      (click)="modal.close('Ok')"
-    >
-      بله
-    </button>
-  </div>
-</ng-template>
-
 <!------------------------------------------------- Details Modal -->
-<ng-template #openDetails let-modal>
+<ng-template #openDetails>
   <div>
     <div class="modal-header">
       <h4 class="modal-title">جزئیات و تغییر وضعیت</h4>
@@ -457,113 +427,111 @@
 
 <!------------------------------------------------- sendLicense Modal -->
 
-<ng-template #sendLicense let-modal>
-  <div>
-    <div class="modal-header">
-      <h4 class="modal-title">ارسال لایسنس</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
+<ng-template #sendLicense>
+  <div class="modal-header">
+    <h4 class="modal-title">ارسال لایسنس</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mt-2">
+      <div
+        class="col-12 row d-flex flex-row align-items-center form-group mb-3"
       >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="row mt-2">
-        <div
-          class="col-12 row d-flex flex-row align-items-center form-group mb-3"
-        >
-          <strong for="file" class="mb-3 ml-2">فایل لایسنس</strong>
-          <ng-container *ngIf="licenseModel.fileExists">
-            <div class="col-md-2 col-5 mb-5 mt-1">
-              <img
-                class="align-self-center w-100 radius-md"
-                src="assets/images/zip-file-icon.png"
-              />
-            </div>
-            <div class="col-md-6 col-5">
-              <a
-                class="btn btn-primary m-1"
-                href="https://dl.iraniExpert.com/{{ licenseModel.filePath }}"
-                >دانلود</a
-              >
-              <button
-                class="btn btn-danger m-1"
-                (click)="deleteFile(licenseModel.filePath)"
-              >
-                حذف
-              </button>
-            </div>
-          </ng-container>
-          <input
-            id="upload"
-            type="file"
-            *ngIf="!licenseModel.fileExists"
-            (change)="onFileChanged($event)"
-          />
-        </div>
-        <ng-container>
-          <strong *ngIf="!licenseModel.fileExists" class="text-danger col-12"
-            >فایل ارسالی باید zip باشد</strong
-          >
-          <div class="col-12 mt-2 mb-2">
-            <button
-              class="btn btn-primary col-2"
-              (click)="uploadFile()"
-              *ngIf="isValidate"
+        <strong for="file" class="mb-3 ml-2">فایل لایسنس</strong>
+        <ng-container *ngIf="licenseModel.fileExists">
+          <div class="col-md-2 col-5 mb-5 mt-1">
+            <img
+              class="align-self-center w-100 radius-md"
+              src="assets/images/zip-file-icon.png"
+            />
+          </div>
+          <div class="col-md-6 col-5">
+            <a
+              class="btn btn-primary m-1"
+              href="https://dl.iraniExpert.com/{{ licenseModel.filePath }}"
+              >دانلود</a
             >
-              آپلود
+            <button
+              class="btn btn-danger m-1"
+              (click)="deleteModal(licenseModel, deletingModal, 1)"
+            >
+              حذف
             </button>
           </div>
         </ng-container>
-
-        <div class="col-md-3 form-group mb-3" dir="ltr">
-          <strong for="startDate" class="mb-3">تاریخ شروع</strong>
-
-          <input
-            (click)="s.toggle()"
-            type="text"
-            class="form-control"
-            ngbDatepicker
-            #s="ngbDatepicker"
-            [(ngModel)]="startDate"
-          />
+        <input
+          id="upload"
+          type="file"
+          *ngIf="!licenseModel.fileExists"
+          (change)="onFileChanged($event)"
+        />
+      </div>
+      <ng-container>
+        <strong *ngIf="!licenseModel.fileExists" class="text-danger col-12"
+          >فایل ارسالی باید zip باشد</strong
+        >
+        <div class="col-12 mt-2 mb-2">
+          <button
+            class="btn btn-primary col-2"
+            (click)="uploadFile()"
+            *ngIf="isValidate"
+          >
+            آپلود
+          </button>
         </div>
-        <div class="col-md-3 form-group mb-3" dir="ltr">
-          <strong for="expireDate" class="mb-3">تاریخ انقضا</strong>
+      </ng-container>
 
-          <input
-            (click)="e.toggle()"
-            type="text"
-            class="form-control"
-            ngbDatepicker
-            #e="ngbDatepicker"
-            [(ngModel)]="expireDate"
-          />
-        </div>
-        <div class="col-md-3 form-group mb-3" dir="ltr">
-          <strong for="versionNumber" class="mb-3">Version Number</strong>
+      <div class="col-md-3 form-group mb-3" dir="ltr">
+        <strong for="startDate" class="mb-3">تاریخ شروع</strong>
 
-          <input type="text" class="form-control" [(ngModel)]="versionNumber" />
-        </div>
-        <div class="col-md-5 form-group mb-3" dir="ltr">
-          <strong for="accountNumber" class="mb-3">شماره حساب کاربر</strong>
+        <input
+          (click)="s.toggle()"
+          type="text"
+          class="form-control"
+          ngbDatepicker
+          #s="ngbDatepicker"
+          [(ngModel)]="startDate"
+        />
+      </div>
+      <div class="col-md-3 form-group mb-3" dir="ltr">
+        <strong for="expireDate" class="mb-3">تاریخ انقضا</strong>
 
-          <input type="text" class="form-control" [(ngModel)]="accountNumber" />
-        </div>
+        <input
+          (click)="e.toggle()"
+          type="text"
+          class="form-control"
+          ngbDatepicker
+          #e="ngbDatepicker"
+          [(ngModel)]="expireDate"
+        />
+      </div>
+      <div class="col-md-3 form-group mb-3" dir="ltr">
+        <strong for="versionNumber" class="mb-3">Version Number</strong>
+
+        <input type="text" class="form-control" [(ngModel)]="versionNumber" />
+      </div>
+      <div class="col-md-5 form-group mb-3" dir="ltr">
+        <strong for="accountNumber" class="mb-3">شماره حساب کاربر</strong>
+
+        <input type="text" class="form-control" [(ngModel)]="accountNumber" />
       </div>
     </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="modal.close(true)"
-      >
-        ارسال
-      </button>
-    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark btn-rounded"
+      (click)="modal.close(true)"
+    >
+      ارسال
+    </button>
   </div>
 </ng-template>
 
@@ -691,5 +659,42 @@
     >
       بله
     </button>
+  </div>
+</ng-template>
+
+<ng-template #deletingModal let-modal>
+  <div class="shadow-lg">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">حذف</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close button"
+        aria-describedby="modal-title"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p><strong>آیا از حذف مطمئنید؟</strong></p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-rounded mr-1"
+        (click)="modal.dismiss('cancel')"
+      >
+        خیر
+      </button>
+      <button
+        type="button"
+        ngbAutofocus
+        class="btn btn-wide btn-danger btn-rounded"
+        (click)="modal.close('Ok')"
+      >
+        بله
+      </button>
+    </div>
   </div>
 </ng-template>

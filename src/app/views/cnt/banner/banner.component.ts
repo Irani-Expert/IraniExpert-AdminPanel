@@ -28,6 +28,7 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
   // ],
 })
 export class BannerComponent implements OnInit {
+  filePathKeeper: string;
   imageFound: boolean = true;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
@@ -110,12 +111,24 @@ export class BannerComponent implements OnInit {
   imgLoad() {}
   initCropper() {}
   imgFailed() {
-    alert('image Failed to Show');
+    this.toastr.error('لطفا از صحت فایل اطمینان حاصل فرمایید', null, {
+      timeOut: 3000,
+      positionClass: 'toast-top-left',
+      messageClass: 'text-small mt-2',
+    });
   }
   deleteModal(item: BannerModel, type: number, modal: any) {
+    let modalCentered: boolean;
+    if (type == 0) {
+      modalCentered = false;
+    }
+    if (type == 1) {
+      modalCentered = true;
+    }
     this.modalService
       .open(modal, {
-        centered: true,
+        animation: true,
+        centered: modalCentered,
       })
       .result.then(
         (_result) => {
@@ -140,15 +153,17 @@ export class BannerComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.imageFound = false;
-          this.addUpdate.filePath = null;
+          this.addUpdate.filePath = this.filePathKeeper;
 
           this.toastr.success('با موفقیت حذف شد', null, {
             closeButton: true,
+            timeOut: 2000,
             positionClass: 'toast-top-left',
           });
         } else {
           this.toastr.error(res.message, 'خطا در حذف تصویر', {
             closeButton: true,
+            timeOut: 2000,
             positionClass: 'toast-top-left',
           });
         }
@@ -171,6 +186,7 @@ export class BannerComponent implements OnInit {
     });
   }
   addorEdit(content: any, row: BannerModel) {
+    this.imageFound = true;
     if (row === undefined) {
       row = new BannerModel();
       row.id = 0;
@@ -179,19 +195,45 @@ export class BannerComponent implements OnInit {
       row.linkType = null;
       row.tableType = null;
     }
-    let filePathKeeper = row.filePath;
+    this.filePathKeeper = row.filePath;
     this.addUpdate = row;
-
+    console.log(this.addUpdate.filePath);
     // /this.addUpdate.filePath=row.filePath.substring(row.filePath.indexOf('com/')+4)
     this.modalService
       .open(content, {
         size: 'lg',
         ariaLabelledBy: 'modal-basic-title',
         beforeDismiss: () => {
-          if (filePathKeeper !== this.addUpdate.filePath) {
+          if (this.filePathKeeper !== this.addUpdate.filePath) {
+            if (this.addUpdate.id == 0) {
+              this.toastr.show(
+                ' لطفا ایجاد را تکمیل کنید یا عکس آپلود شده را حذف کنید',
+                null,
+                {
+                  closeButton: true,
+                  positionClass: 'toast-top-left',
+                  toastClass: 'bg-light',
+                  messageClass: 'text-small mt-2',
+                }
+              );
+            }
+            if (this.addUpdate.id !== 0) {
+              this.toastr.show(
+                ' لطفا ویرایش را تکمیل کنید یا عکس آپلود شده را حذف کنید',
+                null,
+                {
+                  closeButton: true,
+                  positionClass: 'toast-top-left',
+                  toastClass: 'bg-light',
+                  messageClass: 'text-small mt-2',
+                }
+              );
+            }
+
             return false;
-          } else {
-            return this.imageFound;
+          }
+          if (this.addUpdate.id == 0) {
+            return true;
           }
         },
       })
@@ -199,10 +241,14 @@ export class BannerComponent implements OnInit {
         (result) => {
           if (result === true) {
             this.addOrUpdate(this.addUpdate);
-            this.addForm.reset();
           }
         },
-        (reason) => {}
+        (reason) => {
+          console.log(this.addUpdate.filePath);
+
+          this.onFileChanged(null);
+          this.cropImagePreview = null;
+        }
       );
   }
   async addOrUpdate(row: BannerModel) {
@@ -213,6 +259,10 @@ export class BannerComponent implements OnInit {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
+          this.addForm.reset();
+          this.onFileChanged(null);
+          this.cropImagePreview = null;
+          this.getBannerList(this.page.pageNumber, this.page.size);
         } else {
           this.toastr.error(data.message, null, {
             closeButton: true,
@@ -227,16 +277,19 @@ export class BannerComponent implements OnInit {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
+          this.addForm.reset();
+          this.onFileChanged(null);
+          this.cropImagePreview = null;
+          this.getBannerList(this.page.pageNumber, this.page.size);
         } else {
           this.toastr.error(data.message, null, {
             closeButton: true,
+            timeOut: 2000,
             positionClass: 'toast-top-left',
           });
         }
       });
     }
-
-    this.getBannerList(this.page.pageNumber, this.page.size);
   }
   selectType($event: any) {
     if ($event != undefined) {
@@ -269,6 +322,7 @@ export class BannerComponent implements OnInit {
           this.imageFound = true;
 
           this.toastr.success('با موفقیت آپلود شد', null, {
+            timeOut: 2000,
             closeButton: true,
             positionClass: 'toast-top-left',
           });

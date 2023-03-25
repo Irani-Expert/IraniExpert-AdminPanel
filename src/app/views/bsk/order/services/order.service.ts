@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
@@ -80,7 +81,35 @@ export class OrderService extends BaseService<OrderModel, 0> {
       _options
     );
   }
-  getByStatus(pageSize: number, pageIndex: number, transactionStatus: number) {
+  // getByStatus(pageSize: number, pageIndex: number, transactionStatus: number) {
+  //   let _options = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       'Cache-Control':
+  //         'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+  //       Pragma: 'no-cache',
+  //       Expires: '0',
+  //       // Authorization: 'bearer ' + environment.jwtToken,
+  //     }),
+  //   };
+  //   return this._http.get<Result<Paginate<OrderModel[]>>>(
+  //     this._base +
+  //       '/Orders/GetByStatus?pageIndex=' +
+  //       pageIndex +
+  //       '&pageSize=' +
+  //       pageSize +
+  //       '&transactionStatus=' +
+  //       transactionStatus,
+  //     _options
+  //   );
+  // }
+
+  getOrders(
+    pageIndex: number,
+    pageSize: number,
+    transactionStatus: number,
+    filter: FilterModel
+  ) {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -91,14 +120,63 @@ export class OrderService extends BaseService<OrderModel, 0> {
         // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
+
     return this._http.get<Result<Paginate<OrderModel[]>>>(
       this._base +
-        '/Orders/GetByStatus?pageIndex=' +
+        '/Orders?pageIndex=' +
         pageIndex +
         '&pageSize=' +
         pageSize +
-        '&transactionStatus=' +
-        transactionStatus,
+        '&TransactionStatus=' +
+        transactionStatus +
+        (filter.iD == undefined || filter.iD == null
+          ? ''
+          : '&ID=' + filter.iD) +
+        (filter.firstName == undefined || filter.firstName == null
+          ? ''
+          : '&FirstName=' + filter.firstName) +
+        (filter.lastName == undefined || filter.lastName == null
+          ? ''
+          : '&LastName=' + filter.lastName) +
+        (filter.accountNumber == undefined || filter.accountNumber == null
+          ? ''
+          : '&AccountNumber=' + filter.accountNumber) +
+        (filter.fromCreateDate == undefined || filter.fromCreateDate == null
+          ? ''
+          : '&FromCreateDate=' + filter.fromCreateDate) +
+        (filter.toCreateDate == undefined || filter.toCreateDate == null
+          ? ''
+          : '&ToCreateDate=' + filter.toCreateDate) +
+        (filter.phoneNumber == undefined || filter.phoneNumber == null
+          ? ''
+          : '&PhoneNumber=' + filter.phoneNumber) +
+        (filter.planID == undefined || filter.planID == null
+          ? ''
+          : '&PlanID=' + filter.planID) +
+        (filter.productID == undefined || filter.productID == null
+          ? ''
+          : '&ProductID=' + filter.productID) +
+        (filter.code == undefined || filter.code == null
+          ? ''
+          : '&Code=' + filter.code) +
+        (filter.fromStartDate == undefined || filter.fromStartDate == null
+          ? ''
+          : '&FromStartDate=' + filter.fromStartDate) +
+        (filter.toStartDate == undefined || filter.toStartDate == null
+          ? ''
+          : '&ToStartDate=' + filter.toStartDate) +
+        (filter.fromExpireDate == undefined || filter.fromExpireDate == null
+          ? ''
+          : '&FromExpireDate=' + filter.fromExpireDate) +
+        (filter.toExpireDate == undefined || filter.toExpireDate == null
+          ? ''
+          : '&ToExpireDate=' + filter.toExpireDate) +
+        (filter.versionNumber == undefined || filter.versionNumber == null
+          ? ''
+          : '&VersionNumber=' + filter.versionNumber) +
+        (filter.userID == undefined || filter.userID == null
+          ? ''
+          : '&UserID=' + filter.userID),
       _options
     );
   }

@@ -25,6 +25,7 @@ import { LicenseModel } from './models/license.model';
 import { LicenseService } from './services/license.service';
 import { OrderModel } from './models/order.model';
 import { OrderService } from './services/order.service';
+import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 
 @Component({
   selector: 'app-order',
@@ -32,6 +33,7 @@ import { OrderService } from './services/order.service';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  filter: FilterModel = new FilterModel();
   licenseID: number;
   isValidate: boolean;
   // accountNumber: number;
@@ -49,7 +51,7 @@ export class OrderComponent implements OnInit {
   noteRowID: number;
   notes: CommentModel[] = new Array<CommentModel>();
   note: CommentModel = new CommentModel();
-
+  filePathKeeper: string;
   licenseFile: any = '';
   licenseModel: LicenseModel = new LicenseModel();
   startDate: any;
@@ -87,7 +89,7 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setPage(this.page.pageNumber, null);
+    this.setPage(this.page.pageNumber, 8);
 
     this.updateNotebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
@@ -102,7 +104,7 @@ export class OrderComponent implements OnInit {
   setPage(pageInfo: number, transactionStatus: any) {
     this.page.pageNumber = pageInfo;
 
-    this.getOrderbyStatus(transactionStatus, pageInfo);
+    this.getOrders(transactionStatus, pageInfo, this.filter);
   }
   changeHeaderValue() {
     if (this.headerValue != 'کد رهگیری') {
@@ -119,13 +121,14 @@ export class OrderComponent implements OnInit {
       this.dateValue = ' تاریخ ثبت به شمسی';
     }
   }
-  getOrderbyStatus(status: any, pageNumber: number) {
+  getOrders(status: any, pageNumber: number, filter: FilterModel) {
     this.status = status;
     this._orderService
-      .getByStatus(
-        this.page.size,
+      .getOrders(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
-        status
+        this.page.size,
+        status,
+        filter
       )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
@@ -222,7 +225,7 @@ export class OrderComponent implements OnInit {
           closeButton: true,
           positionClass: 'toast-top-left',
         });
-        this.getOrderbyStatus(this.status, this.page.pageNumber);
+        this.getOrders(this.status, this.page.pageNumber, this.filter);
         // if (item.status == 99) {
         //   this.rows[finder].transactionStatus = 5;
         //   if (this.status == 2 || this.status == 8) {
@@ -287,6 +290,7 @@ export class OrderComponent implements OnInit {
         if (res.success) {
           this.licenseModel.filePath = res.data[0];
           this.licenseModel.fileExists = true;
+          this.isValidate = false;
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -299,27 +303,35 @@ export class OrderComponent implements OnInit {
         }
       });
   }
-  // deleteOrder(id: number, modal: any) {
-  //   this.modalService
-  //     .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-  //     .result.then((_result) => {
-  //       this._orderService.delete(id, 'orders').subscribe((res) => {
-  //         if (res.success) {
-  //           this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
-  //             timeOut: 3000,
-  //             positionClass: 'toast-top-left',
-  //           });
-  //         } else {
-  //           this.toastr.error('خطا در حذف', res.message, {
-  //             timeOut: 3000,
-  //             positionClass: 'toast-top-left',
-  //           });
-  //         }
-  //         this.getOrderbyStatus(this.status, this.page.pageNumber);
-  //       });
-  //     });
-  // }
 
+  deleteModal(item: any, modal: any, type: number) {
+    this.modalService
+      .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: false })
+      .result.then((_result) => {
+        if (type == 0) {
+          this.deleteOrder(item.id);
+        }
+        if (type == 1) {
+          this.deleteFile(item.filePath);
+        }
+      });
+  }
+  deleteOrder(id: number) {
+    this._orderService.delete(id, 'orders').subscribe((res) => {
+      if (res.success) {
+        this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
+          timeOut: 3000,
+          positionClass: 'toast-top-left',
+        });
+      } else {
+        this.toastr.error('خطا در حذف', res.message, {
+          timeOut: 3000,
+          positionClass: 'toast-top-left',
+        });
+      }
+      this.getOrders(this.status, this.page.pageNumber, this.filter);
+    });
+  }
   // ///////////// Note List
   // Get Note List
 
@@ -422,6 +434,8 @@ export class OrderComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.licenseModel.fileExists = false;
+          this.licenseModel.filePath = this.filePathKeeper;
+
           this.toastr.success('با موفقیت حذف شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -436,7 +450,7 @@ export class OrderComponent implements OnInit {
   }
   openUpdateModal(content: NgbModal, row: OrderModel) {
     this.licenseModel = new LicenseModel();
-    let filePathKeeper = this.licenseModel.filePath;
+    this.filePathKeeper = this.licenseModel.filePath;
     this.clientId = row.clientId;
     this.licenseID = row.licenseID;
     if (this.licenseID !== null)
@@ -445,7 +459,7 @@ export class OrderComponent implements OnInit {
         .subscribe((res) => {
           if (res.success) {
             this.licenseModel = res.data;
-            filePathKeeper = res.data.filePath;
+            this.filePathKeeper = res.data.filePath;
             this.expireDate = res.data.expireDate;
             this.startDate = res.data.startDate;
             this.versionNumber = res.data.versionNumber;
@@ -458,10 +472,8 @@ export class OrderComponent implements OnInit {
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
         beforeDismiss: () => {
-          if (filePathKeeper !== this.licenseModel.filePath) {
+          if (this.filePathKeeper !== this.licenseModel.filePath) {
             return false;
-          } else {
-            return this.licenseModel.fileExists;
           }
         },
       })
@@ -557,7 +569,7 @@ export class OrderComponent implements OnInit {
           closeButton: true,
           positionClass: 'toast-top-left',
         });
-        this.getOrderbyStatus(this.status, this.page.pageNumber);
+        this.getOrders(this.status, this.page.pageNumber, this.filter);
       } else {
         this.toastr.error(data.message, null, {
           closeButton: true,

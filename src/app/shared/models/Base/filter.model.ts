@@ -1,9 +1,20 @@
-import { IFilter } from "../../interfaces/Base/filter.interface";
+import { IFilter } from '../../interfaces/Base/filter.interface';
 
-export class Filter<T> implements IFilter{
-  pageIndex:number;
-  pageSize:number;
-  pageOrder:string;
-  filters:string;
-  t:T;
+export class FilterModel implements IFilter {
+  iD: number;
+  firstName: string;
+  lastName: string;
+  accountNumber: string;
+  fromCreateDate: string;
+  toCreateDate: string;
+  phoneNumber: string;
+  planID: number;
+  productID: number;
+  code: string;
+  fromStartDate: string;
+  toStartDate: string;
+  fromExpireDate: string;
+  toExpireDate: string;
+  versionNumber: number;
+  userID: number;
 }

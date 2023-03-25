@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Filter } from '../../models/Base/filter.model';
+import { FilterModel } from '../../models/Base/filter.model';
 import { Paginate } from '../../models/Base/paginate.model';
 import { Result } from '../../models/Base/result.model';
 

@@ -1,10 +1,10 @@
 import { IBase } from 'src/app/shared/interfaces/Base/base.interface';
 
 export interface IOrder extends IBase {
-  plan: string;
+  planTitle: string;
   planID: number;
   price: number;
-  product: string;
+  productTitle: string;
   productID: number;
   transactionStatus: number;
   updateDate: string;

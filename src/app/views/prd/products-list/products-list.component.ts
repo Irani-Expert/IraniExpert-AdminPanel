@@ -63,32 +63,22 @@ export class ProductsListComponent implements OnInit {
   deleteProduct(id: number, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then(
-        (_result) => {
-          this._productService
-            .delete(id, 'Product')
-            .subscribe((res) => {
-              var finder=this.rows.findIndex((row) => row.id === id);
-              this.rows.splice(finder, 1);
-              if (res.success) {
-                this.toastr.success(
-                  'فرایند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-              } else {
-
-                this.toastr.error('خطا در حذف', res.message, {
-                  timeOut: 3000,
-                  positionClass: 'toast-top-left',
-                });
-              }
-            })
-    
-        }
-      );
+      .result.then((_result) => {
+        this._productService.delete(id, 'Product').subscribe((res) => {
+          if (res.success) {
+            this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
+              timeOut: 3000,
+              positionClass: 'toast-top-left',
+            });
+            var finder = this.rows.findIndex((row) => row.id === id);
+            this.rows.splice(finder, 1);
+          } else {
+            this.toastr.error('خطا در حذف', res.message, {
+              timeOut: 3000,
+              positionClass: 'toast-top-left',
+            });
+          }
+        });
+      });
   }
 }
