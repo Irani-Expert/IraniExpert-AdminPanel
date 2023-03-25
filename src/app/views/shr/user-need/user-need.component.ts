@@ -52,8 +52,7 @@ export class UserNeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
-    this.userInfo = this.auth.currentUserValue;    
+    this.userInfo = this.auth.currentUserValue;
     this.setPage(this.page.pageNumber, null);
     this.updateNotebar();
     this.router.events
@@ -82,8 +81,8 @@ export class UserNeedComponent implements OnInit {
       scroller?.classList.remove('afterScroll');
     }
     var comments = document.getElementById('comments');
-     console.log(window.innerHeight);
-     
+    console.log(window.innerHeight);
+
     if (document.documentElement.scrollTop + 400 > comments!.offsetHeight) {
       scroller?.classList.remove('afterScroll');
       scroller?.classList.remove('auther-start');
@@ -216,35 +215,34 @@ export class UserNeedComponent implements OnInit {
         }
       });
   }
-  getComment(item: UserNeedModel){
-    this.onWindowScroll()
-    this.rowIdKeeper=item.id
-    
+  getComment(item: UserNeedModel) {
+    this.onWindowScroll();
+    this.rowIdKeeper = item.id;
+
     this._UserNeedService
-    .getCommentByRowid(
-      item.id)
-    .subscribe(
-      (res: Result<Paginate<CommentModel[]>>) => {
+      .getCommentByRowid(item.id)
+      .subscribe((res: Result<Paginate<CommentModel[]>>) => {
         var scrollbar = document.getElementById('scrollbar2');
         scrollbar?.classList.remove('minimum-height');
         this.commentRows = res.data.items;
-        var counter=0;
-        this.commentRows.forEach(x=>{
+        var counter = 0;
+        this.commentRows.forEach((x) => {
           this.commentRows[counter].jalaliDate = moment(
             this.commentRows[counter].createDate,
             'YYYY/MM/DD'
           )
             .locale('fa')
             .format('YYYY/MM/DD');
-            
-            counter++;
-         })
-        
+
+          counter++;
+        });
+
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber + 1;
       });
   }
+
   toggleNotebar(item: UserNeedModel, element: string) {
     this.getNoteList(item);
     this.toggled = true;
@@ -265,6 +263,40 @@ export class UserNeedComponent implements OnInit {
   scroll(elementID: string) {
     let el = document.getElementById(elementID);
     el.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+
+  sideBarNoteStatus: boolean = false;
+  sideBarNote(item: UserNeedModel) {
+    this.sideBarNoteStatus = true;
+
+    this.rowIdKeeper = item.id;
+
+    this._UserNeedService
+      .getCommentByRowid(item.id)
+      .subscribe((res: Result<Paginate<CommentModel[]>>) => {
+        this.commentRows = res.data.items;
+        var counter = 0;
+        this.commentRows.forEach((x) => {
+          this.commentRows[counter].jalaliDate = moment(
+            this.commentRows[counter].createDate,
+            'YYYY/MM/DD'
+          )
+            .locale('fa')
+            .format('YYYY/MM/DD');
+
+          counter++;
+        });
+
+        this.page.totalElements = res.data.totalCount;
+        this.page.totalPages = res.data.totalPages - 1;
+        this.page.pageNumber = res.data.pageNumber + 1;
+      });
+
+    console.log(this.commentRows);
+  }
+
+  closeNote() {
+    this.sideBarNoteStatus = false;
   }
 }
 function testFunctio() {

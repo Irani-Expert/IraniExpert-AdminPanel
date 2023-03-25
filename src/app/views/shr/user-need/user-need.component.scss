@@ -11,7 +11,7 @@
 .notebar-left {
   position: fixed;
   top: 80px;
-  // height: calc(100vh - #{80px});
+  height: calc(100vh - #{80px});
   background: #fff;
   box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.08);
 }
@@ -27,7 +27,7 @@
     list-style: none;
     text-align: center;
     width: 400px;
-    // height: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
     .aside-item {
@@ -100,91 +100,88 @@
 .btn-green {
   background-color: #6e6446;
 }
-.add-comment-header-border{
+.add-comment-header-border {
   height: 15%;
   border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
-.comment-header-border{
+.comment-header-border {
   border-top-left-radius: 0.75rem;
   border-top-right-radius: 0.75rem;
 }
-.comment-scroll{
+.comment-scroll {
   // height: 350px;
-  
+
   overflow-y: scroll;
 }
-    #scrollbar2::-webkit-scrollbar {
-            width: 12px;
-        }
-        
-        #scrollbar2::-webkit-scrollbar-track {
-            border-radius: 8px;
+#scrollbar2::-webkit-scrollbar {
+  width: 12px;
+}
 
-        }
-        
-        #scrollbar2::-webkit-scrollbar-thumb {
-            border-radius: 8px;
-            background-color: #363636!important;
-        }
-.position-sm{
+#scrollbar2::-webkit-scrollbar-track {
+  border-radius: 8px;
+}
+
+#scrollbar2::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #363636 !important;
+}
+.position-sm {
   position: static;
-  height:500px;
- }
- .card-body {
-  padding-bottom: 0px!important;
- }
- @media  (min-width: 499px) {
-  .note-height{
+  height: 500px;
+}
+.card-body {
+  padding-bottom: 0px !important;
+}
+@media (min-width: 499px) {
+  .note-height {
     width: 400px;
-    }
+  }
 
-  .minimum-height{
-   height: 70%;
+  .minimum-height {
+    height: 70%;
   }
   @media only screen and (min-width: 1200px) {
-  .afterScroll{
-   
+    .afterScroll {
       position: fixed !important;
       top: 90px !important;
     }
-    
+
     .auther-start {
       position: absolute !important;
     }
 
-
-    .auther-end{
+    .auther-end {
       position: absolute !important;
-     
+
       bottom: 0 !important;
     }
- 
   }
-  
-
-
 }
-.comment-scroll{
+.comment-scroll {
   height: 65% !important;
- 
 }
-.note-footer{
+.note-footer {
   height: 35%;
 }
 @media screen and (max-height: 750px) {
-
-
-  .afterScroll{
-  bottom: 100px;
-
-
+  .afterScroll {
+    bottom: 100px;
   }
-
 }
 
-
-.note-height{
-
+.note-height {
   height: inherit;
+}
+
+.my-webKit::-webkit-scrollbar {
+  display: none;
+}
+.my-webKit {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.bg-lightdark {
+  background-color: #3f4343f0;
 }

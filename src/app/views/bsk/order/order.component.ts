@@ -645,4 +645,15 @@ export class OrderComponent implements OnInit {
   //     );
   //   this.getOrdersIsPaid(this.page.pageNumber, this.page.size);
   // }
+
+  /*
+  *
+  filterOrders() {
+    this.getOrders(this.status, 0, this.filter);
+  }
+
+  *
+  *
+  * 
+  */
 }

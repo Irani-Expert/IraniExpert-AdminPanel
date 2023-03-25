@@ -14,23 +14,23 @@
         class="nav-item lvl1"
         *appCanAccess="item.privilege"
       >
-        <div
-          class="nav-item-hold"
+        <a
+          class="nav-item-hold d-block"
           routerLink="{{ item.state }}"
           (click)="closeChildNav()"
           *ngIf="!item.disabled && item.navType === 'link'"
         >
           <i class="text-white" [class]="'nav-icon  ' + item.icon"></i>
           <span class="nav-text text-white">{{ item.name }}</span>
-        </div>
-        <div
-          class="nav-item-hold"
+        </a>
+        <a
+          class="nav-item-hold d-block"
           (mouseenter)="selectItem(item)"
           *ngIf="!item.disabled && item.navType === 'dropDown'"
         >
           <i class="text-white" [class]="'nav-icon ' + item.icon"></i>
           <span class="nav-text text-white">{{ item.name }}</span>
-        </div>
+        </a>
         <div
           class="nav-item-hold"
           appCanAccess="''"
