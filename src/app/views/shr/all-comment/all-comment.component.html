@@ -1,5 +1,5 @@
 <div class="my-css d-flex flex-wrap w-100">
-  <div *ngFor="let item of rows" class="col-xl-6 my-2">
+  <div *ngFor="let item of rows.slice().reverse()" class="col-xl-6 my-2">
     <div class="timeline-card card mt-4 h-100">
       <!-- *ngIf="item.parentID === null" -->
       <div
@@ -25,11 +25,11 @@
         <p class="text-white">
           {{ item.text }}
         </p>
-        <!-- <ng-component *ngIf="item.parentID !== null">
-            <p class="bg-dark text-white ml-3">
-              پاسخ:{{ item.parentComment.text }}
-            </p>
-          </ng-component> -->
+        <ng-container *ngIf="item.parentID !== null">
+          <p class="bg-dark text-white ml-3">
+            پاسخ:{{ item.parentComment.text }}
+          </p>
+        </ng-container>
       </div>
       <div class="card-footer bg-gray">
         <div class="mb-2">
@@ -42,16 +42,16 @@
             پذیرفتن
           </button>
         </div>
-        <!-- <div class="mb-2">
-            <button
-              type="button"
-              *ngIf="item.isAccepted === true"
-              (click)="deleteComment(item.id, deleteModal)"
-              class="btn btn-danger btn-rounded m-1"
-            >
-              حذف پیام
-            </button>
-          </div> -->
+        <div class="mb-2">
+          <button
+            type="button"
+            *ngIf="item.isAccepted === true"
+            (click)="deleteComment(item.id, deleteModal)"
+            class="btn btn-danger btn-rounded m-1"
+          >
+            حذف پیام
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@
       type="button"
       class="close"
       aria-label="Close"
-      (click)="modal.dismiss(false)"
+      (click)="modal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -95,7 +95,7 @@
     <button
       type="button"
       class="btn btn-outline-dark btn-rounded"
-      (click)="modal.close(cancel)"
+      (click)="modal.dismiss()"
     >
       خیر
     </button>
@@ -111,7 +111,7 @@
       type="button"
       class="close"
       aria-label="Close"
-      (click)="modal.dismiss(false)"
+      (click)="modal.dismiss()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -128,7 +128,7 @@
     <button
       type="button"
       class="btn btn-outline-dark btn-rounded"
-      (click)="modal.close(cancel)"
+      (click)="modal.dismiss()"
     >
       خیر
     </button>

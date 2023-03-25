@@ -1,6 +1,12 @@
 import { IFilter } from '../../interfaces/Base/filter.interface';
 
 export class FilterModel implements IFilter {
+  parentID: number;
+  rowID: number;
+  name: string;
+  email: string;
+  rate: number;
+  isAccepted: boolean;
   iD: number;
   firstName: string;
   lastName: string;

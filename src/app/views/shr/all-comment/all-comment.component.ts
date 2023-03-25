@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
@@ -13,6 +14,8 @@ import { CommentService } from 'src/app/views/prd/comment/comment.service';
   styleUrls: ['./all-comment.component.scss'],
 })
 export class AllCommentComponent implements OnInit {
+  tableType: number;
+  filter: FilterModel = new FilterModel();
   rows: CommentModel[] = new Array<CommentModel>();
   page: Page = new Page();
   parentComment: CommentModel = new CommentModel();
@@ -24,35 +27,33 @@ export class AllCommentComponent implements OnInit {
     private modalService: NgbModal
   ) {
     this.page.pageNumber = 0;
-    this.page.size = 1000;
+    this.page.size = 10;
   }
 
   ngOnInit(): void {
-    this.setPage(this.page.pageNumber);
+    this.setPage(this.page.pageNumber, 8);
   }
 
-  setPage(pageInfo: number) {
+  setPage(pageInfo: number, tableType: number) {
     this.page.pageNumber = pageInfo;
 
-    this.getCommentListByProductId(this.page.pageNumber, this.page.size);
+    this.getCommentList(this.page.pageNumber, tableType, this.filter);
   }
-  async getCommentListByProductId(pageNumber: number, seedNumber: number) {
-    await this._commentService
-      .GetAllComment(pageNumber !== 0 ? pageNumber - 1 : pageNumber, seedNumber)
+  async getCommentList(
+    pageNumber: number,
+    tableType: number,
+    filter: FilterModel
+  ) {
+    this._commentService
+      .GetAllComment(
+        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        this.page.size,
+        tableType,
+        filter
+      )
       .subscribe(
         (res: Result<Paginate<CommentModel[]>>) => {
-          var counter = 0;
-          res.data.items.forEach((_x) => {
-            if (
-              res.data.items[counter].tableType !== 8 &&
-              res.data.items[counter].tableType !== 10
-            ) {
-              this.rows.push(res.data.items[counter]);
-            }
-            counter++;
-          });
-          console.log(this.rows);
-
+          this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
@@ -96,18 +97,15 @@ export class AllCommentComponent implements OnInit {
       this.parentComment.text = this.replyText;
       this._commentService
         .create(this.parentComment, 'comment')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-       
-        );
+        .subscribe((data) => {
+          if (data.success) {
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        });
     }
 
     row.isAccepted = true;
@@ -115,25 +113,58 @@ export class AllCommentComponent implements OnInit {
     this._commentService
       .update(row.id, row, 'comment')
 
-      .subscribe(
-        (data) => {
-          if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-            this.getCommentListByProductId(
-              this.page.pageNumber,
-              this.page.size
-            );
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
+      .subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.getCommentList(
+            this.page.pageNumber,
+            this.tableType,
+            this.filter
+          );
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
         }
+      });
+  }
+  deleteComment(id: number, modal: NgbModal) {
+    this.modalService
+      .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
+      .result.then(
+        (_result) => {
+          this._commentService.delete(id, 'Comment').subscribe((res) => {
+            if (res.success) {
+              this.toastr.success(
+                'فرایند حذف موفقیت آمیز بود',
+                'موفقیت آمیز!',
+                {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-left',
+                }
+              );
+            } else {
+              this.toastr.error('خطا در حذف', res.message, {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+            }
+            this.getCommentList(
+              this.page.pageNumber,
+              this.tableType,
+              this.filter
+            );
+          });
+        },
+        (_error) => {}
       );
   }
-  deleteComment() {}
+  clearFilter() {
+    this.filter = new FilterModel();
+    this.getCommentList(this.page.pageNumber, this.tableType, this.filter);
+  }
 }

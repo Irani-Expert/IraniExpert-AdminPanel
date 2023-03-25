@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
@@ -86,7 +87,9 @@ export class CommentService extends BaseService<CommentModel, 0> {
   }
   GetAllComment(
     pageIndex: number,
-    pageSize: number
+    pageSize: number,
+    tableType: number,
+    filter: FilterModel
   ): Observable<Result<Paginate<CommentModel[]>>> {
     let _options = {
       headers: new HttpHeaders({
@@ -103,7 +106,39 @@ export class CommentService extends BaseService<CommentModel, 0> {
         '?pagIndex=' +
         pageIndex +
         '&pageSize=' +
-        pageSize,
+        pageSize +
+        '&TableType=' +
+        tableType +
+        (filter.iD == undefined || filter.iD == null
+          ? ''
+          : '&ID=' + filter.iD) +
+        (filter.userID == undefined || filter.userID == null
+          ? ''
+          : '&UserID=' + filter.userID) +
+        (filter.parentID == undefined || filter.parentID == null
+          ? ''
+          : '&ParentID=' + filter.parentID) +
+        (filter.rowID == undefined || filter.rowID == null
+          ? ''
+          : '&RowID=' + filter.rowID) +
+        (filter.name == undefined || filter.name == null
+          ? ''
+          : '&Name=' + filter.name) +
+        (filter.email == undefined || filter.email == null
+          ? ''
+          : '&Email=' + filter.email) +
+        (filter.rate == undefined || filter.rate == null
+          ? ''
+          : '&Rate=' + filter.rate) +
+        (filter.isAccepted == undefined || filter.isAccepted == null
+          ? ''
+          : '&IsAccepted=' + filter.isAccepted) +
+        (filter.fromCreateDate == undefined || filter.fromCreateDate == null
+          ? ''
+          : '&FromCreateDate=' + filter.fromCreateDate) +
+        (filter.toCreateDate == undefined || filter.toCreateDate == null
+          ? ''
+          : '&ToCreateDate=' + filter.toCreateDate),
       _options
     );
   }
