@@ -101,6 +101,10 @@ export class OrderComponent implements OnInit {
         }
       });
   }
+  clearFilter() {
+    this.filter = new FilterModel();
+    this.getOrders(this.status, this.page.pageNumber, this.filter);
+  }
   setPage(pageInfo: number, transactionStatus: any) {
     this.page.pageNumber = pageInfo;
 

@@ -15,4 +15,10 @@ export interface IFilter {
   toExpireDate: string;
   versionNumber: number;
   userID: number;
+  parentID: number;
+  rowID: number;
+  name: string;
+  email: string;
+  rate: number;
+  isAccepted: boolean;
 }
