@@ -9,8 +9,7 @@
 <!-- <input type="text" [(ngModel)]="filter.firstName" />
 <button (click)="filterOrders()"></button> -->
 
-<div class="row g-0 p-0 m-0"> 
-
+<div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
     <div class="col-auto mb-2">
       <button
@@ -54,8 +53,7 @@
         class="btn bg-dark text-white"
         (click)="openFilterModal(filterModal)"
       >
-     
-فیلتر کردن 
+        فیلتر کردن
       </button>
     </div>
   </div>
@@ -90,7 +88,7 @@
       <tr
         class="p-3 shadow-sm border-bottom border-3"
         *ngFor="
-          let item of rows
+          let item of rows.slice().reverse()
             | paginate
               : {
                   itemsPerPage: page.size,
@@ -712,15 +710,11 @@
   </div>
 </ng-template>
 <ng-template #filterModal let-modal>
-  <div class="d-flex align-items-center ">
-
-    <div class="col-11 container  bg-gray mt-2 mb-2 contrast">
-
+  <div class="d-flex align-items-center">
+    <div class="col-11 container bg-gray mt-2 mb-2 contrast">
       <div class="modal-header row">
-        <h4  class="modal-title text-white" id="modal-basic-title">
-          فیلتر
-        </h4>
-    
+        <h4 class="modal-title text-white" id="modal-basic-title">فیلتر</h4>
+
         <button
           type="button"
           class="close"
@@ -733,20 +727,17 @@
       <form class="row" [formGroup]="filterForm" (ngSubmit)="filterComment()">
         <div class="modal-body">
           <div class="row">
-           
             <div class="col-md-6 form-group mb-3 mt-3">
               <label class="text-white">ID</label>
               <input
-        
                 class="form-control"
                 [(ngModel)]="filterModel.iD"
                 [formControl]="filterForm.controls['iD']"
               />
             </div>
             <div class="col-md-6 form-group mb-3 mt-3">
-              <label class="text-white">شماره ی حساب	</label>
+              <label class="text-white">شماره ی حساب </label>
               <input
-        
                 class="form-control"
                 [(ngModel)]="filterModel.accountNumber"
                 [formControl]="filterForm.controls['accountNumber']"
@@ -755,7 +746,6 @@
             <div class="col-md-6 form-group mb-3 mt-3">
               <label class="text-white">نام</label>
               <input
-          
                 class="form-control"
                 [(ngModel)]="filterModel.name"
                 [formControl]="filterForm.controls['name']"
@@ -771,12 +761,10 @@
                 [formControl]="filterForm.controls['email']"
               />
             </div>
-          
-          
-          
+
             <div class="col-md-6 form-group mb-3" dir="ltr">
               <label for="accountNumber " class="text-white">تاریخ شروع</label>
-    
+
               <input
                 (click)="d.toggle()"
                 type="text"
@@ -789,7 +777,7 @@
             </div>
             <div class="col-md-6 form-group mb-3" dir="ltr">
               <label class="text-white">تاریخ پایان</label>
-    
+
               <input
                 (click)="e.toggle()"
                 type="text"
@@ -800,8 +788,7 @@
                 [formControl]="filterForm.controls['ToCreateDate']"
               />
             </div>
-         
-      
+
             <!-- <div class="col-md-6 form-group mb-3 mt-3">
               <label for="accountNumber " class="text-white">امتیاز</label>
               <select
@@ -819,35 +806,32 @@
             </div> -->
             <div class="col-md-6 form-group mb-3 mt-3">
               <label class="text-white">وضعیت</label>
-            <div class="mt-1">
-              <label class="m-1 text-white">پذیرفته شده</label>
-              <label class="switch switch-primary mr-2 m-2">
-                <span class="text-white">عدم پذیرش</span>
-                <input
-                [(ngModel)]="filterModel.isAccepted"
-                [formControl]="filterForm.controls['isAccepted']"
-                  type="checkbox"
-                  id="isActive"
-                />
-                <span class="slider"></span>
-              </label>
+              <div class="mt-1">
+                <label class="m-1 text-white">پذیرفته شده</label>
+                <label class="switch switch-primary mr-2 m-2">
+                  <span class="text-white">عدم پذیرش</span>
+                  <input
+                    [(ngModel)]="filterModel.isAccepted"
+                    [formControl]="filterForm.controls['isAccepted']"
+                    type="checkbox"
+                    id="isActive"
+                  />
+                  <span class="slider"></span>
+                </label>
+              </div>
             </div>
-             
-            </div>
-
           </div>
         </div>
         <div class="modal-footer w-100">
-            <button
-              
-              ngbAutofocus
-              type="button"
-              class="btn btn-outline-dark btn-rounded mr-1 text-white"
-              (click)="modal.close(true)"
-            >
-              ویرایش
-            </button>
-     
+          <button
+            ngbAutofocus
+            type="button"
+            class="btn btn-outline-dark btn-rounded mr-1 text-white"
+            (click)="modal.close(true)"
+          >
+            ویرایش
+          </button>
+
           <button
             type="button"
             class="btn btn-outline-dark btn-rounded text-white"
