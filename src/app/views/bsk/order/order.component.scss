@@ -56,7 +56,6 @@
       display: block;
       width: 100%;
       color: #000;
-      border-bottom: 1px solid #c7c7c7;
       &:focus,
       &:active {
         outline: none;
@@ -219,7 +218,7 @@ td {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-.filter-buttom{
+.filter-buttom {
   left: 0;
-    position: absolute;
+  position: absolute;
 }

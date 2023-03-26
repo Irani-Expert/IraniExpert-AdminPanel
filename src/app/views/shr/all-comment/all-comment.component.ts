@@ -15,7 +15,6 @@ import { CommentService } from 'src/app/views/shr/all-comment/comment.service';
   selector: 'app-all-comment',
   templateUrl: './all-comment.component.html',
   styleUrls: ['./all-comment.component.scss'],
-
 })
 export class AllCommentComponent implements OnInit {
   ExpDate: any;
@@ -27,8 +26,8 @@ export class AllCommentComponent implements OnInit {
   page: Page = new Page();
   parentComment: CommentModel = new CommentModel();
   replyText: string = null;
-  currentRate:number=2
-  filterModel:FilterModel=new FilterModel;
+  currentRate: number = 2;
+  filterModel: FilterModel = new FilterModel();
   filterForm: FormGroup;
   constructor(
     public _commentService: CommentService,
@@ -39,9 +38,7 @@ export class AllCommentComponent implements OnInit {
     this.page.pageNumber = 0;
     this.page.size = 10;
   }
-  setRate(contnt:any){
-
-  }
+  setRate(contnt: any) {}
   ngOnInit(): void {
     this.setPage(this.page.pageNumber, 8);
     this.filterForm = this._formBuilder.group({
@@ -53,7 +50,6 @@ export class AllCommentComponent implements OnInit {
       ToCreateDate: [null, Validators.compose([Validators.required])],
       isAccepted: [null, Validators.compose([Validators.required])],
       rate: [null, Validators.compose([Validators.required])],
-      
     });
   }
 
@@ -191,36 +187,37 @@ export class AllCommentComponent implements OnInit {
     this.getCommentList(this.page.pageNumber, this.tableType, this.filter);
   }
   openFilterModal(content: any) {
-
-
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
         (result) => {
-          if(this.filterModel.rate!=null){
-            this.filterModel.rate=Number(this.filterModel.rate)
-          } 
+          if (this.filterModel.rate != null) {
+            this.filterModel.rate = Number(this.filterModel.rate);
+          }
 
-         if(this.ExpDate!=null){
-          
-          this.filterModel.toCreateDate = 
-            this.ExpDate.year + '-' + this.ExpDate.month + '-' + this.ExpDate.day
-          
-         }
-         if(this.CrtDate!=null){
-          this.filterModel.fromCreateDate =
-          this.CrtDate.year + '-' + this.CrtDate.month + '-' + this.CrtDate.day
-      
-         }
-    debugger
-          this.getCommentList(0,10,this.filterModel)
-        
+          if (this.ExpDate != null) {
+            this.filterModel.toCreateDate =
+              this.ExpDate.year +
+              '-' +
+              this.ExpDate.month +
+              '-' +
+              this.ExpDate.day;
+          }
+          if (this.CrtDate != null) {
+            this.filterModel.fromCreateDate =
+              this.CrtDate.year +
+              '-' +
+              this.CrtDate.month +
+              '-' +
+              this.CrtDate.day;
+          }
+          debugger;
+          this.getCommentList(0, 10, this.filterModel);
+          this.filterModel = new FilterModel();
         },
         (reason) => {
-     
+          this.filterModel = new FilterModel();
         }
-     
       );
   }
- 
 }

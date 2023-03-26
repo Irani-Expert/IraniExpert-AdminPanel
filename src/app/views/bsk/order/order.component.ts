@@ -41,7 +41,7 @@ export class OrderComponent implements OnInit {
   // accountNumber: number;
   invoiceDetail: InvoiceModel = new InvoiceModel();
   invoiceStatus: number;
-  filterModel:FilterModel=new FilterModel;
+  filterModel: FilterModel = new FilterModel();
   filterForm: FormGroup;
   rows: OrderModel[] = new Array<OrderModel>();
   orderDetail: OrderModel;
@@ -102,7 +102,6 @@ export class OrderComponent implements OnInit {
       rate: [null, Validators.compose([Validators.required])],
       fromCreateDate: [null, Validators.compose([Validators.required])],
       ToCreateDate: [null, Validators.compose([Validators.required])],
-      
     });
     this.updateNotebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
@@ -673,33 +672,36 @@ export class OrderComponent implements OnInit {
   *
   * 
   */
- openFilterModal(content:any){
-  this.modalService
-  .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
-  .result.then(
-    (result) => {
-      if(this.filterModel.rate!=null){
-        this.filterModel.rate=Number(this.filterModel.rate)
-      } 
-      if(this.ExpDate!=null){
-          
-        this.filterModel.toCreateDate = 
-          this.ExpDate.year + '-' + this.ExpDate.month + '-' + this.ExpDate.day
-        
-       }
-       if(this.CrtDate!=null){
-        this.filterModel.fromCreateDate =
-        this.CrtDate.year + '-' + this.CrtDate.month + '-' + this.CrtDate.day
-    
-       }
-      this.getOrders(this.status,this.page.pageNumber,this.filterModel)
-    
-    },
-    (reason) => {
- 
-    }
- 
-  );
+  openFilterModal(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
+      .result.then(
+        (result) => {
+          if (this.filterModel.rate != null) {
+            this.filterModel.rate = Number(this.filterModel.rate);
+          }
+          if (this.ExpDate != null) {
+            this.filterModel.toCreateDate =
+              this.ExpDate.year +
+              '-' +
+              this.ExpDate.month +
+              '-' +
+              this.ExpDate.day;
+          }
+          if (this.CrtDate != null) {
+            this.filterModel.fromCreateDate =
+              this.CrtDate.year +
+              '-' +
+              this.CrtDate.month +
+              '-' +
+              this.CrtDate.day;
+          }
+          this.getOrders(this.status, this.page.pageNumber, this.filterModel);
+          this.filterModel = new FilterModel();
+        },
+        (reason) => {
+          this.filterModel = new FilterModel();
+        }
+      );
+  }
 }
- }
-
