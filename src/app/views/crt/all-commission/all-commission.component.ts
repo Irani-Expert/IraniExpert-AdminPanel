@@ -67,7 +67,7 @@ export class AllCommissionComponent implements OnInit {
   }
   getAllCommission(page: number) {
     this._allcommissionService
-      .getCommissionAllUser(3)
+      .getCommissionAllUser(page)
       .subscribe((commission) => {
         this.rows = commission.data;
       });
@@ -120,7 +120,7 @@ export class AllCommissionComponent implements OnInit {
     this.addReceiptModel.price = parseInt(this.price);
     this.addReceiptModel.paymentStep = 0;
     this.addReceiptModel.paymentDate =
-      this.addDate.year + '-' + this.addDate.month + '-' + this.addDate.day;
+      this.addDate.year + '-' + this.addDate.month.slice(-2) + '-' + this.addDate.day.slice(-2);
     this._allcommissionService
       .addReceipt(this.addReceiptModel)
       .subscribe((result) => {

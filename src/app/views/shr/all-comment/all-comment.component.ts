@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { number } from 'echarts';
+import * as moment from 'jalali-moment';
 import { ToastrService } from 'ngx-toastr';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { Page } from 'src/app/shared/models/Base/page';
@@ -12,26 +15,46 @@ import { CommentService } from 'src/app/views/shr/all-comment/comment.service';
   selector: 'app-all-comment',
   templateUrl: './all-comment.component.html',
   styleUrls: ['./all-comment.component.scss'],
+
 })
 export class AllCommentComponent implements OnInit {
+  ExpDate: any;
+  CrtDate: any;
+
   tableType: number;
   filter: FilterModel = new FilterModel();
   rows: CommentModel[] = new Array<CommentModel>();
   page: Page = new Page();
   parentComment: CommentModel = new CommentModel();
   replyText: string = null;
-
+  currentRate:number=2
+  filterModel:FilterModel=new FilterModel;
+  filterForm: FormGroup;
   constructor(
     public _commentService: CommentService,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private _formBuilder: FormBuilder
   ) {
     this.page.pageNumber = 0;
     this.page.size = 10;
   }
+  setRate(contnt:any){
 
+  }
   ngOnInit(): void {
     this.setPage(this.page.pageNumber, 8);
+    this.filterForm = this._formBuilder.group({
+      userID: [null, Validators.compose([Validators.required])],
+      rowID: [null, Validators.compose([Validators.required])],
+      name: [null, Validators.compose([Validators.required])],
+      email: [null, Validators.compose([Validators.required])],
+      fromCreateDate: [null, Validators.compose([Validators.required])],
+      ToCreateDate: [null, Validators.compose([Validators.required])],
+      isAccepted: [null, Validators.compose([Validators.required])],
+      rate: [null, Validators.compose([Validators.required])],
+      
+    });
   }
 
   setPage(pageInfo: number, tableType: number) {
@@ -167,4 +190,37 @@ export class AllCommentComponent implements OnInit {
     this.filter = new FilterModel();
     this.getCommentList(this.page.pageNumber, this.tableType, this.filter);
   }
+  openFilterModal(content: any) {
+
+
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
+      .result.then(
+        (result) => {
+          if(this.filterModel.rate!=null){
+            this.filterModel.rate=Number(this.filterModel.rate)
+          } 
+
+         if(this.ExpDate!=null){
+          
+          this.filterModel.toCreateDate = 
+            this.ExpDate.year + '-' + this.ExpDate.month + '-' + this.ExpDate.day
+          
+         }
+         if(this.CrtDate!=null){
+          this.filterModel.fromCreateDate =
+          this.CrtDate.year + '-' + this.CrtDate.month + '-' + this.CrtDate.day
+      
+         }
+    debugger
+          this.getCommentList(0,10,this.filterModel)
+        
+        },
+        (reason) => {
+     
+        }
+     
+      );
+  }
+ 
 }
