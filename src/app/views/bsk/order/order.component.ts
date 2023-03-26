@@ -14,7 +14,7 @@ import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Utils } from 'src/app/shared/utils';
-import { CommentService } from '../../prd/comment/comment.service';
+import { CommentService } from '../../shr/all-comment/comment.service';
 import { InvoiceModel } from './models/invoice.model';
 import { InvoiceService } from './services/invoice.service';
 import {

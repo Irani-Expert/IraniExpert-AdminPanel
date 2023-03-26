@@ -6,7 +6,7 @@ import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { CommentModel } from 'src/app/shared/models/comment.model';
-import { CommentService } from 'src/app/views/prd/comment/comment.service';
+import { CommentService } from 'src/app/views/shr/all-comment/comment.service';
 
 @Component({
   selector: 'app-all-comment',

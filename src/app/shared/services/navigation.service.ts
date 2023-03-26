@@ -184,13 +184,6 @@ export class NavigationService {
       privilege: 'CustomerRequest-Full Premission',
     },
     {
-      name: 'نظرات',
-      navType: 'link',
-      icon: 'i-Speach-Bubbles',
-      state: '/shr/comment',
-      privilege: 'Comment-Full Premission',
-    },
-    {
       name: 'تخفیف ها',
       navType: 'link',
       icon: 'i-Dollar-Sign',
