@@ -235,17 +235,18 @@
         </div>
         <div class="col-md-6 form-group mb-3 mt-3">
           <label for="accountNumber ">امتیاز</label>
-          <rating [(ngModel)]="model.rating"
-          [max]="5"
-          iconClass="fa-star"
-          fullIcon="★"
-          emptyIcon="☆"
-          [readonly]="false"
-          [disabled]="false"
-          [required]="true"
-          [float]="true"
-          [titles]="['one', 'two', 'three', 'four', 'five']">
-  </rating>
+          <select
+          class="form-control  text-dark"
+          id="status"
+     
+
+        >
+          <option value="3">1</option>
+          <option value="99">2</option>
+          <option value="99">3</option>
+          <option value="99">4</option>
+          <option value="99">5</option>
+        </select>
         </div>
       </div>
     </div>
