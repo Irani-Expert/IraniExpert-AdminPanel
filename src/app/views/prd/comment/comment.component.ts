@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { CommentService } from './comment.service';
+import { CommentService } from '../../shr/all-comment/comment.service';
 
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Page } from 'src/app/shared/models/Base/page';
@@ -71,30 +71,27 @@ export class CommentComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (result) => {
-          this._commentService
-            .delete(id, 'comment')
-            .subscribe((res) => {
-              if (res.success) {
-                this.toastr.success(
-                  'فرایند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-              } else {
-                this.toastr.error('خطا در حذف', res.message, {
+          this._commentService.delete(id, 'comment').subscribe((res) => {
+            if (res.success) {
+              this.toastr.success(
+                'فرایند حذف موفقیت آمیز بود',
+                'موفقیت آمیز!',
+                {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
-                });
-              }
-              this.getCommentListByProductId(
-                this.page.pageNumber,
-                this.page.size
+                }
               );
-
-            });
+            } else {
+              this.toastr.error('خطا در حذف', res.message, {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+            }
+            this.getCommentListByProductId(
+              this.page.pageNumber,
+              this.page.size
+            );
+          });
         },
         (error) => {
           this.toastr.error('خطا در حذف', error.message, {
@@ -119,10 +116,8 @@ export class CommentComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
-        
         (result) => {
-          if (result)
-          this.acceptComment(row);
+          if (result) this.acceptComment(row);
         },
         (reason) => {
           console.log('Err!', reason);
@@ -136,47 +131,40 @@ export class CommentComponent implements OnInit {
       this._commentService
         .create(this.parentComment, 'comment')
 
-        .subscribe(
-          (data) => {
-            if (data.success) {
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          }
-        );
-    }
-    
-    row.isAccepted = true;
-    row.isActive = true;
-    this._commentService
-      .update(row.id, row, 'comment')
-      .subscribe(
-        (data) => {
+        .subscribe((data) => {
           if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-            this.getCommentListByProductId(
-              this.page.pageNumber,
-              this.page.size
-            );
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (error) => {
-          this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+        });
+    }
+
+    row.isAccepted = true;
+    row.isActive = true;
+    this._commentService.update(row.id, row, 'comment').subscribe(
+      (data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.getCommentListByProductId(this.page.pageNumber, this.page.size);
+        } else {
+          this.toastr.error(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
         }
-      );
+      },
+      (error) => {
+        this.toastr.error('خطا مجدد تلاش فرمایید', null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    );
   }
 }

@@ -6,7 +6,6 @@ import { UserWantsPipe } from 'src/app/shared/pipes/user-wants.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
-import { CommentComponent } from './comment/comment.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { UserCommentComponent } from './user-comment/user-comment.component';
 import { AllCommentComponent } from './all-comment/all-comment.component';
@@ -14,7 +13,12 @@ import { FormsModule } from '@angular/forms';
 import {RatingModule} from "ngx-rating";
 
 @NgModule({
-  declarations: [UserNeedComponent, UserWantsPipe, CommentComponent, UserCommentComponent, AllCommentComponent],
+  declarations: [
+    UserNeedComponent,
+    UserWantsPipe,
+    UserCommentComponent,
+    AllCommentComponent,
+  ],
   imports: [
 
     CommonModule,
@@ -23,7 +27,6 @@ import {RatingModule} from "ngx-rating";
     NgxPaginationModule,
     SharedPipesModule,
     PerfectScrollbarModule,
-    RatingModule,
     FormsModule
   ],
 })
