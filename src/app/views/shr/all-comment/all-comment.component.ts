@@ -12,6 +12,7 @@ import { CommentService } from 'src/app/views/prd/comment/comment.service';
   selector: 'app-all-comment',
   templateUrl: './all-comment.component.html',
   styleUrls: ['./all-comment.component.scss'],
+
 })
 export class AllCommentComponent implements OnInit {
   tableType: number;
@@ -20,7 +21,8 @@ export class AllCommentComponent implements OnInit {
   page: Page = new Page();
   parentComment: CommentModel = new CommentModel();
   replyText: string = null;
-
+  currentRate:number=2
+  
   constructor(
     public _commentService: CommentService,
     private toastr: ToastrService,
@@ -29,7 +31,9 @@ export class AllCommentComponent implements OnInit {
     this.page.pageNumber = 0;
     this.page.size = 10;
   }
+  setRate(contnt:any){
 
+  }
   ngOnInit(): void {
     this.setPage(this.page.pageNumber, 8);
   }
@@ -166,5 +170,14 @@ export class AllCommentComponent implements OnInit {
   clearFilter() {
     this.filter = new FilterModel();
     this.getCommentList(this.page.pageNumber, this.tableType, this.filter);
+  }
+  openFilterModal(content: any) {
+
+
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
+      .result.then(
+     
+      );
   }
 }

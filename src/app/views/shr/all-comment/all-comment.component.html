@@ -1,3 +1,6 @@
+<button class="btn bg-dark text-white " (click)="openFilterModal(filterModal)">
+فیلتر کردن
+</button>
 <div class="my-css d-flex flex-wrap w-100">
   <div *ngFor="let item of rows.slice().reverse()" class="col-xl-6 my-2">
     <div class="timeline-card card mt-4 h-100">
@@ -133,4 +136,137 @@
       خیر
     </button>
   </div>
+</ng-template>
+<ng-template #filterModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      فیلتر
+    </h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="addForm" (ngSubmit)="submit()">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="firstName ">ایدی</label>
+          <input
+            name="userName"
+            id="userName"
+            class="form-control"
+       
+   
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="firstName ">ایدی کاربر</label>
+          <input
+            name="firstName"
+            id="firstName"
+            class="form-control"
+          
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="lastName">شناسه محصول</label>
+          <input
+            name="lastName"
+            id="lastName"
+            class="form-control"
+      
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="email ">نام</label>
+          <input
+            name="email"
+            id="email"
+            class="form-control"
+          
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="accountNumber ">ایمیل </label>
+          <input
+            name="accountNumber"
+            id="accountNumber"
+            class="form-control"
+
+          />
+        </div>
+      
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="accountNumber ">وضعیت</label>
+          <select
+            class="form-control  text-dark"
+            id="status"
+       
+
+          >
+            <option value="3">پذیرفته شده</option>
+            <option value="99">پذیرفته نشده</option>
+          </select>
+        </div>
+      
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="accountNumber ">تاریخ شروع</label>
+          <input
+            name="accountNumber"
+            id="accountNumber"
+            class="form-control"
+
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="accountNumber ">تاریخ پایان</label>
+          <input
+            name="accountNumber"
+            id="accountNumber"
+            class="form-control"
+
+          />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-3">
+          <label for="accountNumber ">امتیاز</label>
+          <rating [(ngModel)]="model.rating"
+          [max]="5"
+          iconClass="fa-star"
+          fullIcon="★"
+          emptyIcon="☆"
+          [readonly]="false"
+          [disabled]="false"
+          [required]="true"
+          [float]="true"
+          [titles]="['one', 'two', 'three', 'four', 'five']">
+  </rating>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button
+          
+          ngbAutofocus
+          type="button"
+          class="btn btn-outline-dark btn-rounded mr-1"
+          (click)="modal.close(true)"
+        >
+          ویرایش
+        </button>
+ 
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-rounded"
+        (click)="modal.dismiss()"
+      >
+        انصراف
+      </button>
+    </div>
+  </form>
 </ng-template>
