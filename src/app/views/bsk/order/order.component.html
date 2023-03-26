@@ -88,7 +88,7 @@
       <tr
         class="p-3 shadow-sm border-bottom border-3"
         *ngFor="
-          let item of rows
+          let item of rows.slice().reverse()
             | paginate
               : {
                   itemsPerPage: page.size,
