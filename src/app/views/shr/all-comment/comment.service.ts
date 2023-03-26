@@ -100,6 +100,7 @@ export class CommentService extends BaseService<CommentModel, 0> {
         Expires: '0',
       }),
     };
+    debugger
     return this._http.get<Result<Paginate<CommentModel[]>>>(
       this._base +
         '/Comment' +
