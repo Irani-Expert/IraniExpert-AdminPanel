@@ -710,60 +710,77 @@
   </div>
 </ng-template>
 <ng-template #filterModal let-modal>
-  <div class="d-flex align-items-center bg-gray">
+  <div class="d-flex align-items-center bg--gray">
     <div class="col-11 container mt-2 mb-2 contrast">
       <div class="modal-header row">
         <h4 class="modal-title text-white" id="modal-basic-title">فیلتر</h4>
 
         <button
           type="button"
-          class="close"
+          class="close text-white"
           aria-label="Close"
           (click)="modal.dismiss()"
         >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form class="row" [formGroup]="filterForm" (ngSubmit)="filterComment()">
+      <form class="row" [formGroup]="filterForm" (ngSubmit)="modal.close(true)">
         <div class="modal-body">
           <div class="row">
-            <div class="col-md-6 form-group mb-3 mt-3">
+            <div class="col-md-4 form-group mb-3 mt-3">
               <label class="text-white">ID</label>
               <input
                 class="form-control"
                 [(ngModel)]="filterModel.iD"
-                [formControl]="filterForm.controls['iD']"
+                formControlName="iD"
               />
             </div>
-            <div class="col-md-6 form-group mb-3 mt-3">
-              <label class="text-white">شماره ی حساب </label>
+            <div class="col-md-4 form-group mb-3 mt-3">
+              <label class="text-white">ایدی کاربری</label>
               <input
                 class="form-control"
-                [(ngModel)]="filterModel.accountNumber"
-                [formControl]="filterForm.controls['accountNumber']"
+                [(ngModel)]="filterModel.userID"
+                formControlName="userID"
               />
             </div>
-            <div class="col-md-6 form-group mb-3 mt-3">
+            <div class="col-md-4 form-group mb-3 mt-3">
               <label class="text-white">نام</label>
               <input
                 class="form-control"
-                [(ngModel)]="filterModel.name"
-                [formControl]="filterForm.controls['name']"
+                [(ngModel)]="filterModel.firstName"
+                formControlName="firstName"
               />
             </div>
-            <div class="col-md-6 form-group mb-3 mt-3">
-              <label class="text-white">ایمیل </label>
+            <div class="col-md-4 form-group mb-3 mt-3">
+              <label class="text-white">نام خانوادگی</label>
+              <input
+                class="form-control"
+                [(ngModel)]="filterModel.lastName"
+                formControlName="lastName"
+              />
+            </div>
+            <div class="col-md-4 form-group mb-3 mt-3">
+              <label class="text-white">شماره حساب</label>
+              <input
+                class="form-control"
+                [(ngModel)]="filterModel.accountNumber"
+                formControlName="accountNumber"
+              />
+            </div>
+            <div class="col-md-4 form-group mb-3 mt-3" *ngIf="status == 8">
+              <label class="text-white">شناسه محصول</label>
               <input
                 name="accountNumber"
                 id="accountNumber"
                 class="form-control"
-                [(ngModel)]="filterModel.email"
-                [formControl]="filterForm.controls['email']"
+                [(ngModel)]="filterModel.versionNumber"
+                formControlName="versionNumber"
               />
             </div>
-
-            <div class="col-md-6 form-group mb-3" dir="ltr">
-              <label for="accountNumber " class="text-white">تاریخ شروع</label>
+            <div class="col-md-4 form-group mb-3 mt-3" dir="ltr">
+              <label for="accountNumber " class="text-white"
+                >از تاریخ ایجاد</label
+              >
 
               <input
                 (click)="d.toggle()"
@@ -771,12 +788,12 @@
                 class="form-control"
                 ngbDatepicker
                 #d="ngbDatepicker"
-                [(ngModel)]="CrtDate"
-                [formControl]="filterForm.controls['fromCreateDate']"
+                [(ngModel)]="FCrtDate"
+                formControlName="fromCreateDate"
               />
             </div>
-            <div class="col-md-6 form-group mb-3" dir="ltr">
-              <label class="text-white">تاریخ پایان</label>
+            <div class="col-md-4 form-group mb-3 mt-3" dir="ltr">
+              <label class="text-white">تا تاریخ ایجاد</label>
 
               <input
                 (click)="e.toggle()"
@@ -784,11 +801,126 @@
                 class="form-control"
                 ngbDatepicker
                 #e="ngbDatepicker"
-                [(ngModel)]="ExpDate"
-                [formControl]="filterForm.controls['ToCreateDate']"
+                [(ngModel)]="TCrtDate"
+                formControlName="ToCreateDate"
+              />
+            </div>
+            <div
+              class="col-md-4 form-group mb-3 mt-3"
+              dir="ltr"
+              *ngIf="status == 8"
+            >
+              <label class="text-white">از تاریخ شروع</label>
+
+              <input
+                (click)="m.toggle()"
+                type="text"
+                class="form-control"
+                ngbDatepicker
+                #m="ngbDatepicker"
+                [(ngModel)]="FStrDate"
+                formControlName="fromStartDate"
+              />
+            </div>
+            <div
+              class="col-md-4 form-group mb-3 mt-3"
+              dir="ltr"
+              *ngIf="status == 8"
+            >
+              <label class="text-white">تا تاریخ شروع</label>
+
+              <input
+                (click)="s.toggle()"
+                type="text"
+                class="form-control"
+                ngbDatepicker
+                #s="ngbDatepicker"
+                [(ngModel)]="TStrDate"
+                formControlName="toStartDate"
+              />
+            </div>
+            <div
+              class="col-md-4 form-group mb-3 mt-3"
+              dir="ltr"
+              *ngIf="status == 8"
+            >
+              <label for="accountNumber " class="text-white"
+                >از تاریخ پایان</label
+              >
+
+              <input
+                (click)="fe.toggle()"
+                type="text"
+                class="form-control"
+                ngbDatepicker
+                #fe="ngbDatepicker"
+                [(ngModel)]="FExpDate"
+                formControlName="fromExpireDate"
+              />
+            </div>
+            <div
+              class="col-md-4 form-group mb-3 mt-3"
+              dir="ltr"
+              *ngIf="status == 8"
+            >
+              <label class="text-white">تا تاریخ پایان</label>
+
+              <input
+                (click)="ms.toggle()"
+                type="text"
+                class="form-control"
+                ngbDatepicker
+                #ms="ngbDatepicker"
+                [(ngModel)]="TExpDate"
+                formControlName="toExpireDate"
+              />
+            </div>
+            <div class="col-md-4 form-group mb-3 mt-3">
+              <label class="text-white">محصول</label>
+              <select
+                class="form-control mt-1 text-dark"
+                [(ngModel)]="filterModel.productID"
+                (ngModelChange)="selectProduct($event)"
+                formControlName="productID"
+              >
+                <option
+                  *ngFor="let item of productModel.items"
+                  value="{{ item.id }}"
+                >
+                  {{ item.title }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-4 form-group mb-3 mt-3">
+              <label class="text-white">پلن محصول</label>
+              <select
+                formControlName="planID"
+                class="form-control mt-1 text-dark"
+                [(ngModel)]="filterModel.planID"
+                (ngModelChange)="selectProductPlan($event)"
+              >
+                <option *ngFor="let item of plans" value="{{ item.id }}">
+                  {{ item.title }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-4 form-group mb-3 mt-3">
+              <label class="text-white">کد</label>
+              <input
+                class="form-control"
+                [(ngModel)]="filterModel.code"
+                formControlName="code"
               />
             </div>
 
+            <div class="col-md-4 form-group mb-3 mt-3" dir="ltr">
+              <label class="text-white">شماره تماس</label>
+              <input
+                class="form-control"
+                [(ngModel)]="filterModel.phoneNumber"
+                formControlName="phoneNumber"
+              />
+            </div>
             <!-- <div class="col-md-6 form-group mb-3 mt-3">
               <label for="accountNumber " class="text-white">امتیاز</label>
               <select
@@ -804,22 +936,6 @@
               <option value=5>5</option>
             </select>
             </div> -->
-            <div class="col-md-6 form-group mb-3 mt-3">
-              <label class="text-white">وضعیت</label>
-              <div class="mt-1">
-                <label class="m-1 text-white">پذیرفته شده</label>
-                <label class="switch switch-primary mr-2 m-2">
-                  <span class="text-white">عدم پذیرش</span>
-                  <input
-                    [(ngModel)]="filterModel.isAccepted"
-                    [formControl]="filterForm.controls['isAccepted']"
-                    type="checkbox"
-                    id="isActive"
-                  />
-                  <span class="slider"></span>
-                </label>
-              </div>
-            </div>
           </div>
         </div>
         <div class="modal-footer w-100">

@@ -1,6 +1,14 @@
-<button class="btn bg-dark text-white" (click)="openFilterModal(filterModal)">
+<!-- <button class="btn bg-dark text-white" (click)="openFilterModal(filterModal)">
   فیلتر کردن
-</button>
+</button> -->
+<span class="d-inline-block radius">
+  <a
+    (click)="openFilterModal(filterModal)"
+    class="btn-filter btn d-flex justify-content-around py-btns radius align-items-center"
+    ><i class="i-Filter-2 text-dark text-bigger mr-2"></i>
+    <strong class="text-dark ml-2 text-small"> فیلتر کردن</strong></a
+  >
+</span>
 <div class="my-css d-flex flex-wrap w-100">
   <div *ngFor="let item of rows.slice().reverse()" class="col-xl-6 my-2">
     <div class="timeline-card card mt-4 h-100">
@@ -145,7 +153,7 @@
 
         <button
           type="button"
-          class="close"
+          class="close text-white"
           aria-label="Close"
           (click)="modal.dismiss()"
         >
@@ -156,27 +164,35 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-md-6 form-group mb-3 mt-3">
-              <label class="text-white">ایدی کاربر</label>
+              <label class="text-white">ID</label>
               <input
-                class="form-control"
-                [(ngModel)]="filterModel.userID"
-                [formControl]="filterForm.controls['userID']"
+                class="form-control bg-light radius"
+                [(ngModel)]="filterModel.id"
+                formControlName="ID"
               />
             </div>
             <div class="col-md-6 form-group mb-3 mt-3">
-              <label class="text-white">شناسه محصول</label>
+              <label class="text-white">ID کاربر</label>
               <input
-                class="form-control"
+                class="form-control bg-light radius"
+                [(ngModel)]="filterModel.userID"
+                formControlName="userID"
+              />
+            </div>
+            <div class="col-md-6 form-group mb-3 mt-3">
+              <label class="text-white">محصول</label>
+              <input
+                class="form-control bg-light radius"
                 [(ngModel)]="filterModel.rowID"
-                [formControl]="filterForm.controls['rowID']"
+                formControlName="rowID"
               />
             </div>
             <div class="col-md-6 form-group mb-3 mt-3">
               <label class="text-white">نام</label>
               <input
-                class="form-control"
+                class="form-control bg-light radius"
                 [(ngModel)]="filterModel.name"
-                [formControl]="filterForm.controls['name']"
+                formControlName="name"
               />
             </div>
             <div class="col-md-6 form-group mb-3 mt-3">
@@ -184,46 +200,18 @@
               <input
                 name="accountNumber"
                 id="accountNumber"
-                class="form-control"
+                class="form-control bg-light radius"
                 [(ngModel)]="filterModel.email"
-                [formControl]="filterForm.controls['email']"
+                formControlName="email"
               />
             </div>
-
-            <div class="col-md-6 form-group mb-3" dir="ltr">
-              <label for="accountNumber " class="text-white">تاریخ شروع</label>
-
-              <input
-                (click)="d.toggle()"
-                type="text"
-                class="form-control"
-                ngbDatepicker
-                #d="ngbDatepicker"
-                [(ngModel)]="CrtDate"
-                [formControl]="filterForm.controls['fromCreateDate']"
-              />
-            </div>
-            <div class="col-md-6 form-group mb-3" dir="ltr">
-              <label class="text-white">تاریخ پایان</label>
-
-              <input
-                (click)="e.toggle()"
-                type="text"
-                class="form-control"
-                ngbDatepicker
-                #e="ngbDatepicker"
-                [(ngModel)]="ExpDate"
-                [formControl]="filterForm.controls['ToCreateDate']"
-              />
-            </div>
-
             <div class="col-md-6 form-group mb-3 mt-3">
               <label for="accountNumber " class="text-white">امتیاز</label>
               <select
-                class="form-control text-dark"
+                class="form-control bg-light radius text-dark"
                 id="status"
                 [(ngModel)]="filterModel.rate"
-                [formControl]="filterForm.controls['rate']"
+                formControlName="rate"
               >
                 <option value="1">1</option>
                 <option value="2">2</option>

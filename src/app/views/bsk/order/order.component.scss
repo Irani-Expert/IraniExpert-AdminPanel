@@ -5,10 +5,15 @@
 }
 .notebar-left {
   position: fixed;
-  top: 80px;
+  top: 70px;
   height: calc(100vh - #{80px});
   background: #fff;
   box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+@media screen and (min-width: 577px) {
+  .notebar-left {
+    top: 80px;
+  }
 }
 .bg-lightdark {
   background-color: #3f4343f0;
@@ -47,7 +52,7 @@
   .aside-left {
     list-style: none;
     text-align: center;
-    width: 400px;
+    width: 300px;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -103,8 +108,8 @@
 .bg-green {
   background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
 }
-.bg-grey {
-  background-color: #f5f7fa6b;
+.bg--gray {
+  background-color: rgb(70 85 85);
 }
 .syncIcon {
   font-weight: 900;

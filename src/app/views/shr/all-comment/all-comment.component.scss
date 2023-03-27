@@ -1,9 +1,38 @@
 .bg-light-dark {
-  background-color: rgba(63, 67, 67, 0.9411764706);
+  background-color: #3f4343f0;
 }
 .bg-gray {
   background-color: rgb(100, 100, 100);
 }
-.contrast{
+.contrast {
   filter: contrast(120%);
+}
+
+.btn-filter {
+  color: #e9e1e1 !important;
+  background-color: #e5dbdef4;
+  transition: all 0.15s ease-in-out;
+}
+.btn-filter:hover {
+  background-color: #797576f4;
+  transition: all 0.15s ease-in-out;
+}
+.btn-filter i {
+  margin: 0;
+  transition: all 0.15s ease-in-out;
+}
+.btn-filter:hover i {
+  margin-top: 1.75px !important;
+  transition: all 0.15s ease-in-out;
+}
+
+.py-btns {
+  padding: 0.45rem 1.3rem;
+}
+.radius {
+  border-radius: 6px;
+}
+.text-bigger {
+  font-size: 15px;
+  font-weight: bold;
 }
