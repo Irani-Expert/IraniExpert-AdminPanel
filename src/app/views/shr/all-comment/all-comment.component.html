@@ -1,6 +1,14 @@
-<button class="btn bg-dark text-white" (click)="openFilterModal(filterModal)">
+<!-- <button class="btn bg-dark text-white" (click)="openFilterModal(filterModal)">
   فیلتر کردن
-</button>
+</button> -->
+<span class="d-inline-block radius">
+  <a
+    (click)="openFilterModal(filterModal)"
+    class="btn-filter btn d-flex justify-content-around py-btns radius align-items-center"
+    ><i class="i-Filter-2 text-dark text-bigger mr-2"></i>
+    <strong class="text-dark ml-2 text-small"> فیلتر کردن</strong></a
+  >
+</span>
 <div class="my-css d-flex flex-wrap w-100">
   <div *ngFor="let item of rows.slice().reverse()" class="col-xl-6 my-2">
     <div class="timeline-card card mt-4 h-100">
@@ -145,7 +153,7 @@
 
         <button
           type="button"
-          class="close"
+          class="close text-white"
           aria-label="Close"
           (click)="modal.dismiss()"
         >
@@ -158,7 +166,7 @@
             <div class="col-md-6 form-group mb-3 mt-3">
               <label class="text-white">ایدی کاربر</label>
               <input
-                class="form-control"
+                class="form-control bg-light radius"
                 [(ngModel)]="filterModel.userID"
                 [formControl]="filterForm.controls['userID']"
               />
@@ -166,7 +174,7 @@
             <div class="col-md-6 form-group mb-3 mt-3">
               <label class="text-white">شناسه محصول</label>
               <input
-                class="form-control"
+                class="form-control bg-light radius"
                 [(ngModel)]="filterModel.rowID"
                 [formControl]="filterForm.controls['rowID']"
               />
@@ -174,7 +182,7 @@
             <div class="col-md-6 form-group mb-3 mt-3">
               <label class="text-white">نام</label>
               <input
-                class="form-control"
+                class="form-control bg-light radius"
                 [(ngModel)]="filterModel.name"
                 [formControl]="filterForm.controls['name']"
               />
@@ -184,7 +192,7 @@
               <input
                 name="accountNumber"
                 id="accountNumber"
-                class="form-control"
+                class="form-control bg-light radius"
                 [(ngModel)]="filterModel.email"
                 [formControl]="filterForm.controls['email']"
               />
@@ -196,7 +204,7 @@
               <input
                 (click)="d.toggle()"
                 type="text"
-                class="form-control"
+                class="form-control bg-light radius"
                 ngbDatepicker
                 #d="ngbDatepicker"
                 [(ngModel)]="CrtDate"
@@ -209,7 +217,7 @@
               <input
                 (click)="e.toggle()"
                 type="text"
-                class="form-control"
+                class="form-control bg-light radius"
                 ngbDatepicker
                 #e="ngbDatepicker"
                 [(ngModel)]="ExpDate"
@@ -220,7 +228,7 @@
             <div class="col-md-6 form-group mb-3 mt-3">
               <label for="accountNumber " class="text-white">امتیاز</label>
               <select
-                class="form-control text-dark"
+                class="form-control bg-light radius text-dark"
                 id="status"
                 [(ngModel)]="filterModel.rate"
                 [formControl]="filterForm.controls['rate']"
