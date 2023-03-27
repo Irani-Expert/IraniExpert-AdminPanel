@@ -126,42 +126,43 @@
         >شماره تماس ضروری است</small
       >
     </div>
+    <div class="col-md-6 d-flex align-items-end mb-3">
+      <button
+        type="button"
+        class="btn-download btn d-flex justify-content-around py-btns radius align-items-center text-dark"
+        (click)="isEdit = false"
+        *ngIf="isEdit"
+      >
+        <i class="i-Pen-2 text-bigger mr-2"></i><strong>ویرایش پروفایل</strong>
+      </button>
 
-    <button
-      type="button"
-      class="btn btn-outline-dark btn-rounded ml-2 my-auto p-2"
-      (click)="isEdit = false"
-      *ngIf="isEdit"
-      style="height: fit-content"
-    >
-      ویرایش پروفایل
-    </button>
-    <button
-      type="button"
-      class="btn btn-outline-dark btn-rounded ml-2 my-auto p-2"
-      (click)="updateUser()"
-      *ngIf="!isEdit"
-      style="height: fit-content"
-    >
-      ذخیره
-    </button>
-    <button
-      type="button"
-      class="btn btn-outline-dark btn-rounded ml-2 my-auto p-2"
-      (click)="isEdit = true"
-      *ngIf="!isEdit"
-      style="height: fit-content"
-    >
-      لغو
-    </button>
-    <button
-      (click)="openPasswordModal(passwordModal)"
-      type="button"
-      class="btn btn-outline-primary btn-rounded ml-3 my-auto p-2"
-      style="height: fit-content"
-    >
-      تغییر رمز عبور
-    </button>
+      <button
+        type="button"
+        class="btn-save btn d-flex justify-content-around py-btns radius align-items-center"
+        (click)="updateUser()"
+        *ngIf="!isEdit"
+      >
+        <i class="i-Yes text-bigger mr-2"></i><strong>ذخیره</strong>
+      </button>
+
+      <button
+        type="button"
+        class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center ml-2"
+        (click)="isEdit = true"
+        *ngIf="!isEdit"
+      >
+        <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
+      </button>
+
+      <button
+        (click)="openPasswordModal(passwordModal)"
+        type="button"
+        class="btn-upload btn d-flex justify-content-around py-btns radius align-items-center ml-2"
+        *ngIf="isEdit"
+      >
+        <i class="i-Key text-bigger mr-2"></i><strong>تغییر رمز عبور</strong>
+      </button>
+    </div>
   </form>
 </div>
 
@@ -208,20 +209,21 @@
     <div class="modal-footer">
       <ng-container>
         <button
-          ngbAutofocus
           type="button"
-          class="btn btn-outline-primary btn-rounded mr-1"
+          class="btn-save btn d-flex justify-content-around py-btns radius align-items-center"
+          ngbAutofocus
           (click)="modal.close(true)"
         >
-          تایید
+          <i class="i-Yes text-bigger mr-2"></i><strong>تایید</strong>
         </button>
       </ng-container>
+
       <button
         type="button"
-        class="btn btn-outline-dark btn-rounded"
+        class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center ml-2"
         (click)="modal.close(false)"
       >
-        لغو
+        <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
       </button>
     </div>
   </form>

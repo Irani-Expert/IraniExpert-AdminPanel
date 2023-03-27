@@ -1,11 +1,10 @@
-<button
+<a
   *appCanAccess="'Product-Add'"
   type="button"
   [routerLink]="'/prd/addUpdate'"
-  class="btn btn-primary mb-4"
+  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
+  ><i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong></a
 >
-  <span>ایجاد</span>
-</button>
 
 <div class="separator-breadcrumb border-top"></div>
 
@@ -59,19 +58,19 @@
         <td *ngIf="item.isActive === true">فعال</td>
 
         <td class="td-oprate">
-          <button
+          <a
             *appCanAccess="'Product-Edit'"
-            class="btn btn-info"
+            class="btn-details btn d-inline-flex justify-content-around py-btns radius align-items-center"
             [routerLink]="'/prd/addUpdate/' + item.id"
+            ><i class="i-Information mr-2" style="font-size: 1.2rem"></i
+            ><strong>جزئیات</strong></a
           >
-            جزئیات
-          </button>
           <button
             *appCanAccess="'Product-Delete'"
-            class="btn btn-danger"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="deleteProduct(item.id, deleteConfirmModal)"
           >
-            حذف
+            <i class="i-Close text-bigger mr-2"></i><strong>حذف</strong>
           </button>
         </td>
       </tr>
@@ -115,18 +114,18 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
+      class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.dismiss('cancel')"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
     </button>
     <button
       type="button"
       ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
       (click)="modal.close('Ok')"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
     </button>
   </div>
 </ng-template>

@@ -6,9 +6,6 @@
   (click)="updateNotebar()"
 ></div>
 
-<!-- <input type="text" [(ngModel)]="filter.firstName" />
-<button (click)="filterOrders()"></button> -->
-
 <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
     <div class="col-auto mb-2">
@@ -177,10 +174,11 @@
         <td class="td-oprate">
           <button
             *appCanAccess="'invoice-Full Premission'"
-            class="btn text-small btn-info"
+            class="btn-details btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="openDetailModal(item, openDetails)"
           >
-            جزئیات
+            <i class="i-Information mr-2" style="font-size: 1.2rem"></i
+            ><strong>جزئیات</strong>
           </button>
 
           <ng-container
@@ -189,21 +187,20 @@
             <button
               *appCanAccess="'Licence-Full Premission'"
               type="button"
-              style="padding-right: 5px"
-              [ngClass]="{ 'd-none': viewMode === 'grid' }"
-              class="btn text-small btn-outline-info"
+              class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
               (click)="openUpdateModal(sendLicense, item)"
             >
-              لایسنس
+              <i class="i-File-Zip text-bigger mr-2"></i>
+              <strong class="ml-2 text-small"> لایسنس</strong>
             </button>
           </ng-container>
           <button
             *appCanAccess="'note-Full Premission'"
-            class="btn text-small btn-success"
-            [ngClass]="{ 'd-none': viewMode === 'grid' }"
+            class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="toggleNotebar(item.id)"
           >
-            یادداشت
+            <i class="i-Pen-5 text-bigger mr-2"></i>
+            <strong class="ml-2 text-small">یادداشت</strong>
           </button>
         </td>
       </tr>
@@ -231,7 +228,7 @@
 <!------------------------------------------------- Delete Modal -->
 
 <!------------------------------------------------- Details Modal -->
-<ng-template #openDetails>
+<ng-template #openDetails let-modal>
   <div>
     <div class="modal-header">
       <h4 class="modal-title">جزئیات و تغییر وضعیت</h4>
@@ -427,10 +424,10 @@
     <div class="modal-footer">
       <button
         type="button"
-        class="btn btn-outline-dark btn-rounded"
+        class="btn-add btn d-flex justify-content-around py-btns radius align-items-center"
         (click)="modal.close(true)"
       >
-        تائید
+        <i class="i-Yes text-bigger mr-2"></i><strong>تایید</strong>
       </button>
     </div>
   </div>
@@ -438,7 +435,7 @@
 
 <!------------------------------------------------- sendLicense Modal -->
 
-<ng-template #sendLicense>
+<ng-template #sendLicense let-modal>
   <div class="modal-header">
     <h4 class="modal-title">ارسال لایسنس</h4>
     <button
@@ -465,15 +462,17 @@
           </div>
           <div class="col-md-6 col-5">
             <a
-              class="btn btn-primary m-1"
+              class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
               href="https://dl.iraniExpert.com/{{ licenseModel.filePath }}"
-              >دانلود</a
+              ><i class="i-Download text-dark text-bigger mr-3"></i>
+              <strong>دانلود</strong></a
             >
             <button
-              class="btn btn-danger m-1"
+              class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
               (click)="deleteModal(licenseModel, deletingModal, 1)"
             >
-              حذف
+              <i class="i-Close text-bigger mr-2"></i>
+              <strong> حذف</strong>
             </button>
           </div>
         </ng-container>
@@ -490,11 +489,12 @@
         >
         <div class="col-12 mt-2 mb-2">
           <button
-            class="btn btn-primary col-2"
+            class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="uploadFile()"
-            *ngIf="isValidate"
+            [disabled]="!isValidate"
           >
-            آپلود
+            <i class="i-Upload text-dark text-bigger mr-3"></i>
+            <strong>آپلود</strong>
           </button>
         </div>
       </ng-container>
