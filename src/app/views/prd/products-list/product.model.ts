@@ -5,4 +5,6 @@ export class ProductModel extends Base implements IProduct {
   cardImagePath:string;
   iconPath:number;
   type:number;
+  id:number;
+  title:string;
 }

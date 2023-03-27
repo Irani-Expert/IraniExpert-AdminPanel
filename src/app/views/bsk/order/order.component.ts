@@ -26,6 +26,9 @@ import { LicenseService } from './services/license.service';
 import { OrderModel } from './models/order.model';
 import { OrderService } from './services/order.service';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
+import { ProductModel } from '../../prd/products-list/product.model';
+import { PlanService } from '../../bas/plan/plan.service';
+import { PlanModel } from '../../bas/plan/plan.model';
 
 @Component({
   selector: 'app-order',
@@ -33,8 +36,12 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
-  ExpDate: any;
-  CrtDate: any;
+  FExpDate: any;
+  TExpDate: any;
+  FCrtDate: any;
+  TCrtDate: any;
+  FStrDate: any;
+  TStrDate: any;
   filter: FilterModel = new FilterModel();
   licenseID: number;
   isValidate: boolean;
@@ -42,6 +49,9 @@ export class OrderComponent implements OnInit {
   invoiceDetail: InvoiceModel = new InvoiceModel();
   invoiceStatus: number;
   filterModel: FilterModel = new FilterModel();
+  plans: PlanModel[] = new Array<PlanModel>();
+  productModel: ProductModel[] = new Array <ProductModel>();
+
   filterForm: FormGroup;
   rows: OrderModel[] = new Array<OrderModel>();
   orderDetail: OrderModel;
@@ -82,7 +92,8 @@ export class OrderComponent implements OnInit {
     public _licenseService: LicenseService,
     public _invoiceService: InvoiceService,
     public _commentService: CommentService,
-    private auth: AuthenticateService
+    private auth: AuthenticateService,
+    private _planService: PlanService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 6;
@@ -92,17 +103,39 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.plans
+       this._orderService
+    .getProduct(
+     
+    )
+    .subscribe(
+      (res: Result<ProductModel[]>) => {
+      this.productModel=res.data
+      
+     }
+    );
     this.setPage(this.page.pageNumber, 8);
     this.filterForm = this._formBuilder.group({
-      iD: [null, Validators.compose([Validators.required])],
-      accountNumber: [null, Validators.compose([Validators.required])],
-      name: [null, Validators.compose([Validators.required])],
-      email: [null, Validators.compose([Validators.required])],
-      isAccepted: [null, Validators.compose([Validators.required])],
-      rate: [null, Validators.compose([Validators.required])],
-      fromCreateDate: [null, Validators.compose([Validators.required])],
-      ToCreateDate: [null, Validators.compose([Validators.required])],
+      iD: [null],
+      userID: [null],
+      accountNumber: [null],
+      firstName: [null],
+      lastName: [null],
+      phoneNumber: [null],
+      planID: [null],
+      productID: [null],
+      isAccepted: [null],
+      rate: [null],
+      code: [null],
+      toExpireDate: [null],
+      fromStartDate: [null],
+      toStartDate: [null],
+      fromExpireDate: [null],
+      fromCreateDate: [null],
+      versionNumber: [null],
+      ToCreateDate: [null],
     });
+ 
     this.updateNotebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
     this.router.events
@@ -112,6 +145,27 @@ export class OrderComponent implements OnInit {
           this._orderService.sidebarState.sidenavOpen = false;
         }
       });
+  }
+  selectPlans(data:string){
+
+    debugger
+    if(data!=undefined){
+      this.filterModel.planID=Number(data)
+
+    }
+  }
+  selectProductPlan(data:string){
+    debugger
+    this._planService
+    .getPlanByProductId(
+     Number(data)
+    )
+    .subscribe(
+      (res: Result<PlanModel[]>) => {
+      this.plans=res.data;
+      debugger
+     }
+    );
   }
   clearFilter() {
     this.filter = new FilterModel();
@@ -258,6 +312,7 @@ export class OrderComponent implements OnInit {
       }
     });
   }
+  
   onFileChanged(event: any) {
     let fileType = event.target.files[0].type.split('/');
     if (fileType[1] == 'x-zip-compressed') {
@@ -673,30 +728,66 @@ export class OrderComponent implements OnInit {
   * 
   */
   openFilterModal(content: any) {
+
+    
     this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
         (result) => {
+          debugger
           if (this.filterModel.rate != null) {
             this.filterModel.rate = Number(this.filterModel.rate);
           }
-          if (this.ExpDate != null) {
-            this.filterModel.toCreateDate =
-              this.ExpDate.year +
-              '-' +
-              this.ExpDate.month +
-              '-' +
-              this.ExpDate.day;
-          }
-          if (this.CrtDate != null) {
+          if (this.FCrtDate != null) {
             this.filterModel.fromCreateDate =
-              this.CrtDate.year +
+              this.FCrtDate.year +
               '-' +
-              this.CrtDate.month +
+              this.FCrtDate.month +
               '-' +
-              this.CrtDate.day;
+              this.FCrtDate.day;
           }
-          this.getOrders(this.status, this.page.pageNumber, this.filterModel);
+          if (this.TCrtDate != null) {
+            this.filterModel.toCreateDate =
+              this.TCrtDate.year +
+              '-' +
+              this.TCrtDate.month +
+              '-' +
+              this.TCrtDate.day;
+          }
+          if (this.FStrDate != null) {
+            this.filterModel.fromStartDate =
+              this.FStrDate.year +
+              '-' +
+              this.FStrDate.month +
+              '-' +
+              this.FStrDate.day;
+          }
+          if (this.TStrDate != null) {
+            this.filterModel.toStartDate =
+              this.TStrDate.year +
+              '-' +
+              this.TStrDate.month +
+              '-' +
+              this.TStrDate.day;
+          }
+          if (this.FExpDate != null) {
+            this.filterModel.fromExpireDate =
+              this.FExpDate.year +
+              '-' +
+              this.FExpDate.month +
+              '-' +
+              this.FExpDate.day;
+          }
+          if (this.TExpDate != null) {
+            this.filterModel.toExpireDate =
+              this.TExpDate.year +
+              '-' +
+              this.TExpDate.month +
+              '-' +
+              this.TExpDate.day;
+          }
+         this.getOrders(this.status, this.page.pageNumber, this.filterModel);
+         debugger
           this.filterModel = new FilterModel();
         },
         (reason) => {

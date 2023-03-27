@@ -4,4 +4,6 @@ export interface IProduct extends IBase{
   cardImagePath:string;
   iconPath:number;
   type:number;
+  id:number;
+  title:string;
 }
