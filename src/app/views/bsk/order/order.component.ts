@@ -50,7 +50,7 @@ export class OrderComponent implements OnInit {
   invoiceStatus: number;
   filterModel: FilterModel = new FilterModel();
   plans: PlanModel[] = new Array<PlanModel>();
-  productModel: ProductModel[] = new Array <ProductModel>();
+  productModel: ProductModel[] = new Array<ProductModel>();
 
   filterForm: FormGroup;
   rows: OrderModel[] = new Array<OrderModel>();
@@ -103,17 +103,10 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.plans
-       this._orderService
-    .getProduct(
-     
-    )
-    .subscribe(
-      (res: Result<ProductModel[]>) => {
-      this.productModel=res.data
-      
-     }
-    );
+    this.plans;
+    this._orderService.getProduct().subscribe((res: Result<ProductModel[]>) => {
+      this.productModel = res.data;
+    });
     this.setPage(this.page.pageNumber, 8);
     this.filterForm = this._formBuilder.group({
       iD: [null],
@@ -135,7 +128,7 @@ export class OrderComponent implements OnInit {
       versionNumber: [null],
       ToCreateDate: [null],
     });
- 
+
     this.updateNotebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
     this.router.events
@@ -146,31 +139,10 @@ export class OrderComponent implements OnInit {
         }
       });
   }
-  selectPlans(data:string){
-
-    debugger
-    if(data!=undefined){
-      this.filterModel.planID=Number(data)
-
-    }
-  }
-  selectProductPlan(data:string){
-    debugger
-    this._planService
-    .getPlanByProductId(
-     Number(data)
-    )
-    .subscribe(
-      (res: Result<PlanModel[]>) => {
-      this.plans=res.data;
-      debugger
-     }
-    );
-  }
-  clearFilter() {
-    this.filter = new FilterModel();
-    this.getOrders(this.status, this.page.pageNumber, this.filter);
-  }
+  // clearFilter() {
+  //   this.filter = new FilterModel();
+  //   this.getOrders(this.status, this.page.pageNumber, this.filter);
+  // }
   setPage(pageInfo: number, transactionStatus: any) {
     this.page.pageNumber = pageInfo;
 
@@ -287,6 +259,7 @@ export class OrderComponent implements OnInit {
       this.invoiceDetail.status = parseInt($event);
     }
   }
+
   changePaymentStatus(item: InvoiceModel) {
     // var finder = this.rows.findIndex((row) => row.code === item.code);
     this._invoiceService.update(item.id, item, 'invoice').subscribe((data) => {
@@ -312,7 +285,7 @@ export class OrderComponent implements OnInit {
       }
     });
   }
-  
+
   onFileChanged(event: any) {
     let fileType = event.target.files[0].type.split('/');
     if (fileType[1] == 'x-zip-compressed') {
@@ -728,13 +701,10 @@ export class OrderComponent implements OnInit {
   * 
   */
   openFilterModal(content: any) {
-
-    
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
         (result) => {
-          debugger
           if (this.filterModel.rate != null) {
             this.filterModel.rate = Number(this.filterModel.rate);
           }
@@ -786,13 +756,30 @@ export class OrderComponent implements OnInit {
               '-' +
               this.TExpDate.day;
           }
-         this.getOrders(this.status, this.page.pageNumber, this.filterModel);
-         debugger
-          this.filterModel = new FilterModel();
+          this.getOrders(this.status, this.page.pageNumber, this.filterModel);
+          this.filter = this.filterModel;
         },
         (reason) => {
           this.filterModel = new FilterModel();
         }
       );
+  }
+
+  selectProduct($event: any) {
+    if ($event != undefined) {
+      this.filterModel.productID = parseInt($event);
+    }
+    this._planService
+      .getPlanByProductId(this.filterModel.productID)
+      .subscribe((res) => {
+        if (res.success == true) {
+          this.plans = res.data;
+        }
+      });
+  }
+  selectProductPlan($event: any) {
+    if ($event != undefined) {
+      this.filterModel.planID = parseInt($event);
+    }
   }
 }

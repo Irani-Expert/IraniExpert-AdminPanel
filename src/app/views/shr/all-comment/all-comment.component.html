@@ -163,29 +163,28 @@
       <form class="row" [formGroup]="filterForm" (ngSubmit)="filterComment()">
         <div class="modal-body">
           <div class="row">
-            
             <div class="col-md-6 form-group mb-3 mt-3">
               <label class="text-white">ID</label>
               <input
-                class="form-control"
+                class="form-control bg-light radius"
                 [(ngModel)]="filterModel.id"
-                [formControl]="filterForm.controls['ID']"
+                formControlName="ID"
               />
             </div>
             <div class="col-md-6 form-group mb-3 mt-3">
-              <label class="text-white">ایدی کاربر</label>
+              <label class="text-white">ID کاربر</label>
               <input
                 class="form-control bg-light radius"
                 [(ngModel)]="filterModel.userID"
-                [formControl]="filterForm.controls['userID']"
+                formControlName="userID"
               />
             </div>
             <div class="col-md-6 form-group mb-3 mt-3">
-              <label class="text-white">شناسه محصول</label>
+              <label class="text-white">محصول</label>
               <input
                 class="form-control bg-light radius"
                 [(ngModel)]="filterModel.rowID"
-                [formControl]="filterForm.controls['rowID']"
+                formControlName="rowID"
               />
             </div>
             <div class="col-md-6 form-group mb-3 mt-3">
@@ -193,7 +192,7 @@
               <input
                 class="form-control bg-light radius"
                 [(ngModel)]="filterModel.name"
-                [formControl]="filterForm.controls['name']"
+                formControlName="name"
               />
             </div>
             <div class="col-md-6 form-group mb-3 mt-3">
@@ -203,54 +202,16 @@
                 id="accountNumber"
                 class="form-control bg-light radius"
                 [(ngModel)]="filterModel.email"
-                [formControl]="filterForm.controls['email']"
+                formControlName="email"
               />
             </div>
-          
-            <div class="col-md-6 form-group mb-3 mt-3">
-              <label class="text-white">ایدی پلن </label>
-              <input
-                name="accountNumber"
-                id="accountNumber"
-                class="form-control"
-                [(ngModel)]="filterModel.planID"
-                [formControl]="filterForm.controls['planID']"
-              />
-            </div>
-            <div class="col-md-6 form-group mb-3" dir="ltr">
-              <label for="accountNumber " class="text-white">تاریخ شروع</label>
-
-              <input
-                (click)="d.toggle()"
-                type="text"
-                class="form-control bg-light radius"
-                ngbDatepicker
-                #d="ngbDatepicker"
-                [(ngModel)]="CrtDate"
-                [formControl]="filterForm.controls['fromCreateDate']"
-              />
-            </div>
-            <div class="col-md-6 form-group mb-3" dir="ltr">
-              <label class="text-white">تاریخ پایان</label>
-
-              <input
-                (click)="e.toggle()"
-                type="text"
-                class="form-control bg-light radius"
-                ngbDatepicker
-                #e="ngbDatepicker"
-                [(ngModel)]="ExpDate"
-                [formControl]="filterForm.controls['ToCreateDate']"
-              />
-            </div>
-
             <div class="col-md-6 form-group mb-3 mt-3">
               <label for="accountNumber " class="text-white">امتیاز</label>
               <select
                 class="form-control bg-light radius text-dark"
                 id="status"
                 [(ngModel)]="filterModel.rate"
-                [formControl]="filterForm.controls['rate']"
+                formControlName="rate"
               >
                 <option value="1">1</option>
                 <option value="2">2</option>

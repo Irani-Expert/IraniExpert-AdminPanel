@@ -115,9 +115,7 @@ export class OrderService extends BaseService<OrderModel, 0> {
       }),
     };
     return this._http.get<Result<ProductModel[]>>(
-      this._base +
-        '/Product?pageIndex=0&pageSize=100' 
-        ,  
+      this._base + '/Product?pageIndex=0&pageSize=100',
       _options
     );
   }
@@ -137,7 +135,6 @@ export class OrderService extends BaseService<OrderModel, 0> {
         // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-debugger
     return this._http.get<Result<Paginate<OrderModel[]>>>(
       this._base +
         '/Orders?pageIndex=' +

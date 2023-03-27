@@ -710,7 +710,7 @@
   </div>
 </ng-template>
 <ng-template #filterModal let-modal>
-  <div class="d-flex align-items-center bg-gray">
+  <div class="d-flex align-items-center bg--gray">
     <div class="col-11 container mt-2 mb-2 contrast">
       <div class="modal-header row">
         <h4 class="modal-title text-white" id="modal-basic-title">فیلتر</h4>
@@ -724,7 +724,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form class="row" [formGroup]="filterForm" >
+      <form class="row" [formGroup]="filterForm" (ngSubmit)="modal.close(true)">
         <div class="modal-body">
           <div class="row">
             <div class="col-md-4 form-group mb-3 mt-3">
@@ -740,7 +740,6 @@
               <input
                 class="form-control"
                 [(ngModel)]="filterModel.userID"
-                
                 formControlName="userID"
               />
             </div>
@@ -768,7 +767,7 @@
                 formControlName="accountNumber"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3" *ngIf="status==8">
+            <div class="col-md-4 form-group mb-3 mt-3" *ngIf="status == 8">
               <label class="text-white">شناسه محصول</label>
               <input
                 name="accountNumber"
@@ -779,7 +778,9 @@
               />
             </div>
             <div class="col-md-4 form-group mb-3 mt-3" dir="ltr">
-              <label for="accountNumber " class="text-white">از تاریخ ایجاد</label>
+              <label for="accountNumber " class="text-white"
+                >از تاریخ ایجاد</label
+              >
 
               <input
                 (click)="d.toggle()"
@@ -800,11 +801,16 @@
                 class="form-control"
                 ngbDatepicker
                 #e="ngbDatepicker"
-                [(ngModel)]="TCrtDate" 
-                formControlName="ToCreateDate"             />
+                [(ngModel)]="TCrtDate"
+                formControlName="ToCreateDate"
+              />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3" dir="ltr" *ngIf="status==8">
-              <label  class="text-white">از تاریخ شروع</label>
+            <div
+              class="col-md-4 form-group mb-3 mt-3"
+              dir="ltr"
+              *ngIf="status == 8"
+            >
+              <label class="text-white">از تاریخ شروع</label>
 
               <input
                 (click)="m.toggle()"
@@ -813,10 +819,14 @@
                 ngbDatepicker
                 #m="ngbDatepicker"
                 [(ngModel)]="FStrDate"
-                formControlName="fromStartDate"  
+                formControlName="fromStartDate"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3" dir="ltr" *ngIf="status==8">
+            <div
+              class="col-md-4 form-group mb-3 mt-3"
+              dir="ltr"
+              *ngIf="status == 8"
+            >
               <label class="text-white">تا تاریخ شروع</label>
 
               <input
@@ -826,11 +836,17 @@
                 ngbDatepicker
                 #s="ngbDatepicker"
                 [(ngModel)]="TStrDate"
-                formControlName="toStartDate"  
+                formControlName="toStartDate"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3" dir="ltr" *ngIf="status==8">
-              <label for="accountNumber " class="text-white">از تاریخ پایان</label>
+            <div
+              class="col-md-4 form-group mb-3 mt-3"
+              dir="ltr"
+              *ngIf="status == 8"
+            >
+              <label for="accountNumber " class="text-white"
+                >از تاریخ پایان</label
+              >
 
               <input
                 (click)="fe.toggle()"
@@ -839,11 +855,14 @@
                 ngbDatepicker
                 #fe="ngbDatepicker"
                 [(ngModel)]="FExpDate"
-                formControlName="fromExpireDate"  
-
+                formControlName="fromExpireDate"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3" dir="ltr" *ngIf="status==8">
+            <div
+              class="col-md-4 form-group mb-3 mt-3"
+              dir="ltr"
+              *ngIf="status == 8"
+            >
               <label class="text-white">تا تاریخ پایان</label>
 
               <input
@@ -853,35 +872,37 @@
                 ngbDatepicker
                 #ms="ngbDatepicker"
                 [(ngModel)]="TExpDate"
-                formControlName="toExpireDate"  
+                formControlName="toExpireDate"
               />
             </div>
             <div class="col-md-4 form-group mb-3 mt-3">
               <label class="text-white">محصول</label>
               <select
-              class="form-control mt-1 text-dark"
-              [(ngModel)]="filterModel.productID"
-              (ngModelChange)="selectProductPlan($event)"
-            >
-            <option *ngFor="let item of productModel.items" value="{{ item.id }}">
-              {{item.title}}
-            </option>
-             
-            </select>
+                class="form-control mt-1 text-dark"
+                [(ngModel)]="filterModel.productID"
+                (ngModelChange)="selectProduct($event)"
+                formControlName="productID"
+              >
+                <option
+                  *ngFor="let item of productModel.items"
+                  value="{{ item.id }}"
+                >
+                  {{ item.title }}
+                </option>
+              </select>
             </div>
             <div class="col-md-4 form-group mb-3 mt-3">
               <label class="text-white">پلن محصول</label>
               <select
-              class="form-control mt-1 text-dark"
-              [(ngModel)]="filterModel.planID"
-              (ngModelChange)="selectPlans($event)"
-              [ngModelOptions]="{standalone: true}"
-            >
-            <option *ngFor="let item of plans" value="{{ item.id }}">
-              {{item.title}}
-            </option>
-             
-            </select>
+                formControlName="planID"
+                class="form-control mt-1 text-dark"
+                [(ngModel)]="filterModel.planID"
+                (ngModelChange)="selectProductPlan($event)"
+              >
+                <option *ngFor="let item of plans" value="{{ item.id }}">
+                  {{ item.title }}
+                </option>
+              </select>
             </div>
             <div class="col-md-4 form-group mb-3 mt-3">
               <label class="text-white">کد</label>
@@ -891,15 +912,14 @@
                 formControlName="code"
               />
             </div>
-          
+
             <div class="col-md-4 form-group mb-3 mt-3" dir="ltr">
               <label class="text-white">شماره تماس</label>
               <input
-              class="form-control"
-              [(ngModel)]="filterModel.phoneNumber"
-              formControlName="code"              
-            />
-         
+                class="form-control"
+                [(ngModel)]="filterModel.phoneNumber"
+                formControlName="phoneNumber"
+              />
             </div>
             <!-- <div class="col-md-6 form-group mb-3 mt-3">
               <label for="accountNumber " class="text-white">امتیاز</label>

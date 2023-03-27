@@ -45,11 +45,8 @@ export class AllCommentComponent implements OnInit {
       userID: [null, Validators.compose([Validators.required])],
       ID: [null, Validators.compose([Validators.required])],
       rowID: [null, Validators.compose([Validators.required])],
-      planId: [null, Validators.compose([Validators.required])],
       name: [null, Validators.compose([Validators.required])],
       email: [null, Validators.compose([Validators.required])],
-      fromCreateDate: [null, Validators.compose([Validators.required])],
-      ToCreateDate: [null, Validators.compose([Validators.required])],
       isAccepted: [null, Validators.compose([Validators.required])],
       rate: [null, Validators.compose([Validators.required])],
     });
