@@ -483,8 +483,8 @@
           (change)="onFileChanged($event)"
         />
       </div>
-      <ng-container>
-        <strong *ngIf="!licenseModel.fileExists" class="text-danger col-12"
+      <ng-container *ngIf="!licenseModel.fileExists">
+        <strong  class="text-danger col-12"
           >فایل ارسالی باید zip باشد</strong
         >
         <div class="col-12 mt-2 mb-2">
