@@ -20,12 +20,16 @@ import { Utils } from 'src/app/shared/utils';
 import { UserNeedModel } from './user-need.model';
 import { UserNeedService } from './user-need.service';
 import * as moment from 'jalali-moment';
+import { CommentService } from '../all-comment/comment.service';
 @Component({
   selector: 'app-user-need',
   templateUrl: './user-need.component.html',
   styleUrls: ['./user-need.component.scss'],
 })
 export class UserNeedComponent implements OnInit {
+  note: CommentModel = new CommentModel();
+  notes: CommentModel[] = new Array<CommentModel>();
+  noteRowID: number;
   // @ViewChild('addNoteElement') MyProp: HTMLElement;
   @ViewChildren(PerfectScrollbarDirective)
   psContainers: QueryList<PerfectScrollbarDirective>;
@@ -33,22 +37,21 @@ export class UserNeedComponent implements OnInit {
   toggled = false;
   userWant: any = null;
   userInfo: UserInfoModel;
-  note: UserNeedModel;
   rows: UserNeedModel[] = new Array<UserNeedModel>();
-  commentRows: CommentModel[] = new Array<CommentModel>();
-  addCommentRows: CommentModel = new CommentModel();
-  addComentText: string;
   page: Page = new Page();
-  rowIdKeeper: number = null;
   constructor(
     public router: Router,
     public _UserNeedService: UserNeedService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private auth: AuthenticateService
+    private auth: AuthenticateService,
+    private _commentService : CommentService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 12;
+    setTimeout(() => {
+      this.psContainerSecSidebar = this.psContainers.toArray()[1];
+    });
   }
 
   ngOnInit(): void {
@@ -57,7 +60,7 @@ export class UserNeedComponent implements OnInit {
     this.updateNotebar();
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((routeChange) => {
+      .subscribe((_routeChange) => {
         if (Utils.isMobile()) {
           this._UserNeedService.sidebarState.sidenavOpen = false;
         }
@@ -68,29 +71,29 @@ export class UserNeedComponent implements OnInit {
     this.getUserNeedByUserWant(userWant, pageInfo);
   }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    var scroller = document.getElementById('scrollPart');
+  // @HostListener('window:scroll', [])
+  // onWindowScroll() {
+  //   var scroller = document.getElementById('scrollPart');
 
-    if (document.documentElement.scrollTop > 150) {
-      scroller?.classList.add('afterScroll');
-      scroller?.classList.remove('auther-start');
-    } else {
-      scroller?.classList.add('auther-start');
+  //   if (document.documentElement.scrollTop > 150) {
+  //     scroller?.classList.add('afterScroll');
+  //     scroller?.classList.remove('auther-start');
+  //   } else {
+  //     scroller?.classList.add('auther-start');
 
-      scroller?.classList.remove('afterScroll');
-    }
-    var comments = document.getElementById('comments');
-    console.log(window.innerHeight);
+  //     scroller?.classList.remove('afterScroll');
+  //   }
+  //   var comments = document.getElementById('comments');
+  //   console.log(window.innerHeight);
 
-    if (document.documentElement.scrollTop + 400 > comments!.offsetHeight) {
-      scroller?.classList.remove('afterScroll');
-      scroller?.classList.remove('auther-start');
-      scroller?.classList.add('auther-end');
-    } else {
-      scroller?.classList.remove('auther-end');
-    }
-  }
+  //   if (document.documentElement.scrollTop + 400 > comments!.offsetHeight) {
+  //     scroller?.classList.remove('afterScroll');
+  //     scroller?.classList.remove('auther-start');
+  //     scroller?.classList.add('auther-end');
+  //   } else {
+  //     scroller?.classList.remove('auther-end');
+  //   }
+  // }
 
   getUserNeedByUserWant(userWant: any, pageNumber: number) {
     this.userWant = userWant;
@@ -99,7 +102,7 @@ export class UserNeedComponent implements OnInit {
       .subscribe(
         (res: Result<Paginate<UserNeedModel[]>>) => {
           this.rows = res.data.items;
-          var scrollPart = document.getElementById('scrollPart');
+          // var scrollPart = document.getElementById('scrollPart');
 
           var counter = 0;
           this.rows.forEach((x) => {
@@ -176,75 +179,68 @@ export class UserNeedComponent implements OnInit {
         }
       );
   }
-  getNoteList(row: UserNeedModel) {
-    this.note = row;
-  }
-  addComent() {
-    this.addCommentRows.text = this.addComentText;
-    this.addCommentRows.rate = 0;
-    this.addCommentRows.email = this.userInfo.subject;
-    this.addCommentRows.name =
-      this.userInfo.firstName + ' ' + this.userInfo.lastName;
-    this.addCommentRows.rowID = this.rowIdKeeper;
-    this.addCommentRows.isAccepted = true;
-    this.addCommentRows.tableType = 10;
-    this.addCommentRows.parentID = null;
-    this.addCommentRows.createDate = new Date();
+  // addComent(item: CommentModel, content: any) {
+  //   this.user = this.auth.currentUserValue;
+  //   this.addCommentRows.text = this.addComentText;
+  //   this.addCommentRows.rate = 0;
+  //   this.addCommentRows.email = this.userInfo.subject;
+  //   this.addCommentRows.name =
+  //     this.userInfo.firstName + ' ' + this.userInfo.lastName;
+  //   this.addCommentRows.rowID = this.rowIdKeeper;
+  //   this.addCommentRows.isAccepted = true;
+  //   this.addCommentRows.tableType = 10;
+  //   this.addCommentRows.parentID = null;
+  //   this.addCommentRows.createDate = new Date();
 
-    this._UserNeedService
-      .create(this.addCommentRows, 'Comment')
+  //   this._UserNeedService
+  //     .create(this.addCommentRows, 'Comment')
 
-      .subscribe((data) => {
-        if (data.success) {
-          this.addCommentRows.jalaliDate = moment(
-            this.addCommentRows.createDate,
-            'YYYY/MM/DD'
-          )
-            .locale('fa')
-            .format('YYYY/MM/DD');
-          this.commentRows.unshift(this.addCommentRows);
-          this.toastr.success(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
-  }
-  getComment(item: UserNeedModel) {
-    this.onWindowScroll();
-    this.rowIdKeeper = item.id;
+  //     .subscribe((data) => {
+  //       if (data.success) {
+  //         this.addCommentRows.jalaliDate = moment(
+  //           this.addCommentRows.createDate,
+  //           'YYYY/MM/DD'
+  //         )
+  //           .locale('fa')
+  //           .format('YYYY/MM/DD');
+  //         this.commentRows.unshift(this.addCommentRows);
+  //         this.toastr.success(data.message, null, {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //       } else {
+  //         this.toastr.error(data.message, null, {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //       }
+  //     });
+  // }
 
-    this._UserNeedService
-      .getCommentByRowid(item.id)
+
+// Note List / / / / / / / / / / / / /
+  getNoteList(rowID:number) {
+    this.notes = new Array<CommentModel>();
+    this._commentService
+      .GetByTableTypeAndRowId(0, 20, rowID, 10)
       .subscribe((res: Result<Paginate<CommentModel[]>>) => {
-        var scrollbar = document.getElementById('scrollbar2');
-        scrollbar?.classList.remove('minimum-height');
-        this.commentRows = res.data.items;
+        this.notes = res.data.items;
         var counter = 0;
-        this.commentRows.forEach((x) => {
-          this.commentRows[counter].jalaliDate = moment(
-            this.commentRows[counter].createDate,
+        this.notes.forEach((_x) => {
+          this.notes[counter].jalaliDate = moment(
+            this.notes[counter].createDate,
             'YYYY/MM/DD'
           )
             .locale('fa')
             .format('YYYY/MM/DD');
-
           counter++;
         });
-
-        this.page.totalElements = res.data.totalCount;
-        this.page.totalPages = res.data.totalPages - 1;
-        this.page.pageNumber = res.data.pageNumber + 1;
       });
   }
 
-  toggleNotebar(item: UserNeedModel, element: string) {
-    this.getNoteList(item);
+  toggleNotebar(rowID: number) {
+    this.noteRowID = rowID;
+    this.getNoteList(rowID);
     this.toggled = true;
     const state = this._UserNeedService.sidebarState;
 
@@ -254,51 +250,63 @@ export class UserNeedComponent implements OnInit {
     if (!state.sidenavOpen) {
       state.sidenavOpen = true;
     }
-    this.scroll(element);
   }
   updateNotebar() {
     this.toggled = false;
-    this._UserNeedService.sidebarState.sidenavOpen = false;
+    if (Utils.isMobile()) {
+      this._UserNeedService.sidebarState.sidenavOpen = false;
+    } else {
+      this._UserNeedService.sidebarState.sidenavOpen = false;
+    }
   }
-  scroll(elementID: string) {
-    let el = document.getElementById(elementID);
-    el.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+
+   // ConfirmModal and Add Note
+
+  clearNote() {
+    this.note = new CommentModel();
   }
 
-  sideBarNoteStatus: boolean = false;
-  sideBarNote(item: UserNeedModel) {
-    this.sideBarNoteStatus = true;
 
-    this.rowIdKeeper = item.id;
+  openConfirmationModal(item: CommentModel, content: NgbModal) {
+    this.userInfo = this.auth.currentUserValue;
+    item.rate = 1;
+    item.email = this.userInfo.subject;
+    item.name = this.userInfo.firstName + ' ' + this.userInfo.lastName;
+    item.isActive = true;
+    item.rowID = this.noteRowID;
+    item.isAccepted = true;
+    item.tableType = 8;
+    item.parentID = null;
+    this.modalService
+      .open(content, {
+        ariaLabelledBy: 'modal-basic-title',
+        centered: true,
+      })
+      .result.then((_result: boolean) => {
+        if (_result === true) {
+          this._commentService.create(item, 'Comment').subscribe((res) => {
+            if (res.success) {
+              this.toastr.success('یادداشت ایجاد شد', 'موفقیت آمیز!', {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+              let date = new Date();
+              item.createDate = date;
+              item.jalaliDate = moment(item.createDate, 'YYYY/MM/DD')
+                .locale('fa')
+                .format('YYYY/MM/DD');
+              this.notes.unshift(item);
 
-    this._UserNeedService
-      .getCommentByRowid(item.id)
-      .subscribe((res: Result<Paginate<CommentModel[]>>) => {
-        this.commentRows = res.data.items;
-        var counter = 0;
-        this.commentRows.forEach((x) => {
-          this.commentRows[counter].jalaliDate = moment(
-            this.commentRows[counter].createDate,
-            'YYYY/MM/DD'
-          )
-            .locale('fa')
-            .format('YYYY/MM/DD');
-
-          counter++;
-        });
-
-        this.page.totalElements = res.data.totalCount;
-        this.page.totalPages = res.data.totalPages - 1;
-        this.page.pageNumber = res.data.pageNumber + 1;
+              this.note = new CommentModel();
+            } else {
+              this.toastr.error('خطا در ایجاد ', res.message, {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+            }
+          });
+        }
       });
-
-    console.log(this.commentRows);
   }
-
-  closeNote() {
-    this.sideBarNoteStatus = false;
-  }
-}
-function testFunctio() {
-  throw new Error('Function not implemented.');
 }
