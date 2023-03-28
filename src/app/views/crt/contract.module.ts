@@ -7,13 +7,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AllCommissionComponent } from './all-commission/all-commission.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [ContractListComponent, AllCommissionComponent],
   imports: [CrtRoutingModule, CommonModule,NgPersianDatepickerModule,NgMultiSelectDropDownModule,
-    FormsModule,ReactiveFormsModule,NgbModule,NgxPaginationModule]
+    FormsModule,ReactiveFormsModule,NgbModule,NgxPaginationModule,DragScrollModule]
     ,
 })
 export class ContractModule {}

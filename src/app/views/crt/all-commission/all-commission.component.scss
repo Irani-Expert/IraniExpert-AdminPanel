@@ -27,11 +27,15 @@ td {
   .btn-dark-yellow {
     background-color: #cb9800;
   }
+  drag-scroll {
+    height: 400px;   
+  }
   .modal-table{
     table-layout: fixed;  
-    overflow-x: scroll;
+    overflow-y: scroll;
     display: block;
-    height: 400px;}
+    /* width */
+  }
     .description-border{
         border: 2px solid black;
         margin: 20px;
@@ -41,5 +45,106 @@ td {
     }
    
  #description{
-    height: 70px;
+    height: 100px;
  }
+ .money-color{
+  color: #85bb65 ;
+ }
+
+.table-header{
+  display: block;
+  width: inherit;
+}
+.table-body{
+
+}
+.tr-modal{
+  display: flex;
+ max-width: 300px;
+
+}
+.w-inherit{
+  width: inherit;
+}
+.td-modal{
+  padding-left: 0px;
+  padding-right: 0px;
+  height: 100%;
+  font-size: 0.4rem;
+}
+
+.drag-scroll-content[_ngcontent-qwm-c213]{
+  overflow-x: hidden !important;
+
+}
+.tooltip-color{
+ background-color: #c0bdbd;
+  
+}
+.c-poiter{
+  cursor: pointer;
+}
+.card-body{
+  border-radius: 0.25rem;
+}
+.tooltip-size{
+  font-size: 1rem;
+}
+.btn-blue-right-section {
+  text-align:center;
+  padding: 0px;
+  margin: 0px;
+  margin-left: 10px;
+  border-left: 1px solid #fff;
+}
+
+.btn-blue-icon {
+  color: white;
+  width: 13px;
+}
+.d-grid{
+  display: grid;
+}
+:root {
+  --margin-line: #941c5a;
+  --lines: #1d97b8;
+}
+
+.dollar-icon{}
+
+
+
+
+
+
+
+
+$paper-color: #F1EDE9;
+$paper-line: #94ACD4;
+
+
+.notepad {
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 10px 10px 40px rgba(black, .15);
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+}
+
+.top {
+  width: 100%;
+  height: 50px;
+  background: #333;
+}
+
+.paper {
+  width: 100%;
+  height: 100%;
+  min-height: 60vh;
+  padding: 35px 20px;
+  background: repeating-linear-gradient($paper-color, $paper-color 31px, $paper-line 31px, $paper-line 32px);
+  font-family: 'Shadows Into Light', cursive;
+  line-height: 32px;
+  outline: 0;
+  font-size: 26px;
+}

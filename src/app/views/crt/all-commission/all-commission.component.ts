@@ -8,6 +8,10 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Page } from 'src/app/shared/models/Base/page';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { number } from 'echarts';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-all-commission',
@@ -29,17 +33,33 @@ export class AllCommissionComponent implements OnInit {
   price: string;
   addRedeiptForm: FormGroup;
   page: Page = new Page();
-
+  
   constructor(
     // private activeModal : NgbActiveModal,
     private modalService: NgbModal,
     private _allcommissionService: allcommissionService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private clipboard: Clipboard,
+    private toastr: ToastrService,
+
   ) {
     this.page.pageNumber = 0;
     this.page.size = 12;
   }
-
+  toast$: {
+    "type": "warning",
+    "title": "Check it out!",
+    "body": "This is a warning alert",
+    "delay": 3000
+  }
+  toasts: [
+    {
+      "type": "warning",
+      "title": "Check it out!",
+      "body": "This is a warning alert",
+      "delay": 3000
+    }
+  ]
   ngOnInit(): void {
     this.getAllCommission(3);
     this.setPage(this.page.pageNumber - 1);
@@ -133,4 +153,17 @@ export class AllCommissionComponent implements OnInit {
     this.modalKeeper.close();
     this.openModal(this.mainModalKeeper, 'lg', this.contractIdKeeper);
   }
+  copyText(textToCopy: string) {
+    this.clipboard.copy(textToCopy);
+    this.toastr.info('کپی شد', '', {
+      closeButton: true,
+      positionClass: 'toast-top-left',
+      titleClass: 'text--primary text--smaller text-white',
+      messageClass: 'text--primary text--smaller text-white',
+      
+    });
+}
+
+
+
 }
