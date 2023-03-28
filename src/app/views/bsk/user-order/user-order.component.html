@@ -86,36 +86,39 @@
         <td>
           <a
             *ngIf="item.transactionStatus == 8 && item.filePath != null"
-            class="btn btn-warning text-dark"
+            class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
             href="https://dl.iraniExpert.com/{{ item.filePath }}"
+            ><i class="i-Download text-dark text-bigger mr-3"></i>
+            <strong>دانلود</strong></a
           >
-            دانلود
-          </a>
 
           <button
             *ngIf="
               item.transactionStatus == 8 ||
               (item.transactionStatus == 2 && item.filePath != null)
             "
-            class="btn btn-primary text-white"
+            class="btn-details btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
             (click)="showDetails(item, detailModal)"
           >
-            جزئیات
+            <i class="i-Information mr-2" style="font-size: 1.2rem"></i
+            ><strong>جزئیات</strong>
           </button>
 
           <button
             *ngIf="item.transactionStatus == 2 && item.filePath == null"
-            class="btn btn-outline-light text-dark"
+            class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
             disabled
           >
-            در انتظار لایسنس
+            <i class="i-File-Zip text-bigger mr-2"></i>
+            <strong class="ml-2">در انتظار لایسنس</strong>
           </button>
           <button
-            class="btn btn-info"
+            class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
             (click)="addPay(item, PayModal)"
             *ngIf="item.transactionStatus == 1"
           >
-            ثبت پرداخت
+            <i class="i-Dollar-Sign-2 text-bigger mr-2"></i>
+            <strong>ثبت پرداخت</strong>
           </button>
         </td>
       </tr>
@@ -188,10 +191,11 @@
     <div class="modal-footer">
       <button
         type="button"
-        class="btn btn-outline-secondary btn-rounded mr-1"
+        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
         (click)="modal.dismiss()"
       >
-        بستن
+        <i class="i-Close text-bigger mr-2"></i>
+        <strong>بستن</strong>
       </button>
     </div>
   </div>
@@ -217,18 +221,18 @@
     <div class="modal-footer">
       <button
         type="button"
-        class="btn btn-outline-secondary btn-rounded mr-1"
+        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
         (click)="modal.dismiss()"
       >
-        خیر
+        <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
       </button>
       <button
         type="button"
         ngbAutofocus
-        class="btn btn-wide btn-danger btn-rounded"
+        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
         (click)="modal.close(true)"
       >
-        بله
+        <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
       </button>
     </div>
   </div>

@@ -182,26 +182,27 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-warning btn-rounded mr-1"
+      class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id !== 0"
     >
-      ویرایش
+      <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-primary btn-rounded mr-1"
+      class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id === 0"
     >
-      ایجاد
+      <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.dismiss()"
     >
-      انصراف
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>انصراف</strong>
     </button>
   </div>
 </ng-template>
@@ -225,18 +226,18 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.dismiss('cancel')"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
     </button>
     <button
       type="button"
       ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
       (click)="modal.close()"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
     </button>
   </div>
 </ng-template>

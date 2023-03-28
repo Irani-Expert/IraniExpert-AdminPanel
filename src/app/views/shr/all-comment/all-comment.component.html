@@ -46,11 +46,11 @@
         <div class="mb-2">
           <button
             type="button"
-            class="btn btn-rounded m-1"
+            class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
             *ngIf="item.isAccepted === false"
             (click)="openSmall(modalSmall, item)"
           >
-            پذیرفتن
+            <i class="i-Yes text-bigger mr-2"></i><strong>پذیرفتن</strong>
           </button>
         </div>
         <div class="mb-2">
@@ -58,9 +58,9 @@
             type="button"
             *ngIf="item.isAccepted === true"
             (click)="deleteComment(item.id, deleteModal)"
-            class="btn btn-danger btn-rounded m-1"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
           >
-            حذف پیام
+            <i class="i-Close text-bigger mr-2"></i><strong>حذف پیام</strong>
           </button>
         </div>
       </div>
@@ -98,17 +98,17 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.dismiss()"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
     </button>
   </div>
 </ng-template>
@@ -131,17 +131,17 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.dismiss()"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
     </button>
   </div>
 </ng-template>
@@ -242,18 +242,19 @@
           <button
             ngbAutofocus
             type="button"
-            class="btn btn-outline-dark btn-rounded mr-1 text-white"
+            class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="modal.close(true)"
           >
-            ویرایش
+            <i class="i-Pen-5 text-bigger mr-2"></i>
+            <strong class="ml-2 text-small">ویرایش</strong>
           </button>
 
           <button
             type="button"
-            class="btn btn-outline-dark btn-rounded text-white"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
             (click)="modal.dismiss()"
           >
-            انصراف
+            <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
           </button>
         </div>
       </form>

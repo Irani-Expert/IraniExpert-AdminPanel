@@ -1,9 +1,9 @@
 <button
-  class="btn btn-primary mb-4"
+  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   type="button"
   (click)="openModal(newcontract, undefined)"
 >
-  ایجاد
+  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
 </button>
 <div class="separator-breadcrumb border-top"></div>
 
@@ -30,8 +30,11 @@
         <td>{{ item.prcentReward }}</td>
         <td>{{ item.roleID }}</td>
         <td>
-          <button class="btn btn-danger" (click)="removeContract(item.id)">
-            حذف
+          <button
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
+            (click)="removeContract(item.id)"
+          >
+            <i class="i-Close text-bigger mr-2"></i><strong>حذف</strong>
           </button>
         </td>
       </tr>
@@ -176,10 +179,10 @@
     <div class="modal-footer">
       <button
         type="button"
-        class="btn btn-outline-dark btn-rounded"
+        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
         (click)="contractWith()"
       >
-        ثبت
+        <i class="i-Yes text-bigger mr-2"></i><strong>ثبت</strong>
       </button>
     </div>
   </div>

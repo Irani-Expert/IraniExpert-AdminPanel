@@ -93,17 +93,19 @@
           <div class="mb-2 d-flex justify-content-end">
             <button
               type="button"
-              class="btn btn-rounded m-1"
+              class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
               (click)="toggleNotebar(item.id)"
             >
-              یادداشت ها
+              <i class="i-Pen-5 text-bigger mr-2"></i>
+              <strong class="ml-2 text-small">یادداشت</strong>
             </button>
             <button
               type="button"
               (click)="deleteUserNeed(item.id, deleteModal)"
-              class="btn btn-danger btn-rounded m-1"
+              class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
             >
-              حذف پیام
+              <i class="i-Close text-bigger mr-2"></i>
+              <strong class="ml-2 text-small">حذف پیام</strong>
             </button>
           </div>
         </div>
@@ -209,17 +211,17 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded m-1"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded m-1"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
       (click)="modal.dismiss()"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
     </button>
   </div>
 </ng-template>
@@ -403,10 +405,10 @@
         "
         type="button"
         (click)="openConfirmationModal(note, confirmationModal)"
-        class="btn btn-secondary mb-2"
+        class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-2"
         *appCanAccess="'note-Add'"
       >
-        ایجاد
+        <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
       </button>
     </div>
   </div>

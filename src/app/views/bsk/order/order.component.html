@@ -206,7 +206,7 @@
               (click)="openUpdateModal(sendLicense, item)"
             >
               <i class="i-File-Zip text-bigger mr-2"></i>
-              <strong class="ml-2 text-small"> لایسنس</strong>
+              <strong class="ml-2"> لایسنس</strong>
             </button>
           </ng-container>
           <button
@@ -439,7 +439,7 @@
     <div class="modal-footer">
       <button
         type="button"
-        class="btn-add btn d-flex justify-content-around py-btns radius align-items-center"
+        class="btn-save btn d-flex justify-content-around py-btns radius align-items-center"
         (click)="modal.close(true)"
       >
         <i class="i-Yes text-bigger mr-2"></i><strong>تایید</strong>
@@ -551,10 +551,11 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
     >
-      ارسال
+      <i class="i-Upload text-dark text-bigger mr-3"></i>
+      <strong>ارسال</strong>
     </button>
   </div>
 </ng-template>
@@ -604,7 +605,7 @@
         "
         type="button"
         (click)="openConfirmationModal(note, confirmationModal)"
-        class="btn btn-secondary mb-2"
+        class="btn btn-success mb-2"
         *appCanAccess="'note-Add'"
       >
         ایجاد
@@ -671,17 +672,17 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
       (click)="modal.dismiss('cancel')"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
     </button>
     <button
       type="button"
-      class="btn btn-wide btn-success btn-rounded"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
     </button>
   </div>
 </ng-template>
@@ -706,18 +707,18 @@
     <div class="modal-footer">
       <button
         type="button"
-        class="btn btn-outline-secondary btn-rounded mr-1"
+        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
         (click)="modal.dismiss('cancel')"
       >
-        خیر
+        <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
       </button>
       <button
         type="button"
         ngbAutofocus
-        class="btn btn-wide btn-danger btn-rounded"
+        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
         (click)="modal.close('Ok')"
       >
-        بله
+        <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
       </button>
     </div>
   </div>
@@ -955,18 +956,19 @@
           <button
             ngbAutofocus
             type="button"
-            class="btn btn-outline-dark btn-rounded mr-1 text-white"
+            class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="modal.close(true)"
           >
-            ویرایش
+            <i class="i-Pen-5 text-bigger mr-2"></i>
+            <strong class="ml-2 text-small">ویرایش</strong>
           </button>
 
           <button
             type="button"
-            class="btn btn-outline-dark btn-rounded text-white"
+            class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center ml-2"
             (click)="modal.dismiss()"
           >
-            انصراف
+            <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
           </button>
         </div>
       </form>

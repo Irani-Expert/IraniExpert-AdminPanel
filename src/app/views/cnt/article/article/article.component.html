@@ -1,11 +1,11 @@
-<button
+<a
   *appCanAccess="'Article-Add'"
   type="button"
-  class="btn btn-primary mb-4"
+  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   [routerLink]="'/cnt/article/addUpdate-article'"
 >
-  ایجاد
-</button>
+  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
+</a>
 
 <div class="separator-breadcrumb border-top"></div>
 
@@ -71,21 +71,20 @@
         <td *ngIf="item.isActive === false">غیر فعال</td>
         <td *ngIf="item.isActive === true">فعال</td>
         <td class="td-oprate">
-          <button
+          <a
             *appCanAccess="'Article-Edit'"
-            class="btn btn-warning"
+            class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
             [routerLink]="'/cnt/article/addUpdate-article/' + item.id"
-            [ngClass]="{ 'd-none': viewMode === 'grid' }"
           >
-            ویرایش
-          </button>
+            <i class="i-Pen-5 text-bigger mr-2"></i>
+            <strong class="ml-2 text-small">ویرایش</strong>
+          </a>
           <button
             *appCanAccess="'Article-Delete'"
-            class="btn btn-danger"
-            [ngClass]="{ 'd-none': viewMode === 'grid' }"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
             (click)="deleteArticle(item.id, deleteConfirmModal)"
           >
-            حذف
+            <i class="i-Close text-bigger mr-2"></i><strong>حذف</strong>
           </button>
         </td>
       </tr>
@@ -137,18 +136,18 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.dismiss('cancel')"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
     </button>
     <button
       type="button"
       ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close('Ok')"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
     </button>
   </div>
 </ng-template>
