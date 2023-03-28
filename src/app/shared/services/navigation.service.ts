@@ -193,18 +193,10 @@ export class NavigationService {
 
     {
       name: 'قرار داد ها',
-      navType: 'dropDown',
+      navType: 'link',
       icon: 'i-File-Horizontal-Text',
       privilege: 'Users-Full Premission',
-      sub: [
-        {
-          icon: 'i-File-Clipboard-File--Text',
-          name: 'لیست قرار دادها',
-          state: '/crt/List',
-          navType: 'link',
-          privilege: 'UserPlane-Full Premission',
-        },
-      ],
+      state: '/crt/List',
     },
     {
       name: 'نظرات من',

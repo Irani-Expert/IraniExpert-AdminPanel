@@ -76,8 +76,9 @@
               id="sellingType"
             >
               <option value="0">IB</option>
-              <option value="1">Invesment</option>
-              <option value="2">License</option>
+              <option value="1">سرمایه گذاری</option>
+              <option value="2">مدیر فروش</option>
+              <option value="3">بازاریاب</option>
             </select>
           </div>
 
@@ -99,8 +100,9 @@
               <ng-persian-datepicker class="position-absolute col-12">
                 <div>
                   <input
+                    (ngModelChange)="changeFromDate($event)"
                     [formControl]="contractList.controls['fromDate']"
-                    [(ngModel)]="contractModel.fromDate"
+                    (ngModelChange)="changeToDate($event)"
                     class="form-control mt-1 rounded Checkout_input p-2"
                     type="text"
                   />
@@ -113,7 +115,7 @@
             <div class="row">
               <ng-persian-datepicker class="position-absolute col-12">
                 <input
-                  [(ngModel)]="contractModel.toDate"
+                  (ngModelChange)="changeToDate($event)"
                   [formControl]="contractList.controls['toDate']"
                   class="form-control mt-1 rounded Checkout_input p-2"
                   type="text"
@@ -130,19 +132,19 @@
                 [placeholder]="'       لیست شروط قرارداد  '"
                 [settings]="dropdownSettings"
                 [data]="dropdownList"
-                [(ngModel)]="selectedItems"
                 (onSelect)="onItemSelect($event)"
                 (onSelectAll)="onSelectAll($event)"
                 (onDeSelect)="onDeSelect($event)"
                 (onDeSelectAll)="onDeSelectAll($event)"
                 class="col-12 mt-1"
               >
+                <!-- [(ngModel)]="selectedItems" -->
               </ng-multiselect-dropdown>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4 form-group mb-3">
+          <!-- <div class="col-md-4 form-group mb-3">
             <strong for="discountPrice" class="mb-3">نقش کاربر</strong>
             <select
               class="form-control mt-1"
@@ -155,8 +157,8 @@
                 {{ item.name }}
               </option>
             </select>
-          </div>
-          <div class="col-md-4 form-group mb-3">
+          </div> -->
+          <!-- <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">کاربر</strong>
             <select
               class="form-control mt-1"
@@ -167,7 +169,7 @@
                 {{ item.firstname }} {{ item.lastName }}
               </option>
             </select>
-          </div>
+          </div> -->
         </div>
       </form>
     </div>
