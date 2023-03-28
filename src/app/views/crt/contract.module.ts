@@ -13,8 +13,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [ContractListComponent, AllCommissionComponent],
-  imports: [CrtRoutingModule, CommonModule,NgPersianDatepickerModule,NgMultiSelectDropDownModule,
-    FormsModule,ReactiveFormsModule,NgbModule,NgxPaginationModule,DragScrollModule]
-    ,
+  imports: [
+    CrtRoutingModule,
+    CommonModule,
+    NgPersianDatepickerModule,
+    NgMultiSelectDropDownModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
+    NgxPaginationModule,
+  ],
 })
 export class ContractModule {}

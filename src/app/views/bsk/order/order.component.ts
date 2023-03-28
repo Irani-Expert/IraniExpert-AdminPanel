@@ -36,6 +36,14 @@ import { PlanModel } from '../../bas/plan/plan.model';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  statusTitles = [
+    { title: 'نهایی', id: 8 },
+    { title: 'درانتظار پرداخت', id: 1 },
+    { title: 'درانتظار تائید', id: 6 },
+    { title: 'تائید شده', id: 2 },
+    { title: 'رد شده', id: 5 },
+  ];
+  dropDownTitleHolder: string = 'نهایی';
   FExpDate: any;
   TExpDate: any;
   FCrtDate: any;
@@ -164,6 +172,8 @@ export class OrderComponent implements OnInit {
     }
   }
   getOrders(status: any, pageNumber: number, filter: FilterModel) {
+    let finder = this.statusTitles.findIndex((item) => item.id == status);
+    this.dropDownTitleHolder = this.statusTitles[finder].title;
     this.status = status;
     this._orderService
       .getOrders(

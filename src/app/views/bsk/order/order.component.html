@@ -5,8 +5,27 @@
   (click)="clearNote()"
   (click)="updateNotebar()"
 ></div>
-
-<div class="row g-0 p-0 m-0">
+<div ngbDropdown placement="bottom-end" class="d-inline-block mb-3">
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    id="dropdownBasic1"
+    ngbDropdownToggle
+  >
+    سفارشات {{ dropDownTitleHolder }}
+  </button>
+  <div ngbDropdownMenu class="mt-1" aria-labelledby="dropdownBasic1">
+    <button
+      class="text-left"
+      ngbDropdownItem
+      *ngFor="let item of statusTitles"
+      (click)="getOrders(item.id, 0, filter)"
+    >
+      <strong>{{ item.title }}</strong>
+    </button>
+  </div>
+</div>
+<!-- <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
     <div class="col-auto mb-2">
       <button
@@ -45,17 +64,13 @@
         رد شده
       </button>
     </div>
-    <div class="filter-buttom mb-2">
-      <button
-        class="btn bg-dark text-white"
-        (click)="openFilterModal(filterModal)"
-      >
-        فیلتر کردن
-      </button>
-    </div>
+  
   </div>
-</div>
+</div> -->
 
+<button class="btn bg-dark text-white" (click)="openFilterModal(filterModal)">
+  فیلتر کردن
+</button>
 <section class="main-table">
   <table class="table">
     <thead class="bg-dark text-white">
@@ -484,9 +499,7 @@
         />
       </div>
       <ng-container *ngIf="!licenseModel.fileExists">
-        <strong  class="text-danger col-12"
-          >فایل ارسالی باید zip باشد</strong
-        >
+        <strong class="text-danger col-12">فایل ارسالی باید zip باشد</strong>
         <div class="col-12 mt-2 mb-2">
           <button
             class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"

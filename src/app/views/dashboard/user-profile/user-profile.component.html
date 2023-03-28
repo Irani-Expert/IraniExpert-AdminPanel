@@ -10,7 +10,7 @@
       <label for="firstName">نام</label>
       <input
         type="text"
-        class="form-control form-control-rounded"
+        class="form-control radius"
         id="firstName"
         placeholder="نام را وارد کنید "
         [formControl]="addForm.controls['firstName']"
@@ -35,7 +35,7 @@
       <label for="lastName">نام خانوادگی</label>
       <input
         type="text"
-        class="form-control form-control-rounded"
+        class="form-control radius"
         id="lastName"
         placeholder="نام خانوادگی را وارد کنید "
         [formControl]="addForm.controls['lastName']"
@@ -59,7 +59,7 @@
       <label for="username">نام کاربری</label>
       <input
         type="text"
-        class="form-control form-control-rounded"
+        class="form-control radius"
         id="username"
         placeholder="نام کاربری مورد نظر را وارد کنید "
         [formControl]="addForm.controls['username']"
@@ -83,7 +83,7 @@
       <label for="email">ایمیل</label>
       <input
         type="email"
-        class="form-control form-control-rounded"
+        class="form-control radius"
         id="email"
         placeholder="ایمیل را وارد کنید "
         [formControl]="addForm.controls['email']"
@@ -107,7 +107,7 @@
       <label for="phoneNumber">شماره تماس</label>
       <input
         type="phoneNumber"
-        class="form-control form-control-rounded"
+        class="form-control radius"
         id="phoneNumber"
         placeholder="شماره تماس مورد نظر را وارد کنید "
         [formControl]="addForm.controls['phoneNumber']"
@@ -187,7 +187,7 @@
           <input
             name="oldPassword"
             id="oldPassword"
-            class="form-control form-control-rounded"
+            class="form-control"
             [(ngModel)]="password.oldPassword"
             [formControl]="passwordForm.controls['oldPassword']"
             type="password"
@@ -199,7 +199,7 @@
             type="password"
             name="password"
             id="password"
-            class="form-control form-control-rounded"
+            class="form-control"
             [(ngModel)]="password.password"
             [formControl]="passwordForm.controls['password']"
           />
