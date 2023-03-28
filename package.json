@@ -49,6 +49,7 @@
     "ngx-chips": "3.0.0",
     "ngx-color-picker": "12.0.1",
     "ngx-custom-validators": "11.0.1",
+    "ngx-drag-scroll": "^15.0.0",
     "ngx-echarts": "14.0.0",
     "ngx-img-cropper": "14.0.0",
     "ngx-mat-select-search": "^4.2.1",
