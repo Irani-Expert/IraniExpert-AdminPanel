@@ -1,10 +1,10 @@
 <button
   *appCanAccess="'Banner-Add'"
   type="button"
-  class="btn btn-create btn-primary mb-4"
+  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   (click)="addorEdit(addUpdateModal, undefined)"
 >
-  ایجاد
+  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
 </button>
 
 <div class="separator-breadcrumb border-top"></div>
@@ -54,17 +54,19 @@
         <td class="td-oprate">
           <button
             *appCanAccess="'Banner-Edit'"
-            class="btn btn-warning"
+            class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
             (click)="addorEdit(addUpdateModal, item)"
           >
-            ویرایش
+            <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
           </button>
+
           <button
-            class="btn btn-danger"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
             *appCanAccess="'Banner-Delete'"
             (click)="deleteModal(item, 0, deleteConfirmModal)"
           >
-            حذف
+            <i class="i-Close text-bigger mr-2"></i>
+            <strong>حذف</strong>
           </button>
         </td>
       </tr>
@@ -110,18 +112,18 @@
     <div class="modal-footer">
       <button
         type="button"
-        class="btn btn-outline-secondary btn-rounded mr-1"
+        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
         (click)="modal.dismiss()"
       >
-        خیر
+        <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
       </button>
       <button
         type="button"
         ngbAutofocus
-        class="btn btn-wide btn-danger btn-rounded"
+        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
         (click)="modal.close(true)"
       >
-        بله
+        <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
       </button>
     </div>
   </div>
@@ -316,10 +318,10 @@
               </div>
               <div class="col-md-6 col-5">
                 <button
-                  class="btn-danger btn border-dark border-1 shadow"
+                  class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
                   (click)="deleteModal(addUpdate, 1, deleteConfirmModal)"
                 >
-                  حذف
+                  <i class="i-Close text-bigger mr-2"></i><strong>حذف</strong>
                 </button>
               </div>
             </ng-container>
@@ -346,11 +348,12 @@
               </div>
               <div class="col-12 mt-2">
                 <button
-                  class="btn btn-primary col-2"
+                  class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
                   [disabled]="!cropImagePreview"
                   (click)="uploadFile()"
                 >
-                  آپلود
+                  <i class="i-Upload text-dark text-bigger mr-3"></i>
+                  <strong>آپلود</strong>
                 </button>
               </div>
               <small
@@ -410,23 +413,23 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id !== 0"
     >
       <!-- [disabled]="!addForm.valid"
     [disabled]="!addForm.valid" -->
-
-      ویرایش
+      <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id === 0"
       [disabled]="!addForm.valid"
     >
-      ایجاد
+      <i class="i-Add text-bigger mr-2"></i>
+      <strong>ایجاد</strong>
     </button>
   </div>
 </ng-template>

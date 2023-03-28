@@ -33,10 +33,10 @@
             </div>
             <div class="col-md-6 col-5">
               <button
-                class="btn-danger btn border-dark border-1 shadow"
+                class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
                 (click)="deleteImg(addUpdate.cardImagePath)"
               >
-                حذف
+                <i class="i-Close text-bigger mr-2"></i><strong>حذف</strong>
               </button>
             </div>
           </ng-container>
@@ -124,16 +124,16 @@
               <button
                 type="button"
                 [disabled]="!cropImagePreview"
-                class="btn btn-rounded btn-outline-dark"
+                class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
                 (click)="uploadFile()"
               >
-                آپلود کن
+                <i class="i-Upload text-bigger mr-2"></i>
+                <strong>آپلود کن</strong>
               </button>
             </div>
           </ng-container>
           <div class="col-md-12 form-group mb-3 mt-3">
             <ckeditor
-           
               [formControl]="addForm.controls['description']"
               [(ngModel)]="addUpdate.description"
               name="myckeditor"
@@ -171,28 +171,28 @@
           <!-- *appCanAccess="'punisher' || 'hoas'" -->
           <button
             type="button"
-            class="btn btn-outline-dark btn-rounded col-auto m-1"
+            class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
             *ngIf="addUpdate.id !== 0"
             [disabled]="!addForm.valid"
             (click)="addOrUpdate(addUpdate)"
           >
-            ویرایش
+            <i class="i-Pen-5 text-bigger mr-2"></i>
+            <strong class="ml-2 text-small">ویرایش</strong>
           </button>
           <button
             type="button"
-            class="btn btn-outline-dark btn-rounded col-auto m-1"
+            class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
             *ngIf="addUpdate.id === 0"
             (click)="addOrUpdate(addUpdate)"
           >
-            ذخیره
+            <i class="i-Yes text-bigger mr-2"></i><strong>ذخیره</strong>
           </button>
-          <button
+          <a
             type="button"
-            class="btn btn-outline-dark btn-rounded col-auto m-1"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
             [routerLink]="'/cnt/article'"
+            ><i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong></a
           >
-            انصراف
-          </button>
         </div>
       </form>
     </ng-template>

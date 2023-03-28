@@ -1,32 +1,27 @@
 <button
-*appCanAccess="'Roles-Add'"
+  *appCanAccess="'Roles-Add'"
   type="button"
-  class="btn btn-primary mb-4"
+  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   (click)="roleNameEdit(addUpdateModal, undefined)"
 >
-  ایجاد
+  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
 </button>
+
 <div class="separator-breadcrumb border-top"></div>
 <div class="row justify-content-lg-start justify-content-center">
-  <div
-    class="col-lg-3 col-md-6 col-sm-8 col-12"
-    *ngFor="
-      let item of roles
-    "
-  >
+  <div class="col-lg-3 col-md-6 col-sm-8 col-12" *ngFor="let item of roles">
     <div class="card bg-dark">
-      <div class="flex-row  d-flex card-header text-center m-0 p-0">
+      <div class="flex-row d-flex card-header text-center m-0 p-0">
         <div class="col-2 d-flex justify-content-center align-items-center">
           <button
-          class=" btn btn-primary m-1 pt-2"
-          (click)="roleNameEdit(addUpdateModal, item)"
-        >
-       <i class="text-white i-Pen-5 h-5 nav-icon"></i>
-      </button>
+            class="btn btn-primary m-1 pt-2"
+            (click)="roleNameEdit(addUpdateModal, item)"
+          >
+            <i class="text-white i-Pen-5 h-5 nav-icon"></i>
+          </button>
         </div>
-        
+
         <p class="text-white col-9 align-self-center mt-2">نقش</p>
-  
       </div>
       <div class="card-body radius-card bg-secondary text-center">
         <div class="w-100 text-white mb-3">
@@ -40,8 +35,8 @@
             class="col-5 btn btn-warning"
             (click)="roleEdit(addOrDeletePermision, item.id)"
           >
-          دسترسی ها
-        </button>
+            دسترسی ها
+          </button>
           <!-- <button
             class="col-5 btn btn-danger"
             (click)="deleteRole(item.id, deleteModal)"
@@ -52,63 +47,74 @@
       </div>
     </div>
   </div>
-
-
 </div>
 <ng-template #addOrDeletePermision let-modal>
   <div class="modal-header">
-   
-    <h4 class="modal-title"  >
-      ویرایش
-    </h4>
+    <h4 class="modal-title">ویرایش</h4>
     <button
       type="button"
       class="close"
       aria-label="Close button"
       aria-describedby="modal-basic-title"
       (click)="modal.dismiss()"
-   
     >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body scrollbarModel">
-    <ng-container >
-    
-     <div class="p-2 pt-0 pb-0">
-    <div *ngFor="let item of privilages">
-   <div class="row p-3 m-0">
-    <label class="form-check-label h6" for="flexCheckDefault">
-      <input class="form-check-input" type="checkbox" value=""  [checked]="item.selected" (change)="item.selected=!item.selected;AddOrRemovepermision(item.selected,item)">
-      {{item.title}}      
-  </label> 
+    <ng-container>
+      <div class="p-2 pt-0 pb-0">
+        <div *ngFor="let item of privilages">
+          <div class="row p-3 m-0">
+            <label class="form-check-label h6" for="flexCheckDefault">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                [checked]="item.selected"
+                (change)="
+                  item.selected = !item.selected;
+                  AddOrRemovepermision(item.selected, item)
+                "
+              />
+              {{ item.title }}
+            </label>
 
-  <!-- <i  id="userDropdown"  class="dropdown-toggle" style="font-size: 30px; color: #000000; " (click)="ShowBuyyon(item)"></i> -->
-   </div>
-   <div class="pr-5" > 
-      <div class=" col-auto " *ngFor="let x of item.child" >
-        <input class="form-check-input " type="checkbox" value=""  [checked]="x.selected" (change)="x.selected=!x.selected;AddOrRemovepermision(x.selected,x)">{{x.title}}  <br>
+            <!-- <i  id="userDropdown"  class="dropdown-toggle" style="font-size: 30px; color: #000000; " (click)="ShowBuyyon(item)"></i> -->
+          </div>
+          <div class="pr-5">
+            <div class="col-auto" *ngFor="let x of item.child">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                [checked]="x.selected"
+                (change)="
+                  x.selected = !x.selected; AddOrRemovepermision(x.selected, x)
+                "
+              />{{ x.title }} <br />
+            </div>
+          </div>
+          <hr class="p-0 dotted mb-0 mt-0" />
+        </div>
       </div>
-  </div>
-    <hr class="p-0 dotted mb-0 mt-0"/>
-  </div>
-</div>
     </ng-container>
-   
   </div>
   <div class="modal-footer">
- <button
- type="button"
- class="btn btn-outline-dark btn-rounded"
- (click)="NewPrivilageList();modal.close('Ok')">
- تایید</button>
- 
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
-     (click)="modal.close('Ok')"
-      >
-      انصراف
+      class="btn-save btn d-flex justify-content-around py-btns radius align-items-center"
+      (click)="NewPrivilageList(); modal.close('Ok')"
+    >
+      <i class="i-Yes text-bigger mr-2"></i><strong>تایید</strong>
+    </button>
+
+    <button
+      type="button"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
+      (click)="modal.close('Ok')"
+    >
+      <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
     </button>
   </div>
 </ng-template>
@@ -132,7 +138,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <form action=""  (ngSubmit)="submit()">
+    <form action="" (ngSubmit)="submit()">
       <label for="name">نقش</label>
       <input
         name="name"
@@ -145,26 +151,27 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-warning btn-rounded mr-1"
+      class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.close(true)"
       *ngIf="UpdateRole.id !== 0"
     >
-      ویرایش
+      <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-primary btn-rounded mr-1"
+      class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.close(true)"
       *ngIf="UpdateRole.id === 0"
     >
-      ایجاد
+      <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.close(false)"
     >
-      انصراف
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>انصراف</strong>
     </button>
   </div>
 </ng-template>
@@ -201,26 +208,27 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-warning btn-rounded mr-1"
+      class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id !== 0"
     >
-      ویرایش
+      <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-primary btn-rounded mr-1"
+      class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id === 0"
     >
-      ایجاد
+      <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.close(false)"
     >
-      انصراف
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>انصراف</strong>
     </button>
   </div>
 </ng-template>

@@ -2,10 +2,10 @@
   *appCanAccess="'Group-Add'"
   _ngcontent-tco-c175=""
   type="button"
-  class="btn btn-primary mb-4"
+  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   (click)="addorEdit(addUpdateModal, undefined)"
 >
-  ایجاد
+  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
 </button>
 
 <div class="separator-breadcrumb border-top"></div>
@@ -50,17 +50,18 @@
         <td class="td-oprate">
           <button
             *appCanAccess="'Group-Edit'"
-            class="btn btn-warning"
+            class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="addorEdit(addUpdateModal, item)"
           >
-            ویرایش
+            <i class="i-Pen-5 text-bigger mr-2"></i>
+            <strong class="ml-2 text-small">ویرایش</strong>
           </button>
           <button
             *appCanAccess="'Group-Delete'"
-            class="btn btn-danger"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
             (click)="deleteGroup(item, deleteConfirmModal)"
           >
-            حذف
+            <i class="i-Close text-bigger mr-2"></i><strong>حذف</strong>
           </button>
         </td>
       </tr>
@@ -104,18 +105,18 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.dismiss()"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
     </button>
     <button
       type="button"
       ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close('Ok')"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
     </button>
   </div>
 </ng-template>
@@ -223,21 +224,21 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id !== 0"
       [disabled]="!addForm.valid"
     >
-      ذخیره
+      <i class="i-Yes text-bigger mr-2"></i><strong>ذخیره</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id === 0"
       [disabled]="!addForm.valid"
     >
-      ایجاد
+      <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
     </button>
   </div>
 </ng-template>
