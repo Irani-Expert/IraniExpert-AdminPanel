@@ -768,6 +768,7 @@ export class OrderComponent implements OnInit {
           }
           this.getOrders(this.status, this.page.pageNumber, this.filterModel);
           this.filter = this.filterModel;
+          this.filterModel = new FilterModel();
         },
         (reason) => {
           this.filterModel = new FilterModel();
