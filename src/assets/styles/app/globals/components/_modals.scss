@@ -1,5 +1,11 @@
-.modal-dialog{
-    animation-name: zoomIn;
-    animation-duration: 0.3s;
-    animation-timing-function: ease-in-out;
+.modal-dialog {
+  animation-name: zoomIn;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+}
+.modal-open {
+  padding-right: 0 !important;
+}
+.modal-content {
+  border-radius: 6px !important;
 }

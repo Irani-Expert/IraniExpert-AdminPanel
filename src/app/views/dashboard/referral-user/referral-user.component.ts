@@ -32,7 +32,7 @@ export class ReferralUserComponent implements OnInit {
   getUser() {
     this._userService.getUserByToken().subscribe(
       (res: Result<UserInforamationModel>) => {
-        this.refralcode = res.data.id.toString();
+        this.refralcode = res.data.userID.toString();
         this.subUsers();
       },
       (_error) => {

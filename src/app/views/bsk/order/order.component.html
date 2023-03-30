@@ -5,18 +5,22 @@
   (click)="clearNote()"
   (click)="updateNotebar()"
 ></div>
-<div ngbDropdown placement="bottom-end" class="d-inline-block mb-3">
+<div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-3">
   <button
     type="button"
-    class="btn btn-outline-primary"
+    class="btn btn-details radius py-btns"
     id="dropdownBasic1"
     ngbDropdownToggle
   >
     سفارشات {{ dropDownTitleHolder }}
   </button>
-  <div ngbDropdownMenu class="mt-1" aria-labelledby="dropdownBasic1">
+  <div
+    ngbDropdownMenu
+    class="mt-1 shadow-lg radius"
+    aria-labelledby="dropdownBasic1"
+  >
     <button
-      class="text-left"
+      class="text-left btn"
       ngbDropdownItem
       *ngFor="let item of statusTitles"
       (click)="getOrders(item.id, 0, filter)"
@@ -68,9 +72,12 @@
   </div>
 </div> -->
 
-<button class="btn bg-dark text-white" (click)="openFilterModal(filterModal)">
-  فیلتر کردن
-</button>
+<a
+  (click)="openFilterModal(filterModal)"
+  class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
+  ><i class="i-Filter-2 text-dark text-bigger mr-2"></i>
+  <strong class="text-dark ml-2"> فیلتر کردن</strong></a
+>
 <section class="main-table">
   <table class="table">
     <thead class="bg-dark text-white">
@@ -100,7 +107,7 @@
       <tr
         class="p-3 shadow-sm border-bottom border-3"
         *ngFor="
-          let item of rows.slice().reverse()
+          let item of rows
             | paginate
               : {
                   itemsPerPage: page.size,
@@ -379,7 +386,9 @@
               class="form-control mt-1"
               id="totalPrice"
               rows="1"
-              value="{{ orderDetail.plan }}| {{ orderDetail.product }}"
+              value="{{ orderDetail.planTitle }}| {{
+                orderDetail.productTitle
+              }}"
               disabled
             />
           </div>
@@ -909,7 +918,10 @@
                 </option>
               </select>
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3">
+            <div
+              class="col-md-4 form-group mb-3 mt-3"
+              *ngIf="this.plans.length !== 0"
+            >
               <label class="text-white">پلن محصول</label>
               <select
                 formControlName="planID"

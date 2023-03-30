@@ -51,23 +51,21 @@ export class UserProfileComponent implements OnInit {
       });
   }
   async updateUser() {
-    await this._userService
-      .updateUser(this.addUpdate.id, this.addUpdate)
-      .subscribe(
-        (data) => {
-          if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
+    this._userService
+      .updateUser(this.addUpdate.userID, this.addUpdate)
+      .subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
         }
-      );
+      });
     this.getUser();
   }
   openPasswordModal(content: any) {
@@ -92,23 +90,19 @@ export class UserProfileComponent implements OnInit {
       );
   }
   async passwordChange(password: UpdatePasswordModel) {
-    password.id = this.addUpdate.id;
-    await this._userService
-      .changePassword(this.password)
-      .subscribe(
-        (data) => {
-          if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        }
-      );
+    password.id = this.addUpdate.userID;
+    this._userService.changePassword(this.password).subscribe((data) => {
+      if (data.success) {
+        this.toastr.success(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      } else {
+        this.toastr.error(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    });
   }
 }

@@ -53,10 +53,11 @@ export class allcommissionService extends BaseService<ConditionModel, number> {
     return this._http.get<Result<Paginate<ReceiptModel[]>>>(
       this._base +
         '/Receipt?' +
+        'pageIndex=' +
         pageIndex +
-        '=0&' +
+        '&pageSize=' +
         pageSize +
-        '=100&ContractID=' +
+        '&ContractID=' +
         ContractID,
       _options
     );

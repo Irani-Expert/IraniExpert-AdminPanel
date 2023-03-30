@@ -1,4 +1,17 @@
-<div *ngIf="ChangeBackdrop " style="z-index: 2000; position:fixed;top:0;width:200vw; left: 0;margin-top:-9px;height:1000px;background-color: rgba(10, 9, 9, 0.663);opacity:.5"></div>
+<div
+  *ngIf="ChangeBackdrop"
+  style="
+    z-index: 2000;
+    position: fixed;
+    top: 0;
+    width: 200vw;
+    left: 0;
+    margin-top: -9px;
+    height: 1000px;
+    background-color: rgba(10, 9, 9, 0.663);
+    opacity: 0.5;
+  "
+></div>
 
 <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
@@ -8,13 +21,10 @@
       </button>
     </div>
     <div class="col-auto mb-2">
-      <button class="btn bg-dark text-white " (click)="getAllCommission(2)">
+      <button class="btn bg-dark text-white" (click)="getAllCommission(2)">
         مدیر فروش
       </button>
     </div>
-
-
-
   </div>
 </div>
 
@@ -35,7 +45,9 @@
         <td>{{ item.firstName }}</td>
         <td>{{ item.lastName }}</td>
         <td class="money-color">{{ item.commission | number : "1.2-2" }}</td>
-        <td class="text-danger">{{ item.remainCommission | number : "1.2-2" }}</td>
+        <td class="text-danger">
+          {{ item.remainCommission | number : "1.2-2" }}
+        </td>
 
         <td class="td-oprate">
           <button
@@ -50,9 +62,8 @@
     </tbody>
   </table>
 </section>
-<ng-template #addReceiptModal let-modal >
-    <div class="w-100 h-100
-    " >
+<ng-template #addReceiptModal let-modal>
+  <div class="w-100 h-100">
     <!-- <ngb-modal-backdrop *ngIf="ChangeBackdrop "st  class=" modal-backdrop fade  hidden-back show"></ngb-modal-backdrop> -->
     <div class="modal-header">
       <h4 class="modal-title" id="modal-title">رسید</h4>
@@ -69,16 +80,19 @@
     <div class="modal-body">
       <button
         (click)="openModal(openDetails, 'sm')"
-        class="btn btn-success text-white m-2 p-0 shadow-md" 
+        class="btn btn-success text-white m-2 p-0 shadow-md"
         type="button"
       >
-      <a class="btn p-1  " ><i class="i-Dollar-Sign-2 btn-blue-right-section  m-0  p-1 d-grid text-white"></i></a>
-      <a class="btn  p-1 text-white " >افزودن رسید</a>
+        <a class="btn p-1"
+          ><i
+            class="i-Dollar-Sign-2 btn-blue-right-section m-0 p-1 d-grid text-white"
+          ></i
+        ></a>
+        <a class="btn p-1 text-white">افزودن رسید</a>
       </button>
-    
-  
+
       <table class="shadow table-responsive">
-        <thead class="bg-dark table-header text-white thead-responsive" >
+        <thead class="bg-dark table-header text-white thead-responsive">
           <tr>
             <th>تاریخ</th>
             <th>هزینه</th>
@@ -87,9 +101,70 @@
             <th>توضیحات</th>
           </tr>
         </thead>
-         <drag-scroll class="d-none-tbody" > 
-        <tbody class="table-body drag-scroll-item ">
-          <tr class="tr-modal"
+        <drag-scroll class="d-none-tbody">
+          <tbody class="table-body drag-scroll-item">
+            <tr
+              class="tr-modal"
+              *ngFor="
+                let item of Receipt
+                  | paginate
+                    : {
+                        itemsPerPage: page.size,
+                        page: page.pageNumber - 1,
+                        currentPage: page.pageNumber - 1,
+                        totalItems: page.totalElements
+                      }
+              "
+            >
+              <td>{{ item.paymentDate }} <i class="i-Clock"></i></td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.paymentStep }}</td>
+              <td class="td-modal">
+                <ng-template #tipContent
+                  ><div class="tooltip-size">
+                    {{ item.serialNumber }}
+                  </div></ng-template
+                >
+
+                <div
+                  class="card shadow"
+                  animation="true"
+                  tooltipClass="my-custom-class"
+                  [openDelay]="200"
+                  [closeDelay]="500"
+                  placement="bottom"
+                  [ngbTooltip]="tipContent"
+                >
+                  <div
+                    class="card-body bg-warning text-white c-poiter"
+                    (click)="copyText(item.serialNumber)"
+                  >
+                    {{ item.serialNumber }}
+                  </div>
+                </div>
+              </td>
+              <td class="pt-2">
+                <button
+                  (click)="descriptionfunc(descriptionModal, item.description)"
+                  class="mt-2 h-75 col-5 btn btn-info text-white rounded-circle shadow"
+                  type="button"
+                >
+                  <i
+                    class="i-Pen-5"
+                    style="
+                      font-size: 1.2rem;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                    "
+                  ></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </drag-scroll>
+        <tbody class="d-none-tbody-responsive">
+          <tr
             *ngFor="
               let item of Receipt
                 | paginate
@@ -105,73 +180,56 @@
             <td>{{ item.price }}</td>
             <td>{{ item.paymentStep }}</td>
             <td class="td-modal">
-              <ng-template #tipContent><div class="tooltip-size">{{ item.serialNumber }}</div></ng-template>
-              
-              <div class="card shadow  "  animation="true" tooltipClass="my-custom-class" [openDelay]="200"
-              [closeDelay]="500" placement="bottom" [ngbTooltip]="tipContent" >
-                <div class="card-body bg-warning text-white c-poiter" (click)="copyText(item.serialNumber);">
+              <ng-template #tipContent
+                ><div class="tooltip-size">
+                  {{ item.serialNumber }}
+                </div></ng-template
+              >
+
+              <div
+                class="card shadow"
+                animation="true"
+                tooltipClass="my-custom-class"
+                [openDelay]="200"
+                [closeDelay]="500"
+                placement="bottom"
+                [ngbTooltip]="tipContent"
+              >
+                <div
+                  class="card-body bg-warning text-white c-poiter"
+                  (click)="copyText(item.serialNumber)"
+                >
                   {{ item.serialNumber }}
                 </div>
               </div>
             </td>
             <td class="pt-2">
               <button
-                (click)="descriptionfunc(description, item.description)"
+                (click)="descriptionfunc(descriptionModal, item.description)"
                 class="mt-2 h-75 col-5 btn btn-info text-white rounded-circle shadow"
                 type="button"
               >
-              <i class="i-Pen-5" style="font-size: 1.2rem;     display: flex;
-              justify-content: center;
-              align-items: center;"></i>
+                <i
+                  class="i-Pen-5"
+                  style="
+                    font-size: 1.2rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                ></i>
               </button>
             </td>
           </tr>
         </tbody>
-      </drag-scroll> 
-      <tbody  class="d-none-tbody-responsive">
-        <tr 
-          *ngFor="
-            let item of Receipt
-              | paginate
-                : {
-                    itemsPerPage: page.size,
-                    page: page.pageNumber - 1,
-                    currentPage: page.pageNumber - 1,
-                    totalItems: page.totalElements
-                  }
-          "
-        >
-          <td>{{ item.paymentDate }} <i class="i-Clock"></i></td>
-          <td>{{ item.price }}</td>
-          <td>{{ item.paymentStep }}</td>
-          <td class="td-modal">
-            <ng-template #tipContent><div class="tooltip-size">{{ item.serialNumber }}</div></ng-template>
-            
-            <div class="card shadow  "  animation="true" tooltipClass="my-custom-class" [openDelay]="200"
-            [closeDelay]="500" placement="bottom" [ngbTooltip]="tipContent" >
-              <div class="card-body bg-warning text-white c-poiter" (click)="copyText(item.serialNumber);">
-                {{ item.serialNumber }}
-              </div>
-            </div>
-          </td>
-          <td class="pt-2">
-            <button
-              (click)="descriptionfunc(description, item.description)"
-              class="mt-2 h-75 col-5 btn btn-info text-white rounded-circle shadow"
-              type="button"
-            >
-            <i class="i-Pen-5" style="font-size: 1.2rem;     display: flex;
-            justify-content: center;
-            align-items: center;"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
       </table>
     </div>
-  
+
     <div class="modal-footer">
-      <div class="col-md-12 mt-3" *ngIf="Receipt?.length ==30 || page.pageNumber!=1 ">
+      <div
+        class="col-md-12 mt-3"
+        *ngIf="Receipt?.length == 30 || page.pageNumber != 1"
+      >
         <pagination-controls
           (pageChange)="setPage($event)"
           previousLabel=""
@@ -180,7 +238,6 @@
       </div>
     </div>
   </div>
-
 </ng-template>
 <ng-template #openDetails let-modal>
   <div class="p-3 bg-pr">
@@ -188,8 +245,7 @@
       <button
         type="button"
         class="close text-white w-100"
-        style="
-        text-align: end;"
+        style="text-align: end"
         aria-label="Close button"
         aria-describedby="modal-title"
         (click)="modal.close()"
@@ -199,7 +255,7 @@
     </div>
     <div class="d-flex flex-column justify-content-center w-100 h-100">
       <div>
-    <!-- <div style=" justify-content: end; display: flex;">
+        <!-- <div style=" justify-content: end; display: flex;">
       <div class=" col-4 p-3" style=" display: flex;
       align-items: center;
       justify-content: center;">
@@ -214,61 +270,54 @@ font-weight: bold;"></i>
       </div>
     </div>
 </div> -->
-  
-     
-    <div class="w-100 p-2"> 
-      <form [formGroup]="addRedeiptForm" class="row" >
-      <div class="col-12 form-group  m-0 p-1">
-        <strong class="text-white">میزان پرداخت</strong>
-        <input
-          class="form-control"
-          id="totalPrice"
-          [(ngModel)]="price"
-          [formControl]="addRedeiptForm.controls['price']"
-        />
-      </div>
-      <div class="col-12 form-group  m-0 p-1" dir="ltr">
-        <strong for="expireDate" class="mb-3 text-white">تاریخ</strong>
-  
-        <input
-          (click)="e.toggle()"
-          type="text"
-          class="form-control"
-          ngbDatepicker
-          #e="ngbDatepicker"
-          [(ngModel)]="addDate"
-          [formControl]="addRedeiptForm.controls['paymentDate']"
-        />
-      </div>
-  </form>
- 
-  </div>
-  <div class=" form-group mt-2 " dir="ltr">
-    <strong for="expireDate" class="mb-3 text-white">توضیحات</strong>
-    <textarea
-      name=""
-      cols="30"
-      rows="4"
-      type="text"
-      class="form-control"
-      id="description"
-      [(ngModel)]="addReceiptModel.description"
-      [formControl]="addRedeiptForm.controls['description']"
-      maxlength="500"
-    >
-    </textarea>
-  </div>
 
-  </div>
+        <div class="w-100 p-2">
+          <form [formGroup]="addRedeiptForm" class="row">
+            <div class="col-12 form-group m-0 p-1">
+              <strong class="text-white">میزان پرداخت</strong>
+              <input
+                class="form-control"
+                id="totalPrice"
+                [(ngModel)]="price"
+                [formControl]="addRedeiptForm.controls['price']"
+              />
+            </div>
+            <div class="col-12 form-group m-0 p-1" dir="ltr">
+              <strong for="expireDate" class="mb-3 text-white">تاریخ</strong>
+
+              <input
+                (click)="e.toggle()"
+                type="text"
+                class="form-control"
+                ngbDatepicker
+                #e="ngbDatepicker"
+                [(ngModel)]="addDate"
+                [formControl]="addRedeiptForm.controls['paymentDate']"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="form-group mt-2" dir="ltr">
+          <strong for="expireDate" class="mb-3 text-white">توضیحات</strong>
+          <textarea
+            name=""
+            cols="30"
+            rows="4"
+            type="text"
+            class="form-control"
+            id="description"
+            [(ngModel)]="addReceiptModel.description"
+            [formControl]="addRedeiptForm.controls['description']"
+            maxlength="500"
+          >
+          </textarea>
+        </div>
+      </div>
     </div>
-  
   </div>
-
- 
 </ng-template>
 
-<ng-template #description let-modal>
-
+<ng-template #descriptionModal let-modal>
   <!-- <div class="notepad" >
     <div class="top"></div>
     <div class="paper p-2 text-white" contenteditable="true" style="background-color: #47404f;">
@@ -277,12 +326,9 @@ font-weight: bold;"></i>
     </p>
     </div>
   </div> -->
-  <div  class="p-2 text-white"  style="background-color: #47404f;">
-    <p class=" m-4" *ngIf="descriptionText!=null">
-    {{descriptionText}}
+  <div class="p-2 text-white" style="background-color: #47404f">
+    <p class="m-4">
+      {{ this.descriptionText }}
     </p>
-
-  
   </div>
-
 </ng-template>

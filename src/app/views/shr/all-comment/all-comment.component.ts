@@ -17,6 +17,13 @@ import { CommentService } from 'src/app/views/shr/all-comment/comment.service';
   styleUrls: ['./all-comment.component.scss'],
 })
 export class AllCommentComponent implements OnInit {
+  tableTypeTitles = [
+    { title: 'مقالات', id: 1 },
+    { title: 'محصولات', id: 6 },
+    { title: 'سفارشات', id: 8 },
+    { title: 'درخواست مشتریان', id: 10 },
+  ];
+  dropDownTitleHolder: string = 'مقالات';
   ExpDate: any;
   CrtDate: any;
 
@@ -40,7 +47,7 @@ export class AllCommentComponent implements OnInit {
   }
   setRate(contnt: any) {}
   ngOnInit(): void {
-    this.setPage(this.page.pageNumber, 8);
+    this.setPage(this.page.pageNumber, 1);
     this.filterForm = this._formBuilder.group({
       userID: [null, Validators.compose([Validators.required])],
       ID: [null, Validators.compose([Validators.required])],
@@ -62,6 +69,9 @@ export class AllCommentComponent implements OnInit {
     tableType: number,
     filter: FilterModel
   ) {
+    this.tableType = tableType;
+    let finder = this.tableTypeTitles.findIndex((item) => item.id == tableType);
+    this.dropDownTitleHolder = this.tableTypeTitles[finder].title;
     this._commentService
       .GetAllComment(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
@@ -212,10 +222,10 @@ export class AllCommentComponent implements OnInit {
           }
           debugger;
           this.getCommentList(0, 10, this.filterModel);
-          this.filterModel = new FilterModel();
+          this.filter = new FilterModel();
         },
         (reason) => {
-          this.filterModel = new FilterModel();
+          this.filter = new FilterModel();
         }
       );
   }

@@ -111,7 +111,6 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.plans;
     this._orderService.getProduct().subscribe((res: Result<ProductModel[]>) => {
       this.productModel = res.data;
     });
@@ -745,13 +744,15 @@ export class OrderComponent implements OnInit {
     if ($event != undefined) {
       this.filterModel.productID = parseInt($event);
     }
-    this._planService
-      .getPlanByProductId(this.filterModel.productID)
-      .subscribe((res) => {
-        if (res.success == true) {
-          this.plans = res.data;
-        }
-      });
+    if (this.filterModel.productID !== undefined) {
+      this._planService
+        .getPlanByProductId(this.filterModel.productID)
+        .subscribe((res) => {
+          if (res.success == true) {
+            this.plans = res.data;
+          }
+        });
+    }
   }
   selectProductPlan($event: any) {
     if ($event != undefined) {
