@@ -21,12 +21,16 @@ import { UserNeedModel } from './user-need.model';
 import { UserNeedService } from './user-need.service';
 import * as moment from 'jalali-moment';
 import { CommentService } from '../all-comment/comment.service';
+import { FilterModel } from 'src/app/shared/models/Base/filter.model';
+
 @Component({
   selector: 'app-user-need',
   templateUrl: './user-need.component.html',
   styleUrls: ['./user-need.component.scss'],
 })
 export class UserNeedComponent implements OnInit {
+  filterModel: FilterModel = new FilterModel();
+
   note: CommentModel = new CommentModel();
   notes: CommentModel[] = new Array<CommentModel>();
   noteRowID: number;
@@ -45,7 +49,7 @@ export class UserNeedComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private auth: AuthenticateService,
-    private _commentService : CommentService
+    private _commentService: CommentService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 12;
@@ -217,9 +221,8 @@ export class UserNeedComponent implements OnInit {
   //     });
   // }
 
-
-// Note List / / / / / / / / / / / / /
-  getNoteList(rowID:number) {
+  // Note List / / / / / / / / / / / / /
+  getNoteList(rowID: number) {
     this.notes = new Array<CommentModel>();
     this._commentService
       .GetByTableTypeAndRowId(0, 20, rowID, 10)
@@ -260,13 +263,11 @@ export class UserNeedComponent implements OnInit {
     }
   }
 
-
-   // ConfirmModal and Add Note
+  // ConfirmModal and Add Note
 
   clearNote() {
     this.note = new CommentModel();
   }
-
 
   openConfirmationModal(item: CommentModel, content: NgbModal) {
     this.userInfo = this.auth.currentUserValue;
@@ -308,5 +309,44 @@ export class UserNeedComponent implements OnInit {
           });
         }
       });
+  }
+
+  /*
+  *
+  *
+  * 
+  filter 
+  * 
+  * 
+  * 
+  */
+
+  openFilterModal(content: any) {
+    this.modalService
+      .open(content, {
+        size: 'lg',
+      })
+      .result.then((result) => {
+        this._UserNeedService.getUserNeed(this.filterModel).subscribe(
+          (res: Result<Paginate<UserNeedModel[]>>) => {
+            console.log(res);
+          },
+          (_error) => {
+            console.log('error baby ');
+          }
+        );
+      });
+  }
+
+  start(firstName: string) {
+    this.filterModel.firstName = firstName;
+    this._UserNeedService.getUserNeed(this.filterModel).subscribe(
+      (res: Result<Paginate<UserNeedModel[]>>) => {
+        this.rows = res.data.items;
+      },
+      (_error) => {
+        console.log('error baby');
+      }
+    );
   }
 }

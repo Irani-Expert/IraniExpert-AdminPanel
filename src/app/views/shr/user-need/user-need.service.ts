@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { CommentModel } from 'src/app/shared/models/comment.model';
@@ -49,6 +50,15 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
         '/Comment/GetByTableTypeAndRowId/' +
         rowID +
         '/10?pageIndex=0&pageSize=100',
+      this._options
+    );
+  }
+
+  getUserNeed(filter: FilterModel) {
+    return this._http.get<Result<Paginate<UserNeedModel[]>>>(
+      this._base +
+        '/UserNeed?' +
+        (filter.firstName ? 'FirstName=' + filter.firstName : ''),
       this._options
     );
   }

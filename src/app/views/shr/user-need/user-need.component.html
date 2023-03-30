@@ -43,6 +43,10 @@
       </button>
     </div>
   </div>
+
+  <button class="btn bg-dark text-white" (click)="openFilterModal(filterModal)">
+    فیلتر کردن
+  </button>
 </div>
 <div class="my-css d-flex flex-wrap w-100 pb-5">
   <div id="comments" class="w-100">
@@ -523,3 +527,26 @@
     </div>
   </div>
 </ng-template> -->
+
+<ng-template #filterModal let-modal>
+  <div class="bg--gray px-3">
+    <div class="modal-header row">
+      <h4 class="modal-title text-white">فیلتر</h4>
+
+      <button
+        type="button"
+        class="close text-white"
+        aria-label="Close"
+        (click)="modal.dismiss()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+
+  <label>فعلا فقط نام (بدون فامیل)</label>
+  <input type="text" #firstName />
+  <button type="button" (click)="[start(firstName.value), modal.dismiss()]">
+    ثبت
+  </button>
+</ng-template>

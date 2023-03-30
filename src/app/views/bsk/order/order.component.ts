@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'jalali-moment';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { ToastrService } from 'ngx-toastr';
-import { filter } from 'rxjs/operators';
+import { filter, findIndex } from 'rxjs/operators';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
@@ -566,7 +566,29 @@ export class OrderComponent implements OnInit {
   }
 
   addOrUpdate(item: LicenseModel, climax: CliamxLicenseModel) {
-    item = new LicenseModel();
+    if (this.expireDate.month < 10) {
+      this.expireDate.month = '0' + this.expireDate.month;
+    } else {
+      this.expireDate.month = this.expireDate.month;
+    }
+    if (this.expireDate.day < 10) {
+      this.expireDate.day = '0' + this.expireDate.day;
+    } else {
+      this.expireDate.day = this.expireDate.day;
+    }
+    if (this.startDate.month < 10) {
+      this.startDate.month = '0' + this.startDate.month;
+    } else {
+      this.startDate.month = this.startDate.month;
+    }
+    if (this.startDate.day < 10) {
+      this.startDate.day = '0' + this.startDate.day;
+    } else {
+      this.startDate.day = this.startDate.day;
+    }
+    if (this.licenseID == null) {
+      item = new LicenseModel();
+    }
     item.rowID = this.licenseModel.rowID;
     item.expireDate = this.licenseModel.expireDate;
     item.startDate = this.licenseModel.startDate;
@@ -595,121 +617,64 @@ export class OrderComponent implements OnInit {
       startDate: item.startDate,
       expireDate: item.expireDate,
     };
-    this._licenseService.create(sendLicense, 'License').subscribe((data) => {
-      if (data.success) {
-        // if (climax !== null) {
-        //   climax.licenseId = data.data;
-        //   this._licenseService
-        //     .sendLicenseToClimax(climax)
-        //     .subscribe((dt: CliamxResponse) => {
-        //       if (dt.statusCode != 200) {
-        //         this.toastr.error(dt.message[0], 'خطای Cliamax', {
-        //           closeButton: true,
-        //           positionClass: 'toast-top-left',
-        //         });
-        //       } else {
-        //         this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
-        //           closeButton: true,
-        //           positionClass: 'toast-top-left',
-        //         });
-        //       }
-        //     });
-        // }
-        // var finder = this.rows.findIndex((row) => row.id === item.rowID);
-        // this.rows[finder].transactionStatus = 8;
-        // this.rows[finder].accountNumber=item.accountNumber
-        //this.rows.splice(finder, 1);
-        this.toastr.success(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
+    if (this.licenseID == undefined) {
+      this._licenseService.create(sendLicense, 'License').subscribe((data) => {
+        if (data.success) {
+          // if (climax !== null) {
+          //   climax.licenseId = data.data;
+          //   this._licenseService
+          //     .sendLicenseToClimax(climax)
+          //     .subscribe((dt: CliamxResponse) => {
+          //       if (dt.statusCode != 200) {
+          //         this.toastr.error(dt.message[0], 'خطای Cliamax', {
+          //           closeButton: true,
+          //           positionClass: 'toast-top-left',
+          //         });
+          //       } else {
+          //         this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
+          //           closeButton: true,
+          //           positionClass: 'toast-top-left',
+          //         });
+          //       }
+          //     });
+          // }
+          // var finder = this.rows.findIndex((row) => row.id === item.rowID);
+          // this.rows[finder].transactionStatus = 8;
+          // this.rows[finder].accountNumber=item.accountNumber
+          //this.rows.splice(finder, 1);
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.getOrders(this.status, this.page.pageNumber, this.filter);
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
+    }
+    if (this.licenseID != undefined) {
+      this._licenseService
+        .update(this.licenseID, item, 'License')
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+            // let finder = this.rows.findIndex((row) => row.id === item.rowID)
+            this.getOrders(this.status, this.page.pageNumber, this.filter);
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
         });
-        this.getOrders(this.status, this.page.pageNumber, this.filter);
-      } else {
-        this.toastr.error(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-      }
-    });
-
-    // if (this.licenseID !== null || this.licenseID !== 0) {
-    //   this._licenseService
-    //     .update(this.licenseID, item, 'License')
-    //     .subscribe((data) => {
-    //       if (data.success) {
-    //         // if ((climax.licenseId = data.data.id)) {
-    //         //   this._licenseService
-    //         //     .sendLicenseToClimax(climax)
-    //         //     .subscribe((dt: CliamxResponse) => {
-    //         //       if (dt.statusCode != 200) {
-    //         //         this.toastr.error(dt.message[0], 'خطای Cliamax', {
-    //         //           closeButton: true,
-    //         //           positionClass: 'toast-top-left',
-    //         //         });
-    //         //       } else {
-    //         //         this.toastr.success(dt.message[0], 'تاییدیه کلایمکس', {
-    //         //           closeButton: true,
-    //         //           positionClass: 'toast-top-left',
-    //         //         });
-    //         //         this.getOrderbyStatus(this.status, this.page.pageNumber);
-    //         //       }
-    //         //     });
-    //         // }
-    //         // var finder = this.rows.findIndex((row) => row.id === item.rowID);
-    //         // this.rows[finder].transactionStatus = 8;
-    //         // this.rows[finder].accountNumber=item.accountNumber
-    //         //this.rows.splice(finder, 1);
-    //         this.toastr.success(data.message, null, {
-    //           closeButton: true,
-    //           positionClass: 'toast-top-left',
-    //         });
-    //       } else {
-    //         this.toastr.error(data.message, null, {
-    //           closeButton: true,
-    //           positionClass: 'toast-top-left',
-    //         });
-    //       }
-    //     });
-    // }
+    }
   }
-  // } else {
-  //   await this._licenseService
-  //     .update(item.id, item, 'License')
-  //     .toPromise()
-  //     .then(
-  //       (data) => {
-  //         if (data.success) {
-  //           this.toastr.success(data.message, null, {
-  //             closeButton: true,
-  //             positionClass: 'toast-top-left',
-  //           });
-  //         } else {
-  //           this.toastr.error(data.message, null, {
-  //             closeButton: true,
-  //             positionClass: 'toast-top-left',
-  //           });
-  //         }
-  //       },
-  //       (_error) => {
-  //         this.toastr.error('خطا مجدد تلاش فرمایید', null, {
-  //           closeButton: true,
-  //           positionClass: 'toast-top-left',
-  //         });
-  //       }
-  //     );
-  //   this.getOrdersIsPaid(this.page.pageNumber, this.page.size);
-  // }
-
-  /*
-  *
-  filterOrders() {
-    this.getOrders(this.status, 0, this.filter);
-  }
-
-  *
-  *
-  * 
-  */
   openFilterModal(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
@@ -768,6 +733,7 @@ export class OrderComponent implements OnInit {
           }
           this.getOrders(this.status, this.page.pageNumber, this.filterModel);
           this.filter = this.filterModel;
+          this.filterModel = new FilterModel();
         },
         (reason) => {
           this.filterModel = new FilterModel();
