@@ -29,7 +29,7 @@
 
     <tbody>
       <ng-container *ngFor="let item of rows">
-        <tr *ngIf="pageLoad">
+        <tr *ngIf="item.fileExists">
           <td>
             <img
               (error)="splitRow(item)"

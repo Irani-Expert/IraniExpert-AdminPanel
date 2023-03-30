@@ -10,4 +10,5 @@ export interface IArticle extends IBase {
   updateBy: number;
   updateByFirstName: string;
   updateByLastName: string;
+  fileExists:boolean
 }

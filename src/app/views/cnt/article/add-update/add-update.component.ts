@@ -30,7 +30,6 @@ export class AddUpdateComponent implements OnInit {
   articleId: number = parseInt(
     this._route.snapshot.paramMap.get('articleId') ?? '0'
   );
-  imageFound: boolean = false;
   tableType: number = 1;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
@@ -111,7 +110,6 @@ export class AddUpdateComponent implements OnInit {
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
-          this.imageFound = true;
           this.addUpdate.cardImagePath = undefined;
 
           this.toastr.success('با موفقیت حذف شد', null, {
@@ -133,7 +131,6 @@ export class AddUpdateComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.cardImagePath = res.data[0];
-          this.imageFound = true;
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -155,7 +152,6 @@ export class AddUpdateComponent implements OnInit {
       .getOneByID(id, 'Article')
       .subscribe((res: Result<ArticleModel>) => {
         this.addUpdate = res.data;
-        this.imageFound = true;
         this.group = this.groupList.find(
           (item) => item.value === this.addUpdate.groupID
         );

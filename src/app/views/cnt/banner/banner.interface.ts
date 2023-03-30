@@ -9,4 +9,5 @@ export interface IBanner extends IBase {
   rowID: number;
   url: string;
   fileInfo: string;
+  fileExists:boolean;
 }

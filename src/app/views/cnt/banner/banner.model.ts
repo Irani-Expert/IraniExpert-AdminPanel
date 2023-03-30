@@ -7,6 +7,7 @@ export class BannerModel extends Base implements IBanner {
   filePath: string;
   fileType: number;
   fileInfo: string;
+  fileExists:boolean;
   tableType: number;
   rowID: number;
   url: string;

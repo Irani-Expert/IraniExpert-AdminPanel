@@ -34,7 +34,7 @@ export class FileService extends BaseService<FileModel, 0> {
         Pragma: 'no-cache',
         Expires: '0',
       }),
-    };
+    }
     return this._http.get<Result<FileModel[]>>(
       this._base + `/Files/GetByTableTypeAndRowID/${rowId}/${tableType}`,
       _options

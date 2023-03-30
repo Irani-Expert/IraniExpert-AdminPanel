@@ -20,12 +20,12 @@
     <ng-template ngbNavContent>
       <form class="card container p-4">
         <div class="row">
-          <ng-container *ngIf="imageFound">
+          <ng-container *ngIf="addUpdate.fileExists">
             <div
               class="d-flex justify-content-end align-items-end col-md-3 col-5 mb-5 mt-1"
             >
               <img
-                (error)="imageFound = false"
+                (error)="!addUpdate.fileExists"
                 class="align-self-center w-100 radius-md"
                 [src]="'https://dl.iraniexpert.com/' + addUpdate.cardImagePath"
                 [alt]="addUpdate.title"
@@ -99,7 +99,7 @@
             >
           </div>
 
-          <ng-container *ngIf="imageFound == false">
+          <ng-container *ngIf="!addUpdate.fileExists">
             <div class="col-md-7 mt-4">
               <label class="d-block" for="picker1">انتخاب تصویر</label>
               <input type="file" (change)="onFileChanged($event)" />

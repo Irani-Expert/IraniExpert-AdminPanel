@@ -37,8 +37,8 @@
         "
       >
         <td>{{ item.id }}</td>
-        <td>
-          <a href="" class="m-0">
+        <td >
+          <a href="" class="m-0" *ngIf="item.fileExists">
             <img
               src="{{ 'https://dl.iraniexpert.com/' + item.cardImagePath }}"
               class="img-card m-0"

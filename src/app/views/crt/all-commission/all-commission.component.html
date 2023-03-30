@@ -171,7 +171,7 @@
     </div>
   
     <div class="modal-footer">
-      <div class="col-md-12 mt-3" *ngIf="Receipt?.length ==30 && page.pageNumber==1 ">
+      <div class="col-md-12 mt-3" *ngIf="Receipt?.length ==30 || page.pageNumber!=1 ">
         <pagination-controls
           (pageChange)="setPage($event)"
           previousLabel=""
