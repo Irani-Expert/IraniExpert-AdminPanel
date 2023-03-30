@@ -54,11 +54,34 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
     );
   }
 
-  getUserNeed(filter: FilterModel) {
+  getUserNeed(
+    filter: FilterModel,
+    pageIndex: number,
+    pageSize: number,
+    userWant: number
+  ) {
     return this._http.get<Result<Paginate<UserNeedModel[]>>>(
       this._base +
-        '/UserNeed?' +
-        (filter.firstName ? 'FirstName=' + filter.firstName : ''),
+        '/UserNeed?pageIndex=' +
+        pageIndex +
+        '&pageSize=' +
+        pageSize +
+        (filter.iD ? '&ID=' + filter.iD : '') +
+        (filter.firstName ? '&FirstName=' + filter.firstName : '') +
+        (filter.lastName ? '&LastName=' + filter.lastName : '') +
+        (filter.phoneNumber ? '&PhoneNumber=' + filter.phoneNumber : '') +
+        (filter.email ? '&Email=' + filter.phoneNumber : '') +
+        (userWant !== undefined ? '&UserWant=' + userWant : '') +
+        (filter.amount ? '&Amount=' + filter.amount : '') +
+        (filter.financialActivity
+          ? '&FinancialActivity=' + filter.financialActivity
+          : '') +
+        (filter.robotUsage ? '&RobotUsage=' + filter.robotUsage : '') +
+        (filter.fromCreateDate
+          ? '&FromCreateDate=' + filter.fromCreateDate
+          : '') +
+        (filter.toCreateDate ? '&ToCreateDate=' + filter.toCreateDate : ''),
+
       this._options
     );
   }

@@ -23,4 +23,7 @@ export class FilterModel implements IFilter {
   toExpireDate: string;
   versionNumber: number;
   userID: number;
+  amount: number;
+  financialActivity: boolean;
+  robotUsage: boolean;
 }
