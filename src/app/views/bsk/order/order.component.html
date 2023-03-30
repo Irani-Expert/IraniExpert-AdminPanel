@@ -75,25 +75,25 @@
   <table class="table">
     <thead class="bg-dark text-white">
       <tr>
-        <th (click)="changeHeaderValue()" class="rounded--right">
+        <th (click)="changeHeaderValue()" class="rounded--right text-small">
           {{ headerValue
           }}<i
             class="text-white i-Sync nav-icon m-1 float-end p-2 text-dark syncIcon"
           ></i>
         </th>
-        <th>نام کاربر</th>
-        <th>شماره ی حساب</th>
-        <th>نام و پلن محصول</th>
-        <th>هزینه</th>
-        <th (click)="changeDateValue()">
+        <th class="text-small">نام کاربر</th>
+        <th class="text-small">شماره ی حساب</th>
+        <th class="text-small">نام و پلن محصول</th>
+        <th class="text-small">هزینه</th>
+        <th class="text-small" (click)="changeDateValue()">
           {{ dateValue
           }}<i
             class="text-white i-Sync nav-icon m-1 float-end p-2 text-dark syncIcon"
           ></i>
         </th>
-        <th>Max Balance</th>
-        <th *ngIf="status == null">وضعیت</th>
-        <th class="rounded--left">عملیات</th>
+        <th class="text-small">Max Balance</th>
+        <!-- <th class="text-small" *ngIf="status == null">وضعیت</th> -->
+        <th class="rounded--left text-small">عملیات</th>
       </tr>
     </thead>
     <tbody>
@@ -110,25 +110,29 @@
                 }
         "
       >
-        <td *ngIf="headerValue == 'ID'">
+        <td class="text-small" *ngIf="headerValue == 'ID'">
           {{ item.id }}
         </td>
-        <td *ngIf="headerValue == 'کد رهگیری'">
+        <td class="text-small" *ngIf="headerValue == 'کد رهگیری'">
           {{ item.code }}
         </td>
-        <td>{{ item.firstName }}&nbsp;{{ item.lastName }}</td>
-        <td>{{ item.accountNumber }}</td>
-        <td>{{ item.productTitle }}|{{ item.planTitle }}</td>
-        <td>{{ item.price | currency }}</td>
-        <td *ngIf="dateValue == 'تاریخ ثبت به میلادی'">
+        <td class="text-small">
+          {{ item.firstName }}&nbsp;{{ item.lastName }}
+        </td>
+        <td class="text-small">{{ item.accountNumber }}</td>
+        <td class="text-small">{{ item.productTitle }}|{{ item.planTitle }}</td>
+        <td class="text-small">{{ item.price | currency }}</td>
+        <td class="text-small" *ngIf="dateValue == 'تاریخ ثبت به میلادی'">
           {{ item.createDate | date : " YYYY d MMMM " }}
         </td>
-        <td *ngIf="dateValue == ' تاریخ ثبت به شمسی'">
+        <td class="text-small" *ngIf="dateValue == ' تاریخ ثبت به شمسی'">
           {{ item.jalaliDate }}
         </td>
-        <td *ngIf="item.maximumBalance != null">{{ item.maximumBalance }}</td>
-        <td *ngIf="item.maximumBalance == null">ندارد</td>
-        <ng-container *ngIf="status == null">
+        <td class="text-small" *ngIf="item.maximumBalance != null">
+          {{ item.maximumBalance }}
+        </td>
+        <td class="text-small" *ngIf="item.maximumBalance == null">ندارد</td>
+        <!-- <ng-container *ngIf="status == null">
           <td *ngIf="item.transactionStatus == 6">
             <span
               class="badge p-2 text-white"
@@ -184,7 +188,7 @@
               >{{ item.transactionStatus | transactionStatus }}</span
             >
           </td>
-        </ng-container>
+        </ng-container> -->
 
         <td class="td-oprate">
           <button
