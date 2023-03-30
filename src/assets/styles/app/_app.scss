@@ -42,7 +42,10 @@
 .empty-row {
   text-align: right !important;
 }
-
+.vertical {
+  border-left: 2px solid rgb(91, 91, 94);
+  height: 21px !important;
+}
 .dp-material input[type="text"] {
   border-radius: 5px;
   text-align: right;
@@ -507,6 +510,6 @@ Buttons
   transition: all 0.15s ease-in-out;
 }
 
-.window-z-index{
-  z-index: 2001!important;
+.window-z-index {
+  z-index: 2001 !important;
 }

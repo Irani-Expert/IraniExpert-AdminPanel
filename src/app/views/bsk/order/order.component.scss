@@ -245,3 +245,18 @@ td {
   margin-top: 1.75px !important;
   transition: all 0.15s ease-in-out;
 }
+.btn-scale-1 {
+  transition: transform 0.15s ease-in-out;
+}
+.btn-scale-1:hover {
+  color: #af2929;
+  transform: scale(1.1);
+  transition: all 0.15s ease-in-out;
+}
+.btn-scale-1:hover i {
+  color: #980404 !important;
+}
+.btn-scale-1:focus {
+  border: 0 !important;
+  box-shadow: none !important;
+}

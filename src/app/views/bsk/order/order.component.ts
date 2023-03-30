@@ -29,6 +29,7 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { ProductModel } from '../../prd/products-list/product.model';
 import { PlanService } from '../../bas/plan/plan.service';
 import { PlanModel } from '../../bas/plan/plan.model';
+import { List } from 'echarts';
 
 @Component({
   selector: 'app-order',
@@ -36,6 +37,7 @@ import { PlanModel } from '../../bas/plan/plan.model';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  filters: any;
   statusTitles = [
     { title: 'نهایی', id: 8 },
     { title: 'درانتظار پرداخت', id: 1 },
@@ -50,6 +52,7 @@ export class OrderComponent implements OnInit {
   TCrtDate: any;
   FStrDate: any;
   TStrDate: any;
+  filtered: boolean = false;
   filter: FilterModel = new FilterModel();
   licenseID: number;
   isValidate: boolean;
@@ -114,6 +117,8 @@ export class OrderComponent implements OnInit {
     this._orderService.getProduct().subscribe((res: Result<ProductModel[]>) => {
       this.productModel = res.data;
     });
+    console.log(this.filter);
+
     this.setPage(this.page.pageNumber, 8);
     this.filterForm = this._formBuilder.group({
       iD: [null],
@@ -732,7 +737,8 @@ export class OrderComponent implements OnInit {
           }
           this.getOrders(this.status, this.page.pageNumber, this.filterModel);
           this.filter = this.filterModel;
-          this.filterModel = new FilterModel();
+          this.fillTheFiltersRow(this.filter);
+          this.filtered = true;
         },
         (reason) => {
           this.filterModel = new FilterModel();
@@ -758,5 +764,168 @@ export class OrderComponent implements OnInit {
     if ($event != undefined) {
       this.filterModel.planID = parseInt($event);
     }
+  }
+  deleteFilter(item: any) {
+    let finder = this.filters.findIndex((filter) => filter.id == item.id);
+    this.filters[finder].isFilled = false;
+    switch (item.id) {
+      case 1:
+        this.filter.firstName = undefined;
+        break;
+      case 2:
+        this.filter.lastName = undefined;
+        break;
+      case 3:
+        this.filter.iD = undefined;
+        break;
+      case 4:
+        this.filter.userID = undefined;
+        break;
+      case 5:
+        this.filter.accountNumber = undefined;
+        break;
+      case 6:
+        this.filter.phoneNumber = undefined;
+        break;
+      case 7:
+        this.filter.planID = undefined;
+        break;
+      case 8:
+        this.filter.productID = undefined;
+        break;
+      case 9:
+        this.filter.isAccepted = undefined;
+        break;
+      case 10:
+        this.filter.rate = undefined;
+        break;
+      case 11:
+        this.filter.code = undefined;
+        break;
+      case 12:
+        this.filter.fromExpireDate = undefined;
+        break;
+      case 13:
+        this.filter.toExpireDate = undefined;
+        break;
+      case 14:
+        this.filter.fromStartDate = undefined;
+        break;
+      case 15:
+        this.filter.toStartDate = undefined;
+        break;
+      case 16:
+        this.filter.fromCreateDate = undefined;
+        break;
+      case 17:
+        this.filter.toCreateDate = undefined;
+        break;
+      case 18:
+        this.filter.versionNumber = undefined;
+        break;
+    }
+    this.getOrders(this.status, this.page.pageNumber, this.filter);
+  }
+  deleteAllFilter() {
+    this.filtered = false;
+    this.filter = new FilterModel();
+    this.filters.forEach((item) => {
+      if (item.isFilled == true) {
+        item.isFilled = false;
+      }
+    });
+    this.getOrders(this.status, this.page.pageNumber, this.filter);
+  }
+  fillTheFiltersRow(filter: FilterModel) {
+    this.filters = [
+      {
+        id: 1,
+        label: 'نام',
+        title: filter.firstName,
+        isFilled: false,
+      },
+      {
+        id: 2,
+        label: ' نام خانوادگی',
+        title: filter.lastName,
+        isFilled: false,
+      },
+      { id: 3, label: 'نام', title: filter.iD, isFilled: false },
+      { id: 4, label: 'نام', title: filter.userID, isFilled: false },
+      {
+        id: 5,
+        label: 'شماره حساب',
+        title: filter.accountNumber,
+        isFilled: false,
+      },
+      {
+        id: 6,
+        label: 'شماره تماس',
+        title: filter.phoneNumber,
+        isFilled: false,
+      },
+      { id: 7, label: 'نام', title: filter.planID, isFilled: false },
+      {
+        id: 8,
+        label: 'محصول',
+        title: filter.productID,
+        isFilled: false,
+      },
+      {
+        id: 9,
+        label: 'پلن',
+        title: filter.isAccepted,
+        isFilled: false,
+      },
+      { id: 10, label: 'نام', title: filter.rate, isFilled: false },
+      { id: 11, label: 'نام', title: filter.code, isFilled: false },
+      {
+        id: 12,
+        label: 'از انقضا در',
+        title: filter.fromExpireDate,
+        isFilled: false,
+      },
+      {
+        id: 13,
+        label: ' تا انقضا در',
+        title: filter.toExpireDate,
+        isFilled: false,
+      },
+      {
+        id: 14,
+        label: 'از شروع در',
+        title: filter.fromStartDate,
+        isFilled: false,
+      },
+      {
+        id: 15,
+        label: 'تا شروع در',
+        title: filter.toStartDate,
+        isFilled: false,
+      },
+      {
+        id: 16,
+        label: 'از ایجاد در',
+        title: filter.fromCreateDate,
+        isFilled: false,
+      },
+      {
+        id: 17,
+        label: 'تا ایجاد در',
+        title: filter.toCreateDate,
+        isFilled: false,
+      },
+      {
+        id: 18,
+        label: 'ورژن لایسنس',
+        title: filter.versionNumber,
+        isFilled: false,
+      },
+    ];
+    this.filters.forEach((item: any) => {
+      if (item.title !== undefined && item.title !== null) {
+        item.isFilled = true;
+      }
+    });
   }
 }

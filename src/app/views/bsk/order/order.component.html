@@ -8,7 +8,7 @@
 <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-3">
   <button
     type="button"
-    class="btn btn-details radius py-btns"
+    class="btn btn-details radius py-btns text-small"
     id="dropdownBasic1"
     ngbDropdownToggle
   >
@@ -29,55 +29,61 @@
     </button>
   </div>
 </div>
-<!-- <div class="row g-0 p-0 m-0">
-  <div class="col-12 row g-0 p-0 flex-row mb-2">
-    <div class="col-auto mb-2">
-      <button
-        class="btn btn-final text-white"
-        (click)="getOrders(8, 0, filter)"
-      >
-        نهایی
-      </button>
-    </div>
-
-    <div class="col-auto mb-2">
-      <button class="btn btn-primary" (click)="getOrders(1, 0, filter)">
-        در انتظار پرداخت
-      </button>
-    </div>
-    <div class="col-auto mb-2">
-      <button class="btn btn-dark" (click)="getOrders(6, 0, filter)">
-        در انتظار تائید
-      </button>
-    </div>
-
-    <div class="col-auto mb-2">
-      <button
-        class="btn btn-confirmed text-white"
-        (click)="getOrders(2, 0, filter)"
-      >
-        تائید شده
-      </button>
-    </div>
-
-    <div class="col-auto mb-2">
-      <button
-        class="btn btn-rejected text-white"
-        (click)="getOrders(5, 0, filter)"
-      >
-        رد شده
-      </button>
-    </div>
-  
-  </div>
-</div> -->
 
 <a
   (click)="openFilterModal(filterModal)"
   class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
   ><i class="i-Filter-2 text-dark text-bigger mr-2"></i>
-  <strong class="text-dark ml-2"> فیلتر کردن</strong></a
+  <strong class="text-dark ml-2 text-small"> فیلتر کردن</strong></a
 >
+<div
+  class="flex-row d-flex justify-content-start align-items-center"
+  *ngIf="filtered"
+>
+  <ng-container *ngFor="let filterItem of filters">
+    <a
+      *ngIf="filterItem.isFilled"
+      class="d-inline-flex bg-light clickable-btn p-1 justify-content-start radius m-1 align-items-center"
+    >
+      <button
+        (click)="deleteFilter(filterItem)"
+        ngbTooltip="حذف فیلتر"
+        [openDelay]="100"
+        [closeDelay]="500"
+        placement="bottom"
+        class="bg-transparent btn-scale-1 btn d-flex align-items-center"
+      >
+        <i
+          class="i-Close text-dark"
+          style="font-size: 22px; font-weight: normal"
+        ></i>
+      </button>
+
+      <div class="vertical"></div>
+      <strong class="text-dark text-small ml-2 pt-1 pr-2"
+        >{{ filterItem.label }} : {{ filterItem.title }}</strong
+      >
+    </a>
+  </ng-container>
+  <a
+    class="d-inline-flex btn-delete clickable-btn p-1 justify-content-start radius m-1 align-items-center"
+  >
+    <button
+      (click)="deleteAllFilter()"
+      class="bg-transparent btn-scale-1 btn d-flex align-items-center"
+    >
+      <i
+        class="i-Close text-white"
+        style="font-size: 22px; font-weight: normal"
+      ></i>
+    </button>
+
+    <div class="vertical"></div>
+    <strong class="text-white text-small ml-2 pt-1 pr-2"
+      >حذف همه فیلتر ها</strong
+    >
+  </a>
+</div>
 <section class="main-table">
   <table class="table">
     <thead class="bg-dark text-white">
