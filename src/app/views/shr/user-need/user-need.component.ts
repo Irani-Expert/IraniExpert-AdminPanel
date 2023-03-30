@@ -30,6 +30,8 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 })
 export class UserNeedComponent implements OnInit {
   filterModel: FilterModel = new FilterModel();
+  fromCreateDate: { year: number; month: number; day: number };
+  toCreateDate: { year: number; month: number; day: number };
 
   note: CommentModel = new CommentModel();
   notes: CommentModel[] = new Array<CommentModel>();
@@ -39,7 +41,7 @@ export class UserNeedComponent implements OnInit {
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   toggled = false;
-  userWant: any = null;
+  userWant: number;
   userInfo: UserInfoModel;
   rows: UserNeedModel[] = new Array<UserNeedModel>();
   page: Page = new Page();
@@ -70,7 +72,7 @@ export class UserNeedComponent implements OnInit {
         }
       });
   }
-  setPage(pageInfo: number, userWant: any) {
+  setPage(pageInfo: number, userWant: number) {
     this.page.pageNumber = pageInfo;
     this.getUserNeedByUserWant(userWant, pageInfo);
   }
@@ -99,8 +101,9 @@ export class UserNeedComponent implements OnInit {
   //   }
   // }
 
-  getUserNeedByUserWant(userWant: any, pageNumber: number) {
+  getUserNeedByUserWant(userWant: number, pageNumber: number) {
     this.userWant = userWant;
+
     this._UserNeedService
       .getByStatus(12, pageNumber !== 0 ? pageNumber - 1 : pageNumber, userWant)
       .subscribe(
@@ -322,30 +325,61 @@ export class UserNeedComponent implements OnInit {
   */
 
   openFilterModal(content: any) {
-    this.modalService
-      .open(content, {
-        size: 'lg',
-      })
-      .result.then((result) => {
-        this._UserNeedService.getUserNeed(this.filterModel).subscribe(
-          (res: Result<Paginate<UserNeedModel[]>>) => {
-            console.log(res);
-          },
-          (_error) => {
-            console.log('error baby ');
-          }
-        );
-      });
+    this.modalService.open(content, {
+      size: 'lg',
+    });
+
+    // .result.then((result) => {
+    //   this._UserNeedService.getUserNeed(this.filterModel).subscribe(
+    //     (res: Result<Paginate<UserNeedModel[]>>) => {
+    //       console.log(res);
+    //     },
+    //     (_error) => {
+    //       console.log('error baby ');
+    //     }
+    //   );
+    // });
   }
 
-  start() {
-    this._UserNeedService.getUserNeed(this.filterModel).subscribe(
-      (res: Result<Paginate<UserNeedModel[]>>) => {
-        this.rows = res.data.items;
-      },
-      (_error) => {
-        console.log('error baby');
-      }
-    );
+  startFilter() {
+    if (this.fromCreateDate) {
+      this.filterModel.fromCreateDate =
+        this.fromCreateDate.year +
+        '-' +
+        this.fromCreateDate.month +
+        '-' +
+        this.fromCreateDate.day;
+    }
+
+    if (this.toCreateDate) {
+      this.filterModel.toCreateDate =
+        this.toCreateDate.year +
+        '-' +
+        this.toCreateDate.month +
+        '-' +
+        this.toCreateDate.day;
+    }
+
+    this._UserNeedService
+      .getUserNeed(
+        this.filterModel,
+        this.page.pageNumber !== 0
+          ? this.page.pageNumber - 1
+          : this.page.pageNumber,
+        this.page.size,
+        this.userWant
+      )
+      .subscribe(
+        (res: Result<Paginate<UserNeedModel[]>>) => {
+          this.rows = res.data.items;
+          this.filterModel = new FilterModel();
+        },
+        (error) => {
+          this.toastr.error('رد خواست شما انجام نشد', error.message, {
+            timeOut: 2000,
+            positionClass: 'toast-top-left',
+          });
+        }
+      );
   }
 }
