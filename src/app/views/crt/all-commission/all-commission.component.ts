@@ -85,9 +85,10 @@ export class AllCommissionComponent implements OnInit {
       )
       .subscribe((res: Result<Paginate<ReceiptModel[]>>) => {
         this.Receipt = res.data.items;
+       
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
-        this.page.pageNumber = res.data.pageNumber + 1;
+        this.page.pageNumber = res.data.pageNumber ;
       });
   }
   getAllCommission(page: number) {
@@ -99,8 +100,7 @@ export class AllCommissionComponent implements OnInit {
   }
   descriptionfunc(content: any, description: string) {
     this.descriptionText = description;
-    console.log(description);
-    console.log(this.descriptionText);
+  
 
     if (this.descriptionText == null) {
       this.toastr.warning('متنی برای نمایش وجود ندارد', '', {
@@ -110,7 +110,7 @@ export class AllCommissionComponent implements OnInit {
         messageClass: 'text--primary text--smaller text-white',
       });
     } else {
-      this.openModal(content, 'md', this.contractIdKeeper);
+      this.openModal(content, 'md', null);
     }
   }
   openModal(content: any, modalsize: string, contractId: number) {
@@ -126,7 +126,8 @@ export class AllCommissionComponent implements OnInit {
         windowClass: 'window-z-index',
       });
     } else {
-      this.getReceiptByContractId(contractId);
+      this.getReceiptByContractId( contractId );
+      this.contractIdKeeper = contractId;
       this.modalKeeper = this.modalService.open(content, {
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
@@ -135,15 +136,19 @@ export class AllCommissionComponent implements OnInit {
         animation: true,
       });
     }
-    if (contractId != null) {
-      this.contractIdKeeper = contractId;
-    }
-
+  
+  
     this.modalKeeper.result.then(
       (result) => {
         this.ChangeBackdrop = false;
+        if(contractId==undefined){
+          debugger
+          this.addNewReceipt()
+        }
+    
       },
       (result) => {
+        debugger
         this.ChangeBackdrop = false;
       }
     );
@@ -166,13 +171,28 @@ export class AllCommissionComponent implements OnInit {
       this.addDate.month.slice(-2) +
       '-' +
       this.addDate.day.slice(-2);
-    this._allcommissionService
-      .addReceipt(this.addReceiptModel)
-      .subscribe((result) => {
-        if (result.success) {
-          this.openModal(this.mainModalKeeper, 'lg', this.contractIdKeeper);
-        }
-      });
+      if(this.addReceiptModel.price==null){
+        this.toastr.error('بخش میزان پرداخت نمیتواند خالی باشد', '', {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+          titleClass: 'text--primary text--smaller text-white',
+          messageClass: 'text--primary text--smaller text-white',
+        });
+      }
+      else{
+        this._allcommissionService
+        .addReceipt(this.addReceiptModel)
+        .subscribe((result) => {
+          this.getReceiptByContractId(this.contractIdKeeper)
+          this.toastr.success('ثبت رسید موفقیت امیز بود', 'موفقیت امیز', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+            titleClass: 'text--primary text--smaller text-white',
+            messageClass: 'text--primary text--smaller text-white',
+          });
+        });
+      }
+   
   }
 
   copyText(textToCopy: string) {
@@ -181,7 +201,8 @@ export class AllCommissionComponent implements OnInit {
       closeButton: true,
       positionClass: 'toast-top-left',
       titleClass: 'text--primary text--smaller text-white',
-      messageClass: 'text--primary text--smaller text-white',
+      messageClass: 'text--primary text--smaller text-white bg-white text-dark ',
+      toastClass:' bg-white text-dark text-center'
     });
   }
 }
