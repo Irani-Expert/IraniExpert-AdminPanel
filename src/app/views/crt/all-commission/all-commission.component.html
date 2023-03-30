@@ -41,7 +41,13 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let item of rows">
+      <tr *ngFor="let item of rows | paginate
+      : {
+          itemsPerPage: 30,
+          page: page.pageNumber - 1,
+          currentPage: page.pageNumber - 1,
+          totalItems: 30
+        }">
         <td>{{ item.firstName }}</td>
         <td>{{ item.lastName }}</td>
         <td class="money-color">{{ item.commission | number : "1.2-2" }}</td>
@@ -52,16 +58,16 @@
         <td class="td-oprate">
           <button
             (click)="openModal(addReceiptModal, 'lg', item.contractID)"
-            class="btn btn-dark-yellow text-white"
+            class="btn btn-details  text-white"
             type="button"
           >
-            افزودن رسید پرداخت
-          </button>
+          جزئیات          </button>
         </td>
       </tr>
     </tbody>
   </table>
 </section>
+
 <ng-template #addReceiptModal let-modal>
   <div class="w-100 h-100">
     <!-- <ngb-modal-backdrop *ngIf="ChangeBackdrop "st  class=" modal-backdrop fade  hidden-back show"></ngb-modal-backdrop> -->
@@ -88,7 +94,7 @@
             class="i-Dollar-Sign-2 btn-blue-right-section m-0 p-1 d-grid text-white"
           ></i
         ></a>
-        <a class="btn p-1 text-white">افزودن رسید</a>
+        <a class="btn p-1 text-white">ثبت پرداخت جدید</a>
       </button>
 
       <table class="shadow table-responsive">
@@ -109,10 +115,10 @@
                 let item of Receipt
                   | paginate
                     : {
-                        itemsPerPage: page.size,
+                        itemsPerPage: 30,
                         page: page.pageNumber - 1,
                         currentPage: page.pageNumber - 1,
-                        totalItems: page.totalElements
+                        totalItems: 30
                       }
               "
             >
@@ -136,7 +142,7 @@
                   [ngbTooltip]="tipContent"
                 >
                   <div
-                    class="card-body bg-warning text-white c-poiter"
+                    class="card-body btn-download  c-poiter"
                     (click)="copyText(item.serialNumber)"
                   >
                     {{ item.serialNumber }}
@@ -169,10 +175,10 @@
               let item of Receipt
                 | paginate
                   : {
-                      itemsPerPage: page.size,
+                      itemsPerPage: 30,
                       page: page.pageNumber - 1,
                       currentPage: page.pageNumber - 1,
-                      totalItems: page.totalElements
+                      totalItems: 30
                     }
             "
           >
@@ -228,7 +234,7 @@
     <div class="modal-footer">
       <div
         class="col-md-12 mt-3"
-        *ngIf="Receipt?.length == 30 || page.pageNumber != 1"
+     
       >
         <pagination-controls
           (pageChange)="setPage($event)"
@@ -248,7 +254,7 @@
         style="text-align: end"
         aria-label="Close button"
         aria-describedby="modal-title"
-        (click)="modal.close()"
+        (click)="modal.dismiss()"
       >
         <span aria-hidden="true">&times;</span>
       </button>
@@ -313,6 +319,15 @@ font-weight: bold;"></i>
           </textarea>
         </div>
       </div>
+    </div>
+    <div class="modal-footer">
+      <button
+      type="button"
+      class="btn bg-white btn-rounded"
+      (click)="modal.close(true)"
+    >
+      ویرایش
+    </button>
     </div>
   </div>
 </ng-template>
