@@ -545,8 +545,6 @@
   </div>
 
   <label>فعلا فقط نام (بدون فامیل)</label>
-  <input type="text" #firstName />
-  <button type="button" (click)="[start(firstName.value), modal.dismiss()]">
-    ثبت
-  </button>
+  <input type="text" [(ngModel)]="filterModel.firstName" />
+  <button type="button" (click)="[start(), modal.dismiss()]">ثبت</button>
 </ng-template>
