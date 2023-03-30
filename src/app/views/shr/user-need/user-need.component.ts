@@ -338,8 +338,7 @@ export class UserNeedComponent implements OnInit {
       });
   }
 
-  start(firstName: string) {
-    this.filterModel.firstName = firstName;
+  start() {
     this._UserNeedService.getUserNeed(this.filterModel).subscribe(
       (res: Result<Paginate<UserNeedModel[]>>) => {
         this.rows = res.data.items;
