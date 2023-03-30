@@ -1,3 +1,5 @@
+<div *ngIf="ChangeBackdrop " style="z-index: 2000; position:fixed;top:0;width:200vw; left: 0;margin-top:-9px;height:1000px;background-color: rgba(10, 9, 9, 0.663);opacity:.5"></div>
+
 <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
     <div class="col-auto mb-2">
@@ -48,43 +50,86 @@
     </tbody>
   </table>
 </section>
-<ng-template #addReceiptModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">رسید</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close button"
-      aria-describedby="modal-title"
-      (click)="modal.close()"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <button
-      (click)="openModal(openDetails, 'lg')"
-      class="btn btn-success text-white m-2 p-0 shadow-md" 
-      type="button"
-    >
-    <a class="btn p-1  " href="#"><i class="i-Dollar-Sign-2 btn-blue-right-section  m-0  p-1 d-grid text-white"></i></a>
-    <a class="btn  p-1 text-white " href="#">افزودن رسید</a>
-    </button>
+<ng-template #addReceiptModal let-modal >
+    <div class="w-100 h-100
+    " >
+    <!-- <ngb-modal-backdrop *ngIf="ChangeBackdrop "st  class=" modal-backdrop fade  hidden-back show"></ngb-modal-backdrop> -->
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">رسید</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close button"
+        aria-describedby="modal-title"
+        (click)="modal.close()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <button
+        (click)="openModal(openDetails, 'sm')"
+        class="btn btn-success text-white m-2 p-0 shadow-md" 
+        type="button"
+      >
+      <a class="btn p-1  " ><i class="i-Dollar-Sign-2 btn-blue-right-section  m-0  p-1 d-grid text-white"></i></a>
+      <a class="btn  p-1 text-white " >افزودن رسید</a>
+      </button>
+    
   
-
-    <table class="shadow">
-      <thead class="bg-dark table-header text-white" >
-        <tr>
-          <th>تاریخ</th>
-          <th>هزینه</th>
-          <th>مرحله پرداخت</th>
-          <th>شماره سریال</th>
-          <th>توضیحات</th>
-        </tr>
-      </thead>
-      <drag-scroll class="" drag-scroll-x-disabled="true"> 
-      <tbody class="table-body drag-scroll-item drag-scroll-x-disabled">
-        <tr class="tr-modal"
+      <table class="shadow table-responsive">
+        <thead class="bg-dark table-header text-white thead-responsive" >
+          <tr>
+            <th>تاریخ</th>
+            <th>هزینه</th>
+            <th>مرحله پرداخت</th>
+            <th>شماره سریال</th>
+            <th>توضیحات</th>
+          </tr>
+        </thead>
+         <drag-scroll class="d-none-tbody" > 
+        <tbody class="table-body drag-scroll-item ">
+          <tr class="tr-modal"
+            *ngFor="
+              let item of Receipt
+                | paginate
+                  : {
+                      itemsPerPage: page.size,
+                      page: page.pageNumber - 1,
+                      currentPage: page.pageNumber - 1,
+                      totalItems: page.totalElements
+                    }
+            "
+          >
+            <td>{{ item.paymentDate }} <i class="i-Clock"></i></td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.paymentStep }}</td>
+            <td class="td-modal">
+              <ng-template #tipContent><div class="tooltip-size">{{ item.serialNumber }}</div></ng-template>
+              
+              <div class="card shadow  "  animation="true" tooltipClass="my-custom-class" [openDelay]="200"
+              [closeDelay]="500" placement="bottom" [ngbTooltip]="tipContent" >
+                <div class="card-body bg-warning text-white c-poiter" (click)="copyText(item.serialNumber);">
+                  {{ item.serialNumber }}
+                </div>
+              </div>
+            </td>
+            <td class="pt-2">
+              <button
+                (click)="descriptionfunc(description, item.description)"
+                class="mt-2 h-75 col-5 btn btn-info text-white rounded-circle shadow"
+                type="button"
+              >
+              <i class="i-Pen-5" style="font-size: 1.2rem;     display: flex;
+              justify-content: center;
+              align-items: center;"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </drag-scroll> 
+      <tbody  class="d-none-tbody-responsive">
+        <tr 
           *ngFor="
             let item of Receipt
               | paginate
@@ -122,47 +167,59 @@
           </td>
         </tr>
       </tbody>
-    </drag-scroll>
-
-    </table>
-  </div>
-
-  <div class="modal-footer">
-    <div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
-      <pagination-controls
-        (pageChange)="setPage($event)"
-        previousLabel=""
-        nextLabel=""
-      ></pagination-controls>
+      </table>
+    </div>
+  
+    <div class="modal-footer">
+      <div class="col-md-12 mt-3" *ngIf="rows?.length >30 ">
+        <pagination-controls
+          (pageChange)="setPage($event)"
+          previousLabel=""
+          nextLabel=""
+        ></pagination-controls>
+      </div>
     </div>
   </div>
+
 </ng-template>
 <ng-template #openDetails let-modal>
-  <div style="   background: linear-gradient(-45deg, #f29274, #d81e65, #375a67, #67ffdb);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;">
+  <div class="p-3 bg-pr">
+    <div class="">
+      <button
+        type="button"
+        class="close text-white w-100"
+        style="
+        text-align: end;"
+        aria-label="Close button"
+        aria-describedby="modal-title"
+        (click)="modal.close()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <div class="d-flex flex-column justify-content-center w-100 h-100">
       <div>
-    
-  
-        <div class=" col-3 p-3" style=" display: flex;
-        align-items: center;
-        justify-content: center;">
-        <div class="bg-warning shadow rounded-circle text-center col-5 p-2  " style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    " >
-          <i class="i-Dollar-Sign-2 p-2 text-white" style="
-          font-size: 30px;
-  font-weight: bold;"></i>
-        </div>
+    <!-- <div style=" justify-content: end; display: flex;">
+      <div class=" col-4 p-3" style=" display: flex;
+      align-items: center;
+      justify-content: center;">
+      <div class="bg-warning shadow rounded-circle text-center col-5 p-2  " style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  " >
+        <i class="i-Dollar-Sign-2 p-2 text-white" style="
+        font-size: 30px;
+font-weight: bold;"></i>
       </div>
+    </div>
+</div> -->
   
-    <div class="row m-2"> 
-      <form [formGroup]="addRedeiptForm" class="col-5">
-      <div class="col-12 form-group mb-3">
-        <strong for="totalPrice" class="mb-3">میزان پرداخت</strong>
+     
+    <div class="w-100 p-2"> 
+      <form [formGroup]="addRedeiptForm" class="row" >
+      <div class="col-12 form-group  m-0 p-1">
+        <strong class="text-white">میزان پرداخت</strong>
         <input
           class="form-control"
           id="totalPrice"
@@ -170,8 +227,8 @@
           [formControl]="addRedeiptForm.controls['price']"
         />
       </div>
-      <div class="col-12 form-group mb-3" dir="ltr">
-        <strong for="expireDate" class="mb-3">تاریخ</strong>
+      <div class="col-12 form-group  m-0 p-1" dir="ltr">
+        <strong for="expireDate" class="mb-3 text-white">تاریخ</strong>
   
         <input
           (click)="e.toggle()"
@@ -184,8 +241,10 @@
         />
       </div>
   </form>
-  <div class="col-7 form-group mt-2 " dir="ltr">
-    <strong for="expireDate" class="mb-3">توضیحات</strong>
+ 
+  </div>
+  <div class=" form-group mt-2 " dir="ltr">
+    <strong for="expireDate" class="mb-3 text-white">توضیحات</strong>
     <textarea
       name=""
       cols="30"
@@ -199,17 +258,7 @@
     >
     </textarea>
   </div>
-  </div>
-    
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-dark btn-rounded"
-        (click)="addNewReceipt()"
-      >
-        تائید
-      </button>
-    </div>
+
   </div>
     </div>
   
@@ -219,29 +268,21 @@
 </ng-template>
 
 <ng-template #description let-modal>
-  <!-- <div>
-    <div class="modal-header">
-      <h4 class="modal-title">توضیحات</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-   
-    <div class="modal-body">
-      <p class="description-border"></p>
-      <div class="modal-footer"></div>
+
+  <!-- <div class="notepad" >
+    <div class="top"></div>
+    <div class="paper p-2 text-white" contenteditable="true" style="background-color: #47404f;">
+      <p class=" m-4">
+      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخز شامل حروفچینی دستاوردهای اصلی، و جوابد.
+    </p>
     </div>
   </div> -->
-  <div class="notepad">
-    <div class="top"></div>
-    <div class="paper" contenteditable="true">
-      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخز شامل حروفچینی دستاوردهای اصلی، و جوابد.
-    </div>
-  </div>
+  <div  class="p-2 text-white"  style="background-color: #47404f;">
+    <p class=" m-4" *ngIf="descriptionText!=null">
+    {{descriptionText}}
+    </p>
+
   
+  </div>
+
 </ng-template>

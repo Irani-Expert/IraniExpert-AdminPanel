@@ -19,7 +19,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./all-commission.component.scss'],
 })
 export class AllCommissionComponent implements OnInit {
-  addReceiptModal: any;
+  contractId:number;
   modalKeeper: any;
   mainModalKeeper: any;
   contractIdKeeper: number;
@@ -33,7 +33,7 @@ export class AllCommissionComponent implements OnInit {
   price: string;
   addRedeiptForm: FormGroup;
   page: Page = new Page();
-  
+  ChangeBackdrop:boolean=false;
   constructor(
     // private activeModal : NgbActiveModal,
     private modalService: NgbModal,
@@ -62,7 +62,9 @@ export class AllCommissionComponent implements OnInit {
   ]
   ngOnInit(): void {
     this.getAllCommission(3);
-    this.setPage(this.page.pageNumber - 1);
+    debugger
+    this.page.pageNumber=0
+  
     this.addRedeiptForm = this._formBuilder.group({
       price: [null, Validators.compose([Validators.required])],
       paymentDate: [null, Validators.compose([Validators.required])],
@@ -70,15 +72,17 @@ export class AllCommissionComponent implements OnInit {
     });
   }
   setPage(pageInfo: number) {
-    this.page.pageNumber = pageInfo - 1;
+    this.page.pageNumber = pageInfo;
+    this.getReceiptByContractId(this.contractId)
   }
   getReceiptByContractId(contractId: number) {
+    debugger
+     this.contractId=contractId;
+   
     this._allcommissionService
-      .getReceipt(2, 0, 100)
-      .subscribe((res: Result<Paginate<ReceiptModel[]>>) => {});
-    this._allcommissionService
-      .getReceipt(contractId, 0, 100)
-      .subscribe((res: Result<Paginate<ReceiptModel[]>>) => {
+    .getReceipt(this.contractId, 30, this.page.pageNumber-1)
+          .subscribe((res: Result<Paginate<ReceiptModel[]>>) => {
+        debugger
         this.Receipt = res.data.items;
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
@@ -95,37 +99,61 @@ export class AllCommissionComponent implements OnInit {
   descriptionfunc(content: any, description: string) {
     this.descriptionText = description;
     this.descriptionContent = content;
-    this.openModal(this.descriptionContent, 'md', this.contractIdKeeper);
-  }
-  openModal(content: any, modelsize: string, contractId: number) {
-    if (contractId != undefined) {
-      this.contractIdKeeper = contractId;
+    if(  this.descriptionText==null){
+      this.toastr.warning('متنی یری نمایش وجود ندارد', '', {
+        closeButton: true,
+        positionClass: 'toast-top-left',
+        titleClass: 'text--primary text--smaller text-white',
+        messageClass: 'text--primary text--smaller text-white',
+        
+      });
     }
-    this.getReceiptByContractId(contractId);
-    if (modelsize != 'lg') {
-      this.modalKeeper.close();
-    } else {
-      this.mainModalKeeper = content;
-    }
+    else{
+      this.openModal(this.descriptionContent, 'md', this.contractIdKeeper);
 
-    this.modalKeeper = this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      centered: true,
-      size: modelsize,
-    });
+    }
+  }
+  openModal(content: any, modalsize: string, contractId: number) {
+    if(modalsize!='lg'){
+this.ChangeBackdrop=true
+this.modalKeeper = this.modalService.open(content, {
+  ariaLabelledBy: 'modal-basic-title',
+  centered: true,
+  size: modalsize,
+  backdrop:true,
+  animation: true,
+  windowClass:'window-z-index'
+});
+    }
+    else{
+      this.modalKeeper = this.modalService.open(content, {
+        ariaLabelledBy: 'modal-basic-title',
+        centered: true,
+        size: modalsize,
+        backdrop:true,
+        animation: true,
+      });
+    }
+    if (contractId != undefined) {
+      debugger
+      this.contractIdKeeper = contractId;
+          this.getReceiptByContractId(contractId);
+
+    }
+   
+   
+  
+
 
     this.modalKeeper.result.then(
-      (result) => {},
       (result) => {
-        if (modelsize != 'lg') {
-          this.addReceipt();
-        }
+        this.ChangeBackdrop=false
+      },
+      (result) => {
+        this.ChangeBackdrop=false
+
       }
     );
-
-    //  .result.then(function() {
-
-    //  });
   }
   addNewReceipt() {
     if (this.addDate.month < 10 || this.addDate.day < 10) {
@@ -145,14 +173,11 @@ export class AllCommissionComponent implements OnInit {
       .addReceipt(this.addReceiptModel)
       .subscribe((result) => {
         if (result.success) {
-          this.addReceipt();
+          this.openModal(this.mainModalKeeper, 'lg', this.contractIdKeeper);
         }
       });
   }
-  addReceipt() {
-    this.modalKeeper.close();
-    this.openModal(this.mainModalKeeper, 'lg', this.contractIdKeeper);
-  }
+
   copyText(textToCopy: string) {
     this.clipboard.copy(textToCopy);
     this.toastr.info('کپی شد', '', {

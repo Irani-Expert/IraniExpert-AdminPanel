@@ -22,6 +22,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     NgbModule,
     NgxPaginationModule,
+    DragScrollModule
   ],
 })
 export class ContractModule {}
