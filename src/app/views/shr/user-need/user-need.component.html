@@ -5,7 +5,39 @@
   (click)="updateNotebar()"
 ></div>
 
-<div class="row g-0 p-0 m-0">
+<div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-3">
+  <button
+    type="button"
+    class="btn btn-details radius py-btns text-small"
+    id="dropdownBasic1"
+    ngbDropdownToggle
+  >
+    درخواست: {{ dropDownTitleHolder }}
+  </button>
+  <div
+    ngbDropdownMenu
+    class="mt-1 shadow-lg radius"
+    aria-labelledby="dropdownBasic1"
+  >
+    <button
+      class="text-left btn"
+      ngbDropdownItem
+      *ngFor="let item of statusTitles"
+      (click)="getUserNeedByUserWant(item.id, 0)"
+    >
+      <strong>{{ item.title }}</strong>
+    </button>
+  </div>
+</div>
+<button
+  class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
+  (click)="openFilterModal(filterModal)"
+>
+  <i class="i-Filter-2 text-dark text-bigger mr-2"></i>
+  <strong class="text-dark ml-2 text-small"> فیلتر کردن</strong>
+</button>
+
+<!-- <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
     <div class="col-auto mb-2">
       <button
@@ -43,11 +75,8 @@
       </button>
     </div>
   </div>
+</div> -->
 
-  <button class="btn bg-dark text-white" (click)="openFilterModal(filterModal)">
-    فیلتر کردن
-  </button>
-</div>
 <div class="my-css d-flex flex-wrap w-100 pb-5">
   <div id="comments" class="w-100">
     <div
@@ -542,55 +571,100 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="text-white d-flex flex-column">
-      <label>شناسه</label>
-      <input type="text" [(ngModel)]="filterModel.iD" />
+    <div class="text-white d-flex flex-wrap input-form">
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-2">
+        <label>شناسه</label>
+        <input type="text" [(ngModel)]="filterModel.iD" />
+      </div>
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-2">
+        <label for="">نام</label>
+        <input type="text" [(ngModel)]="filterModel.firstName" />
+      </div>
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-2">
+        <label>نام خانوادگی</label>
+        <input type="text" [(ngModel)]="filterModel.lastName" />
+      </div>
 
-      <label for="">نام</label>
-      <input type="text" [(ngModel)]="filterModel.firstName" />
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-2">
+        <label for="">شماره تلفن</label>
+        <input type="text" [(ngModel)]="filterModel.phoneNumber" />
+      </div>
 
-      <label>نام خانوادگی</label>
-      <input type="text" [(ngModel)]="filterModel.lastName" />
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-2">
+        <label for="">ایمیل</label>
+        <input type="email" [(ngModel)]="filterModel.email" />
+      </div>
 
-      <label for="">شماره تلفن</label>
-      <input type="text" [(ngModel)]="filterModel.phoneNumber" />
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-2">
+        <label for="">میزان</label>
+        <input type="text" [(ngModel)]="filterModel.amount" />
+      </div>
 
-      <label for="">ایمیل</label>
-      <input type="email" [(ngModel)]="filterModel.email" />
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-2">
+        <label for="">از تاریخ ایجاد</label>
+        <input
+          type="text"
+          (click)="datePickerStatus1.toggle()"
+          ngbDatepicker
+          #datePickerStatus1="ngbDatepicker"
+          [(ngModel)]="fromCreateDate"
+        />
+      </div>
 
-      <label for="">میزان</label>
-      <input type="text" [(ngModel)]="filterModel.amount" />
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-2">
+        <label for="">تا تاریخ پایان</label>
+        <input
+          type="text"
+          (click)="datePickerStatus2.toggle()"
+          ngbDatepicker
+          #datePickerStatus2="ngbDatepicker"
+          [(ngModel)]="toCreateDate"
+        />
+      </div>
 
-      <label for="">فعالیت مالی</label>
-      <input type="checkbox" [(ngModel)]="filterModel.financialActivity" />
+      <div class="col-12">
+        <div
+          class="d-flex justify-content-between col-12 col-lg-6 col-xl-4 my-2"
+        >
+          <label for="">فعالیت مالی</label>
+          <label class="switch">
+            <input
+              type="checkbox"
+              [(ngModel)]="filterModel.financialActivity"
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
 
-      <label for="">استفاده از ربات</label>
-      <input type="checkbox" [(ngModel)]="filterModel.robotUsage" />
+        <div
+          class="d-flex justify-content-between col-12 col-lg-6 col-xl-4 my-2"
+        >
+          <label for="">استفاده از ربات</label>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="filterModel.robotUsage" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
 
-      <label for="">از تاریخ ایجاد</label>
-      <input
-        type="text"
-        (click)="datePickerStatus1.toggle()"
-        ngbDatepicker
-        #datePickerStatus1="ngbDatepicker"
-        [(ngModel)]="fromCreateDate"
-      />
+      <div class="modal-footer col-12 mt-5">
+        <button
+          type="button"
+          class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
+          (click)="[startFilter(), modal.dismiss()]"
+        >
+          <i class="i-Yes text-bigger mr-2"></i>
+          <strong class="ml-2 text-small">تایید</strong>
+        </button>
 
-      <label for="">تا تاریخ پایان</label>
-      <input
-        type="text"
-        (click)="datePickerStatus2.toggle()"
-        ngbDatepicker
-        #datePickerStatus2="ngbDatepicker"
-        [(ngModel)]="toCreateDate"
-      />
-      <button
-        type="button"
-        class="mt-5"
-        (click)="[startFilter(), modal.dismiss()]"
-      >
-        ثبت
-      </button>
+        <button
+          type="button"
+          class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center ml-2"
+          (click)="modal.dismiss()"
+        >
+          <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
+        </button>
+      </div>
     </div>
   </div>
 </ng-template>

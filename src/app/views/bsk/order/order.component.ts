@@ -1,7 +1,7 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'jalali-moment';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { ToastrService } from 'ngx-toastr';
@@ -78,8 +78,8 @@ export class OrderComponent implements OnInit {
   filePathKeeper: string;
   licenseFile: any = '';
   licenseModel: LicenseModel = new LicenseModel();
-  startDate: any;
-  expireDate: any;
+  startDate: NgbDate = new NgbDate(2023, 4, 3);
+  expireDate: NgbDate = new NgbDate(2023, 4, 3);
   clientId: number;
   versionNumber: number;
 
@@ -114,10 +114,11 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._orderService.getProduct().subscribe((res: Result<ProductModel[]>) => {
-      this.productModel = res.data;
-    });
-    console.log(this.filter);
+    this._orderService
+      .getProduct()
+      .subscribe((res: Result<Paginate<ProductModel[]>>) => {
+        this.productModel = res.data.items;
+      });
 
     this.setPage(this.page.pageNumber, 8);
     this.filterForm = this._formBuilder.group({
@@ -518,8 +519,39 @@ export class OrderComponent implements OnInit {
           if (res.success) {
             this.licenseModel = res.data;
             this.filePathKeeper = res.data.filePath;
-            this.expireDate = res.data.expireDate;
-            this.startDate = res.data.startDate;
+
+            // sendDateToInputValue
+
+            this.expireDate.year = Number(
+              this.licenseModel.expireDate.slice(0, 4)
+            );
+            this.expireDate.month = Number(
+              this.licenseModel.expireDate.slice(5, 7)
+            );
+            this.expireDate.day = Number(
+              this.licenseModel.expireDate.slice(8, 10)
+            );
+            this.expireDate = new NgbDate(
+              this.expireDate.year,
+              this.expireDate.month,
+              this.expireDate.day
+            );
+            this.startDate.year = Number(
+              this.licenseModel.startDate.slice(0, 4)
+            );
+            this.startDate.month = Number(
+              this.licenseModel.startDate.slice(5, 7)
+            );
+            this.startDate.day = Number(
+              this.licenseModel.startDate.slice(8, 10)
+            );
+            this.startDate = new NgbDate(
+              this.startDate.year,
+              this.startDate.month,
+              this.startDate.day
+            );
+            // sendDateToInputValue
+
             this.versionNumber = res.data.versionNumber;
           }
         });
@@ -569,27 +601,7 @@ export class OrderComponent implements OnInit {
       });
   }
 
-  addOrUpdate(item: LicenseModel, climax: CliamxLicenseModel) {
-    if (this.expireDate.month < 10) {
-      this.expireDate.month = '0' + this.expireDate.month;
-    } else {
-      this.expireDate.month = this.expireDate.month;
-    }
-    if (this.expireDate.day < 10) {
-      this.expireDate.day = '0' + this.expireDate.day;
-    } else {
-      this.expireDate.day = this.expireDate.day;
-    }
-    if (this.startDate.month < 10) {
-      this.startDate.month = '0' + this.startDate.month;
-    } else {
-      this.startDate.month = this.startDate.month;
-    }
-    if (this.startDate.day < 10) {
-      this.startDate.day = '0' + this.startDate.day;
-    } else {
-      this.startDate.day = this.startDate.day;
-    }
+  addOrUpdate(item: LicenseModel, _climax: CliamxLicenseModel) {
     if (this.licenseID == null) {
       item = new LicenseModel();
     }
@@ -599,20 +611,29 @@ export class OrderComponent implements OnInit {
     item.filePath = this.licenseModel.filePath;
     item.versionNumber = this.versionNumber;
     if (this.startDate.year !== undefined) {
+      debugger;
       item.startDate =
         this.startDate.year +
         '-' +
-        this.startDate.month +
+        (this.startDate.month < 10
+          ? '0' + this.startDate.month
+          : this.startDate.month) +
         '-' +
-        this.startDate.day;
+        (this.startDate.day < 10
+          ? '0' + this.startDate.day
+          : this.startDate.day);
     }
     if (this.expireDate.year !== undefined) {
       item.expireDate =
         this.expireDate.year +
         '-' +
-        this.expireDate.month +
+        (this.expireDate.month < 10
+          ? '0' + this.expireDate.month
+          : this.expireDate.month) +
         '-' +
-        this.expireDate.day;
+        (this.expireDate.day < 10
+          ? '0' + this.expireDate.day
+          : this.expireDate.day);
     }
     let sendLicense = {
       rowID: item.rowID,
@@ -683,7 +704,7 @@ export class OrderComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
-        (result) => {
+        (_result) => {
           if (this.filterModel.rate != null) {
             this.filterModel.rate = Number(this.filterModel.rate);
           }
@@ -740,7 +761,7 @@ export class OrderComponent implements OnInit {
           this.fillTheFiltersRow(this.filter);
           this.filtered = true;
         },
-        (reason) => {
+        (_reason) => {
           this.filterModel = new FilterModel();
         }
       );
@@ -766,11 +787,13 @@ export class OrderComponent implements OnInit {
     }
   }
   deleteFilter(item: any) {
-    let finder = this.filters.findIndex((filter) => filter.id == item.id);
+    let finder = this.filters.findIndex(
+      (filter: { id: number }) => filter.id == item.id
+    );
 
     this.filters[finder].isFilled = false;
     let indexOfTheFilter = this.filters.findIndex(
-      (filter) => filter.isFilled == true
+      (filter: { isFilled: boolean }) => filter.isFilled == true
     );
     if (indexOfTheFilter == -1) {
       this.filtered = false;
@@ -855,8 +878,8 @@ export class OrderComponent implements OnInit {
         title: filter.lastName,
         isFilled: false,
       },
-      { id: 3, label: 'نام', title: filter.iD, isFilled: false },
-      { id: 4, label: 'نام', title: filter.userID, isFilled: false },
+      { id: 3, label: 'ID سفارش', title: filter.iD, isFilled: false },
+      { id: 4, label: 'ID کاربر', title: filter.userID, isFilled: false },
       {
         id: 5,
         label: 'شماره حساب',
@@ -869,7 +892,7 @@ export class OrderComponent implements OnInit {
         title: filter.phoneNumber,
         isFilled: false,
       },
-      { id: 7, label: 'نام', title: filter.planID, isFilled: false },
+      { id: 7, label: 'پلن', title: filter.planID, isFilled: false },
       {
         id: 8,
         label: 'محصول',
@@ -882,42 +905,54 @@ export class OrderComponent implements OnInit {
         title: filter.isAccepted,
         isFilled: false,
       },
-      { id: 10, label: 'نام', title: filter.rate, isFilled: false },
-      { id: 11, label: 'نام', title: filter.code, isFilled: false },
+      { id: 10, label: 'امیاز', title: filter.rate, isFilled: false },
+      { id: 11, label: 'کد رهگیری', title: filter.code, isFilled: false },
       {
         id: 12,
         label: 'از انقضا در',
-        title: filter.fromExpireDate,
+        title: filter.fromExpireDate
+          ? filter.fromExpireDate.split('-').reverse().join('-')
+          : undefined,
         isFilled: false,
       },
       {
         id: 13,
         label: ' تا انقضا در',
-        title: filter.toExpireDate,
+        title: filter.toExpireDate
+          ? filter.toExpireDate.split('-').reverse().join('-')
+          : undefined,
         isFilled: false,
       },
       {
         id: 14,
         label: 'از شروع در',
-        title: filter.fromStartDate,
+        title: filter.fromStartDate
+          ? filter.fromStartDate.split('-').reverse().join('-')
+          : undefined,
         isFilled: false,
       },
       {
         id: 15,
         label: 'تا شروع در',
-        title: filter.toStartDate,
+        title: filter.toStartDate
+          ? filter.toStartDate.split('-').reverse().join('-')
+          : undefined,
         isFilled: false,
       },
       {
         id: 16,
         label: 'از ایجاد در',
-        title: filter.fromCreateDate,
+        title: filter.fromCreateDate
+          ? filter.fromCreateDate.split('-').reverse().join('-')
+          : undefined,
         isFilled: false,
       },
       {
         id: 17,
         label: 'تا ایجاد در',
-        title: filter.toCreateDate,
+        title: filter.toCreateDate
+          ? filter.toCreateDate.split('-').reverse().join('-')
+          : undefined,
         isFilled: false,
       },
       {
@@ -932,5 +967,19 @@ export class OrderComponent implements OnInit {
         item.isFilled = true;
       }
     });
+    if (this.filters[7].isFilled == true) {
+      this.productModel.forEach((item) => {
+        if (item.id == filter.productID) {
+          this.filters[7].title = item.title;
+        }
+      });
+    }
+    if (this.filters[6].isFilled == true) {
+      this.plans.forEach((item) => {
+        if (item.id == filter.planID) {
+          this.filters[6].title = item.title;
+        }
+      });
+    }
   }
 }

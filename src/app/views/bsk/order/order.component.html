@@ -30,12 +30,13 @@
   </div>
 </div>
 
-<a
+<button
   (click)="openFilterModal(filterModal)"
   class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
-  ><i class="i-Filter-2 text-dark text-bigger mr-2"></i>
-  <strong class="text-dark ml-2 text-small"> فیلتر کردن</strong></a
 >
+  <i class="i-Filter-2 text-dark text-bigger mr-2"></i>
+  <strong class="text-dark ml-2 text-small"> فیلتر</strong>
+</button>
 <div
   class="flex-row d-flex justify-content-start align-items-center"
   *ngIf="filtered"
@@ -756,7 +757,7 @@
       <form class="row" [formGroup]="filterForm" (ngSubmit)="modal.close(true)">
         <div class="modal-body">
           <div class="row">
-            <div class="col-md-4 form-group mb-3 mt-3">
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
               <label class="text-white">ID</label>
               <input
                 class="form-control"
@@ -764,7 +765,7 @@
                 formControlName="iD"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3">
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
               <label class="text-white">ایدی کاربری</label>
               <input
                 class="form-control"
@@ -772,7 +773,7 @@
                 formControlName="userID"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3">
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
               <label class="text-white">نام</label>
               <input
                 class="form-control"
@@ -780,7 +781,7 @@
                 formControlName="firstName"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3">
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
               <label class="text-white">نام خانوادگی</label>
               <input
                 class="form-control"
@@ -788,7 +789,7 @@
                 formControlName="lastName"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3">
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
               <label class="text-white">شماره حساب</label>
               <input
                 class="form-control"
@@ -796,7 +797,10 @@
                 formControlName="accountNumber"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3" *ngIf="status == 8">
+            <div
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
+              *ngIf="status == 8"
+            >
               <label class="text-white">شناسه محصول</label>
               <input
                 name="accountNumber"
@@ -806,10 +810,8 @@
                 formControlName="versionNumber"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3" dir="ltr">
-              <label for="accountNumber " class="text-white"
-                >از تاریخ ایجاد</label
-              >
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3" dir="ltr">
+              <label for="accountNumber " class="text-white"> ت ثبت از</label>
 
               <input
                 (click)="d.toggle()"
@@ -821,8 +823,8 @@
                 formControlName="fromCreateDate"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3" dir="ltr">
-              <label class="text-white">تا تاریخ ایجاد</label>
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3" dir="ltr">
+              <label class="text-white">ت ثبت تا</label>
 
               <input
                 (click)="e.toggle()"
@@ -835,11 +837,11 @@
               />
             </div>
             <div
-              class="col-md-4 form-group mb-3 mt-3"
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
               dir="ltr"
               *ngIf="status == 8"
             >
-              <label class="text-white">از تاریخ شروع</label>
+              <label class="text-white">ت شروع لایسنس</label>
 
               <input
                 (click)="m.toggle()"
@@ -852,11 +854,11 @@
               />
             </div>
             <div
-              class="col-md-4 form-group mb-3 mt-3"
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
               dir="ltr"
               *ngIf="status == 8"
             >
-              <label class="text-white">تا تاریخ شروع</label>
+              <label class="text-white">ت شروع لایسنس تا</label>
 
               <input
                 (click)="s.toggle()"
@@ -869,12 +871,12 @@
               />
             </div>
             <div
-              class="col-md-4 form-group mb-3 mt-3"
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
               dir="ltr"
               *ngIf="status == 8"
             >
               <label for="accountNumber " class="text-white"
-                >از تاریخ پایان</label
+                >ت پایان لایسنس از</label
               >
 
               <input
@@ -888,11 +890,11 @@
               />
             </div>
             <div
-              class="col-md-4 form-group mb-3 mt-3"
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
               dir="ltr"
               *ngIf="status == 8"
             >
-              <label class="text-white">تا تاریخ پایان</label>
+              <label class="text-white">ت پایان لایسنس تا</label>
 
               <input
                 (click)="ms.toggle()"
@@ -904,7 +906,7 @@
                 formControlName="toExpireDate"
               />
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3">
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
               <label class="text-white">محصول</label>
               <select
                 class="form-control mt-1 text-dark"
@@ -912,18 +914,12 @@
                 (ngModelChange)="selectProduct($event)"
                 formControlName="productID"
               >
-                <option
-                  *ngFor="let item of productModel.items"
-                  value="{{ item.id }}"
-                >
+                <option *ngFor="let item of productModel" value="{{ item.id }}">
                   {{ item.title }}
                 </option>
               </select>
             </div>
-            <div
-              class="col-md-4 form-group mb-3 mt-3"
-              *ngIf="this.plans.length !== 0"
-            >
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
               <label class="text-white">پلن محصول</label>
               <select
                 formControlName="planID"
@@ -931,12 +927,19 @@
                 [(ngModel)]="filterModel.planID"
                 (ngModelChange)="selectProductPlan($event)"
               >
-                <option *ngFor="let item of plans" value="{{ item.id }}">
-                  {{ item.title }}
+                <ng-container *ngFor="let item of plans">
+                  <option *ngIf="plans.length !== 0" value="{{ item.id }}">
+                    <p class="text-small">
+                      {{ item.title }}
+                    </p>
+                  </option>
+                </ng-container>
+                <option *ngIf="plans.length == 0">
+                  <p class="text-small">لطفا اول محصول را انتخاب کنید</p>
                 </option>
               </select>
             </div>
-            <div class="col-md-4 form-group mb-3 mt-3">
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
               <label class="text-white">کد</label>
               <input
                 class="form-control"
@@ -945,7 +948,7 @@
               />
             </div>
 
-            <div class="col-md-4 form-group mb-3 mt-3" dir="ltr">
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3" dir="ltr">
               <label class="text-white">شماره تماس</label>
               <input
                 class="form-control"
@@ -972,21 +975,20 @@
         </div>
         <div class="modal-footer w-100">
           <button
-            ngbAutofocus
             type="button"
-            class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
-            (click)="modal.close(true)"
-          >
-            <i class="i-Pen-5 text-bigger mr-2"></i>
-            <strong class="ml-2 text-small">ویرایش</strong>
-          </button>
-
-          <button
-            type="button"
-            class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center ml-2"
+            class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center"
             (click)="modal.dismiss()"
           >
             <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
+          </button>
+          <button
+            ngbAutofocus
+            type="button"
+            class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
+            (click)="modal.close(true)"
+          >
+            <i class="i-Yes text-bigger mr-2"></i>
+            <strong class="ml-2 text-small">تائید</strong>
           </button>
         </div>
       </form>

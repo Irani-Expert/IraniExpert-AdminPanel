@@ -11,6 +11,7 @@ import { UserCommentComponent } from './user-comment/user-comment.component';
 import { AllCommentComponent } from './all-comment/all-comment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
+import { NotesComponent } from './notes/notes.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
     UserWantsPipe,
     UserCommentComponent,
     AllCommentComponent,
+    NotesComponent,
   ],
   imports: [
     ReactiveFormsModule,

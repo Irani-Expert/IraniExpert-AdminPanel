@@ -114,7 +114,7 @@ export class OrderService extends BaseService<OrderModel, 0> {
         Expires: '0',
       }),
     };
-    return this._http.get<Result<ProductModel[]>>(
+    return this._http.get<Result<Paginate<ProductModel[]>>>(
       this._base + '/Product?pageIndex=0&pageSize=100',
       _options
     );
