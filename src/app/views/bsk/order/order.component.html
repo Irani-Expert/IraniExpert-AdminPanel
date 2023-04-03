@@ -913,10 +913,7 @@
                 (ngModelChange)="selectProduct($event)"
                 formControlName="productID"
               >
-                <option
-                  *ngFor="let item of productModel.items"
-                  value="{{ item.id }}"
-                >
+                <option *ngFor="let item of productModel" value="{{ item.id }}">
                   {{ item.title }}
                 </option>
               </select>
@@ -979,7 +976,7 @@
             (click)="modal.close(true)"
           >
             <i class="i-Yes text-bigger mr-2"></i>
-            <strong class="ml-2 text-small">تایید</strong>
+            <strong class="ml-2 text-small">تائید</strong>
           </button>
 
           <button

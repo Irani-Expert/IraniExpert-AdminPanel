@@ -41,7 +41,7 @@
 <div class="my-css d-flex flex-wrap w-100">
   <div
     *ngFor="
-      let item of rows.slice().reverse()
+      let item of rows
         | paginate
           : {
               itemsPerPage: page.size,

@@ -42,7 +42,6 @@ export class GalleryComponent implements OnInit {
   async getFileByProductId(rowId: number, tableType: number) {
     this._fileService.getFilesByRowIdAndTableType(rowId, tableType).subscribe(
       (res: Result<FileModel[]>) => {
-        debugger
         this.rows = res.data;
       },
       (_error) => {

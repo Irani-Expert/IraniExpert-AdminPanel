@@ -220,7 +220,6 @@ export class AllCommentComponent implements OnInit {
               '-' +
               this.CrtDate.day;
           }
-          debugger;
           this.getCommentList(0, 10, this.filterModel);
           this.filter = new FilterModel();
         },

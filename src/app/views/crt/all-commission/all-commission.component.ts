@@ -59,7 +59,6 @@ export class AllCommissionComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.getAllCommission(3);
-    debugger;
     this.page.pageNumber = 0;
 
     this.addRedeiptForm = this._formBuilder.group({
@@ -142,13 +141,11 @@ export class AllCommissionComponent implements OnInit {
       (result) => {
         this.ChangeBackdrop = false;
         if(contractId==undefined){
-          debugger
           this.addNewReceipt()
         }
     
       },
       (result) => {
-        debugger
         this.ChangeBackdrop = false;
       }
     );
