@@ -89,6 +89,7 @@
             <strong for="totalPrice" class="mb-3">درصد دریافتی</strong>
             <input
               type="number"
+              placeholder=""
               class="form-control mt-1"
               [formControl]="contractList.controls['prcentReward']"
               id="prcentReward"
@@ -161,9 +162,17 @@
               </option>
             </select>
           </div> -->
-          <!-- <div class="col-md-4 form-group mb-3">
+          <div class="col-md-4 form-group mb-3">
             <strong for="totalPrice" class="mb-3">کاربر</strong>
-            <select
+            <input
+              type="number"
+              placeholder=""
+              class="form-control mt-1"
+              [formControl]="contractList.controls['userID']"
+              id="userID"
+              [(ngModel)]="contractModel.userID"
+            />
+            <!-- <select
               class="form-control mt-1"
               [formControl]="contractList.controls['userID']"
               [(ngModel)]="contractModel.userID"
@@ -171,8 +180,8 @@
               <option *ngFor="let item of userInfo" value="{{ item.userID }}">
                 {{ item.firstname }} {{ item.lastName }}
               </option>
-            </select>
-          </div> -->
+            </select> -->
+          </div>
         </div>
       </form>
     </div>

@@ -161,7 +161,6 @@ export class ContractListComponent implements OnInit {
   }
   contractWith() {
     this.contractModel.sellingType = Number(this.contractModel.sellingType);
-    this.contractModel.userID = 54;
     this.contractModel.isActive = true;
     this._contractService
       .create(this.contractModel, 'Contract')

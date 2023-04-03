@@ -66,19 +66,15 @@
     </a>
   </ng-container>
   <a
+    (click)="deleteAllFilter()"
     class="d-inline-flex btn-delete clickable-btn p-1 justify-content-start radius m-1 align-items-center"
   >
-    <button
-      (click)="deleteAllFilter()"
-      class="bg-transparent btn-scale-1 btn d-flex align-items-center"
-    >
+    <button class="bg-transparent btn-scale-1 btn d-flex align-items-center">
       <i
         class="i-Close text-white"
         style="font-size: 22px; font-weight: normal"
       ></i>
     </button>
-
-    <div class="vertical"></div>
     <strong class="text-white text-small ml-2 pt-1 pr-2"
       >حذف همه فیلتر ها</strong
     >

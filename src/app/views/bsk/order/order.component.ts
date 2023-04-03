@@ -767,7 +767,14 @@ export class OrderComponent implements OnInit {
   }
   deleteFilter(item: any) {
     let finder = this.filters.findIndex((filter) => filter.id == item.id);
+
     this.filters[finder].isFilled = false;
+    let indexOfTheFilter = this.filters.findIndex(
+      (filter) => filter.isFilled == true
+    );
+    if (indexOfTheFilter == -1) {
+      this.filtered = false;
+    }
     switch (item.id) {
       case 1:
         this.filter.firstName = undefined;
@@ -830,9 +837,7 @@ export class OrderComponent implements OnInit {
     this.filtered = false;
     this.filter = new FilterModel();
     this.filters.forEach((item) => {
-      if (item.isFilled == true) {
-        item.isFilled = false;
-      }
+      item.isFilled = false;
     });
     this.getOrders(this.status, this.page.pageNumber, this.filter);
   }
