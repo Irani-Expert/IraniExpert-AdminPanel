@@ -13,21 +13,31 @@
   "
 ></div>
 
-<div class="row g-0 p-0 m-0">
-  <div class="col-12 row g-0 p-0 flex-row mb-2">
-    <div class="col-auto mb-2">
-      <button class="btn btn-primary" (click)="getAllCommission(3)">
-        بازار یاب
-      </button>
-    </div>
-    <div class="col-auto mb-2">
-      <button class="btn bg-dark text-white" (click)="getAllCommission(2)">
-        مدیر فروش
-      </button>
-    </div>
+<div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-3">
+  <button
+    type="button"
+    class="btn btn-details radius py-btns text-small"
+    id="dropdownBasic1"
+    ngbDropdownToggle
+  >
+    سفارشات {{ dropDownTitleHolder }}
+  </button>
+  <div
+    ngbDropdownMenu
+    class="mt-1 shadow-lg radius"
+    aria-labelledby="dropdownBasic1"
+    ngModel="item.title"
+  >
+    <button
+      class="text-left btn"
+      ngbDropdownItem
+      *ngFor="let item of statusTitles"
+      (click)="getAllCommission(item.id)"
+    >
+      <strong>{{ item.title }}</strong>
+    </button>
   </div>
 </div>
-
 <section class="main-table">
   <table class="table">
     <thead class="bg-dark text-white">
@@ -35,36 +45,32 @@
         <th>شناسه قرارداد</th>
         <th>نام</th>
         <th>نام خانوادگی</th>
-        <th>کمیسیون</th>
+        <th>کل کمیسیون</th>
         <th>باقی مانده</th>
         <th class="rounded--left">رسید ها</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let item of rows | paginate
-      : {
-          itemsPerPage: 30,
-          page: page.pageNumber - 1,
-          currentPage: page.pageNumber - 1,
-          totalItems: 30
-        }">
+      <tr *ngFor="let item of rows">
         <td>{{ item.contractID }}</td>
         <td>{{ item.firstName }}</td>
         <td>{{ item.lastName }}</td>
-        <td class="money-color">{{ item.commission | number : "1.2-2" }}</td>
-        <td class="text-danger">
-          {{ item.remainCommission | number : "1.2-2" }}
+        <td class="money-color">{{ item.commission | number : "1.2-2" }}$</td>
+        <td >
+          {{ item.remainCommission | number : "1.2-2" }}$
         </td>
 
         <td class="td-oprate">
           <button
             (click)="openModal(addReceiptModal, 'lg', item.contractID)"
-            class="btn btn-details  text-white"
+            class="btn-details btn d-inline-flex justify-content-around py-btns radius align-items-center"
             type="button"
           >
+          <i class="i-Information mr-2" style="font-size: 1.2rem"></i>
           جزئیات          </button>
         </td>
+     
       </tr>
     </tbody>
   </table>
@@ -117,17 +123,17 @@
                 let item of Receipt
                   | paginate
                     : {
-                        itemsPerPage: 30,
+                        itemsPerPage: page.size,
                         page: page.pageNumber - 1,
                         currentPage: page.pageNumber - 1,
-                        totalItems: 30
+                        totalItems: page.totalElements
                       }
               "
             >
-              <td>{{ item.paymentDate }} <i class="i-Clock"></i></td>
-              <td>{{ item.price }}</td>
-              <td>{{ item.paymentStep }}</td>
-              <td class="td-modal">
+              <td class="d-flex justify-content-center align-items-center"  dir="ltr">{{ item.paymentDate| slice:0:10 }}  <i class="i-Clock"></i></td>
+              <td class="d-flex justify-content-center align-items-center">{{ item.price }}$</td>
+              <td class="d-flex justify-content-center align-items-center">{{ item.paymentStep }}</td>
+              <td class="td-modal ">
                 <ng-template #tipContent
                   ><div class="tooltip-size">
                     {{ item.serialNumber }}
@@ -135,7 +141,7 @@
                 >
 
                 <div
-                  class="card shadow"
+                  class="card shadow m-0"
                   animation="true"
                   tooltipClass="my-custom-class"
                   [openDelay]="200"
@@ -144,14 +150,14 @@
                   [ngbTooltip]="tipContent"
                 >
                   <div
-                    class="card-body btn-download  c-poiter row"
+                    class="card-body btn-download  c-poiter row d-flex justify-content-center pl-0 pr-0"
                     (click)="copyText(item.serialNumber)"
           
               
                   >          
                   <div >{{ item.serialNumber | slice:0:7}}</div>
-                  <div>.......</div>
-                  <div >{{ item.serialNumber | slice :-7 }}</div> 
+                  <div>......</div>
+                  <div class="">{{ item.serialNumber | slice :-7 }}</div> 
                   </div>
                 </div>
               </td>
@@ -180,12 +186,12 @@
             *ngFor="
               let item of Receipt
                 | paginate
-                  : {
-                      itemsPerPage: 30,
-                      page: page.pageNumber - 1,
-                      currentPage: page.pageNumber - 1,
-                      totalItems: 30
-                    }
+                : {
+                  itemsPerPage: page.size,
+                  page: page.pageNumber,
+                  currentPage: page.pageNumber,
+                  totalItems: page.totalElements
+                }
             "
           >
             <td>{{ item.paymentDate }} <i class="i-Clock"></i></td>

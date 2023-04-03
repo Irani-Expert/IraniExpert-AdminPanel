@@ -787,11 +787,13 @@ export class OrderComponent implements OnInit {
     }
   }
   deleteFilter(item: any) {
-    let finder = this.filters.findIndex((filter) => filter.id == item.id);
+    let finder = this.filters.findIndex(
+      (filter: { id: number }) => filter.id == item.id
+    );
 
     this.filters[finder].isFilled = false;
     let indexOfTheFilter = this.filters.findIndex(
-      (filter) => filter.isFilled == true
+      (filter: { isFilled: boolean }) => filter.isFilled == true
     );
     if (indexOfTheFilter == -1) {
       this.filtered = false;
@@ -876,8 +878,8 @@ export class OrderComponent implements OnInit {
         title: filter.lastName,
         isFilled: false,
       },
-      { id: 3, label: 'نام', title: filter.iD, isFilled: false },
-      { id: 4, label: 'نام', title: filter.userID, isFilled: false },
+      { id: 3, label: 'ID سفارش', title: filter.iD, isFilled: false },
+      { id: 4, label: 'ID کاربر', title: filter.userID, isFilled: false },
       {
         id: 5,
         label: 'شماره حساب',

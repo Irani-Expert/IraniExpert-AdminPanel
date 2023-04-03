@@ -32,6 +32,12 @@ export class AllCommissionComponent implements OnInit {
   addRedeiptForm: FormGroup;
   page: Page = new Page();
   ChangeBackdrop: boolean = false;
+  dropDownTitleHolder: string = 'بازاریاب';
+  statusTitles = [
+    { title: 'بازاریاب ', id: 3 },
+    { title: 'مدیر فروش', id: 2 },
+  
+  ];
   constructor(
     // private activeModal : NgbActiveModal,
     private modalService: NgbModal,
@@ -40,8 +46,9 @@ export class AllCommissionComponent implements OnInit {
     private clipboard: Clipboard,
     private toastr: ToastrService
   ) {
-    this.page.pageNumber = 0;
-    this.page.size = 12;
+    this.page.size = 10;
+
+    this.page.pageNumber = 1;
   }
   toast$: {
     type: 'warning';
@@ -59,7 +66,7 @@ export class AllCommissionComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.getAllCommission(3);
-    this.page.pageNumber = 0;
+    this.page.pageNumber = 1;
 
     this.addRedeiptForm = this._formBuilder.group({
       price: [null, Validators.compose([Validators.required])],
@@ -77,20 +84,24 @@ export class AllCommissionComponent implements OnInit {
     this._allcommissionService
       .getReceipt(
         this.contractId,
-        30,
-        this.page.pageNumber !== 0
-          ? this.page.pageNumber - 1
-          : this.page.pageNumber
+        10,
+
+         this.page.pageNumber - 1
+  
       )
       .subscribe((res: Result<Paginate<ReceiptModel[]>>) => {
+        debugger
         this.Receipt = res.data.items;
        
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
+        this.page.pageNumber = res.data.pageNumber + 1;
+        
         this.page.pageNumber = res.data.pageNumber ;
       });
   }
   getAllCommission(page: number) {
+    let finder = this.statusTitles.findIndex((item) => item.id == page);
     this._allcommissionService
       .getCommissionAllUser(page)
       .subscribe((commission) => {

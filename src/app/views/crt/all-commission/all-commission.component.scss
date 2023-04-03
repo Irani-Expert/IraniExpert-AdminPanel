@@ -76,7 +76,12 @@ td {
   height: 100%;
 
 }
-
+td {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+ }
 .drag-scroll-content[_ngcontent-qwm-c213]{
   overflow-x: hidden !important;
 
