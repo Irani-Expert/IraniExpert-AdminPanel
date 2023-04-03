@@ -30,12 +30,13 @@
   </div>
 </div>
 
-<a
+<button
   (click)="openFilterModal(filterModal)"
   class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
-  ><i class="i-Filter-2 text-dark text-bigger mr-2"></i>
-  <strong class="text-dark ml-2 text-small"> فیلتر کردن</strong></a
 >
+  <i class="i-Filter-2 text-dark text-bigger mr-2"></i>
+  <strong class="text-dark ml-2 text-small"> فیلتر کردن</strong>
+</button>
 <div
   class="flex-row d-flex justify-content-start align-items-center"
   *ngIf="filtered"
@@ -977,8 +978,8 @@
             class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="modal.close(true)"
           >
-            <i class="i-Pen-5 text-bigger mr-2"></i>
-            <strong class="ml-2 text-small">ویرایش</strong>
+            <i class="i-Yes text-bigger mr-2"></i>
+            <strong class="ml-2 text-small">تایید</strong>
           </button>
 
           <button

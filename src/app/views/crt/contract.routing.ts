@@ -5,7 +5,7 @@ import { AllCommissionComponent } from './all-commission/all-commission.componen
 import { ContractListComponent } from './contract-list/contract-list.component';
 const routes: Routes = [
   {
-    path: 'List',
+    path: 'list',
     component: ContractListComponent,
     canActivate: [AuthGuard],
   },

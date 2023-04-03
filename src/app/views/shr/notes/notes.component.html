@@ -1,0 +1,23 @@
+<div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-3">
+  <button
+    type="button"
+    class="btn btn-details radius py-btns text-small"
+    id="dropdownBasic1"
+    ngbDropdownToggle
+  >
+    یادداشت: {{ dropDownTitleHolder }}
+  </button>
+  <div
+    ngbDropdownMenu
+    class="mt-1 shadow-lg radius"
+    aria-labelledby="dropdownBasic1"
+  >
+    <button
+      class="text-left btn"
+      ngbDropdownItem
+      *ngFor="let item of tableTypes"
+    >
+      <strong>{{ item.title }}</strong>
+    </button>
+  </div>
+</div>

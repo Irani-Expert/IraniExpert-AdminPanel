@@ -196,7 +196,14 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-File-Horizontal-Text',
       privilege: 'Users-Full Premission',
-      state: '/crt/List',
+      state: '/crt/list',
+    },
+    {
+      name: 'یادداشت ها',
+      navType: 'link',
+      icon: 'i-Pen-5',
+      privilege: 'Comment-Full Premission',
+      state: '/shr/notes',
     },
     {
       name: 'نظرات من',

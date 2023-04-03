@@ -33,6 +33,16 @@ export class UserNeedComponent implements OnInit {
   fromCreateDate: { year: number; month: number; day: number };
   toCreateDate: { year: number; month: number; day: number };
 
+  dropDownTitleHolder: string = null;
+
+  statusTitles = [
+    { title: 'آخرین درخواست ها', id: null },
+    { title: 'دمو', id: 0 },
+    { title: 'مشاوره', id: 1 },
+    { title: 'مشارکت در سود', id: 2 },
+    { title: 'نمایشگاه', id: 3 },
+  ];
+
   note: CommentModel = new CommentModel();
   notes: CommentModel[] = new Array<CommentModel>();
   noteRowID: number;
@@ -103,6 +113,12 @@ export class UserNeedComponent implements OnInit {
 
   getUserNeedByUserWant(userWant: number, pageNumber: number) {
     this.userWant = userWant;
+
+    this.statusTitles.forEach((item) => {
+      if (item.id === userWant) {
+        this.dropDownTitleHolder = item.title;
+      }
+    });
 
     this._UserNeedService
       .getByStatus(12, pageNumber !== 0 ? pageNumber - 1 : pageNumber, userWant)
@@ -325,9 +341,18 @@ export class UserNeedComponent implements OnInit {
   */
 
   openFilterModal(content: any) {
-    this.modalService.open(content, {
-      size: 'lg',
-    });
+    this.modalService
+      .open(content, {
+        size: 'lg',
+      })
+      .result.then(
+        () => {},
+        () => {
+          this.filterModel = new FilterModel();
+          this.fromCreateDate = null;
+          this.toCreateDate = null;
+        }
+      );
 
     // .result.then((result) => {
     //   this._UserNeedService.getUserNeed(this.filterModel).subscribe(
@@ -350,7 +375,6 @@ export class UserNeedComponent implements OnInit {
         '-' +
         this.fromCreateDate.day;
     }
-
     if (this.toCreateDate) {
       this.filterModel.toCreateDate =
         this.toCreateDate.year +
@@ -359,7 +383,6 @@ export class UserNeedComponent implements OnInit {
         '-' +
         this.toCreateDate.day;
     }
-
     this._UserNeedService
       .getUserNeed(
         this.filterModel,
