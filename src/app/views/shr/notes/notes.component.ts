@@ -17,6 +17,7 @@ export class NotesComponent implements OnInit {
     { title: 'سفارشات', id: 8 },
     { title: 'درخواست مشتریان', id: 10 },
   ];
+  currentTableType: number = 8;
   dropDownTitleHolder: string = null;
 
   page: Page = new Page();
@@ -34,10 +35,14 @@ export class NotesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCommnetOfspecificTableTypes(8);
+    this.setPage(0, this.currentTableType);
   }
-
+  setPage(pageNumber: number, tableType: number) {
+    this.page.pageNumber = pageNumber;
+    this.getCommnetOfspecificTableTypes(tableType);
+  }
   getCommnetOfspecificTableTypes(tableTypeId: number) {
+    this.currentTableType = tableTypeId;
     this.tableTypes.forEach((item) => {
       if (item.id === tableTypeId) {
         this.dropDownTitleHolder = item.title;
@@ -45,7 +50,9 @@ export class NotesComponent implements OnInit {
     });
     this._commentService
       .GetAllComment(
-        this.page.pageNumber,
+        this.page.pageNumber !== 0
+          ? this.page.pageNumber - 1
+          : this.page.pageNumber,
         this.page.size,
         tableTypeId,
         this.filter
@@ -54,6 +61,9 @@ export class NotesComponent implements OnInit {
         (res: Result<Paginate<CommentModel[]>>) => {
           this.pageIsLoad = true;
           this.rows = res.data.items;
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber + 1;
         },
         (error) => {
           this.toastr.error(
