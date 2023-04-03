@@ -157,7 +157,7 @@ td {
 //   outline: 0;
 //   font-size: 26px;
 // }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
   .table-responsive{
   
     width: inherit;
@@ -172,7 +172,7 @@ td {
   height: 400px;
 }
 }
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 1000px) {
 
  .table-header{
   display: block;

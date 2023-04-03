@@ -30,6 +30,7 @@ import { ProductModel } from '../../prd/products-list/product.model';
 import { PlanService } from '../../bas/plan/plan.service';
 import { PlanModel } from '../../bas/plan/plan.model';
 import { List } from 'echarts';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-order',
@@ -44,6 +45,7 @@ export class OrderComponent implements OnInit {
     { title: 'درانتظار تائید', id: 6 },
     { title: 'تائید شده', id: 2 },
     { title: 'رد شده', id: 5 },
+    { title: 'فعال', id: 9 },
   ];
   dropDownTitleHolder: string = 'نهایی';
   FExpDate: any;
@@ -180,6 +182,11 @@ export class OrderComponent implements OnInit {
     let finder = this.statusTitles.findIndex((item) => item.id == status);
     this.dropDownTitleHolder = this.statusTitles[finder].title;
     this.status = status;
+    if( this.status ==9){
+      status  = 8;
+     filter.fromExpireDate=formatDate(new Date(), 'yyyy-MM-dd', 'en_US')
+
+    }
     this._orderService
       .getOrders(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
@@ -189,6 +196,9 @@ export class OrderComponent implements OnInit {
       )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
+       if(this.status==9){
+         filter.fromExpireDate = undefined
+       }
           this.rows = res.data.items;
           var counter = 0;
           this.rows.forEach((_x) => {
@@ -700,6 +710,7 @@ export class OrderComponent implements OnInit {
         });
     }
   }
+
   openFilterModal(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
@@ -756,6 +767,7 @@ export class OrderComponent implements OnInit {
               '-' +
               this.TExpDate.day;
           }
+          debugger
           this.getOrders(this.status, this.page.pageNumber, this.filterModel);
           this.filter = this.filterModel;
           this.fillTheFiltersRow(this.filter);
