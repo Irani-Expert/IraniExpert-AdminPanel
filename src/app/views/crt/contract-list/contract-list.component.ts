@@ -71,7 +71,7 @@ export class ContractListComponent implements OnInit {
       fromDate: [this.date, Validators.compose([Validators.required])],
       toDate: [this.date, Validators.compose([Validators.required])],
       // roleID: [null, Validators.compose([Validators.required])],
-      // userID: [null, Validators.compose([Validators.required])],
+      userID: [null, Validators.compose([Validators.required])],
       isActive: [true],
       condition: [null],
     });
