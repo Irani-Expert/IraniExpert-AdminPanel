@@ -32,6 +32,7 @@
   <table class="table">
     <thead class="bg-dark text-white">
       <tr>
+        <th>شناسه قرارداد</th>
         <th>نام</th>
         <th>نام خانوادگی</th>
         <th>کمیسیون</th>
@@ -48,6 +49,7 @@
           currentPage: page.pageNumber - 1,
           totalItems: 30
         }">
+        <td>{{ item.contractID }}</td>
         <td>{{ item.firstName }}</td>
         <td>{{ item.lastName }}</td>
         <td class="money-color">{{ item.commission | number : "1.2-2" }}</td>
@@ -142,10 +144,14 @@
                   [ngbTooltip]="tipContent"
                 >
                   <div
-                    class="card-body btn-download  c-poiter"
+                    class="card-body btn-download  c-poiter row"
                     (click)="copyText(item.serialNumber)"
-                  >
-                    {{ item.serialNumber }}
+          
+              
+                  >          
+                  <div >{{ item.serialNumber | slice:0:7}}</div>
+                  <div>.......</div>
+                  <div >{{ item.serialNumber | slice :-7 }}</div> 
                   </div>
                 </div>
               </td>

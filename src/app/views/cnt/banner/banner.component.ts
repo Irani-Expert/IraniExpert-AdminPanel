@@ -85,7 +85,6 @@ export class BannerComponent implements OnInit {
       )
       .subscribe(
         (res: Result<Paginate<BannerModel[]>>) => {
-          debugger
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;

@@ -50,7 +50,6 @@ export class allcommissionService extends BaseService<ConditionModel, number> {
         Expires: '0',
       }),
     };
-    debugger
     return this._http.get<Result<Paginate<ReceiptModel[]>>>(
       this._base +
         '/Receipt?' +
