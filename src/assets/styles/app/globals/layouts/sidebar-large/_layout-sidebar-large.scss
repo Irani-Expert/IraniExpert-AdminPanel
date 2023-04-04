@@ -67,21 +67,21 @@
         }
         .nav-item-hold {
           width: 100%;
-          padding: 26px 0;
+          padding: 22px 0;
           &:focus,
           &:active {
             outline: none;
           }
           .nav-icon,
           .feather {
-            font-size: 32px;
+            font-size: 27px;
             height: 32px;
             width: 32px;
             display: block;
             margin: 0 auto 6px;
           }
           .nav-text {
-            font-size: 13px;
+            font-size: 0.76rem;
             display: block;
             font-weight: 400;
           }

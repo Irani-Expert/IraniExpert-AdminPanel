@@ -1,11 +1,11 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'jalali-moment';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { ToastrService } from 'ngx-toastr';
-import { filter, findIndex } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
@@ -17,10 +17,7 @@ import { Utils } from 'src/app/shared/utils';
 import { CommentService } from '../../shr/all-comment/comment.service';
 import { InvoiceModel } from './models/invoice.model';
 import { InvoiceService } from './services/invoice.service';
-import {
-  CliamxLicenseModel,
-  CliamxResponse,
-} from './models/cliamaxLicense.model';
+import { CliamxLicenseModel } from './models/cliamaxLicense.model';
 import { LicenseModel } from './models/license.model';
 import { LicenseService } from './services/license.service';
 import { OrderModel } from './models/order.model';
@@ -29,7 +26,6 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { ProductModel } from '../../prd/products-list/product.model';
 import { PlanService } from '../../bas/plan/plan.service';
 import { PlanModel } from '../../bas/plan/plan.model';
-import { List } from 'echarts';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -182,10 +178,9 @@ export class OrderComponent implements OnInit {
     let finder = this.statusTitles.findIndex((item) => item.id == status);
     this.dropDownTitleHolder = this.statusTitles[finder].title;
     this.status = status;
-    if( this.status ==9){
-      status  = 8;
-     filter.fromExpireDate=formatDate(new Date(), 'yyyy-MM-dd', 'en_US')
-
+    if (this.status == 9) {
+      status = 8;
+      filter.fromExpireDate = formatDate(new Date(), 'yyyy-MM-dd', 'en_US');
     }
     this._orderService
       .getOrders(
@@ -196,9 +191,9 @@ export class OrderComponent implements OnInit {
       )
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
-       if(this.status==9){
-         filter.fromExpireDate = undefined
-       }
+          if (this.status == 9) {
+            filter.fromExpireDate = undefined;
+          }
           this.rows = res.data.items;
           var counter = 0;
           this.rows.forEach((_x) => {
@@ -716,9 +711,6 @@ export class OrderComponent implements OnInit {
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
         (_result) => {
-          if (this.filterModel.rate != null) {
-            this.filterModel.rate = Number(this.filterModel.rate);
-          }
           if (this.FCrtDate != null) {
             this.filterModel.fromCreateDate =
               this.FCrtDate.year +
@@ -767,13 +759,13 @@ export class OrderComponent implements OnInit {
               '-' +
               this.TExpDate.day;
           }
-          debugger
-          this.getOrders(this.status, this.page.pageNumber, this.filterModel);
           this.filter = this.filterModel;
+          this.getOrders(this.status, this.page.pageNumber, this.filterModel);
           this.fillTheFiltersRow(this.filter);
           this.filtered = true;
         },
         (_reason) => {
+          this.plans = [];
           this.filterModel = new FilterModel();
         }
       );
@@ -979,6 +971,10 @@ export class OrderComponent implements OnInit {
         item.isFilled = true;
       }
     });
+
+    if (this.status == 9) {
+      this.filters[11].isFilled = false;
+    }
     if (this.filters[7].isFilled == true) {
       this.productModel.forEach((item) => {
         if (item.id == filter.productID) {

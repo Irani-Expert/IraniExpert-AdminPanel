@@ -1,9 +1,9 @@
 <div class="main-header bg-lightdark">
-  <div class="logo">
+  <div class="logo mr-4">
     <a href="https://iraniexpert.com/">
       <img
         src="../../../../../../assets/images/darklogo.png"
-        class="logo-img"
+        class="logo-img bg-logo radius p-2"
         alt=""
       />
     </a>
@@ -16,23 +16,23 @@
       <div></div>
     </div>
 
-    <div ngbDropdown [placement]="'bottom-right'" class="user row">
+    <div ngbDropdown placement="bottom-end" class="">
       <!-- سلام این یه نمونه ی کار است که بخوایم کاری کنیم -->
 
       <div class="d-none d-vsm-block">
         <button
           ngbDropdownToggle
-          class="btn-outline-light btn header-dropdown-item"
+          class="btn-outline-light radius btn header-dropdown-item"
         >
-          <span class="text-white">
-            {{ user.firstName }} {{ user.lastName }} عزیز
+          <span class="text-white text-small">
+            {{ user.firstName }} {{ user.lastName }}
           </span>
         </button>
 
         <div
           ngbDropdownMenu
           aria-labelledby="userDropdown"
-          class="header-account-dropdown bg-dark"
+          class="header-account-dropdown mt-1 bg-dark radius"
         >
           <button
             class="dropdown-item align-items-center text-white bg-icon d-flex justify-content-between"
@@ -41,10 +41,10 @@
             <span class="d-flex">
               <i
                 class="i-Close mr-1"
-                style="font-size: 15px; color: #f3f4f6"
+                style="font-size: 18px; color: #f3f4f6"
               ></i>
             </span>
-            <span> خروج </span>
+            <span class="text-small"> خروج </span>
           </button>
         </div>
       </div>

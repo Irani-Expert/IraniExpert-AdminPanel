@@ -5,7 +5,7 @@
   (click)="clearNote()"
   (click)="updateNotebar()"
 ></div>
-<div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-3">
+<div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-2">
   <button
     type="button"
     class="btn btn-details radius py-btns text-small"
@@ -38,13 +38,13 @@
   <strong class="text-dark ml-2 text-small"> فیلتر</strong>
 </button>
 <div
-  class="flex-row d-flex justify-content-start align-items-center"
+  class="flex-row d-flex justify-content-start align-items-center mb-1"
   *ngIf="filtered"
 >
   <ng-container *ngFor="let filterItem of filters">
     <a
       *ngIf="filterItem.isFilled"
-      class="d-inline-flex bg-light clickable-btn p-1 justify-content-start radius m-1 align-items-center"
+      class="d-inline-flex bg-light clickable-btn justify-content-start radius m-1 align-items-center"
     >
       <button
         (click)="deleteFilter(filterItem)"
@@ -68,7 +68,7 @@
   </ng-container>
   <a
     (click)="deleteAllFilter()"
-    class="d-inline-flex btn-delete clickable-btn p-1 justify-content-start radius m-1 align-items-center"
+    class="d-inline-flex btn-delete clickable-btn justify-content-start radius m-1 align-items-center"
   >
     <button class="bg-transparent btn-scale-1 btn d-flex align-items-center">
       <i
@@ -801,7 +801,7 @@
               class="col-md-6 col-lg-4 form-group mb-3 mt-3"
               *ngIf="status == 8"
             >
-              <label class="text-white">شناسه محصول</label>
+              <label class="text-white">نسخه لایسنس</label>
               <input
                 name="accountNumber"
                 id="accountNumber"
@@ -956,8 +956,7 @@
                 formControlName="phoneNumber"
               />
             </div>
-            
-           
+
             <!-- <div class="col-md-6 form-group mb-3 mt-3">
               <label for="accountNumber " class="text-white">امتیاز</label>
               <select

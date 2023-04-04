@@ -1,11 +1,20 @@
 .logo-img {
   object-fit: contain;
-  width: 100%;
-  height: 100px;
 }
 .bg-icon:hover {
   background-color: #52495a !important;
 }
 .bg-lightdark {
   background-color: #5e6a69;
+}
+.bg-logo {
+  border: 0;
+  background-color: rgba(229, 219, 222, 0.9568627451);
+  transition: border, background-color 0.25s ease-in-out;
+}
+.bg-logo:hover {
+  border: 1px solid rgba(229, 219, 222, 0.9568627451);
+  background-color: #829291;
+
+  transition: border, background-color 0.25s ease-in-out;
 }

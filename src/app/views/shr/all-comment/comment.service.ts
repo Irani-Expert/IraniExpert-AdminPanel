@@ -102,8 +102,7 @@ export class CommentService extends BaseService<CommentModel, 0> {
     };
     return this._http.get<Result<Paginate<CommentModel[]>>>(
       this._base +
-        '/Comment' +
-        '?pagIndex=' +
+        '/Comment?pageIndex=' +
         pageIndex +
         '&pageSize=' +
         pageSize +
