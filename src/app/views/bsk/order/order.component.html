@@ -85,16 +85,15 @@
           ></i>
         </th>
         <th class="text-small">نام کاربر</th>
-        <th class="text-small">شماره ی حساب</th>
+
         <th class="text-small">نام و پلن محصول</th>
-        <th class="text-small">هزینه</th>
+        <th class="text-small">Max Balance</th>
         <th class="text-small" (click)="changeDateValue()">
           {{ dateValue
           }}<i
             class="text-white i-Sync nav-icon m-1 float-end p-2 text-dark syncIcon"
           ></i>
         </th>
-        <th class="text-small">Max Balance</th>
         <!-- <th class="text-small" *ngIf="status == null">وضعیت</th> -->
         <th class="rounded--left text-small">جزئیات</th>
       </tr>
@@ -122,19 +121,18 @@
         <td class="text-small">
           {{ item.firstName }}&nbsp;{{ item.lastName }}
         </td>
-        <td class="text-small">{{ item.accountNumber }}</td>
+
         <td class="text-small">{{ item.productTitle }}|{{ item.planTitle }}</td>
-        <td class="text-small">{{ item.price | currency }}</td>
+        <td class="text-small" *ngIf="item.maximumBalance != null">
+          {{ item.maximumBalance }}
+        </td>
+        <td class="text-small" *ngIf="item.maximumBalance == null">ندارد</td>
         <td class="text-small" *ngIf="dateValue == 'تاریخ ثبت به میلادی'">
           {{ item.createDate | date : " YYYY d MMMM " }}
         </td>
         <td class="text-small" *ngIf="dateValue == ' تاریخ ثبت به شمسی'">
           {{ item.jalaliDate }}
         </td>
-        <td class="text-small" *ngIf="item.maximumBalance != null">
-          {{ item.maximumBalance }}
-        </td>
-        <td class="text-small" *ngIf="item.maximumBalance == null">ندارد</td>
         <!-- <ng-container *ngIf="status == null">
           <td *ngIf="item.transactionStatus == 6">
             <span
@@ -549,10 +547,6 @@
         <div class="col-md-5 form-group mb-3" dir="ltr">
           <strong for="versionNumber" class="mb-3">Version Number</strong>
           <input type="text" class="form-control" [(ngModel)]="versionNumber" />
-        </div>
-        <div class="col-md-5 form-group mb-3" dir="ltr">
-          <strong for="accountNumber" class="mb-3">شماره حساب کاربر</strong>
-          <input type="text" class="form-control" [(ngModel)]="accountNumber" />
         </div>
       </div>
     </div>
