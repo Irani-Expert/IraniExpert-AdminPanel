@@ -111,6 +111,7 @@ export class AddUpdateComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.cardImagePath = undefined;
+          this.addUpdate.fileExists = false;
 
           this.toastr.success('با موفقیت حذف شد', null, {
             closeButton: true,
@@ -131,6 +132,7 @@ export class AddUpdateComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.cardImagePath = res.data[0];
+          this.addUpdate.fileExists = true;
           this.toastr.success('با موفقیت آپلود شد', null, {
             closeButton: true,
             positionClass: 'toast-top-left',

@@ -307,20 +307,15 @@
           *ngIf="addUpdate.fileType === 0 && addUpdate.fileType !== null"
         >
           <div class="row">
-            <ng-container *ngIf="imageFound">
+            <ng-container *ngIf="addUpdate.fileExists">
               <div
                 class="d-flex justify-content-end align-items-end col-md-4 col-5 mb-5 mt-1"
               >
                 <img
-                  *ngIf="addUpdate.fileExists"
-                  (error)="imageFound = false"
                   class="align-self-center w-100 radius-md"
                   [src]="'https://dl.iraniexpert.com/' + addUpdate.filePath"
                   [alt]="addUpdate.title"
                 />
-                <div *ngIf="!addUpdate.fileExists" class="w-100 text-center">
-                  تصویری موجود نیست
-                </div>
               </div>
               <div class="col-md-6 col-5">
                 <button
@@ -331,7 +326,7 @@
                 </button>
               </div>
             </ng-container>
-            <ng-container *ngIf="!imageFound">
+            <ng-container *ngIf="!addUpdate.fileExists">
               <div class="col-md-7 mt-4">
                 <input type="file" (change)="onFileChanged($event)" />
                 <div>
@@ -362,14 +357,6 @@
                   <strong>آپلود</strong>
                 </button>
               </div>
-              <small
-                *ngIf="
-                  addForm.controls['filePath'].hasError('required') &&
-                  addForm.controls['filePath'].touched
-                "
-                class="mat-text-warn m-t-negative"
-                >انتخاب یک مورد و آپلود ضروری است</small
-              >
             </ng-container>
           </div>
         </div>
