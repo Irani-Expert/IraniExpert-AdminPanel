@@ -34,6 +34,8 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  pageIsLoad: boolean = false;
+
   filters: any;
   statusTitles = [
     { title: 'نهایی', id: 8 },
@@ -174,6 +176,7 @@ export class OrderComponent implements OnInit {
       this.dateValue = ' تاریخ ثبت به شمسی';
     }
   }
+
   getOrders(status: any, pageNumber: number, filter: FilterModel) {
     let finder = this.statusTitles.findIndex((item) => item.id == status);
     this.dropDownTitleHolder = this.statusTitles[finder].title;
@@ -195,6 +198,7 @@ export class OrderComponent implements OnInit {
             filter.fromExpireDate = undefined;
           }
           this.rows = res.data.items;
+          this.pageIsLoad = true;
           var counter = 0;
           this.rows.forEach((_x) => {
             this.rows[counter].jalaliDate = moment(

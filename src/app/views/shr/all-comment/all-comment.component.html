@@ -1,6 +1,3 @@
-<!-- <button class="btn bg-dark text-white" (click)="openFilterModal(filterModal)">
-  فیلتر کردن
-</button> -->
 <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-3">
   <button
     type="button"
@@ -79,7 +76,7 @@
         </p>
         <ng-container *ngIf="item.parentID !== null">
           <p class="bg-dark text-white ml-3">
-            پاسخ:{{ item.parentComment.text }}
+            <!-- پاسخ:{{ item.parentComment.text }} -->
           </p>
         </ng-container>
       </div>
@@ -114,6 +111,7 @@
     (pageChange)="setPage($event, this.tableType)"
     previousLabel=""
     nextLabel=""
+    responsive="true"
   ></pagination-controls>
 </div>
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">

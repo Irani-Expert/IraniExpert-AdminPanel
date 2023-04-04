@@ -23,7 +23,15 @@
   </div>
 </div>
 
-<div class="my-css d-flex flex-wrap w-100">
+<button
+  (click)="openFilterModal(filterModal)"
+  class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
+>
+  <i class="i-Filter-2 text-dark text-bigger mr-2"></i>
+  <strong class="text-dark ml-2 text-small">فیلتر</strong>
+</button>
+
+<div class="my-css d-flex flex-wrap w-100" *ngIf="pageIsLoad">
   <div
     *ngFor="
       let item of rows
@@ -73,10 +81,68 @@
   </div>
 </div>
 
-<div class="col-md-12 mt-5" *ngIf="rows?.length > 0">
+<div class="mt-5" *ngIf="rows?.length > 0">
   <pagination-controls
     (pageChange)="setPage($event, currentTableType)"
     previousLabel=""
     nextLabel=""
+    responsive="true"
   ></pagination-controls>
 </div>
+
+<ng-template #filterModal let-modal>
+  <div class="bg--gray px-3">
+    <div class="modal-header row">
+      <h4 class="modal-title text-white">فیلتر</h4>
+
+      <button
+        type="button"
+        class="close text-white"
+        aria-label="Close"
+        (click)="modal.dismiss()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="text-white d-flex flex-wrap input-form">
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-3">
+        <label>شناسه</label>
+        <input type="number" [(ngModel)]="filterModel.iD" />
+      </div>
+
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-3">
+        <label>شناسه کاربر</label>
+        <input type="number" [(ngModel)]="filterModel.userID" />
+      </div>
+
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-3">
+        <label for="">نام</label>
+        <input type="text" [(ngModel)]="filterModel.name" />
+      </div>
+
+      <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-3">
+        <label for="">ایمیل</label>
+        <input type="email" [(ngModel)]="filterModel.email" />
+      </div>
+
+      <div class="modal-footer col-12 mt-5">
+        <button
+          type="button"
+          class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
+          (click)="[startFilter(), modal.dismiss()]"
+        >
+          <i class="i-Yes text-bigger mr-2"></i>
+          <strong class="ml-2 text-small">تایید</strong>
+        </button>
+
+        <button
+          type="button"
+          class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center ml-2"
+          (click)="modal.dismiss()"
+        >
+          <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

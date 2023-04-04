@@ -353,17 +353,6 @@ export class UserNeedComponent implements OnInit {
           this.toCreateDate = null;
         }
       );
-
-    // .result.then((result) => {
-    //   this._UserNeedService.getUserNeed(this.filterModel).subscribe(
-    //     (res: Result<Paginate<UserNeedModel[]>>) => {
-    //       console.log(res);
-    //     },
-    //     (_error) => {
-    //       console.log('error baby ');
-    //     }
-    //   );
-    // });
   }
 
   startFilter() {
