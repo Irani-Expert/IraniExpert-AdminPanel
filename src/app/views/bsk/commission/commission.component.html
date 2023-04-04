@@ -1,15 +1,17 @@
-<div class="d-flex flex-column flex-sm-row mb-5 flex-sm-wrap" *ngIf="isLoaded">
+<div class="d-flex flex-column flex-sm-row mb-5 flex-sm-wrap">
   <div class="bg_pink rounded--title p-3 mt-3 mt-sm-0">
     <span class="mr-2">شماره قرارداد &nbsp;:</span>
-    <span>{{ data.header.contractID }}</span>
+    <span *ngIf="isLoaded">{{ data.header.contractID }}</span>
   </div>
   <div class="ml-sm-4 bg_pink rounded--title p-3 mt-3 mt-sm-0">
     <span class="mr-2">عنوان قرارداد &nbsp;:</span>
-    <span>{{ data.header.contractTitle }}</span>
+    <span *ngIf="isLoaded">{{ data.header.contractTitle }}</span>
   </div>
   <div class="ml-sm-4 bg_pink rounded--title p-3 mt-3 mt-sm-0">
     <span class="mr-2">پورسانت قرارداد &nbsp;:</span>
-    <span>{{ data.header.allCommission | number : "1.2-2" }}&nbsp;$ </span>
+    <span *ngIf="isLoaded"
+      >{{ data.header.allCommission | number : "1.2-2" }}&nbsp;$
+    </span>
   </div>
 </div>
 
@@ -19,7 +21,7 @@
   >سفارشات تیم فروش شما</span
 >
 
-<section class="main-table">
+<section class="main-table" *ngIf="isLoaded">
   <table class="table">
     <thead class="bg-dark text-white">
       <tr>
@@ -33,7 +35,7 @@
       </tr>
     </thead>
 
-    <tbody *ngIf="isLoaded">
+    <tbody>
       <tr
         *ngFor="
           let row of data.orders
@@ -63,5 +65,6 @@
     (pageChange)="setPage($event)"
     previousLabel=""
     nextLabel=""
+    responsive="true"
   ></pagination-controls>
 </div>

@@ -31,7 +31,9 @@ export class CommissionComponent implements OnInit {
   ngOnInit(): void {
     this._commission.getMyCommission(this.user.userID, 4).subscribe((thing) => {
       this.data = thing.data;
-      this.isLoaded = true;
+      if (thing.data.header) {
+        this.isLoaded = true;
+      }
       this.page.totalElements = thing.data.orders.length;
     });
   }

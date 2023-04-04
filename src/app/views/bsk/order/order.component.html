@@ -81,7 +81,7 @@
     >
   </a>
 </div>
-<section class="main-table">
+<section class="main-table" *ngIf="pageIsLoad">
   <table class="table">
     <thead class="bg-dark text-white">
       <tr>
@@ -242,6 +242,7 @@
     (pageChange)="setPage($event, this.status)"
     previousLabel=""
     nextLabel=""
+    responsive="true"
   ></pagination-controls>
 </div>
 

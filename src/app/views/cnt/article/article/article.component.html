@@ -37,7 +37,7 @@
         "
       >
         <td>{{ item.id }}</td>
-        <td >
+        <td>
           <a href="" class="m-0" *ngIf="item.fileExists">
             <img
               src="{{ 'https://dl.iraniexpert.com/' + item.cardImagePath }}"
@@ -106,6 +106,7 @@
     (pageChange)="setPage($event)"
     previousLabel=""
     nextLabel=""
+    responsive="true"
   ></pagination-controls>
 </div>
 
