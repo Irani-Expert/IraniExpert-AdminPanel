@@ -45,7 +45,9 @@ export class AllCommentComponent implements OnInit {
     this.page.pageNumber = 0;
     this.page.size = 10;
   }
+
   setRate(contnt: any) {}
+
   ngOnInit(): void {
     this.setPage(this.page.pageNumber, 1);
     this.filterForm = this._formBuilder.group({
@@ -64,6 +66,7 @@ export class AllCommentComponent implements OnInit {
 
     this.getCommentList(this.page.pageNumber, tableType, this.filter);
   }
+
   async getCommentList(
     pageNumber: number,
     tableType: number,
@@ -82,6 +85,7 @@ export class AllCommentComponent implements OnInit {
       .subscribe(
         (res: Result<Paginate<CommentModel[]>>) => {
           this.rows = res.data.items;
+
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
@@ -98,6 +102,7 @@ export class AllCommentComponent implements OnInit {
         }
       );
   }
+
   openSmall(content: any, row: CommentModel) {
     this.parentComment = new CommentModel();
     this.parentComment.parentID = row.id;
@@ -120,6 +125,7 @@ export class AllCommentComponent implements OnInit {
         }
       );
   }
+
   acceptComment(row: CommentModel) {
     if (this.replyText !== null && this.replyText.length > 0) {
       this.parentComment.text = this.replyText;
@@ -160,6 +166,7 @@ export class AllCommentComponent implements OnInit {
         }
       });
   }
+
   deleteComment(id: number, modal: NgbModal) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
@@ -191,10 +198,12 @@ export class AllCommentComponent implements OnInit {
         (_error) => {}
       );
   }
+
   clearFilter() {
     this.filter = new FilterModel();
     this.getCommentList(this.page.pageNumber, this.tableType, this.filter);
   }
+
   openFilterModal(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
