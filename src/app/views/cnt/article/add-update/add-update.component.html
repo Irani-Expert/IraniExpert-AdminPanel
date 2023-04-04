@@ -25,7 +25,7 @@
               class="d-flex justify-content-end align-items-end col-md-3 col-5 mb-5 mt-1"
             >
               <img
-                (error)="!addUpdate.fileExists"
+                (error)="addUpdate.fileExists = false"
                 class="align-self-center w-100 radius-md"
                 [src]="'https://dl.iraniexpert.com/' + addUpdate.cardImagePath"
                 [alt]="addUpdate.title"

@@ -268,11 +268,19 @@ export class OrderComponent implements OnInit {
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
       })
-      .result.then((result: boolean) => {
-        if (result === true) {
-          this.changePaymentStatus(this.invoiceDetail);
+      .result.then(
+        (result: boolean) => {
+          if (result === true) {
+            this.changePaymentStatus(this.invoiceDetail);
+            this.updateNotebar();
+            this.clearNote();
+          }
+        },
+        (reason) => {
+          this.updateNotebar();
+          this.clearNote();
         }
-      });
+      );
   }
   selectStatus($event: any) {
     if ($event != undefined) {
@@ -563,47 +571,60 @@ export class OrderComponent implements OnInit {
 
     this.modalService
       .open(content, {
-        size: 'lg',
+        size: 'md',
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
         beforeDismiss: () => {
           if (this.filePathKeeper !== this.licenseModel.filePath) {
+            this.toastr.show(
+              ' لطفا ایجاد یا ویرایش را تکمیل یا فایل آپلود شده را حذف کنید',
+              null,
+              {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+                toastClass: 'bg-light',
+                messageClass: 'text-small mt-2',
+              }
+            );
             return false;
           }
         },
       })
-      .result.then((result: boolean) => {
-        if (result == true) {
-          if (this.clientId == null) {
-            this.licenseModel.rowID = row.id;
-            this.addOrUpdate(this.licenseModel, null);
-            // this.addForm.reset();
+      .result.then(
+        (result: boolean) => {
+          if (result == true) {
+            if (this.clientId == null) {
+              this.licenseModel.rowID = row.id;
+              this.addOrUpdate(this.licenseModel, null);
+              // this.addForm.reset();
+            }
+            // else {
+            //   let climax = new CliamxLicenseModel();
+            //   climax.file = this.licenseFile;
+            //   climax.accountNumber = this.licenseModel.accountNumber.toString();
+            //   climax.startDate =
+            //     this.startDate.year +
+            //     '-' +
+            //     this.startDate.month +
+            //     '-' +
+            //     this.startDate.day;
+
+            //   climax.expireDate =
+            //     this.expireDate.year +
+            //     '-' +
+            //     this.expireDate.month +
+            //     '-' +
+            //     this.expireDate.day;
+            //   this.licenseModel.rowID = row.id;
+            //   this.licenseModel.filePath = '';
+
+            //   this.addOrUpdate(this.licenseModel, climax);
+            //   // this.addForm.reset();
+            // }
           }
-          // else {
-          //   let climax = new CliamxLicenseModel();
-          //   climax.file = this.licenseFile;
-          //   climax.accountNumber = this.licenseModel.accountNumber.toString();
-          //   climax.startDate =
-          //     this.startDate.year +
-          //     '-' +
-          //     this.startDate.month +
-          //     '-' +
-          //     this.startDate.day;
-
-          //   climax.expireDate =
-          //     this.expireDate.year +
-          //     '-' +
-          //     this.expireDate.month +
-          //     '-' +
-          //     this.expireDate.day;
-          //   this.licenseModel.rowID = row.id;
-          //   this.licenseModel.filePath = '';
-
-          //   this.addOrUpdate(this.licenseModel, climax);
-          //   // this.addForm.reset();
-          // }
-        }
-      });
+        },
+        (reason) => {}
+      );
   }
 
   addOrUpdate(item: LicenseModel, _climax: CliamxLicenseModel) {
