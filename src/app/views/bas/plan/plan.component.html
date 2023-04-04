@@ -1,11 +1,12 @@
 <!--------------------------- Create Plan -->
 <div class="mb-4 d-block">
   <button
-    class="btn btn-primary mb-4"
+    class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
     type="button"
     (click)="addorEdit(addUpdateModal, undefined)"
   >
-    ایجاد
+    <i class="i-Add text-bigger mr-2"></i>
+    <strong>ایجاد</strong>
   </button>
 </div>
 <div class="separator-breadcrumb border-top"></div>
@@ -68,7 +69,7 @@
                   <span class="col-5">
                     <button
                       (click)="openPlanOptionModal(planOption, item.id)"
-                      class="btn-warning btn rounded-pill mr-1 font-bigger pt-2 mb-sm-1 mb-xl-0"
+                      class="btn-upload btn rounded-pill mr-1 font-bigger pt-2 mb-sm-1 mb-xl-0"
                     >
                       <i class="i-Pen-5"></i>
                     </button>
@@ -77,7 +78,7 @@
                         deletePlanOption(planOption.id, deleteConfirmModal)
                       "
                       type="button"
-                      class="btn btn-danger rounded-pill mr-1 font-bigger pt-2 mb-sm-1 mb-xl-0"
+                      class="btn btn-delete rounded-pill mr-1 font-bigger pt-2 mb-sm-1 mb-xl-0"
                     >
                       <i class="i-Remove"></i>
                     </button>
@@ -85,10 +86,11 @@
                   <span class="span"></span>
                 </div>
                 <button
-                  class="btn btn-success col-12 btn-block btn-rounded"
+                  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
                   (click)="openPlanOptionModal(undefined, item.id)"
                 >
-                  ایجاد امکان
+                  <i class="i-Add text-bigger mr-2"></i>
+                  <strong>ایجاد امکان</strong>
                 </button>
               </span>
             </ng-template>
@@ -97,17 +99,19 @@
 
         <div class="row mt-3 p-2 justify-content-around">
           <button
-            class="btn btn-warning col-8 btn-block btn-rounded"
+            class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="addorEdit(addUpdateModal, item)"
           >
-            ویرایش
+            <i class="i-Pen-5 text-bigger mr-2"></i>
+            <strong>ویرایش</strong>
           </button>
 
           <button
-            class="btn btn-danger col-8 btn-block btn-rounded"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="deletePlan(item.id, deleteConfirmModal)"
           >
-            حذف
+            <i class="i-Close text-bigger mr-2"></i>
+            <strong>حذف</strong>
           </button>
         </div>
       </div>
@@ -286,19 +290,21 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id !== 0"
     >
-      ویرایش
+      <i class="i-Pen-5 text-bigger mr-2"></i>
+      <strong>ویرایش</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(false)"
       *ngIf="addUpdate.id === 0"
     >
-      ایجاد
+      <i class="i-Add text-bigger mr-2"></i>
+      <strong>ایجاد</strong>
     </button>
   </div>
 </ng-template>
@@ -323,18 +329,20 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.dismiss('cancel')"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>خیر</strong>
     </button>
     <button
       type="button"
       ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close('Ok')"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i>
+      <strong>بله</strong>
     </button>
   </div>
 </ng-template>
@@ -358,18 +366,20 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.dismiss('cancel')"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>خیر</strong>
     </button>
     <button
       type="button"
       ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close('Ok')"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i>
+      <strong>بله</strong>
     </button>
   </div>
 </ng-template>

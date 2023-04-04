@@ -35,11 +35,12 @@
         <div class="mb-2">
           <button
             type="button"
-            class="btn btn-rounded m-1"
+            class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
             *ngIf="item.isAccepted === false"
             (click)="openSmall(modalSmall, item)"
           >
-            پذیرفتن
+            <i class="i-Yes text-bigger mr-2"></i>
+            <strong>پذیرفتن</strong>
           </button>
         </div>
         <div class="mb-2">
@@ -47,9 +48,10 @@
             type="button"
             *ngIf="item.isAccepted === true"
             (click)="deleteComment(item.id, deleteModal)"
-            class="btn btn-danger btn-rounded m-1"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
           >
-            حذف پیام
+            <i class="i-Close text-bigger mr-3"></i>
+            <strong>حذف پیام</strong>
           </button>
         </div>
       </div>
@@ -87,17 +89,19 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i>
+      <strong>بله</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(cancel)"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>خیر</strong>
     </button>
   </div>
 </ng-template>
@@ -120,17 +124,19 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i>
+      <strong>بله</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(cancel)"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>خیر</strong>
     </button>
   </div>
 </ng-template>

@@ -1,11 +1,12 @@
 <div class="mb-4 d-block">
   <button
-    class="btn btn-primary mb-4"
+    class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
     type="button"
     [ngClass]="{ 'd-none': viewMode === 'grid' }"
     (click)="addorEdit(addUpdateModal, undefined)"
   >
-    ایجاد
+    <i class="i-Add text-bigger mr-2"></i>
+    <strong>ایجاد</strong>
   </button>
 </div>
 <div class="separator-breadcrumb border-top"></div>
@@ -40,10 +41,11 @@
           </td>
           <td>
             <button
-              class="btn btn-danger"
+              class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
               (click)="deleteImg(item, deleteConfirmModal)"
             >
-              حذف
+              <i class="i-Close text-bigger mr-2"></i>
+              <strong>حذف</strong>
             </button>
           </td>
         </tr>
@@ -99,10 +101,11 @@
       <div class="col-12 mt-2 mb-3">
         <button
           type="button"
-          class="btn btn-rounded btn-outline-dark"
+          class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
           (click)="uploadFile()"
         >
-          آپلود کن
+          <i class="i-Upload text-dark text-bigger mr-3"></i>
+          <strong>آپلود</strong>
         </button>
       </div>
     </form>
@@ -110,10 +113,11 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
     >
-      ایجاد
+      <i class="i-Add text-bigger mr-2"></i>
+      <strong>ایجاد</strong>
     </button>
   </div>
 </ng-template>
@@ -138,30 +142,20 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.dismiss('cancel')"
     >
-      خیر
+      <i class="i-Close text-dark text-bigger mr-3"></i>
+      <strong>خیر</strong>
     </button>
     <button
       type="button"
       ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close('Ok')"
     >
-      بله
+      <i class="i-Yes text-dark text-bigger mr-3"></i>
+      <strong>بله</strong>
     </button>
   </div>
 </ng-template>
-
-<!-- PAGINATION CONTROL -->
-
-<!-- <div class="col-md-12 mt-3" *ngIf="rows?.length">
-  <pagination-controls
-    (pageChange)="page = $event"
-    previousLabel=""
-    nextLabel=""
-  ></pagination-controls>
-</div> -->
-
-<!-- (click)="deletePicture(item.id, deleteConfirmModal)" -->
