@@ -111,124 +111,118 @@
   </div>
 </div> -->
 
-<div class="my-css d-flex flex-wrap w-100 pb-5">
-  <div id="comments" class="w-100">
-    <div
-      class="my-2"
-      *ngFor="
-        let item of rows
-          | paginate
-            : {
-                itemsPerPage: page.size,
-                page: page.pageNumber,
-                currentPage: page.pageNumber,
-                totalItems: page.totalElements
-              }
-      "
-    >
-      <div class="timeline-card card mt-4">
-        <div
-          class="card-header bg-light-dark d-flex justify-content-between align-items-center comment-header-border"
-        >
-          <div class="mb-1">
-            <strong class="mr-1 text-white"
-              >&nbsp;{{ item.firstName }}&nbsp;{{ item.lastName }}</strong
+<div class="my-css d-flex flex-wrap pb-5 justify-content-between">
+  <div
+    id="comments"
+    class="my-2 col-lg-6"
+    *ngFor="
+      let item of rows
+        | paginate
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber,
+              currentPage: page.pageNumber,
+              totalItems: page.totalElements
+            }
+    "
+  >
+    <div class="timeline-card card mt-4">
+      <div
+        class="card-header bg-light-dark d-flex justify-content-between align-items-center comment-header-border"
+      >
+        <div class="mb-1">
+          <strong class="mr-1 text-white"
+            >&nbsp;{{ item.firstName }}&nbsp;{{ item.lastName }}</strong
+          >
+
+          <p class="text-white-50">&nbsp;{{ item.userWant | userWants }}</p>
+        </div>
+      </div>
+      <div class="card-body bg-gray">
+        <div class="row p-3">
+          <div class="col-md-6">
+            <label for="FullName" class="text-white d-block"
+              >ایمیل و شماره تماس</label
             >
-
-            <p class="text-white-50">&nbsp;{{ item.userWant | userWants }}</p>
+            <strong class="mr-1 text-white"
+              >{{ item.email }}<br />{{ item.phoneNumber }}
+            </strong>
+          </div>
+          <div class="col-md-6">
+            <label for="FullName" class="text-white d-block">تاریخ ایجاد</label>
+            <strong class="mr-1 text-white">{{ item.createDate }}</strong>
+          </div>
+          <div class="col-md-6 text-white">
+            <span>شناسه: </span><span>{{ item.id }}</span>
           </div>
         </div>
-        <div class="card-body bg-gray">
-          <div class="row p-3">
-            <div class="col-md-6">
-              <label for="FullName" class="text-white d-block"
-                >ایمیل و شماره تماس</label
-              >
-              <strong class="mr-1 text-white"
-                >{{ item.email }}<br />{{ item.phoneNumber }}
-              </strong>
-            </div>
-            <div class="col-md-6">
-              <label for="FullName" class="text-white d-block"
-                >تاریخ ایجاد</label
-              >
-              <strong class="mr-1 text-white">{{ item.createDate }}</strong>
-            </div>
-            <div class="col-md-6 text-white">
-              <span>شناسه: </span><span>{{ item.id }}</span>
-            </div>
+        <div class="d-flex flex-wrap">
+          <span class="text-white">فعالیت مالی</span>
+          <span class="ml-2 span-circle" *ngIf="!item.isActive"></span>
+          <div class="wrapper" *ngIf="item.isActive">
+            <svg
+              class="checkmark"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 52 52"
+            >
+              <circle
+                class="checkmark__circle"
+                cx="26"
+                cy="26"
+                r="25"
+                fill="none"
+              />
+              <path
+                class="checkmark__check"
+                fill="none"
+                d="M14.1 27.2l7.1 7.2 16.7-16.8"
+              />
+            </svg>
+          </div>
+
+          <span class="ml-3 text-white">استفاده از ربات</span>
+          <span class="ml-2 span-circle" *ngIf="!item.robotUsage"></span>
+          <div class="wrapper" *ngIf="item.robotUsage">
+            <svg
+              class="checkmark"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 52 52"
+            >
+              <circle
+                class="checkmark__circle"
+                cx="26"
+                cy="26"
+                r="25"
+                fill="none"
+              />
+              <path
+                class="checkmark__check"
+                fill="none"
+                d="M14.1 27.2l7.1 7.2 16.7-16.8"
+              />
+            </svg>
           </div>
         </div>
-        <div class="card-footer bg-gray">
-          <div class="mb-2 d-flex justify-content-between">
-            <div class="d-flex">
-              <span class="text-white">فعالیت مالی</span>
-              <span class="ml-2 span-circle" *ngIf="!item.isActive"></span>
-              <div class="wrapper" *ngIf="item.isActive">
-                <svg
-                  class="checkmark"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 52 52"
-                >
-                  <circle
-                    class="checkmark__circle"
-                    cx="26"
-                    cy="26"
-                    r="25"
-                    fill="none"
-                  />
-                  <path
-                    class="checkmark__check"
-                    fill="none"
-                    d="M14.1 27.2l7.1 7.2 16.7-16.8"
-                  />
-                </svg>
-              </div>
-
-              <span class="ml-3 text-white">استفاده از ربات</span>
-              <span class="ml-2 span-circle" *ngIf="!item.robotUsage"></span>
-              <div class="wrapper" *ngIf="item.robotUsage">
-                <svg
-                  class="checkmark"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 52 52"
-                >
-                  <circle
-                    class="checkmark__circle"
-                    cx="26"
-                    cy="26"
-                    r="25"
-                    fill="none"
-                  />
-                  <path
-                    class="checkmark__check"
-                    fill="none"
-                    d="M14.1 27.2l7.1 7.2 16.7-16.8"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <div class="d-flex">
-              <button
-                type="button"
-                class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
-                (click)="toggleNotebar(item.id)"
-              >
-                <i class="i-Pen-5 text-bigger mr-2"></i>
-                <strong class="ml-2 text-small">یادداشت</strong>
-              </button>
-              <button
-                type="button"
-                (click)="deleteUserNeed(item.id, deleteModal)"
-                class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
-              >
-                <i class="i-Close text-bigger mr-2"></i>
-                <strong class="ml-2 text-small">حذف پیام</strong>
-              </button>
-            </div>
-          </div>
-        </div>
+      </div>
+      <div
+        class="mb-2 card-footer bg-gray d-flex justify-content-end flex-wrap"
+      >
+        <button
+          type="button"
+          class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
+          (click)="toggleNotebar(item.id)"
+        >
+          <i class="i-Pen-5 text-bigger mr-2"></i>
+          <strong class="ml-2 text-small">یادداشت</strong>
+        </button>
+        <button
+          type="button"
+          (click)="deleteUserNeed(item.id, deleteModal)"
+          class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
+        >
+          <i class="i-Close text-bigger mr-2"></i>
+          <strong class="ml-2 text-small">حذف پیام</strong>
+        </button>
       </div>
     </div>
   </div>
