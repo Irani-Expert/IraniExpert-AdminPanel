@@ -6,7 +6,7 @@ import {
   HostListener,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { ToastrService } from 'ngx-toastr';
 import { filter } from 'rxjs/operators';
@@ -32,6 +32,12 @@ export class UserNeedComponent implements OnInit {
   filterModel: FilterModel = new FilterModel();
   fromCreateDate: { year: number; month: number; day: number };
   toCreateDate: { year: number; month: number; day: number };
+  filterExecutedModel: FilterModel = new FilterModel();
+  filterValues: Array<{
+    title: string;
+    value: string | number | boolean;
+    key: string;
+  }> = [];
 
   dropDownTitleHolder: string = null;
 
@@ -82,6 +88,7 @@ export class UserNeedComponent implements OnInit {
         }
       });
   }
+
   setPage(pageInfo: number, userWant: number) {
     this.page.pageNumber = pageInfo;
     this.getUserNeedByUserWant(userWant, pageInfo);
@@ -100,7 +107,6 @@ export class UserNeedComponent implements OnInit {
   //     scroller?.classList.remove('afterScroll');
   //   }
   //   var comments = document.getElementById('comments');
-  //   console.log(window.innerHeight);
 
   //   if (document.documentElement.scrollTop + 400 > comments!.offsetHeight) {
   //     scroller?.classList.remove('afterScroll');
@@ -154,6 +160,7 @@ export class UserNeedComponent implements OnInit {
         }
       );
   }
+
   async getUserNeedById(pageNumber: number, seedNumber: number) {
     this._UserNeedService
       .get(
@@ -170,6 +177,7 @@ export class UserNeedComponent implements OnInit {
         this.page.pageNumber = res.data.pageNumber + 1;
       });
   }
+
   deleteUserNeed(id: any, modal: any) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
@@ -202,6 +210,7 @@ export class UserNeedComponent implements OnInit {
         }
       );
   }
+
   // addComent(item: CommentModel, content: any) {
   //   this.user = this.auth.currentUserValue;
   //   this.addCommentRows.text = this.addComentText;
@@ -273,6 +282,7 @@ export class UserNeedComponent implements OnInit {
       state.sidenavOpen = true;
     }
   }
+
   updateNotebar() {
     this.toggled = false;
     if (Utils.isMobile()) {
@@ -341,6 +351,26 @@ export class UserNeedComponent implements OnInit {
   */
 
   openFilterModal(content: any) {
+    this.filterModel = { ...this.filterExecutedModel };
+
+    if (this.filterExecutedModel.fromCreateDate) {
+      let time = this.filterExecutedModel.fromCreateDate.split('-');
+      this.fromCreateDate = new NgbDate(
+        Number(time[0]),
+        Number(time[1]),
+        Number(time[2])
+      );
+    }
+
+    if (this.filterExecutedModel.toCreateDate) {
+      let time = this.filterExecutedModel.toCreateDate.split('-');
+      this.toCreateDate = new NgbDate(
+        Number(time[0]),
+        Number(time[1]),
+        Number(time[2])
+      );
+    }
+
     this.modalService
       .open(content, {
         size: 'lg',
@@ -348,7 +378,6 @@ export class UserNeedComponent implements OnInit {
       .result.then(
         () => {},
         () => {
-          this.filterModel = new FilterModel();
           this.fromCreateDate = null;
           this.toCreateDate = null;
         }
@@ -372,6 +401,7 @@ export class UserNeedComponent implements OnInit {
         '-' +
         this.toCreateDate.day;
     }
+
     this._UserNeedService
       .getUserNeed(
         this.filterModel,
@@ -384,7 +414,96 @@ export class UserNeedComponent implements OnInit {
       .subscribe(
         (res: Result<Paginate<UserNeedModel[]>>) => {
           this.rows = res.data.items;
-          this.filterModel = new FilterModel();
+          this.filterExecutedModel = { ...this.filterModel };
+
+          /*
+          *
+          *
+          Filter Values
+          *
+          */
+
+          this.filterValues = [];
+
+          if (this.filterExecutedModel.iD) {
+            this.filterValues.push({
+              title: 'شناسه',
+              value: this.filterExecutedModel.iD,
+              key: 'iD',
+            });
+          }
+
+          if (this.filterExecutedModel.firstName) {
+            this.filterValues.push({
+              title: 'نام',
+              value: this.filterExecutedModel.firstName,
+              key: 'firstName',
+            });
+          }
+
+          if (this.filterExecutedModel.lastName) {
+            this.filterValues.push({
+              title: 'نام خانوادگی',
+              value: this.filterExecutedModel.lastName,
+              key: 'lastName',
+            });
+          }
+
+          if (this.filterExecutedModel.phoneNumber) {
+            this.filterValues.push({
+              title: 'شماره تلفن',
+              value: this.filterExecutedModel.phoneNumber,
+              key: 'phoneNumber',
+            });
+          }
+
+          if (this.filterExecutedModel.email) {
+            this.filterValues.push({
+              title: 'ایمیل',
+              value: this.filterExecutedModel.email,
+              key: 'email',
+            });
+          }
+
+          if (this.filterExecutedModel.amount) {
+            this.filterValues.push({
+              title: 'میزان',
+              value: this.filterExecutedModel.amount,
+              key: 'amount',
+            });
+          }
+
+          if (this.filterExecutedModel.fromCreateDate) {
+            this.filterValues.push({
+              title: 'از تاریخ ایجاد',
+              value: this.filterExecutedModel.fromCreateDate,
+              key: 'fromCreateDate',
+            });
+          }
+
+          if (this.filterExecutedModel.toCreateDate) {
+            this.filterValues.push({
+              title: 'تا تاریخ ایجاد',
+              value: this.filterExecutedModel.toCreateDate,
+              key: 'toCreateDate',
+            });
+          }
+
+          if (this.filterExecutedModel.financialActivity) {
+            this.filterValues.push({
+              title: 'فعالیت مالی',
+              value: this.filterExecutedModel.financialActivity,
+              key: 'financialActivity',
+            });
+          }
+
+          if (this.filterExecutedModel.robotUsage) {
+            this.filterValues.push({
+              title: 'استفاده از ربات',
+              value: this.filterExecutedModel.robotUsage,
+              key: 'robotUsage',
+            });
+          }
         },
         (error) => {
           this.toastr.error('رد خواست شما انجام نشد', error.message, {
@@ -393,5 +512,25 @@ export class UserNeedComponent implements OnInit {
           });
         }
       );
+  }
+
+  deleteAllFilter() {
+    this.filterValues = [];
+    this.filterExecutedModel = new FilterModel();
+    this.setPage(0, null);
+  }
+
+  deleteFilter(value: string) {
+    let temporaryIndex = this.filterValues.findIndex((item) => {
+      return item.value === value;
+    });
+
+    this.filterValues.splice(temporaryIndex, 1);
+
+    this.filterExecutedModel[value] = null;
+
+    this.filterModel = { ...this.filterExecutedModel };
+
+    this.startFilter();
   }
 }

@@ -37,6 +37,40 @@
   <strong class="text-dark ml-2 text-small"> فیلتر کردن</strong>
 </button>
 
+<div *ngIf="filterValues.length > 0">
+  <div
+    *ngFor="let item of filterValues"
+    class="d-inline-flex bg-light clickable-btn justify-content-start radius m-1 align-items-center"
+  >
+    <button
+      (click)="deleteFilter(item.key)"
+      [openDelay]="100"
+      [closeDelay]="500"
+      placement="bottom"
+      class="bg-transparent btn-scale-1 btn d-flex align-items-center"
+    >
+      <i
+        class="i-Close text-dark"
+        style="font-size: 22px; font-weight: normal"
+      ></i></button
+    >|<span class="pr-2 text-dark text-small"
+      >{{ item.title }}: {{ item.value }}</span
+    >
+  </div>
+  <a
+    (click)="deleteAllFilter()"
+    class="d-inline-flex btn-delete clickable-btn justify-content-start radius m-1 align-items-center"
+  >
+    <button class="bg-transparent btn-scale-1 btn d-flex align-items-center">
+      <i
+        class="i-Close text-white"
+        style="font-size: 22px; font-weight: normal"
+      ></i>
+    </button>
+    <strong class="text-white pr-2 text-small">حذف همه فیلتر ها</strong>
+  </a>
+</div>
+
 <!-- <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
     <div class="col-auto mb-2">
@@ -120,26 +154,79 @@
               >
               <strong class="mr-1 text-white">{{ item.createDate }}</strong>
             </div>
+            <div class="col-md-6 text-white">
+              <span>شناسه: </span><span>{{ item.id }}</span>
+            </div>
           </div>
         </div>
         <div class="card-footer bg-gray">
-          <div class="mb-2 d-flex justify-content-end">
-            <button
-              type="button"
-              class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
-              (click)="toggleNotebar(item.id)"
-            >
-              <i class="i-Pen-5 text-bigger mr-2"></i>
-              <strong class="ml-2 text-small">یادداشت</strong>
-            </button>
-            <button
-              type="button"
-              (click)="deleteUserNeed(item.id, deleteModal)"
-              class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
-            >
-              <i class="i-Close text-bigger mr-2"></i>
-              <strong class="ml-2 text-small">حذف پیام</strong>
-            </button>
+          <div class="mb-2 d-flex justify-content-between">
+            <div class="d-flex">
+              <span class="text-white">فعالیت مالی</span>
+              <span class="ml-2 span-circle" *ngIf="!item.isActive"></span>
+              <div class="wrapper" *ngIf="item.isActive">
+                <svg
+                  class="checkmark"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 52 52"
+                >
+                  <circle
+                    class="checkmark__circle"
+                    cx="26"
+                    cy="26"
+                    r="25"
+                    fill="none"
+                  />
+                  <path
+                    class="checkmark__check"
+                    fill="none"
+                    d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                  />
+                </svg>
+              </div>
+
+              <span class="ml-3 text-white">استفاده از ربات</span>
+              <span class="ml-2 span-circle" *ngIf="!item.robotUsage"></span>
+              <div class="wrapper" *ngIf="item.robotUsage">
+                <svg
+                  class="checkmark"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 52 52"
+                >
+                  <circle
+                    class="checkmark__circle"
+                    cx="26"
+                    cy="26"
+                    r="25"
+                    fill="none"
+                  />
+                  <path
+                    class="checkmark__check"
+                    fill="none"
+                    d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div class="d-flex">
+              <button
+                type="button"
+                class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
+                (click)="toggleNotebar(item.id)"
+              >
+                <i class="i-Pen-5 text-bigger mr-2"></i>
+                <strong class="ml-2 text-small">یادداشت</strong>
+              </button>
+              <button
+                type="button"
+                (click)="deleteUserNeed(item.id, deleteModal)"
+                class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
+              >
+                <i class="i-Close text-bigger mr-2"></i>
+                <strong class="ml-2 text-small">حذف پیام</strong>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -612,7 +699,7 @@
       </div>
 
       <div class="d-flex flex-column col-12 col-lg-6 col-xl-4 my-2">
-        <label for="">تا تاریخ پایان</label>
+        <label for="">تا تاریخ ایجاد</label>
         <input
           type="text"
           (click)="datePickerStatus2.toggle()"
