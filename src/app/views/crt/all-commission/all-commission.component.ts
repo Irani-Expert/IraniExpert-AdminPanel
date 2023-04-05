@@ -90,7 +90,6 @@ export class AllCommissionComponent implements OnInit {
   
       )
       .subscribe((res: Result<Paginate<ReceiptModel[]>>) => {
-        debugger
         this.Receipt = res.data.items;
        
         this.page.totalElements = res.data.totalCount;

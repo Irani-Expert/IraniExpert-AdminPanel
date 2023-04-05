@@ -641,7 +641,6 @@ export class OrderComponent implements OnInit {
     item.filePath = this.licenseModel.filePath;
     item.versionNumber = this.versionNumber;
     if (this.startDate.year !== undefined) {
-      debugger;
       item.startDate =
         this.startDate.year +
         '-' +
