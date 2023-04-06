@@ -28,7 +28,6 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @returns insert
    */
   create(t: object, route: string): Observable<Result<number>> {
-    debugger
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
