@@ -28,7 +28,7 @@
   class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
 >
   <i class="i-Filter-2 text-dark text-bigger mr-2"></i>
-  <strong class="text-dark ml-2 text-small">فیلتر</strong>
+  <strong class="text-dark ml-2">فیلتر</strong>
 </button>
 
 <div class="my-css d-flex flex-wrap w-100" *ngIf="pageIsLoad">
@@ -51,21 +51,24 @@
       >
         <div class="mb-1">
           <strong class="mr-1 text-white">{{ item.name }}</strong>
-          <span
-            class="badge badge-warning mr-1 text-primary"
-            *ngIf="item.isAccepted === false"
-            >تایید نشده</span
-          >
-          <span
-            class="badge badge-success mr-1 text-white"
-            *ngIf="item.isAccepted === true"
-            >تایید شده</span
-          >
+
+          <!-- <p class="text-white-50 m-0">
+            <span>{{ item.createDate | relativeTime }} | </span>
+            <span>شناسه: {{ item.id }} | </span>
+            <span>{{ item.createDate | jalali }}</span>
+          </p> -->
+
+          <p class="text-white-50 m-0 mt-2">
+            <span>{{ item.createDate | relativeTime }} | </span>
+
+            <span>{{ item.createDate | jalali }}</span>
+          </p>
+
           <p class="text-white-50 m-0">
-            {{ item.createDate | relativeTime }}
+            <span>شناسه: {{ item.id }} | </span>
+            <span>مربوط به شناسه: {{ item.rowID }}</span>
           </p>
         </div>
-        <div class="text-warning">امتیاز:5\{{ item.rate }}</div>
       </div>
       <div class="card-body bg-gray">
         <p class="text-white">

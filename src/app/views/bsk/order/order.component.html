@@ -963,13 +963,6 @@
         </div>
         <div class="modal-footer w-100">
           <button
-            type="button"
-            class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center"
-            (click)="modal.dismiss()"
-          >
-            <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
-          </button>
-          <button
             ngbAutofocus
             type="button"
             class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
@@ -977,6 +970,14 @@
           >
             <i class="i-Yes text-bigger mr-2"></i>
             <strong class="ml-2 text-small">تائید</strong>
+          </button>
+
+          <button
+            type="button"
+            class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center"
+            (click)="modal.dismiss()"
+          >
+            <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
           </button>
         </div>
       </form>

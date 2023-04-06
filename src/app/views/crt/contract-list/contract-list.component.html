@@ -11,24 +11,26 @@
   <table class="table">
     <thead class="bg-dark text-white">
       <tr>
-        <th class="rounded--right">عنوان</th>
+        <th class="rounded--right">شناسه</th>
+        <th>نام و نام خانوادگی</th>
+        <th>عنوان</th>
         <th>نوع قرارداد</th>
         <th>تاریخ شروع</th>
         <th>تاریخ پایان</th>
         <th>درصد دریافتی</th>
-        <th>نقش</th>
         <th class="rounded--left">حذف</th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let item of allContract">
+        <td>{{ item.id }}</td>
+        <td>{{ item.userName }}</td>
         <td>{{ item.title }}</td>
         <td>{{ sellingTypeTitle[item.sellingType] }}</td>
         <td>{{ item.fromDate }}</td>
         <td>{{ item.toDate }}</td>
         <td>{{ item.prcentReward }}</td>
-        <td>{{ item.roleID }}</td>
         <td>
           <button
             class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"

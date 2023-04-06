@@ -20,8 +20,6 @@ export class AllCommentComponent implements OnInit {
   tableTypeTitles = [
     { title: 'مقالات', id: 1 },
     { title: 'محصولات', id: 6 },
-    { title: 'سفارشات', id: 8 },
-    { title: 'درخواست مشتریان', id: 10 },
   ];
   dropDownTitleHolder: string = 'مقالات';
   ExpDate: any;
@@ -43,7 +41,7 @@ export class AllCommentComponent implements OnInit {
     private _formBuilder: FormBuilder
   ) {
     this.page.pageNumber = 0;
-    this.page.size = 10;
+    this.page.size = 6;
   }
 
   setRate(contnt: any) {}

@@ -34,7 +34,7 @@
   (click)="openFilterModal(filterModal)"
 >
   <i class="i-Filter-2 text-dark text-bigger mr-2"></i>
-  <strong class="text-dark ml-2 text-small"> فیلتر کردن</strong>
+  <strong class="text-dark ml-2">فیلتر</strong>
 </button>
 
 <div *ngIf="filterValues.length > 0">
@@ -156,7 +156,7 @@
             <span>شناسه: </span><span>{{ item.id }}</span>
           </div>
         </div>
-        <div class="d-flex flex-wrap">
+        <div class="d-flex flex-wrap col-md-6">
           <span class="text-white">فعالیت مالی</span>
           <span class="ml-2 span-circle" *ngIf="!item.isActive"></span>
           <div class="wrapper" *ngIf="item.isActive">

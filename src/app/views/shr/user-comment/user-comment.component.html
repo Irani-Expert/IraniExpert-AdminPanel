@@ -1,5 +1,6 @@
-<div class="my-css w-75">
+<div class="my-css d-flex flex-wrap">
   <div
+    class="col-lg-6"
     *ngFor="
       let item of rows
         | paginate
@@ -27,7 +28,17 @@
             *ngIf="item.isAccepted === true"
             >تایید شده</span
           >
-          <p class="text-white-50">{{ item.createDate | relativeTime }}</p>
+
+          <p class="text-white-50 m-0 mt-2">
+            <span>{{ item.createDate | relativeTime }} | </span>
+
+            <span>{{ item.createDate | jalali }}</span>
+          </p>
+
+          <!-- <p class="text-white-50 m-0">
+            <span>شناسه: {{ item.id }} | </span>
+            <span>مربوط به شناسه: {{ item.rowID }}</span>
+          </p> -->
         </div>
         <div class="text-warning">امتیاز:5\{{ item.rate }}</div>
       </div>
@@ -41,7 +52,7 @@
             </p>
           </ng-component> -->
       </div>
-      <div class="card-footer bg-secondary"></div>
+      <!-- <div class="card-footer bg-secondary"></div> -->
     </div>
   </div>
 </div>
