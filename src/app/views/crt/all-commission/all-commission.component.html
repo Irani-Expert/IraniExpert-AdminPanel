@@ -57,9 +57,7 @@
         <td>{{ item.firstName }}</td>
         <td>{{ item.lastName }}</td>
         <td class="money-color">{{ item.commission | number : "1.2-2" }}$</td>
-        <td >
-          {{ item.remainCommission | number : "1.2-2" }}$
-        </td>
+        <td>{{ item.remainCommission | number : "1.2-2" }}$</td>
 
         <td class="td-oprate">
           <button
@@ -67,10 +65,10 @@
             class="btn-details btn d-inline-flex justify-content-around py-btns radius align-items-center"
             type="button"
           >
-          <i class="i-Information mr-2" style="font-size: 1.2rem"></i>
-          جزئیات          </button>
+            <i class="i-Information mr-2" style="font-size: 1.2rem"></i>
+            جزئیات
+          </button>
         </td>
-     
       </tr>
     </tbody>
   </table>
@@ -130,10 +128,20 @@
                       }
               "
             >
-              <td class="d-flex justify-content-center align-items-center "  dir="ltr">{{ item.paymentDate| slice:0:10 }}  <i class="i-Clock mr-1"></i></td>
-              <td class="d-flex justify-content-center align-items-center">{{ item.price }}$</td>
-              <td class="d-flex justify-content-center align-items-center">{{ item.paymentStep }}</td>
-              <td class="td-modal ">
+              <td
+                class="d-flex justify-content-center align-items-center"
+                dir="ltr"
+              >
+                {{ item.paymentDate | slice : 0 : 10 }}
+                <i class="i-Clock mr-1"></i>
+              </td>
+              <td class="d-flex justify-content-center align-items-center">
+                {{ item.price }}$
+              </td>
+              <td class="d-flex justify-content-center align-items-center">
+                {{ item.paymentStep }}
+              </td>
+              <td class="td-modal">
                 <ng-template #tipContent
                   ><div class="tooltip-size">
                     {{ item.serialNumber }}
@@ -150,14 +158,12 @@
                   [ngbTooltip]="tipContent"
                 >
                   <div
-                    class="card-body btn-download  c-poiter row d-flex justify-content-center pl-0 pr-0"
+                    class="card-body btn-download c-poiter row d-flex justify-content-center pl-0 pr-0"
                     (click)="copyText(item.serialNumber)"
-          
-              
-                  >          
-                  <div >{{ item.serialNumber | slice:0:7}}</div>
-                  <div>......</div>
-                  <div class="">{{ item.serialNumber | slice :-7 }}</div> 
+                  >
+                    <div>{{ item.serialNumber | slice : 0 : 7 }}</div>
+                    <div>......</div>
+                    <div class="">{{ item.serialNumber | slice : -7 }}</div>
                   </div>
                 </div>
               </td>
@@ -186,12 +192,12 @@
             *ngFor="
               let item of Receipt
                 | paginate
-                : {
-                  itemsPerPage: page.size,
-                  page: page.pageNumber,
-                  currentPage: page.pageNumber,
-                  totalItems: page.totalElements
-                }
+                  : {
+                      itemsPerPage: page.size,
+                      page: page.pageNumber,
+                      currentPage: page.pageNumber,
+                      totalItems: page.totalElements
+                    }
             "
           >
             <td>{{ item.paymentDate }} <i class="i-Clock"></i></td>
@@ -214,7 +220,7 @@
                 [ngbTooltip]="tipContent"
               >
                 <div
-                  class="card-body btn-download  c-poiter row d-flex justify-content-center pl-0 pr-0"
+                  class="card-body btn-download c-poiter row d-flex justify-content-center pl-0 pr-0"
                   (click)="copyText(item.serialNumber)"
                 >
                   {{ item.serialNumber }}
@@ -244,14 +250,12 @@
     </div>
 
     <div class="modal-footer">
-      <div
-        class="col-md-12 mt-3"
-     
-      >
+      <div class="col-md-12 mt-3">
         <pagination-controls
           (pageChange)="setPage($event)"
           previousLabel=""
           nextLabel=""
+          responsive="true"
         ></pagination-controls>
       </div>
     </div>
@@ -334,25 +338,17 @@ font-weight: bold;"></i>
     </div>
     <div class="modal-footer">
       <button
-      type="button"
-      class="btn bg-white btn-rounded"
-      (click)="modal.close(true)"
-    >
-      ویرایش
-    </button>
+        type="button"
+        class="btn bg-white btn-rounded"
+        (click)="modal.close(true)"
+      >
+        ویرایش
+      </button>
     </div>
   </div>
 </ng-template>
 
 <ng-template #descriptionModal let-modal>
-  <!-- <div class="notepad" >
-    <div class="top"></div>
-    <div class="paper p-2 text-white" contenteditable="true" style="background-color: #47404f;">
-      <p class=" m-4">
-      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخز شامل حروفچینی دستاوردهای اصلی، و جوابد.
-    </p>
-    </div>
-  </div> -->
   <div class="p-2 text-white" style="background-color: #47404f">
     <p class="m-4">
       {{ this.descriptionText }}

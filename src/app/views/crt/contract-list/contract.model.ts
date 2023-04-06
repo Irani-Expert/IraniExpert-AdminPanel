@@ -4,13 +4,14 @@ import { IContract } from './contract.interface';
 export class ContractModel extends Base implements IContract {
   id: number;
   title: string;
-  orderID:number; 
-  sellingType: number
-  sellingTypeTitle:string
+  orderID: number;
+  sellingType: number;
+  sellingTypeTitle: string;
   fromDate: string;
   toDate: string;
   prcentReward: number;
   userID: number;
   roleID: number;
-  conditions:number[]=new Array<number>();
+  userName: string;
+  conditions: number[] = new Array<number>();
 }

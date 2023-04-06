@@ -152,7 +152,7 @@ export class BannerComponent implements OnInit {
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
-          this.imageFound = false;
+          this.addUpdate.fileExists = false;
           this.addUpdate.filePath = this.filePathKeeper;
 
           this.toastr.success('با موفقیت حذف شد', null, {
@@ -194,6 +194,7 @@ export class BannerComponent implements OnInit {
       row.fileType = null;
       row.linkType = null;
       row.tableType = null;
+      row.fileExists = false;
     }
     this.filePathKeeper = row.filePath;
     this.addUpdate = row;
@@ -319,7 +320,7 @@ export class BannerComponent implements OnInit {
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.filePath = res.data[0];
-          this.imageFound = true;
+          this.addUpdate.fileExists = true;
 
           this.toastr.success('با موفقیت آپلود شد', null, {
             timeOut: 2000,

@@ -6,6 +6,7 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { CommentModel } from 'src/app/shared/models/comment.model';
 import { ToastrService } from 'ngx-toastr';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-notes',
@@ -24,11 +25,12 @@ export class NotesComponent implements OnInit {
 
   rows: CommentModel[];
   pageIsLoad: boolean = false;
-  filter: FilterModel = new FilterModel();
+  filterModel: FilterModel = new FilterModel();
 
   constructor(
     public _commentService: CommentService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: NgbModal
   ) {
     this.page.pageNumber = 0;
     this.page.size = 6;
@@ -55,7 +57,7 @@ export class NotesComponent implements OnInit {
           : this.page.pageNumber,
         this.page.size,
         tableTypeId,
-        this.filter
+        this.filterModel
       )
       .subscribe(
         (res: Result<Paginate<CommentModel[]>>) => {
@@ -76,5 +78,46 @@ export class NotesComponent implements OnInit {
           );
         }
       );
+  }
+
+  /*
+  *
+  *
+  *
+  Filter
+  * 
+  *
+  */
+
+  openFilterModal(content: any) {
+    this.modalService
+      .open(content, {
+        size: 'lg',
+      })
+      .result.then(
+        () => {},
+        () => {
+          this.filterModel = new FilterModel();
+        }
+      );
+  }
+
+  startFilter() {
+    this._commentService
+      .GetAllComment(
+        this.page.pageNumber !== 0
+          ? this.page.pageNumber - 1
+          : this.page.pageNumber,
+        this.page.size,
+        this.currentTableType,
+        this.filterModel
+      )
+      .subscribe((res) => {
+        this.pageIsLoad = true;
+        this.rows = res.data.items;
+        this.page.totalElements = res.data.totalCount;
+        this.page.totalPages = res.data.totalPages - 1;
+        this.page.pageNumber = res.data.pageNumber + 1;
+      });
   }
 }

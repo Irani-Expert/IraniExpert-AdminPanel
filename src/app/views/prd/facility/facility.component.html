@@ -1,10 +1,11 @@
 <div class="mb-4 d-block">
   <button
-    class="btn btn-primary mb-4"
+    class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
     type="button"
     (click)="addorEdit(addUpdateModal, undefined)"
   >
-    ایجاد
+    <i class="i-Add text-bigger mr-2"></i>
+    <strong>ایجاد</strong>
   </button>
 </div>
 <div class="separator-breadcrumb border-top"></div>
@@ -23,16 +24,18 @@
         <div class="col-10 text-start">
           <button
             (click)="addorEdit(addUpdateModal, item)"
-            class="btn btn-info mt-4"
+            class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center mt-4"
           >
-            ویرایش
+            <i class="i-Pen-5 text-bigger mr-2"></i>
+            <strong>ویرایش</strong>
           </button>
           <button
             type="button"
             (click)="deleteFacility(item.id, deleteConfirmModal)"
-            class="btn btn-danger mt-4 ml-2"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mt-4 ml-2"
           >
-            حذف
+            <i class="i-Close text-bigger mr-2"></i>
+            <strong>حذف</strong>
           </button>
         </div>
       </div>
@@ -67,18 +70,20 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.dismiss('cancel')"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>خیر</strong>
     </button>
     <button
       type="button"
       ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close('Ok')"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i>
+      <strong>بله</strong>
     </button>
   </div>
 </ng-template>
@@ -207,19 +212,21 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id !== 0"
     >
-      ویرایش
+      <i class="i-Pen-5 text-bigger mr-2"></i>
+      <strong>ویرایش</strong>
     </button>
     <button
       type="button"
-      class="btn btn-outline-dark btn-rounded"
+      class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
       *ngIf="addUpdate.id === 0"
     >
-      ایجاد
+      <i class="i-Add text-bigger mr-2"></i>
+      <strong>ایجاد</strong>
     </button>
   </div>
 </ng-template>

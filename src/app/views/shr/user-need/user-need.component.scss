@@ -439,3 +439,37 @@ input:checked + .slider:before {
   outline: none;
   height: 30px;
 }
+
+.span-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  background-color: rgb(23, 185, 23);
+  border-radius: 50%;
+}
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+
+  // fill: none;
+}
+.checkmark {
+  width: 20px;
+  height: 20px;
+
+  display: block;
+  stroke-width: 2;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+}

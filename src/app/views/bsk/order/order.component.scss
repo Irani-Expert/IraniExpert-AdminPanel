@@ -44,7 +44,7 @@
 }
 .notebar-left {
   left: calc(-#{400px} - #{20px});
-  z-index: 90;
+  z-index: 1057;
   transition: all 0.24s ease-in-out;
   &.open {
     left: 0;
@@ -122,18 +122,18 @@
 .padding-fixer {
   padding-left: 46px;
 }
-.updateNoteBar {
-  top: 0;
-  bottom: 0;
-  position: fixed;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  background-color: none;
-  display: block;
-  z-index: 89;
-  width: 100%;
-  overflow: visible;
-}
+// .updateNoteBar {
+//   top: 0;
+//   bottom: 0;
+//   position: fixed;
+//   overflow-y: scroll;
+//   overflow-x: hidden;
+//   background-color: none;
+//   display: block;
+//   z-index: 1055;
+//   width: 100%;
+//   overflow: visible;
+// }
 .rounded-4 {
   border-radius: 15px !important;
 }

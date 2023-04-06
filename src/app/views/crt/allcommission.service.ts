@@ -41,7 +41,6 @@ export class allcommissionService extends BaseService<ConditionModel, number> {
     pageSize: number,
     pageIndex: number
   ): Observable<Result<Paginate<ReceiptModel[]>>> {
-    debugger
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

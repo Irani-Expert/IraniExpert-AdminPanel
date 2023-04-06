@@ -1,5 +1,5 @@
 <button
-*appCanAccess="'Users-Add'"
+  *appCanAccess="'Users-Add'"
   type="button"
   class="btn btn-primary mb-4"
   (click)="openSignupModal(signUpModal)"
@@ -8,7 +8,6 @@
 </button>
 <div class="separator-breadcrumb border-top"></div>
 <div class="row list-horizontal">
-  
   <div
     class="list-item"
     [ngClass]="{
@@ -111,7 +110,7 @@
             <div class="text-center col-auto d-flex justify-content-around">
               <div class="w-25 w-sm-100 mr-sm-2">
                 <button
-                *appCanAccess="'Users-Edit'"
+                  *appCanAccess="'Users-Edit'"
                   class="btn btn-warning"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="userRoleEdit(addUpdateModal, user)"
@@ -121,7 +120,7 @@
               </div>
               <div class="w-25 w-sm-100 ml-sm-2">
                 <button
-                *appCanAccess="'Users-Delete'"
+                  *appCanAccess="'Users-Delete'"
                   class="btn btn-danger"
                   [ngClass]="{ 'd-none': viewMode === 'grid' }"
                   (click)="
@@ -163,6 +162,7 @@
       (pageChange)="setPage($event)"
       previousLabel=""
       nextLabel=""
+      responsive="true"
     ></pagination-controls>
   </div>
 </div>
@@ -176,7 +176,6 @@
 </div>
 <ng-template #addUpdateModal let-modal>
   <div class="modal-header">
-
     <h4 class="modal-title" *ngIf="userIdTracker !== 0" id="modal-basic-title">
       ویرایش
     </h4>
@@ -289,9 +288,7 @@
 </ng-template>
 <ng-template #signUpModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title"  id="modal-basic-title">
-      ایجاد
-    </h4>
+    <h4 class="modal-title" id="modal-basic-title">ایجاد</h4>
 
     <button
       type="button"
@@ -305,7 +302,6 @@
   <form [formGroup]="signUpForm" (ngSubmit)="submit()">
     <div class="modal-body">
       <div class="row">
-     
         <div class="col-md-6 form-group mb-3 mt-3">
           <label for="firstName ">نام </label>
           <input
@@ -359,7 +355,6 @@
       </div>
     </div>
     <div class="modal-footer">
-
       <button
         ngbAutofocus
         type="button"

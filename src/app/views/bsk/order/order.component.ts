@@ -38,6 +38,8 @@ import { ProductService } from '../../prd/products-list/product.service';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  pageIsLoad: boolean = false;
+
   filters: any;
   statusTitles = [
     { title: 'نهایی', id: 8 },
@@ -204,6 +206,7 @@ this.callOrder()
       this.dateValue = ' تاریخ ثبت به شمسی';
     }
   }
+
   getOrders(status: any, pageNumber: number, filter: FilterModel) {
     let finder = this.statusTitles.findIndex((item) => item.id == status);
     this.dropDownTitleHolder = this.statusTitles[finder].title;
@@ -225,6 +228,7 @@ this.callOrder()
             filter.fromExpireDate = undefined;
           }
           this.rows = res.data.items;
+          this.pageIsLoad = true;
           var counter = 0;
           this.rows.forEach((_x) => {
             this.rows[counter].jalaliDate = moment(
@@ -298,11 +302,19 @@ this.callOrder()
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
       })
-      .result.then((result: boolean) => {
-        if (result === true) {
-          this.changePaymentStatus(this.invoiceDetail);
+      .result.then(
+        (result: boolean) => {
+          if (result === true) {
+            this.changePaymentStatus(this.invoiceDetail);
+            this.updateNotebar();
+            this.clearNote();
+          }
+        },
+        (reason) => {
+          this.updateNotebar();
+          this.clearNote();
         }
-      });
+      );
   }
   selectStatus($event: any) {
     if ($event != undefined) {
@@ -593,47 +605,60 @@ this.callOrder()
 
     this.modalService
       .open(content, {
-        size: 'lg',
+        size: 'md',
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
         beforeDismiss: () => {
           if (this.filePathKeeper !== this.licenseModel.filePath) {
+            this.toastr.show(
+              ' لطفا ایجاد یا ویرایش را تکمیل یا فایل آپلود شده را حذف کنید',
+              null,
+              {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+                toastClass: 'bg-light',
+                messageClass: 'text-small mt-2',
+              }
+            );
             return false;
           }
         },
       })
-      .result.then((result: boolean) => {
-        if (result == true) {
-          if (this.clientId == null) {
-            this.licenseModel.rowID = row.id;
-            this.addOrUpdate(this.licenseModel, null);
-            // this.addForm.reset();
+      .result.then(
+        (result: boolean) => {
+          if (result == true) {
+            if (this.clientId == null) {
+              this.licenseModel.rowID = row.id;
+              this.addOrUpdate(this.licenseModel, null);
+              // this.addForm.reset();
+            }
+            // else {
+            //   let climax = new CliamxLicenseModel();
+            //   climax.file = this.licenseFile;
+            //   climax.accountNumber = this.licenseModel.accountNumber.toString();
+            //   climax.startDate =
+            //     this.startDate.year +
+            //     '-' +
+            //     this.startDate.month +
+            //     '-' +
+            //     this.startDate.day;
+
+            //   climax.expireDate =
+            //     this.expireDate.year +
+            //     '-' +
+            //     this.expireDate.month +
+            //     '-' +
+            //     this.expireDate.day;
+            //   this.licenseModel.rowID = row.id;
+            //   this.licenseModel.filePath = '';
+
+            //   this.addOrUpdate(this.licenseModel, climax);
+            //   // this.addForm.reset();
+            // }
           }
-          // else {
-          //   let climax = new CliamxLicenseModel();
-          //   climax.file = this.licenseFile;
-          //   climax.accountNumber = this.licenseModel.accountNumber.toString();
-          //   climax.startDate =
-          //     this.startDate.year +
-          //     '-' +
-          //     this.startDate.month +
-          //     '-' +
-          //     this.startDate.day;
-
-          //   climax.expireDate =
-          //     this.expireDate.year +
-          //     '-' +
-          //     this.expireDate.month +
-          //     '-' +
-          //     this.expireDate.day;
-          //   this.licenseModel.rowID = row.id;
-          //   this.licenseModel.filePath = '';
-
-          //   this.addOrUpdate(this.licenseModel, climax);
-          //   // this.addForm.reset();
-          // }
-        }
-      });
+        },
+        (reason) => {}
+      );
   }
 
   addOrUpdate(item: LicenseModel, _climax: CliamxLicenseModel) {
@@ -646,7 +671,6 @@ this.callOrder()
     item.filePath = this.licenseModel.filePath;
     item.versionNumber = this.versionNumber;
     if (this.startDate.year !== undefined) {
-      debugger;
       item.startDate =
         this.startDate.year +
         '-' +

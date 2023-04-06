@@ -49,11 +49,12 @@
 
     <button
       type="button"
-      class="btn btn-outline-primary btn-rounded mb-4"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
       (click)="addOrUpdate()"
       [disabled]="!addForm.valid"
     >
-      ذخیره
+      <i class="i-Yes text-bigger mr-2"></i>
+      <strong>ذخیره</strong>
     </button>
   </div>
 </form>
@@ -71,15 +72,20 @@
           {{ item.answer }}
         </div>
         <div class="col-10 text-start">
-          <button (click)="addUpdate = item" class="btn btn-warning mt-4">
-            ویرایش
+          <button
+            (click)="addUpdate = item"
+            class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center mt-4"
+          >
+            <i class="i-Pen-5 text-bigger mr-2"></i>
+            <strong>ویرایش</strong>
           </button>
           <button
             type="button"
             (click)="deleteFaq(item.id, deleteConfirmModal)"
-            class="btn btn-danger mt-4 ml-2"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mt-4 ml-2"
           >
-            حذف
+            <i class="i-Close text-bigger mr-2"></i>
+            <strong>حذف</strong>
           </button>
         </div>
       </div>
@@ -114,18 +120,20 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-outline-secondary btn-rounded mr-1"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
       (click)="modal.dismiss('cancel')"
     >
-      خیر
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>خیر</strong>
     </button>
     <button
       type="button"
       ngbAutofocus
-      class="btn btn-wide btn-danger btn-rounded"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close('Ok')"
     >
-      بله
+      <i class="i-Yes text-bigger mr-2"></i>
+      <strong>بله</strong>
     </button>
   </div>
 </ng-template>

@@ -1,6 +1,3 @@
-<!-- <button class="btn bg-dark text-white" (click)="openFilterModal(filterModal)">
-  فیلتر کردن
-</button> -->
 <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-3">
   <button
     type="button"
@@ -35,7 +32,7 @@
   (click)="openFilterModal(filterModal)"
   class="btn-filter btn d-inline-flex justify-content-around py-btns radius m-1 align-items-center"
   ><i class="i-Filter-2 text-dark text-bigger mr-2"></i>
-  <strong class="text-dark ml-2"> فیلتر کردن</strong></a
+  <strong class="text-dark ml-2">فیلتر</strong></a
 >
 
 <div class="my-css d-flex flex-wrap w-100">
@@ -69,7 +66,17 @@
             *ngIf="item.isAccepted === true"
             >تایید شده</span
           >
-          <p class="text-white-50">{{ item.createDate | relativeTime }}</p>
+
+          <p class="text-white-50 m-0 mt-2">
+            <span>{{ item.createDate | relativeTime }} | </span>
+
+            <span>{{ item.createDate | jalali }}</span>
+          </p>
+
+          <p class="text-white-50 m-0">
+            <span>شناسه: {{ item.id }} | </span>
+            <span>مربوط به شناسه: {{ item.rowID }}</span>
+          </p>
         </div>
         <div class="text-warning">امتیاز:5\{{ item.rate }}</div>
       </div>
@@ -79,7 +86,7 @@
         </p>
         <ng-container *ngIf="item.parentID !== null">
           <p class="bg-dark text-white ml-3">
-            پاسخ:{{ item.parentComment.text }}
+            <!-- پاسخ:{{ item.parentComment.text }} -->
           </p>
         </ng-container>
       </div>
@@ -114,6 +121,7 @@
     (pageChange)="setPage($event, this.tableType)"
     previousLabel=""
     nextLabel=""
+    responsive="true"
   ></pagination-controls>
 </div>
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
@@ -293,8 +301,8 @@
             class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="modal.close(true)"
           >
-            <i class="i-Pen-5 text-bigger mr-2"></i>
-            <strong class="ml-2 text-small">ویرایش</strong>
+            <i class="i-Yes text-bigger mr-2"></i>
+            <strong class="ml-2 text-small">تایید</strong>
           </button>
 
           <button

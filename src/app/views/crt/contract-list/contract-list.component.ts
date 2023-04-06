@@ -26,6 +26,8 @@ import { Condition } from 'selenium-webdriver';
   styleUrls: ['./contract-list.component.scss'],
 })
 export class ContractListComponent implements OnInit {
+  content: any;
+
   date = new Date();
   dropdownList = [];
   sellingTypeTitle = ['IB', 'Invesment', 'License'];
@@ -51,7 +53,7 @@ export class ContractListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCondition();
+    // this.getCondition();
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -117,11 +119,6 @@ export class ContractListComponent implements OnInit {
           counter++;
         });
 
-        // this.allContract.forEach(x=>
-        //   {
-        //     x.fromDate=
-        //   }
-        //   )
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber;
@@ -138,27 +135,20 @@ export class ContractListComponent implements OnInit {
       }
     );
   }
+
   openModal(content: any, row: ContractModel) {
     this.getCondition();
-
+    this.content = content;
     if (row === undefined) {
       row = new ContractModel();
       row.id = 0;
       row.prcentReward = 0;
     }
     this.contractModel = row;
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
-      .result.then(
-        (result) => {
-          this.getCondition();
-        },
-        (reason) => {
-          console.log('Err!', reason);
-        }
-      );
-    this.getRoleList();
+
+    // this.getRoleList();
   }
+
   contractWith() {
     this.contractModel.sellingType = Number(this.contractModel.sellingType);
     this.contractModel.isActive = true;
@@ -270,8 +260,22 @@ export class ContractListComponent implements OnInit {
               this.contractModel.conditions.push(x.id);
             }
           });
-          console.log(this.contractModel.conditions);
+          // console.log(this.contractModel.conditions);
         }
+
+        this.modalService
+          .open(this.content, {
+            ariaLabelledBy: 'modal-basic-title',
+            size: 'lg',
+          })
+          .result.then(
+            (result) => {
+              // this.getCondition();
+            },
+            (reason) => {
+              console.log('Err!', reason);
+            }
+          );
       },
       (_error) => {
         this.toastr.error(

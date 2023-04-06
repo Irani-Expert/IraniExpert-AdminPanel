@@ -16,6 +16,7 @@
         <th>درصد یا میزان تخفیف</th>
         <th>تاریخ ایجاد</th>
         <th>تاریخ انقضا</th>
+        <th>استفاده</th>
         <th>کد</th>
         <th class="rounded--left">عملیات</th>
       </tr>
@@ -40,6 +41,16 @@
         <td *ngIf="item.percent == 0">${{ item.amount }}</td>
         <td>{{ item.createDate }}</td>
         <td>{{ item.expireDate }}</td>
+
+        <td *ngIf="item.isUsed">
+          <span class="text-small text-white badge bg_gray">استفاده شده</span>
+        </td>
+        <td *ngIf="!item.isUsed">
+          <span class="text-small text-white badge bg-success"
+            >استفاده نشده</span
+          >
+        </td>
+
         <td>
           <div class="card bg-warning bg-gradient text-white text-center p-3">
             {{ item.code }}
@@ -63,6 +74,7 @@
     (pageChange)="setPage($event)"
     previousLabel=""
     nextLabel=""
+    responsive="true"
   ></pagination-controls>
 </div>
 
@@ -152,10 +164,7 @@
           </div>
         </div>
 
-        <div class="row container">
-          <strong for="" class="text--secondary mb-2"
-            >تخفیف بر اساس مبلغ</strong
-          >
+        <div class="row container justify-content-end">
           <div class="d-flex col-7">
             <input
               class="p-2"

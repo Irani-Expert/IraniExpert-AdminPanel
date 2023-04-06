@@ -30,10 +30,11 @@
         <div class="col-12 mt-2 mb-3">
           <button
             type="button"
-            class="btn btn-rounded btn-outline-dark"
+            class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="uploadFile()"
           >
-            آپلود کن
+            <i class="i-Upload text-dark text-bigger mr-3"></i>
+            <strong>آپلود</strong>
           </button>
         </div>
         <form class="col-12 row mt-2 mb-3" [formGroup]="addForm">
@@ -145,21 +146,23 @@
       </div>
       <button
         type="button"
-        class="btn btn-outline-dark btn-rounded"
+        class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
         (click)="addOrUpdate(addUpdate)"
         *ngIf="addUpdate.id !== 0"
         [disabled]="!addForm.valid"
       >
-        ویرایش
+        <i class="i-Pen-5 text-bigger mr-2"></i>
+        <strong>ویرایش</strong>
       </button>
       <button
         type="button"
-        class="btn btn-outline-dark btn-rounded"
+        class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
         (click)="addOrUpdate(addUpdate)"
         *ngIf="addUpdate.id === 0"
         [disabled]="!addForm.valid"
       >
-        ایجاد
+        <i class="i-Add text-bigger mr-2"></i>
+        <strong>ایجاد</strong>
       </button>
     </ng-template>
   </li>
