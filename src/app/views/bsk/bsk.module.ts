@@ -15,7 +15,7 @@ import { FileUploaderService } from 'src/app/shared/services/fileUploader.servic
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { UserOrderComponent } from './user-order/user-order.component';
-import { JalaliPipe } from 'src/app/shared/pipes/jalali-time.pipe';
+// import { JalaliPipe } from 'src/app/shared/pipes/jalali-time.pipe';
 import { CommissionComponent } from './commission/commission.component';
 
 @NgModule({
@@ -30,7 +30,7 @@ import { CommissionComponent } from './commission/commission.component';
     // LicenseComponent,
     UserOrderComponent,
     // LicenseUpdateComponent, //Deleted
-    JalaliPipe,
+
     CommissionComponent,
   ],
   imports: [

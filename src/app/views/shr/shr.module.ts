@@ -12,12 +12,10 @@ import { AllCommentComponent } from './all-comment/all-comment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { NotesComponent } from './notes/notes.component';
-import { JalaliPipe } from 'src/app/shared/pipes/jalali-time.pipe';
 
 @NgModule({
   declarations: [
     UserNeedComponent,
-    JalaliPipe,
     UserWantsPipe,
     UserCommentComponent,
     AllCommentComponent,
