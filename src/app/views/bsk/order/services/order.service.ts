@@ -7,6 +7,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { ProductModel } from 'src/app/views/prd/products-list/product.model';
+import { UsersModel } from 'src/app/views/sec/user-mangement/users.model';
 import { environment } from 'src/environments/environment.prod';
 import { referraluserModel } from '../../../dashboard/referral-user/referral-user.model';
 import { OrderModel } from '../models/order.model';
@@ -31,6 +32,23 @@ export class OrderService extends BaseService<OrderModel, 0> {
    * @param route
    * @returns all
    */
+  getUserbyUserId(userId){
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      }),
+    };
+    return this._http.get<Result<UsersModel>>(
+      this._base +
+        '/AspNetUser/' +
+        userId,
+      _options
+    );
+  }
   getMyOrder(
     pageIndex: number,
     pageSize: number,
@@ -114,7 +132,7 @@ export class OrderService extends BaseService<OrderModel, 0> {
         Expires: '0',
       }),
     };
-    return this._http.get<Result<Paginate<ProductModel[]>>>(
+    return this._http.get<Result<ProductModel[]>>(
       this._base + '/Product?pageIndex=0&pageSize=100',
       _options
     );

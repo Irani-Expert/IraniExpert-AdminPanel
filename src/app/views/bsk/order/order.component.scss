@@ -276,7 +276,10 @@ input[type="checkbox"] {
   width: 0;
   //  visibility: hidden;
 }
-
+.add-btn{
+  position: absolute;
+    left: 2%;
+}
 .activeOrder label {
   cursor: pointer;
   //text-indent: -9999px;
@@ -300,4 +303,107 @@ input:checked + label:after {
 
 .activeOrder label:active:after {
   width: 60px;
+}
+.card-green {
+
+  background: #2c762f;
+  border-radius: 0.25rem;
+  transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+ }
+ .card-purple {
+
+  background: rgba(121, 117, 118, 0.9568627451);
+  border-radius: 0.25rem;
+  transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+ }
+
+ 
+ .btn-blue-right-section {
+  text-align: center;
+
+  border-left: 1px solid #fff;
+}
+.d-grid{
+  display: grid;
+}
+.card-text-font{
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  33% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  background: #8510bb;
+  box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  /* padding: 0px 30px; */
+  color: #fff;
+  font-family: Lato, Arial, sans-serif;
+  border-color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  will-change: transform;
+  
+  &:hover {
+    background: darken(#8510bb,10%);
+    box-shadow: 0 4px 17px rgba(0,0,0,0.2);
+    transform: translate3d(0, -2px, 0);
+  }
+  &:active {
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
+    transform: translate3d(0, 1px, 0);
+  }
+}
+
+.pulse {
+  position: relative;
+  
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,.4);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    margin: auto;
+  }
+  &:before {
+    animation: pulse 1.5s infinite linear;
+  }
+  &:after {
+    animation: pulse 2s .4s infinite linear;
+  }
+  &:hover:before, &:hover:after {
+    display: none;
+  }
+}
+.icon-font-size{
+  font-size: 44px;
+    font-weight: bold;
 }

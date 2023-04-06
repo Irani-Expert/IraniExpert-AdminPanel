@@ -1,6 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'jalali-moment';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
@@ -27,6 +27,10 @@ import { ProductModel } from '../../prd/products-list/product.model';
 import { PlanService } from '../../bas/plan/plan.service';
 import { PlanModel } from '../../bas/plan/plan.model';
 import { formatDate } from '@angular/common';
+import { AddOrderModel } from './models/AddOrder.model';
+import { number } from 'echarts';
+import { UsersModel } from '../../sec/user-mangement/users.model';
+import { ProductService } from '../../prd/products-list/product.service';
 
 @Component({
   selector: 'app-order',
@@ -59,13 +63,16 @@ export class OrderComponent implements OnInit {
   invoiceStatus: number;
   filterModel: FilterModel = new FilterModel();
   plans: PlanModel[] = new Array<PlanModel>();
+  addPlans: PlanModel[] = new Array<PlanModel>();
   productModel: ProductModel[] = new Array<ProductModel>();
+  AddproductModel: ProductModel[] = new Array<ProductModel>();
 
   filterForm: FormGroup;
+  AddOrderForm: FormGroup;
   rows: OrderModel[] = new Array<OrderModel>();
   orderDetail: OrderModel;
   status: any;
-
+  
   page: Page = new Page();
 
   viewMode: 'list' | 'grid' = 'list';
@@ -73,6 +80,8 @@ export class OrderComponent implements OnInit {
   noteRowID: number;
   notes: CommentModel[] = new Array<CommentModel>();
   note: CommentModel = new CommentModel();
+  userInfo:UsersModel = new UsersModel();
+  AddOrderModel: AddOrderModel = new AddOrderModel();
   filePathKeeper: string;
   licenseFile: any = '';
   licenseModel: LicenseModel = new LicenseModel();
@@ -80,17 +89,16 @@ export class OrderComponent implements OnInit {
   expireDate: NgbDate = new NgbDate(2023, 4, 3);
   clientId: number;
   versionNumber: number;
-
+  productList: ProductModel[] = new Array<ProductModel>();
   toggled = false;
-
+  AddorderSituation:boolean=true;
   @ViewChildren(PerfectScrollbarDirective)
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   dateValue: string = 'تاریخ ثبت به میلادی';
-
   headerValue: string = 'کد رهگیری';
-
   user: UserInfoModel;
+  
   constructor(
     public router: Router,
     public _orderService: OrderService,
@@ -102,23 +110,36 @@ export class OrderComponent implements OnInit {
     public _invoiceService: InvoiceService,
     public _commentService: CommentService,
     private auth: AuthenticateService,
-    private _planService: PlanService
+    private _planService: PlanService,
+
   ) {
     this.page.pageNumber = 0;
     this.page.size = 6;
     setTimeout(() => {
       this.psContainerSecSidebar = this.psContainers.toArray()[1];
     });
+
   }
 
   ngOnInit(): void {
-    this._orderService
-      .getProduct()
-      .subscribe((res: Result<Paginate<ProductModel[]>>) => {
-        this.productModel = res.data.items;
-      });
+  console.log(this.userInfo);
+  
+this.callOrder()
 
     this.setPage(this.page.pageNumber, 8);
+    this.AddOrderForm = this._formBuilder.group({
+      userId: [null],
+      productID: [null, Validators.compose([Validators.required])],
+      planID: [null, Validators.compose([Validators.required])],
+      accountNumber: [null, Validators.compose([Validators.required])],
+      discountPrice: [null],
+      transactionCode: [null, Validators.compose([Validators.required])],
+      price:[null],
+      firstName: [null, Validators.compose([Validators.required])],
+      lastName: [null, Validators.compose([Validators.required])],
+      phoneNumber: [null, Validators.compose([Validators.required])],
+      email: [null, Validators.email],
+    });
     this.filterForm = this._formBuilder.group({
       iD: [null],
       userID: [null],
@@ -139,6 +160,7 @@ export class OrderComponent implements OnInit {
       versionNumber: [null],
       ToCreateDate: [null],
     });
+ 
 
     this.updateNotebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
@@ -148,6 +170,14 @@ export class OrderComponent implements OnInit {
         if (Utils.isMobile()) {
           this._orderService.sidebarState.sidenavOpen = false;
         }
+      });
+  }
+  callOrder(){
+    this._orderService
+      .getProduct()
+      .subscribe((res: Result<ProductModel[]>) => {
+        this.productModel = res.data;
+        this.AddproductModel=res.data;
       });
   }
   // clearFilter() {
@@ -785,6 +815,34 @@ export class OrderComponent implements OnInit {
         });
     }
   }
+  addSelectProduct($event: any) {
+    if ($event != undefined) {
+      this.AddOrderModel.productID = parseInt($event);
+    }
+    if (this.AddOrderModel.productID !== undefined) {
+      this._planService
+        .getPlanByProductId(this.AddOrderModel.productID)
+        .subscribe((res) => {
+          if (res.success == true) {
+            this.addPlans = res.data;
+            this.addSelectPlan(this.addPlans[0].id);
+          }
+        });
+    }
+  }
+  addSelectPlan(content:any){
+    if(content!=undefined){
+      var palnId=Number(content)
+      var plan =this.addPlans.findIndex((x) => x.id === palnId);
+      this.AddOrderModel.planID=palnId
+      this.AddOrderModel.price=this.addPlans[plan].price
+      this.AddOrderModel.discountPrice=null;
+    }
+    else{
+      this.AddOrderModel.price=null
+    }
+   
+  }
   selectProductPlan($event: any) {
     if ($event != undefined) {
       this.filterModel.planID = parseInt($event);
@@ -990,4 +1048,72 @@ export class OrderComponent implements OnInit {
       });
     }
   }
+  openAddModal(content:any){
+    this.AddOrderForm.controls.userId.valueChanges.subscribe(value => {
+       var NValue=Number(value)
+     
+});
+    this.modalService
+      .open(content, {
+        size: 'lg',
+        ariaLabelledBy: 'modal-basic-title',
+        centered: true,
+       
+      }).result.then((_result) => {
+        
+        let token = localStorage.getItem('token');
+        this.AddOrderModel.token=token
+        if(this.AddOrderModel.discountPrice!=null){
+        this.AddOrderModel.discountPrice=Number(this.AddOrderModel.discountPrice);
+        }
+        else{
+          this.AddOrderModel.discountPrice=0
+        }
+          this.AddOrderModel.userID=Number(this.AddOrderModel.userID);
+    
+ 
+
+        this._orderService.create(this.AddOrderModel,'Orders/CreateAdminOrder') .subscribe((res: Result<number>) => {
+          this.AddOrderModel=new AddOrderModel();
+          this.AddOrderForm.reset();
+          this.userInfo=new UsersModel;
+          if(res.success){
+            this.callOrder()
+
+            this.toastr.success(res.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        });
+         
+       
+      })
+  }
+  getUserbyUserId(){
+    if (typeof +this.AddOrderModel.userID === "number" && !isNaN(+this.AddOrderModel.userID)){
+this._orderService.getUserbyUserId(this.AddOrderModel.userID)  .subscribe((res: Result<UsersModel>) => {
+  this.userInfo = res.data;
+  this.AddOrderForm.patchValue({firstName: this.userInfo.firstName, lastName: this.userInfo.lastName
+    , phoneNumber: this.userInfo.phoneNumber,email: this.userInfo.email})
+  this.AddOrderModel.firstName=this.userInfo.firstName
+  this.AddOrderModel.lastName=this.userInfo.lastName
+  this.AddOrderModel.phoneNumber=this.userInfo.phoneNumber
+  this.AddOrderModel.email=this.userInfo.email
+});
+    }
+    else{
+      this.toastr.warning('نوع داده اشتباه است', null, {
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      });
+    }
+}
+changeAddTypeofRequest(){
+  this.AddorderSituation=!this.AddorderSituation;
+  this.AddOrderForm.reset();
+  this.userInfo=new UsersModel();
+
+}
+
 }
