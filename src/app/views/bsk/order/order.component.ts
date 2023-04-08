@@ -849,6 +849,7 @@ this.callOrder()
         .subscribe((res) => {
           if (res.success == true) {
             this.addPlans = res.data;
+            debugger
             this.addSelectPlan(this.addPlans[0].id);
           }
         });
@@ -1093,8 +1094,8 @@ this.callOrder()
         else{
           this.AddOrderModel.discountPrice=0
         }
-          this.AddOrderModel.userID=Number(this.AddOrderModel.userID);
-    
+        this.AddOrderModel.userID==0? null :Number(this.AddOrderModel.userID);
+    debugger
  
 
         this._orderService.create(this.AddOrderModel,'Orders/CreateAdminOrder') .subscribe((res: Result<number>) => {
