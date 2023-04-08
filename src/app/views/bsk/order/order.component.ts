@@ -100,7 +100,7 @@ export class OrderComponent implements OnInit {
   dateValue: string = 'تاریخ ثبت به میلادی';
   headerValue: string = 'کد رهگیری';
   user: UserInfoModel;
-  
+  addOrderModalTable:string='برای کاربر موجود';
   constructor(
     public router: Router,
     public _orderService: OrderService,
@@ -1094,10 +1094,7 @@ this.callOrder()
         else{
           this.AddOrderModel.discountPrice=0
         }
-        this.AddOrderModel.userID==0? null :Number(this.AddOrderModel.userID);
-    debugger
- 
-
+        this.AddOrderModel.userID==0? null :Number(this.AddOrderModel.userID); 
         this._orderService.create(this.AddOrderModel,'Orders/CreateAdminOrder') .subscribe((res: Result<number>) => {
           this.AddOrderModel=new AddOrderModel();
           this.AddOrderForm.reset();
@@ -1135,6 +1132,14 @@ this._orderService.getUserbyUserId(this.AddOrderModel.userID)  .subscribe((res: 
     }
 }
 changeAddTypeofRequest(){
+  if(this.addOrderModalTable==='برای کاربر موجود'){
+    this.addOrderModalTable= 'و ثبت نام کاربر';
+  }
+  else{
+    this.addOrderModalTable= 'برای کاربر موجود';
+
+  }
+
   this.AddorderSituation=!this.AddorderSituation;
   this.AddOrderForm.reset();
   this.userInfo=new UsersModel();
