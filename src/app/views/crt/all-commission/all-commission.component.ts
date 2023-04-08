@@ -99,8 +99,9 @@ export class AllCommissionComponent implements OnInit {
         this.page.pageNumber = res.data.pageNumber ;
       });
   }
-  getAllCommission(page: number) {
+  getAllCommission(page: number) {    
     let finder = this.statusTitles.findIndex((item) => item.id == page);
+    this.dropDownTitleHolder=this.statusTitles[finder].title
     this._allcommissionService
       .getCommissionAllUser(page)
       .subscribe((commission) => {

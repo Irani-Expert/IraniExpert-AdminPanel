@@ -1160,8 +1160,8 @@
             <label >مبلغ پرداختی</label>
             <div class="card-green shadow-lg">
               <div class="p-1">
-               <a  class="btn p-1"><i  class="i-Dollar-Sign-2 btn-blue-right-section m-0 p-1 d-grid text-white"></i></a>
-               <a  class="btn p-1 text-white" *ngIf="AddOrderModel.price!=null">{{AddOrderModel.price-AddOrderModel.discountPrice}}</a>
+               <a  class="btn p-1" *ngIf="AddOrderModel.discountPrice   < AddOrderModel.price || AddOrderModel.price==null"><i  class="i-Dollar-Sign-2 btn-blue-right-section m-0 p-1 d-grid text-white"></i></a>
+               <a  class="btn p-1 text-white" *ngIf="AddOrderModel.price!=null">{{AddOrderModel.discountPrice   > AddOrderModel.price ? 'مبلغ صحیح نیست'   : AddOrderModel.price-AddOrderModel.discountPrice }}</a>
               </div>
             </div>
           </div>
