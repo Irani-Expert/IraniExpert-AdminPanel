@@ -998,7 +998,7 @@
   <div class="d-flex align-items-center ">
     <div class="col-11 container mt-2 mb-2 contrast">
       <div class="modal-header row">
-        <h4 class="modal-title " id="modal-basic-title">فیلتر</h4>
+        <h4 class="modal-title " id="modal-basic-title">ثبت سفارش <small>{{addOrderModalTable}}</small></h4>
 
         <button
           type="button"
@@ -1160,8 +1160,8 @@
             <label >مبلغ پرداختی</label>
             <div class="card-green shadow-lg">
               <div class="p-1">
-               <a  class="btn p-1"><i  class="i-Dollar-Sign-2 btn-blue-right-section m-0 p-1 d-grid text-white"></i></a>
-               <a  class="btn p-1 text-white" *ngIf="AddOrderModel.price!=null">{{AddOrderModel.price-AddOrderModel.discountPrice}}</a>
+               <a  class="btn p-1" *ngIf="AddOrderModel.discountPrice   < AddOrderModel.price || AddOrderModel.price==null"><i  class="i-Dollar-Sign-2 btn-blue-right-section m-0 p-1 d-grid text-white"></i></a>
+               <a  class="btn p-1 text-white" *ngIf="AddOrderModel.price!=null">{{AddOrderModel.discountPrice   > AddOrderModel.price ? 'مبلغ صحیح نیست'   : AddOrderModel.price-AddOrderModel.discountPrice }}</a>
               </div>
             </div>
           </div>
@@ -1190,7 +1190,7 @@
             type="button"
             class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
             (click)="modal.close(true)"
-            [disabled]="!AddOrderForm.valid
+            [disabled]="!AddOrderForm.valid || AddOrderModel.price    <= AddOrderModel.discountPrice
             "
           >
             <i class="i-Yes text-bigger mr-2"></i>

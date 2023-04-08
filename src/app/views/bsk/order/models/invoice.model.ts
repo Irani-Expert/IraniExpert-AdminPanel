@@ -19,4 +19,5 @@ export class InvoiceModel extends Base implements IInvoice {
   isConfirmed: boolean;
   tableType: number;
   userID: number;
+
 }

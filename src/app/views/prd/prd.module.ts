@@ -22,7 +22,6 @@ import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { ProductModel } from './products-list/product.model';
 import { GalleryComponent } from './gallery/gallery.component';
-
 @NgModule({
   declarations: [
     ProductsListComponent,
