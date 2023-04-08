@@ -1190,7 +1190,7 @@
             type="button"
             class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
             (click)="modal.close(true)"
-            [disabled]="!AddOrderForm.valid
+            [disabled]="!AddOrderForm.valid || AddOrderModel.price    <= AddOrderModel.discountPrice
             "
           >
             <i class="i-Yes text-bigger mr-2"></i>
