@@ -1,9 +1,5 @@
-<div class="card row">
-  <form
-    class="col-12 row mt-2 mb-3"
-    [formGroup]="addForm"
-    *ngIf="isDataFetched"
-  >
+<div class="card row mt-2 px-3" *ngIf="isDataFetched">
+  <form [formGroup]="addForm" class="row">
     <!-- name -->
 
     <div class="col-md-6 form-group mb-3">
@@ -164,7 +160,20 @@
       </button>
     </div>
   </form>
+
+  <div class="mb-4">
+    <button
+      type="button"
+      (click)="getreferral(repModal, userReferralModalCreate)"
+      class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
+    >
+      <i class="i-Business-Man text-bigger mr-2"></i>
+      <strong>معرف</strong>
+    </button>
+  </div>
 </div>
+
+<!--  -->
 
 <ng-template #passwordModal let-modal>
   <div class="modal-header">
@@ -209,7 +218,7 @@
     <div class="modal-footer">
       <button
         type="button"
-        class="btn-save btn d-flex justify-content-around py-btns radius align-items-center"
+        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
         ngbAutofocus
         (click)="modal.close(true)"
       >
@@ -218,11 +227,156 @@
 
       <button
         type="button"
-        class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center ml-2"
+        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
         (click)="modal.close(false)"
       >
         <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
       </button>
     </div>
   </form>
+</ng-template>
+
+<ng-template #repModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">معرف</h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <p>
+      <span>{{ referral.firstname }}</span>
+      <span class="ml-1">{{ referral.lastName }}</span>
+    </p>
+
+    <button
+      class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
+      (click)="[modal.dismiss(), sendUserReferralChange(userReferralModal)]"
+    >
+      <i class="i-Pen-5 text-bigger mr-2"></i>
+      <strong>تغییر معرف</strong>
+    </button>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn-details btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+      (click)="modal.dismiss()"
+    >
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>متوجه شدم</strong>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #userReferralModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">تغییر معرف</h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body px-4">
+    <div class="col-md-6 d-flex flex-column p-0">
+      <label for="referralCode">کد معرف جدید</label>
+      <input type="text" id="referralCode" [(ngModel)]="userReferral.title" />
+    </div>
+
+    <div class="d-flex flex-column mt-2">
+      <label for="referralDescription">توضیحات</label>
+      <textarea
+        id="referralDescription"
+        cols="30"
+        rows="10"
+        [(ngModel)]="userReferral.description"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      (click)="modal.close()"
+      type="button"
+      class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+    >
+      <i class="i-Yes text-bigger mr-2"></i>
+      <strong>تایید</strong>
+    </button>
+
+    <button
+      type="button"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+      (click)="modal.dismiss()"
+    >
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>انصراف</strong>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #userReferralModalCreate let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">ایجاد معرف</h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body px-4">
+    <div class="col-md-6 d-flex flex-column p-0">
+      <label for="referralCode">کد معرف جدید</label>
+      <input type="text" id="referralCode" [(ngModel)]="userReferral.title" />
+    </div>
+
+    <div class="d-flex flex-column mt-2">
+      <label for="referralDescription">توضیحات</label>
+      <textarea
+        id="referralDescription"
+        cols="30"
+        rows="10"
+        [(ngModel)]="userReferral.description"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      (click)="modal.close()"
+      type="button"
+      class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+    >
+      <i class="i-Yes text-bigger mr-2"></i>
+      <strong>تایید</strong>
+    </button>
+
+    <button
+      type="button"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+      (click)="modal.dismiss()"
+    >
+      <i class="i-Close text-bigger mr-2"></i>
+      <strong>انصراف</strong>
+    </button>
+  </div>
 </ng-template>

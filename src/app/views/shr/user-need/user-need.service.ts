@@ -32,6 +32,7 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
   public sidebarState: INoteSidebar = {
     sidenavOpen: true,
   };
+
   getByStatus(pageSize: number, pageIndex: number, userWant: number) {
     return this._http.get<Result<Paginate<UserNeedModel[]>>>(
       this._base +
@@ -44,6 +45,7 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
       this._options
     );
   }
+
   getCommentByRowid(rowID: number) {
     return this._http.get<Result<Paginate<CommentModel[]>>>(
       this._base +

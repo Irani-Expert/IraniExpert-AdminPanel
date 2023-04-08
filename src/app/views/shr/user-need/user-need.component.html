@@ -156,7 +156,7 @@
             <span>شناسه: </span><span>{{ item.id }}</span>
           </div>
         </div>
-        <div class="d-flex flex-wrap col-md-6">
+        <div class="d-flex flex-wrap col-md-6" *ngIf="item.userWant != 4">
           <span class="text-white">فعالیت مالی</span>
           <span class="ml-2 span-circle" *ngIf="!item.isActive"></span>
           <div class="wrapper" *ngIf="item.isActive">
@@ -202,6 +202,16 @@
               />
             </svg>
           </div>
+        </div>
+
+        <div
+          class="d-flex flex-column col-md-6 text-white"
+          *ngIf="item.userWant == 4"
+        >
+          <label for="">کد رفرال معرف جدید:</label>
+          <span>{{ item.title }}</span>
+          <label for="">توضیحات:</label>
+          <span>{{ item.description }}</span>
         </div>
       </div>
       <div
