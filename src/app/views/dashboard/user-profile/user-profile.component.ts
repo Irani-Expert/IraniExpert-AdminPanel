@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { UserInforamationModel } from 'src/app/shared/models/userInforamationModel';
 import { UsersService } from '../../sec/user-mangement/users.service';
-import { UpdatePasswordModel } from './UpdatePassword.model';
+import { UpdatePasswordModel } from '../user-profile/updatePassword.model';
 import { UserProfileService } from './user-profile.service';
 import { referralModel } from 'src/app/shared/models/referralModel';
 import { UserReferralModel } from 'src/app/shared/models/userReferralModel.model';
@@ -117,7 +117,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  getreferral(modal: NgbModal, modal2: NgbModal) {
+  getReferral(modal: NgbModal, modal2: NgbModal) {
     //
     this._userInfoService.getParentLevelOne(this.addUpdate.userID).subscribe(
       (res) => {
@@ -159,7 +159,14 @@ export class UserProfileComponent implements OnInit {
           this.userReferral.userWant = 4;
 
           this._userInfoService.postUserReferral(this.userReferral).subscribe(
-            (res) => {},
+            (res) => {
+              if (res.success) {
+                this.toastr.success(res.message, null, {
+                  closeButton: true,
+                  positionClass: 'toast-top-left',
+                });
+              }
+            },
             (error) => {
               this.toastr.error(error.message, null, {
                 closeButton: true,
@@ -197,7 +204,14 @@ export class UserProfileComponent implements OnInit {
           this.userReferral.userWant = 4;
 
           this._userInfoService.postUserReferral(this.userReferral).subscribe(
-            (res) => {},
+            (res) => {
+              if (res.success) {
+                this.toastr.success(res.message, null, {
+                  closeButton: true,
+                  positionClass: 'toast-top-left',
+                });
+              }
+            },
             (error) => {
               this.toastr.error(error.message, null, {
                 closeButton: true,

@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { referralModel } from 'src/app/shared/models/referralModel';
 import { UserReferralModel } from 'src/app/shared/models/userReferralModel.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +31,10 @@ export class UserProfileService {
     );
   }
 
-  postUserReferral(data: UserReferralModel) {
-    return this._http.post<UserReferralModel>(
+  postUserReferral(
+    data: UserReferralModel
+  ): Observable<Result<UserReferralModel>> {
+    return this._http.post<Result<UserReferralModel>>(
       this._base + '/UserNeed',
       data,
       this._options

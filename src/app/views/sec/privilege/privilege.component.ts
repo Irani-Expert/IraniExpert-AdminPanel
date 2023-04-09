@@ -44,7 +44,6 @@ export class PrivilegeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.allPrivilage();
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       keyValue: [null, Validators.required],
@@ -72,6 +71,7 @@ export class PrivilegeComponent implements OnInit {
       .subscribe(
         (res: Result<Paginate<PrivilegeModel[]>>) => {
           this.rows = res.data.items;
+          this.allPrivilageData = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
@@ -94,27 +94,24 @@ export class PrivilegeComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (_result) => {
-          this._privilegeService
-            .delete(id, 'Privilege')
-            .subscribe((res) => {
-              if (res.success) {
-                this.toastr.success(
-                  'فرایند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-              } else {
-                this.toastr.error('خطا در حذف', res.message, {
+          this._privilegeService.delete(id, 'Privilege').subscribe((res) => {
+            if (res.success) {
+              this.toastr.success(
+                'فرایند حذف موفقیت آمیز بود',
+                'موفقیت آمیز!',
+                {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
-                });
-              }
-              this.getPrivilegeList(this.page.pageNumber, this.page.size);
-            
-            });
+                }
+              );
+            } else {
+              this.toastr.error('خطا در حذف', res.message, {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+            }
+            this.getPrivilegeList(this.page.pageNumber, this.page.size);
+          });
         },
         (error) => {
           this.toastr.error('انصراف از حذف', error.message, {
@@ -149,70 +146,46 @@ export class PrivilegeComponent implements OnInit {
     if (row.id === 0) {
       await this._privilegeService
         .create(row, 'Privilege')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
 
-              row.id = this.rows[0].id + 1;
-              this.rows.unshift(row);
-              this.addForm.reset();
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-        );
+            row.id = this.rows[0].id + 1;
+            this.rows.unshift(row);
+            this.addForm.reset();
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        });
     } else {
       await this._privilegeService
         .update(row.id, row, 'Privilege')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
 
-              let rowIndexForUpdate = this.rows.findIndex(
-                (item) => item.id === row.id
-              );
-              this.rows[rowIndexForUpdate] = row;
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
+            let rowIndexForUpdate = this.rows.findIndex(
+              (item) => item.id === row.id
+            );
+            this.rows[rowIndexForUpdate] = row;
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
           }
-        );
+        });
     }
 
     // this.getPrivilegeList(this.page.pageNumber, this.page.size);
-  }
-  allPrivilage() {
-    this._privilegeService.get(0, 500, 'ID', null, 'Privilege').subscribe(
-      (res: Result<Paginate<PrivilegeModel[]>>) => {
-        this.allPrivilageData = res.data.items;
-        this.page.totalElements = res.data.totalCount;
-        this.page.totalPages = res.data.totalPages - 1;
-        this.page.pageNumber = res.data.pageNumber + 1;
-      },
-      (_error) => {
-        this.toastr.error(
-          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-          null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          }
-        );
-      }
-    );
   }
 }

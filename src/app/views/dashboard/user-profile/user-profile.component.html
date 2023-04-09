@@ -129,7 +129,8 @@
         (click)="isEdit = false"
         *ngIf="isEdit"
       >
-        <i class="i-Pen-2 text-bigger mr-2"></i><strong>ویرایش پروفایل</strong>
+        <i class="i-Pen-2 text-bigger mr-2"></i
+        ><strong class="text-small">ویرایش پروفایل</strong>
       </button>
 
       <button
@@ -138,7 +139,8 @@
         (click)="updateUser()"
         *ngIf="!isEdit"
       >
-        <i class="i-Yes text-bigger mr-2"></i><strong>ذخیره</strong>
+        <i class="i-Yes text-bigger mr-2"></i
+        ><strong class="text-small">ذخیره</strong>
       </button>
 
       <button
@@ -147,7 +149,8 @@
         (click)="isEdit = true"
         *ngIf="!isEdit"
       >
-        <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
+        <i class="i-Close text-bigger mr-2"></i
+        ><strong class="text-small">انصراف</strong>
       </button>
 
       <button
@@ -156,21 +159,20 @@
         class="btn-upload btn d-flex justify-content-around py-btns radius align-items-center ml-2 mt-2 mt-sm-0"
         *ngIf="isEdit"
       >
-        <i class="i-Key text-bigger mr-2"></i><strong>تغییر رمز عبور</strong>
+        <i class="i-Key text-bigger mr-2"></i
+        ><strong class="text-small">تغییر رمز عبور</strong>
+      </button>
+      <button
+        *ngIf="isEdit"
+        type="button"
+        (click)="getReferral(repModal, userReferralModalCreate)"
+        class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 mt-2 mt-sm-0"
+      >
+        <i class="i-Business-Man text-bigger mr-2"></i>
+        <strong class="text-small">معرف من </strong>
       </button>
     </div>
   </form>
-
-  <div class="mb-4">
-    <button
-      type="button"
-      (click)="getreferral(repModal, userReferralModalCreate)"
-      class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
-    >
-      <i class="i-Business-Man text-bigger mr-2"></i>
-      <strong>معرف</strong>
-    </button>
-  </div>
 </div>
 
 <!--  -->
@@ -346,12 +348,18 @@
   <div class="modal-body px-4">
     <div class="col-md-6 d-flex flex-column p-0">
       <label for="referralCode">کد معرف جدید</label>
-      <input type="text" id="referralCode" [(ngModel)]="userReferral.title" />
+      <input
+        type="text"
+        class="form-control radius"
+        id="referralCode"
+        [(ngModel)]="userReferral.title"
+      />
     </div>
 
     <div class="d-flex flex-column mt-2">
       <label for="referralDescription">توضیحات</label>
       <textarea
+        class="form-control radius"
         id="referralDescription"
         cols="30"
         rows="10"

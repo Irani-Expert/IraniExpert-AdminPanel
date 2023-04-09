@@ -74,7 +74,7 @@ export class OrderComponent implements OnInit {
   rows: OrderModel[] = new Array<OrderModel>();
   orderDetail: OrderModel;
   status: any;
-  
+
   page: Page = new Page();
 
   viewMode: 'list' | 'grid' = 'list';
@@ -82,7 +82,7 @@ export class OrderComponent implements OnInit {
   noteRowID: number;
   notes: CommentModel[] = new Array<CommentModel>();
   note: CommentModel = new CommentModel();
-  userInfo:UsersModel = new UsersModel();
+  userInfo: UsersModel = new UsersModel();
   AddOrderModel: AddOrderModel = new AddOrderModel();
   filePathKeeper: string;
   licenseFile: any = '';
@@ -93,14 +93,14 @@ export class OrderComponent implements OnInit {
   versionNumber: number;
   productList: ProductModel[] = new Array<ProductModel>();
   toggled = false;
-  AddorderSituation:boolean=true;
+  AddorderSituation: boolean = true;
   @ViewChildren(PerfectScrollbarDirective)
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   dateValue: string = 'تاریخ ثبت به میلادی';
   headerValue: string = 'کد رهگیری';
   user: UserInfoModel;
-  addOrderModalTable:string='برای کاربر موجود';
+  addOrderModalTable: string = 'برای کاربر موجود';
   constructor(
     public router: Router,
     public _orderService: OrderService,
@@ -112,21 +112,19 @@ export class OrderComponent implements OnInit {
     public _invoiceService: InvoiceService,
     public _commentService: CommentService,
     private auth: AuthenticateService,
-    private _planService: PlanService,
-
+    private _planService: PlanService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 6;
     setTimeout(() => {
       this.psContainerSecSidebar = this.psContainers.toArray()[1];
     });
-
   }
 
   ngOnInit(): void {
-  console.log(this.userInfo);
-  
-this.callOrder()
+    console.log(this.userInfo);
+
+    this.callOrder();
 
     this.setPage(this.page.pageNumber, 8);
     this.AddOrderForm = this._formBuilder.group({
@@ -136,7 +134,7 @@ this.callOrder()
       accountNumber: [null, Validators.compose([Validators.required])],
       discountPrice: [null],
       transactionCode: [null, Validators.compose([Validators.required])],
-      price:[null],
+      price: [null],
       firstName: [null, Validators.compose([Validators.required])],
       lastName: [null, Validators.compose([Validators.required])],
       phoneNumber: [null, Validators.compose([Validators.required])],
@@ -162,7 +160,6 @@ this.callOrder()
       versionNumber: [null],
       ToCreateDate: [null],
     });
- 
 
     this.updateNotebar();
     // CLOSE SIDENAV ON ROUTE CHANGE
@@ -174,13 +171,11 @@ this.callOrder()
         }
       });
   }
-  callOrder(){
-    this._orderService
-      .getProduct()
-      .subscribe((res: Result<ProductModel[]>) => {
-        this.productModel = res.data;
-        this.AddproductModel=res.data;
-      });
+  callOrder() {
+    this._orderService.getProduct().subscribe((res: Result<ProductModel[]>) => {
+      this.productModel = res.data;
+      this.AddproductModel = res.data;
+    });
   }
   // clearFilter() {
   //   this.filter = new FilterModel();
@@ -849,24 +844,22 @@ this.callOrder()
         .subscribe((res) => {
           if (res.success == true) {
             this.addPlans = res.data;
-            debugger
+            debugger;
             this.addSelectPlan(this.addPlans[0].id);
           }
         });
     }
   }
-  addSelectPlan(content:any){
-    if(content!=undefined){
-      var palnId=Number(content)
-      var plan =this.addPlans.findIndex((x) => x.id === palnId);
-      this.AddOrderModel.planID=palnId
-      this.AddOrderModel.price=this.addPlans[plan].price
-      this.AddOrderModel.discountPrice=null;
+  addSelectPlan(content: any) {
+    if (content != undefined) {
+      var palnId = Number(content);
+      var plan = this.addPlans.findIndex((x) => x.id === palnId);
+      this.AddOrderModel.planID = palnId;
+      this.AddOrderModel.price = this.addPlans[plan].price;
+      this.AddOrderModel.discountPrice = null;
+    } else {
+      this.AddOrderModel.price = null;
     }
-    else{
-      this.AddOrderModel.price=null
-    }
-   
   }
   selectProductPlan($event: any) {
     if ($event != undefined) {
@@ -951,6 +944,7 @@ this.callOrder()
     });
     this.getOrders(this.status, this.page.pageNumber, this.filter);
   }
+
   fillTheFiltersRow(filter: FilterModel) {
     this.filters = [
       {
@@ -1054,7 +1048,6 @@ this.callOrder()
         item.isFilled = true;
       }
     });
-
     if (this.status == 9) {
       this.filters[11].isFilled = false;
     }
@@ -1073,77 +1066,82 @@ this.callOrder()
       });
     }
   }
-  openAddModal(content:any){
-    this.AddOrderForm.controls.userId.valueChanges.subscribe(value => {
-       var NValue=Number(value)
-     
-});
+  openAddModal(content: any) {
+    this.AddOrderForm.controls.userId.valueChanges.subscribe((value) => {
+      var NValue = Number(value);
+    });
     this.modalService
       .open(content, {
         size: 'lg',
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
-       
-      }).result.then((_result) => {
-        
-        let token = localStorage.getItem('token');
-        this.AddOrderModel.token=token
-        if(this.AddOrderModel.discountPrice!=null){
-        this.AddOrderModel.discountPrice=Number(this.AddOrderModel.discountPrice);
-        }
-        else{
-          this.AddOrderModel.discountPrice=0
-        }
-        this.AddOrderModel.userID==0? null :Number(this.AddOrderModel.userID); 
-        this._orderService.create(this.AddOrderModel,'Orders/CreateAdminOrder') .subscribe((res: Result<number>) => {
-          this.AddOrderModel=new AddOrderModel();
-          this.AddOrderForm.reset();
-          this.userInfo=new UsersModel;
-          if(res.success){
-            this.callOrder()
-
-            this.toastr.success(res.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        });
-         
-       
       })
+      .result.then((_result) => {
+        let token = localStorage.getItem('token');
+        this.AddOrderModel.token = token;
+        if (this.AddOrderModel.discountPrice != null) {
+          this.AddOrderModel.discountPrice = Number(
+            this.AddOrderModel.discountPrice
+          );
+        } else {
+          this.AddOrderModel.discountPrice = 0;
+        }
+        this.AddOrderModel.userID == 0
+          ? null
+          : Number(this.AddOrderModel.userID);
+        this._orderService
+          .create(this.AddOrderModel, 'Orders/CreateAdminOrder')
+          .subscribe((res: Result<number>) => {
+            this.AddOrderModel = new AddOrderModel();
+            this.AddOrderForm.reset();
+            this.userInfo = new UsersModel();
+            if (res.success) {
+              this.callOrder();
+
+              this.toastr.success(res.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
+          });
+      });
   }
-  getUserbyUserId(){
-    if (typeof +this.AddOrderModel.userID === "number" && !isNaN(+this.AddOrderModel.userID)){
-this._orderService.getUserbyUserId(this.AddOrderModel.userID)  .subscribe((res: Result<UsersModel>) => {
-  this.userInfo = res.data;
-  this.AddOrderForm.patchValue({firstName: this.userInfo.firstName, lastName: this.userInfo.lastName
-    , phoneNumber: this.userInfo.phoneNumber,email: this.userInfo.email})
-  this.AddOrderModel.firstName=this.userInfo.firstName
-  this.AddOrderModel.lastName=this.userInfo.lastName
-  this.AddOrderModel.phoneNumber=this.userInfo.phoneNumber
-  this.AddOrderModel.email=this.userInfo.email
-});
-    }
-    else{
+  getUserbyUserId() {
+    if (
+      typeof +this.AddOrderModel.userID === 'number' &&
+      !isNaN(+this.AddOrderModel.userID)
+    ) {
+      this._orderService
+        .getUserbyUserId(this.AddOrderModel.userID)
+        .subscribe((res: Result<UsersModel>) => {
+          this.userInfo = res.data;
+          this.AddOrderForm.patchValue({
+            firstName: this.userInfo.firstName,
+            lastName: this.userInfo.lastName,
+            phoneNumber: this.userInfo.phoneNumber,
+            email: this.userInfo.email,
+          });
+          this.AddOrderModel.firstName = this.userInfo.firstName;
+          this.AddOrderModel.lastName = this.userInfo.lastName;
+          this.AddOrderModel.phoneNumber = this.userInfo.phoneNumber;
+          this.AddOrderModel.email = this.userInfo.email;
+        });
+    } else {
       this.toastr.warning('نوع داده اشتباه است', null, {
         closeButton: true,
         positionClass: 'toast-top-left',
       });
     }
-}
-changeAddTypeofRequest(){
-  if(this.addOrderModalTable==='برای کاربر موجود'){
-    this.addOrderModalTable= 'و ثبت نام کاربر';
   }
-  else{
-    this.addOrderModalTable= 'برای کاربر موجود';
+  changeAddTypeofRequest() {
+    if (this.addOrderModalTable === 'برای کاربر موجود') {
+      this.addOrderModalTable = 'و ثبت نام کاربر';
+    } else {
+      this.addOrderModalTable = 'برای کاربر موجود';
+    }
 
+    this.AddorderSituation = !this.AddorderSituation;
+    this.AddOrderForm.reset();
+    this.userInfo = new UsersModel();
   }
-
-  this.AddorderSituation=!this.AddorderSituation;
-  this.AddOrderForm.reset();
-  this.userInfo=new UsersModel();
-
-}
-
 }
