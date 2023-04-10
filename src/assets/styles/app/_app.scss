@@ -24,7 +24,9 @@
 @import "../vendor/bootstrap/bootstrap.scss";
 @import "bootstrap-rtl.scss";
 @import "globals/globals";
-
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
 .edit {
   font-size: 18px !important;
   color: rgb(185, 223, 17) !important;
@@ -521,3 +523,4 @@ Buttons
 .bg_gray {
   background-color: #797576f4;
 }
+

@@ -126,6 +126,7 @@ export class OrderComponent implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
     this.setPage(this.page.pageNumber, 8);
     this.callOrder();
