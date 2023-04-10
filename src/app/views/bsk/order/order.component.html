@@ -32,13 +32,12 @@
 </button>
 
 <button
-  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center  add-btn"
+  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center add-btn"
   type="button"
   (click)="openAddModal(AddOrderModal)"
 >
   <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
 </button>
-
 
 <div
   class="flex-row d-flex justify-content-start align-items-center mb-1"
@@ -95,7 +94,7 @@
           ></i>
         </th>
         <th class="text-small">نام کاربر</th>
-
+        <th class="text-small"><strong>شماره حساب</strong></th>
         <th class="text-small">نام و پلن محصول</th>
         <th class="text-small">Max Balance</th>
         <th class="text-small" (click)="changeDateValue()">
@@ -131,7 +130,9 @@
         <td class="text-small">
           {{ item.firstName }}&nbsp;{{ item.lastName }}
         </td>
-
+        <td class="text-small">
+          <strong>{{ item.accountNumber }}</strong>
+        </td>
         <td class="text-small">{{ item.productTitle }}|{{ item.planTitle }}</td>
         <td class="text-small" *ngIf="item.maximumBalance != null">
           {{ item.maximumBalance }}
@@ -911,7 +912,10 @@
                 (ngModelChange)="selectProduct($event)"
                 formControlName="productID"
               >
-                <option *ngFor="let item of productModel.items" value="{{ item.id }}">
+                <option
+                  *ngFor="let item of productModel.items"
+                  value="{{ item.id }}"
+                >
                   {{ item.title }}
                 </option>
               </select>
@@ -995,10 +999,12 @@
   </div>
 </ng-template>
 <ng-template #AddOrderModal let-modal>
-  <div class="d-flex align-items-center ">
+  <div class="d-flex align-items-center">
     <div class="col-11 container mt-2 mb-2 contrast">
       <div class="modal-header row">
-        <h4 class="modal-title " id="modal-basic-title">ثبت سفارش <small>{{addOrderModalTable}}</small></h4>
+        <h4 class="modal-title" id="modal-basic-title">
+          ثبت سفارش <small>{{ addOrderModalTable }}</small>
+        </h4>
 
         <button
           type="button"
@@ -1010,162 +1016,222 @@
         </button>
       </div>
       <div class="row justify-content-start align-items-center">
-       
-      <button href="#" class="button pulse p-2 m-2" (click)="changeAddTypeofRequest()">
-        <i class="i-Add-User icon-font-size "*ngIf="AddorderSituation"></i>
-        <i class="i-Bag-Items icon-font-size " *ngIf="!AddorderSituation"></i>
-      </button>
-   <div *ngIf="AddorderSituation">افزودن کاربر</div> 
-   <div *ngIf="!AddorderSituation">ثبت سفارش با ایدی کاربر</div> 
+        <button
+          href="#"
+          class="button pulse p-2 m-2"
+          (click)="changeAddTypeofRequest()"
+        >
+          <i class="i-Add-User icon-font-size" *ngIf="AddorderSituation"></i>
+          <i class="i-Bag-Items icon-font-size" *ngIf="!AddorderSituation"></i>
+        </button>
+        <div *ngIf="AddorderSituation">افزودن کاربر</div>
+        <div *ngIf="!AddorderSituation">ثبت سفارش با ایدی کاربر</div>
+      </div>
 
-    </div>
-
-      <form class="row" [formGroup]="AddOrderForm" (ngSubmit)="modal.close(true)">
+      <form
+        class="row"
+        [formGroup]="AddOrderForm"
+        (ngSubmit)="modal.close(true)"
+      >
         <div class="modal-body">
           <div class="row">
+            <div
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
+              *ngIf="AddorderSituation"
+            >
+              <label>شناسه کاربر</label>
+              <input
+                class="form-control"
+                [(ngModel)]="AddOrderModel.userID"
+                [formControl]="AddOrderForm.controls['userId']"
+                (focusout)="getUserbyUserId()"
+              />
+            </div>
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
+              <label>شماره حساب</label>
+              <input
+                class="form-control"
+                [formControl]="AddOrderForm.controls['accountNumber']"
+                [(ngModel)]="AddOrderModel.accountNumber"
+              />
+            </div>
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
+              <label>(Tx Id) کد پرداخت </label>
+              <input
+                class="form-control"
+                [(ngModel)]="AddOrderModel.transactionCode"
+                [formControl]="AddOrderForm.controls['transactionCode']"
+              />
+            </div>
 
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3" *ngIf="AddorderSituation">
-            <label >شناسه کاربر</label>
-            <input
-              class="form-control"
-              [(ngModel)]="AddOrderModel.userID"
-              [formControl]="AddOrderForm.controls['userId']"
-              (focusout)="getUserbyUserId()"
-            />
-            
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
-            <label >شماره حساب</label>
-            <input
-              class="form-control"
-              [formControl]="AddOrderForm.controls['accountNumber']"
-              [(ngModel)]="AddOrderModel.accountNumber"
-            />
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
-            <label >(Tx Id) کد پرداخت </label>
-            <input
-              class="form-control"
-              [(ngModel)]="AddOrderModel.transactionCode"
-              [formControl]="AddOrderForm.controls['transactionCode']"
-            />
-          </div>
-      
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3"  *ngIf="(userInfo | json) != ({} | json) &&AddorderSituation">
-            <label >نام و نام خانوادگی</label>
-            <div class="card-purple shadow-sm">
-              <div class="p-1">
-                <div class="text-white text-center p-1 card-text-font">{{AddOrderModel.firstName}} {{AddOrderModel.lastName}} </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3" *ngIf="(userInfo | json) != ({} | json) &&AddorderSituation">
-            <label >شماره تماس</label>
-            <div class="card-purple shadow-sm">
-              <div class="p-1">
-                <div class="text-white text-center p-1 card-text-font">{{AddOrderModel.phoneNumber}}</div>
-  
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3" *ngIf="(userInfo | json) != ({} | json) &&AddorderSituation">
-            <label >ایمیل</label>
-            <div class="card-purple shadow-sm">
-              <div class="p-1">
-                <div class="text-white text-center p-1 card-text-font">{{AddOrderModel.email}}</div>
-           </div>
-            </div>
-          </div>
-   
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3" *ngIf="!AddorderSituation">
-            <label >نام</label>
-            <input
-              class="form-control"
-              [(ngModel)]="AddOrderModel.firstName"
-              [formControl]="AddOrderForm.controls['firstName']"
-            />
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3" *ngIf="!AddorderSituation">
-            <label >نام خانوادگی</label>
-            <input
-              class="form-control"
-              [(ngModel)]="AddOrderModel.lastName"
-              [formControl]="AddOrderForm.controls['lastName']"
-            />
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3" *ngIf="!AddorderSituation">
-            <label >ایمیل</label>
-            <input
-              class="form-control"
-              [(ngModel)]="AddOrderModel.email"
-              [formControl]="AddOrderForm.controls['email']"
-              placeholder="you@example.com"
-            />
-            <div class="text--primary text--smaller text-danger"  *ngIf="AddOrderForm.controls['email'].invalid &&AddOrderForm.controls['email'].dirty  ">فیلد ایمیل صحیح نیست</div>
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3" *ngIf="!AddorderSituation">
-            <label >شماره تماس</label>
-            <input
-              class="form-control"
-              [(ngModel)]="AddOrderModel.phoneNumber"
-              [formControl]="AddOrderForm.controls['phoneNumber']"
-            />
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
-            <label>محصول</label>
-            <select
-              class="form-control mt-1 text-dark"
-              [formControl]="AddOrderForm.controls['productID']"
-              [(ngModel)]="AddOrderModel.productID"
-              (ngModelChange)="addSelectProduct($event)"
+            <div
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
+              *ngIf="(userInfo | json) != ({} | json) && AddorderSituation"
             >
-            <option *ngFor="let item of AddproductModel.items" value="{{ item.id }}">
-              {{ item.title }}
-            </option>
-            </select>
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
-            <label >پلن</label>
-            <select
-              class="form-control mt-1 text-dark"
-              [formControl]="AddOrderForm.controls['planID']"
-              [(ngModel)]="AddOrderModel.planID"
-              (ngModelChange)="addSelectPlan($event)"
-            >
-            <option *ngIf="addPlans.length == 0">
-              <p class="text-small">لطفا اول محصول را انتخاب کنید</p>
-            </option>
-            <option *ngFor="let item of addPlans" value="{{ item.id }}">
-              {{ item.title }}
-            </option>
-            </select>
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
-            <label >مبلغ کل</label>
-              <div class="p-1">
-                {{AddOrderModel.price}}
-              </div>
-          </div>
-          <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
-            <label >مبلغ تخفیف</label>
-            <input
-              class="form-control"
-              [formControl]="AddOrderForm.controls['discountPrice']"
-              [(ngModel)]="AddOrderModel.discountPrice"
-            />
-          </div>
-        
-       
-          <div class="col-md-4 col-lg-3 form-group mb-3 mt-3">
-            <label >مبلغ پرداختی</label>
-            <div class="card-green shadow-lg">
-              <div class="p-1">
-               <a  class="btn p-1" *ngIf="AddOrderModel.discountPrice   < AddOrderModel.price || AddOrderModel.price==null"><i  class="i-Dollar-Sign-2 btn-blue-right-section m-0 p-1 d-grid text-white"></i></a>
-               <a  class="btn p-1 text-white" *ngIf="AddOrderModel.price!=null">{{AddOrderModel.discountPrice   > AddOrderModel.price ? 'مبلغ صحیح نیست'   : AddOrderModel.price-AddOrderModel.discountPrice }}</a>
+              <label>نام و نام خانوادگی</label>
+              <div class="card-purple shadow-sm">
+                <div class="p-1">
+                  <div class="text-white text-center p-1 card-text-font">
+                    {{ AddOrderModel.firstName }} {{ AddOrderModel.lastName }}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- <div class=" col-12 form-group mb-3 mt-3">
+            <div
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
+              *ngIf="(userInfo | json) != ({} | json) && AddorderSituation"
+            >
+              <label>شماره تماس</label>
+              <div class="card-purple shadow-sm">
+                <div class="p-1">
+                  <div class="text-white text-center p-1 card-text-font">
+                    {{ AddOrderModel.phoneNumber }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
+              *ngIf="(userInfo | json) != ({} | json) && AddorderSituation"
+            >
+              <label>ایمیل</label>
+              <div class="card-purple shadow-sm">
+                <div class="p-1">
+                  <div class="text-white text-center p-1 card-text-font">
+                    {{ AddOrderModel.email }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
+              *ngIf="!AddorderSituation"
+            >
+              <label>نام</label>
+              <input
+                class="form-control"
+                [(ngModel)]="AddOrderModel.firstName"
+                [formControl]="AddOrderForm.controls['firstName']"
+              />
+            </div>
+            <div
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
+              *ngIf="!AddorderSituation"
+            >
+              <label>نام خانوادگی</label>
+              <input
+                class="form-control"
+                [(ngModel)]="AddOrderModel.lastName"
+                [formControl]="AddOrderForm.controls['lastName']"
+              />
+            </div>
+            <div
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
+              *ngIf="!AddorderSituation"
+            >
+              <label>ایمیل</label>
+              <input
+                class="form-control"
+                [(ngModel)]="AddOrderModel.email"
+                [formControl]="AddOrderForm.controls['email']"
+                placeholder="you@example.com"
+              />
+              <div
+                class="text--primary text--smaller text-danger"
+                *ngIf="
+                  AddOrderForm.controls['email'].invalid &&
+                  AddOrderForm.controls['email'].dirty
+                "
+              >
+                فیلد ایمیل صحیح نیست
+              </div>
+            </div>
+            <div
+              class="col-md-6 col-lg-4 form-group mb-3 mt-3"
+              *ngIf="!AddorderSituation"
+            >
+              <label>شماره تماس</label>
+              <input
+                class="form-control"
+                [(ngModel)]="AddOrderModel.phoneNumber"
+                [formControl]="AddOrderForm.controls['phoneNumber']"
+              />
+            </div>
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
+              <label>محصول</label>
+              <select
+                class="form-control mt-1 text-dark"
+                [formControl]="AddOrderForm.controls['productID']"
+                [(ngModel)]="AddOrderModel.productID"
+                (ngModelChange)="addSelectProduct($event)"
+              >
+                <option
+                  *ngFor="let item of AddproductModel.items"
+                  value="{{ item.id }}"
+                >
+                  {{ item.title }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
+              <label>پلن</label>
+              <select
+                class="form-control mt-1 text-dark"
+                [formControl]="AddOrderForm.controls['planID']"
+                [(ngModel)]="AddOrderModel.planID"
+                (ngModelChange)="addSelectPlan($event)"
+              >
+                <option *ngIf="addPlans.length == 0">
+                  <p class="text-small">لطفا اول محصول را انتخاب کنید</p>
+                </option>
+                <option *ngFor="let item of addPlans" value="{{ item.id }}">
+                  {{ item.title }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
+              <label>مبلغ کل</label>
+              <div class="p-1">
+                {{ AddOrderModel.price }}
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
+              <label>مبلغ تخفیف</label>
+              <input
+                class="form-control"
+                [formControl]="AddOrderForm.controls['discountPrice']"
+                [(ngModel)]="AddOrderModel.discountPrice"
+              />
+            </div>
+
+            <div class="col-md-4 col-lg-3 form-group mb-3 mt-3">
+              <label>مبلغ پرداختی</label>
+              <div class="card-green shadow-lg">
+                <div class="p-1">
+                  <a
+                    class="btn p-1"
+                    *ngIf="
+                      AddOrderModel.discountPrice < AddOrderModel.price ||
+                      AddOrderModel.price == null
+                    "
+                    ><i
+                      class="i-Dollar-Sign-2 btn-blue-right-section m-0 p-1 d-grid text-white"
+                    ></i
+                  ></a>
+                  <a
+                    class="btn p-1 text-white"
+                    *ngIf="AddOrderModel.price != null"
+                    >{{
+                      AddOrderModel.discountPrice > AddOrderModel.price
+                        ? "مبلغ صحیح نیست"
+                        : AddOrderModel.price - AddOrderModel.discountPrice
+                    }}</a
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- <div class=" col-12 form-group mb-3 mt-3">
             <label >توضیحات</label>
             <textarea
             cols="30"
@@ -1176,27 +1242,29 @@
             [(ngModel)]="AddOrderModel.description"
             maxlength="500"></textarea>
           </div> -->
-        </div>
-        <div class="modal-footer w-100">
-          <button
-            type="button"
-            class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center"
-            (click)="modal.dismiss()"
-          >
-            <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
-          </button>
-          <button
-            ngbAutofocus
-            type="button"
-            class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
-            (click)="modal.close(true)"
-            [disabled]="!AddOrderForm.valid || AddOrderModel.price    <= AddOrderModel.discountPrice
-            "
-          >
-            <i class="i-Yes text-bigger mr-2"></i>
-            <strong class="ml-2 text-small">تائید</strong>
-          </button>
-        </div>
+          </div>
+          <div class="modal-footer w-100">
+            <button
+              type="button"
+              class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center"
+              (click)="modal.dismiss()"
+            >
+              <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
+            </button>
+            <button
+              ngbAutofocus
+              type="button"
+              class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
+              (click)="modal.close(true)"
+              [disabled]="
+                !AddOrderForm.valid ||
+                AddOrderModel.price <= AddOrderModel.discountPrice
+              "
+            >
+              <i class="i-Yes text-bigger mr-2"></i>
+              <strong class="ml-2 text-small">تائید</strong>
+            </button>
+          </div>
         </div>
       </form>
     </div>

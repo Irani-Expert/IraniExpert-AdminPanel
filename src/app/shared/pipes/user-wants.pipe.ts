@@ -19,6 +19,10 @@ export class UserWantsPipe implements PipeTransform {
       case 3:
         result = 'نمایشگاه';
         break;
+
+      case 4:
+        result = 'تغییر معرف';
+        break;
     }
     return result;
   }

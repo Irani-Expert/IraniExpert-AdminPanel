@@ -47,6 +47,7 @@ export class UserNeedComponent implements OnInit {
     { title: 'مشاوره', id: 1 },
     { title: 'مشارکت در سود', id: 2 },
     { title: 'نمایشگاه', id: 3 },
+    { title: 'تغییر معرف', id: 4 },
   ];
 
   note: CommentModel = new CommentModel();

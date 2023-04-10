@@ -148,15 +148,24 @@
               >{{ item.email }}<br />{{ item.phoneNumber }}
             </strong>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-3">
             <label for="FullName" class="text-white d-block">تاریخ ایجاد</label>
             <strong class="mr-1 text-white">{{ item.createDate }}</strong>
           </div>
-          <div class="col-md-6 text-white">
-            <span>شناسه: </span><span>{{ item.id }}</span>
+          <div class="col-md-3 text-white" *ngIf="item.userWant == 4">
+            <span>کد معرف درخواستی: </span>
+            <span>{{ item.title }}</span>
           </div>
         </div>
-        <div class="d-flex flex-wrap col-md-6">
+
+        <div
+          *ngIf="item.userWant == 4"
+          class="d-flex flex-row col-md-6 text-white"
+        >
+          <label for="">توضیح کاربر:</label>
+          <span>{{ item.description }}</span>
+        </div>
+        <div class="d-flex flex-wrap col-md-6" *ngIf="item.userWant == 3">
           <span class="text-white">فعالیت مالی</span>
           <span class="ml-2 span-circle" *ngIf="!item.isActive"></span>
           <div class="wrapper" *ngIf="item.isActive">

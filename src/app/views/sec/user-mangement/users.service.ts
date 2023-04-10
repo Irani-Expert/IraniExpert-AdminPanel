@@ -11,10 +11,10 @@ import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.s
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
 import { UserCountModel } from '../../dashboard/dashboad-default/userInfo.model';
-import { UpdatePasswordModel } from '../../dashboard/user-profile/UpdatePassword.model';
 import { RoleModel } from '../role-mangement/role.model';
 import { UserRoleModel } from '../user-role/user-role.model';
 import { UsersModel } from './users.model';
+import { UpdatePasswordModel } from '../../dashboard/user-profile/updatePassword.model';
 
 @Injectable({
   providedIn: 'root',

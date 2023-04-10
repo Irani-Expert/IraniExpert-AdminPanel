@@ -49,17 +49,17 @@ export class UserMangementComponent implements OnInit {
       singleSelection: false,
       idField: 'item_id',
       textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 2,
+      selectAllText: 'انتخاب همه',
+      unSelectAllText: 'رد انتخاب همه',
+      itemsShowLimit: 3,
       allowSearchFilter: true,
+      searchPlaceholderText: 'جستجو',
     };
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       userName: [null, Validators.compose([Validators.required])],
       firstName: [null, Validators.compose([Validators.required])],
       lastName: [null, Validators.compose([Validators.required])],
-      email: [null, Validators.compose([Validators.required])],
       accountNumber: [null, Validators.compose([Validators.required])],
       permision: [null, Validators.compose([Validators.required])],
     });
@@ -130,57 +130,49 @@ export class UserMangementComponent implements OnInit {
       );
   }
   async addOrUpdate(row: UsersModel) {
-    var indexFinder = this.rows.findIndex((rows) => rows.id === row.id);
+    var indexFinder = this.rows.findIndex((item) => item.id === row.id);
 
-    if (row.id === 0) {
-      await this._usersService.create(row, 'aspnetuser').subscribe((data) => {
-        if (data.success) {
-          this.toastr.success(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
-    } else {
-      var counter = 0;
+    // if (row.id === 0) {
+    //   this._usersService.create(row, 'aspnetuser').subscribe((data) => {
+    //     if (data.success) {
+    //       this.toastr.success(data.message, null, {
+    //         closeButton: true,
+    //         positionClass: 'toast-top-left',
+    //       });
+    //     } else {
+    //       this.toastr.error(data.message, null, {
+    //         closeButton: true,
+    //         positionClass: 'toast-top-left',
+    //       });
+    //     }
+    //   });
+    // } else {
+    var counter = 0;
 
-      this.roleModel = [];
-      this.roleKeeper.forEach((x) => {
-        this.roleModel[counter] = new UserRolesModel();
-        this.roleModel[counter].userId = row.id;
-        this.roleModel[counter].roleId = x.item_id;
-        counter += 1;
-      });
+    this.roleModel = [];
+    this.roleKeeper.forEach((x) => {
+      this.roleModel[counter] = new UserRolesModel();
+      this.roleModel[counter].userId = row.id;
+      this.roleModel[counter].roleId = x.item_id;
+      counter += 1;
+    });
 
-      //   const convert_list_to_object = (list: any[]) => new (...list);
-      //   let list_of_objects = [];s
-      //   for (let list of this.roleKeeper ) {
-      //     list_of_objects.push(convert_list_to_object(list));
-      // }
-      this.updateRoleId();
-      await this._usersService
-        .update(row.id, row, 'aspnetuser')
-        .subscribe((data) => {
-          if (data.success) {
-            this.toastr.success(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-            this.rows.splice(indexFinder, 1);
-            this.rows.unshift(row);
-          } else {
-            this.toastr.error(data.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
+    this.updateRoleId();
+    this._usersService.update(row.id, row, 'aspnetuser').subscribe((data) => {
+      if (data.success) {
+        this.toastr.success(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
         });
-    }
+        this.rows.splice(indexFinder, 1);
+        this.rows.unshift(row);
+      } else {
+        this.toastr.error(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    });
   }
   deleteUser(id: number, modal: any) {
     this.modalService
@@ -259,7 +251,7 @@ export class UserMangementComponent implements OnInit {
       this.roleKeeper.push(x.item_id);
     });
   }
-  onDeSelectAll(item: any) {
+  onDeSelectAll(_item: any) {
     this.roleKeeper = [];
   }
   updateRoleId() {

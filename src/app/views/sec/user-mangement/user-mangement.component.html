@@ -176,16 +176,6 @@
           />
         </div>
         <div class="col-md-6 form-group mb-3 mt-3">
-          <label for="email ">ایمیل</label>
-          <input
-            name="email"
-            id="email"
-            class="form-control"
-            [(ngModel)]="addUpdate.email"
-            [formControl]="addForm.controls['email']"
-          />
-        </div>
-        <div class="col-md-6 form-group mb-3 mt-3">
           <label for="accountNumber ">شماره حساب</label>
           <input
             name="accountNumber"
@@ -195,7 +185,12 @@
             [formControl]="addForm.controls['accountNumber']"
           />
         </div>
-        <div class="col-md-6 form-group mb-3 mt-3">
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="referralCode">کد رفرال معرف جدید</label>
+          <input id="referralCode" class="form-control" />
+        </div>
+        <div class="col-md-6 form-group mb-3 mt-2">
           <label for="accountNumber ">دسترسی ها</label>
           <ng-multiselect-dropdown
             [formControl]="addForm.controls['permision']"
@@ -207,7 +202,7 @@
             (onSelectAll)="onSelectAll($event)"
             (onDeSelect)="onDeSelect($event)"
             (onDeSelectAll)="onDeSelectAll($event)"
-            class="col-12 mt-1"
+            class="col-12 mt-1 text-small"
           >
           </ng-multiselect-dropdown>
         </div>
