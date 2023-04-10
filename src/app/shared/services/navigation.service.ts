@@ -67,7 +67,14 @@ export class NavigationService {
       state: '/dashboard/user-profile',
       privilege: 'Dashboard-Full Premission',
     },
-
+    {
+      name: 'کاربران زیر مجموعه',
+      description: 'پروفایل',
+      navType: 'link',
+      icon: 'i-Add-UserStar',
+      state: '/mrk/sub-user',
+      privilege: 'Dashboard-Full Premission',
+    },
     // {
     //   name: 'مشتریان من',
     //   navType: 'dropDown',
@@ -134,14 +141,14 @@ export class NavigationService {
       privilege: 'Comment-Full Premission',
     },
     {
-      name: 'تخصیص دسترسی به کاربران',
+      name: 'دسترسی نقش ها',
       navType: 'link',
-      icon: 'i-Add-UserStar',
+      icon: 'i-Add-User',
       state: '/sec/user-privilege',
       privilege: 'AddUserRole-Full Premission',
     },
     {
-      name: '  دسترسی نقش ها ',
+      name: '  تعریف دسترسی',
       navType: 'link',
       icon: 'i-Gears',
       state: '/sec/privilege',

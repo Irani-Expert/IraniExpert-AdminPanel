@@ -74,7 +74,8 @@ export class OrderComponent implements OnInit {
   rows: OrderModel[] = new Array<OrderModel>();
   orderDetail: OrderModel;
   status: any;
-  
+  empList: Array<{name: string, empoloyeeID: number}> = []; 
+
   page: Page = new Page();
 
   viewMode: 'list' | 'grid' = 'list';
@@ -101,6 +102,7 @@ export class OrderComponent implements OnInit {
   headerValue: string = 'کد رهگیری';
   user: UserInfoModel;
   addOrderModalTable:string='برای کاربر موجود';
+  
   constructor(
     public router: Router,
     public _orderService: OrderService,
@@ -123,9 +125,12 @@ export class OrderComponent implements OnInit {
 
   }
 
+
   ngOnInit(): void {
   console.log(this.userInfo);
-  
+  let usertest: UserInfoModel = new UserInfoModel();
+  (usertest as any).child = this.userInfo;
+
 this.callOrder()
 
     this.setPage(this.page.pageNumber, 8);

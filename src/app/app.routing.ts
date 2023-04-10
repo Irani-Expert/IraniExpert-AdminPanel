@@ -31,7 +31,11 @@ const adminRoutes: Routes = [
     loadChildren: () =>
       import('./views/cnt/cnt.module').then((m) => m.CntModule),
   },
-
+  {
+    path: 'mrk',
+    loadChildren: () =>
+      import('./views/mrk/subuser.module').then((m) => m.SubuserModule),
+  },
   {
     path: 'bsk',
     loadChildren: () =>
@@ -102,7 +106,16 @@ const routes: Routes = [
       },
     ],
   },
-
+  {
+    path: 'mrk',
+    children: [
+      {
+        path: 'mrk',
+        loadChildren: () =>
+        import('./views/mrk/subuser.module').then((m) => m.SubuserModule),  
+          },
+    ],
+  },
   {
     path: 'cnt',
     children: [
