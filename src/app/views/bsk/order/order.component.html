@@ -40,7 +40,7 @@
 </button>
 
 <div
-  class="flex-row d-flex justify-content-start align-items-center mb-1"
+  class="flex-row row g-0 d-flex justify-content-start align-items-center mb-1"
   *ngIf="filtered"
 >
   <ng-container *ngFor="let filterItem of filters">
@@ -909,13 +909,10 @@
               <select
                 class="form-control mt-1 text-dark"
                 [(ngModel)]="filterModel.productID"
-                (ngModelChange)="selectProduct($event)"
+                (change)="selectProduct($event.target.value)"
                 formControlName="productID"
               >
-                <option
-                  *ngFor="let item of productModel.items"
-                  value="{{ item.id }}"
-                >
+                <option *ngFor="let item of productList" value="{{ item.id }}">
                   {{ item.title }}
                 </option>
               </select>
@@ -926,7 +923,7 @@
                 formControlName="planID"
                 class="form-control mt-1 text-dark"
                 [(ngModel)]="filterModel.planID"
-                (ngModelChange)="selectProductPlan($event)"
+                (change)="selectProductPlan($event.target.value)"
               >
                 <ng-container *ngFor="let item of plans">
                   <option *ngIf="plans.length !== 0" value="{{ item.id }}">
@@ -1167,7 +1164,7 @@
                 (ngModelChange)="addSelectProduct($event)"
               >
                 <option
-                  *ngFor="let item of AddproductModel.items"
+                  *ngFor="let item of AddproductModel"
                   value="{{ item.id }}"
                 >
                   {{ item.title }}

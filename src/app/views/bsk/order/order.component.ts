@@ -31,6 +31,7 @@ import { AddOrderModel } from './models/AddOrder.model';
 import { number } from 'echarts';
 import { UsersModel } from '../../sec/user-mangement/users.model';
 import { ProductService } from '../../prd/products-list/product.service';
+import { log } from 'console';
 
 @Component({
   selector: 'app-order',
@@ -39,8 +40,12 @@ import { ProductService } from '../../prd/products-list/product.service';
 })
 export class OrderComponent implements OnInit {
   pageIsLoad: boolean = false;
-
-  filters: any;
+  filters: Array<{
+    id: string;
+    label: string;
+    title: string | number | boolean;
+    isFilled: boolean;
+  }> = [];
   statusTitles = [
     { title: 'نهایی', id: 8 },
     { title: 'درانتظار پرداخت', id: 1 },
@@ -64,9 +69,8 @@ export class OrderComponent implements OnInit {
   invoiceDetail: InvoiceModel = new InvoiceModel();
   invoiceStatus: number;
   filterModel: FilterModel = new FilterModel();
-  plans: PlanModel[] = new Array<PlanModel>();
+
   addPlans: PlanModel[] = new Array<PlanModel>();
-  productModel: ProductModel[] = new Array<ProductModel>();
   AddproductModel: ProductModel[] = new Array<ProductModel>();
 
   filterForm: FormGroup;
@@ -76,7 +80,6 @@ export class OrderComponent implements OnInit {
   status: any;
 
   page: Page = new Page();
-
   viewMode: 'list' | 'grid' = 'list';
 
   noteRowID: number;
@@ -87,11 +90,12 @@ export class OrderComponent implements OnInit {
   filePathKeeper: string;
   licenseFile: any = '';
   licenseModel: LicenseModel = new LicenseModel();
-  startDate: NgbDate = new NgbDate(2023, 4, 3);
-  expireDate: NgbDate = new NgbDate(2023, 4, 3);
+  startDate: NgbDate = new NgbDate(2023, 4, 3); // A Random Date for Functional Use
+  expireDate: NgbDate = new NgbDate(2023, 4, 3); // A Random Date for Functional Use
   clientId: number;
   versionNumber: number;
   productList: ProductModel[] = new Array<ProductModel>();
+  plans: PlanModel[] = new Array<PlanModel>();
   toggled = false;
   AddorderSituation: boolean = true;
   @ViewChildren(PerfectScrollbarDirective)
@@ -111,6 +115,7 @@ export class OrderComponent implements OnInit {
     public _licenseService: LicenseService,
     public _invoiceService: InvoiceService,
     public _commentService: CommentService,
+    private _productService: ProductService,
     private auth: AuthenticateService,
     private _planService: PlanService
   ) {
@@ -122,11 +127,8 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.userInfo);
-
-    this.callOrder();
-
     this.setPage(this.page.pageNumber, 8);
+    this.callOrder();
     this.AddOrderForm = this._formBuilder.group({
       userId: [null],
       productID: [null, Validators.compose([Validators.required])],
@@ -172,10 +174,12 @@ export class OrderComponent implements OnInit {
       });
   }
   callOrder() {
-    this._orderService.getProduct().subscribe((res: Result<ProductModel[]>) => {
-      this.productModel = res.data;
-      this.AddproductModel = res.data;
-    });
+    this._productService
+      .get(0, null, 'ID', null, 'Product')
+      .subscribe((res) => {
+        this.productList = res.data.items;
+        this.AddproductModel = res.data.items;
+      });
   }
   // clearFilter() {
   //   this.filter = new FilterModel();
@@ -815,25 +819,17 @@ export class OrderComponent implements OnInit {
         },
         (_reason) => {
           this.plans = [];
+          this.FCrtDate = null;
+          this.TCrtDate = null;
+          this.FStrDate = null;
+          this.TStrDate = null;
+          this.FExpDate = null;
+          this.TExpDate = null;
           this.filterModel = new FilterModel();
         }
       );
   }
 
-  selectProduct($event: any) {
-    if ($event != undefined) {
-      this.filterModel.productID = parseInt($event);
-    }
-    if (this.filterModel.productID !== undefined) {
-      this._planService
-        .getPlanByProductId(this.filterModel.productID)
-        .subscribe((res) => {
-          if (res.success == true) {
-            this.plans = res.data;
-          }
-        });
-    }
-  }
   addSelectProduct($event: any) {
     if ($event != undefined) {
       this.AddOrderModel.productID = parseInt($event);
@@ -844,7 +840,7 @@ export class OrderComponent implements OnInit {
         .subscribe((res) => {
           if (res.success == true) {
             this.addPlans = res.data;
-            debugger;
+
             this.addSelectPlan(this.addPlans[0].id);
           }
         });
@@ -861,78 +857,40 @@ export class OrderComponent implements OnInit {
       this.AddOrderModel.price = null;
     }
   }
+
+  selectProduct($event: any) {
+    if ($event != undefined) {
+      this.filterModel.productID = parseInt($event);
+    }
+    if (this.filterModel.productID !== undefined) {
+      this._planService
+        .getPlanByProductId(this.filterModel.productID)
+        .subscribe((res) => {
+          if (res.success == true) {
+            this.plans = res.data;
+            if (res.data[0]) {
+              this.filterModel.planID = res.data[0].id;
+            }
+          }
+        });
+    }
+  }
   selectProductPlan($event: any) {
     if ($event != undefined) {
       this.filterModel.planID = parseInt($event);
     }
   }
   deleteFilter(item: any) {
-    let finder = this.filters.findIndex(
-      (filter: { id: number }) => filter.id == item.id
-    );
-
-    this.filters[finder].isFilled = false;
+    let tempIndex = this.filters.findIndex((filter) => {
+      return filter.title === item.title;
+    });
+    this.filters.splice(tempIndex, 1);
+    this.filter[item.id] = null;
     let indexOfTheFilter = this.filters.findIndex(
-      (filter: { isFilled: boolean }) => filter.isFilled == true
+      (filter) => filter.isFilled == true
     );
     if (indexOfTheFilter == -1) {
       this.filtered = false;
-    }
-    switch (item.id) {
-      case 1:
-        this.filter.firstName = undefined;
-        break;
-      case 2:
-        this.filter.lastName = undefined;
-        break;
-      case 3:
-        this.filter.iD = undefined;
-        break;
-      case 4:
-        this.filter.userID = undefined;
-        break;
-      case 5:
-        this.filter.accountNumber = undefined;
-        break;
-      case 6:
-        this.filter.phoneNumber = undefined;
-        break;
-      case 7:
-        this.filter.planID = undefined;
-        break;
-      case 8:
-        this.filter.productID = undefined;
-        break;
-      case 9:
-        this.filter.isAccepted = undefined;
-        break;
-      case 10:
-        this.filter.rate = undefined;
-        break;
-      case 11:
-        this.filter.code = undefined;
-        break;
-      case 12:
-        this.filter.fromExpireDate = undefined;
-        break;
-      case 13:
-        this.filter.toExpireDate = undefined;
-        break;
-      case 14:
-        this.filter.fromStartDate = undefined;
-        break;
-      case 15:
-        this.filter.toStartDate = undefined;
-        break;
-      case 16:
-        this.filter.fromCreateDate = undefined;
-        break;
-      case 17:
-        this.filter.toCreateDate = undefined;
-        break;
-      case 18:
-        this.filter.versionNumber = undefined;
-        break;
     }
     this.getOrders(this.status, this.page.pageNumber, this.filter);
   }
@@ -946,124 +904,141 @@ export class OrderComponent implements OnInit {
   }
 
   fillTheFiltersRow(filter: FilterModel) {
-    this.filters = [
-      {
-        id: 1,
-        label: 'نام',
+    this.filters = [];
+    if (filter.firstName) {
+      this.filters.push({
         title: filter.firstName,
-        isFilled: false,
-      },
-      {
-        id: 2,
-        label: ' نام خانوادگی',
+        label: 'نام',
+        id: 'firstName',
+        isFilled: true,
+      });
+    }
+    if (filter.lastName) {
+      this.filters.push({
         title: filter.lastName,
-        isFilled: false,
-      },
-      { id: 3, label: 'ID سفارش', title: filter.iD, isFilled: false },
-      { id: 4, label: 'ID کاربر', title: filter.userID, isFilled: false },
-      {
-        id: 5,
+        label: 'نام خانوادگی',
+        id: 'lastName',
+        isFilled: true,
+      });
+    }
+    if (filter.iD) {
+      this.filters.push({
+        title: filter.iD,
+        label: 'ID سفارش',
+        id: 'iD',
+        isFilled: true,
+      });
+    }
+    if (filter.userID) {
+      this.filters.push({
+        id: 'userID',
+        label: 'ID کاربر',
+        title: filter.userID,
+        isFilled: true,
+      });
+    }
+    if (filter.accountNumber) {
+      this.filters.push({
+        id: 'accountNumber',
         label: 'شماره حساب',
         title: filter.accountNumber,
-        isFilled: false,
-      },
-      {
-        id: 6,
+        isFilled: true,
+      });
+    }
+    if (filter.phoneNumber) {
+      this.filters.push({
+        id: 'phoneNumber',
         label: 'شماره تماس',
         title: filter.phoneNumber,
-        isFilled: false,
-      },
-      { id: 7, label: 'پلن', title: filter.planID, isFilled: false },
-      {
-        id: 8,
-        label: 'محصول',
-        title: filter.productID,
-        isFilled: false,
-      },
-      {
-        id: 9,
+        isFilled: true,
+      });
+    }
+    if (filter.planID) {
+      let planIndex = this.plans.findIndex((item) => item.id === filter.planID);
+      this.filters.push({
+        id: 'planID',
         label: 'پلن',
-        title: filter.isAccepted,
-        isFilled: false,
-      },
-      { id: 10, label: 'امیاز', title: filter.rate, isFilled: false },
-      { id: 11, label: 'کد رهگیری', title: filter.code, isFilled: false },
-      {
-        id: 12,
+        title: this.plans[planIndex].title,
+        isFilled: true,
+      });
+    }
+    if (filter.productID) {
+      let productIndex = this.productList.findIndex(
+        (item) => item.id === filter.productID
+      );
+      this.filters.push({
+        id: 'productID',
+        label: 'محصول',
+        title: this.productList[productIndex].title,
+        isFilled: true,
+      });
+    }
+    if (filter.code) {
+      this.filters.push({
+        id: 'code',
+        label: 'کد رهگیری',
+        title: filter.code,
+        isFilled: true,
+      });
+    }
+    if (filter.fromExpireDate) {
+      this.filters.push({
+        title: filter.fromExpireDate.split('-').reverse().join('-'),
         label: 'از انقضا در',
-        title: filter.fromExpireDate
-          ? filter.fromExpireDate.split('-').reverse().join('-')
-          : undefined,
-        isFilled: false,
-      },
-      {
-        id: 13,
+        id: 'fromExpireDate',
+        isFilled: true,
+      });
+    }
+    if (filter.toExpireDate) {
+      this.filters.push({
+        title: filter.toExpireDate.split('-').reverse().join('-'),
         label: ' تا انقضا در',
-        title: filter.toExpireDate
-          ? filter.toExpireDate.split('-').reverse().join('-')
-          : undefined,
-        isFilled: false,
-      },
-      {
-        id: 14,
+        id: 'toExpireDate',
+        isFilled: true,
+      });
+    }
+    if (filter.fromStartDate) {
+      this.filters.push({
+        title: filter.fromStartDate.split('-').reverse().join('-'),
         label: 'از شروع در',
-        title: filter.fromStartDate
-          ? filter.fromStartDate.split('-').reverse().join('-')
-          : undefined,
-        isFilled: false,
-      },
-      {
-        id: 15,
+        id: 'fromStartDate',
+        isFilled: true,
+      });
+    }
+    if (filter.toStartDate) {
+      this.filters.push({
+        title: filter.toStartDate.split('-').reverse().join('-'),
         label: 'تا شروع در',
-        title: filter.toStartDate
-          ? filter.toStartDate.split('-').reverse().join('-')
-          : undefined,
-        isFilled: false,
-      },
-      {
-        id: 16,
+        id: 'toStartDate',
+        isFilled: true,
+      });
+    }
+    if (filter.fromCreateDate) {
+      this.filters.push({
+        title: filter.fromCreateDate.split('-').reverse().join('-'),
         label: 'از ایجاد در',
-        title: filter.fromCreateDate
-          ? filter.fromCreateDate.split('-').reverse().join('-')
-          : undefined,
-        isFilled: false,
-      },
-      {
-        id: 17,
+        id: 'fromCreateDate',
+        isFilled: true,
+      });
+    }
+    if (filter.toCreateDate) {
+      this.filters.push({
+        title: filter.toCreateDate.split('-').reverse().join('-'),
         label: 'تا ایجاد در',
-        title: filter.toCreateDate
-          ? filter.toCreateDate.split('-').reverse().join('-')
-          : undefined,
-        isFilled: false,
-      },
-      {
-        id: 18,
-        label: 'ورژن لایسنس',
+        id: 'toCreateDate',
+        isFilled: true,
+      });
+    }
+    if (filter.versionNumber) {
+      this.filters.push({
         title: filter.versionNumber,
-        isFilled: false,
-      },
-    ];
-    this.filters.forEach((item: any) => {
-      if (item.title !== undefined && item.title !== null) {
-        item.isFilled = true;
-      }
-    });
+        label: 'نسخه لایسنس',
+        id: 'versionNumber',
+        isFilled: true,
+      });
+    }
     if (this.status == 9) {
       this.filters[11].isFilled = false;
-    }
-    if (this.filters[7].isFilled == true) {
-      this.productModel.forEach((item) => {
-        if (item.id == filter.productID) {
-          this.filters[7].title = item.title;
-        }
-      });
-    }
-    if (this.filters[6].isFilled == true) {
-      this.plans.forEach((item) => {
-        if (item.id == filter.planID) {
-          this.filters[6].title = item.title;
-        }
-      });
     }
   }
   openAddModal(content: any) {
