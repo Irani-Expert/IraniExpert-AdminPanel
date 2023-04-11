@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { BskRoutingModule } from './bsk.routing';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { OrderComponent } from './order/order.component';
@@ -44,6 +44,6 @@ import { CommissionComponent } from './commission/commission.component';
     PerfectScrollbarModule,
     SharedDirectivesModule,
   ],
-  providers: [FileUploaderService],
+  providers: [FileUploaderService, DecimalPipe],
 })
 export class BskModule {}

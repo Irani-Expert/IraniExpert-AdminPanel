@@ -296,12 +296,18 @@
   <div class="modal-body px-4">
     <div class="col-md-6 d-flex flex-column p-0">
       <label for="referralCode">کد معرف جدید</label>
-      <input type="text" id="referralCode" [(ngModel)]="userReferral.title" />
+      <input
+        type="text"
+        id="referralCode"
+        class="form-control radius"
+        [(ngModel)]="userReferral.title"
+      />
     </div>
 
     <div class="d-flex flex-column mt-2">
       <label for="referralDescription">توضیحات</label>
       <textarea
+        class="form-control radius"
         id="referralDescription"
         cols="30"
         rows="10"

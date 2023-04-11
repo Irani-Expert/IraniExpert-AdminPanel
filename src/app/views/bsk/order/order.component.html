@@ -203,14 +203,56 @@
         </ng-container> -->
 
         <td class="td-oprate">
-          <button
+          <div
+            class="row flex-row d-flex align-content-center justify-content-center align-items-center"
+          >
+            <button
+              ngbTooltip="جزئیات سفارش"
+              [openDelay]="50"
+              [closeDelay]="150"
+              style="width: 32px; height: 32px"
+              *appCanAccess="'invoice-Full Premission'"
+              class="btn-details btn rounded-circle d-flex justify-content-center m-1"
+              (click)="openDetailModal(item, openDetails)"
+            >
+              <i
+                class="i-Information fix-to-center"
+                style="font-size: 1.2rem"
+              ></i>
+            </button>
+            <span
+              *ngIf="item.commentCount !== 0"
+              ngbTooltip="تعداد یادداشت ها"
+              [openDelay]="50"
+              [closeDelay]="150"
+              placement="bottom"
+              style="width: 32px; height: 32px; padding-top: 2.5px"
+              class="btn-add rounded-circle d-flex justify-content-center m-1 align-items-center"
+              >{{ item.commentCount }}</span
+            >
+          </div>
+          <!-- <button
+            ngbTooltip="جزئیات سفارش"
+            [openDelay]="50"
+            [closeDelay]="150"
+            style="width: 32px; height: 32px"
             *appCanAccess="'invoice-Full Premission'"
-            class="btn-details btn d-inline-flex justify-content-around radius align-items-center"
+            class="btn-details btn d-inline-flex justify-content-around radius rounded-circle align-items-center"
             (click)="openDetailModal(item, openDetails)"
           >
             <i class="i-Information" style="font-size: 1.2rem"></i>
-            <!-- <strong></strong> -->
+             <strong></strong> 
           </button>
+          <span
+            *ngIf="item.commentCount !== 0"
+            ngbTooltip="تعداد یادداشت ها"
+            [openDelay]="50"
+            [closeDelay]="150"
+            placement="bottom"
+            style="width: 32px; height: 32px"
+            class="btn-add d-inline-flex ml-1 align-items-center justify-content-around rounded-circle p-2"
+            ><strong class="margin-4px">{{ item.commentCount }}</strong></span
+          > -->
         </td>
       </tr>
     </tbody>
@@ -364,17 +406,19 @@
               />
             </div>
           </div>
-          <div class="col-6 col-lg-3 form-group mb-3">
-            <strong for="totalPrice" class="mb-3">محصول و پلن آن</strong>
-            <input
+          <div class="col-6 col-lg-6 form-group mb-3">
+            <strong for="totalPrice" class="mb-3"
+              >محصول , پلن و مکس بالانس</strong
+            >
+            <textarea
               class="form-control mt-1"
               id="totalPrice"
-              rows="1"
-              value="{{ orderDetail.planTitle }}| {{
-                orderDetail.productTitle
-              }}"
+              rows=""
+              value="{{ orderDetail.productTitle }} | {{
+                orderDetail.planTitle
+              }} | {{ orderDetail.maximumBalance }}"
               disabled
-            />
+            ></textarea>
           </div>
           <div class="col-6 col-lg-3 form-group mb-3">
             <strong for="totalPrice" class="mb-3">قیمت محصول</strong>

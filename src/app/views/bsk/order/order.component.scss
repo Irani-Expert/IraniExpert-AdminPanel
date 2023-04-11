@@ -15,6 +15,10 @@
     top: 80px;
   }
 }
+.fix-to-center {
+  margin-right: 1.5px;
+  margin-bottom: 1.5px;
+}
 .bg-lightdark {
   background-color: #3f4343f0;
 }
@@ -276,9 +280,9 @@ input[type="checkbox"] {
   width: 0;
   //  visibility: hidden;
 }
-.add-btn{
+.add-btn {
   position: absolute;
-    left: 2%;
+  left: 2%;
 }
 .activeOrder label {
   cursor: pointer;
@@ -305,28 +309,25 @@ input:checked + label:after {
   width: 60px;
 }
 .card-green {
-
   background: #2c762f;
   border-radius: 0.25rem;
   transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
- }
- .card-purple {
-
+}
+.card-purple {
   background: rgba(121, 117, 118, 0.9568627451);
   border-radius: 0.25rem;
   transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
- }
+}
 
- 
- .btn-blue-right-section {
+.btn-blue-right-section {
   text-align: center;
 
   border-left: 1px solid #fff;
 }
-.d-grid{
+.d-grid {
   display: grid;
 }
-.card-text-font{
+.card-text-font {
   font-weight: bold;
   font-size: 0.8rem;
 }
@@ -364,29 +365,30 @@ input:checked + label:after {
   text-decoration: none;
   transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
   will-change: transform;
-  
+
   &:hover {
-    background: darken(#8510bb,10%);
-    box-shadow: 0 4px 17px rgba(0,0,0,0.2);
+    background: darken(#8510bb, 10%);
+    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.2);
     transform: translate3d(0, -2px, 0);
   }
   &:active {
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
     transform: translate3d(0, 1px, 0);
   }
 }
 
 .pulse {
   position: relative;
-  
-  &:before, &:after {
-    content: '';
+
+  &:before,
+  &:after {
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255,255,255,.4);
+    background: rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     width: 20px;
     height: 20px;
@@ -397,13 +399,14 @@ input:checked + label:after {
     animation: pulse 1.5s infinite linear;
   }
   &:after {
-    animation: pulse 2s .4s infinite linear;
+    animation: pulse 2s 0.4s infinite linear;
   }
-  &:hover:before, &:hover:after {
+  &:hover:before,
+  &:hover:after {
     display: none;
   }
 }
-.icon-font-size{
+.icon-font-size {
   font-size: 44px;
-    font-weight: bold;
+  font-weight: bold;
 }

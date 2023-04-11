@@ -9,6 +9,7 @@ import { UpdatePasswordModel } from '../user-profile/updatePassword.model';
 import { UserProfileService } from './user-profile.service';
 import { referralModel } from 'src/app/shared/models/referralModel';
 import { UserReferralModel } from 'src/app/shared/models/userReferralModel.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -30,7 +31,8 @@ export class UserProfileComponent implements OnInit {
     private _userService: UsersService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _userInfoService: UserProfileService
+    private _userInfoService: UserProfileService,
+    private router: Router
   ) {
     this.addForm = this._formBuilder.group({
       lastName: [null, Validators.compose([Validators.required])],
@@ -56,6 +58,16 @@ export class UserProfileComponent implements OnInit {
         this.addUpdate = res.data;
         this.isEdit = true;
         this.isDataFetched = true;
+        if (!res.success) {
+          localStorage.removeItem('currentUser');
+          this.toastr.error(res.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          setTimeout(() => {
+            this.router.navigate(['/sessions/signin']);
+          }, 1000);
+        }
       });
   }
 
@@ -125,7 +137,8 @@ export class UserProfileComponent implements OnInit {
           this.referral = res.data;
 
           this.modalService.open(modal, {
-            size: 'lg',
+            size: 'xs',
+            centered: true,
           });
         } else {
           this.sendUserReferralCreate(modal2);
@@ -143,7 +156,8 @@ export class UserProfileComponent implements OnInit {
   sendUserReferralChange(modal: NgbModal) {
     this.modalService
       .open(modal, {
-        size: 'lg',
+        size: 'md',
+        centered: true,
       })
       .result.then(
         () => {
@@ -188,7 +202,8 @@ export class UserProfileComponent implements OnInit {
   sendUserReferralCreate(modal: NgbModal) {
     this.modalService
       .open(modal, {
-        size: 'lg',
+        size: 'md',
+        centered: true,
       })
       .result.then(
         () => {

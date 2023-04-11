@@ -26,7 +26,7 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { ProductModel } from '../../prd/products-list/product.model';
 import { PlanService } from '../../bas/plan/plan.service';
 import { PlanModel } from '../../bas/plan/plan.model';
-import { formatDate } from '@angular/common';
+import { DecimalPipe, formatDate } from '@angular/common';
 import { AddOrderModel } from './models/AddOrder.model';
 import { number } from 'echarts';
 import { UsersModel } from '../../sec/user-mangement/users.model';
@@ -117,7 +117,8 @@ export class OrderComponent implements OnInit {
     public _commentService: CommentService,
     private _productService: ProductService,
     private auth: AuthenticateService,
-    private _planService: PlanService
+    private _planService: PlanService,
+    private _decimalPipe: DecimalPipe
   ) {
     this.page.pageNumber = 0;
     this.page.size = 6;
@@ -125,7 +126,6 @@ export class OrderComponent implements OnInit {
       this.psContainerSecSidebar = this.psContainers.toArray()[1];
     });
   }
-
 
   ngOnInit(): void {
     this.setPage(this.page.pageNumber, 8);
@@ -291,6 +291,7 @@ export class OrderComponent implements OnInit {
   // }
   openDetailModal(item: OrderModel, openDetails: any) {
     this.orderDetail = item;
+
     this._invoiceService
       .GetByTableTypeAndRowId(0, 2, 'ID', 'invoice', item.id, 8)
       .subscribe((res: Result<InvoiceModel[]>) => {
