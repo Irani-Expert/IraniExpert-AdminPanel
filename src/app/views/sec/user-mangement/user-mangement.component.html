@@ -91,7 +91,7 @@
       </tr>
     </tbody>
   </table>
-  <!-- 
+  <!--
     *
 
 
@@ -150,7 +150,7 @@
           <input
             name="userName"
             id="userName"
-            class="form-control"
+            class="form-control text-small"
             [(ngModel)]="addUpdate.userName"
             [formControl]="addForm.controls['userName']"
           />
@@ -160,7 +160,7 @@
           <input
             name="firstName"
             id="firstName"
-            class="form-control"
+            class="form-control text-small"
             [(ngModel)]="addUpdate.firstName"
             [formControl]="addForm.controls['firstName']"
           />
@@ -170,7 +170,7 @@
           <input
             name="lastName"
             id="lastName"
-            class="form-control"
+            class="form-control text-small"
             [(ngModel)]="addUpdate.lastName"
             [formControl]="addForm.controls['lastName']"
           />
@@ -180,17 +180,69 @@
           <input
             name="accountNumber"
             id="accountNumber"
-            class="form-control"
+            class="form-control text-small"
             [(ngModel)]="addUpdate.accountNumber"
             [formControl]="addForm.controls['accountNumber']"
           />
         </div>
 
         <div class="col-md-6 form-group mb-3">
-          <label for="referralCode">کد رفرال معرف جدید</label>
-          <input id="referralCode" class="form-control" />
+          <label for="parent">معرف</label>
+          <input
+            [placeholder]="
+              isChangingParent
+                ? 'کد معرف ,مثل: 1234'
+                : userParent.firstname + '&nbsp;' + userParent.lastName
+            "
+            id="parent"
+            (change)="changeUserParentValue($event.target.value)"
+            [disabled]="!isChangingParent"
+            class="form-control text-small"
+          />
+          <span
+            *ngIf="!isChangingParent && userParent.userID !== 0"
+            ngbTooltip="ویرایش معرف"
+            [openDelay]="50"
+            [closeDelay]="150"
+            placement="bottom"
+            class="d-inline-flex mt-2 p-2 radius bg-light"
+            (click)="changeParent(changeParentModal)"
+            ><i class="i-Pen-5 text-bigger text-black"></i
+          ></span>
+          <span
+            *ngIf="!isChangingParent && userParent.userID == 0"
+            ngbTooltip="ثبت معرف"
+            [openDelay]="50"
+            [closeDelay]="150"
+            placement="bottom"
+            class="d-inline-flex mt-2 p-2 radius bg-light"
+            (click)="changeParent(changeParentModal)"
+            ><i class="i-Add text-bigger text-black"></i
+          ></span>
+          <span
+            *ngIf="isChangingParent"
+            ngbTooltip="انصراف"
+            [openDelay]="50"
+            [closeDelay]="150"
+            placement="bottom"
+            class="d-inline-flex mt-2 p-2 radius bg-light"
+            (click)="isChangingParent = false"
+            ><i class="i-Close text-bigger text-black"></i
+          ></span>
+          <span
+            *ngIf="isChangingParent"
+            ngbTooltip="ثبت"
+            [openDelay]="50"
+            [closeDelay]="150"
+            placement="bottom"
+            class="d-inline-flex mt-2 p-2 radius btn-delete ml-2"
+            (click)="
+              changeUserParent(addUpdate.id, userParentToSend.newReferralCode)
+            "
+            ><i class="i-Yes text-bigger text-black"></i
+          ></span>
         </div>
-        <div class="col-md-6 form-group mb-3 mt-2">
+        <div class="col-md-6 form-group mb-3">
           <label for="accountNumber ">دسترسی ها</label>
           <ng-multiselect-dropdown
             [formControl]="addForm.controls['permision']"
@@ -263,6 +315,40 @@
       (click)="modal.dismiss()"
     >
       <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
+      (click)="modal.close(true)"
+    >
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
+    </button>
+  </div>
+</ng-template>
+
+<!-- Change User Parent Modal -->
+
+<ng-template #changeParentModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">تغییر معرف کاربر</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss('Close Modal')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+      (click)="modal.dismiss('Reject')"
+    >
+      <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
     </button>
     <button
       type="button"

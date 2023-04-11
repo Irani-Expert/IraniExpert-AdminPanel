@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -12,6 +18,9 @@ import { RoleModel } from '../role-mangement/role.model';
 import { RoleService } from '../role-mangement/role.service';
 import { UserRoleModel } from '../user-role/user-role.model';
 import { UserRolesModel } from 'src/app/shared/models/userRoles';
+import { UserProfileService } from '../../dashboard/user-profile/user-profile.service';
+import { referralModel } from 'src/app/shared/models/referralModel';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-mangement',
@@ -19,6 +28,13 @@ import { UserRolesModel } from 'src/app/shared/models/userRoles';
   styleUrls: ['./user-mangement.component.scss'],
 })
 export class UserMangementComponent implements OnInit {
+  changeParentStatus: boolean;
+  userParentToSend: {
+    userId: number;
+    newReferralCode: string;
+  };
+  userParent: referralModel = new referralModel();
+  isChangingParent: boolean = false;
   viewMode: 'list' | 'grid' = 'list';
   rows: UsersModel[] = new Array<UsersModel>();
   allSelected: boolean;
@@ -37,13 +53,18 @@ export class UserMangementComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
-    public _roleService: RoleService
+    public _roleService: RoleService,
+    private _userReferralSevice: UserProfileService
   ) {
     this.page.pageNumber = 0;
     this.page.size = 8;
   }
 
   ngOnInit(): void {
+    this.userParentToSend = {
+      userId: 0,
+      newReferralCode: '',
+    };
     this.getRoleList(0, 100);
     this.dropdownSettings = {
       singleSelection: false,
@@ -69,7 +90,7 @@ export class UserMangementComponent implements OnInit {
 
     this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver);
   }
-  async getUsersList(pageNumber: number, seedNumber: number, roleId: number) {
+  getUsersList(pageNumber: number, seedNumber: number, roleId: number) {
     this.roleIdSaver = roleId;
     this._usersService
       .getUserByRoleID(
@@ -96,7 +117,9 @@ export class UserMangementComponent implements OnInit {
         }
       );
   }
-  async usersEdit(content: any, row: UsersModel) {
+  usersEdit(content: any, row: UsersModel) {
+    this.userParent.firstname = '';
+    this.userParent.lastName = '';
     //this.roleKeeper=row.roles
     if (row === undefined) {
       row = new UsersModel();
@@ -111,6 +134,17 @@ export class UserMangementComponent implements OnInit {
       this.roleKeeper = this.selectedItems;
     }
     this.addUpdate = row;
+    this._userReferralSevice.getParentLevelOne(row.id).subscribe((res) => {
+      if (res.success) {
+        this.userParent = res.data;
+      }
+      if (!res.success) {
+        this.userParent.firstname = '';
+        this.userParent.lastName = res.message;
+        this.userParent.userID = res.data.userID;
+      }
+    });
+    this.userParentToSend.userId = row.id;
     this.modalService
       .open(content, {
         size: 'md',
@@ -124,6 +158,7 @@ export class UserMangementComponent implements OnInit {
           }
         },
         (reason) => {
+          this.isChangingParent = false;
           console.log('Err!', reason);
           this.addForm.reset;
         }
@@ -158,14 +193,18 @@ export class UserMangementComponent implements OnInit {
     });
 
     this.updateRoleId();
+
     this._usersService.update(row.id, row, 'aspnetuser').subscribe((data) => {
       if (data.success) {
         this.toastr.success(data.message, null, {
           closeButton: true,
           positionClass: 'toast-top-left',
         });
-        this.rows.splice(indexFinder, 1);
-        this.rows.unshift(row);
+        this.getUsersList(
+          this.page.pageNumber,
+          this.page.size,
+          this.roleIdSaver
+        );
       } else {
         this.toastr.error(data.message, null, {
           closeButton: true,
@@ -173,6 +212,7 @@ export class UserMangementComponent implements OnInit {
         });
       }
     });
+    this.isChangingParent = false;
   }
   deleteUser(id: number, modal: any) {
     this.modalService
@@ -205,7 +245,7 @@ export class UserMangementComponent implements OnInit {
         );
       });
   }
-  async getRoleList(pageNumber: number, seedNumber: number) {
+  getRoleList(pageNumber: number, seedNumber: number) {
     this._roleService
       .get(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
@@ -256,19 +296,73 @@ export class UserMangementComponent implements OnInit {
   }
   updateRoleId() {
     this._usersService.updateUserRole(this.roleModel).subscribe((data) => {
-      this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver);
       if (data.success) {
-        this.toastr.success(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
+        this.roleKeeper = [];
       } else {
-        this.toastr.error(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
       }
     });
-    this.roleKeeper = [];
+  }
+
+  // ----------------------------- Change Parent Modal
+
+  changeParent(changeParentModal: NgbModal) {
+    this.modalService
+      .open(changeParentModal, {
+        ariaLabelledBy: 'modal-basic-title',
+        centered: false,
+        size: 'xs',
+      })
+      .result.then(
+        (accept) => {
+          if (accept) {
+            (<HTMLInputElement>document.getElementById('parent')).value = '';
+            this.isChangingParent = true;
+          }
+        },
+        (reject) => {
+          console.log(reject.message);
+        }
+      );
+  }
+  changeUserParent(userId: number, newParentRefCode: string) {
+    this._usersService
+      .changeParentPresentor(userId, newParentRefCode)
+      .subscribe((res) => {
+        if (res.success) {
+          this.toastr.success(res.message, '', {
+            timeOut: 3000,
+            positionClass: 'toast-top-left',
+          });
+          this._userReferralSevice
+            .getParentLevelOne(userId)
+            .subscribe((res) => {
+              if (res.success) {
+                this.userParent = res.data;
+                (<HTMLInputElement>document.getElementById('parent')).value =
+                  this.userParent.firstname + ' ' + this.userParent.lastName;
+              }
+
+              if (!res.success) {
+                this.userParent.firstname = '';
+                this.userParent.lastName = res.message;
+                this.userParent.userID = res.data.userID;
+              }
+            });
+
+          this.changeParentStatus = true;
+          this.isChangingParent = false;
+        }
+        if (!res.success) {
+          this.toastr.error(res.message, '', {
+            timeOut: 3000,
+            positionClass: 'toast-top-left',
+          });
+          this.changeParentStatus = false;
+          this.isChangingParent = true;
+        }
+      });
+  }
+  changeUserParentValue(e: string) {
+    this.userParentToSend.newReferralCode = e;
   }
 }

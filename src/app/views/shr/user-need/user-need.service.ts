@@ -36,7 +36,7 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
   getByStatus(pageSize: number, pageIndex: number, userWant: number) {
     return this._http.get<Result<Paginate<UserNeedModel[]>>>(
       this._base +
-        '/UserNeed/GetByUserWant?pageIndex=' +
+        '/UserNeed?pageIndex=' +
         pageIndex +
         '&pageSize=' +
         pageSize +
