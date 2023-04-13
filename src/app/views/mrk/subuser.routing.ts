@@ -8,7 +8,8 @@ const routes: Routes = [
   path: 'sub-user',
   component: SubUserComponent,
   canActivate: [AuthGuard],
-},];
+},
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

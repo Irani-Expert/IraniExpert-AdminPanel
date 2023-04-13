@@ -13,13 +13,15 @@ import {OrganizationChartModule} from 'primeng/organizationchart';
 import { HttpClientModule } from '@angular/common/http';
 import {ToastModule} from 'primeng/toast';
 import { SubUserComponent } from './sub-user/sub-user.component';
-import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
+import {AccordionModule} from 'primeng/accordion';
+import { DragScrollModule } from 'ngx-drag-scroll';
+//accordion and accordion tab
 import {MenuItem} from 'primeng/api';    
 @NgModule({
-  declarations: [SubUserComponent],
+  declarations: [SubUserComponent,],
   imports: [
     AccordionModule,
-    
+    DragScrollModule,
     CommonModule,
     SubuserRoutingModule,
     NgbModule,

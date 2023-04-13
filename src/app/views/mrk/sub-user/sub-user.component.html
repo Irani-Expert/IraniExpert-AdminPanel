@@ -1,17 +1,14 @@
-<div class="table-direction">
-
-<h5>Advanced</h5>
-<p>Organization with advanced customization.</p>
-<p-organizationChart [value]="Users" selectionMode="single" (onNodeExpand)="testonNodeExpand()" [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)"
-    styleClass="company">
+<div class="table-direction card flex justify-content-center">
+    <p-organizationChart [value]="treeNodes" selectionMode="single" [(selection)]="selectedNode"
+    (onNodeExpand)="testonNodeExpand($event)" styleClass="company">
     <ng-template let-node pTemplate="person">
-
-        <div class="node-content" style="border: black;">
-            <img class="img-s"  src="../../../../../../assets/images/User.png" width="32">
-            <div>{{node.data.firstname }} {{node.data.lastName}}</div>
-            
-
+        <div class="node-header">{{node.title}}</div>
+        <div class="node-content">
+            <div>{{node.email}}</div>
         </div>
     </ng-template>
- 
+    <ng-template let-node pTemplate="department">
+        {{node.phoneNumber}}
+    </ng-template>
 </p-organizationChart>
+</div>

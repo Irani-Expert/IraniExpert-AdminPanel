@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {TreeNode} from 'primeng/api';
+import {TreeNode} from '../NodeModel/treenode';
 import {MessageService} from 'primeng/api';
-import { UserData } from '../NodeModel/UserData.interface';
-import { log } from 'console';
+import { UserDataModel } from '../NodeModel/UserData.model';
+import { SubUserService } from '../sub-user.service';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
+import { Result } from 'src/app/shared/models/Base/result.model';
+import { count } from 'console';
 @Component({
   selector: 'app-sub-user',
   templateUrl: './sub-user.component.html',
@@ -15,92 +18,117 @@ import { log } from 'console';
 export class SubUserComponent implements OnInit {
   files: TreeNode[];
   data1: TreeNode[];
-  public mySentences:UserData[] = [
-    {firstname: "mohammad", lastName: "toroghi",accountNumber: 23,node: 0,parentAccountNumber:0},
-    {firstname: "javad", lastName: "abasi",accountNumber: 10,node: 1,parentAccountNumber:23},    
-    {firstname: "ali", lastName: "ziba",accountNumber: 12,node: 1,parentAccountNumber:23},   
-     {firstname: "parham", lastName: "afghahi",accountNumber: 101,node: 2,parentAccountNumber:10},
+//   public mySentences:UserData[firstName] = [
+//     {firstName: "mohammad", lastName: "toroghi",accountNumber: 23,node: 0,parentAccountNumber:null},
+//     {firstName: "javad", lastName: "abasi",accountNumber: 10,node: 1,parentAccountNumber:23},    
+//     {firstName: "ali", lastName: "ziba",accountNumber: 12,node: 1,parentAccountNumber:23},   
+//      {firstName: "parham", lastName: "afghahi",accountNumber: 101,node: 2,parentAccountNumber:10},
 
-];
+// ];
 
-  data: TreeNode[];
-  calcNode:number=0;
+  userId:number;
+  previousSelectedNode:number=0
+  rawData:UserDataModel[];
+  arrayData:UserDataModel[]=[{userID:2230,email:this._auth.currentUserValue.username,
+    firstName:this._auth.currentUserValue.firstName,lastName:this._auth.currentUserValue.lastName,phoneNumber:"",accountNumber:22,totalPayment:22,
+    parentUserID:null,childsCount:null}];
+    arrayData2:UserDataModel[]=[{userID:3243,email:'000',
+      firstName:this._auth.currentUserValue.firstName,lastName:this._auth.currentUserValue.lastName,phoneNumber:"",accountNumber:22,totalPayment:22,
+      parentUserID:null,childsCount:null}];
   selectedNode: TreeNode;
-  nodeData: TreeNode[];
-  constructor(private messageService: MessageService) { }
+  public nodeCounter: number = 0;
+  public nodeData: TreeNode[] = [];
+  constructor(private messageService: MessageService,
+    private _subservice:SubUserService,  private _auth: AuthenticateService
+    ) { }
  
-  Users: TreeNode[] = [];
+ public treeNodes: TreeNode[] = [];
   ngOnInit() {
+   //this.userId = this._authService.currentUserValue.userID;
+  this.userId=2230;
+   this.getUnderUsers(this.userId)
+}
+
+getUnderUsers(userId:number){
+  this._subservice.GetChildsLevelOne(userId)
+  .subscribe((res: Result<UserDataModel[]>)=> {
+    if(res.success){
+      this.rawData=res.data;
+      let counter =0;
+      let childGenerator=[] as UserDataModel[]
+
+      this.rawData.forEach(x=>{
+        x.parentUserID=userId
+       childGenerator[0]=this.arrayData2[0]
+        if(x.childsCount!=0){
+          childGenerator[0].childsCount=0
+          childGenerator[0].parentUserID=x.userID
+          childGenerator[0].userID=x.userID*100
+         let find= this.rawData.findIndex(x=>{x.parentUserID==childGenerator[0].parentUserID})
+         if(find==-1){
+         this.rawData.push(childGenerator[0])
+
+         } 
+        }
     
-      this.data=[{
-      type: 'person',
-      styleClass: 'p-person',
-      data: {firstname:'', lastName:"",accountNumber:null,parentAccountNumber:null},
-      children:[],
-    }]
- 
-    this.counterListSize()
-    this.creatingListData()
-    this.Users = [{
-      type: 'person',
-      styleClass: 'p-person',
-      data: {firstname:'Walter', lastName:"sss",accountNumber:12,parentAccountNumber:null},
-      children:[],
-  }];
-    // this.Users[0].data={firstname: this.mySentences[0].firstname, lastName: this.mySentences[0].lastName,
-    //   accountNumber: this.mySentences[0].accountNumber,node: this.mySentences[0].node,
-    //   parentAccountNumber:this.mySentences[0].parentAccountNumber},
-    this.Users[0].children.push({ type: 'person',
-    styleClass: 'p-person',
-    data: {firstname:'test2', lastName:"toroghi",accountNumber:12,parentAccountNumber:null}}      
-     ,)
-     debugger
-//     this.data2 = [{
-      
-     
-//       type: 'person',
-//       styleClass: 'p-person',
-//       data: {firstname:'Walter', lastName:"sss",accountNumber:12,parentAccountNumber:null},
-//       children: [
-//           {
-       
-//               type: 'person',
-//               styleClass: 'p-person',
-//               data: {firstname:'Walter', lastName:"sss",node:1,accountNumber:12,parentAccountNumber:12},
-         
-//           },
-//           {
-          
-          
-//               type: 'person',
-//               styleClass: 'p-person',
-//               data: {firstname:'Walter White', lastName:"sss",node:1,accountNumber:12,parentAccountNumber:12},
-//               children:[{},
-// ]
-//           }
-//       ]
-//   }];
+        counter++
+      })
+   
+        this.arrayData.push(...this.rawData)
+        this.arrayData[0].childsCount=counter
+       this.setTree(this.arrayData)
+    }
+   
+ }      
+); 
+}
+
+
+ setTree(_searchResponses: UserDataModel[]): void {
+  let treeSearchResponses: TreeNode[] = [];
+  let empty: TreeNode[]
+  _searchResponses.map((searchResponse) => {
+    let treeNode=new TreeNode() ;
+    treeNode.id=searchResponse.userID
+    treeNode.parentId = searchResponse.parentUserID;
+    treeNode.title = searchResponse.firstName+searchResponse.lastName;
+    treeNode.phoneNumber = searchResponse.phoneNumber;
+    treeNode.email = searchResponse.email;
+    treeNode.type= 'person';
+    treeNode.expanded=true
+    this.nodeCounter++;
+    
+    treeSearchResponses.push(treeNode);
+  });
+  const nest = (items, id = null, link = 'parentId') =>
+    items
+      .filter((item:TreeNode) => item[link] === id)
+      .map((item) => (Object.assign(Object.assign({}, item), { children: nest(items, item.id) })));
+
+  this.treeNodes = nest(treeSearchResponses);
+}
+
+ onNodeSelected(n): void {
+}
+testonNodeExpand(data:any){
+
+  if(this.previousSelectedNode!= data.node.id && data.node.id!=this.userId){
+    this.previousSelectedNode= data.node.id
+    let co=0;
+   this.arrayData.forEach(x=>{
+     if( x.email==='000'&& data.node.id===x.parentUserID){
+      delete this.arrayData[co]
+
+     }
+     co++
+    })
+    
+    this.getUnderUsers(data.node.id)
+
+
+  }
+
 
 }
-counterListSize(){
-  this.mySentences.forEach(x=>{
-    if(x.node>this.calcNode){
-      this.calcNode=x.node
-    }
-  })
-}
-creatingListData(){
-  for (let x = 0; x <= this.calcNode; x++) {
-    this.mySentences.forEach(y=>{
-      if(y.node==x){
-     this.Users[0].children
-     }
-    })
-    debugger
-}}
-onNodeSelect(event) {
-  debugger
-}
-testonNodeExpand(){debugger}
 
 }
