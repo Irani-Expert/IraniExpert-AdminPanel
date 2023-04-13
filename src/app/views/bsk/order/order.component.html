@@ -1299,7 +1299,7 @@
               (click)="modal.close(true)"
               [disabled]="
                 !AddOrderForm.valid ||
-                AddOrderModel.price <= AddOrderModel.discountPrice
+                AddOrderModel.price < AddOrderModel.discountPrice
               "
             >
               <i class="i-Yes text-bigger mr-2"></i>
