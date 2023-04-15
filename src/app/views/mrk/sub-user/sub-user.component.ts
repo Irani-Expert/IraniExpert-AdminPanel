@@ -89,6 +89,7 @@ getUnderUsers(userId:number){
 
  setTree(_searchResponses: UserDataModel[]): void {
   debugger
+  var nafar='نفر'
   let treeSearchResponses: TreeNode[] = [];
   let empty: TreeNode[]
   _searchResponses.map((searchResponse) => {
@@ -97,6 +98,7 @@ getUnderUsers(userId:number){
     treeNode.id=searchResponse.userID
     treeNode.accountNumber=searchResponse.accountNumber
     treeNode.childrenCount=searchResponse.childsCount
+    
     treeNode.parentId = searchResponse.parentUserID;
     treeNode.title = searchResponse.firstName+' '+searchResponse.lastName;
     treeNode.phoneNumber = searchResponse.phoneNumber;

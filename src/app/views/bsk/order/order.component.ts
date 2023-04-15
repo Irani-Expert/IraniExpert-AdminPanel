@@ -1080,8 +1080,11 @@ export class OrderComponent implements OnInit {
                 positionClass: 'toast-top-left',
               });
             }
-          });
-      });
+          })
+        },
+          (reason) => {  this.AddOrderModel = new AddOrderModel();}
+        );
+
   }
   getUserbyUserId() {
     if (

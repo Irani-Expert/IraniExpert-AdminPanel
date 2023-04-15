@@ -1,7 +1,7 @@
 
-<div class="table-direction card flex ">
+<div class="main-table card flex  f-direction">
     <p-organizationChart [value]="treeNodes" selectionMode="single" [(selection)]="selectedNode"
-    (onNodeExpand)="testonNodeExpand($event)" styleClass="company">
+    (onNodeExpand)="testonNodeExpand($event)" >
     <ng-template let-node pTemplate="person">
        
        
@@ -16,32 +16,52 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" >
           </div>
           <div class="data">
-            <h3>{{node.title}}</h3>
-            <span class="fo-small" *ngIf="node.parentId!=null">مجموع پرداختی:<span class="total-payment fo-small">${{node.totalPayment  == null ? 0 : node.totalPayment }}</span></span>
+            <h3 class="font-face">{{node.title}}</h3>
+            <span class="fo-small font-face" *ngIf="node.parentId!=null">مجموع پرداختی:<span class="total-payment fo-small font-face">${{node.totalPayment  == null ? 0 : node.totalPayment }}</span></span>
           </div>
           <div class="row m-2">
-            <div class="col-6">
-              <h5>شماره حساب</h5>
-              <span class="fo-small">{{node.accountNumber}}</span>
+            <div class="col-6 ">
+              <div class="card m-1">
+
+              <h5  class="header-label p-2 font-face">شماره حساب</h5>
+              <span class="fo-small font-face">{{node.accountNumber  == null ? 0 : node.accountNumber }}</span>
+              </div>
             </div>
-            <div class="col-6">
-              <h5>ایدی</h5>
-              <span class="fo-small">{{node.id}}</span>
+            <div class="col-6 ">
+              <div class="card m-1">
+
+              <h5  class="header-label p-1 font-face">شناسه</h5>
+              <span class="fo-small font-face">{{node.id}}</span>
             </div>
-            <div class="col-6">
-              <h5>شماره تلفن</h5>
-              <span class="fo-small">{{node.phoneNumber}}</span>
+
             </div>
-            <div class="col-6">
-              <h5>زیر مجموعه ها</h5>
-              <span class="fo-small">{{node.childrenCount}}</span>
-            </div>
-            <div class="col-12 text-center">
-              <h5>ایمیل</h5>
-              <span class="fo-small">{{node.email}}</span>
+            <div class="col-6 ">
+              <div class="card m-1">
+
+              <h5  class="header-label p-1 font-face">شماره تلفن</h5>
+              <span class="fo-small font-face">{{node.phoneNumber}}</span>
             </div>
           </div>
-       
+
+            <div class="col-6  flex-column-reverse">
+              <div class="card m-1">
+                <h5 class="header-label p-1 font-face">زیر مجموعه ها</h5>
+                <div class="person-Count fo-small font-face"   >  <span class="pr-1 fo-small" >{{node.childrenCount}}</span>
+                   <span class="fo-small font-face" > نفر</span>
+                </div>
+              </div>
+            
+              
+
+            </div>
+            <div class="col-12 text-center">
+              <div class="card m-1">
+
+              <h5  class="header-label p-1 font-face">ایمیل</h5>
+              <span class="fo-small font-face">{{node.email}}</span>
+            </div>
+          </div>
+       </div>
         </div>
       </section>  
     </ng-template>

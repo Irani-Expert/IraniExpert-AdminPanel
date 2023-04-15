@@ -1,14 +1,29 @@
-.table-direction{
-  direction: ltr;
+@font-face {
+  font-family: Vazir;
+  src: url("../../../../assets/fonts/Vazir.eot");
+  src: url("../../../../assets/fonts/Vazir.eot?#iefix") format("embedded-opentype"),
+    url("../../../../assets/fonts/Vazir.woff2") format("woff2"),
+    url("../../../../assets/fonts/Vazir.woff") format("woff"),
+    url("../../../../assets/fonts/Vazir.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+.font-face {
+  font-family: 'Vazir' !important;
+
+}
+.main-table{
   overflow: scroll;
   max-height: 40em;
 }
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+.f-direction{
+  direction: ltr;
+}
 *{
-  margin: 0;
+  margin:
+   0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
 }
 .main{
   width: 15rem;
@@ -26,8 +41,8 @@
   max-width: 400px;
   width: 100%;
   border-radius: 25px;
-  border: 1px solid #ffffff40;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+
+
 }
 .image{
   position: relative;
@@ -91,6 +106,21 @@ table {
 margin-top: 20px;
   
 }
-tbody {
 
+.person-Count{
+  display: flex;
+          justify-content:center ;
+            
+              flex-direction: row-reverse;
+}
+.header-label{
+  background: #5e6a69;
+  color: white;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  font-size: 0.8rem !important;
+
+}
+.p-organizationchart-node-content{
+  border: 3px solid #dee2e6  !important;
 }

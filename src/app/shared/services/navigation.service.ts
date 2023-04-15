@@ -68,12 +68,12 @@ export class NavigationService {
       privilege: 'Dashboard-Full Premission',
     },
     {
-      name: 'کاربران زیر مجموعه',
+      name: 'مشتریان من',
       description: 'پروفایل',
       navType: 'link',
       icon: 'i-Add-UserStar',
       state: '/mrk/sub-user',
-      privilege: 'Dashboard-Full Premission',
+      privilege: 'Subuser-Full Premission',
     },
     // {
     //   name: 'مشتریان من',
