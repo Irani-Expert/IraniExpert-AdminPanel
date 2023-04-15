@@ -88,7 +88,7 @@ getUnderUsers(userId:number){
 
 
  setTree(_searchResponses: UserDataModel[]): void {
-  debugger
+
   var nafar='نفر'
   let treeSearchResponses: TreeNode[] = [];
   let empty: TreeNode[]
