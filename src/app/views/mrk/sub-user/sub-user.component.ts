@@ -27,7 +27,7 @@ export class SubUserComponent implements OnInit {
 // ];
 
   userId:number;
-  previousSelectedNode:number=0
+  opendList:Array<number>=[];
   rawData:UserDataModel[];
   arrayData:UserDataModel[]=[{userID:2230,email:this._auth.currentUserValue.username,
     firstName:this._auth.currentUserValue.firstName,lastName:this._auth.currentUserValue.lastName,phoneNumber:"",accountNumber:22,totalPayment:22,
@@ -46,6 +46,7 @@ export class SubUserComponent implements OnInit {
   ngOnInit() {
    //this.userId = this._authService.currentUserValue.userID;
   this.userId=2230;
+  this.opendList.push(this.userId)
    this.getUnderUsers(this.userId)
 }
 
@@ -89,13 +90,21 @@ getUnderUsers(userId:number){
   let empty: TreeNode[]
   _searchResponses.map((searchResponse) => {
     let treeNode=new TreeNode() ;
+    let opendBefor=false
     treeNode.id=searchResponse.userID
     treeNode.parentId = searchResponse.parentUserID;
     treeNode.title = searchResponse.firstName+searchResponse.lastName;
     treeNode.phoneNumber = searchResponse.phoneNumber;
     treeNode.email = searchResponse.email;
+    this.opendList.forEach(x=>{
+      if(x==searchResponse.userID){
+       opendBefor=true
+      }
+    })
+    if(opendBefor){
+      treeNode.expanded=true
+    }
     treeNode.type= 'person';
-    treeNode.expanded=true
     this.nodeCounter++;
     
     treeSearchResponses.push(treeNode);
@@ -111,19 +120,30 @@ getUnderUsers(userId:number){
  onNodeSelected(n): void {
 }
 testonNodeExpand(data:any){
+  let counter=0;
+   let opendBefor=true
+ this.opendList.forEach(x=>{
+  if(x==data.node.id){
+    opendBefor=false
+  }
+  counter++;
+ })
+ if(opendBefor){
+ this.opendList.push(data.node.id)
 
-  if(this.previousSelectedNode!= data.node.id && data.node.id!=this.userId){
-    this.previousSelectedNode= data.node.id
-    let co=0;
-   this.arrayData.forEach(x=>{
-     if( x.email==='000'&& data.node.id===x.parentUserID){
-      delete this.arrayData[co]
+  let co=0;
+  this.arrayData.forEach(x=>{
+    if( x.email==='000'&& data.node.id===x.parentUserID){
+     delete this.arrayData[co]
 
-     }
-     co++
-    })
-    
-    this.getUnderUsers(data.node.id)
+    }
+    co++
+   })
+   
+   this.getUnderUsers(data.node.id)
+
+ }
+
 
 
   }
@@ -131,4 +151,4 @@ testonNodeExpand(data:any){
 
 }
 
-}
+
