@@ -29,9 +29,9 @@ export class SubUserComponent implements OnInit {
   userId:number;
   opendList:Array<number>=[];
   rawData:UserDataModel[];
-  arrayData:UserDataModel[]=[{userID:2230,email:this._auth.currentUserValue.username,
-    firstName:this._auth.currentUserValue.firstName,lastName:this._auth.currentUserValue.lastName,phoneNumber:"",accountNumber:22,totalPayment:22,
-    parentUserID:null,childsCount:null}];
+  arrayData:UserDataModel[]=[{userID:2230,email:this._auth.currentUserValue['email'],
+    firstName:this._auth.currentUserValue.firstName,lastName:this._auth.currentUserValue.lastName,totalPayment:22,
+    parentUserID:null,childsCount:null,phoneNumber:this._auth.currentUserValue['phoneNumber'],accountNumber:this._auth.currentUserValue['accountNumber']}];
     arrayData2:UserDataModel[]=[{userID:3243,email:'000',
       firstName:this._auth.currentUserValue.firstName,lastName:this._auth.currentUserValue.lastName,phoneNumber:"",accountNumber:22,totalPayment:22,
       parentUserID:null,childsCount:null}];
@@ -44,6 +44,8 @@ export class SubUserComponent implements OnInit {
  
  public treeNodes: TreeNode[] = [];
   ngOnInit() {
+    console.log(this._auth.currentUserValue)
+
    //this.userId = this._authService.currentUserValue.userID;
   this.userId=2230;
   this.opendList.push(this.userId)
@@ -86,14 +88,17 @@ getUnderUsers(userId:number){
 
 
  setTree(_searchResponses: UserDataModel[]): void {
+  debugger
   let treeSearchResponses: TreeNode[] = [];
   let empty: TreeNode[]
   _searchResponses.map((searchResponse) => {
     let treeNode=new TreeNode() ;
     let opendBefor=false
     treeNode.id=searchResponse.userID
+    treeNode.accountNumber=searchResponse.accountNumber
+    treeNode.childrenCount=searchResponse.childsCount
     treeNode.parentId = searchResponse.parentUserID;
-    treeNode.title = searchResponse.firstName+searchResponse.lastName;
+    treeNode.title = searchResponse.firstName+' '+searchResponse.lastName;
     treeNode.phoneNumber = searchResponse.phoneNumber;
     treeNode.email = searchResponse.email;
     this.opendList.forEach(x=>{

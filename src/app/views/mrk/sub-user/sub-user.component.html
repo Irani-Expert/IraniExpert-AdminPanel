@@ -1,35 +1,49 @@
-<div class="table-direction card flex justify-content-center">
+
+<div class="table-direction card flex ">
     <p-organizationChart [value]="treeNodes" selectionMode="single" [(selection)]="selectedNode"
     (onNodeExpand)="testonNodeExpand($event)" styleClass="company">
     <ng-template let-node pTemplate="person">
        
        
       
-        <head>
-            <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed:300,400,600i&display=swap" rel="stylesheet">
-          </head>
-          <div class="infocardContainer">
-            <div id="main">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" >
+        
+      <!-- <div> <div id="main">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" >
+      </div></div> -->
+      <section class="main">
+        <div class="profile-card">
+          <div class="image">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" >
+          </div>
+          <div class="data">
+            <h3>{{node.title}}</h3>
+            <span class="fo-small" *ngIf="node.parentId!=null">مجموع پرداختی:<span class="total-payment fo-small">${{node.totalPayment  == null ? 0 : node.totalPayment }}</span></span>
+          </div>
+          <div class="row m-2">
+            <div class="col-6">
+              <h5>شماره حساب</h5>
+              <span class="fo-small">{{node.accountNumber}}</span>
             </div>
-            <div id="textbois">
-              <h2>Emil Alicic</h2>
-              <h4>Professional Memeologist</h4>
-              <a href="mailto:limecicila@gmail.com">limecicila@gmail.com</a>
-              <div id="hotlinks">
-                <a href="https://codepen.io/LIMESTA"><img id="codepenio" src="https://blog.codepen.io/wp-content/uploads/2012/06/Button-Fill-Black-Small.png" target="_blank">
-                </a>
-                <a href="https://codepen.io/LIMESTA">
-                  <img id="codepenio" src="https://blog.codepen.io/wp-content/uploads/2012/06/Button-Fill-Black-Small.png" target="_blank">
-                </a>
-                <a href="https://codepen.io/LIMESTA">
-                  <img id="codepenio" src="https://blog.codepen.io/wp-content/uploads/2012/06/Button-Fill-Black-Small.png" target="_blank">
-                </a>
-              </div>
+            <div class="col-6">
+              <h5>ایدی</h5>
+              <span class="fo-small">{{node.id}}</span>
+            </div>
+            <div class="col-6">
+              <h5>شماره تلفن</h5>
+              <span class="fo-small">{{node.phoneNumber}}</span>
+            </div>
+            <div class="col-6">
+              <h5>زیر مجموعه ها</h5>
+              <span class="fo-small">{{node.childrenCount}}</span>
+            </div>
+            <div class="col-12 text-center">
+              <h5>ایمیل</h5>
+              <span class="fo-small">{{node.email}}</span>
             </div>
           </div>
-      
-           
+       
+        </div>
+      </section>  
     </ng-template>
    
 </p-organizationChart>

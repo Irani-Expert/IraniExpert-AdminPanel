@@ -27,4 +27,5 @@ export class TreeNode<T = any> {
     phoneNumber: string;
     accountNumber: number;
     totalPayment: number;
+    childrenCount:number;
 }

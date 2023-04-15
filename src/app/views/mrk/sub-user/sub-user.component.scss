@@ -1,173 +1,96 @@
-
-:host ::ng-deep .p-organizationchart {
-    .p-person {
-        padding: 0;
-        border: 0 none;
-    }
-
-    .node-header, .node-content {
-        padding: .5em .7rem;
-    }
-
-    .node-header {
-        background-color: #495ebb;
-        color: #ffffff;
-    }
-
-    .node-content {
-        text-align: center;
-        border: 1px solid #495ebb;
-    }
-
-    .node-content img {
-        border-radius: 50%;
-    }
-
-    .department-cfo {
-        background-color: #7247bc;
-        color: #ffffff;
-    }
-
-    .department-coo {
-        background-color: #a534b6;
-        color: #ffffff;
-    }
-
-    .department-cto {
-        background-color: #e9286f;
-        color: #ffffff;
-    }
-}
-.img-s{
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #080808;
-    background-color: rgba(0, 0, 0, 0);
-}
 .table-direction{
-    direction: ltr;
-    overflow: scroll;
+  direction: ltr;
+  overflow: scroll;
+  max-height: 40em;
 }
-i{
-    display: block;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
-.infocardContainer * {
-    font-family: 'Fira Sans Condensed', sans-serif;
-    font-weight: 300;
-  }
-  h2 {
-    font-weight: 600; font-style: italic; font-family: "Fira Sans Condensed", sans-serif;
-  }
-  header {
-    height: 2em;
-    background-color: #111122;
-    margin: 0 0 0 0;
-    padding: auto;
-    font-size: 2em;
-    text-align: center;
-    line-height: 2em;
-    color: white;
-  }
-  a {
-    text-decoration: none;
-  }
-  a:visited {
-    color: #555566;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  .infocardContainer {
-    display: flex;
-    height: 200px;
-    width: 200px;
-    border-radius: 100px;
-    background: #5e6a69;
-    background: linear-gradient(121deg, rgba(255,255,255,0) 13%, #5e6a69 100%);
-    transition: all 500ms ease-in;
-    transition-delay: 1s;
-    margin: auto;
+.main{
+  width: 15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
+  background-position: center;
+  background-size: cover;
+}
+.profile-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  width: 100%;
+  border-radius: 25px;
+  border: 1px solid #ffffff40;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+.image{
+  position: relative;
+  height: 100px;
+  width: 100px;
+}
+.image .profile-pic{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+.data{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.data h2{
+  font-size: 33px;
+  font-weight: 600;
+}
+span{
+  font-size: 18px;
+}
+.row{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.row .info{
+  text-align: center;
+  padding: 0 20px;
+}
+.buttons{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.buttons .btn{
+  color: #fff;
+  text-decoration: none;
+  margin: 0 20px;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-size: 18px;
+  white-space: nowrap;
+  background: linear-gradient(to left, #33ccff 0%, #ff99cc 100%);
+}
+.buttons .btn:hover{
+  box-shadow: inset 0 5px 20px rgba(0,0,0,0.4);
+}
+.total-payment{
+  color: rgb(36, 148, 36);
+}
+.fo-small{
+  font-size: small;
+
+}
+table {
+margin-top: 20px;
   
-  }
-  .infocardContainer:hover {
-    width: 500px;
-    border-radius: 100px 10px 100px 100px;
-    transition: all 1s ease-out;
-  }
-  
-  .infocardContainer div {
-    text-color: white;
-    flex-shrink: 1;
-    width: 100%;
-    --background-color: green;
-  }
-  .infocardContainer div * {
-    display: flex;
-    --flex: inherit;
-    overflow: hidden;
-    text-overflow: hidden;
-    --background-color: yellow;
-    color: white;
-    white-space: nowrap;
-    width: 0;
-    height: auto;
-    transition: all 450ms ease-in;
-    transition-delay: 1s;
-  }
-  .infocardContainer:hover div *{
-    --background-color: purple;
-    display: flex;
-    visibility: visible;
-    transition: all 1s ease-out;
-    transition-delay: 500ms;
-    width: 100%;
-    height: auto;
-  }
-  
-  .infocardContainer #main, .infocardContainer #main img{
-    --background-color: red;
-    height: 200px;
-    width: 200px;
-    padding-right: 10px;
-    border-radius: 100%;
-    flex-shrink: 0;
-    object-fit: cover;
-  }
-  .infocardContainer #main img{
-    height: 180px;
-    width: 180px;
-    transition: none;
-    display: float;
-    position: relative;
-    border: 10px solid white;
-    margin: 0 0 0 0; padding: 0 0 0 0;
-  }
-  .infocardContainer #textbois {
-    position: relative;
-  }
-  .infocardContainer #textbois #hotlinks {
-    max-width: 60%;
-    max-height: 30px;
-    
-    --background-color: white;
-    position:absolute;
-    bottom: 5px;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 13px;
-  }
-  .infocardContainer #textbois #hotlinks * {
-    background-color: white;
-    max-width: 30px;
-    --margin: 0 1px 0 1px;
-    border-radius: 25px;
-  }
-  /*TODO: animate copy main transition style for info*/
-  .infocardContainer #textbois #hotlinks *:hover {
-    
-    
-  }
+}
+tbody {
+
+}
