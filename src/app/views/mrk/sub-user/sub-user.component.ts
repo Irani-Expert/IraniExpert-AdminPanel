@@ -44,10 +44,7 @@ export class SubUserComponent implements OnInit {
  
  public treeNodes: TreeNode[] = [];
   ngOnInit() {
-    console.log(this._auth.currentUserValue)
-
-   //this.userId = this._authService.currentUserValue.userID;
-  this.userId=2230;
+   this.userId = this._auth.currentUserValue.userID;
   this.opendList.push(this.userId)
    this.getUnderUsers(this.userId)
 }
