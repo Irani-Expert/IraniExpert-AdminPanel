@@ -6,6 +6,7 @@ import { SubUserService } from '../sub-user.service';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { count } from 'console';
+import { number } from 'echarts';
 @Component({
   selector: 'app-sub-user',
   templateUrl: './sub-user.component.html',
@@ -29,7 +30,7 @@ export class SubUserComponent implements OnInit {
   userId:number;
   opendList:Array<number>=[];
   rawData:UserDataModel[];
-  arrayData:UserDataModel[]=[{userID:2230,email:this._auth.currentUserValue['email'],
+  arrayData:UserDataModel[]=[{userID:54,email:this._auth.currentUserValue['email'],
     firstName:this._auth.currentUserValue.firstName,lastName:this._auth.currentUserValue.lastName,totalPayment:22,
     parentUserID:null,childsCount:null,phoneNumber:this._auth.currentUserValue['phoneNumber'],accountNumber:this._auth.currentUserValue['accountNumber']}];
     arrayData2:UserDataModel[]=[{userID:3243,email:'000',
@@ -44,7 +45,8 @@ export class SubUserComponent implements OnInit {
  
  public treeNodes: TreeNode[] = [];
   ngOnInit() {
-   this.userId = this._auth.currentUserValue.userID;
+  //  this.userId = this._auth.currentUserValue.userID;
+  this.userId=54
   this.opendList.push(this.userId)
    this.getUnderUsers(this.userId)
 }
@@ -75,7 +77,10 @@ getUnderUsers(userId:number){
       })
    
         this.arrayData.push(...this.rawData)
-        this.arrayData[0].childsCount=counter
+        if(userId==this.userId){
+          this.arrayData[0].childsCount=counter
+
+        }
        this.setTree(this.arrayData)
     }
    
@@ -124,6 +129,7 @@ getUnderUsers(userId:number){
  onNodeSelected(n): void {
 }
 testonNodeExpand(data:any){
+  
   let counter=0;
    let opendBefor=true
  this.opendList.forEach(x=>{
@@ -137,13 +143,12 @@ testonNodeExpand(data:any){
 
   let co=0;
   this.arrayData.forEach(x=>{
-    if( x.email==='000'&& data.node.id===x.parentUserID){
-     delete this.arrayData[co]
+    if( data.node.id===x.parentUserID){
+      this.arrayData.splice(co,1)
 
     }
     co++
    })
-   
    this.getUnderUsers(data.node.id)
 
  }
@@ -151,6 +156,48 @@ testonNodeExpand(data:any){
 
 
   }
+  onNodedeSelected(n:any){
+   let s=[]
+   s.push(2)
+   this.arrayData.forEach(x=>{
+    
+    if(n.node.id==x.parentUserID){ 
+      
+          s.push(x.userID)       
+      }
+   })
+   s.forEach(data=>{
+    var counter=0;
+    var find=-1
+    this.arrayData.forEach(x=>{
+      if(x.userID==data){
+       find=counter
+      }
+      counter++
+    })
+    if(find!=-1){
+      this.arrayData.splice(find,1)
+
+    }
+   })
+   
+  let addIndex= this.arrayData.findIndex(x=>{
+    x.userID==n.node.id
+   })
+   let userModel=[] as UserDataModel[]
+   userModel=this.arrayData2
+   userModel[0].parentUserID=n.node.id
+   userModel[0].userID=n.node.id*1000
+   
+   this.arrayData.push(userModel[0])
+  
+    this.opendList.splice(this.opendList.indexOf(n.node.id),1);
+    this.setTree(this.arrayData)
+  
+   
+    
+  }
+
 
 
 }
