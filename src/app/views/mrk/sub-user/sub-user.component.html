@@ -1,7 +1,7 @@
 
 <div class="main-table card flex  f-direction">
     <p-organizationChart class="h-100" [value]="treeNodes" selectionMode="single" [(selection)]="selectedNode"
-    (onNodeExpand)="testonNodeExpand($event)" >
+    (onNodeExpand)="testonNodeExpand($event)" (onNodeCollapse)="onNodedeSelected($event)" >
     <ng-template let-node pTemplate="person">
        
        
@@ -17,21 +17,21 @@
           </div>
           <div class="data">
             <h3 class="font-face">{{node.title}}</h3>
-            <span class="fo-small font-face" *ngIf="node.parentId!=null">مجموع پرداختی:<span class="total-payment fo-small font-face">${{node.totalPayment  == null ? 0 : node.totalPayment }}</span></span>
+            <span class="fo-small font-face span-static-time" *ngIf="node.parentId!=null">مجموع پرداختی:<span class="total-payment fo-small font-face">${{node.totalPayment  == null ? 0 : node.totalPayment }}</span></span>
           </div>
           <div class="row m-2">
             <div class="col-6 ">
               <div class="card m-1">
 
               <h5  class="header-label p-2 font-face">شماره حساب</h5>
-              <span class="fo-small font-face">{{node.accountNumber  == null ? 0 : node.accountNumber }}</span>
+              <span class="fo-small font-face span-static-time">{{node.accountNumber  == null ? 0 : node.accountNumber }}</span>
               </div>
             </div>
             <div class="col-6 ">
               <div class="card m-1">
 
               <h5  class="header-label p-1 font-face">شناسه</h5>
-              <span class="fo-small font-face">{{node.id}}</span>
+              <span class="fo-small font-face span-static-time">{{node.id}}</span>
             </div>
 
             </div>
@@ -39,14 +39,14 @@
               <div class="card m-1">
 
               <h5  class="header-label p-1 font-face">شماره تلفن</h5>
-              <span class="fo-small font-face">{{node.phoneNumber}}</span>
+              <span class="fo-small font-face span-static-time">{{node.phoneNumber}}</span>
             </div>
           </div>
 
             <div class="col-6  flex-column-reverse">
               <div class="card m-1">
                 <h5 class="header-label p-1 font-face">زیر مجموعه ها</h5>
-                <div class="person-Count fo-small font-face"   >  <span class="pr-1 fo-small" >{{node.childrenCount}}</span>
+                <div class="person-Count fo-small font-face"   >  <span class="pr-1 fo-small span-static-time" >{{node.childrenCount}}</span>
                    <span class="fo-small font-face" > نفر</span>
                 </div>
               </div>
@@ -58,7 +58,7 @@
               <div class="card m-1">
 
               <h5  class="header-label p-1 font-face">ایمیل</h5>
-              <span class="fo-small font-face">{{node.email}}</span>
+              <span class="fo-small font-face span-static-time" >{{node.email}}</span>
             </div>
           </div>
        </div>
