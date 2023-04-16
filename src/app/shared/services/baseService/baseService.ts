@@ -6,6 +6,8 @@ import { Result } from '../../models/Base/result.model';
 import { FilterModel } from '../../models/Base/filter.model';
 import { environment } from 'src/environments/environment.prod';
 import { Paginate } from '../../models/Base/paginate.model';
+import { UserInfoModel } from '../../models/userInfoModel';
+import { AuthenticateService } from '../auth/authenticate.service';
 
 /**
  * سرویس پایه

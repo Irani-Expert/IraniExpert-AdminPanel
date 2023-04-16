@@ -90,10 +90,10 @@ export class UserProfileComponent implements OnInit {
     this.getUser();
   }
 
-  openPasswordModal(content: any) {
+  openPasswordChangeModal(content: any) {
     this.modalService
       .open(content, {
-        size: 'md',
+        size: 'sm',
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
       })

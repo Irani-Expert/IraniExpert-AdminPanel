@@ -87,11 +87,16 @@ const routes: Routes = [
   },
   {
     path: 'prd',
+    component: NotFoundComponent,
     children: [
       {
         path: 'prd',
         loadChildren: () =>
           import('./views/prd/prd.module').then((m) => m.PrdModule),
+      },
+      {
+        path: 'prd/**',
+        component: NotFoundComponent,
       },
     ],
   },
@@ -112,8 +117,8 @@ const routes: Routes = [
       {
         path: 'mrk',
         loadChildren: () =>
-        import('./views/mrk/subuser.module').then((m) => m.SubuserModule),  
-          },
+          import('./views/mrk/subuser.module').then((m) => m.SubuserModule),
+      },
     ],
   },
   {

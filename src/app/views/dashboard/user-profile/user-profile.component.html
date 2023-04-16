@@ -125,7 +125,7 @@
     <div class="col-md-6 d-flex align-items-end mb-3 flex-wrap">
       <button
         type="button"
-        class="btn-download btn d-flex justify-content-around py-btns radius align-items-center text-dark"
+        class="btn-download btn d-flex justify-content-around py-btns radius align-items-center mr-2 text-dark"
         (click)="isEdit = false"
         *ngIf="isEdit"
       >
@@ -135,7 +135,7 @@
 
       <button
         type="button"
-        class="btn-save btn d-flex justify-content-around py-btns radius align-items-center mt-2 mt-sm-0"
+        class="btn-save btn d-flex justify-content-around py-btns radius align-items-center mr-2 mt-2 mt-sm-0"
         (click)="updateUser()"
         *ngIf="!isEdit"
       >
@@ -145,7 +145,7 @@
 
       <button
         type="button"
-        class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center ml-2 mt-2 mt-sm-0"
+        class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center mr-2 mt-2 mt-sm-0"
         (click)="isEdit = true"
         *ngIf="!isEdit"
       >
@@ -154,19 +154,28 @@
       </button>
 
       <button
-        (click)="openPasswordModal(passwordModal)"
+        (click)="openPasswordChangeModal(passwordModal)"
         type="button"
-        class="btn-upload btn d-flex justify-content-around py-btns radius align-items-center ml-2 mt-2 mt-sm-0"
+        class="btn-upload btn d-flex justify-content-around py-btns radius align-items-center mr-2 mt-2 mt-xl-0"
         *ngIf="isEdit"
       >
         <i class="i-Key text-bigger mr-2"></i
         ><strong class="text-small">تغییر رمز عبور</strong>
       </button>
+      <!-- <button
+        (click)="openPasswordForgetModal(passwordModal)"
+        type="button"
+        class="btn-upload btn d-flex justify-content-around py-btns radius align-items-center ml-2 mt-2 mt-sm-0"
+        *ngIf="isEdit"
+      >
+        <i class="i-Key text-bigger mr-2"></i
+        ><strong class="text-small">فراموشی رمز عبور</strong>
+      </button> -->
       <button
         *ngIf="isEdit"
         type="button"
         (click)="getReferral(repModal, userReferralModalCreate)"
-        class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 mt-2 mt-sm-0"
+        class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-2 mt-2 mt-xl-0"
       >
         <i class="i-Business-Man text-bigger mr-2"></i>
         <strong class="text-small">معرف من </strong>

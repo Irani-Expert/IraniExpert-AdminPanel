@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { DashboadDefaultComponent } from './dashboad-default/dashboad-default.component';
 import { ReferralUserComponent } from './referral-user/referral-user.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { NotFoundComponent } from '../session/not-found/not-found.component';
 
 const routes: Routes = [
   {

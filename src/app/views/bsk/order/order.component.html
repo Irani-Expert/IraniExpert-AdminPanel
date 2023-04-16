@@ -221,14 +221,20 @@
               ></i>
             </button>
             <span
-              *ngIf="item.commentCount !== 0"
-              ngbTooltip="تعداد یادداشت ها"
+              ngbTooltip=" تعداد یادداشت ها "
               [openDelay]="50"
               [closeDelay]="150"
               placement="bottom"
               style="width: 32px; height: 32px; padding-top: 2.5px"
-              class="btn-add rounded-circle d-flex justify-content-center m-1 align-items-center"
-              >{{ item.commentCount }}</span
+              class="btn-add card position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
+            >
+              <i class="i-Pen-5 fix-to-center" style="font-size: 1.1rem"></i>
+              <span
+                style="padding-top: 7px"
+                class="top-left-card top-0 start-100 translate-middle badge rounded-pill bg-light"
+              >
+                {{ item.commentCount }}
+              </span></span
             >
           </div>
           <!-- <button
