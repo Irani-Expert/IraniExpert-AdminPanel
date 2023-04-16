@@ -1,6 +1,6 @@
 
 <div class="main-table card flex  f-direction">
-    <p-organizationChart [value]="treeNodes" selectionMode="single" [(selection)]="selectedNode"
+    <p-organizationChart class="h-100" [value]="treeNodes" selectionMode="single" [(selection)]="selectedNode"
     (onNodeExpand)="testonNodeExpand($event)" >
     <ng-template let-node pTemplate="person">
        
