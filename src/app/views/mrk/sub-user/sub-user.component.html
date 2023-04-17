@@ -1,7 +1,7 @@
 
-<div class="main-table card flex  f-direction">
+<div class="main-table card flex  f-direction" >
     <p-organizationChart class="h-100" [value]="treeNodes" selectionMode="single" [(selection)]="selectedNode"
-    (onNodeExpand)="testonNodeExpand($event)" (onNodeCollapse)="onNodedeSelected($event)" >
+    (onNodeExpand)="testonNodeExpand($event)" (onNodeCollapse)="onNodedeSelected($event)" class="zoom-out">
     <ng-template let-node pTemplate="person">
        
        

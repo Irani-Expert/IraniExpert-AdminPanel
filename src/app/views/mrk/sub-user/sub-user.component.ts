@@ -7,6 +7,10 @@ import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.s
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { count } from 'console';
 import { number } from 'echarts';
+import { Utils } from 'src/app/shared/utils';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-sub-user',
   templateUrl: './sub-user.component.html',
@@ -40,11 +44,24 @@ export class SubUserComponent implements OnInit {
   public nodeCounter: number = 0;
   public nodeData: TreeNode[] = [];
   constructor(private messageService: MessageService,
-    private _subservice:SubUserService,  private _auth: AuthenticateService
+    private _subservice:SubUserService,  private _auth: AuthenticateService,
+        public router: Router,
+        private toastr: ToastrService
+
     ) { }
  
  public treeNodes: TreeNode[] = [];
+ 
   ngOnInit() {
+    if (Utils.isMobile()) {
+
+     
+        this.toastr.warning('لطفا گوشی را به صورت عمودی بچرخانید', null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+    
+  }   
   //  this.userId = this._auth.currentUserValue.userID;
   this.userId=54
   this.opendList.push(this.userId)
@@ -52,6 +69,7 @@ export class SubUserComponent implements OnInit {
 }
 
 getUnderUsers(userId:number){
+  
   this._subservice.GetChildsLevelOne(userId)
   .subscribe((res: Result<UserDataModel[]>)=> {
     if(res.success){
@@ -62,12 +80,25 @@ getUnderUsers(userId:number){
       this.rawData.forEach(x=>{
         x.parentUserID=userId
        childGenerator[0]=this.arrayData2[0]
-        if(x.childsCount!=0){
+       var listOpend=true
+       var findi=this.opendList.forEach(user=>{
+        if(user==x.userID)
+        {
+          listOpend=false
+        }
+       })
+        if(x.childsCount!=0 && listOpend){
+          debugger
+          let UnderExist=true
           childGenerator[0].childsCount=0
           childGenerator[0].parentUserID=x.userID
           childGenerator[0].userID=x.userID*100
-         let find= this.rawData.findIndex(x=>{x.parentUserID==childGenerator[0].parentUserID})
-         if(find==-1){
+          this.arrayData.forEach(x=>{
+            if(x.parentUserID==childGenerator[0].parentUserID){
+              UnderExist=false
+            }
+          })
+         if(UnderExist){
          this.rawData.push(childGenerator[0])
 
          } 
@@ -162,10 +193,10 @@ testonNodeExpand(data:any){
    this.arrayData.forEach(x=>{
     
     if(n.node.id==x.parentUserID){ 
-      
           s.push(x.userID)       
       }
    })
+  s.splice(1,1);
    s.forEach(data=>{
     var counter=0;
     var find=-1
@@ -177,21 +208,20 @@ testonNodeExpand(data:any){
     })
     if(find!=-1){
       this.arrayData.splice(find,1)
-
+      
     }
    })
    
-  let addIndex= this.arrayData.findIndex(x=>{
-    x.userID==n.node.id
-   })
-   let userModel=[] as UserDataModel[]
-   userModel=this.arrayData2
-   userModel[0].parentUserID=n.node.id
-   userModel[0].userID=n.node.id*1000
-   
-   this.arrayData.push(userModel[0])
-  
+
+    
     this.opendList.splice(this.opendList.indexOf(n.node.id),1);
+    
+    // this.arrayData.forEach(x=>{
+    //   var find=this.arrayData.findIndex(y=>y.userID==x.parentUserID)
+    //   if(find==-1 && x.userID!=this.userId){
+    //     this.arrayData.splice(this.arrayData.indexOf(x),1)
+    //   }
+    // })
     this.setTree(this.arrayData)
   
    

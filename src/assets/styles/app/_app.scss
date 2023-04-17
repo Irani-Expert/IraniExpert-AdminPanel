@@ -527,8 +527,17 @@ Buttons
 .p-organizationchart-node-content {
   border: 3px solid #dee2e6 !important;
 }
-// .p-organizationchart-line-left {
+.p-organizationchart-line-left {
+  border-right: 3px solid #dee2e6  !important;
+    border-right-color: rgb(222, 226, 230);
+  border-color: #dee2e6;
+}
+// .p-organizationchart-line-right {
 //   border-right: 3px solid #dee2e6  !important;
 //     border-right-color: rgb(222, 226, 230);
 //   border-color: #dee2e6;
 // }
+.p-organizationchart-line-top {
+  border-top: 3px solid #dee2e6!important;
+  border-color: #dee2e6;
+}
