@@ -62,8 +62,7 @@ export class SubUserComponent implements OnInit {
         });
     
   }   
-  //  this.userId = this._auth.currentUserValue.userID;
-  this.userId=54
+  this.userId = this._auth.currentUserValue.userID;
   this.opendList.push(this.userId)
    this.getUnderUsers(this.userId)
 }
