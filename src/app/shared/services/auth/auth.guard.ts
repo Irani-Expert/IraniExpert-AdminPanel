@@ -25,6 +25,15 @@ export class AuthGuard implements CanActivate {
 
   canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
+    console.log(_route);
+
+    if (state.url.includes('prd/addUpdate/')) {
+      state.url = '/prd/' + _route.routeConfig.path;
+    }
+    if (state.url.includes('cnt/article/addUpdate-article')) {
+      state.url = '/cnt/' + _route.routeConfig.path;
+    }
+
     let valid: boolean = false;
     if (currentUser) {
       let index: number;
