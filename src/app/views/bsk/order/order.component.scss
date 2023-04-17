@@ -131,18 +131,20 @@
 .padding-fixer {
   padding-left: 46px;
 }
-// .updateNoteBar {
-//   top: 0;
-//   bottom: 0;
-//   position: fixed;
-//   overflow-y: scroll;
-//   overflow-x: hidden;
-//   background-color: none;
-//   display: block;
-//   z-index: 1055;
-//   width: 100%;
-//   overflow: visible;
-// }
+
+.updateNoteBar {
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: none;
+  display: block;
+  z-index: 1055;
+  width: 100%;
+  overflow: visible;
+}
+
 .rounded-4 {
   border-radius: 15px !important;
 }

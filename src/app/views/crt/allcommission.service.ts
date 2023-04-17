@@ -10,6 +10,7 @@ import { ConditionModel } from 'src/app/shared/models/ConditionModel';
 import { allComissionModel } from './all-commission/allComission.model';
 import { ReceiptModel } from '../bsk/order/models/Receipt.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,8 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 export class allcommissionService extends BaseService<ConditionModel, number> {
   userGuid = environment.jwtToken;
 
-  constructor(public _http: HttpClient) {
-    super(_http, environment.api.baseUrl);
+  constructor(public _http: HttpClient, public auth: AuthenticateService) {
+    super(_http, environment.api.baseUrl, auth);
   }
   addReceipt(data: ReceiptModel) {
     let _options = {

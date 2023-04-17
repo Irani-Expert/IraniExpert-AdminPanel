@@ -21,8 +21,8 @@ export class OrderService extends BaseService<OrderModel, 0> {
   userGuid = environment.jwtToken;
   userID: number;
 
-  constructor(public _http: HttpClient, private _auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl);
+  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
+    super(_http, environment.api.baseUrl, _auth);
   }
   public sidebarState: INoteSidebar = {
     sidenavOpen: true,
@@ -32,7 +32,7 @@ export class OrderService extends BaseService<OrderModel, 0> {
    * @param route
    * @returns all
    */
-  getUserbyUserId(userId){
+  getUserbyUserId(userId) {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -43,9 +43,7 @@ export class OrderService extends BaseService<OrderModel, 0> {
       }),
     };
     return this._http.get<Result<UsersModel>>(
-      this._base +
-        '/AspNetUser/' +
-        userId,
+      this._base + '/AspNetUser/' + userId,
       _options
     );
   }

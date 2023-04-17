@@ -1,3 +1,9 @@
+<div
+  class="updateNoteBar"
+  *ngIf="toggled"
+  (click)="clearNote()"
+  (click)="updateNotebar()"
+></div>
 <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-2">
   <button
     type="button"
@@ -221,11 +227,18 @@
               ></i>
             </button>
             <span
-              ngbTooltip=" تعداد یادداشت ها "
+              *appCanAccess="'note-Full Premission'"
+              (click)="toggleNotebar(item)"
+              ngbTooltip=" یادداشت ها "
               [openDelay]="50"
               [closeDelay]="150"
               placement="bottom"
-              style="width: 32px; height: 32px; padding-top: 2.5px"
+              style="
+                width: 32px;
+                height: 32px;
+                padding-top: 2.5px;
+                cursor: pointer;
+              "
               class="btn-add card position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
             >
               <i class="i-Pen-5 fix-to-center" style="font-size: 1.1rem"></i>
@@ -493,21 +506,21 @@
         <button
           *appCanAccess="'Licence-Full Premission'"
           type="button"
-          class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
+          class="btn-light btn d-inline-flex justify-content-around py-btns radius mr-1 align-items-center"
           (click)="openUpdateModal(sendLicense, orderDetail)"
         >
           <i class="i-File-Zip text-bigger mr-2"></i>
           <strong class="ml-2"> لایسنس</strong>
         </button>
       </ng-container>
-      <button
-        *appCanAccess="'note-Full Premission'"
+      <!-- <button
+        
         class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
-        (click)="toggleNotebar(orderDetail.id)"
+       
       >
         <i class="i-Pen-5 text-bigger mr-2"></i>
         <strong class="ml-2 text-small">یادداشت</strong>
-      </button>
+      </button> -->
       <button
         type="button"
         class="btn-save btn d-flex justify-content-around py-btns radius align-items-center"
@@ -549,7 +562,7 @@
             </div>
             <div class="col-md-6 col-5">
               <a
-                class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
+                class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center m-1 ml-0"
                 href="https://dl.iraniExpert.com/{{ licenseModel.filePath }}"
                 ><i class="i-Download text-dark text-bigger mr-3"></i>
                 <strong>دانلود</strong></a
@@ -957,7 +970,7 @@
             <div class="col-md-6 col-lg-4 form-group mb-3 mt-3">
               <label class="text-white">محصول</label>
               <select
-                class="form-control mt-1 text-dark"
+                class="form-control text-dark"
                 [(ngModel)]="filterModel.productID"
                 (change)="selectProduct($event.target.value)"
                 formControlName="productID"
@@ -971,7 +984,7 @@
               <label class="text-white">پلن محصول</label>
               <select
                 formControlName="planID"
-                class="form-control mt-1 text-dark"
+                class="form-control text-dark"
                 [(ngModel)]="filterModel.planID"
                 (change)="selectProductPlan($event.target.value)"
               >
@@ -1026,7 +1039,7 @@
           <button
             ngbAutofocus
             type="button"
-            class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
+            class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center mr-2"
             (click)="modal.close(true)"
           >
             <i class="i-Yes text-bigger mr-2"></i>
