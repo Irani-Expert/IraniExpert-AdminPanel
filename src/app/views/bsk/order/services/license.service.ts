@@ -11,14 +11,15 @@ import {
   CliamxResponse,
 } from '../models/cliamaxLicense.model';
 import { LicenseModel } from '../models/license.model';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LicenseService extends BaseService<LicenseModel, 0> {
   userGuid = environment.jwtToken;
-  constructor(public _http: HttpClient) {
-    super(_http, environment.api.baseUrl);
+  constructor(public _http: HttpClient, public auth: AuthenticateService) {
+    super(_http, environment.api.baseUrl, auth);
   }
   getOrdersIsPaid(
     _pageIndex: number,

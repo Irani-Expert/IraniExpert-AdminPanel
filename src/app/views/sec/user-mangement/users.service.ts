@@ -22,8 +22,8 @@ import { UpdatePasswordModel } from '../../dashboard/user-profile/updatePassword
 export class UsersService extends BaseService<UsersModel, 0> {
   userGuid = environment.jwtToken;
 
-  constructor(public _http: HttpClient) {
-    super(_http, environment.api.baseUrl);
+  constructor(public _http: HttpClient, public auth: AuthenticateService) {
+    super(_http, environment.api.baseUrl, auth);
   }
   /**
    * درخواست  آپدیت

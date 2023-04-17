@@ -301,7 +301,7 @@ export class OrderComponent implements OnInit {
       .open(openDetails, {
         size: 'lg',
         ariaLabelledBy: 'modal-basic-title',
-        centered: true,
+        centered: false,
       })
       .result.then(
         (result: boolean) => {
@@ -443,7 +443,6 @@ export class OrderComponent implements OnInit {
   // Get Note List
 
   getNoteList(rowId: number) {
-    this.notes = new Array<CommentModel>();
     this._commentService
       .GetByTableTypeAndRowId(0, 20, rowId, 8)
       .subscribe((res: Result<Paginate<CommentModel[]>>) => {
@@ -460,9 +459,12 @@ export class OrderComponent implements OnInit {
         });
       });
   }
-  toggleNotebar(rowId: number) {
-    this.noteRowID = rowId;
-    this.getNoteList(rowId);
+  toggleNotebar(row: OrderModel) {
+    this.noteRowID = row.id;
+    this.notes = new Array<CommentModel>();
+    if (row.commentCount !== 0) {
+      this.getNoteList(row.id);
+    }
     this.toggled = true;
     const state = this._orderService.sidebarState;
 
@@ -514,7 +516,10 @@ export class OrderComponent implements OnInit {
                 .locale('fa')
                 .format('YYYY/MM/DD');
               this.notes.unshift(item);
-
+              let indexOfElement = this.rows.findIndex(
+                (row) => row.id == item.rowID
+              );
+              this.rows[indexOfElement].commentCount += 1;
               this.note = new CommentModel();
             } else {
               this.toastr.error('خطا در ایجاد ', res.message, {
@@ -818,6 +823,7 @@ export class OrderComponent implements OnInit {
           this.getOrders(this.status, this.page.pageNumber, this.filterModel);
           this.fillTheFiltersRow(this.filter);
           this.filtered = true;
+          this.plans = [];
         },
         (_reason) => {
           this.plans = [];
@@ -1053,38 +1059,40 @@ export class OrderComponent implements OnInit {
         ariaLabelledBy: 'modal-basic-title',
         centered: true,
       })
-      .result.then((_result) => {
-        let token = localStorage.getItem('token');
-        this.AddOrderModel.token = token;
-        if (this.AddOrderModel.discountPrice != null) {
-          this.AddOrderModel.discountPrice = Number(
-            this.AddOrderModel.discountPrice
-          );
-        } else {
-          this.AddOrderModel.discountPrice = 0;
-        }
-        this.AddOrderModel.userID == 0
-          ? null
-          : Number(this.AddOrderModel.userID);
-        this._orderService
-          .create(this.AddOrderModel, 'Orders/CreateAdminOrder')
-          .subscribe((res: Result<number>) => {
-            this.AddOrderModel = new AddOrderModel();
-            this.AddOrderForm.reset();
-            this.userInfo = new UsersModel();
-            if (res.success) {
-              this.callOrder();
+      .result.then(
+        (_result) => {
+          let token = localStorage.getItem('token');
+          this.AddOrderModel.token = token;
+          if (this.AddOrderModel.discountPrice != null) {
+            this.AddOrderModel.discountPrice = Number(
+              this.AddOrderModel.discountPrice
+            );
+          } else {
+            this.AddOrderModel.discountPrice = 0;
+          }
+          this.AddOrderModel.userID == 0
+            ? null
+            : Number(this.AddOrderModel.userID);
+          this._orderService
+            .create(this.AddOrderModel, 'Orders/CreateAdminOrder')
+            .subscribe((res: Result<number>) => {
+              this.AddOrderModel = new AddOrderModel();
+              this.AddOrderForm.reset();
+              this.userInfo = new UsersModel();
+              if (res.success) {
+                this.callOrder();
 
-              this.toastr.success(res.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          })
+                this.toastr.success(res.message, null, {
+                  closeButton: true,
+                  positionClass: 'toast-top-left',
+                });
+              }
+            });
         },
-          (reason) => {  this.AddOrderModel = new AddOrderModel();}
-        );
-
+        (reason) => {
+          this.AddOrderModel = new AddOrderModel();
+        }
+      );
   }
   getUserbyUserId() {
     if (

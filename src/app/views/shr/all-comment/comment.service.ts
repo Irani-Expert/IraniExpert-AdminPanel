@@ -16,8 +16,8 @@ export class CommentService extends BaseService<CommentModel, 0> {
   userGuid = environment.jwtToken;
   userId: number;
 
-  constructor(public _http: HttpClient, private _auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl);
+  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
+    super(_http, environment.api.baseUrl, _auth);
   }
 
   /**

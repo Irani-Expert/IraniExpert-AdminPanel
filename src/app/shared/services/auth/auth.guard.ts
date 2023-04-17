@@ -36,7 +36,6 @@ export class AuthGuard implements CanActivate {
       );
       if (index == -1) {
         this.toastr.error('', 'عدم دسترسی به بخش مورد نظر', {
-          closeButton: true,
           positionClass: 'toast-top-left',
         });
         valid = false;

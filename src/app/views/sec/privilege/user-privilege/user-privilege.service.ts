@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment.prod';
 import { PrivilegeModel } from '../privilege.model';
 import { AddUpdateprivilage } from './add-updateprivilage.model';
 import { UserPrivilegeModel } from './user-privilege.model';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,8 @@ import { UserPrivilegeModel } from './user-privilege.model';
 export class UserPrivilegeService extends BaseService<UserPrivilegeModel, 0> {
   userGuid = environment.jwtToken;
 
-  constructor(public _http: HttpClient) {
-    super(_http, environment.api.baseUrl);
+  constructor(public _http: HttpClient, public auth: AuthenticateService) {
+    super(_http, environment.api.baseUrl, auth);
   }
 
   addUpdateUserPrivilege(Updateprivilege: AddUpdateprivilage[]) {
@@ -22,9 +23,9 @@ export class UserPrivilegeService extends BaseService<UserPrivilegeModel, 0> {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Cache-Control':
-        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-      Pragma: 'no-cache',
-      Expires: '0',
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
       }),
     };
     return this._http.post<Result<number>>(
