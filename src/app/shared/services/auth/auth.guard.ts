@@ -40,9 +40,12 @@ export class AuthGuard implements CanActivate {
       let indexOfElement = this.navService.defaultMenu.findIndex(
         (item) => item.state == state.url
       );
-      index = currentUser.privileges.findIndex(
-        (priv) => priv == this.navService.defaultMenu[indexOfElement].privilege
-      );
+      try{
+        index = currentUser.privileges.findIndex(
+          (priv) => priv == this.navService.defaultMenu[indexOfElement].privilege
+        );
+      }
+     catch{}
       if (index == -1) {
         this.toastr.error('', 'عدم دسترسی به بخش مورد نظر', {
           positionClass: 'toast-top-left',

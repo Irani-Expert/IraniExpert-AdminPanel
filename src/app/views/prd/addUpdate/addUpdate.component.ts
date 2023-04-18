@@ -7,6 +7,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { ProductModel } from '../products-list/product.model';
 import { ProductService } from '../products-list/product.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-addUpdate',
@@ -22,7 +23,7 @@ export class AddUpdateComponent implements OnInit {
   tableType: number = 6;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
-
+  ifDataExist:boolean=false;
   constructor(
     private _route: ActivatedRoute,
     private _formBuilder: FormBuilder,
@@ -55,8 +56,15 @@ export class AddUpdateComponent implements OnInit {
       await this._productsService
         .getOneByID(this.productId, 'Product')
         .subscribe((res: Result<ProductModel>) => {
-          this.addUpdate = res.data;
-          //  this.page.totalElements = res.data.length;
+          debugger
+          if(res.success){
+            this.addUpdate = res.data;
+            this.ifDataExist=true
+          }
+          else{
+            this._router.navigate(['/404'])
+          }
+        
         });
   }
   onFileChanged(event: any) {

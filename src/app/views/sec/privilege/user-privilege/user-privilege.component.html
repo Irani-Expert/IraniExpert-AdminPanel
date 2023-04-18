@@ -21,7 +21,15 @@
           </button>
         </div>
 
-        <p class="text-white col-9 align-self-center mt-2">نقش</p>
+        <p class="text-white col-8 align-self-center mt-2">نقش</p>
+        <div class="col-2 d-flex justify-content-center align-items-center">
+          <button
+            class="btn btn-danger m-1 pt-2"
+            (click)="removerole(item.id,changeParentModal)"
+          >
+            <i class="text-white i-Close  h-5 nav-icon"></i>
+          </button>
+        </div>
       </div>
       <div class="card-body radius-card bg-secondary text-center">
         <div class="w-100 text-white mb-3">
@@ -229,6 +237,37 @@
     >
       <i class="i-Close text-bigger mr-2"></i>
       <strong>انصراف</strong>
+    </button>
+  </div>
+</ng-template>
+<ng-template #changeParentModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">ایا از حذف نقش مطمئنید؟</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss('Close Modal')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+      (click)="modal.dismiss('Reject')"
+    >
+      <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
+      (click)="modal.close(true)"
+    >
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
     </button>
   </div>
 </ng-template>

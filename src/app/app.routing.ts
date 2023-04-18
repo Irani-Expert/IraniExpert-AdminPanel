@@ -103,6 +103,7 @@ const routes: Routes = [
 
   {
     path: 'bas',
+    component: NotFoundComponent,
     children: [
       {
         path: 'bas',
@@ -113,6 +114,7 @@ const routes: Routes = [
   },
   {
     path: 'mrk',
+    component: NotFoundComponent,
     children: [
       {
         path: 'mrk',
@@ -123,6 +125,7 @@ const routes: Routes = [
   },
   {
     path: 'cnt',
+    component: NotFoundComponent,
     children: [
       {
         path: 'cnt',
@@ -133,6 +136,7 @@ const routes: Routes = [
   },
   {
     path: 'crt',
+    component: NotFoundComponent,
     children: [
       {
         path: 'crt',
@@ -143,6 +147,7 @@ const routes: Routes = [
   },
   {
     path: 'dct',
+    component: NotFoundComponent,
     children: [
       {
         path: 'dct',
@@ -153,6 +158,7 @@ const routes: Routes = [
   },
   {
     path: 'bsk',
+    component: NotFoundComponent,
     children: [
       {
         path: 'bsk',
@@ -163,6 +169,7 @@ const routes: Routes = [
   },
   {
     path: 'shr',
+    component: NotFoundComponent,
     children: [
       {
         path: 'shr',
@@ -173,6 +180,7 @@ const routes: Routes = [
   },
   {
     path: 'sec',
+    component: NotFoundComponent,
     children: [
       {
         path: 'sec',

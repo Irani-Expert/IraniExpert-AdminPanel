@@ -13,6 +13,7 @@ import { PrivilegeService } from '../privilege.service';
 import { AddUpdateprivilage } from './add-updateprivilage.model';
 import { UserPrivilegeModel } from './user-privilege.model';
 import { UserPrivilegeService } from './user-privilege.service';
+import { log } from 'console';
 
 // import {
 //   CdkDragDrop,
@@ -41,6 +42,7 @@ export class UserPrivilegeComponent implements OnInit {
   removeItem: number[] = new Array<number>();
   rowCounter: number = 0;
   element: boolean = false;
+  isChangingParent: boolean = false;
   UpdateRole: RoleModel = new RoleModel();
   constructor(
     public _roleService: RoleService,
@@ -110,6 +112,7 @@ export class UserPrivilegeComponent implements OnInit {
   async getRoleList() {
     this._roleService.get(0, 100, 'ID', null, 'aspnetrole').subscribe(
       (res: Result<Paginate<RoleModel[]>>) => {
+        debugger
         this.roles = res.data.items;
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
@@ -344,9 +347,10 @@ export class UserPrivilegeComponent implements OnInit {
                 closeButton: true,
                 positionClass: 'toast-top-left',
               });
+             this.getRoleList()
+              // row.id = this.roles[0].id + 1;
+              // this.roles.unshift(row);
 
-              row.id = this.roles[0].id + 1;
-              this.roles.unshift(row);
               this.addForm.reset();
             } else {
               this.toastr.error(data.message, null, {
@@ -405,6 +409,35 @@ export class UserPrivilegeComponent implements OnInit {
           this.addForm.reset();
         }
       );
+  }
+  removerole(roleId:number,changeParentModal:any){
+    debugger
+    this.modalService
+    .open(changeParentModal, {
+      ariaLabelledBy: 'modal-basic-title',
+      centered: false,
+      size: 'xs',
+    })
+    .result.then(
+      (accept) => {
+        if (accept) {
+          this._roleService
+          .delete(roleId, 'aspnetrole')
+          .subscribe(
+            (data) => {
+            if(data.success){
+            let remove= this.roles.findIndex(x=> x.id===roleId)
+              this.roles.splice(remove,1)
+            }             
+            }
+          );
+        }
+      },
+      (reject) => {
+        console.log(reject.message);
+      }
+    );
+  
   }
   //   )
 }

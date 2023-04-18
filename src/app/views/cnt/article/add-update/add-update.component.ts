@@ -21,6 +21,7 @@ import { Base } from 'src/app/shared/models/Base/base.model';
 import { CliamxLicenseModel } from 'src/app/views/bsk/order/models/cliamaxLicense.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { async, lastValueFrom } from 'rxjs';
+import { log } from 'console';
 @Component({
   selector: 'app-add-update',
   templateUrl: './add-update.component.html',
@@ -37,6 +38,7 @@ export class AddUpdateComponent implements OnInit {
   groupList: any[] = new Array<any>();
   group: any = new Object();
   addForm: FormGroup;
+  ifDataExist:boolean=false;
   ckeConfig: CKEDITOR.config;
   @ViewChild('myckeditor') ckeditor: CKEditorComponent;
 
@@ -47,7 +49,8 @@ export class AddUpdateComponent implements OnInit {
     private _fileUploaderService: FileUploaderService,
     private toastr: ToastrService,
     private _groupService: GroupService,
-    private _user: AuthenticateService
+    private _user: AuthenticateService,
+    private _router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -153,10 +156,17 @@ export class AddUpdateComponent implements OnInit {
     this._articleService
       .getOneByID(id, 'Article')
       .subscribe((res: Result<ArticleModel>) => {
-        this.addUpdate = res.data;
-        this.group = this.groupList.find(
-          (item) => item.value === this.addUpdate.groupID
-        );
+        if(res.success){
+          this.ifDataExist=true
+          this.addUpdate = res.data;
+          this.group = this.groupList.find(
+            (item) => item.value === this.addUpdate.groupID
+          );
+        }
+      else{
+        this._router.navigate(['/404'])
+
+      }
         //  this.page.totalElements = res.data.length;
       });
   }

@@ -34,4 +34,5 @@ export class UserPrivilegeService extends BaseService<UserPrivilegeModel, 0> {
       _options
     );
   }
+  
 }
