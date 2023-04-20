@@ -60,6 +60,14 @@ export class NavigationService {
       privilege: 'Dashboard-Full Premission',
     },
     {
+      name: 'لاگ ها',
+      description: '',
+      navType: 'link',
+      icon: 'i-Home1',
+      state: '/log/s',
+      privilege: 'Dashboard-Full Premission',
+    },
+    {
       name: 'پروفایل من',
       description: 'پروفایل',
       navType: 'link',
