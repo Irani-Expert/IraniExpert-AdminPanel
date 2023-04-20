@@ -10,6 +10,7 @@ export class CreateAddlogComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }
