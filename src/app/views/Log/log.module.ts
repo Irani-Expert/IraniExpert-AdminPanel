@@ -7,13 +7,16 @@ import { ShowLogsComponent } from './show-logs/show-logs.component';
 import { CreateAddlogComponent } from './create-addlog/create-addlog.component';
 import { LogsComponent } from './logs/logs.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TreeModule } from 'primeng/tree';
+import { NodeService } from './nodeservice';
 
 
 @NgModule({
   declarations: [
     ShowLogsComponent,
     CreateAddlogComponent,
-    LogsComponent
+    LogsComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -23,6 +26,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     DatePipe,
     FormsModule,
-  ]
+    TreeModule
+  ],
+  providers: [ NodeService ]
 })
 export class LogModule { }
