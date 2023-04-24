@@ -16,6 +16,7 @@
 @import "quill/dist/quill.snow.css";
 @import "highlight.js/styles/github.css";
 @import "ladda/dist/ladda.min.css";
+@import "../primeicons/primeicons.css";
 @import "../iconsmind/iconsmind.css";
 @import "variables";
 
@@ -26,7 +27,7 @@
 @import "globals/globals";
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
-@import "primeicons/primeicons.css";
+
 .edit {
   font-size: 18px !important;
   color: rgb(185, 223, 17) !important;
@@ -528,8 +529,8 @@ Buttons
   border: 3px solid #dee2e6 !important;
 }
 .p-organizationchart-line-left {
-  border-right: 3px solid #dee2e6  !important;
-    border-right-color: rgb(222, 226, 230);
+  border-right: 3px solid #dee2e6 !important;
+  border-right-color: rgb(222, 226, 230);
   border-color: #dee2e6;
 }
 // .p-organizationchart-line-right {
@@ -538,7 +539,7 @@ Buttons
 //   border-color: #dee2e6;
 // }
 .p-organizationchart-line-top {
-  border-top: 3px solid #dee2e6!important;
+  border-top: 3px solid #dee2e6 !important;
   border-color: #dee2e6;
 }
 .p-tree .p-treenode-children {

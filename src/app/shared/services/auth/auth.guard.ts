@@ -25,7 +25,6 @@ export class AuthGuard implements CanActivate {
 
   canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
-    console.log(_route);
 
     if (state.url.includes('prd/addUpdate/')) {
       state.url = '/prd/' + _route.routeConfig.path;
@@ -40,12 +39,12 @@ export class AuthGuard implements CanActivate {
       let indexOfElement = this.navService.defaultMenu.findIndex(
         (item) => item.state == state.url
       );
-      try{
+      try {
         index = currentUser.privileges.findIndex(
-          (priv) => priv == this.navService.defaultMenu[indexOfElement].privilege
+          (priv) =>
+            priv == this.navService.defaultMenu[indexOfElement].privilege
         );
-      }
-     catch{}
+      } catch {}
       if (index == -1) {
         this.toastr.error('', 'عدم دسترسی به بخش مورد نظر', {
           positionClass: 'toast-top-left',
