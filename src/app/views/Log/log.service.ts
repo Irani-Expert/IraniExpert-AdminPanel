@@ -46,4 +46,35 @@ export class LogService extends BaseService<AllCheckingLog, number> {
       _options
     );
   }
+  updateList(data:AllCheckingLog){
+    debugger
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      }),
+    };
+    return this._http.put<Result<AllCheckingLog>>(
+      this._base + '/MainLogging'+'/'+data.id,data,
+      _options
+    );
+  }
+  removeLog(id){
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      }),
+    };
+    return this._http.delete<Result<AllCheckingLog>>(
+      this._base + '/MainLogging'+'/'+id,
+      _options
+    );
+  }
 }

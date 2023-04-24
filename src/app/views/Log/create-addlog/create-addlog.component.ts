@@ -8,16 +8,32 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { TableType } from '../models/table-typeModel';
 import { Key } from 'protractor';
 import { number } from 'echarts';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-create-addlog',
   templateUrl: './create-addlog.component.html',
   styleUrls: ['./create-addlog.component.scss']
 })
 export class CreateAddlogComponent implements OnInit {
-
+  addLogForm:FormGroup;
+  addNewLogModel:AllCheckingLog=new AllCheckingLog;
   constructor(    private modalService: NgbModal, private nodeService: NodeService ,
-    private _logServices:LogService  ) { }
+    private _formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private _logServices:LogService  ) { 
+      this.addLogForm = this._formBuilder.group({
+        title: [null, Validators.compose([Validators.required])],
+        description: [null, Validators.compose([Validators.required])],
+        actionDescriptor: [null, Validators.compose([Validators.required])],
+        isActive: [false, Validators.compose([Validators.required])],
+        requestType: [null, Validators.compose([Validators.required])],
+        tableType: [null, Validators.compose([Validators.required])],
+      });
+    }
   selectedFile: TreeNode;
+  selectedFiles: TreeNode[];
+
   nodes: TreeNode[];
   data:AllCheckingLog[]=new Array<AllCheckingLog>()
   tableTypes:TableType[]=new Array<TableType>()
@@ -25,6 +41,7 @@ export class CreateAddlogComponent implements OnInit {
    
   this._logServices.getAllTableType().subscribe((res: Result<TableType[]>) => {
     if(res.success){
+      
       this.tableTypes=res.data
       this.addTableTypetoNode();
       this.getAllLogs()
@@ -35,24 +52,36 @@ export class CreateAddlogComponent implements OnInit {
     this.nodes = [
       {
           key: '0',
-          label: 'Introduction',
-          children: [
-              { key: '0-0', label: 'What is Angular', data: 'https://angular.io', type: 'url' },
-              { key: '0-1', label: 'Getting Started', data: 'https://angular.io/guide/setup-local', type: 'url' },
-              { key: '0-2', label: 'Learn and Explore', data: 'https://angular.io/guide/architecture', type: 'url' },
-              { key: '0-3', label: 'Take a Look', data: 'https://angular.io/start', type: 'url' }
-          ]
+          label: '',
+          children: []
       },
   
   ];
 
   }
   getAllLogs(){
-    debugger
+    
     this._logServices.getAllLog(100).subscribe((res: Result<AllCheckingLog[]>) => {
       if(res.success){
-        this.data=res.data
+        
+        this.data=res.data['items']
         this.addNodesTochild();
+        var counter=0;
+        let treeNode:TreeNode[]=new Array<TreeNode>()
+        this.nodes.forEach(x=>{
+         if(x.children.length==0 || x.label=='Introduction' ){
+          treeNode.push(x)
+          
+         }
+         counter++;
+        })
+        treeNode.forEach(x=>{
+          var finder=this.nodes.findIndex(y=>y.key===x.key)
+          if(finder!=-1){
+            this.nodes.splice(finder,1)
+
+          }
+        })
       }
     
   
@@ -72,12 +101,12 @@ export class CreateAddlogComponent implements OnInit {
    
   }
   addNodesTochild(){
-    var saveChilderen:TreeNode[]=new Array<TreeNode>()
     this.nodes.forEach(x=>{
+      var saveChilderen:TreeNode[]=new Array<TreeNode>()
       let counter=0;
       this.data.forEach(y=>{
-        if(y.tableType==x.parentkey){
-          saveChilderen.push({ key: '0-'+counter, label: y.title,parentkey:Number(x.key) },
+        if(y.tableType==Number(x.key)){
+          saveChilderen.push({ key: '0-'+counter, label: y.title,parentkey:Number(x.key),data: 'https://angular.io', type: 'url',id:y.id,checked:y.isActive  },
           )
           counter++
         }
@@ -85,18 +114,100 @@ export class CreateAddlogComponent implements OnInit {
       x.children.push(...saveChilderen)
     })
   }
+  slectedFile(){
+    
+  }
   OpenModal(content:any){
     this.modalService
 
       .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (result: boolean) => {
- 
+          this.addNewLogModel.requestType=Number(this.addNewLogModel.requestType)
+          this.addNewLogModel.tableType=Number(this.addNewLogModel.tableType)
+        this._logServices.create(this.addNewLogModel,'MainLogging').subscribe(
+          (data) => {
+        if(data.success){
+          this.toastr.success(data.message, 'موفقیت آمیز!', {
+            timeOut: 3000,
+            positionClass: 'toast-top-left',
+          });
+        }
+        else{
+          this.toastr.success(data.message, 'عملیات با خطا مواجه شد', {
+            timeOut: 3000,
+            positionClass: 'toast-top-left',
+          });
+        }
+          }
+        );
         },
         (reason) => {
     
         }
       );
   }
+  onCheckboxChange(event: any,id:number) {
+    this.nodes
+    var updateindex=this.data.findIndex(x=>x.id==id)
+    if(event.target.checked){
 
+     this.data[updateindex].isActive=true
+     this.ActiveField(this.data[updateindex])
+    }
+    else{
+      this.data[updateindex].isActive=false
+      this.ActiveField(this.data[updateindex])
+    }
+  }
+  ActiveField(data:AllCheckingLog){
+    this._logServices.updateList(data).subscribe((res: Result<AllCheckingLog>) => {
+      if(res.success){
+        
+      }
+    
+  
+    })
+  }
+  updateLog(){
+    console.log(this.selectedFiles)
+  }
+nodeRemove(id:number){
+  this._logServices.removeLog(id).subscribe((res) => {
+    if(res.success){
+      console.log(res.message)
+    }
+  
+
+  })
+}
+editModal(content:any,id:number){
+  var updateindex=this.data.findIndex(x=>x.id==id)
+
+this.addNewLogModel=this.data[updateindex]
+  this.modalService
+
+  .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
+  .result.then(
+    (result: boolean) => {
+      this.addNewLogModel.requestType=Number(this.addNewLogModel.requestType)
+      this.addNewLogModel.tableType=Number(this.addNewLogModel.tableType)
+      this._logServices.updateList(this.addNewLogModel).subscribe((res: Result<AllCheckingLog>) => {
+        if(res.success){
+          
+        }
+        this.addNewLogModel=new AllCheckingLog;
+
+      })
+      debugger
+  
+    },
+    (reason) => {
+      this.addNewLogModel=new AllCheckingLog;
+
+    }
+  );
+
+
+}
 }

@@ -17,6 +17,7 @@ import { NodeService } from './nodeservice';
     CreateAddlogComponent,
     LogsComponent,
     
+    
   ],
   imports: [
     CommonModule,

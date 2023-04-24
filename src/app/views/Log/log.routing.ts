@@ -4,11 +4,11 @@ import { LogsComponent } from './logs/logs.component';
 import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 
 const routes: Routes = [
-  // {
-  //   path: 's',
-  //   component: LogsComponent,
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 's',
+    component: LogsComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

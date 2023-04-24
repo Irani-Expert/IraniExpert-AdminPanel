@@ -11,15 +11,23 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
 
 
   <p-tree [value]="nodes" class="w-full md:w-30rem" >
-    <ng-template let-node pTemplate="url">
-      <div class="form-check" >
-        <label class="form-check-label">
-          <input type="checkbox" class="form-check-input" disabled>Option 3
+    <ng-template let-node pTemplate="url" >
+      <div>
+        <div class="form-check" >
+
+          <input type="checkbox" class="form-check-input"[checked] ="node.checked"
+          (change)="onCheckboxChange($event,node.id)"  >
+          <div class="collapsible-header" (click)="editModal(edit,node.id)"><i class="text-white i-Home1 nav-icon" style="background-color: black;" ></i></div>
+          <div class="collapsible-header" (click)="nodeRemove(node.id)"><i class="text-white i-Remove-Bag nav-icon" style="background-color: brown;" ></i></div>
+          <label class="form-check-label">
+            {{ node.label }}
         </label>
-      </div>   </ng-template>
-    <ng-template let-node pTemplate="default">
+      </div>
+      </div>
+       </ng-template>
+    <!-- <ng-template let-node pTemplate="default">
         <b>{{ node.label }}</b>
-    </ng-template>
+    </ng-template> -->
 </p-tree>
 
 </div>
@@ -28,7 +36,7 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
 
 <ng-template #addLog let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-title">حذف امکان</h4>
+      <h4 class="modal-title" id="modal-title"></h4>
       <button
         type="button"
         class="close"
@@ -40,8 +48,242 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
       </button>
     </div>
     <div class="modal-body">
-      <p><strong>آیا از حذف مطمئنید؟</strong></p>
+      <form
+      class="g-0 p-0 m-0 d-flex row justify-content-md-around justify-content-center align-items-center"
+      [formGroup]="addLogForm"
+    >
+      <div class="col-11">
+        <div class="pb-4 form-group mb-3">
+          <div>
+            <strong for="" class="text--secondary mb-2">عنوان</strong>
+            <input
+              type="text"
+              class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
+              [(ngModel)]="addNewLogModel.title"
+              [formControl]="addLogForm.controls['title']"
+            />
+          </div>
+          <div>
+            <strong for="" class="text--secondary mb-2">ادرس کنترلر</strong>
+            <input
+              type="text"
+              class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
+              [(ngModel)]="addNewLogModel.actionDescriptor"
+              [formControl]="addLogForm.controls['actionDescriptor']"
+            />
+          </div>
+          <div>
+            <strong for="" class="text--secondary mb-2">تیبل تایپ</strong>
+            <select  class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1" 
+            [(ngModel)]="addNewLogModel.tableType"
+            [formControl]="addLogForm.controls['tableType']"
+            >
+            <option *ngFor="let item of tableTypes "  value={{item.value}}>{{item.title}}</option>
+         
+            </select>
+          </div>
+          <div>
+            <strong for="" class="text--secondary mb-2">نوع درخواست</strong>
+            <select   [(ngModel)]="addNewLogModel.requestType"
+            [formControl]="addLogForm.controls['requestType']"
+                class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1" 
+            >
+            <option  value="1">1</option>
+            <option  value="2" >2</option>
+            <option  value="3">3</option>
+            </select>
+          </div>
+          <div>
+            <strong for="" class="text--secondary mb-2">توضیحات</strong>
+            <textarea
+              type="text"
+              class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
+              [(ngModel)]="addNewLogModel.description"
+              [formControl]="addLogForm.controls['description']"
+            ></textarea>
+          </div>
+        </div>
+     
+      
+
+        <div class="row ActiveCheckBox ml-2">
+          <div >وضعیت</div>
+          <div class="d-flex col-7">
+            <input
+              class="p-2"
+              type="checkbox"
+              id="switch"
+              [(ngModel)]="addNewLogModel.isActive"
+              [formControl]="addLogForm.controls['isActive']"
+            />
+            <label
+              class="d-flex align-items-center justify-content-start padr"
+              for="switch"
+              ></label
+            >
+         
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-11">
+      <label for="" class="text--secondary mb-2">درصد تخفیف</label>
+      <input
+      type="text"
+        class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
+        formControlName="lastName"
+        [(ngModel)]="counselingModel.lastName"
+        required
+      />
+      <div class="text--primary text--smaller text-danger"  *ngIf="counselingForm.controls['lastName'].invalid &&counselingForm.controls['lastName'].dirty  ">فیلد نام خانوادگی نمیتواند خالی باشد</div>
+      </div> -->
+      <!-- <div class="col-11">
+      <label for="" class="text--secondary mb-2">میزان تخفیف</label>
+      <input
+      type="text"
+        class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
+        formControlName="phoneNumber"
+        [(ngModel)]="counselingModel.phoneNumber"
+        required
+      />
+       </div> -->
+    </form>    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+        (click)="modal.dismiss('cancel')"
+      >
+        <i class="i-Close text-bigger mr-2"></i>
+        <strong>خیر</strong>
+      </button>
+      <button
+        type="button"
+        ngbAutofocus
+        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
+        (click)="modal.close('Ok')"
+      >
+        <i class="i-Yes text-bigger mr-2"></i>
+        <strong>بله</strong>
+      </button>
     </div>
+  </ng-template>
+  <ng-template #edit let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title"></h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close button"
+        aria-describedby="modal-title"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form
+      class="g-0 p-0 m-0 d-flex row justify-content-md-around justify-content-center align-items-center"
+      [formGroup]="addLogForm"
+    >
+      <div class="col-11">
+        <div class="pb-4 form-group mb-3">
+          <div>
+            <strong for="" class="text--secondary mb-2">عنوان</strong>
+            <input
+              type="text"
+              class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
+              [(ngModel)]="addNewLogModel.title"
+              [formControl]="addLogForm.controls['title']"
+            />
+          </div>
+          <div>
+            <strong for="" class="text--secondary mb-2">ادرس کنترلر</strong>
+            <input
+              type="text"
+              class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
+              [(ngModel)]="addNewLogModel.actionDescriptor"
+              [formControl]="addLogForm.controls['actionDescriptor']"
+            />
+          </div>
+          <div>
+            <strong for="" class="text--secondary mb-2">تیبل تایپ</strong>
+            <select  class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1" 
+            [(ngModel)]="addNewLogModel.tableType"
+            [formControl]="addLogForm.controls['tableType']"
+            >
+            <option *ngFor="let item of tableTypes "  value={{item.value}}>{{item.title}}</option>
+         
+            </select>
+          </div>
+          <div>
+            <strong for="" class="text--secondary mb-2">نوع درخواست</strong>
+            <select   [(ngModel)]="addNewLogModel.requestType"
+            [formControl]="addLogForm.controls['requestType']"
+                class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1" 
+            >
+            <option  value="1">1</option>
+            <option  value="2" >2</option>
+            <option  value="3">3</option>
+            </select>
+          </div>
+          <div>
+            <strong for="" class="text--secondary mb-2">توضیحات</strong>
+            <textarea
+              type="text"
+              class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
+              [(ngModel)]="addNewLogModel.description"
+              [formControl]="addLogForm.controls['description']"
+            ></textarea>
+          </div>
+        </div>
+     
+      
+
+        <div class="row ActiveCheckBox ml-2">
+          <div >وضعیت</div>
+          <div class="d-flex col-7">
+            <input
+              class="p-2"
+              type="checkbox"
+              id="switch"
+              [(ngModel)]="addNewLogModel.isActive"
+              [formControl]="addLogForm.controls['isActive']"
+            />
+            <label
+              class="d-flex align-items-center justify-content-start padr"
+              for="switch"
+              ></label
+            >
+         
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-11">
+      <label for="" class="text--secondary mb-2">درصد تخفیف</label>
+      <input
+      type="text"
+        class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
+        formControlName="lastName"
+        [(ngModel)]="counselingModel.lastName"
+        required
+      />
+      <div class="text--primary text--smaller text-danger"  *ngIf="counselingForm.controls['lastName'].invalid &&counselingForm.controls['lastName'].dirty  ">فیلد نام خانوادگی نمیتواند خالی باشد</div>
+      </div> -->
+      <!-- <div class="col-11">
+      <label for="" class="text--secondary mb-2">میزان تخفیف</label>
+      <input
+      type="text"
+        class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1"
+        formControlName="phoneNumber"
+        [(ngModel)]="counselingModel.phoneNumber"
+        required
+      />
+       </div> -->
+    </form>    </div>
     <div class="modal-footer">
       <button
         type="button"

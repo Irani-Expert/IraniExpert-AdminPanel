@@ -4,7 +4,7 @@ export class AllCheckingLog  implements IAllCheckingLog{
     id: number;
     title: string;
     description: string;
-    orderID: number;
+    orderID: number=0;
     isActive: boolean;
     actionDescriptor: string;
     requestType: number;
