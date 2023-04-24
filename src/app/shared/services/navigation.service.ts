@@ -96,7 +96,7 @@ export class NavigationService {
       description: '',
       navType: '',
       icon: '',
-      state: `/prd/addUpdate`,
+      state: '/prd/addUpdate',
       privilege: 'Product-Add',
     },
     {
@@ -112,7 +112,7 @@ export class NavigationService {
       description: '',
       navType: '',
       icon: '',
-      state: `/cnt/article/addUpdate-article`,
+      state: '/cnt/article/addUpdate-article',
       privilege: 'Article-Add',
     },
 
