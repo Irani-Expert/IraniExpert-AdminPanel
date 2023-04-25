@@ -10,6 +10,7 @@ import { Key } from 'protractor';
 import { number } from 'echarts';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+// import { TreeNode } from '../../mrk/NodeModel/treenode';
 @Component({
   selector: 'app-create-addlog',
   templateUrl: './create-addlog.component.html',
@@ -38,26 +39,29 @@ export class CreateAddlogComponent implements OnInit {
   data:AllCheckingLog[]=new Array<AllCheckingLog>()
   tableTypes:TableType[]=new Array<TableType>()
   ngOnInit(): void {
-   
-  this._logServices.getAllTableType().subscribe((res: Result<TableType[]>) => {
-    if(res.success){
-      
-      this.tableTypes=res.data
-      this.addTableTypetoNode();
-      this.getAllLogs()
-    }
-  
-
-  })
+   this.firstSetup()
+ 
     this.nodes = [
       {
-          key: '0',
+          key: '',
           label: '',
           children: []
       },
   
   ];
 
+  }
+  firstSetup(){
+    this._logServices.getAllTableType().subscribe((res: Result<TableType[]>) => {
+      if(res.success){
+        
+        this.tableTypes=res.data
+        this.addTableTypetoNode();
+        this.getAllLogs()
+      }
+    
+  
+    })
   }
   getAllLogs(){
     
@@ -69,7 +73,7 @@ export class CreateAddlogComponent implements OnInit {
         var counter=0;
         let treeNode:TreeNode[]=new Array<TreeNode>()
         this.nodes.forEach(x=>{
-         if(x.children.length==0 || x.label=='Introduction' ){
+         if(x.children.length==0 ){
           treeNode.push(x)
           
          }
@@ -148,7 +152,6 @@ export class CreateAddlogComponent implements OnInit {
       );
   }
   onCheckboxChange(event: any,id:number) {
-    this.nodes
     var updateindex=this.data.findIndex(x=>x.id==id)
     if(event.target.checked){
 
@@ -172,10 +175,20 @@ export class CreateAddlogComponent implements OnInit {
   updateLog(){
     console.log(this.selectedFiles)
   }
-nodeRemove(id:number){
-  this._logServices.removeLog(id).subscribe((res) => {
+nodeRemove(model:any){
+  this._logServices.removeLog(model.id).subscribe((res) => {
     if(res.success){
-      console.log(res.message)
+    let finder=  this.nodes.findIndex(x=>x.key==model.parentkey)
+    if(finder!=-1){
+      debugger
+      var counter=0
+      this.nodes[finder].children.forEach(y=>{
+     if(y.id==model.id){
+      this.nodes[finder].children.splice(finder,0)
+     }
+counter++
+      })
+    }
     }
   
 

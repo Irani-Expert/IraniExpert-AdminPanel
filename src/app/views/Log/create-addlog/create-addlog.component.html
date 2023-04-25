@@ -18,7 +18,7 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
           <input type="checkbox" class="form-check-input"[checked] ="node.checked"
           (change)="onCheckboxChange($event,node.id)"  >
           <div class="collapsible-header" (click)="editModal(edit,node.id)"><i class="text-white i-Home1 nav-icon" style="background-color: black;" ></i></div>
-          <div class="collapsible-header" (click)="nodeRemove(node.id)"><i class="text-white i-Remove-Bag nav-icon" style="background-color: brown;" ></i></div>
+          <div class="collapsible-header" (click)="nodeRemove(node)"><i class="text-white i-Remove-Bag nav-icon" style="background-color: brown;" ></i></div>
           <label class="form-check-label">
             {{ node.label }}
         </label>
