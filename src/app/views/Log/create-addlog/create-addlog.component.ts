@@ -57,7 +57,6 @@ export class CreateAddlogComponent implements OnInit {
         
         this.tableTypes=res.data
         this.addTableTypetoNode();
-        this.getAllLogs()
       }
     
   
@@ -71,27 +70,28 @@ export class CreateAddlogComponent implements OnInit {
         this.data=res.data['items']
         this.addNodesTochild();
         var counter=0;
-        let treeNode:TreeNode[]=new Array<TreeNode>()
-        this.nodes.forEach(x=>{
-         if(x.children.length==0 ){
-          treeNode.push(x)
+        // let treeNode:TreeNode[]=new Array<TreeNode>()
+        // this.nodes.forEach(x=>{
+        //  if(x.children.length==0 ){
+        //   treeNode.push(x)
           
-         }
-         counter++;
-        })
-        treeNode.forEach(x=>{
-          var finder=this.nodes.findIndex(y=>y.key===x.key)
-          if(finder!=-1){
-            this.nodes.splice(finder,1)
+        //  }
+        //  counter++;
+        // })
+        // treeNode.forEach(x=>{
+        //   var finder=this.nodes.findIndex(y=>y.key===x.key)
+        //   if(finder!=-1){
+        //     this.nodes.splice(finder,1)
 
-          }
-        })
+        //   }
+        // })
       }
     
   
     })
   }
   addTableTypetoNode(){
+    this.nodes=new Array<TreeNode>()
     this.tableTypes.forEach(x=>{
       this.nodes.push(
         {
@@ -102,7 +102,30 @@ export class CreateAddlogComponent implements OnInit {
     
     )
     })
-   
+    this.getAllLogs()
+
+  }
+  addRequestNode(){
+    this.nodes=[      {
+      key: '0',
+      label: 'ویرایش',
+      children: []
+  },
+  {
+    key: '1',
+    label:'افزودن',
+    children: []
+ },
+ {
+  key: '2',
+  label: 'حذف',
+  children: []
+},]
+
+  
+
+  this.getAllLogs()
+
   }
   addNodesTochild(){
     this.nodes.forEach(x=>{
@@ -115,12 +138,11 @@ export class CreateAddlogComponent implements OnInit {
           counter++
         }
       })
+      x.children=[]
       x.children.push(...saveChilderen)
     })
   }
-  slectedFile(){
-    
-  }
+
   OpenModal(content:any){
     this.modalService
 
@@ -132,6 +154,10 @@ export class CreateAddlogComponent implements OnInit {
         this._logServices.create(this.addNewLogModel,'MainLogging').subscribe(
           (data) => {
         if(data.success){
+  
+            this.data.push(this.addNewLogModel)
+            this.addNodesTochild()
+          
           this.toastr.success(data.message, 'موفقیت آمیز!', {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -175,20 +201,27 @@ export class CreateAddlogComponent implements OnInit {
   updateLog(){
     console.log(this.selectedFiles)
   }
-nodeRemove(model:any){
-  this._logServices.removeLog(model.id).subscribe((res) => {
+nodeRemove(id:number){
+
+  this._logServices.removeLog(id).subscribe((res) => {
     if(res.success){
-    let finder=  this.nodes.findIndex(x=>x.key==model.parentkey)
+    
+    let finder=  this.data.findIndex(x=>x.id==id)
     if(finder!=-1){
-      debugger
-      var counter=0
-      this.nodes[finder].children.forEach(y=>{
-     if(y.id==model.id){
-      this.nodes[finder].children.splice(finder,0)
-     }
-counter++
-      })
+
+      this.data.splice(finder,1)
+      this.addNodesTochild()
     }
+    this.toastr.success(res.message, 'با موفقیت حذف شد', {
+      timeOut: 3000,
+      positionClass: 'toast-top-left',
+    });
+    }
+    else{
+      this.toastr.error(res.message, 'عملیات با خطا مواجه شد', {
+        timeOut: 3000,
+        positionClass: 'toast-top-left',
+      });
     }
   
 
@@ -207,12 +240,25 @@ this.addNewLogModel=this.data[updateindex]
       this.addNewLogModel.tableType=Number(this.addNewLogModel.tableType)
       this._logServices.updateList(this.addNewLogModel).subscribe((res: Result<AllCheckingLog>) => {
         if(res.success){
-          
+          let finder=  this.data.findIndex(x=>x.id==id)
+          if(finder!=-1){
+            this.data[finder]=this.addNewLogModel
+            this.addNodesTochild()
+          }        
+          this.toastr.success(res.message, 'با موفقیت ویرایش شد', {
+            timeOut: 3000,
+            positionClass: 'toast-top-left',
+          });
+        }
+        else{
+          this.toastr.error(res.message, 'خطا در عملیات', {
+            timeOut: 3000,
+            positionClass: 'toast-top-left',
+          });
         }
         this.addNewLogModel=new AllCheckingLog;
 
       })
-      debugger
   
     },
     (reason) => {

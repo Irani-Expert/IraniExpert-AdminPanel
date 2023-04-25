@@ -1,28 +1,61 @@
-<div class="d-flex justify-content-end
+
+<div class=" row 
+
 ">
+
+<div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-2">
+  <button
+    type="button"
+    class="btn btn-details radius py-btns text-small"
+    id="dropdownBasic1"
+    ngbDropdownToggle
+  >
+    نوع مرتب سازی 
+  </button>
+  <div
+    ngbDropdownMenu
+    class="mt-1 shadow-lg radius"
+    aria-labelledby="dropdownBasic1"
+  >
+    <button
+      class="text-left btn"
+      ngbDropdownItem
+      (click)="addTableTypetoNode()"
+      >
+      <strong>جدول</strong>
+    </button>
+    <button
+    class="text-left btn"
+    ngbDropdownItem
+    (click)="addRequestNode()"
+  >
+    <strong>نوع درخواست</strong>
+  </button>
+  </div>
+</div>
+
 <a
 type="button"
 (click)="OpenModal(addLog)"
-class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
+class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center m-1 mb-2"
 ><i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong></a
 >
+
 </div>
-<div class="rightToleft">
-
-
-  <p-tree [value]="nodes" class="w-full md:w-30rem" >
-    <ng-template let-node pTemplate="url" >
-      <div>
+<div class="rightToleft f-bold">
+  <p-tree *ngIf="nodes"  [value]="nodes"   class="w-full md:w-30rem" >
+    <ng-template let-node pTemplate="url"   >
         <div class="form-check" >
 
-          <input type="checkbox" class="form-check-input"[checked] ="node.checked"
-          (change)="onCheckboxChange($event,node.id)"  >
-          <div class="collapsible-header" (click)="editModal(edit,node.id)"><i class="text-white i-Home1 nav-icon" style="background-color: black;" ></i></div>
-          <div class="collapsible-header" (click)="nodeRemove(node)"><i class="text-white i-Remove-Bag nav-icon" style="background-color: brown;" ></i></div>
-          <label class="form-check-label">
+          <label class="d-flex  align-items-center">
+            <input class="checkbox-lg" type="checkbox" [checked] ="node.checked"
+            (change)="onCheckboxChange($event,node.id)"  >
+            <div class="collapsible-header m-1" (click)="editModal(edit,node.id)">
+              <span  class="pi pi pi-pencil text-dark" style="font-size: 0.8rem;"></span></div>
+            <div class="collapsible-header m-1" (click)="nodeRemove(node.id)">
+              <span  class="pi pi-trash text-danger" style="font-size: 0.8rem;"></span></div>  
             {{ node.label }}
         </label>
-      </div>
       </div>
        </ng-template>
     <!-- <ng-template let-node pTemplate="default">
@@ -88,9 +121,9 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
             [formControl]="addLogForm.controls['requestType']"
                 class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1" 
             >
-            <option  value="1">1</option>
-            <option  value="2" >2</option>
-            <option  value="3">3</option>
+            <option  value="0">ویرایش</option>
+            <option  value="1" >افزودن</option>
+            <option  value="2">حذف</option>
             </select>
           </div>
           <div>
@@ -223,9 +256,9 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
             [formControl]="addLogForm.controls['requestType']"
                 class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1" 
             >
-            <option  value="1">1</option>
-            <option  value="2" >2</option>
-            <option  value="3">3</option>
+            <option  value="0">ویرایش</option>
+            <option  value="1" >افزودن</option>
+            <option  value="2">حذف</option>
             </select>
           </div>
           <div>

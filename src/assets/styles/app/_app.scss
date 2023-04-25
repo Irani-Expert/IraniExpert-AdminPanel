@@ -545,3 +545,39 @@ Buttons
 .p-tree .p-treenode-children {
   padding:  0 2rem 0 0 !important;
 }
+
+
+
+
+
+   
+     
+  .rightToleft{
+   
+    .p-treenode-leaf{ 
+      display: none!important;
+
+    }
+    .p-treenode{
+      border-bottom: 1px solid #ccc;
+    }
+    .p-treenode-children{
+      .p-treenode-leaf{ 
+        display: block !important;
+  
+      }
+  
+    }
+  }
+   
+
+  
+    
+
+
+  
+
+.p-treenode-leaf{
+  border-bottom: none!important;
+
+}
