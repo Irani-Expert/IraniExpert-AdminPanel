@@ -45,7 +45,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     };
 
     return this._http.post<Result<number>>(
-      this._base + '/' + route + '?autherID=' + loggedUserID,
+      this._base + '/' + route + '?authorID=' + loggedUserID,
       t,
       _options
     );
@@ -71,7 +71,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
       }),
     };
     return this._http.put<Result<T>>(
-      this._base + '/' + route + '/' + id + '?autherID=' + loggedUserID,
+      this._base + '/' + route + '/' + id + '?authorID=' + loggedUserID,
       t,
       _options
     );
@@ -222,7 +222,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
       }),
     };
     return this._http.delete<Result<T>>(
-      this._base + '/' + route + '/' + id + '?autherID=' + loggedUserID,
+      this._base + '/' + route + '/' + id + '?authorID=' + loggedUserID,
       _options
     );
   }
