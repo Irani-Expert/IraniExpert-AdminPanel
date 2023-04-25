@@ -1,35 +1,108 @@
-<div class="row grid-gutter flex-row d-flex justify-content-start">
-  <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
-  >
-    <ul class="list-unstyled">
-      <li class="mt-2 mb-2">
-        <span class="d-inline-flex p-2 bg-light rounded-circle"
-          ><span class="pi pi-check" style="font-size: 1.2rem"></span
+<div
+  class="row grid-gutter flex-row d-flex justify-content-start"
+  *ngIf="isDataFetched"
+>
+  <ng-container *ngFor="let item of object">
+    <div
+      class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
+    >
+      <!-- Action Desription -->
+      <div
+        [ngClass]="{
+          'btn-save': item.requestType == 0,
+          'btn-delete': item.requestType == 2,
+          'btn-add': item.requestType == 1
+        }"
+        class="d-flex py-1 radius align-items-center"
+      >
+        <span class="d-inline-flex p-2"
+          ><span
+            class="pi"
+            [ngClass]="{
+              'pi-trash': item.requestType == 2,
+              'pi-pencil': item.requestType == 0,
+              'pi-plus': item.requestType == 1
+            }"
+            style="font-size: 1.2rem"
+          ></span
         ></span>
-      </li>
-      <hr />
-      <li class="mt-2 mb-2">
-        <span class="d-inline-flex p-2 bg-light rounded-circle"
-          ><span class="pi pi-user" style="font-size: 1.2rem"></span
-        ></span>
-      </li>
-      <hr />
-      <li class="mt-2 mb-2">
-        <span class="d-inline-flex p-2 bg-light rounded-circle"
-          ><span class="pi pi-comments" style="font-size: 1.2rem"></span
-        ></span>
-      </li>
-    </ul>
-  </div>
-  <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
+        <strong class="mx-2">{{ item.requesetTypeTitle }}</strong>
+      </div>
+      <!-- Action Desription -->
+      <!-- Log Details -->
+      <ul class="list-unstyled mt-2">
+        <li class="mt-2 mb-2">
+          <div class="d-flex align-items-center">
+            <span class="d-inline-flex p-2 bg-light rounded-circle"
+              ><span
+                class="pi"
+                [ngClass]="{
+                  'pi-images': log.tableType == 0,
+                  'pi-users': log.tableType == 2,
+                  'pi-cog': log.tableType == 2,
+                  'pi-image': log.tableType == 2,
+                  'pi-gift': log.tableType == 2,
+                  'pi-shopping-cart': log.tableType == 2,
+                  'pi-upload': log.tableType == 2,
+                  'pi-file-word': log.tableType == 2,
+                  'pi-hashtag': log.tableType == 2,
+                  'pi-id-card': log.tableType == 2,
+                  'pi-envelope': log.tableType == 2,
+                  'pi-key': log.tableType == 2,
+                  'pi-folder-open': log.tableType == 2,
+                  'pi-shopping-bag': log.tableType == 2,
+                  'pi-wrench': log.tableType == 2,
+                  'pi-sign-in': log.tableType == 2,
+                  'pi-cart-plus': log.tableType == 2,
+                  'pi-bars': log.tableType == 2,
+                  'pi-sitemap': log.tableType == 2,
+                  'pi-tags': log.tableType == 2,
+                  'pi-tag': log.tableType == 2,
+                  'pi-dollar': log.tableType == 2,
+                  'pi-file-pdf': log.tableType == 2,
+                  'pi-money-bill': log.tableType == 2,
+                  'pi-question': log.tableType == 2,
+                  'pi-wallet': log.tableType == 2,
+                  'pi-list': log.tableType == 1
+                }"
+                style="font-size: 1.2rem"
+              ></span
+            ></span>
+            <strong class="mx-2 text-small"> {{ item.tableTypeTitle }}</strong>
+          </div>
+        </li>
+        <hr />
+        <li class="mt-2 mb-2">
+          <div class="d-flex align-items-center">
+            <span class="d-inline-flex p-2 bg-light rounded-circle"
+              ><span class="pi pi-user" style="font-size: 1.2rem"></span
+            ></span>
+            <strong class="mx-2 text-small">
+              {{ item.firstName }} &nbsp; {{ item.lastName }}
+            </strong>
+          </div>
+        </li>
+        <hr />
+        <li class="mt-2 mb-2">
+          <div class="d-flex align-items-center">
+            <span class="d-inline-flex p-2 bg-light rounded-circle"
+              ><span class="pi pi-clock" style="font-size: 1.2rem"></span
+            ></span>
+            <strong class="mx-2 text-small">
+              {{ item.createDate | date }}
+            </strong>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+  <!-- <div
+    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
   >
     <ul class="list-unstyled">
       <li class="mt-2 mb-2">
         <span class="d-inline-flex p-2 bg-light rounded-circle"
           ><span class="pi pi-cog" style="font-size: 1.2rem">
-            <!-- Config -->
           </span></span
         >
       </li>
@@ -48,7 +121,7 @@
     </ul>
   </div>
   <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
+    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
   >
     <ul class="list-unstyled">
       <li class="mt-2 mb-2">
@@ -71,7 +144,7 @@
     </ul>
   </div>
   <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
+    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
   >
     <ul class="list-unstyled">
       <li class="mt-2 mb-2">
@@ -94,7 +167,7 @@
     </ul>
   </div>
   <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
+    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
   >
     <ul class="list-unstyled">
       <li class="mt-2 mb-2">
@@ -117,7 +190,7 @@
     </ul>
   </div>
   <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
+    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
   >
     <ul class="list-unstyled">
       <li class="mt-2 mb-2">
@@ -140,7 +213,7 @@
     </ul>
   </div>
   <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
+    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
   >
     <ul class="list-unstyled">
       <li class="mt-2 mb-2">
@@ -163,7 +236,7 @@
     </ul>
   </div>
   <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
+    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
   >
     <ul class="list-unstyled">
       <li class="mt-2 mb-2">
@@ -186,7 +259,7 @@
     </ul>
   </div>
   <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
+    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
   >
     <ul class="list-unstyled">
       <li class="mt-2 mb-2">
@@ -209,7 +282,7 @@
     </ul>
   </div>
   <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
+    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
   >
     <ul class="list-unstyled">
       <li class="mt-2 mb-2">
@@ -232,7 +305,7 @@
     </ul>
   </div>
   <div
-    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-3 card bg-white shadow-lg"
+    class="col-10 col-sm-8 py-3 col-md-5 col-lg-4 col-xl-2 card bg-white shadow-lg"
   >
     <ul class="list-unstyled">
       <li class="mt-2 mb-2">
@@ -254,4 +327,26 @@
       </li>
     </ul>
   </div>
+</div> -->
+  <!-- 
+<li class="mt-2 mb-2">
+  <div class="d-flex align-items-center">
+    <span class="d-inline-flex p-2 bg-light rounded-circle"
+      ><span
+        class="pi"
+        [ngClass]="{
+          'pi-plus': operationType[indexOfCurrentOperation].key == 0,
+          'pi-trash': operationType[indexOfCurrentOperation].key == 2,
+          'pi-pencil': operationType[indexOfCurrentOperation].key == 1
+        }"
+        style="font-size: 1.2rem"
+      >
+      </span
+    ></span>
+
+    <strong class="mx-2">{{
+      operationType[indexOfCurrentOperation].title
+    }}</strong>
+  </div>
+</li> -->
 </div>
