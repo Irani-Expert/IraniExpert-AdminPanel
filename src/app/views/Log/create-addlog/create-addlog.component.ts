@@ -108,16 +108,19 @@ export class CreateAddlogComponent implements OnInit {
   addRequestNode(){
     this.nodes=[      {
       key: '0',
+      requestType:0,
       label: 'ویرایش',
       children: []
   },
   {
     key: '1',
+    requestType:1,
     label:'افزودن',
     children: []
  },
  {
   key: '2',
+  requestType:2,
   label: 'حذف',
   children: []
 },]
@@ -132,7 +135,7 @@ export class CreateAddlogComponent implements OnInit {
       var saveChilderen:TreeNode[]=new Array<TreeNode>()
       let counter=0;
       this.data.forEach(y=>{
-        if(y.tableType==Number(x.key)){
+        if(y.tableType==Number(x.key) || x.requestType==y.requestType){
           saveChilderen.push({ key: '0-'+counter, label: y.title,parentkey:Number(x.key),data: 'https://angular.io', type: 'url',id:y.id,checked:y.isActive  },
           )
           counter++
@@ -154,10 +157,9 @@ export class CreateAddlogComponent implements OnInit {
         this._logServices.create(this.addNewLogModel,'MainLogging').subscribe(
           (data) => {
         if(data.success){
-  
+            
             this.data.push(this.addNewLogModel)
-            this.addNodesTochild()
-          
+          this.addTableTypetoNode()
           this.toastr.success(data.message, 'موفقیت آمیز!', {
             timeOut: 3000,
             positionClass: 'toast-top-left',
