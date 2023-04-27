@@ -10,6 +10,8 @@ import { Key } from 'protractor';
 import { number } from 'echarts';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { findIndex } from 'rxjs';
+import * as moment from 'jalali-moment';
 // import { TreeNode } from '../../mrk/NodeModel/treenode';
 @Component({
   selector: 'app-create-addlog',
@@ -27,14 +29,15 @@ export class CreateAddlogComponent implements OnInit {
         title: [null, Validators.compose([Validators.required])],
         description: [null, Validators.compose([Validators.required])],
         actionDescriptor: [null, Validators.compose([Validators.required])],
-        isActive: [false, Validators.compose([Validators.required])],
+        isActive: [false],
         requestType: [null, Validators.compose([Validators.required])],
         tableType: [null, Validators.compose([Validators.required])],
       });
     }
   selectedFile: TreeNode;
   selectedFiles: TreeNode[];
-
+  infoModal:AllCheckingLog;
+  opendNodeList:TreeNode[]=new Array<TreeNode>
   nodes: TreeNode[];
   data:AllCheckingLog[]=new Array<AllCheckingLog>()
   tableTypes:TableType[]=new Array<TableType>()
@@ -62,29 +65,14 @@ export class CreateAddlogComponent implements OnInit {
   
     })
   }
-  getAllLogs(){
+  getAllLogs(pageIndex:number,pageSize:number){
     
-    this._logServices.getAllLog(100).subscribe((res: Result<AllCheckingLog[]>) => {
+    this._logServices.getAllLog(pageIndex,pageSize).subscribe((res: Result<AllCheckingLog[]>) => {
       if(res.success){
         
         this.data=res.data['items']
         this.addNodesTochild();
-        var counter=0;
-        // let treeNode:TreeNode[]=new Array<TreeNode>()
-        // this.nodes.forEach(x=>{
-        //  if(x.children.length==0 ){
-        //   treeNode.push(x)
-          
-        //  }
-        //  counter++;
-        // })
-        // treeNode.forEach(x=>{
-        //   var finder=this.nodes.findIndex(y=>y.key===x.key)
-        //   if(finder!=-1){
-        //     this.nodes.splice(finder,1)
-
-        //   }
-        // })
+  
       }
     
   
@@ -92,19 +80,20 @@ export class CreateAddlogComponent implements OnInit {
   }
   addTableTypetoNode(){
     this.nodes=new Array<TreeNode>()
-    this.tableTypes.forEach(x=>{
+    this.tableTypes.forEach(addNode=>{
       this.nodes.push(
         {
-            key: x.value.toString(),
-            label: x.title,
+            key: addNode.value.toString(),
+            label: addNode.title,
             children: []
         },
     
     )
     })
-    this.getAllLogs()
+    this.getAllLogs(0,10)
 
   }
+  
   addRequestNode(){
     this.nodes=[      {
       key: '0',
@@ -127,22 +116,26 @@ export class CreateAddlogComponent implements OnInit {
 
   
 
-  this.getAllLogs()
+this.getAllLogs(0,100)
 
   }
   addNodesTochild(){
-    this.nodes.forEach(x=>{
+    this.nodes.forEach(node=>{
       var saveChilderen:TreeNode[]=new Array<TreeNode>()
       let counter=0;
-      this.data.forEach(y=>{
-        if(y.tableType==Number(x.key) || x.requestType==y.requestType){
-          saveChilderen.push({ key: '0-'+counter, label: y.title,parentkey:Number(x.key),data: 'https://angular.io', type: 'url',id:y.id,checked:y.isActive  },
+      this.data.forEach(nodeChilderen=>{
+        if(nodeChilderen.tableType==Number(node.key) || node.requestType==nodeChilderen.requestType){
+          saveChilderen.push({ key: '0-'+counter, label: nodeChilderen.title,parentkey:Number(node.key),data: 'https://angular.io', type: 'url',id:nodeChilderen.id,checked:nodeChilderen.isActive  },
           )
           counter++
         }
       })
-      x.children=[]
-      x.children.push(...saveChilderen)
+      node.children=[]
+      node.children.push(...saveChilderen)
+      var openedBefore=this.opendNodeList.findIndex(n=>node.key==n.key)
+      if(openedBefore!=-1){
+        node.expanded=true
+      }
     })
   }
 
@@ -164,6 +157,7 @@ export class CreateAddlogComponent implements OnInit {
             timeOut: 3000,
             positionClass: 'toast-top-left',
           });
+        
         }
         else{
           this.toastr.success(data.message, 'عملیات با خطا مواجه شد', {
@@ -173,14 +167,15 @@ export class CreateAddlogComponent implements OnInit {
         }
           }
         );
+        this.addNewLogModel=new AllCheckingLog();
         },
         (reason) => {
-    
+       this.addNewLogModel=new AllCheckingLog();
         }
       );
   }
   onCheckboxChange(event: any,id:number) {
-    var updateindex=this.data.findIndex(x=>x.id==id)
+    var updateindex=this.data.findIndex(finder=>finder.id==id)
     if(event.target.checked){
 
      this.data[updateindex].isActive=true
@@ -203,12 +198,12 @@ export class CreateAddlogComponent implements OnInit {
   updateLog(){
     console.log(this.selectedFiles)
   }
-nodeRemove(id:number){
-
+nodeRemove(id:any){
+debugger
   this._logServices.removeLog(id).subscribe((res) => {
     if(res.success){
     
-    let finder=  this.data.findIndex(x=>x.id==id)
+    let finder=  this.data.findIndex(finder=>finder.id==id)
     if(finder!=-1){
 
       this.data.splice(finder,1)
@@ -230,7 +225,7 @@ nodeRemove(id:number){
   })
 }
 editModal(content:any,id:number){
-  var updateindex=this.data.findIndex(x=>x.id==id)
+  var updateindex=this.data.findIndex(finder=>finder.id==id)
 
 this.addNewLogModel=this.data[updateindex]
   this.modalService
@@ -242,7 +237,7 @@ this.addNewLogModel=this.data[updateindex]
       this.addNewLogModel.tableType=Number(this.addNewLogModel.tableType)
       this._logServices.updateList(this.addNewLogModel).subscribe((res: Result<AllCheckingLog>) => {
         if(res.success){
-          let finder=  this.data.findIndex(x=>x.id==id)
+          let finder=  this.data.findIndex(finder=>finder.id==id)
           if(finder!=-1){
             this.data[finder]=this.addNewLogModel
             this.addNodesTochild()
@@ -270,5 +265,49 @@ this.addNewLogModel=this.data[updateindex]
   );
 
 
+
 }
+nodeSelect(event) {
+  let findIndex=this.opendNodeList.findIndex(finder=>finder.key==event.node.key)
+  if(findIndex!=-1){
+    this.opendNodeList.splice(findIndex,1)
+  }
+  else{
+    debugger
+    this.opendNodeList.push(event.node)
+
+  }
+    this.nodes.forEach(node=>{
+      if(node.key==event.node.key){
+       node.expanded=!node.expanded
+      }
+      })
+  
+
+}
+openDescriptionModal(content:any,node:number){
+  let finder=  this.data.findIndex(finder=>finder.id==node)
+  if(finder!=-1){
+    this.infoModal=this.data[finder]
+    this.infoModal.createDate=moment(
+      this.infoModal.createDate,
+      'YYYY/MM/DD'
+    )
+      .locale('fa')
+      .format('YYYY/MM/DD');
+   }
+  debugger
+  node
+  this.modalService
+  .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
+  .result.then(
+    (result: boolean) => {
+    },
+    (reason) => {
+    }
+  );
+}
+
+
+
 }

@@ -37,27 +37,68 @@
 <a
 type="button"
 (click)="OpenModal(addLog)"
-class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center m-1 mb-2"
+class="btn-add btn text-small d-inline-flex justify-content-around py-btns radius align-items-center m-1 mb-2"
 ><i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong></a
 >
 
 </div>
-<div class="rightToleft f-bold">
-  <p-tree *ngIf="nodes"  [value]="nodes"   class="w-full md:w-30rem" >
+<div class="logNode">
+  <p-tree *ngIf="nodes"  [value]="nodes"  selectionMode="single" [(selection)]="selectedFile"  (onNodeSelect)="nodeSelect($event)"(onNodeExpand)="nodeExpand($event)" (onNodeCollapse)="nodeCollapse($event)"  class="w-full md:w-30rem" >
     <ng-template let-node pTemplate="url"   >
-        <div class="form-check" >
+        <div class="form-check" style="    font-family: Vazir, sans-serif;" >
 
-          <label class="d-flex  align-items-center">
-            <input class="checkbox-lg" type="checkbox" [checked] ="node.checked"
+          <label class="d-flex  align-items-center f-vazir">
+            <input class="checkbox-lg m-2" type="checkbox" [checked] ="node.checked"
             (change)="onCheckboxChange($event,node.id)"  >
-            <div class="collapsible-header m-1" (click)="editModal(edit,node.id)">
-              <span  class="pi pi pi-pencil text-dark" style="font-size: 0.8rem;"></span></div>
-            <div class="collapsible-header m-1" (click)="nodeRemove(node.id)">
-              <span  class="pi pi-trash text-danger" style="font-size: 0.8rem;"></span></div>  
             {{ node.label }}
+            <div class="collapsible-header " (click)="editModal(edit,node.id)">
+              <span
+              ngbTooltip=" ادیت"
+              [openDelay]="50"
+              [closeDelay]="150"
+              placement="bottom"
+              style="
+                width: 32px;
+                height: 32px;
+                padding-top: 2.5px;
+                cursor: pointer;
+              "
+              class="bg-light card text-white position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
+            >
+              <i  class="i-Pen-5 fix-to-center" style="font-size: 0.8rem;"></i></span></div>
+            <div class="collapsible-header " (click)="nodeRemove(node)">
+              <span
+              ngbTooltip=" ادیت"
+              [openDelay]="50"
+              [closeDelay]="150"
+              placement="bottom"
+              style="
+                width: 32px;
+                height: 32px;
+                padding-top: 2.5px;
+                cursor: pointer;
+              "
+              class="bg-light card position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
+            >
+              <span  class="pi pi-trash text-danger " style="font-size: 0.8rem;"></span></span></div>  
+              <button
+              ngbTooltip="توضیحات"
+              [openDelay]="50"
+              [closeDelay]="150"
+              style="width: 32px; height: 32px"
+              class="btn-details btn rounded-circle d-flex justify-content-center m-1"
+              (click)="openDescriptionModal(description,node.id)"
+            >
+              <i
+                class="i-Information fix-to-center"
+                style="font-size: 1.2rem"
+              ></i>
+            </button>
         </label>
+        <hr class="sepratorLine" *ngIf="'0'+'-'+(node.parent.children?.length-1).toString() !=node.key">  
       </div>
-       </ng-template>
+    </ng-template>
+
     <!-- <ng-template let-node pTemplate="default">
         <b>{{ node.label }}</b>
     </ng-template> -->
@@ -65,6 +106,17 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
 
 </div>
 
+<ng-template #description let-modal>
+  <div class="p-2 text-white" style="background-color: #47404f">
+    <p class="m-4">
+    {{infoModal.description}}
+    </p>
+    <div class="col-12">
+      <div class="col-6">تاریخ ایجاد:{{infoModal.createDate}}</div>
+      <div class="col-6"></div>
+    </div>
+  </div>
+</ng-template>
 
 
 <ng-template #addLog let-modal>
@@ -106,7 +158,7 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
             />
           </div>
           <div>
-            <strong for="" class="text--secondary mb-2">تیبل تایپ</strong>
+            <strong for="" class="text--secondary mb-2">جدول</strong>
             <select  class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1" 
             [(ngModel)]="addNewLogModel.tableType"
             [formControl]="addLogForm.controls['tableType']"
@@ -140,8 +192,8 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
       
 
         <div class="row ActiveCheckBox ml-2">
-          <div >وضعیت</div>
-          <div class="d-flex col-7">
+          <div  class="d-flex align-items-center">وضعیت</div>
+          <div class="d-flex m-0">
             <input
               class="p-2"
               type="checkbox"
@@ -150,7 +202,7 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
               [formControl]="addLogForm.controls['isActive']"
             />
             <label
-              class="d-flex align-items-center justify-content-start padr"
+              class="d-flex align-items-center justify-content-start padr p-0 m-0"
               for="switch"
               ></label
             >
@@ -185,20 +237,21 @@ class="btn-add btn d-inline-flex justify-content-around py-btns radius align-ite
     <div class="modal-footer">
       <button
         type="button"
-        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+        class="btn-delete  btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
         (click)="modal.dismiss('cancel')"
       >
         <i class="i-Close text-bigger mr-2"></i>
-        <strong>خیر</strong>
+        <strong>انصراف</strong>
       </button>
       <button
         type="button"
         ngbAutofocus
-        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
+        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
         (click)="modal.close('Ok')"
-      >
+        [disabled]="!addLogForm.valid"
+        >
         <i class="i-Yes text-bigger mr-2"></i>
-        <strong>بله</strong>
+        <strong>ایجاد</strong>
       </button>
     </div>
   </ng-template>

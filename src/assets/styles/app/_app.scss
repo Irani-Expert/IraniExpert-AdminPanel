@@ -546,7 +546,11 @@ Buttons
   padding: 0 2rem 0 0 !important;
 }
 
-.rightToleft {
+.logNode {
+  .p-treenode-label{
+    font-family: "Vazir", sans-serif !important;
+  }
+
   .p-treenode-leaf {
     display: none !important;
   }
@@ -563,3 +567,7 @@ Buttons
 .p-treenode-leaf {
   border-bottom: none !important;
 }
+.f-vazir{
+  font-family: "Vazir", sans-serif !important;
+}
+

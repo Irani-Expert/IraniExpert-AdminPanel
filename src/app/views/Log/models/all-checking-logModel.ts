@@ -9,4 +9,5 @@ export class AllCheckingLog  implements IAllCheckingLog{
     actionDescriptor: string;
     requestType: number;
     tableType: number;
+    createDate:string;
 }

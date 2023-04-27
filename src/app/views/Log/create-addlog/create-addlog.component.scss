@@ -23,7 +23,7 @@
         position: relative;
         color: rgb(255, 255, 255);
         // margin-right: 47%;
-        left: -100%;
+        left: -5%;
       }
     
       label:after {
@@ -75,8 +75,12 @@
   width: 1.55rem;
   height: 1.55rem;
 }
-.f-bold{
+
+
+.sepratorLine{
+  border: 0;
+  border-bottom: 1px dashed #ccc;
+  background: #999;  
+  width: 75rem;
   
 }
-
-

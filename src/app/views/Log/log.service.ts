@@ -32,7 +32,7 @@ export class LogService extends BaseService<AllCheckingLog, number> {
       _options
     );
   }
-  getAllLog(pageSize: number) {
+  getAllLog(pageIndex,pageSize: number) {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ export class LogService extends BaseService<AllCheckingLog, number> {
       }),
     };
     return this._http.get<Result<AllCheckingLog[]>>(
-      this._base + '/MainLogging?' + 'pageIndex=' + 0 + '&pageSize=' + pageSize,
+      this._base + '/MainLogging?' + 'pageIndex=' + pageIndex + '&pageSize=' + pageSize,
       _options
     );
   }
