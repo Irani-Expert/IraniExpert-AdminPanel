@@ -227,11 +227,11 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     );
   }
 
-  protected handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      let errMsg = `error in ${operation}()`;
-      console.error(error); // log to console instead
-      return throwError(errMsg);
-    };
-  }
+  // private handleError<T>(operation = 'operation', result?: T) {
+  //   return (error: any): Observable<T> => {
+  //     let errMsg = `error in ${operation}()`;
+  //     console.error(error); // log to console instead
+  //     return throwError(errMsg);
+  //   };
+  // }
 }
