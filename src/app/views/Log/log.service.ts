@@ -3,10 +3,12 @@ import { AllCheckingLog } from './models/all-checking-logModel';
 import { environment } from 'src/environments/environment.prod';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { TableType } from './models/table-typeModel';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { Observable, retry } from 'rxjs';
+import { LogsModel } from './models/logs.model';
 
 @Injectable({
   providedIn: 'root',
@@ -79,7 +81,10 @@ export class LogService extends BaseService<AllCheckingLog, number> {
       _options
     );
   }
-  getLogs() {
+
+  // Get All Logs
+
+  getLogs(): Observable<Result<Paginate<LogsModel[]>>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -88,11 +93,13 @@ export class LogService extends BaseService<AllCheckingLog, number> {
         Pragma: 'no-cache',
         Expires: '0',
       }),
+      params: new HttpParams().set('pageIndex', 0).set('pageOrder', 'ID'),
     };
 
-    return this._http.get<Result<Paginate<Object[]>>>(
-      this._base + '/Logging?pageIndex=0&pageOrder=ID',
-      _options
-    );
+    return this._http
+      .get<Result<Paginate<LogsModel[]>>>(this._base + '/Logging', _options)
+      .pipe(retry(3));
   }
+
+  // Get All Logs
 }
