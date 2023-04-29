@@ -10,4 +10,6 @@ export class AllCheckingLog  implements IAllCheckingLog{
     requestType: number;
     tableType: number;
     createDate:string;
+    updateDate:string;
+    loggingCount:number;
 }

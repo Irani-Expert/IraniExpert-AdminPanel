@@ -35,6 +35,7 @@ export class AddUpdateComponent implements OnInit {
 
   async ngOnInit() {
     if (this.productId === 0) {
+      this.ifDataExist = true
       this.addUpdate = new ProductModel();
       this.addUpdate.id = this.productId;
       this.addUpdate.isActive = false;
@@ -48,6 +49,7 @@ export class AddUpdateComponent implements OnInit {
       orderID: [null, Validators.compose([Validators.required])],
       isActive: [null, Validators.compose([Validators.required])],
       description: [null, Validators.compose([Validators.required])],
+      actionDescriptor: [null, Validators.compose([Validators.required])],
     });
   }
 

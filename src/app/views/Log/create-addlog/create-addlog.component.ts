@@ -41,6 +41,7 @@ export class CreateAddlogComponent implements OnInit {
   nodes: TreeNode[];
   data:AllCheckingLog[]=new Array<AllCheckingLog>()
   tableTypes:TableType[]=new Array<TableType>()
+  filterName:string;
   ngOnInit(): void {
    this.firstSetup()
  
@@ -79,6 +80,7 @@ export class CreateAddlogComponent implements OnInit {
     })
   }
   addTableTypetoNode(){
+    this.filterName='جدول'
     this.nodes=new Array<TreeNode>()
     this.tableTypes.forEach(addNode=>{
       this.nodes.push(
@@ -90,11 +92,13 @@ export class CreateAddlogComponent implements OnInit {
     
     )
     })
-    this.getAllLogs(0,10)
+    this.getAllLogs(0,200)
 
   }
   
   addRequestNode(){
+    this.filterName='نوع درخواست'
+
     this.nodes=[      {
       key: '0',
       requestType:0,
@@ -125,7 +129,7 @@ this.getAllLogs(0,100)
       let counter=0;
       this.data.forEach(nodeChilderen=>{
         if(nodeChilderen.tableType==Number(node.key) || node.requestType==nodeChilderen.requestType){
-          saveChilderen.push({ key: '0-'+counter, label: nodeChilderen.title,parentkey:Number(node.key),data: 'https://angular.io', type: 'url',id:nodeChilderen.id,checked:nodeChilderen.isActive  },
+          saveChilderen.push({ key: '0-'+counter, label: nodeChilderen.title,parentkey:Number(node.key),nodeCount:nodeChilderen.loggingCount,data: 'https://angular.io', type: 'url',id:nodeChilderen.id,checked:nodeChilderen.isActive  },
           )
           counter++
         }
@@ -147,6 +151,7 @@ this.getAllLogs(0,100)
         (result: boolean) => {
           this.addNewLogModel.requestType=Number(this.addNewLogModel.requestType)
           this.addNewLogModel.tableType=Number(this.addNewLogModel.tableType)
+          debugger
         this._logServices.create(this.addNewLogModel,'MainLogging').subscribe(
           (data) => {
         if(data.success){
@@ -189,7 +194,10 @@ this.getAllLogs(0,100)
   ActiveField(data:AllCheckingLog){
     this._logServices.updateList(data).subscribe((res: Result<AllCheckingLog>) => {
       if(res.success){
-        
+        this.toastr.success(res.message, 'موفقیت آمیز!', {
+          timeOut: 3000,
+          positionClass: 'toast-top-left',
+        });
       }
     
   
@@ -198,8 +206,23 @@ this.getAllLogs(0,100)
   updateLog(){
     console.log(this.selectedFiles)
   }
+  changeParent(changeParentModal: NgbModal,nodeId:number) {
+    this.modalService
+      .open(changeParentModal, {
+        ariaLabelledBy: 'modal-basic-title',
+        centered: false,
+        size: 'xs',
+      })
+      .result.then(
+        (accept) => {
+     this.nodeRemove(nodeId)
+        },
+        (reject) => {
+          console.log(reject.message);
+        }
+      );
+  }
 nodeRemove(id:number){
-debugger
   this._logServices.removeLog(id).subscribe((res) => {
     if(res.success){
     
@@ -209,7 +232,7 @@ debugger
       this.data.splice(finder,1)
       this.addNodesTochild()
     }
-    this.toastr.success(res.message, 'با موفقیت حذف شد', {
+    this.toastr.success(res.message, '', {
       timeOut: 3000,
       positionClass: 'toast-top-left',
     });
@@ -242,7 +265,7 @@ this.addNewLogModel=this.data[updateindex]
             this.data[finder]=this.addNewLogModel
             this.addNodesTochild()
           }        
-          this.toastr.success(res.message, 'با موفقیت ویرایش شد', {
+          this.toastr.success(res.message, '', {
             timeOut: 3000,
             positionClass: 'toast-top-left',
           });
@@ -296,8 +319,13 @@ openDescriptionModal(content:any,node:number){
       .locale('fa')
       .format('YYYY/MM/DD');
    }
-  debugger
-  node
+   this.infoModal.updateDate=moment(
+     this.infoModal.updateDate,
+     'YYYY/MM/DD'
+   )
+     .locale('fa')
+     .format('YYYY/MM/DD');
+
   this.modalService
   .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
   .result.then(

@@ -1,7 +1,5 @@
 
-<div class=" row 
-
-">
+<div class=" row ">
 
 <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-2">
   <button
@@ -10,7 +8,8 @@
     id="dropdownBasic1"
     ngbDropdownToggle
   >
-    نوع مرتب سازی 
+     براساس
+    {{filterName}}
   </button>
   <div
     ngbDropdownMenu
@@ -47,53 +46,73 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
     <ng-template let-node pTemplate="url"   >
         <div class="form-check" style="    font-family: Vazir, sans-serif;" >
 
-          <label class="d-flex  align-items-center f-vazir">
-            <input class="checkbox-lg m-2" type="checkbox" [checked] ="node.checked"
-            (change)="onCheckboxChange($event,node.id)"  />
-            {{ node.label }}
-            <div class="collapsible-header " (click)="editModal(edit,node.id)">
-              <button
-              ngbTooltip=" ادیت"
+          <label class="d-flex  align-items-center f-vazir setting-width">
+          
+            <div class="setting-width d-flex align-items-center">   
+              <input class="checkbox-lg m-2" type="checkbox" [checked] ="node.checked"
+              (change)="onCheckboxChange($event,node.id)"  />
+              {{ node.label }}</div>
+            <div class="row">
+              <div class="collapsible-header " (click)="editModal(edit,node.id)">
+                <button
+                ngbTooltip=" ادیت"
+                [openDelay]="50"
+                [closeDelay]="150"
+                placement="bottom"
+                style="
+                  width: 32px;
+                  height: 32px;
+                  padding-top: 2.5px;
+                  cursor: pointer;
+                "
+                class="bg-light card text-white position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
+              >
+                <i  class="i-Pen-5 fix-to-center" style="font-size: 0.8rem;"></i></button></div>
+              <div class="collapsible-header " (click)="changeParent(changeParentModal,node.id)">
+                <button
+                ngbTooltip=" حذف"
+                [openDelay]="50"
+                [closeDelay]="150"
+                placement="bottom"
+                style="
+                  width: 32px;
+                  height: 32px;
+                  padding-top: 2.5px;
+                  cursor: pointer;
+                "
+                class="bg-light card position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
+              >
+                <span  class="pi pi-trash text-danger " style="font-size: 0.8rem;"></span></button></div>  
+                <button
+                ngbTooltip="توضیحات"
+                [openDelay]="50"
+                [closeDelay]="150"
+                style="width: 32px; height: 32px"
+                class="btn-details btn rounded-circle d-flex justify-content-center m-1"
+                (click)="openDescriptionModal(description,node.id)"
+              >
+                <i
+                  class="i-Information fix-to-center"
+                  style="font-size: 1.2rem"
+                ></i>
+              </button>
+              <span
+              ngbTooltip=" تعداد فعالیت‌های ثبت شده"
               [openDelay]="50"
               [closeDelay]="150"
               placement="bottom"
               style="
-                width: 32px;
+                width: 64px;
                 height: 32px;
                 padding-top: 2.5px;
                 cursor: pointer;
               "
-              class="bg-light card text-white position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
+              class="btn-details card text-white position-relative  d-flex justify-content-center m-1 align-items-center"
             >
-              <i  class="i-Pen-5 fix-to-center" style="font-size: 0.8rem;"></i></button></div>
-            <div class="collapsible-header " (click)="nodeRemove(node.id)">
-              <button
-              ngbTooltip=" حذف"
-              [openDelay]="50"
-              [closeDelay]="150"
-              placement="bottom"
-              style="
-                width: 32px;
-                height: 32px;
-                padding-top: 2.5px;
-                cursor: pointer;
-              "
-              class="bg-light card position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
-            >
-              <span  class="pi pi-trash text-danger " style="font-size: 0.8rem;"></span></button></div>  
-              <button
-              ngbTooltip="توضیحات"
-              [openDelay]="50"
-              [closeDelay]="150"
-              style="width: 32px; height: 32px"
-              class="btn-details btn rounded-circle d-flex justify-content-center m-1"
-              (click)="openDescriptionModal(description,node.id)"
-            >
-              <i
-                class="i-Information fix-to-center"
-                style="font-size: 1.2rem"
-              ></i>
-            </button>
+            {{node.nodeCount}}
+              </span>
+            </div>
+    
         </label>
         <hr class="sepratorLine" *ngIf="'0'+'-'+(node.parent.children?.length-1).toString() !=node.key">  
       </div>
@@ -111,14 +130,44 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
     <p class="m-4">
     {{infoModal.description}}
     </p>
-    <div class="col-12">
-      <div class="col-6">تاریخ ایجاد:{{infoModal.createDate}}</div>
-      <div class="col-6"></div>
+    <div class="row">
+      <div class="col-5">تاریخ ایجاد:{{infoModal.createDate}}</div>
+      <div class="col-6">اخرین تاریخ ویرایش:{{infoModal.updateDate}}</div>
     </div>
   </div>
 </ng-template>
 
-
+<ng-template #changeParentModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">ایا از حذف نقش مطمئنید؟</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss('Close Modal')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+      (click)="modal.dismiss('Reject')"
+    >
+      <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
+      (click)="modal.close(true)"
+    >
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
+    </button>
+  </div>
+</ng-template>ظ
 <ng-template #addLog let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-title"></h4>
@@ -251,7 +300,7 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
         [disabled]="!addLogForm.valid"
         >
         <i class="i-Yes text-bigger mr-2"></i>
-        <strong>ایجاد</strong>
+        <strong>تایید</strong>
       </button>
     </div>
   </ng-template>
@@ -294,7 +343,7 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
             />
           </div>
           <div>
-            <strong for="" class="text--secondary mb-2">تیبل تایپ</strong>
+            <strong for="" class="text--secondary mb-2">جدول</strong>
             <select  class="form-control radius-sm bg--input mb-1 text--secondary text--smaller p-2 pe-1" 
             [(ngModel)]="addNewLogModel.tableType"
             [formControl]="addLogForm.controls['tableType']"
@@ -373,20 +422,20 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
     <div class="modal-footer">
       <button
         type="button"
-        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+        class="btn-delete  btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
         (click)="modal.dismiss('cancel')"
       >
         <i class="i-Close text-bigger mr-2"></i>
-        <strong>خیر</strong>
+        <strong>انصراف</strong>
       </button>
       <button
         type="button"
         ngbAutofocus
-        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
+        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
         (click)="modal.close('Ok')"
       >
         <i class="i-Yes text-bigger mr-2"></i>
-        <strong>بله</strong>
+        <strong>به روزرسانی</strong>
       </button>
     </div>
   </ng-template>

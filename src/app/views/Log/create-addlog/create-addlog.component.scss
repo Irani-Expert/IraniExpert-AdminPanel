@@ -2,6 +2,9 @@
 
     direction: rtl;
 }
+.setting-width{
+  min-width: 16rem!important;
+}
 .ActiveCheckBox{
     .Left-0 {
         left: 0;
@@ -25,7 +28,7 @@
         // margin-right: 47%;
         left: -5%;
       }
-    
+
       label:after {
         content: "";
         position: absolute;
