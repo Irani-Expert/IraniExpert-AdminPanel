@@ -49,10 +49,10 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
 
           <label class="d-flex  align-items-center f-vazir">
             <input class="checkbox-lg m-2" type="checkbox" [checked] ="node.checked"
-            (change)="onCheckboxChange($event,node.id)"  >
+            (change)="onCheckboxChange($event,node.id)"  />
             {{ node.label }}
             <div class="collapsible-header " (click)="editModal(edit,node.id)">
-              <span
+              <button
               ngbTooltip=" ادیت"
               [openDelay]="50"
               [closeDelay]="150"
@@ -65,10 +65,10 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
               "
               class="bg-light card text-white position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
             >
-              <i  class="i-Pen-5 fix-to-center" style="font-size: 0.8rem;"></i></span></div>
-            <div class="collapsible-header " (click)="nodeRemove(node)">
-              <span
-              ngbTooltip=" ادیت"
+              <i  class="i-Pen-5 fix-to-center" style="font-size: 0.8rem;"></i></button></div>
+            <div class="collapsible-header " (click)="nodeRemove(node.id)">
+              <button
+              ngbTooltip=" حذف"
               [openDelay]="50"
               [closeDelay]="150"
               placement="bottom"
@@ -80,7 +80,7 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
               "
               class="bg-light card position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
             >
-              <span  class="pi pi-trash text-danger " style="font-size: 0.8rem;"></span></span></div>  
+              <span  class="pi pi-trash text-danger " style="font-size: 0.8rem;"></span></button></div>  
               <button
               ngbTooltip="توضیحات"
               [openDelay]="50"

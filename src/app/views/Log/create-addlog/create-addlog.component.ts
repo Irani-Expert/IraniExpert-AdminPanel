@@ -198,7 +198,7 @@ this.getAllLogs(0,100)
   updateLog(){
     console.log(this.selectedFiles)
   }
-nodeRemove(id:any){
+nodeRemove(id:number){
 debugger
   this._logServices.removeLog(id).subscribe((res) => {
     if(res.success){
