@@ -26,4 +26,9 @@ export class FilterModel implements IFilter {
   amount: number;
   financialActivity: boolean;
   robotUsage: boolean;
+  requestType: number;
+  isSuccess: boolean;
+  ipAddress: string;
+  mainLoggingID: number;
+  title: string;
 }

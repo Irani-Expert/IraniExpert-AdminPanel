@@ -483,11 +483,11 @@ Buttons
 
 .btn-delete {
   color: #e9e1e1 !important;
-  background-color: #a70000b7;
+  background-color: #a70000b7 !important;
   transition: all 0.15s ease-in-out;
 }
 .btn-delete:hover {
-  background-color: #5c0000b7;
+  background-color: #5c0000b7 !important;
   transition: all 0.15s ease-in-out;
 }
 
@@ -497,10 +497,10 @@ Buttons
 
 .btn-save {
   color: white !important;
-  background-color: rgb(11, 117, 11);
+  background-color: rgb(11, 117, 11) !important;
 }
 .btn-save:hover {
-  background-color: rgb(7, 71, 7);
+  background-color: rgb(7, 71, 7) !important;
   transition: all 0.15s ease-in-out;
 }
 
@@ -547,7 +547,7 @@ Buttons
 }
 
 .logNode {
-  .p-treenode-label{
+  .p-treenode-label {
     font-family: "Vazir", sans-serif !important;
   }
 
@@ -567,7 +567,6 @@ Buttons
 .p-treenode-leaf {
   border-bottom: none !important;
 }
-.f-vazir{
+.f-vazir {
   font-family: "Vazir", sans-serif !important;
 }
-

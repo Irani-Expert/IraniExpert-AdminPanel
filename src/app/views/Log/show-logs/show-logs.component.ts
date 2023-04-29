@@ -4,6 +4,11 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LogsModel } from '../models/logs.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { FilterModel } from 'src/app/shared/models/Base/filter.model';
+import { Page } from 'src/app/shared/models/Base/page';
+import { TableType } from '../models/table-typeModel';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'jalali-moment';
 
 @Component({
   selector: 'app-show-logs',
@@ -11,48 +16,70 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
   styleUrls: ['./show-logs.component.scss'],
 })
 export class ShowLogsComponent implements OnInit {
-  res: Result<Object> = new Result<Object>();
+  logDetail: LogsModel = new LogsModel();
+  index: number;
+  tableTypes: TableType[];
+  filteredItems: Array<{
+    id: string;
+    label: string;
+    title: string | number | boolean;
+    isFilled: boolean;
+  }>;
+  filter: FilterModel = new FilterModel();
+  filterHolder: FilterModel;
+  page: Page = new Page();
   logRows: LogsModel[] = new Array<LogsModel>();
   isDataFetched: boolean = false;
-  log = {
-    tableType: 0,
-  };
-  date: Date = new Date();
-  indexOfCurrentOperation: number = 0;
-  operationType = [
-    {
-      title: 'ایجاد ',
-      key: 2,
-    },
-    {
-      title: 'ویرایش',
-      key: 1,
-    },
-    {
-      title: 'حذف',
-      key: 0,
-    },
-  ];
-  constructor(private logService: LogService) {}
+  constructor(private logService: LogService, private modalService: NgbModal) {
+    this.page.pageNumber = 0;
+    this.page.size = 12;
+    this.tableTypes = new Array<TableType>();
+  }
 
   ngOnInit(): void {
-    this.getLogs();
+    this.setPage(this.page, null);
   }
-
-  chOp() {
-    if (this.indexOfCurrentOperation++ > 2) {
-      this.indexOfCurrentOperation = 0;
+  setPage(pageToSet: Page, tableTypeToSet: number) {
+    this.getLogs(
+      pageToSet.pageNumber,
+      pageToSet.size,
+      tableTypeToSet,
+      this.filter
+    );
+    if (this.tableTypes.length == 0) {
+      this.getTableTypes();
     }
   }
-  getLogs() {
+
+  getTableTypes() {
+    this.logService.getAllTableType().subscribe((res: Result<TableType[]>) => {
+      if (res.success) this.tableTypes = res.data;
+    });
+  }
+
+  getLogs(
+    pageIndex: number,
+    pageSize: number,
+    tableType: number,
+    filter: FilterModel
+  ) {
     this.logService
-      .getLogs()
+      .getLogs(pageIndex, pageSize, tableType, filter)
       .subscribe((data: Result<Paginate<LogsModel[]>>) => {
         if (data.success) {
           this.isDataFetched = !this.isDataFetched;
         }
+
         this.logRows = data.data.items;
-        console.log(this.logRows);
       });
+  }
+  openModal(item: LogsModel, modal: NgbModal) {
+    this.logDetail = item;
+    this.modalService.open(modal, {
+      size: 'sm',
+    });
+    this.logDetail.jalaliDate = moment(this.logDetail.createDate, 'YYYY/MM/DD')
+      .locale('fa')
+      .format('YYYY/MM/DD');
   }
 }

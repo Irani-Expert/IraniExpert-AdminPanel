@@ -16,4 +16,5 @@ export class LogsModel {
   accountNumber: string;
   phoneNumber: string;
   referralCode: string;
+  jalaliDate: string;
 }
