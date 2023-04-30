@@ -9,6 +9,7 @@ import { Page } from 'src/app/shared/models/Base/page';
 import { TableType } from '../models/table-typeModel';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'jalali-moment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-show-logs',
@@ -17,8 +18,8 @@ import * as moment from 'jalali-moment';
 })
 export class ShowLogsComponent implements OnInit {
   logDetail: LogsModel = new LogsModel();
-  index: number;
-  tableTypes: TableType[];
+  index: number = 0;
+  tableTypes: TableType[] = new Array<TableType>();
   filteredItems: Array<{
     id: string;
     label: string;
@@ -30,30 +31,36 @@ export class ShowLogsComponent implements OnInit {
   page: Page = new Page();
   logRows: LogsModel[] = new Array<LogsModel>();
   isDataFetched: boolean = false;
-  constructor(private logService: LogService, private modalService: NgbModal) {
+  constructor(
+    private logService: LogService,
+    private modalService: NgbModal,
+    private toastr: ToastrService
+  ) {
     this.page.pageNumber = 0;
-    this.page.size = 12;
-    this.tableTypes = new Array<TableType>();
+    this.page.size = 15;
   }
 
   ngOnInit(): void {
-    this.setPage(this.page, null);
+    this.setPage(this.page.pageNumber, null);
   }
-  setPage(pageToSet: Page, tableTypeToSet: number) {
-    this.getLogs(
-      pageToSet.pageNumber,
-      pageToSet.size,
-      tableTypeToSet,
-      this.filter
-    );
+  setPage(pageToSet: number, tableTypeToSet: number) {
+    this.getLogs(pageToSet, this.page.size, tableTypeToSet, this.filter);
     if (this.tableTypes.length == 0) {
       this.getTableTypes();
     }
   }
 
   getTableTypes() {
+    let allLogs = [
+      {
+        title: 'همه',
+        value: null,
+      },
+    ];
     this.logService.getAllTableType().subscribe((res: Result<TableType[]>) => {
-      if (res.success) this.tableTypes = res.data;
+      if (res.success) {
+        this.tableTypes = allLogs.concat(res.data);
+      }
     });
   }
 
@@ -63,17 +70,33 @@ export class ShowLogsComponent implements OnInit {
     tableType: number,
     filter: FilterModel
   ) {
-    let number = Math.floor(Math.random() * 10);
-    console.log(number);
-
+    if (tableType !== null) {
+      this.index = tableType + 1;
+    }
+    if (tableType == null) {
+      this.index = 0;
+    }
+    this.page.pageNumber = pageIndex;
     this.logService
-      .getLogs(pageIndex, pageSize, tableType, filter)
+      .getLogs(
+        pageIndex == 0 ? pageIndex : pageIndex - 1,
+        pageSize,
+        tableType,
+        filter
+      )
       .subscribe((data: Result<Paginate<LogsModel[]>>) => {
         if (data.success) {
-          this.isDataFetched = !this.isDataFetched;
+          this.page.totalPages = data.data.totalPages;
+          this.page.totalElements = data.data.totalCount;
+          this.logRows = data.data.items;
+          this.isDataFetched = true;
         }
-
-        this.logRows = data.data.items;
+        if (data.data.totalCount == 0) {
+          this.toastr.error('فعالیتی برای این بخش ثبت نشده است', 'خطا !!', {
+            positionClass: 'toast-top-left',
+          });
+          this.isDataFetched = true;
+        }
       });
   }
   openModal(item: LogsModel, modal: NgbModal) {
