@@ -61,7 +61,6 @@ export class LogService extends BaseService<AllCheckingLog, number> {
     );
   }
   updateList(data: AllCheckingLog) {
-    debugger;
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

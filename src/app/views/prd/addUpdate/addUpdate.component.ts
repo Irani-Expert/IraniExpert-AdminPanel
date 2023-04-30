@@ -58,7 +58,6 @@ export class AddUpdateComponent implements OnInit {
       await this._productsService
         .getOneByID(this.productId, 'Product')
         .subscribe((res: Result<ProductModel>) => {
-          debugger
           if(res.success){
             this.addUpdate = res.data;
             this.ifDataExist=true

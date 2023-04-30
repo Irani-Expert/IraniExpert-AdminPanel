@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TreeNode } from 'primeng/api';
 import { NodeService } from '../../Log/nodeservice';
 import { AllCheckingLog } from '../models/all-checking-logModel';
 import { LogService } from '../log.service';
@@ -12,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { findIndex } from 'rxjs';
 import * as moment from 'jalali-moment';
-// import { TreeNode } from '../../mrk/NodeModel/treenode';
+import { TreeData } from '../create-addlog/TreeData';
 @Component({
   selector: 'app-create-addlog',
   templateUrl: './create-addlog.component.html',
@@ -34,11 +33,11 @@ export class CreateAddlogComponent implements OnInit {
         tableType: [null, Validators.compose([Validators.required])],
       });
     }
-  selectedFile: TreeNode;
-  selectedFiles: TreeNode[];
+  selectedFile: TreeData;
+  selectedFiles: TreeData[];
   infoModal:AllCheckingLog;
-  opendNodeList:TreeNode[]=new Array<TreeNode>
-  nodes: TreeNode[];
+  opendNodeList:TreeData[]=new Array<TreeData>
+  nodes: TreeData[];
   data:AllCheckingLog[]=new Array<AllCheckingLog>()
   tableTypes:TableType[]=new Array<TableType>()
   filterName:string;
@@ -81,7 +80,7 @@ export class CreateAddlogComponent implements OnInit {
   }
   addTableTypetoNode(){
     this.filterName='جدول'
-    this.nodes=new Array<TreeNode>()
+    this.nodes=new Array<TreeData>()
     this.tableTypes.forEach(addNode=>{
       this.nodes.push(
         {
@@ -125,7 +124,7 @@ this.getAllLogs(0,100)
   }
   addNodesTochild(){
     this.nodes.forEach(node=>{
-      var saveChilderen:TreeNode[]=new Array<TreeNode>()
+      var saveChilderen:TreeData[]=new Array<TreeData>()
       let counter=0;
       this.data.forEach(nodeChilderen=>{
         if(nodeChilderen.tableType==Number(node.key) || node.requestType==nodeChilderen.requestType){
@@ -151,7 +150,7 @@ this.getAllLogs(0,100)
         (result: boolean) => {
           this.addNewLogModel.requestType=Number(this.addNewLogModel.requestType)
           this.addNewLogModel.tableType=Number(this.addNewLogModel.tableType)
-          debugger
+
         this._logServices.create(this.addNewLogModel,'MainLogging').subscribe(
           (data) => {
         if(data.success){
@@ -296,7 +295,6 @@ nodeSelect(event) {
     this.opendNodeList.splice(findIndex,1)
   }
   else{
-    debugger
     this.opendNodeList.push(event.node)
 
   }

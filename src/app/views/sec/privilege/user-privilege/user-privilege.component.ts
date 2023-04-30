@@ -112,7 +112,6 @@ export class UserPrivilegeComponent implements OnInit {
   async getRoleList() {
     this._roleService.get(0, 100, 'ID', null, 'aspnetrole').subscribe(
       (res: Result<Paginate<RoleModel[]>>) => {
-        debugger
         this.roles = res.data.items;
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
@@ -411,7 +410,6 @@ export class UserPrivilegeComponent implements OnInit {
       );
   }
   removerole(roleId:number,changeParentModal:any){
-    debugger
     this.modalService
     .open(changeParentModal, {
       ariaLabelledBy: 'modal-basic-title',

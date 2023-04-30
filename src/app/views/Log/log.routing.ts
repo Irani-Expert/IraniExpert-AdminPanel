@@ -5,7 +5,7 @@ import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 
 const routes: Routes = [
   {
-    path: 's',
+    path: 'log-info',
     component: LogsComponent,
     canActivate: [AuthGuard],
   },
