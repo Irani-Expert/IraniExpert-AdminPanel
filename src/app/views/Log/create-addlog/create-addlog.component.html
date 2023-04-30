@@ -42,7 +42,7 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
 
 </div>
 <div class="logNode">
-  <p-tree *ngIf="nodes"  [value]="nodes"  selectionMode="single" [(selection)]="selectedFile"  (onNodeSelect)="nodeSelect($event)"(onNodeExpand)="nodeExpand($event)" (onNodeCollapse)="nodeCollapse($event)"  class="w-full md:w-30rem" >
+  <p-tree   [value]="nodes"  selectionMode="single" [(selection)]="selectedFile"  (onNodeSelect)="nodeSelect($event)"(onNodeExpand)="nodeSelect($event)" (onNodeCollapse)="nodeSelect($event)"  class="w-full md:w-30rem" >
     <ng-template let-node pTemplate="url"   >
         <div class="form-check" style="    font-family: Vazir, sans-serif;" >
 
@@ -167,7 +167,7 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
       <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
     </button>
   </div>
-</ng-template>ظ
+</ng-template>
 <ng-template #addLog let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-title"></h4>
