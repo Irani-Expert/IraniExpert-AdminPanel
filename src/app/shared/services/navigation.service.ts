@@ -60,11 +60,11 @@ export class NavigationService {
       privilege: 'Dashboard-Full Premission',
     },
     {
-      name: 'لاگ ها',
+      name: 'فعالیت ها',
       description: '',
       navType: 'link',
-      icon: 'i-Home1',
-      state: '/log/s',
+      icon: 'i-Eye',
+      state: '/log/log-info',
       privilege: 'Dashboard-Full Premission',
     },
     {

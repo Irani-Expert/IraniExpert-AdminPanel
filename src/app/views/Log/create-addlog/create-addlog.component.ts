@@ -150,7 +150,7 @@ this.getAllLogs(0,100)
         (result: boolean) => {
           this.addNewLogModel.requestType=Number(this.addNewLogModel.requestType)
           this.addNewLogModel.tableType=Number(this.addNewLogModel.tableType)
-          debugger
+
         this._logServices.create(this.addNewLogModel,'MainLogging').subscribe(
           (data) => {
         if(data.success){
@@ -295,7 +295,6 @@ nodeSelect(event) {
     this.opendNodeList.splice(findIndex,1)
   }
   else{
-    debugger
     this.opendNodeList.push(event.node)
 
   }
