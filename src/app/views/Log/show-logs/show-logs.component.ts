@@ -63,6 +63,9 @@ export class ShowLogsComponent implements OnInit {
     tableType: number,
     filter: FilterModel
   ) {
+    let number = Math.floor(Math.random() * 10);
+    console.log(number);
+
     this.logService
       .getLogs(pageIndex, pageSize, tableType, filter)
       .subscribe((data: Result<Paginate<LogsModel[]>>) => {

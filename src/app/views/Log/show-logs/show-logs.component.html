@@ -80,33 +80,36 @@
               ><span
                 class="pi"
                 [ngClass]="{
-                  'pi-images': item.tableType == 0,
-                  'pi-users': item.tableType == 0,
-                  'pi-cog': item.tableType == 0,
-                  'pi-image': item.tableType == 0,
-                  'pi-gift': item.tableType == 0,
-                  'pi-shopping-cart': item.tableType == 0,
-                  'pi-upload': item.tableType == 0,
-                  'pi-file-word': item.tableType == 0,
-                  'pi-hashtag': item.tableType == 0,
-                  'pi-id-card': item.tableType == 0,
-                  'pi-envelope': item.tableType == 0,
-                  'pi-key': item.tableType == 0,
-                  'pi-folder-open': item.tableType == 0,
-                  'pi-shopping-bag': item.tableType == 0,
-                  'pi-wrench': item.tableType == 0,
-                  'pi-sign-in': item.tableType == 0,
-                  'pi-cart-plus': item.tableType == 0,
-                  'pi-bars': item.tableType == 0,
-                  'pi-sitemap': item.tableType == 0,
-                  'pi-tags': item.tableType == 0,
-                  'pi-tag': item.tableType == 0,
-                  'pi-dollar': item.tableType == 0,
-                  'pi-file-pdf': item.tableType == 0,
-                  'pi-money-bill': item.tableType == 0,
-                  'pi-question': item.tableType == 0,
-                  'pi-wallet': item.tableType == 0,
-                  'pi-list': item.tableType == 0
+                  'pi-images': item.tableType == 7,
+                  'pi-users': item.tableType == 20,
+                  'pi-user': item.tableType == 10,
+                  'pi-cog': item.tableType == 27,
+                  'pi-image': item.tableType == 22,
+                  'pi-gift': item.tableType == 11,
+                  'pi-shopping-cart': item.tableType == 8,
+                  'pi-upload': item.tableType == 31,
+                  'pi-file-word': item.tableType == 18,
+                  'pi-hashtag': item.tableType == 5,
+                  'pi-id-card': item.tableType == 32,
+                  'pi-envelope': item.tableType == 9,
+                  'pi-key': item.tableType == 26,
+                  'pi-folder-open': item.tableType == 24,
+                  'pi-shopping-bag': item.tableType == 6,
+                  'pi-wrench': item.tableType == 23,
+                  'pi-sign-in': item.tableType == 3,
+                  'pi-cart-plus': item.tableType == 2,
+                  'pi-bars': item.tableType == 17,
+                  'pi-sitemap': item.tableType == 21,
+                  'pi-tags': item.tableType == 17,
+                  'pi-tag': item.tableType == 6,
+                  'pi-dollar': item.tableType == 2,
+                  'pi-file-pdf': item.tableType == 1,
+                  'pi-file': item.tableType == 30,
+                  'pi-money-bill': item.tableType == 14,
+                  'pi-question': item.tableType == 29,
+                  'pi-wallet': item.tableType == 15,
+                  'pi-book': item.tableType == 12,
+                  'pi-link': item.tableType == 12
                 }"
                 style="font-size: 1.2rem"
               ></span
@@ -170,7 +173,7 @@
         <strong for="totalPrice" class="mb-3">ایمیل</strong>
         <input
           class="form-control mt-1"
-          value="{{ logDetail.ipAddress }}"
+          value="{{ logDetail.email }}"
           disabled
         />
       </div>
