@@ -62,7 +62,7 @@ const adminRoutes: Routes = [
       import('./views/dct/discount.module').then((m) => m.DiscountModule),
   },
   {
-    path: 'log',
+    path: 'log-info',
     loadChildren: () =>
       import('./views/Log/log.module').then((m) => m.LogModule),
   },
@@ -162,11 +162,12 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'log',
+    path: '',
+    pathMatch: 'full',
     component: NotFoundComponent,
     children: [
       {
-        path: 'log',
+        path: 'log-info',
         loadChildren: () =>
           import('./views/Log/log.module').then((m) => m.LogModule),
       },

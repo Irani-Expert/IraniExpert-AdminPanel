@@ -64,7 +64,7 @@ export class NavigationService {
       description: '',
       navType: 'link',
       icon: 'i-Eye',
-      state: '/log/log-info',
+      state: '/log-info',
       privilege: 'Dashboard-Full Premission',
     },
     {
