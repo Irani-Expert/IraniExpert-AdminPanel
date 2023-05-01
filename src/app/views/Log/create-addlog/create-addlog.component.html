@@ -42,11 +42,11 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
 
 </div>
 <div class="logNode">
-  <p-tree   [value]="nodes"  selectionMode="single" [(selection)]="selectedFile"  (onNodeSelect)="nodeSelect($event)"(onNodeExpand)="nodeSelect($event)" (onNodeCollapse)="nodeSelect($event)"  class="w-full md:w-30rem" >
+  <p-tree   [value]="nodes"  selectionMode="single" [(selection)]="selectedFile"  (onNodeSelect)="nodeSelect($event)"  class="w-full md:w-30rem" >
     <ng-template let-node pTemplate="url"   >
         <div class="form-check" style="    font-family: Vazir, sans-serif;" >
 
-          <label class="d-flex  align-items-center f-vazir setting-width">
+          <div class="d-flex  align-items-center f-vazir ">
           
             <div class="setting-width d-flex align-items-center">   
               <input class="checkbox-lg m-2" type="checkbox" [checked] ="node.checked"
@@ -55,7 +55,7 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
             <div class="row">
               <div class="collapsible-header " (click)="editModal(edit,node.id)">
                 <button
-                ngbTooltip=" ادیت"
+                ngbTooltip=" ویرایش"
                 [openDelay]="50"
                 [closeDelay]="150"
                 placement="bottom"
@@ -97,10 +97,8 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
                 ></i>
               </button>
               <span
-              ngbTooltip=" تعداد فعالیت‌های ثبت شده"
               [openDelay]="50"
               [closeDelay]="150"
-              placement="bottom"
               style="
                 width: 64px;
                 height: 32px;
@@ -109,12 +107,12 @@ class="btn-add btn text-small d-inline-flex justify-content-around py-btns radiu
               "
               class="btn-details card text-white position-relative  d-flex justify-content-center m-1 align-items-center"
             >
-            {{node.nodeCount}}
+            <div>{{node.nodeCount}}</div>
               </span>
             </div>
     
-        </label>
-        <hr class="sepratorLine" *ngIf="'0'+'-'+(node.parent.children?.length-1).toString() !=node.key">  
+          </div>
+        <hr class="sepratorLine mt-4" *ngIf="'0'+'-'+(node.parent.children?.length-1).toString() !=node.key">  
       </div>
     </ng-template>
 
