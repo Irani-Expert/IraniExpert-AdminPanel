@@ -85,24 +85,26 @@
                   style="font-size: 0.8rem"
                 ></span>
               </button>
-              <span
-              [openDelay]="50"
-              [closeDelay]="150"
-              style="
-                width: 64px;
-                height: 32px;
-                padding-top: 2.5px;
-                cursor: pointer;
-              "
-              class="btn-details card text-white position-relative d-flex justify-content-center m-1 align-items-center"
-            >
-            <div>{{node.nodeCount}}</div>
-              </span>
+
             </div>
-    
+               <div  class="collapsible-header">
+                <span
+                [openDelay]="50"
+                [closeDelay]="150"
+                style="
+                  width: 64px;
+                  height: 32px;
+                  padding-top: 2.5px;
+                  cursor: pointer;
+                "
+                class="btn-details card text-white position-relative d-flex justify-content-center m-1 align-items-center"
+              >
+              <div>{{node.nodeCount}}</div>
+                </span>
+               </div>
           </div>
-        <hr class="sepratorLine mt-4" *ngIf="'0'+'-'+(node.parent.children?.length-1).toString() !=node.key">  
       </div>
+      <hr class="sepratorLine mt-4" *ngIf="'0'+'-'+(node.parent.children?.length-1).toString() !=node.key">  
       </div>
     </ng-template>
 
