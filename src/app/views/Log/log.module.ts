@@ -9,17 +9,12 @@ import { LogsComponent } from './logs/logs.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeModule } from 'primeng/tree';
 import { NodeService } from './nodeservice';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
-  declarations: [
-    ShowLogsComponent,
-    CreateAddlogComponent,
-    LogsComponent,
-    
-    
-  ],
+  declarations: [ShowLogsComponent, CreateAddlogComponent, LogsComponent],
   imports: [
+    NgxPaginationModule,
     CommonModule,
     NgbModule,
     LogRoutingModule,
@@ -27,8 +22,8 @@ import { NodeService } from './nodeservice';
     ReactiveFormsModule,
     DatePipe,
     FormsModule,
-    TreeModule
+    TreeModule,
   ],
-  providers: [ NodeService ]
+  providers: [NodeService],
 })
-export class LogModule { }
+export class LogModule {}
