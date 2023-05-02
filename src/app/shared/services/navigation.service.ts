@@ -65,7 +65,22 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Eye',
       state: '/log-info',
-      privilege: 'Log-Full Premission',
+      privilege: 'Dashboard-Full Premission',
+    },
+    {
+      name: 'مشتریان من',
+      description: 'پروفایل',
+      navType: 'link',
+      icon: 'i-Add-UserStar',
+      state: '/mrk/sub-list-profit',
+      privilege: 'sub-list-profit-Full Premission',
+    },
+    {
+      name: '  دسترسی ها',
+      navType: 'link',
+      icon: 'i-Gears',
+      state: '/sec/permissions',
+      privilege: 'permissions-Full Premission',
     },
     {
       name: 'پروفایل من',
@@ -75,14 +90,14 @@ export class NavigationService {
       state: '/dashboard/user-profile',
       privilege: 'Dashboard-Full Premission',
     },
-    {
-      name: 'مشتریان من',
-      description: 'پروفایل',
-      navType: 'link',
-      icon: 'i-Add-UserStar',
-      state: '/mrk/sub-user',
-      privilege: 'Subuser-Full Premission',
-    },
+    // {
+    //   name: 'مشتریان من',
+    //   description: 'پروفایل',
+    //   navType: 'link',
+    //   icon: 'i-Add-UserStar',
+    //   state: '/mrk/sub-user',
+    //   privilege: 'Subuser-Full Premission',
+    // },
     {
       name: '*',
       description: '',
@@ -166,35 +181,18 @@ export class NavigationService {
       navType: 'link',
       privilege: 'CheckOrders-Full Premission',
     },
-
     {
-      icon: 'i-Dollar-Sign-2',
-      name: 'پورسانت',
-      state: '/bsk/commission',
-      navType: 'link',
-      privilege: 'CheckOrders-Full Premission',
-    },
-    {
-      name: 'پورسانت ها',
+      name: 'سودها',
       navType: 'link',
       icon: 'i-Dollar',
-      state: '/crt/all-comission',
-      privilege: 'Comment-Full Premission',
+      state: '/crt/profits',
+      privilege: 'profits-Full Premission',
     },
-    {
-      name: 'دسترسی نقش ها',
-      navType: 'link',
-      icon: 'i-Add-User',
-      state: '/sec/user-privilege',
-      privilege: 'AddUserRole-Full Premission',
-    },
-    {
-      name: '  تعریف دسترسی',
-      navType: 'link',
-      icon: 'i-Gears',
-      state: '/sec/privilege',
-      privilege: 'ControlRoles-Full Premission',
-    },
+
+   
+
+
+
     {
       name: 'کاربران',
       navType: 'link',

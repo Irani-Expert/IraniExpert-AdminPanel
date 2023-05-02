@@ -10,9 +10,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DragScrollModule } from 'ngx-drag-scroll';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ProfitsComponent } from './profits/profits.component';
+import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 
 @NgModule({
-  declarations: [ContractListComponent, AllCommissionComponent],
+  declarations: [ContractListComponent, AllCommissionComponent, ProfitsComponent],
   imports: [
     CrtRoutingModule,
     CommonModule,
@@ -22,7 +24,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     NgbModule,
     NgxPaginationModule,
-    DragScrollModule
+    DragScrollModule,
+    SharedDirectivesModule,
+
   ],
 })
 export class ContractModule {}

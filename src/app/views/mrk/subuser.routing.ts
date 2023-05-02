@@ -2,11 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { SubUserComponent } from './sub-user/sub-user.component';
+import { SubListProfitComponent } from './sub-list-profit/sub-list-profit.component';
 
 const routes: Routes = [
 {
   path: 'sub-user',
   component: SubUserComponent,
+  canActivate: [AuthGuard],
+},
+{
+  path: 'sub-list-profit',
+  component: SubListProfitComponent,
   canActivate: [AuthGuard],
 },
 ];

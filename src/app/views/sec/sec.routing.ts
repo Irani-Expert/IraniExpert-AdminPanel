@@ -6,6 +6,7 @@ import { UserPrivilegeComponent } from './privilege/user-privilege/user-privileg
 import { RoleMangementComponent } from './role-mangement/role-mangement.component';
 import { UserMangementComponent } from './user-mangement/user-mangement.component';
 import { UserRoleComponent } from './user-role/user-role.component';
+import { PermissionsComponent } from './permissions/permissions.component';
 
 const routes: Routes = [
   {
@@ -24,14 +25,10 @@ const routes: Routes = [
     component: RoleMangementComponent,
     canActivate: [AuthGuard],
   },
+
   {
-    path: 'privilege',
-    component: PrivilegeComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'user-privilege',
-    component: UserPrivilegeComponent,
+    path: 'permissions',
+    component: PermissionsComponent,
     canActivate: [AuthGuard],
   },
 ];
