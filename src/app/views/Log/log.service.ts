@@ -19,7 +19,7 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 @Injectable({
   providedIn: 'root',
 })
-export class LogService extends BaseService<AllCheckingLog, number> {
+export class LogService extends BaseService<Object, number> {
   userGuid = environment.jwtToken;
 
   constructor(public _http: HttpClient, public auth: AuthenticateService) {
@@ -97,6 +97,7 @@ export class LogService extends BaseService<AllCheckingLog, number> {
   getLogs(
     pageIndex: number,
     pageSize: number,
+    pageOrder: string,
     tableType: number,
     filter: FilterModel
   ): Observable<Result<Paginate<LogsModel[]>>> {
@@ -110,62 +111,61 @@ export class LogService extends BaseService<AllCheckingLog, number> {
       }),
     };
 
-    return this._http
-      .get<Result<Paginate<LogsModel[]>>>(
-        this._base +
-          '/Logging?pageIndex=' +
-          pageIndex +
-          '&pageSize=' +
-          pageSize +
-          '&pageOrder=ID' +
-          (filter.iD == undefined || filter.iD == null
-            ? ''
-            : '&ID=' + filter.iD) +
-          (filter.fromCreateDate == undefined || filter.fromCreateDate == null
-            ? ''
-            : '&FromCreateDate=' + filter.fromCreateDate) +
-          (filter.toCreateDate == undefined || filter.toCreateDate == null
-            ? ''
-            : '&ToCreateDate=' + filter.toCreateDate) +
-          (filter.requestType == undefined || filter.requestType == null
-            ? ''
-            : '&RequestType=' + filter.requestType) +
-          (tableType == undefined || tableType == null
-            ? ''
-            : '&TableType=' + tableType) +
-          (filter.rowID == undefined || filter.rowID == null
-            ? ''
-            : '&RowID=' + filter.rowID) +
-          (filter.isSuccess == undefined || filter.isSuccess == null
-            ? ''
-            : '&IsSuccess=' + filter.isSuccess) +
-          (filter.ipAddress == undefined || filter.ipAddress == null
-            ? ''
-            : '&IpAddress=' + filter.ipAddress) +
-          (filter.userID == undefined || filter.userID == null
-            ? ''
-            : '&UserID=' + filter.userID) +
-          (filter.firstName == undefined || filter.firstName == null
-            ? ''
-            : '&FirstName=' + filter.firstName) +
-          (filter.lastName == undefined || filter.lastName == null
-            ? ''
-            : '&LastName=' + filter.lastName) +
-          (filter.email == undefined || filter.email == null
-            ? ''
-            : '&Email=' + filter.email) +
-          (filter.accountNumber == undefined || filter.accountNumber == null
-            ? ''
-            : '&AccountNumber=' + filter.accountNumber) +
-          (filter.mainLoggingID == undefined || filter.mainLoggingID == null
-            ? ''
-            : '&MainLoggingID=' + filter.mainLoggingID) +
-          (filter.title == undefined || filter.title == null
-            ? ''
-            : '&Title=' + filter.title),
-        _options
-      )
-      .pipe(retry(3), delay(3000));
+    return this._http.get<Result<Paginate<LogsModel[]>>>(
+      this._base +
+        '/Logging?pageIndex=' +
+        pageIndex +
+        '&pageSize=' +
+        pageSize +
+        '&pageOrder=' +
+        pageOrder +
+        (filter.iD == undefined || filter.iD == null
+          ? ''
+          : '&ID=' + filter.iD) +
+        (filter.fromCreateDate == undefined || filter.fromCreateDate == null
+          ? ''
+          : '&FromCreateDate=' + filter.fromCreateDate) +
+        (filter.toCreateDate == undefined || filter.toCreateDate == null
+          ? ''
+          : '&ToCreateDate=' + filter.toCreateDate) +
+        (filter.requestType == undefined || filter.requestType == null
+          ? ''
+          : '&RequestType=' + filter.requestType) +
+        (tableType == undefined || tableType == null
+          ? ''
+          : '&TableType=' + tableType) +
+        (filter.rowID == undefined || filter.rowID == null
+          ? ''
+          : '&RowID=' + filter.rowID) +
+        (filter.isSuccess == undefined || filter.isSuccess == null
+          ? ''
+          : '&IsSuccess=' + filter.isSuccess) +
+        (filter.ipAddress == undefined || filter.ipAddress == null
+          ? ''
+          : '&IpAddress=' + filter.ipAddress) +
+        (filter.userID == undefined || filter.userID == null
+          ? ''
+          : '&UserID=' + filter.userID) +
+        (filter.firstName == undefined || filter.firstName == null
+          ? ''
+          : '&FirstName=' + filter.firstName) +
+        (filter.lastName == undefined || filter.lastName == null
+          ? ''
+          : '&LastName=' + filter.lastName) +
+        (filter.email == undefined || filter.email == null
+          ? ''
+          : '&Email=' + filter.email) +
+        (filter.accountNumber == undefined || filter.accountNumber == null
+          ? ''
+          : '&AccountNumber=' + filter.accountNumber) +
+        (filter.mainLoggingID == undefined || filter.mainLoggingID == null
+          ? ''
+          : '&MainLoggingID=' + filter.mainLoggingID) +
+        (filter.title == undefined || filter.title == null
+          ? ''
+          : '&Title=' + filter.title),
+      _options
+    );
   }
 
   // Get All Logs

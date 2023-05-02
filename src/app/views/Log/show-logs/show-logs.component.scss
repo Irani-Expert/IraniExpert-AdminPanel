@@ -25,3 +25,22 @@ hr {
 .dropdown-menu {
   z-index: 1 !important;
 }
+.margin-top-lg {
+  margin-top: 100.391px;
+}
+input::placeholder {
+  color: #0b1136;
+}
+// input:: .datePicker {
+//   display: none;
+// }
+input:focus {
+  border-color: #ced4da !important;
+  border: 1px solid #ced4da !important;
+  color: #0b1136 !important;
+  box-shadow: none !important;
+  background: #f4f2f2 !important;
+}
+.date-picker:focus {
+  background: #fff !important;
+}

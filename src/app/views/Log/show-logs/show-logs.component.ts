@@ -7,16 +7,65 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { Page } from 'src/app/shared/models/Base/page';
 import { TableType } from '../models/table-typeModel';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCalendar,
+  NgbDateStruct,
+  NgbModal,
+} from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'jalali-moment';
 import { ToastrService } from 'ngx-toastr';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-show-logs',
   templateUrl: './show-logs.component.html',
   styleUrls: ['./show-logs.component.scss'],
+  animations: [
+    trigger('rotate90deg', [
+      state('default', style({ transform: 'rotate(0)' })),
+      state('rotated', style({ transform: 'rotate(-90deg)' })),
+      transition('rotated => default', animate('300ms ease-in-out')),
+      transition('default => rotated', animate('500ms ease-in-out')),
+    ]),
+    // trigger('pushDown', [
+    //   state('default', style({ margin: '0' })),
+    //   state('rotated', style({ margin: '2% 0 0 0' })),
+    //   transition('rotated => default', animate('100ms ease-in-out')),
+    //   transition('default => rotated', animate('300ms ease-in-out')),
+    // ]),
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-40%)', opacity: 0 }),
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'translateY(0%)', opacity: 1 })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms ease-in-out',
+          style({ transform: 'translateY(-40%)', opacity: 0 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class ShowLogsComponent implements OnInit {
+  requestType = null;
+  dropdownRequestTypeTitle: string = 'همه';
+  dropdownPageOrderTitle: string = 'جدیدترین ها';
+  pageOrder: string = 'ID';
+  toCreateDatePicker: NgbDateStruct;
+  fromCreateDate: NgbDateStruct;
+  today = this.calendar.getToday();
+  stateOfChevron: string = 'default';
+  isDivExpanded: boolean = false;
   logDetail: LogsModel = new LogsModel();
   index: number = 0;
   tableTypes: TableType[] = new Array<TableType>();
@@ -32,6 +81,7 @@ export class ShowLogsComponent implements OnInit {
   logRows: LogsModel[] = new Array<LogsModel>();
   isDataFetched: boolean = false;
   constructor(
+    private calendar: NgbCalendar,
     private logService: LogService,
     private modalService: NgbModal,
     private toastr: ToastrService
@@ -41,10 +91,35 @@ export class ShowLogsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setPage(this.page.pageNumber, null);
+    this.filter.isSuccess = true;
+    this.setPage(this.page.pageNumber, this.pageOrder, null, null);
   }
-  setPage(pageToSet: number, tableTypeToSet: number) {
-    this.getLogs(pageToSet, this.page.size, tableTypeToSet, this.filter);
+  toggleFilters() {
+    this.isDivExpanded = !this.isDivExpanded;
+    this.stateOfChevron =
+      this.stateOfChevron === 'default' ? 'rotated' : 'default';
+  }
+  setPage(
+    pageToSet: number,
+    pageOrder: string,
+    requestType: number,
+    tableTypeToSet: number
+  ) {
+    this.filter.requestType = requestType;
+    if (tableTypeToSet !== null) {
+      this.index = tableTypeToSet + 1;
+    }
+    if (tableTypeToSet == null) {
+      this.index = 0;
+    }
+    this.page.pageNumber = pageToSet;
+    this.getLogs(
+      pageToSet,
+      this.page.size,
+      pageOrder,
+      tableTypeToSet,
+      this.filter
+    );
     if (this.tableTypes.length == 0) {
       this.getTableTypes();
     }
@@ -67,33 +142,30 @@ export class ShowLogsComponent implements OnInit {
   getLogs(
     pageIndex: number,
     pageSize: number,
+    pageOrder: string,
     tableType: number,
     filter: FilterModel
   ) {
-    if (tableType !== null) {
-      this.index = tableType + 1;
-    }
-    if (tableType == null) {
-      this.index = 0;
-    }
-    this.page.pageNumber = pageIndex;
     this.logService
       .getLogs(
         pageIndex == 0 ? pageIndex : pageIndex - 1,
         pageSize,
+        pageOrder,
         tableType,
         filter
       )
       .subscribe((data: Result<Paginate<LogsModel[]>>) => {
-        if (data.success) {
+        if (data.success && data.data.totalCount !== 0) {
+          this.logRows = data.data.items;
           this.page.totalPages = data.data.totalPages;
           this.page.totalElements = data.data.totalCount;
-          this.logRows = data.data.items;
           this.isDataFetched = true;
         }
         if (data.data.totalCount == 0) {
-          this.toastr.error('فعالیتی برای این بخش ثبت نشده است', 'خطا !!', {
+          this.logRows = [];
+          this.toastr.show('فعالیتی برای این بخش ثبت نشده است', '', {
             positionClass: 'toast-top-left',
+            toastClass: 'btn-details text-small',
           });
           this.isDataFetched = true;
         }
@@ -107,5 +179,13 @@ export class ShowLogsComponent implements OnInit {
     this.logDetail.jalaliDate = moment(this.logDetail.createDate, 'YYYY/MM/DD')
       .locale('fa')
       .format('YYYY/MM/DD');
+  }
+  sendFilter() {
+    this.setPage(
+      0,
+      this.pageOrder,
+      this.requestType,
+      this.tableTypes[this.index].value
+    );
   }
 }

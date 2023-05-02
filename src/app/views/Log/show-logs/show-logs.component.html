@@ -1,50 +1,340 @@
-<div
-  *ngIf="isDataFetched"
-  ngbDropdown
-  placement="bottom-end"
-  class="d-inline-block m-1 mb-2"
->
-  <button
-    type="button"
-    class="btn btn-details radius py-btns text-small"
-    id="dropdownBasic1"
-    ngbDropdownToggle
-  >
-    {{ tableTypes[index].title }}
-  </button>
-  <div
-    ngbDropdownMenu
-    class="mt-1 shadow-lg radius dropDown-scroll"
-    aria-labelledby="dropdownBasic1"
-    style="height: 300px; overflow: auto"
-  >
-    <button
-      class="text-left btn mt-2"
-      ngbDropdownItem
-      *ngFor="let tableType of tableTypes"
-      (click)="setPage(0, tableType.value)"
+<div class="pb-3 d-flex flex-row row align-items-center">
+  <div class="d-flex row col-10 align-items-center">
+    <strong class="m-1 text-small"
+      ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
+      &nbsp; : &nbsp;</strong
     >
-      <strong>{{ tableType.title }}</strong>
+
+    <!-- TableType -->
+    <strong for="pageOrder" class="text-small"> فعالیت در </strong>
+    <div ngbDropdown placement="bottom-end" class="col-auto">
+      <button
+        type="button"
+        class="btn btn-details radius py-btns text-small"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        {{ tableTypes[index]?.title }}
+      </button>
+      <div
+        ngbDropdownMenu
+        class="mt-1 shadow-lg radius dropDown-scroll"
+        aria-labelledby="dropdownBasic1"
+        style="height: 300px; overflow: auto"
+      >
+        <button
+          class="text-left btn mt-2"
+          ngbDropdownItem
+          *ngFor="let tableType of tableTypes"
+          (click)="setPage(0, 'ID', null, tableType.value)"
+        >
+          <strong class="text-small">{{ tableType.title }}</strong>
+        </button>
+      </div>
+    </div>
+
+    <!-- Request Type -->
+    <strong for="pageOrder" class="text-small">نوع فعالیت</strong>
+    <div ngbDropdown placement="bottom-end" class="col-auto">
+      <button
+        type="button"
+        class="btn btn-details radius w-100 py-btns text-small"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        {{ dropdownRequestTypeTitle }}
+      </button>
+      <div
+        ngbDropdownMenu
+        class="mt-1 shadow-lg radius dropDown-scroll"
+        aria-labelledby="dropdownBasic1"
+      >
+        <button
+          class="text-left btn mt-2 text-small"
+          ngbDropdownItem
+          (click)="
+            requestType = null;
+            setPage(0, 'ID', null, tableTypes[index]?.value);
+            dropdownRequestTypeTitle = 'همه'
+          "
+        >
+          <strong>همه</strong>
+        </button>
+        <button
+          class="text-left btn mt-2 text-small"
+          ngbDropdownItem
+          (click)="
+            requestType = 1;
+            setPage(0, 'ID', 1, tableTypes[index]?.value);
+            dropdownRequestTypeTitle = 'ایجاد'
+          "
+        >
+          <strong>ایجاد</strong>
+        </button>
+        <button
+          class="text-left btn mt-2 text-small"
+          ngbDropdownItem
+          (click)="
+            requestType = 0;
+            setPage(0, 'ID', 0, tableTypes[index]?.value);
+            dropdownRequestTypeTitle = 'ویرایش'
+          "
+        >
+          <strong>ویرایش</strong>
+        </button>
+        <button
+          class="text-left btn mt-2 text-small"
+          ngbDropdownItem
+          (click)="
+            requestType = 2;
+            setPage(0, 'ID', 2, tableTypes[index]?.value);
+            dropdownRequestTypeTitle = 'حذف'
+          "
+        >
+          <strong> حذف</strong>
+        </button>
+      </div>
+    </div>
+
+    <!-- Order -->
+    <!-- <strong for="pageOrder" class="text-small">ترتیب</strong>
+    <div ngbDropdown placement="bottom-end" class="col-auto">
+      <button
+        type="button"
+        class="btn btn-details radius w-100 py-btns text-small"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        {{ dropdownPageOrderTitle }}
+      </button>
+      <div
+        ngbDropdownMenu
+        class="mt-1 shadow-lg radius dropDown-scroll"
+        aria-labelledby="dropdownBasic1"
+      >
+        <button
+          class="text-left btn mt-2 text-small"
+          ngbDropdownItem
+          (click)="
+            pageOrder = 'ID';
+            setPage(0, pageOrder, filter.requestType, tableTypes[index]?.value);
+            dropdownPageOrderTitle = 'جدیدترین ها'
+          "
+        >
+          <strong>جدیدترین ها</strong>
+        </button>
+        <button
+          class="text-left btn mt-2 text-small"
+          ngbDropdownItem
+          (click)="
+            pageOrder = '-ID';
+            setPage(0, pageOrder, filter.requestType, tableTypes[index]?.value);
+            dropdownPageOrderTitle = 'قدیمی ترین ها'
+          "
+        >
+          <strong>قدیمی ترین ها</strong>
+        </button>
+      </div>
+    </div> -->
+
+    <!-- Expand The Div -->
+    <button
+      (click)="toggleFilters()"
+      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
+    >
+      <strong class="text-small mr-1">پیشرفته</strong>
+      <span class="d-inline-flex"
+        ><span
+          class="pi pi-chevron-left ml-1"
+          [@rotate90deg]="stateOfChevron"
+          style="font-size: 0.7rem"
+        ></span
+      ></span>
     </button>
+    <!-- Expand The Div -->
   </div>
 </div>
 
-<!-- <button
-  *ngIf="isDataFetched"
-  class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
->
-  <i class="i-Filter-2 text-dark text-bigger mr-2"></i>
-  <strong class="text-dark ml-2 text-small"> فیلتر</strong>
-</button> -->
+<!-- Hidden Filtering Div -->
 
+<div @slideInOut *ngIf="isDivExpanded">
+  <div class="row d-flex align-items-center">
+    <!-- Inputs -->
+    <input
+      type="text"
+      class="form-control m-1 radius col-lg-2 col-md-4 bg-white text-small"
+      placeholder="نام"
+      [(ngModel)]="filter.firstName"
+    />
+    <span
+      *ngIf="filter.firstName"
+      (click)="filter.firstName = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-lg-2 col-md-4 bg-white text-small"
+      placeholder="نام خانوادگی"
+      [(ngModel)]="filter.lastName"
+    />
+    <span
+      *ngIf="filter.lastName"
+      (click)="filter.lastName = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+      placeholder="عنوان"
+      [(ngModel)]="filter.title"
+    />
+    <span
+      *ngIf="filter.title"
+      (click)="filter.title = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <!-- DatePickers -->
+    <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+      >ایجاد از</strong
+    >
+    <input
+      type="text"
+      placement="bottom-right"
+      autocomplete="off"
+      class="form-control radius m-1 col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+      placeholder=" روز / ماه / سال "
+      [navigation]="'select'"
+      [(ngModel)]="fromCreateDate"
+      [outsideDays]="'collapsed'"
+      ngbDatepicker
+      [footerTemplate]="fromCRTfooterTemplate"
+      #fromCreateDatePicker="ngbDatepicker"
+      (click)="fromCreateDatePicker.toggle()"
+    />
+    <span
+      *ngIf="fromCreateDate"
+      (click)="
+        filter.fromCreateDate = null; fromCreateDate = null; sendFilter()
+      "
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+      >ایجاد تا</strong
+    >
+    <input
+      type="text"
+      [navigation]="'select'"
+      placement="bottom-right"
+      autocomplete="off"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+      [(ngModel)]="toCreateDate"
+      ngbDatepicker
+      [outsideDays]="'collapsed'"
+      [footerTemplate]="toCRTfooterTemplate"
+      #toCreateDatePicker="ngbDatepicker"
+      (click)="toCreateDatePicker.toggle()"
+      placeholder=" روز / ماه / سال "
+    />
+    <span
+      *ngIf="toCreateDate"
+      (click)="filter.fromCreateDate = null; toCreateDate = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <!-- DatePickers -->
+
+    <input
+      [(ngModel)]="filter.userID"
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+      placeholder="شناسه کاربر"
+    />
+    <span
+      *ngIf="filter.userID"
+      (click)="filter.userID = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      [(ngModel)]="filter.rowID"
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="شناسه محصول یا .. "
+    />
+    <span
+      *ngIf="filter.rowID"
+      (click)="filter.rowID = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <!-- <input
+    [(ngModel)]="filter.email"
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="ایمیل"
+    /> 
+   <span
+      *ngIf="filter.email"
+      (click)="filter.email = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>-->
+    <input
+      [(ngModel)]="filter.accountNumber"
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="شماره حساب"
+    />
+    <span
+      *ngIf="filter.accountNumber"
+      (click)="filter.accountNumber = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      [(ngModel)]="filter.ipAddress"
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="آدرس آی پی"
+    />
+    <span
+      *ngIf="filter.ipAddress"
+      (click)="filter.ipAddress = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <div class="mb-1 mr-1">
+      <strong class="m-1 text-small">موفق</strong>
+      <label class="switch switch-primary mr-2 m-2">
+        <strong class="text-small">نا موفق</strong>
+        <input type="checkbox" [(ngModel)]="filter.isSuccess" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
+      (click)="sendFilter()"
+    >
+      <i class="i-Filter-2 text-bigger mr-2"></i>
+      <strong class="text-small">فیلتر </strong>
+    </button>
+  </div>
+</div>
 <div class="row grid-gutter flex-row d-flex justify-content-start mt-3">
+  <!-- [@pushDown]="stateOfChevron" -->
   <ng-container
     *ngFor="
       let item of logRows
         | paginate
           : {
               itemsPerPage: page.size,
-              page: page.pageNumber,
+
               currentPage: page.pageNumber,
               totalItems: page.totalElements
             }
@@ -124,6 +414,7 @@
                 style="font-size: 1.2rem"
               ></span
             ></span>
+
             <strong class="mx-2 text-small"
               >{{ item.tableTypeTitle }} , <br />
               شناسه : {{ item.rowID }}</strong
@@ -148,7 +439,7 @@
               ><span class="pi pi-clock" style="font-size: 1.2rem"></span
             ></span>
             <strong class="mx-2 text-small">
-              {{ item.createDate | date }}
+              {{ item.createDate | date : "  h:mm , MMMM /d " }}
             </strong>
           </div>
         </li>
@@ -156,10 +447,11 @@
     </div>
   </ng-container>
 </div>
-
-<div class="col-md-12 mt-3" *ngIf="logRows?.length > 0">
+<div class="col-md-12 mt-3" *ngIf="logRows?.length > page.size">
   <pagination-controls
-    (pageChange)="setPage($event, tableTypes[index].value)"
+    (pageChange)="
+      setPage($event, pageOrder, filter.request, tableTypes[index].value)
+    "
     previousLabel=""
     nextLabel=""
     responsive="true"
@@ -190,57 +482,66 @@
   <div class="modal-body">
     <div class="row mt-3">
       <div class="col-12 form-group mb-3">
-        <strong for="totalPrice" class="mb-3">شناسه‌ی کابر</strong>
+        <strong for="totalPrice" class="mb-3 text-small">شناسه‌ی کاربر</strong>
         <input
-          class="form-control mt-1"
+          class="form-control mt-1 text-small"
           value="{{ logDetail.userID }}"
           disabled
         />
       </div>
       <div class="col-12 form-group mb-3">
-        <strong for="totalPrice" class="mb-3">ایمیل</strong>
+        <strong for="totalPrice" class="mb-3 text-small">توضیحات</strong>
+        <textarea
+          class="form-control mt-1 text-small"
+          value="{{ logDetail.description }}"
+          disabled
+          rows="6"
+        ></textarea>
+      </div>
+      <div class="col-12 form-group mb-3">
+        <strong for="totalPrice" class="mb-3 text-small">ایمیل</strong>
         <input
-          class="form-control mt-1"
+          class="form-control mt-1 text-small"
           value="{{ logDetail.email }}"
           disabled
         />
       </div>
       <div class="col-12 form-group mb-3">
-        <strong for="totalPrice" class="mb-3">شماره تماس</strong>
+        <strong for="totalPrice" class="mb-3 text-small">شماره تماس</strong>
         <input
-          class="form-control mt-1"
+          class="form-control mt-1 text-small"
           value="{{ logDetail.phoneNumber }}"
           disabled
         />
       </div>
       <div class="col-12 form-group mb-3">
-        <strong for="totalPrice" class="mb-3">کد معرف</strong>
+        <strong for="totalPrice" class="mb-3 text-small">کد معرف</strong>
         <input
-          class="form-control mt-1"
+          class="form-control mt-1 text-small"
           value="{{ logDetail.referralCode }}"
           disabled
         />
       </div>
       <div class="col-12 form-group mb-3">
-        <strong for="totalPrice" class="mb-3">آدرس آی پی</strong>
+        <strong for="totalPrice" class="mb-3 text-small">آدرس آی پی</strong>
         <input
-          class="form-control mt-1"
+          class="form-control mt-1 text-small"
           value="{{ logDetail.ipAddress }}"
           disabled
         />
       </div>
       <div class="col-12 form-group mb-3">
-        <strong for="totalPrice" class="mb-3">تاریخ شمسی</strong>
+        <strong for="totalPrice" class="mb-3 text-small">تاریخ شمسی</strong>
         <input
-          class="form-control mt-1"
+          class="form-control mt-1 text-small"
           value="{{ logDetail.jalaliDate }}"
           disabled
         />
       </div>
       <div class="col-12 form-group mb-3">
-        <strong for="totalPrice" class="mb-3">وضعیت فعالیت</strong>
+        <strong for="totalPrice" class="mb-3 text-small">وضعیت فعالیت</strong>
         <input
-          class="form-control mt-1"
+          class="form-control mt-1 text-small"
           [value]="logDetail.isSuccess ? 'موفق' : 'ناموفق'"
           [ngClass]="{
             'btn-save': logDetail.isSuccess,
@@ -252,3 +553,27 @@
     </div>
   </div>
 </ng-template>
+
+<!-- From CreateDate DatePicker Footer -->
+<ng-template #fromCRTfooterTemplate>
+  <hr class="my-0" />
+  <button
+    class="btn btn-add btn-sm m-2"
+    (click)="fromCreateDate = today; fromCreateDatePicker.toggle()"
+  >
+    امروز
+  </button>
+</ng-template>
+<!-- From CreateDate DatePicker Footer -->
+
+<!-- To CreateDate DatePicker Footer -->
+<ng-template #toCRTfooterTemplate>
+  <hr class="my-0" />
+  <button
+    class="btn btn-primary btn-sm m-2 float-start"
+    (click)="toCreateDate = today; toCreateDatePicker.toggle()"
+  >
+    امروز
+  </button>
+</ng-template>
+<!-- To CreateDate DatePicker Footer -->
