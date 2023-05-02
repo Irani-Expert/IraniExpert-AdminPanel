@@ -30,6 +30,7 @@
   <a
     type="button"
     (click)="OpenModal(addLog)"
+    *appCanAccess="'Log-Add'" 
     class="btn-add btn text-small d-inline-flex justify-content-around py-btns radius align-items-center m-1 mb-2"
     ><i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong></a
   >
@@ -49,6 +50,7 @@
          
               <div class="collapsible-header " (click)="editModal(edit,node.id)">
                 <button
+                *appCanAccess="'Log-Edit'" 
                 ngbTooltip=" ویرایش"
                 [openDelay]="50"
                 [closeDelay]="150"
@@ -70,6 +72,7 @@
             >
               <button
                 ngbTooltip=" حذف"
+                *appCanAccess="'Log-Delete'" 
                 [openDelay]="50"
                 [closeDelay]="150"
                 placement="bottom"

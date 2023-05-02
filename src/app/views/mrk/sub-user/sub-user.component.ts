@@ -11,6 +11,7 @@ import { Utils } from 'src/app/shared/utils';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { ViewportScroller } from '@angular/common';
 @Component({
   selector: 'app-sub-user',
   templateUrl: './sub-user.component.html',
@@ -66,21 +67,29 @@ export class SubUserComponent implements OnInit {
     private _subservice: SubUserService,
     private _auth: AuthenticateService,
     public router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private scroller: ViewportScroller,
   ) {}
 
   public treeNodes: TreeNode[] = [];
 
   ngOnInit() {
+
     if (Utils.isMobile()) {
       this.toastr.warning('لطفا گوشی را به صورت عمودی بچرخانید', null, {
         closeButton: true,
         positionClass: 'toast-top-left',
       });
     }
-    this.userId = this._auth.currentUserValue.userID;
+    this.userId =54;
     this.opendList.push(this.userId);
     this.getUnderUsers(this.userId);
+    setTimeout(function(){
+      document.getElementById("54").scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });     }, 400);
   }
 
   getUnderUsers(userId: number) {
@@ -166,6 +175,7 @@ export class SubUserComponent implements OnInit {
         );
 
     this.treeNodes = nest(treeSearchResponses);
+
   }
 
   onNodeSelected(n): void {}

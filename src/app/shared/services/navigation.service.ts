@@ -65,7 +65,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Eye',
       state: '/log-info',
-      privilege: 'Dashboard-Full Premission',
+      privilege: 'Log-Full Premission',
     },
     {
       name: 'پروفایل من',
