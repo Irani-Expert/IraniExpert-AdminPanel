@@ -164,8 +164,7 @@ export class LogService extends BaseService<AllCheckingLog, number> {
             ? ''
             : '&Title=' + filter.title),
         _options
-      )
-      .pipe(retry(3), delay(3000));
+      )    
   }
 
   // Get All Logs
