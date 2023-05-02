@@ -277,8 +277,7 @@
     </tbody>
   </table>
 </section>
-
-<div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+<div class="col-md-12 mt-3" *ngIf="page.totalElements> 6">
   <pagination-controls
     (pageChange)="setPage($event, this.status)"
     previousLabel=""

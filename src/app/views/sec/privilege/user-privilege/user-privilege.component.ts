@@ -132,6 +132,8 @@ export class UserPrivilegeComponent implements OnInit {
   async getPrivilageList() {
     this._privilegeService.get(0, 100, 'ID', null, 'Privilege').subscribe(
       (res: Result<Paginate<PrivilegeModel[]>>) => {
+        debugger
+
         this.privilages = [];
         res.data.items.forEach((it) => {
           it.child = new Array<PrivilegeModel>();
@@ -140,14 +142,19 @@ export class UserPrivilegeComponent implements OnInit {
           );
           //let x=res.data.items.findIndex(index=>index.parentID==it.id)
           it.child.forEach((y) => {
-            this.privilages.splice(
-              this.privilages.findIndex((ide) => ide.id == y.id),
-              1
-            );
+            var finder=this.privilages.findIndex((ide) => ide.id == y.id)
+            if(finder!=-1){
+              this.privilages.splice(
+                finder,
+                1
+              );
+            }
+         
           });
+          
           this.privilages.push(it);
         });
-
+        debugger
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber + 1;

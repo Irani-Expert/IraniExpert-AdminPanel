@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center scrollable h-main" dir="ltr">
+<div class="d-flex scrollable h-main " dir="ltr" #viewport>
   <p-organizationChart
     [value]="treeNodes"
     selectionMode="single"
@@ -6,15 +6,17 @@
     (onNodeExpand)="testonNodeExpand($event)"
     (onNodeCollapse)="onNodedeSelected($event)"
     class="zoom-out"
+    #viewBox
   >
     <ng-template let-node pTemplate="person">
       <!-- <div> <div id="main">
         <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" >
       </div></div> -->
-      <section class="main">
+      <section class="main" >
         <div class="profile-card">
           <div class="image">
-            <img
+            <img 
+            id={{node.id}}
               src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
             />
           </div>
@@ -79,3 +81,4 @@
     </ng-template>
   </p-organizationChart>
 </div>
+

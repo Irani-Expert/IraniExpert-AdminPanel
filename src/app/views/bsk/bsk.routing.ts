@@ -16,11 +16,7 @@ const routes: Routes = [
     component: UserOrderComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'commission',
-    component: CommissionComponent,
-    canActivate: [AuthGuard],
-  },
+
 ];
 
 @NgModule({

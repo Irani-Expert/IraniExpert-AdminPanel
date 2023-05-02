@@ -13,6 +13,7 @@ import { UserPrivilegeComponent } from './privilege/user-privilege/user-privileg
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { PermissionsComponent } from './permissions/permissions.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     UserRoleComponent,
     PrivilegeComponent,
     UserPrivilegeComponent,
+    PermissionsComponent,
   ],
   imports: [
     NgxPaginationModule,

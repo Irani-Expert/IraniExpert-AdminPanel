@@ -16,9 +16,11 @@ import { SubUserComponent } from './sub-user/sub-user.component';
 import {AccordionModule} from 'primeng/accordion';
 import { DragScrollModule } from 'ngx-drag-scroll';
 //accordion and accordion tab
-import {MenuItem} from 'primeng/api';    
+import {MenuItem} from 'primeng/api';
+import { SubListProfitComponent } from './sub-list-profit/sub-list-profit.component';    
+import { CommissionComponent } from '../bsk/commission/commission.component';
 @NgModule({
-  declarations: [SubUserComponent,],
+  declarations: [SubUserComponent, SubListProfitComponent,CommissionComponent],
   imports: [
     AccordionModule,
     DragScrollModule,
@@ -30,6 +32,7 @@ import {MenuItem} from 'primeng/api';
     ReactiveFormsModule,
     OrganizationChartModule,
     HttpClientModule,
+    SharedDirectivesModule,
 
  
   ]

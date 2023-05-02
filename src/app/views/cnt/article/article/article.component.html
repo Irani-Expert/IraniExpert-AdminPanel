@@ -101,7 +101,7 @@
 </section>
 
 <!-- PAGINATION CONTROL -->
-<div class="mt-3" *ngIf="rows?.length > 0">
+<div class="mt-3" *ngIf="page.totalElements > page.size">
   <pagination-controls
     (pageChange)="setPage($event)"
     previousLabel=""

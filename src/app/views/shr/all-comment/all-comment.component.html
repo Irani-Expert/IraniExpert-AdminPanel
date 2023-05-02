@@ -116,7 +116,7 @@
   </div>
 </div>
 
-<div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+<div class="col-md-12 mt-3" *ngIf="page.totalElements > page.size">
   <pagination-controls
     (pageChange)="setPage($event, this.tableType)"
     previousLabel=""

@@ -31,7 +31,7 @@ import { CommissionComponent } from './commission/commission.component';
     UserOrderComponent,
     // LicenseUpdateComponent, //Deleted
 
-    CommissionComponent,
+    // CommissionComponent,
   ],
   imports: [
     NgbModule,

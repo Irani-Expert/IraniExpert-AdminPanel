@@ -1,11 +1,11 @@
-<!-- <button
+<button
   *appCanAccess="'privilege-Add'"
   type="button"
   class="btn btn-primary mb-4"
   (click)="addorEdit(addUpdateModal, undefined)"
 >
   ایجاد
-</button> -->
+</button> 
 <div class="separator-breadcrumb border-top"></div>
 <div class="row d-md-flex flex-row justify-content-md-start">
   <div
@@ -61,7 +61,7 @@
     </div>
   </div>
 </div>
-<div class="col-md-12 mt-3" *ngIf="rows?.length > 0">
+<div class="col-md-12 mt-3" *ngIf="page.totalElements > page.size">
   <pagination-controls
     (pageChange)="setPage($event)"
     previousLabel=""

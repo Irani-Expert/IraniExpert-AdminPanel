@@ -84,7 +84,7 @@
   </div>
 </div>
 
-<div class="mt-5" *ngIf="rows?.length > 0">
+<div class="mt-5" *ngIf="page.totalElements > page.size">
   <pagination-controls
     (pageChange)="setPage($event, currentTableType)"
     previousLabel=""

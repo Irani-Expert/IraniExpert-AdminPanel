@@ -30,6 +30,7 @@
   <a
     type="button"
     (click)="OpenModal(addLog)"
+    *appCanAccess="'Log-Add'" 
     class="btn-add btn text-small d-inline-flex justify-content-around py-btns radius align-items-center m-1 mb-2"
     ><i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong></a
   >
@@ -46,8 +47,10 @@
               (change)="onCheckboxChange($event,node.id)"  />
               {{ node.label }}</div>
             <div class="row">
+         
               <div class="collapsible-header " (click)="editModal(edit,node.id)">
                 <button
+                *appCanAccess="'Log-Edit'" 
                 ngbTooltip=" ویرایش"
                 [openDelay]="50"
                 [closeDelay]="150"
@@ -69,6 +72,7 @@
             >
               <button
                 ngbTooltip=" حذف"
+                *appCanAccess="'Log-Delete'" 
                 [openDelay]="50"
                 [closeDelay]="150"
                 placement="bottom"
@@ -87,6 +91,19 @@
               </button>
 
             </div>
+            <div class="collapsible-header ">     <button
+              ngbTooltip="توضیحات"
+              [openDelay]="50"
+              [closeDelay]="150"
+              style="width: 32px; height: 32px"
+              class="btn-details btn rounded-circle d-flex justify-content-center m-1"
+              (click)="openDescriptionModal(description,node.id)"
+            >
+              <i
+                class="i-Information fix-to-center"
+                style="font-size: 1.2rem"
+              ></i>
+            </button></div>
                <div  class="collapsible-header">
                 <span
                 [openDelay]="50"
