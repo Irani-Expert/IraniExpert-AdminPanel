@@ -34,7 +34,10 @@ export class CommissionComponent implements OnInit {
       if (thing.data.header) {
         this.isLoaded = true;
       }
-      this.page.totalElements = thing.data.orders.length;
+      if(thing.data.orders!=null){
+        this.page.totalElements = thing.data.orders.length;
+
+      }
     });
   }
   setPage(_pageNumber: number) {
