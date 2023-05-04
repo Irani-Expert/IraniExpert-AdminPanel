@@ -77,7 +77,7 @@ export class ShowLogsComponent implements OnInit {
     isFilled: boolean;
   }>;
   filter: FilterModel = new FilterModel();
-  filterHolder: FilterModel;
+  filterHolder: string[];
   page: Page = new Page();
   logRows: LogsModel[] = new Array<LogsModel>();
   isDataFetched: boolean = false;
@@ -161,7 +161,6 @@ export class ShowLogsComponent implements OnInit {
           this.page.totalPages = data.data.totalPages;
           this.page.totalElements = data.data.totalCount;
           this.isDataFetched = true;
-          this.isFilterBtn = false;
         }
         if (data.data.totalCount == 0) {
           this.logRows = [];

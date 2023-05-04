@@ -12,7 +12,7 @@ import {
 import { TableType } from './models/table-typeModel';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
-import { Observable, delay, retry } from 'rxjs';
+import { Observable, delay, repeat, retry } from 'rxjs';
 import { LogsModel } from './models/logs.model';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 
@@ -166,6 +166,9 @@ export class LogService extends BaseService<Object, number> {
           : '&Title=' + filter.title),
       _options
     );
+    // .pipe(repeat({
+    //   delay: 1000,
+    // }),)
   }
 
   // Get All Logs
