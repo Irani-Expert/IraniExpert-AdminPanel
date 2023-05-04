@@ -132,7 +132,6 @@ export class UserPrivilegeComponent implements OnInit {
   async getPrivilageList() {
     this._privilegeService.get(0, 100, 'ID', null, 'Privilege').subscribe(
       (res: Result<Paginate<PrivilegeModel[]>>) => {
-        debugger
 
         this.privilages = [];
         res.data.items.forEach((it) => {
@@ -154,7 +153,6 @@ export class UserPrivilegeComponent implements OnInit {
           
           this.privilages.push(it);
         });
-        debugger
         this.page.totalElements = res.data.totalCount;
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber + 1;

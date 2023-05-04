@@ -81,15 +81,16 @@ export class SubUserComponent implements OnInit {
         positionClass: 'toast-top-left',
       });
     }
-    this.userId =54;
+    this.userId=54
     this.opendList.push(this.userId);
     this.getUnderUsers(this.userId);
+    var strUserId=String(this.userId)
     setTimeout(function(){
-      document.getElementById("54").scrollIntoView({
+      document.getElementById(strUserId).scrollIntoView({
         behavior: "smooth",
         block: "center",
         inline: "center",
-      });     }, 400);
+      });     }, 500);
   }
 
   getUnderUsers(userId: number) {
