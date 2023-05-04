@@ -241,7 +241,7 @@
     />
     <span
       *ngIf="toCreateDate"
-      (click)="filter.fromCreateDate = null; toCreateDate = null; sendFilter()"
+      (click)="filter.toCreateDate = null; toCreateDate = null; sendFilter()"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -319,7 +319,7 @@
       type="button"
       ngbAutofocus
       class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
-      (click)="sendFilter()"
+      (click)="isFilterBtn = true; sendFilter()"
     >
       <i class="i-Filter-2 text-bigger mr-2"></i>
       <strong class="text-small">فیلتر </strong>
