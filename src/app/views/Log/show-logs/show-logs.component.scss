@@ -9,19 +9,7 @@ hr {
   margin-top: 1.3rem;
   margin-bottom: 1.3rem;
 }
-.dropDown-scroll::-webkit-scrollbar {
-  width: 6px;
-  margin-top: 2px;
-  background: #fff;
-  border-radius: 0 0 0 6px;
-}
-.dropDown-scroll::-webkit-scrollbar-thumb {
-  background: #5e6a69;
-  border-radius: 10px;
-}
-.dropDown-scroll::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
+
 .dropdown-menu {
   z-index: 1 !important;
 }
@@ -40,7 +28,4 @@ input:focus {
   color: #0b1136 !important;
   box-shadow: none !important;
   background: #f4f2f2 !important;
-}
-.date-picker:focus {
-  background: #fff !important;
 }

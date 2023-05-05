@@ -6,6 +6,14 @@
 ></div>
 <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-2">
   <button
+  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mr-2"
+  type="button"
+  (click)="openAddModal(AddOrderModal)"
+>
+  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
+</button>
+
+  <button
     type="button"
     class="btn btn-details radius py-btns text-small"
     id="dropdownBasic1"
@@ -29,21 +37,326 @@
   </div>
 </div>
 
-<button
-  (click)="openFilterModal(filterModal)"
-  class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
->
-  <i class="i-Filter-2 text-dark text-bigger mr-2"></i>
-  <strong class="text-dark ml-2 text-small"> فیلتر</strong>
-</button>
+<div class="pb-3 d-flex flex-row row align-items-center">
 
-<button
-  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center add-btn"
-  type="button"
-  (click)="openAddModal(AddOrderModal)"
+  <div class="d-flex row col-10 align-items-center">
+    <strong class="m-1 text-small"
+      ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
+      &nbsp; : &nbsp;</strong
+    >
+
+    
+    <strong>محصول</strong>
+    <!-- TableType -->
+    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-2">
+      <button
+        type="button"
+        class="btn btn-details radius py-btns text-small"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+      {{productTitle}}
+      </button>
+      <div
+        ngbDropdownMenu
+        class="mt-1 shadow-lg radius"
+        aria-labelledby="dropdownBasic1"
+      >
+        <button
+          class="text-left btn"
+          ngbDropdownItem
+          *ngFor="let item of productList"
+          (click)="setProductId(item.id,item.title)"
+        >
+          <strong>{{ item.title }}</strong>
+        </button>
+      </div>
+    </div>
+    <strong>پلن محصول</strong>
+    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-2">
+      <button
+        type="button"
+        class="btn btn-details radius py-btns text-small"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+      {{planTitle}}
+      </button>
+      <div
+        ngbDropdownMenu
+        class="mt-1 shadow-lg radius"
+        aria-labelledby="dropdownBasic1"
+        *ngIf="plans.length!=0"
+      >
+        <button
+          class="text-left btn"
+          ngbDropdownItem
+          *ngFor="let item of plans"
+          (click)="setPlan(item.id,item.title)"
+        >
+          <strong>{{ item.title }}</strong>
+        </button>
+      </div>
+      <div
+      ngbDropdownMenu
+      class="mt-1 shadow-lg radius"
+      aria-labelledby="dropdownBasic1"
+      *ngIf="plans.length==0"
+    >
+    <div class="m-2 text-center">    ابتدا محصول را انتخاب
+    </div>
+    </div>
+    </div>
+    <!-- <strong for="pageOrder" class="text-small"> پلن محصول</strong>
+    <div ngbDropdown placement="bottom-end" class="col-auto">
+      <button
+        type="button"
+        class="btn btn-details radius py-btns text-small"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+        *ngFor="let item of plans"
+        (click)="setProductId(item.id)"    
+          >
+      {{ item.title }}
+    </button>
+    
+    </div> -->
+    <button
+    (click)="toggleFilters()"
+      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
+    >
+      <strong class="text-small mr-1">پیشرفته</strong>
+      <span class="d-inline-flex"
+        ><span
+          class="pi pi-chevron-left ml-1"
+          [@rotate90deg]="stateOfChevron"
+          style="font-size: 0.7rem"
+        ></span
+      ></span>
+    </button>
+    <!-- Expand The Div -->
+  </div>
+</div>
+<div @slideInOut *ngIf="isDivExpanded">
+    <div class="row d-flex align-items-center">
+  <input
+  type="text"
+  class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+  placeholder="Id"
+  [(ngModel)]="filterModel.iD"
+
+/>
+<span
+  *ngIf="filterModel.iD"
+  (click)="filterModel.iD = null; sendFilter()"
+  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+  ><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+placeholder="ایدی کاربر"
+[(ngModel)]="filterModel.userID"
+/>
+
+ 
+<span
+*ngIf="filterModel.userID"
+(click)="filterModel.userID = null; filterdata()"
+    class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+    ><span class="pi pi-times" style="font-size: 0.7rem"></span
+  ></span>
+
+
+  <input
+  type="text"
+  class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+  placeholder="نام"
+  [(ngModel)]="filterModel.firstName"
+/>
+<span
+  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterModel.firstName"
+(click)="filterModel.firstName = null;"
+  ><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="نام خانوادگی"
+[(ngModel)]="filterModel.lastName"
+/>
+<span
+  *ngIf="filterModel.lastName"
+  (click)="filterModel.lastName = null;"
+  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+  ><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+placeholder="شماره حساب"
+[(ngModel)]="filterModel.accountNumber"
+/>
+
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterModel.accountNumber"
+(click)="filterModel.accountNumber = null; "
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
+
+
+
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>تا تاریخ ثبت</strong
 >
-  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
-</button>
+<input
+type="text"
+[navigation]="'select'"
+#TCrtDateStatus="ngbDatepicker"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="TCrtDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+#toCreateDatePicker="ngbDatepicker"
+(click)="TCrtDateStatus.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>تا تاریخ ثبت از</strong
+>
+<input
+type="text"
+[navigation]="'select'"
+#FCrtDateStatus="ngbDatepicker"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="FCrtDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+#toCreateDatePicker="ngbDatepicker"
+(click)="FCrtDateStatus.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>تا ریخ شروع لایسنس</strong
+>
+<input
+type="text"
+[navigation]="'select'"
+#FStrDateStatus="ngbDatepicker"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="FStrDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+#toCreateDatePicker="ngbDatepicker"
+(click)="FStrDateStatus.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>تاریخ شروع لایسینس تا</strong
+>
+<input
+type="text"
+[navigation]="'select'"
+#TStrDateStatus="ngbDatepicker"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="TStrDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+#toCreateDatePicker="ngbDatepicker"
+(click)="TStrDateStatus.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>تااریخ پایان لایسنس از</strong
+>
+<input
+type="text"
+[navigation]="'select'"
+#FExpDateStatus="ngbDatepicker"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="FExpDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+#toCreateDatePicker="ngbDatepicker"
+(click)="FExpDateStatus.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>تاریخ پایان لایسنس تا</strong
+>
+<input
+type="text"
+[navigation]="'select'"
+#TExpDateStatus="ngbDatepicker"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="TExpDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+#toCreateDatePicker="ngbDatepicker"
+(click)="TExpDateStatus.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+
+
+
+
+
+
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+placeholder="کد"
+[(ngModel)]="filterModel.code"
+/>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+placeholder="نسخه لایسنس"
+[(ngModel)]="filterModel.versionNumber"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterModel.code"
+(click)="filterModel.code = null;"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
+
+
+
+  <button
+    type="button"
+    ngbAutofocus
+    class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
+    (click)="filterdata()"
+  >
+    <i class="i-Filter-2 text-bigger mr-2"></i>
+    <strong class="text-small">فیلتر </strong>
+  </button>
+</div></div>
+
 
 <div
   class="flex-row row g-0 d-flex justify-content-start align-items-center mb-1"

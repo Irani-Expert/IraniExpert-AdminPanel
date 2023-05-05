@@ -239,23 +239,23 @@ td {
   position: absolute;
 }
 
-.btn-filter {
-  color: #e9e1e1 !important;
-  background-color: #e5dbdef4;
-  transition: all 0.15s ease-in-out;
-}
-.btn-filter:hover {
-  background-color: #797576f4;
-  transition: all 0.15s ease-in-out;
-}
-.btn-filter i {
-  margin: 0;
-  transition: all 0.15s ease-in-out;
-}
-.btn-filter:hover i {
-  margin-top: 1.75px !important;
-  transition: all 0.15s ease-in-out;
-}
+// .btn-filter {
+//   color: #e9e1e1 !important;
+//   background-color: #e5dbdef4;
+//   transition: all 0.15s ease-in-out;
+// }
+// .btn-filter:hover {
+//   background-color: #797576f4;
+//   transition: all 0.15s ease-in-out;
+// }
+// .btn-filter i {
+//   margin: 0;
+//   transition: all 0.15s ease-in-out;
+// }
+// .btn-filter:hover i {
+//   margin-top: 1.75px !important;
+//   transition: all 0.15s ease-in-out;
+// }
 .btn-scale-1 {
   transition: transform 0.15s ease-in-out;
 }
@@ -287,10 +287,7 @@ input[type="checkbox"] {
   width: 0;
   //  visibility: hidden;
 }
-.add-btn {
-  position: absolute;
-  left: 2%;
-}
+
 .activeOrder label {
   cursor: pointer;
   //text-indent: -9999px;

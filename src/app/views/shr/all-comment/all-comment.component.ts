@@ -10,11 +10,47 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { CommentModel } from 'src/app/shared/models/comment.model';
 import { CommentService } from 'src/app/views/shr/all-comment/comment.service';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-all-comment',
   templateUrl: './all-comment.component.html',
   styleUrls: ['./all-comment.component.scss'],
+  animations: [
+    trigger('rotate90deg', [
+      state('default', style({ transform: 'rotate(0)' })),
+      state('rotated', style({ transform: 'rotate(-90deg)' })),
+      transition('rotated => default', animate('300ms ease-in-out')),
+      transition('default => rotated', animate('500ms ease-in-out')),
+    ]),
+    // trigger('pushDown', [
+    //   state('default', style({ margin: '0' })),
+    //   state('rotated', style({ margin: '2% 0 0 0' })),
+    //   transition('rotated => default', animate('100ms ease-in-out')),
+    //   transition('default => rotated', animate('300ms ease-in-out')),
+    // ]),
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-40%)', opacity: 0 }),
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'translateY(0%)', opacity: 1 })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms ease-in-out',
+          style({ transform: 'translateY(-40%)', opacity: 0 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class AllCommentComponent implements OnInit {
   tableTypeTitles = [
@@ -24,11 +60,15 @@ export class AllCommentComponent implements OnInit {
   dropDownTitleHolder: string = 'مقالات';
   ExpDate: any;
   CrtDate: any;
+  rateNumber: number[] = [1,2,3,4,5]; 
+  rateText:string='انخاب نشده';
+  isDivExpanded: boolean = false;
 
   tableType: number;
   filter: FilterModel = new FilterModel();
   rows: CommentModel[] = new Array<CommentModel>();
   page: Page = new Page();
+  stateOfChevron: string = 'default';
   parentComment: CommentModel = new CommentModel();
   replyText: string = null;
   currentRate: number = 2;
@@ -44,7 +84,6 @@ export class AllCommentComponent implements OnInit {
     this.page.size = 6;
   }
 
-  setRate(contnt: any) {}
 
   ngOnInit(): void {
     this.setPage(this.page.pageNumber, 1);
@@ -72,7 +111,9 @@ export class AllCommentComponent implements OnInit {
   ) {
     this.tableType = tableType;
     let finder = this.tableTypeTitles.findIndex((item) => item.id == tableType);
-    this.dropDownTitleHolder = this.tableTypeTitles[finder].title;
+    if(finder!=-1){
+      this.dropDownTitleHolder = this.tableTypeTitles[finder].title;
+    }
     this._commentService
       .GetAllComment(
         pageNumber !== 0 ? pageNumber - 1 : pageNumber,
@@ -202,37 +243,39 @@ export class AllCommentComponent implements OnInit {
     this.getCommentList(this.page.pageNumber, this.tableType, this.filter);
   }
 
-  openFilterModal(content: any) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
-      .result.then(
-        (result) => {
-          if (this.filterModel.rate != null) {
-            this.filterModel.rate = Number(this.filterModel.rate);
-          }
 
-          if (this.ExpDate != null) {
-            this.filterModel.toCreateDate =
-              this.ExpDate.year +
-              '-' +
-              this.ExpDate.month +
-              '-' +
-              this.ExpDate.day;
-          }
-          if (this.CrtDate != null) {
-            this.filterModel.fromCreateDate =
-              this.CrtDate.year +
-              '-' +
-              this.CrtDate.month +
-              '-' +
-              this.CrtDate.day;
-          }
-          this.getCommentList(0, 10, this.filterModel);
-          this.filter = new FilterModel();
-        },
-        (reason) => {
-          this.filter = new FilterModel();
-        }
-      );
+  sendFilter(){
+    if (this.filterModel.rate != null) {
+      this.filterModel.rate = Number(this.filterModel.rate);
+    }
+
+    if (this.ExpDate != null) {
+      this.filterModel.toCreateDate =
+        this.ExpDate.year +
+        '-' +
+        this.ExpDate.month +
+        '-' +
+        this.ExpDate.day;
+    }
+    if (this.CrtDate != null) {
+      this.filterModel.fromCreateDate =
+        this.CrtDate.year +
+        '-' +
+        this.CrtDate.month +
+        '-' +
+        this.CrtDate.day;
+    }
+    this.getCommentList(0, 10, this.filterModel);
+    this.filter = new FilterModel();
   }
+  setRate(rate:number){
+    this.filterModel.rate=rate
+    this.rateText=String(rate)
+    this.sendFilter()
+    }
+    toggleFilters() {
+      this.isDivExpanded = !this.isDivExpanded;
+      this.stateOfChevron =
+        this.stateOfChevron === 'default' ? 'rotated' : 'default';
+    }
 }

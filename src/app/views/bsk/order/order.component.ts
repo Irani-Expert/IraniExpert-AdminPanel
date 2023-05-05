@@ -32,11 +32,46 @@ import { number } from 'echarts';
 import { UsersModel } from '../../sec/user-mangement/users.model';
 import { ProductService } from '../../prd/products-list/product.service';
 import { log } from 'console';
-
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+} from '@angular/animations';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss'],
+  animations: [
+    trigger('rotate90deg', [
+      state('default', style({ transform: 'rotate(0)' })),
+      state('rotated', style({ transform: 'rotate(-90deg)' })),
+      transition('rotated => default', animate('300ms ease-in-out')),
+      transition('default => rotated', animate('500ms ease-in-out')),
+    ]),
+    // trigger('pushDown', [
+    //   state('default', style({ margin: '0' })),
+    //   state('rotated', style({ margin: '2% 0 0 0' })),
+    //   transition('rotated => default', animate('100ms ease-in-out')),
+    //   transition('default => rotated', animate('300ms ease-in-out')),
+    // ]),
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-40%)', opacity: 0 }),
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'translateY(0%)', opacity: 1 })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms ease-in-out',
+          style({ transform: 'translateY(-40%)', opacity: 0 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class OrderComponent implements OnInit {
   pageIsLoad: boolean = false;
@@ -54,6 +89,8 @@ export class OrderComponent implements OnInit {
     { title: 'رد شده', id: 5 },
     { title: 'فعال', id: 9 },
   ];
+  isDivExpanded: boolean = false;
+  stateOfChevron: string = 'default';
   dropDownTitleHolder: string = 'نهایی';
   FExpDate: any;
   TExpDate: any;
@@ -61,6 +98,8 @@ export class OrderComponent implements OnInit {
   TCrtDate: any;
   FStrDate: any;
   TStrDate: any;
+  planTitle:string="انتخاب کنید";
+  productTitle:string="انتخاب کنید";
   filtered: boolean = false;
   filter: FilterModel = new FilterModel();
   licenseID: number;
@@ -179,6 +218,7 @@ export class OrderComponent implements OnInit {
       .get(0, null, 'ID', null, 'Product')
       .subscribe((res) => {
         this.productList = res.data.items;
+        debugger
         this.AddproductModel = res.data.items;
       });
   }
@@ -875,6 +915,12 @@ export class OrderComponent implements OnInit {
         .getPlanByProductId(this.filterModel.productID)
         .subscribe((res) => {
           if (res.success == true) {
+            let PlanIndex = this.filters.findIndex((filter) => {
+              return filter.label === 'پلن';
+            });
+            this.sortDeletedPart('planID',PlanIndex)
+            this.plans=[]
+            this.planTitle = "انتخاب کنید";
             this.plans = res.data;
             if (res.data[0]) {
               this.filterModel.planID = res.data[0].id;
@@ -889,11 +935,32 @@ export class OrderComponent implements OnInit {
     }
   }
   deleteFilter(item: any) {
-    let tempIndex = this.filters.findIndex((filter) => {
-      return filter.title === item.title;
-    });
-    this.filters.splice(tempIndex, 1);
-    this.filter[item.id] = null;
+   
+    if(item.label=='محصول' ){
+      this.productTitle = "انتخاب کنید";
+      this.planTitle = "انتخاب کنید";
+      delete this.filterModel.planID
+      this.plans=[]
+      delete this.filterModel.productID
+      let PlanIndex = this.filters.findIndex((filter) => {
+        return filter.label === 'پلن';
+      });
+      this.sortDeletedPart('planID',PlanIndex)
+    }
+    if(item.label=='پلن'){
+      this.planTitle = "انتخاب کنید";
+      delete this.filterModel.planID
+    }
+  
+  let tempIndex = this.filters.findIndex((filter) => {
+    return filter.title === item.title;
+  });
+   this.sortDeletedPart(item.id,tempIndex)
+    }
+    sortDeletedPart(id:string,tempIndex:number){
+
+      this.filters.splice(tempIndex, 1);
+    this.filter[id] = null;
     let indexOfTheFilter = this.filters.findIndex(
       (filter) => filter.isFilled == true
     );
@@ -901,8 +968,11 @@ export class OrderComponent implements OnInit {
       this.filtered = false;
     }
     this.getOrders(this.status, this.page.pageNumber, this.filter);
-  }
+  
+    }
   deleteAllFilter() {
+    this.planTitle = "انتخاب کنید";
+    this.productTitle = "انتخاب کنید";
     this.filtered = false;
     this.filter = new FilterModel();
     this.filters.forEach((item) => {
@@ -1132,4 +1202,77 @@ export class OrderComponent implements OnInit {
     this.AddOrderForm.reset();
     this.userInfo = new UsersModel();
   }
+  setProductId(productId:number,productTitle:string){
+    
+    this.productTitle=productTitle
+this.filterModel.productID=productId
+this.selectProduct(productId)
+
+this.filterdata()
+}
+  setPlan(planId:number,planTitle:string){
+    this.filterModel.planID=planId
+    this.planTitle=planTitle
+    this.filterdata()
+      }
+      toggleFilters() {
+        this.isDivExpanded = !this.isDivExpanded;
+        this.stateOfChevron =
+          this.stateOfChevron === 'default' ? 'rotated' : 'default';
+      }
+      filterdata(){
+        if (this.FCrtDate != null) {
+          this.filterModel.fromCreateDate =
+            this.FCrtDate.year +
+            '-' +
+            this.FCrtDate.month +
+            '-' +
+            this.FCrtDate.day;
+        }
+        if (this.TCrtDate != null) {
+          this.filterModel.toCreateDate =
+            this.TCrtDate.year +
+            '-' +
+            this.TCrtDate.month +
+            '-' +
+            this.TCrtDate.day;
+        }
+        if (this.FStrDate != null) {
+          this.filterModel.fromStartDate =
+            this.FStrDate.year +
+            '-' +
+            this.FStrDate.month +
+            '-' +
+            this.FStrDate.day;
+        }
+        if (this.TStrDate != null) {
+          this.filterModel.toStartDate =
+            this.TStrDate.year +
+            '-' +
+            this.TStrDate.month +
+            '-' +
+            this.TStrDate.day;
+        }
+        if (this.FExpDate != null) {
+          this.filterModel.fromExpireDate =
+            this.FExpDate.year +
+            '-' +
+            this.FExpDate.month +
+            '-' +
+            this.FExpDate.day;
+        }
+        if (this.TExpDate != null) {
+          this.filterModel.toExpireDate =
+            this.TExpDate.year +
+            '-' +
+            this.TExpDate.month +
+            '-' +
+            this.TExpDate.day;
+        }
+        this.filter = this.filterModel;
+        debugger
+        this.getOrders(this.status, this.page.pageNumber, this.filterModel);
+        this.fillTheFiltersRow(this.filter);
+        this.filtered = true;
+      }
 }

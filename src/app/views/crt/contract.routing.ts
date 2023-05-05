@@ -16,6 +16,11 @@ const routes: Routes = [
     component: ProfitsComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'سسس',
+    component: AllCommissionComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

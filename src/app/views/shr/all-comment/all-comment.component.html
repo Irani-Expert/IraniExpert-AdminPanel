@@ -27,13 +27,151 @@
     </button>
   </div>
 </div>
+<div class="pb-3 d-flex flex-row row align-items-center">
 
-<a
-  (click)="openFilterModal(filterModal)"
-  class="btn-filter btn d-inline-flex justify-content-around py-btns radius m-1 align-items-center"
-  ><i class="i-Filter-2 text-dark text-bigger mr-2"></i>
-  <strong class="text-dark ml-2">فیلتر</strong></a
->
+  <div class="d-flex row col-10 align-items-center">
+    <strong class="m-1 text-small"
+      ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
+      &nbsp; : &nbsp;</strong
+    >
+
+    <!-- TableType -->
+    <strong for="pageOrder" class="text-small"> امتیاز</strong>
+    <div ngbDropdown placement="bottom-end" class="col-auto">
+      <button
+        type="button"
+        class="btn btn-details radius py-btns text-small"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+{{rateText}}
+    </button>
+      <div
+        ngbDropdownMenu
+        class="mt-1 shadow-lg radius dropDown-scroll"
+        aria-labelledby="dropdownBasic1"
+        style="height: 235px; overflow: auto"
+   
+      >
+      <button
+      class="text-left btn mt-2"
+      ngbDropdownItem
+      *ngFor="let rate of rateNumber"
+      (click)="setRate(rate)"
+    >
+      <strong class="text-small">{{rate}}</strong>
+    </button>
+      </div>
+    </div>
+
+
+    <button
+    (click)="toggleFilters()"
+      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
+    >
+      <strong class="text-small mr-1">پیشرفته</strong>
+      <span class="d-inline-flex"
+        ><span
+          class="pi pi-chevron-left ml-1"
+          [@rotate90deg]="stateOfChevron"
+          style="font-size: 0.7rem"
+        ></span
+      ></span>
+    </button>
+    <!-- Expand The Div -->
+  </div>
+</div>
+<div @slideInOut *ngIf="isDivExpanded">
+    <div class="row d-flex align-items-center">
+  <input
+  type="text"
+  class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+  placeholder="شناسه"
+  [(ngModel)]="filterModel.iD"
+
+/>
+<span
+  *ngIf="filterModel.iD"
+  (click)="filterModel.iD = null; "
+  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+  ><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+placeholder="ایدی کاربر"
+[(ngModel)]="filterModel.userID"
+/>
+
+ 
+<span
+*ngIf="filterModel.userID"
+(click)="filterModel.userID = null; "
+    class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+    ><span class="pi pi-times" style="font-size: 0.7rem"></span
+  ></span>
+
+  <input
+    type="text"
+    class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+    placeholder="ایدی محصول"
+    [(ngModel)]="filterModel.rowID"
+    />
+  <span
+  *ngIf="filterModel.rowID"
+  (click)="filter.rowID = null; "
+    class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+    ><span class="pi pi-times" style="font-size: 0.7rem"></span
+  ></span>
+  <input
+  type="text"
+  class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+  placeholder="نام و نام خانوادگی"
+  [(ngModel)]="filterModel.name"
+/>
+<span
+  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterModel.name"
+(click)="filterModel.name = null; "
+  ><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="ایمیل"
+[(ngModel)]="filterModel.email"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterModel.email"
+(click)="filterModel.email = null; "
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
+  <div class="mb-1 mr-1">
+    <strong class="m-1 text-small">پذیرفته شده</strong>
+    <label class="switch switch-primary mr-2 m-2">
+      <strong class="text-small">عدم پذیرش</strong>
+      <input type="checkbox" [(ngModel)]="filterModel.isAccepted"
+      />
+      <span class="slider"></span>
+
+    </label>
+  </div>
+  <button
+    type="button"
+    ngbAutofocus
+    class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
+    (click)="sendFilter()"
+  >
+    <i class="i-Filter-2 text-bigger mr-2"></i>
+    <strong class="text-small">فیلتر </strong>
+  </button>
+</div></div>
+
+
+
+
 
 <div class="my-css d-flex flex-wrap w-100">
   <div
@@ -201,7 +339,7 @@
     </button>
   </div>
 </ng-template>
-<ng-template #filterModal let-modal>
+<!-- <ng-template #filterModal let-modal>
   <div class="d-flex align-items-center bg-gray">
     <div class="col-11 container mt-2 mb-2 contrast">
       <div class="modal-header row">
@@ -316,4 +454,4 @@
       </form>
     </div>
   </div>
-</ng-template>
+</ng-template> -->

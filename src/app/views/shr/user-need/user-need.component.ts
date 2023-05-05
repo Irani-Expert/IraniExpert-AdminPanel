@@ -22,17 +22,54 @@ import { UserNeedService } from './user-need.service';
 import * as moment from 'jalali-moment';
 import { CommentService } from '../all-comment/comment.service';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
-
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+} from '@angular/animations';
 @Component({
   selector: 'app-user-need',
   templateUrl: './user-need.component.html',
   styleUrls: ['./user-need.component.scss'],
+  animations: [
+    trigger('rotate90deg', [
+      state('default', style({ transform: 'rotate(0)' })),
+      state('rotated', style({ transform: 'rotate(-90deg)' })),
+      transition('rotated => default', animate('300ms ease-in-out')),
+      transition('default => rotated', animate('500ms ease-in-out')),
+    ]),
+    // trigger('pushDown', [
+    //   state('default', style({ margin: '0' })),
+    //   state('rotated', style({ margin: '2% 0 0 0' })),
+    //   transition('rotated => default', animate('100ms ease-in-out')),
+    //   transition('default => rotated', animate('300ms ease-in-out')),
+    // ]),
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-40%)', opacity: 0 }),
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'translateY(0%)', opacity: 1 })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms ease-in-out',
+          style({ transform: 'translateY(-40%)', opacity: 0 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class UserNeedComponent implements OnInit {
   filterModel: FilterModel = new FilterModel();
   fromCreateDate: { year: number; month: number; day: number };
   toCreateDate: { year: number; month: number; day: number };
   filterExecutedModel: FilterModel = new FilterModel();
+  stateOfChevron: string = 'default';
+
   filterValues: Array<{
     title: string;
     value: string | number | boolean;
@@ -58,6 +95,7 @@ export class UserNeedComponent implements OnInit {
   psContainers: QueryList<PerfectScrollbarDirective>;
   psContainerSecSidebar: PerfectScrollbarDirective;
   toggled = false;
+  isDivExpanded: boolean = false;
   userWant: number;
   userInfo: UserInfoModel;
   rows: UserNeedModel[] = new Array<UserNeedModel>();
@@ -351,40 +389,6 @@ export class UserNeedComponent implements OnInit {
   * 
   */
 
-  openFilterModal(content: any) {
-    this.filterModel = { ...this.filterExecutedModel };
-
-    if (this.filterExecutedModel.fromCreateDate) {
-      let time = this.filterExecutedModel.fromCreateDate.split('-');
-      this.fromCreateDate = new NgbDate(
-        Number(time[0]),
-        Number(time[1]),
-        Number(time[2])
-      );
-    }
-
-    if (this.filterExecutedModel.toCreateDate) {
-      let time = this.filterExecutedModel.toCreateDate.split('-');
-      this.toCreateDate = new NgbDate(
-        Number(time[0]),
-        Number(time[1]),
-        Number(time[2])
-      );
-    }
-
-    this.modalService
-      .open(content, {
-        size: 'lg',
-      })
-      .result.then(
-        () => {},
-        () => {
-          this.fromCreateDate = null;
-          this.toCreateDate = null;
-        }
-      );
-  }
-
   startFilter() {
     if (this.fromCreateDate) {
       this.filterModel.fromCreateDate =
@@ -402,7 +406,7 @@ export class UserNeedComponent implements OnInit {
         '-' +
         this.toCreateDate.day;
     }
-
+debugger
     this._UserNeedService
       .getUserNeed(
         this.filterModel,
@@ -514,7 +518,11 @@ export class UserNeedComponent implements OnInit {
         }
       );
   }
-
+  toggleFilters() {
+    this.isDivExpanded = !this.isDivExpanded;
+    this.stateOfChevron =
+      this.stateOfChevron === 'default' ? 'rotated' : 'default';
+  }
   deleteAllFilter() {
     this.filterValues = [];
     this.filterExecutedModel = new FilterModel();

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
 import { BskRoutingModule } from './bsk.routing';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { OrderComponent } from './order/order.component';
@@ -17,6 +17,7 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
 import { UserOrderComponent } from './user-order/user-order.component';
 // import { JalaliPipe } from 'src/app/shared/pipes/jalali-time.pipe';
 import { CommissionComponent } from './commission/commission.component';
+import { TreeModule } from 'primeng/tree';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CommissionComponent } from './commission/commission.component';
     IsConfirmedPipe,
     // LicenseComponent,
     UserOrderComponent,
+    
     // LicenseUpdateComponent, //Deleted
 
     // CommissionComponent,
@@ -43,6 +45,9 @@ import { CommissionComponent } from './commission/commission.component';
     SharedPipesModule,
     PerfectScrollbarModule,
     SharedDirectivesModule,
+  
+    DatePipe,
+    TreeModule,
   ],
   providers: [FileUploaderService, DecimalPipe],
 })

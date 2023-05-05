@@ -7,11 +7,46 @@ import { CommentModel } from 'src/app/shared/models/comment.model';
 import { ToastrService } from 'ngx-toastr';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+} from '@angular/animations';
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.scss'],
+  animations: [
+    trigger('rotate90deg', [
+      state('default', style({ transform: 'rotate(0)' })),
+      state('rotated', style({ transform: 'rotate(-90deg)' })),
+      transition('rotated => default', animate('300ms ease-in-out')),
+      transition('default => rotated', animate('500ms ease-in-out')),
+    ]),
+    // trigger('pushDown', [
+    //   state('default', style({ margin: '0' })),
+    //   state('rotated', style({ margin: '2% 0 0 0' })),
+    //   transition('rotated => default', animate('100ms ease-in-out')),
+    //   transition('default => rotated', animate('300ms ease-in-out')),
+    // ]),
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-40%)', opacity: 0 }),
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'translateY(0%)', opacity: 1 })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms ease-in-out',
+          style({ transform: 'translateY(-40%)', opacity: 0 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class NotesComponent implements OnInit {
   tableTypes = [
@@ -20,8 +55,9 @@ export class NotesComponent implements OnInit {
   ];
   currentTableType: number = 8;
   dropDownTitleHolder: string = null;
-
+  stateOfChevron: string = 'default';
   page: Page = new Page();
+  isDivExpanded: boolean = false;
 
   rows: CommentModel[];
   pageIsLoad: boolean = false;
@@ -89,19 +125,12 @@ export class NotesComponent implements OnInit {
   *
   */
 
-  openFilterModal(content: any) {
-    this.modalService
-      .open(content, {
-        size: 'lg',
-      })
-      .result.then(
-        () => {},
-        () => {
-          this.filterModel = new FilterModel();
-        }
-      );
-  }
 
+  toggleFilters() {
+    this.isDivExpanded = !this.isDivExpanded;
+    this.stateOfChevron =
+      this.stateOfChevron === 'default' ? 'rotated' : 'default';
+  }
   startFilter() {
     this._commentService
       .GetAllComment(

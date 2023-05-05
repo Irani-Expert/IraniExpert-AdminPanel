@@ -573,3 +573,19 @@ Buttons
   font-family: "Vazir", sans-serif !important;
 }
 .p-organizationchart{scale: 0.8;}
+.dropDown-scroll::-webkit-scrollbar {
+  width: 6px;
+  margin-top: 2px;
+  background: #fff;
+  border-radius: 0 0 0 6px;
+}
+.dropDown-scroll::-webkit-scrollbar-thumb {
+  background: #5e6a69;
+  border-radius: 10px;
+}
+.dropDown-scroll::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+.date-picker:focus {
+  background: #fff !important;
+}

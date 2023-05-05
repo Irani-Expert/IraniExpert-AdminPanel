@@ -29,15 +29,181 @@
     </button>
   </div>
 </div>
-<button
+<!-- <button
   class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
   (click)="openFilterModal(filterModal)"
 >
   <i class="i-Filter-2 text-dark text-bigger mr-2"></i>
   <strong class="text-dark ml-2">فیلتر</strong>
-</button>
+</button> -->
+<div class="pb-3 d-flex flex-row row align-items-center">
 
-<div *ngIf="filterValues.length > 0">
+  <div class="d-flex row col-10 align-items-center">
+    <strong class="m-1 text-small"
+      ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
+      &nbsp; : &nbsp;</strong
+    >
+
+    <!-- TableType -->
+
+
+
+    <button
+    (click)="toggleFilters()"
+      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
+    >
+      <strong class="text-small mr-1">پیشرفته</strong>
+      <span class="d-inline-flex"
+        ><span
+          class="pi pi-chevron-left ml-1"
+          [@rotate90deg]="stateOfChevron"
+          style="font-size: 0.7rem"
+        ></span
+      ></span>
+    </button>
+    <!-- Expand The Div -->
+  </div>
+</div>
+<div @slideInOut *ngIf="isDivExpanded">
+    <div class="row d-flex align-items-center">
+  <input
+  type="text"
+  class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+  placeholder="شناسه کاربر"
+  [(ngModel)]="filterModel.iD"
+
+/>
+<span
+  *ngIf="filterModel.iD"
+  (click)="filterModel.iD = null; startFilter()"
+  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+  ><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
+
+  <input
+  type="text"
+  class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+  placeholder="نام"
+  [(ngModel)]="filterModel.firstName"
+/>
+<span
+  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterModel.firstName"
+(click)="filterModel.firstName = null; startFilter()"
+  ><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="نام خانوادگی"
+[(ngModel)]="filterModel.lastName"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterModel.lastName"
+(click)="filterModel.lastName = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="شماره تلفن"
+[(ngModel)]="filterModel.phoneNumber"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterModel.phoneNumber"
+(click)="filterModel.phoneNumber = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="ایمیل"
+[(ngModel)]="filterModel.email"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterModel.email"
+(click)="filterModel.email = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="میزان"
+[(ngModel)]="filterModel.amount"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterModel.amount"
+(click)="filterModel.amount = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>ازتاریخ</strong
+>
+<input
+type="text"
+ngbDatepicker
+#datePickerStatus1="ngbDatepicker"
+type="text"
+[navigation]="'select'"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="fromCreateDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+(click)="datePickerStatus1.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>تا تاریخ</strong
+>
+<input
+type="text"
+[navigation]="'select'"
+#datePickerStatus2="ngbDatepicker"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="toCreateDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+#toCreateDatePicker="ngbDatepicker"
+(click)="datePickerStatus2.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+<div class="mb-1 mr-1">
+  <strong class="m-1 text-small">فعالیت مالی</strong>
+  <label class="switch switch-primary mr-2 m-2">
+    <input type="checkbox" [(ngModel)]="filterModel.financialActivity"/>
+    <span class="slider"></span>
+  </label>
+</div>
+<div class="mb-1 mr-1">
+  <strong class="m-1 text-small">استفاده از ربات</strong>
+  <label class="switch switch-primary mr-2 m-2">
+    <input type="checkbox" [(ngModel)]="filterModel.robotUsage" />
+    <span class="slider"></span>
+  </label>
+</div>
+   <button
+    type="button"
+    ngbAutofocus
+    class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
+    (click)="startFilter()"
+  >
+    <i class="i-Filter-2 text-bigger mr-2"></i>
+    <strong class="text-small">فیلتر </strong>
+  </button> 
+</div></div>
+<!-- <div *ngIf="filterValues.length > 0">
   <div
     *ngFor="let item of filterValues"
     class="d-inline-flex bg-light clickable-btn justify-content-start radius m-1 align-items-center"
@@ -69,7 +235,7 @@
     </button>
     <strong class="text-white pr-2 text-small">حذف همه فیلتر ها</strong>
   </a>
-</div>
+</div> -->
 
 <!-- <div class="row g-0 p-0 m-0">
   <div class="col-12 row g-0 p-0 flex-row mb-2">
@@ -646,7 +812,7 @@
     </div>
   </div>
 </ng-template> -->
-
+<!-- 
 <ng-template #filterModal let-modal>
   <div class="bg--gray px-3">
     <div class="modal-header row">
@@ -757,4 +923,4 @@
       </div>
     </div>
   </div>
-</ng-template>
+</ng-template> -->
