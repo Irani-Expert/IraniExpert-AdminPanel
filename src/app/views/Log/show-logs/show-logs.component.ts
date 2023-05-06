@@ -57,7 +57,6 @@ import {
   ],
 })
 export class ShowLogsComponent implements OnInit {
-  isFilterBtn: boolean = false;
   requestType = null;
   dropdownRequestTypeTitle: string = 'همه';
   dropdownPageOrderTitle: string = 'جدیدترین ها';
@@ -70,17 +69,12 @@ export class ShowLogsComponent implements OnInit {
   logDetail: LogsModel = new LogsModel();
   index: number = 0;
   tableTypes: TableType[] = new Array<TableType>();
-  filteredItems: Array<{
-    id: string;
-    label: string;
-    title: string | number | boolean;
-    isFilled: boolean;
-  }>;
   filter: FilterModel = new FilterModel();
-  filterHolder: string[];
+  filterHolder: FilterModel;
   page: Page = new Page();
   logRows: LogsModel[] = new Array<LogsModel>();
   isDataFetched: boolean = false;
+
   constructor(
     private calendar: NgbCalendar,
     private logService: LogService,
@@ -171,6 +165,7 @@ export class ShowLogsComponent implements OnInit {
           this.isDataFetched = true;
         }
       });
+    this.filteredItems(filter);
   }
   openModal(item: LogsModel, modal: NgbModal) {
     this.logDetail = item;
@@ -182,6 +177,7 @@ export class ShowLogsComponent implements OnInit {
       .format('YYYY/MM/DD');
   }
   sendFilter() {
+    this.filteredItems(this.filter);
     if (this.fromCreateDate !== null && this.fromCreateDate !== undefined) {
       this.filter.fromCreateDate =
         this.fromCreateDate.year +
@@ -199,13 +195,15 @@ export class ShowLogsComponent implements OnInit {
         '-' +
         this.toCreateDate.day;
     }
-    if (this.isFilterBtn == true) {
-      this.setPage(
-        0,
-        this.pageOrder,
-        this.requestType,
-        this.tableTypes[this.index].value
-      );
-    }
+    this.setPage(
+      0,
+      this.pageOrder,
+      this.requestType,
+      this.tableTypes[this.index].value
+    );
+  }
+
+  filteredItems(filter: FilterModel) {
+    this.filterHolder = { ...filter };
   }
 }
