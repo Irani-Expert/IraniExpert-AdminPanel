@@ -5,11 +5,7 @@ import { SubUserComponent } from './sub-user/sub-user.component';
 import { SubListProfitComponent } from './sub-list-profit/sub-list-profit.component';
 
 const routes: Routes = [
-{
-  path: 'sub-user',
-  component: SubUserComponent,
-  canActivate: [AuthGuard],
-},
+
 {
   path: 'sub-list-profit',
   component: SubListProfitComponent,

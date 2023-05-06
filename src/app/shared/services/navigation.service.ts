@@ -237,14 +237,6 @@ export class NavigationService {
       privilege: 'Comment-Full Premission',
     },
 
- 
-    {
-      name: 'یادداشت ها',
-      navType: 'link',
-      icon: 'i-Pen-5',
-      privilege: 'Comment-Full Premission',
-      state: '/shr/notes',
-    },
     {
       name: 'نظرات من',
       navType: 'link',
@@ -253,10 +245,10 @@ export class NavigationService {
       privilege: 'comment-user-Special-Premission',
     },
     {
-      name: 'همه کامنت ها',
+      name: 'نوشته ها',
       navType: 'link',
       icon: 'i-Speach-Bubbles',
-      state: '/shr/all-Comments',
+      state: '/shr/comment',
       privilege: 'Comment-Full Premission',
     },
 

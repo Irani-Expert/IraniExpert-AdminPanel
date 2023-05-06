@@ -5,22 +5,14 @@ import { AllCommissionComponent } from './all-commission/all-commission.componen
 import { ContractListComponent } from './contract-list/contract-list.component';
 import { ProfitsComponent } from './profits/profits.component';
 const routes: Routes = [
-  {
-    path: 'list',
-    component: ContractListComponent,
-    canActivate: [AuthGuard],
-  },
+
 
   {
     path: 'profits',
     component: ProfitsComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'سسس',
-    component: AllCommissionComponent,
-    canActivate: [AuthGuard],
-  },
+
 ];
 
 @NgModule({
