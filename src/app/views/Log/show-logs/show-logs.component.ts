@@ -57,11 +57,12 @@ import {
   ],
 })
 export class ShowLogsComponent implements OnInit {
+  isFilterBtn: boolean = false;
   requestType = null;
   dropdownRequestTypeTitle: string = 'همه';
   dropdownPageOrderTitle: string = 'جدیدترین ها';
   pageOrder: string = 'ID';
-  toCreateDatePicker: NgbDateStruct;
+  toCreateDate: NgbDateStruct;
   fromCreateDate: NgbDateStruct;
   today = this.calendar.getToday();
   stateOfChevron: string = 'default';
@@ -76,7 +77,7 @@ export class ShowLogsComponent implements OnInit {
     isFilled: boolean;
   }>;
   filter: FilterModel = new FilterModel();
-  filterHolder: FilterModel;
+  filterHolder: string[];
   page: Page = new Page();
   logRows: LogsModel[] = new Array<LogsModel>();
   isDataFetched: boolean = false;
@@ -181,11 +182,30 @@ export class ShowLogsComponent implements OnInit {
       .format('YYYY/MM/DD');
   }
   sendFilter() {
-    this.setPage(
-      0,
-      this.pageOrder,
-      this.requestType,
-      this.tableTypes[this.index].value
-    );
+    if (this.fromCreateDate !== null && this.fromCreateDate !== undefined) {
+      this.filter.fromCreateDate =
+        this.fromCreateDate.year +
+        '-' +
+        this.fromCreateDate.month +
+        '-' +
+        this.fromCreateDate.day;
+    }
+
+    if (this.toCreateDate !== null && this.toCreateDate !== undefined) {
+      this.filter.toCreateDate =
+        this.toCreateDate.year +
+        '-' +
+        this.toCreateDate.month +
+        '-' +
+        this.toCreateDate.day;
+    }
+    if (this.isFilterBtn == true) {
+      this.setPage(
+        0,
+        this.pageOrder,
+        this.requestType,
+        this.tableTypes[this.index].value
+      );
+    }
   }
 }

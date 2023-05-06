@@ -153,74 +153,67 @@
     </button>
     <!-- Expand The Div -->
   </div>
-  <div class="d-flex row col-10 align-items-center">
-    <strong class="m-1 text-small"
-      ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
-      &nbsp; : &nbsp;</strong
-    >
-
-    <!-- TableType -->
-    <strong for="pageOrder" class="text-small"> فعالیت در </strong>
-    <div ngbDropdown placement="bottom-end" class="col-auto">
-      <button
-        type="button"
-        class="btn btn-details radius py-btns text-small"
-        id="dropdownBasic1"
-        ngbDropdownToggle
-      >
-        {{ tableTypes[index]?.title }}
-      </button>
-      <div
-        ngbDropdownMenu
-        class="mt-1 shadow-lg radius dropDown-scroll"
-        aria-labelledby="dropdownBasic1"
-        style="height: 300px; overflow: auto"
-      >
-        <button
-          class="text-left btn mt-2"
-          ngbDropdownItem
-          *ngFor="let tableType of tableTypes"
-          (click)="setPage(0, 'ID', null, tableType.value)"
-        >
-          <strong class="text-small">{{ tableType.title }}</strong>
-        </button>
-      </div>
-    </div>
-
-
-    <button
-      (click)="toggleFilters()"
-      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
-    >
-      <strong class="text-small mr-1">پیشرفته</strong>
-      <span class="d-inline-flex"
-        ><span
-          class="pi pi-chevron-left ml-1"
-          [@rotate90deg]="stateOfChevron"
-          style="font-size: 0.7rem"
-        ></span
-      ></span>
-    </button>
-    <!-- Expand The Div -->
-  </div>
 </div>
 
 <!-- Hidden Filtering Div -->
 
 <div @slideInOut *ngIf="isDivExpanded">
   <div class="row d-flex align-items-center">
+    <!-- Inputs -->
     <input
-    type="text"
-    class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
-    placeholder="عنوان"
-    [(ngModel)]="filter.title"
-  />
-  <span
-    *ngIf="filter.title"
-    (click)="filter.title = null; sendFilter()"
-    class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-    ><span class="pi pi-times" style="font-size: 0.7rem"></span
-  ></span>
+      type="text"
+      class="form-control m-1 radius col-lg-2 col-md-4 bg-white text-small"
+      placeholder="نام"
+      [(ngModel)]="filter.firstName"
+    />
+    <span
+      *ngIf="filter.firstName"
+      (click)="filter.firstName = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-lg-2 col-md-4 bg-white text-small"
+      placeholder="نام خانوادگی"
+      [(ngModel)]="filter.lastName"
+    />
+    <span
+      *ngIf="filter.lastName"
+      (click)="filter.lastName = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+      placeholder="عنوان"
+      [(ngModel)]="filter.title"
+    />
+    <span
+      *ngIf="filter.title"
+      (click)="filter.title = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <!-- DatePickers -->
+    <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+      >ایجاد از</strong
+    >
+    <input
+      type="text"
+      placement="bottom-right"
+      autocomplete="off"
+      class="form-control radius m-1 col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+      placeholder=" روز / ماه / سال "
+      [navigation]="'select'"
+      [(ngModel)]="fromCreateDate"
+      [outsideDays]="'collapsed'"
+      ngbDatepicker
+      [footerTemplate]="fromCRTfooterTemplate"
+      #fromCreateDatePicker="ngbDatepicker"
+      (click)="fromCreateDatePicker.toggle()"
+    />
     <span
       *ngIf="fromCreateDate"
       (click)="
@@ -246,8 +239,62 @@
       (click)="toCreateDatePicker.toggle()"
       placeholder=" روز / ماه / سال "
     />
+    <span
+      *ngIf="toCreateDate"
+      (click)="filter.fromCreateDate = null; toCreateDate = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <!-- DatePickers -->
 
- 
+    <input
+      [(ngModel)]="filter.userID"
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+      placeholder="شناسه کاربر"
+    />
+    <span
+      *ngIf="filter.userID"
+      (click)="filter.userID = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      [(ngModel)]="filter.rowID"
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="شناسه محصول یا .. "
+    />
+    <span
+      *ngIf="filter.rowID"
+      (click)="filter.rowID = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <!-- <input
+    [(ngModel)]="filter.email"
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="ایمیل"
+    /> 
+   <span
+      *ngIf="filter.email"
+      (click)="filter.email = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>-->
+    <input
+      [(ngModel)]="filter.accountNumber"
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="شماره حساب"
+    />
+    <span
+      *ngIf="filter.accountNumber"
+      (click)="filter.accountNumber = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
     <input
       [(ngModel)]="filter.ipAddress"
       type="text"
