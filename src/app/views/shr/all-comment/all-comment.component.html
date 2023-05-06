@@ -21,7 +21,7 @@
       class="text-left btn"
       ngbDropdownItem
       *ngFor="let item of tableTypeTitles"
-      (click)="getCommentList(0, item.id, filter)"
+      (click)="getCommentList(0, item.id, this.filterModel)"
     >
       <strong>{{ item.title }}</strong>
     </button>

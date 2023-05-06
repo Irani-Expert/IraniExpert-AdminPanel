@@ -100,7 +100,6 @@ export class AllCommentComponent implements OnInit {
 
   setPage(pageInfo: number, tableType: number) {
     this.page.pageNumber = pageInfo;
-
     this.getCommentList(this.page.pageNumber, tableType, this.filter);
   }
 
@@ -265,7 +264,7 @@ export class AllCommentComponent implements OnInit {
         '-' +
         this.CrtDate.day;
     }
-    this.getCommentList(0, 10, this.filterModel);
+    this.getCommentList(0, this.tableType, this.filterModel);
     this.filter = new FilterModel();
   }
   setRate(rate:number){
