@@ -26,7 +26,6 @@
     ngbDropdownMenu
     class="mt-1 shadow-lg radius"
     aria-labelledby="dropdownBasic1"
-    ngModel="item.title"
   >
     <button
       class="text-left btn"
@@ -331,6 +330,7 @@ font-weight: bold;"></i>
             [(ngModel)]="addReceiptModel.description"
             [formControl]="addRedeiptForm.controls['description']"
             maxlength="500"
+            
           >
           </textarea>
         </div>

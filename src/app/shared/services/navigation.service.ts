@@ -237,13 +237,7 @@ export class NavigationService {
       privilege: 'Comment-Full Premission',
     },
 
-    {
-      name: 'قرار داد ها',
-      navType: 'link',
-      icon: 'i-File-Horizontal-Text',
-      privilege: 'Users-Full Premission',
-      state: '/crt/list',
-    },
+ 
     {
       name: 'یادداشت ها',
       navType: 'link',
