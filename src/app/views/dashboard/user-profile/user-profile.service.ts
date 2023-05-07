@@ -5,6 +5,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { referralModel } from 'src/app/shared/models/referralModel';
 import { UserReferralModel } from 'src/app/shared/models/userReferralModel.model';
 import { Observable } from 'rxjs';
+import { UsersModel } from '../../sec/user-mangement/users.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,25 @@ export class UserProfileService {
       this._base + '/UserNeed',
       data,
       this._options
+    );
+  }
+  updateUserbyAspnet(
+    id: number,
+    t: UsersModel
+  ): Observable<Result<boolean>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      }),
+    };
+    return this._http.put<Result<boolean>>(
+      environment.api.baseUrl + '/AspNetUser/' + id+'?authorID='+id,
+      t,
+      _options
     );
   }
 }
