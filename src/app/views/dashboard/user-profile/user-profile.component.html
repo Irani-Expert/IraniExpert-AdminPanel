@@ -59,7 +59,7 @@
         id="username"
         placeholder="نام کاربری مورد نظر را وارد کنید "
         [formControl]="addForm.controls['username']"
-        [(ngModel)]="addUpdate.subject"
+        [(ngModel)]="addUpdate.userName"
         maxlength="51"
         minlength="2"
         [attr.disabled]="true"
@@ -80,7 +80,7 @@
       <input
         type="email"
         class="form-control radius"
-        id="email"
+        id="userName"
         placeholder="ایمیل را وارد کنید "
         [formControl]="addForm.controls['email']"
         [(ngModel)]="addUpdate.email"

@@ -10,6 +10,9 @@ import { UserProfileService } from './user-profile.service';
 import { referralModel } from 'src/app/shared/models/referralModel';
 import { UserReferralModel } from 'src/app/shared/models/userReferralModel.model';
 import { Router } from '@angular/router';
+import { UsersModel } from '../../sec/user-mangement/users.model';
+import { OrderService } from '../../bsk/order/services/order.service';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,12 +22,13 @@ import { Router } from '@angular/router';
 export class UserProfileComponent implements OnInit {
   referral: referralModel;
   userReferral: UserReferralModel = new UserReferralModel();
-
+  addUpdate: UsersModel;
   isDataFetched: boolean = false;
   addForm: FormGroup;
+  userParent: referralModel = new referralModel();
   passwordForm: FormGroup;
-  addUpdate: UserInforamationModel;
   isEdit: boolean = true;
+  userId:number;
   password: UpdatePasswordModel = new UpdatePasswordModel();
   constructor(
     private _formBuilder: FormBuilder,
@@ -32,7 +36,11 @@ export class UserProfileComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _userInfoService: UserProfileService,
-    private router: Router
+    private router: Router,
+    private _userReferralSevice: UserProfileService,
+    private _order:OrderService,
+    private _auth: AuthenticateService,
+
   ) {
     this.addForm = this._formBuilder.group({
       lastName: [null, Validators.compose([Validators.required])],
@@ -48,47 +56,59 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUser();
+    this.userId=this._auth.currentUserValue.userID
+    this.userInfo(this.userId)
   }
+  userInfo(userId: number) {
+   this._order.getUserbyUserId(userId).subscribe((data) => {
+    if (data.success) {
+     this.addUpdate=data['data']
+     debugger
+     this.isDataFetched = true;
+      
+    } else {
 
-  getUser() {
-    this._userService
-      .getUserByToken()
-      .subscribe((res: Result<UserInforamationModel>) => {
-        this.addUpdate = res.data;
-        this.isEdit = true;
-        this.isDataFetched = true;
-        if (!res.success) {
-          localStorage.removeItem('currentUser');
-          this.toastr.error(res.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-          setTimeout(() => {
-            this.router.navigate(['/sessions/signin']);
-          }, 1000);
-        }
-      });
-  }
+    }
+  });
+}
+  // getUser() {
+  //   this._userService
+  //     .getUserByToken()
+  //     .subscribe((res: Result<UserInforamationModel>) => {
+  //       // this.addUpdate = res.data;
+  //       this.isEdit = true;
+  //       this.isDataFetched = true;
+  //       if (!res.success) {
+  //         localStorage.removeItem('currentUser');
+  //         this.toastr.error(res.message, null, {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //         setTimeout(() => {
+  //           this.router.navigate(['/sessions/signin']);
+  //         }, 1000);
+  //       }
+  //     });
+  // }
 
-  async updateUser() {
-    this._userService
-      .updateUser(this.addUpdate.userID, this.addUpdate)
-      .subscribe((data) => {
-        if (data.success) {
-          this.toastr.success(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
-    this.getUser();
-  }
+  // async updateUser() {
+  //   this._userService
+  //     .updateUser(this.addUpdate.userID, this.addUpdate)
+  //     .subscribe((data) => {
+  //       if (data.success) {
+  //         this.toastr.success(data.message, null, {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //       } else {
+  //         this.toastr.error(data.message, null, {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //       }
+  //     });
+  //   this.getUser();
+  // }
 
   openPasswordChangeModal(content: any) {
     this.modalService
@@ -102,7 +122,7 @@ export class UserProfileComponent implements OnInit {
           if (result === true) {
             this.passwordChange(this.password);
             this.addForm.reset();
-            this.getUser();
+            // this.getUser();
           }
         },
         (reason) => {
@@ -113,7 +133,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   async passwordChange(password: UpdatePasswordModel) {
-    password.id = this.addUpdate.userID;
+    password.id = this.addUpdate.id;
     this._userService.changePassword(this.password).subscribe((data) => {
       if (data.success) {
         this.toastr.success(data.message, null, {
@@ -129,29 +149,29 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  getReferral(modal: NgbModal, modal2: NgbModal) {
-    //
-    this._userInfoService.getParentLevelOne(this.addUpdate.userID).subscribe(
-      (res) => {
-        if (res.data.firstname) {
-          this.referral = res.data;
+  // getReferral(modal: NgbModal, modal2: NgbModal) {
+  //   //
+  //   this._userInfoService.getParentLevelOne(this.addUpdate.userID).subscribe(
+  //     (res) => {
+  //       if (res.data.firstname) {
+  //         this.referral = res.data;
 
-          this.modalService.open(modal, {
-            size: 'xs',
-            centered: true,
-          });
-        } else {
-          this.sendUserReferralCreate(modal2);
-        }
-      },
-      (error) => {
-        this.toastr.error(error.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-      }
-    );
-  }
+  //         this.modalService.open(modal, {
+  //           size: 'xs',
+  //           centered: true,
+  //         });
+  //       } else {
+  //         this.sendUserReferralCreate(modal2);
+  //       }
+  //     },
+  //     (error) => {
+  //       this.toastr.error(error.message, null, {
+  //         closeButton: true,
+  //         positionClass: 'toast-top-left',
+  //       });
+  //     }
+  //   );
+  // }
 
   sendUserReferralChange(modal: NgbModal) {
     this.modalService
