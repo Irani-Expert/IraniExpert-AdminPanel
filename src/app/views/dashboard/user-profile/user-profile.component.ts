@@ -63,7 +63,6 @@ export class UserProfileComponent implements OnInit {
    this._order.getUserbyUserId(userId).subscribe((data) => {
     if (data.success) {
      this.addUpdate=data['data']
-     debugger
      this.isDataFetched = true;
       
     } else {
@@ -71,44 +70,7 @@ export class UserProfileComponent implements OnInit {
     }
   });
 }
-  // getUser() {
-  //   this._userService
-  //     .getUserByToken()
-  //     .subscribe((res: Result<UserInforamationModel>) => {
-  //       // this.addUpdate = res.data;
-  //       this.isEdit = true;
-  //       this.isDataFetched = true;
-  //       if (!res.success) {
-  //         localStorage.removeItem('currentUser');
-  //         this.toastr.error(res.message, null, {
-  //           closeButton: true,
-  //           positionClass: 'toast-top-left',
-  //         });
-  //         setTimeout(() => {
-  //           this.router.navigate(['/sessions/signin']);
-  //         }, 1000);
-  //       }
-  //     });
-  // }
 
-  // async updateUser() {
-  //   this._userService
-  //     .updateUser(this.addUpdate.userID, this.addUpdate)
-  //     .subscribe((data) => {
-  //       if (data.success) {
-  //         this.toastr.success(data.message, null, {
-  //           closeButton: true,
-  //           positionClass: 'toast-top-left',
-  //         });
-  //       } else {
-  //         this.toastr.error(data.message, null, {
-  //           closeButton: true,
-  //           positionClass: 'toast-top-left',
-  //         });
-  //       }
-  //     });
-  //   this.getUser();
-  // }
 
   openPasswordChangeModal(content: any) {
     this.modalService
@@ -122,7 +84,6 @@ export class UserProfileComponent implements OnInit {
           if (result === true) {
             this.passwordChange(this.password);
             this.addForm.reset();
-            // this.getUser();
           }
         },
         (reason) => {
@@ -149,29 +110,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  // getReferral(modal: NgbModal, modal2: NgbModal) {
-  //   //
-  //   this._userInfoService.getParentLevelOne(this.addUpdate.userID).subscribe(
-  //     (res) => {
-  //       if (res.data.firstname) {
-  //         this.referral = res.data;
 
-  //         this.modalService.open(modal, {
-  //           size: 'xs',
-  //           centered: true,
-  //         });
-  //       } else {
-  //         this.sendUserReferralCreate(modal2);
-  //       }
-  //     },
-  //     (error) => {
-  //       this.toastr.error(error.message, null, {
-  //         closeButton: true,
-  //         positionClass: 'toast-top-left',
-  //       });
-  //     }
-  //   );
-  // }
 
   sendUserReferralChange(modal: NgbModal) {
     this.modalService
@@ -262,5 +201,24 @@ export class UserProfileComponent implements OnInit {
           this.userReferral = new UserReferralModel();
         }
       );
+  }
+  updateProfile(){
+    var userID=this._auth.currentUserValue.userID
+    this._userInfoService
+      .updateUserbyAspnet(userID,this.addUpdate)
+      .subscribe((data) => {
+         if(data){
+          this.toastr.success(data.message, null, {
+                      closeButton: true,
+                      positionClass: 'toast-top-left',
+                    });
+         }
+         else{
+          this.toastr.warning(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+         }
+      });
   }
 }
