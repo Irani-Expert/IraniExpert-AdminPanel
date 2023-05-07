@@ -56,6 +56,13 @@
       <button
       class="text-left btn mt-2"
       ngbDropdownItem
+      (click)="setRate(null)"
+    >
+      <strong class="text-small">همه</strong>
+    </button>
+      <button
+      class="text-left btn mt-2"
+      ngbDropdownItem
       *ngFor="let rate of rateNumber"
       (click)="setRate(rate)"
     >
@@ -91,8 +98,8 @@
 
 />
 <span
-  *ngIf="filterModel.iD"
-  (click)="filterModel.iD = null; "
+  *ngIf="filterHolder.iD"
+  (click)="filterModel.iD = null;sendFilter() "
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
@@ -105,8 +112,8 @@ placeholder="ایدی کاربر"
 
  
 <span
-*ngIf="filterModel.userID"
-(click)="filterModel.userID = null; "
+*ngIf="filterHolder.userID"
+(click)="filterModel.userID = null;sendFilter() "
     class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
     ><span class="pi pi-times" style="font-size: 0.7rem"></span
   ></span>
@@ -118,8 +125,8 @@ placeholder="ایدی کاربر"
     [(ngModel)]="filterModel.rowID"
     />
   <span
-  *ngIf="filterModel.rowID"
-  (click)="filter.rowID = null; "
+  *ngIf="filterHolder.rowID"
+  (click)="filter.rowID = null;sendFilter() "
     class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
     ><span class="pi pi-times" style="font-size: 0.7rem"></span
   ></span>
@@ -131,8 +138,8 @@ placeholder="ایدی کاربر"
 />
 <span
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.name"
-(click)="filterModel.name = null; "
+*ngIf="filterHolder.name"
+(click)="filterModel.name = null;sendFilter() "
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <input
@@ -143,8 +150,8 @@ placeholder="ایمیل"
 />
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.email"
-(click)="filterModel.email = null; "
+*ngIf="filterHolder.email"
+(click)="filterModel.email = null;sendFilter() "
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 

@@ -26,6 +26,7 @@
     class="mt-1 shadow-lg radius"
     aria-labelledby="dropdownBasic1"
   >
+
     <button
       class="text-left btn"
       ngbDropdownItem
@@ -62,6 +63,13 @@
         class="mt-1 shadow-lg radius"
         aria-labelledby="dropdownBasic1"
       >
+      <button
+      class="text-left btn"
+      ngbDropdownItem
+      (click)="setProductId(null,'همه')"
+      >
+      <strong>همه</strong>
+    </button>
         <button
           class="text-left btn"
           ngbDropdownItem
@@ -88,6 +96,13 @@
         aria-labelledby="dropdownBasic1"
         *ngIf="plans.length!=0"
       >
+      <button
+      class="text-left btn"
+      ngbDropdownItem
+      (click)="setPlan(null,'همه')"
+      >
+      <strong>همه</strong>
+    </button>
         <button
           class="text-left btn"
           ngbDropdownItem
@@ -147,8 +162,8 @@
 
 />
 <span
-  *ngIf="filterModel.iD"
-  (click)="filterModel.iD = null; sendFilter()"
+  *ngIf="filterHolder.iD"
+  (click)="filterModel.iD = null;filterdata()"
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
@@ -161,8 +176,8 @@ placeholder="ایدی کاربر"
 
  
 <span
-*ngIf="filterModel.userID"
-(click)="filterModel.userID = null; filterdata()"
+*ngIf="filterHolder.userID"
+(click)="filterModel.userID = null;filterdata() "
     class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
     ><span class="pi pi-times" style="font-size: 0.7rem"></span
   ></span>
@@ -176,8 +191,8 @@ placeholder="ایدی کاربر"
 />
 <span
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.firstName"
-(click)="filterModel.firstName = null;"
+*ngIf="filterHolder.firstName"
+(click)="filterModel.firstName = null;filterdata()"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <input
@@ -187,8 +202,8 @@ placeholder="نام خانوادگی"
 [(ngModel)]="filterModel.lastName"
 />
 <span
-  *ngIf="filterModel.lastName"
-  (click)="filterModel.lastName = null;"
+  *ngIf="filterHolder.lastName"
+  (click)="filterModel.lastName = null;filterdata()"
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
@@ -201,8 +216,8 @@ placeholder="شماره حساب"
 
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.accountNumber"
-(click)="filterModel.accountNumber = null; "
+*ngIf="filterHolder.accountNumber"
+(click)="filterModel.accountNumber = null;filterdata() "
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 
@@ -227,7 +242,12 @@ ngbDatepicker
 (click)="TCrtDateStatus.toggle()"
 placeholder=" روز / ماه / سال "
 />
-
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.toCreateDate"
+(click)="filterModel.toCreateDate = null;TCrtDate=null; filterdata()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
 <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
 >تا تاریخ ثبت از</strong
 >
@@ -246,6 +266,12 @@ ngbDatepicker
 (click)="FCrtDateStatus.toggle()"
 placeholder=" روز / ماه / سال "
 />
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.fromCreateDate"
+(click)="filterModel.fromCreateDate = null;FCrtDate=null; filterdata()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
 <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
 >تا ریخ شروع لایسنس</strong
 >
@@ -264,6 +290,12 @@ ngbDatepicker
 (click)="FStrDateStatus.toggle()"
 placeholder=" روز / ماه / سال "
 />
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.fromStartDate"
+(click)="filterModel.fromStartDate = null;FStrDate=null; filterdata()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
 <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
 >تاریخ شروع لایسینس تا</strong
 >
@@ -282,6 +314,12 @@ ngbDatepicker
 (click)="TStrDateStatus.toggle()"
 placeholder=" روز / ماه / سال "
 />
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.toStartDate"
+(click)="filterModel.toStartDate = null;TStrDate=null; filterdata()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
 <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
 >تااریخ پایان لایسنس از</strong
 >
@@ -300,6 +338,12 @@ ngbDatepicker
 (click)="FExpDateStatus.toggle()"
 placeholder=" روز / ماه / سال "
 />
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.fromExpireDate"
+(click)="filterModel.fromExpireDate = null;FExpDate=null; filterdata()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
 <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
 >تاریخ پایان لایسنس تا</strong
 >
@@ -318,7 +362,12 @@ ngbDatepicker
 (click)="TExpDateStatus.toggle()"
 placeholder=" روز / ماه / سال "
 />
-
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.toExpireDate"
+(click)="filterModel.toExpireDate = null;TExpDate=null; filterdata()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
 
 
 
@@ -338,8 +387,8 @@ placeholder="نسخه لایسنس"
 />
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.code"
-(click)="filterModel.code = null;"
+*ngIf="filterHolder.code"
+(click)="filterModel.code = null;filterdata()"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 
@@ -358,50 +407,6 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 </div></div>
 
 
-<div
-  class="flex-row row g-0 d-flex justify-content-start align-items-center mb-1"
-  *ngIf="filtered"
->
-  <ng-container *ngFor="let filterItem of filters">
-    <a
-      *ngIf="filterItem.isFilled"
-      class="d-inline-flex bg-light clickable-btn justify-content-start radius m-1 align-items-center"
-    >
-      <button
-        (click)="deleteFilter(filterItem)"
-        ngbTooltip="حذف فیلتر"
-        [openDelay]="100"
-        [closeDelay]="500"
-        placement="bottom"
-        class="bg-transparent btn-scale-1 btn d-flex align-items-center"
-      >
-        <i
-          class="i-Close text-dark"
-          style="font-size: 22px; font-weight: normal"
-        ></i>
-      </button>
-
-      <div class="vertical"></div>
-      <span class="text-dark text-small ml-2 pt-1 pr-2"
-        >{{ filterItem.label }} : {{ filterItem.title }}</span
-      >
-    </a>
-  </ng-container>
-  <a
-    (click)="deleteAllFilter()"
-    class="d-inline-flex btn-delete clickable-btn justify-content-start radius m-1 align-items-center"
-  >
-    <button class="bg-transparent btn-scale-1 btn d-flex align-items-center">
-      <i
-        class="i-Close text-white"
-        style="font-size: 22px; font-weight: normal"
-      ></i>
-    </button>
-    <strong class="text-white text-small ml-2 pt-1 pr-2"
-      >حذف همه فیلتر ها</strong
-    >
-  </a>
-</div>
 <section class="main-table" *ngIf="pageIsLoad">
   <table class="table">
     <thead class="bg-dark text-white">

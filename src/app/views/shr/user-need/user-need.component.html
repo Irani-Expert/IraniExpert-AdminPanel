@@ -69,12 +69,12 @@
   <input
   type="text"
   class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
-  placeholder="شناسه کاربر"
+  placeholder="Id"
   [(ngModel)]="filterModel.iD"
 
 />
 <span
-  *ngIf="filterModel.iD"
+  *ngIf="filterHolder.iD"
   (click)="filterModel.iD = null; startFilter()"
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
@@ -89,7 +89,7 @@
 />
 <span
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.firstName"
+*ngIf="filterHolder.firstName"
 (click)="filterModel.firstName = null; startFilter()"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
@@ -101,7 +101,7 @@ placeholder="نام خانوادگی"
 />
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.lastName"
+*ngIf="filterHolder.lastName"
 (click)="filterModel.lastName = null; startFilter()"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
@@ -113,7 +113,7 @@ placeholder="شماره تلفن"
 />
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.phoneNumber"
+*ngIf="filterHolder.phoneNumber"
 (click)="filterModel.phoneNumber = null; startFilter()"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
@@ -125,19 +125,19 @@ placeholder="ایمیل"
 />
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.email"
+*ngIf="filterHolder.email"
 (click)="filterModel.email = null; startFilter()"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <input
 type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+class="form-control m-1 mr-5 radius col-9 col-sm-5 col-md-2 bg-white text-small"
 placeholder="میزان"
 [(ngModel)]="filterModel.amount"
 />
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.amount"
+*ngIf="filterHolder.amount"
 (click)="filterModel.amount = null; startFilter()"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
@@ -161,6 +161,12 @@ ngbDatepicker
 (click)="datePickerStatus1.toggle()"
 placeholder=" روز / ماه / سال "
 />
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.fromCreateDate"
+(click)="filterModel.fromCreateDate = null;fromCreateDate=null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
 <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
 >تا تاریخ</strong
 >
@@ -179,6 +185,12 @@ ngbDatepicker
 (click)="datePickerStatus2.toggle()"
 placeholder=" روز / ماه / سال "
 />
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.toCreateDate"
+(click)="filterModel.toCreateDate = null;toCreateDate=null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
 <div class="mb-1 mr-1">
   <strong class="m-1 text-small">فعالیت مالی</strong>
   <label class="switch switch-primary mr-2 m-2">

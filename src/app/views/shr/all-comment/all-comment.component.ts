@@ -60,8 +60,9 @@ export class AllCommentComponent implements OnInit {
   dropDownTitleHolder: string = 'مقالات';
   ExpDate: any;
   CrtDate: any;
+  filterHolder: FilterModel=new FilterModel;
   rateNumber: number[] = [1,2,3,4,5]; 
-  rateText:string='انخاب نشده';
+  rateText:string='همه';   
   isDivExpanded: boolean = false;
 
   tableType: number;
@@ -108,6 +109,7 @@ export class AllCommentComponent implements OnInit {
     tableType: number,
     filter: FilterModel
   ) {
+    this.filteredItems(this.filterModel)
     this.tableType = tableType;
     let finder = this.tableTypeTitles.findIndex((item) => item.id == tableType);
     if(finder!=-1){
@@ -264,17 +266,27 @@ export class AllCommentComponent implements OnInit {
         '-' +
         this.CrtDate.day;
     }
+ 
     this.getCommentList(0, this.tableType, this.filterModel);
     this.filter = new FilterModel();
   }
   setRate(rate:number){
     this.filterModel.rate=rate
-    this.rateText=String(rate)
+    if(rate!=null){
+      this.rateText=String(rate)
+
+    }
+    else{
+      this.rateText='همه'
+    }
     this.sendFilter()
     }
     toggleFilters() {
       this.isDivExpanded = !this.isDivExpanded;
       this.stateOfChevron =
         this.stateOfChevron === 'default' ? 'rotated' : 'default';
+    }
+    filteredItems(filter: FilterModel) {
+      this.filterHolder = { ...filter };
     }
 }

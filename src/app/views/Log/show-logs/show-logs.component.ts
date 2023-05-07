@@ -70,7 +70,7 @@ export class ShowLogsComponent implements OnInit {
   index: number = 0;
   tableTypes: TableType[] = new Array<TableType>();
   filter: FilterModel = new FilterModel();
-  filterHolder: FilterModel;
+  filterHolder: FilterModel=new FilterModel;
   page: Page = new Page();
   logRows: LogsModel[] = new Array<LogsModel>();
   isDataFetched: boolean = false;

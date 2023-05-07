@@ -69,6 +69,7 @@ export class UserNeedComponent implements OnInit {
   toCreateDate: { year: number; month: number; day: number };
   filterExecutedModel: FilterModel = new FilterModel();
   stateOfChevron: string = 'default';
+  filterHolder: FilterModel=new FilterModel;
 
   filterValues: Array<{
     title: string;
@@ -390,7 +391,7 @@ export class UserNeedComponent implements OnInit {
   */
 
   startFilter() {
-    if (this.fromCreateDate) {
+    if (this.fromCreateDate!=null) {
       this.filterModel.fromCreateDate =
         this.fromCreateDate.year +
         '-' +
@@ -398,7 +399,7 @@ export class UserNeedComponent implements OnInit {
         '-' +
         this.fromCreateDate.day;
     }
-    if (this.toCreateDate) {
+    if (this.toCreateDate!=null) {
       this.filterModel.toCreateDate =
         this.toCreateDate.year +
         '-' +
@@ -406,7 +407,8 @@ export class UserNeedComponent implements OnInit {
         '-' +
         this.toCreateDate.day;
     }
-debugger
+    this.filteredItems(this.filterModel)
+
     this._UserNeedService
       .getUserNeed(
         this.filterModel,
@@ -541,5 +543,8 @@ debugger
     this.filterModel = { ...this.filterExecutedModel };
 
     this.startFilter();
+  }
+  filteredItems(filter: FilterModel) {
+    this.filterHolder = { ...filter };
   }
 }

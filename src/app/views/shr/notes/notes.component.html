@@ -60,8 +60,8 @@
 
 />
 <span
-  *ngIf="filterModel.iD"
-  (click)="filterModel.iD = null; "
+  *ngIf="filterHolder.iD"
+  (click)="filterModel.iD = null;startFilter() "
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
@@ -74,8 +74,8 @@ placeholder="ایدی کاربر"
 
  
 <span
-*ngIf="filterModel.userID"
-(click)="filterModel.userID = null; "
+*ngIf="filterHolder.userID"
+(click)="filterModel.userID = null;startFilter() "
     class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
     ><span class="pi pi-times" style="font-size: 0.7rem"></span
   ></span>
@@ -89,8 +89,8 @@ placeholder="ایدی کاربر"
 />
 <span
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterModel.name"
-(click)="filterModel.name = null;"
+*ngIf="filterHolder.name"
+(click)="filterModel.name = null;startFilter()"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <input
@@ -101,8 +101,8 @@ placeholder="ایمیل"
 />
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
-*ngIf="filterModel.email"
-(click)="filterModel.email = null; "
+*ngIf="filterHolder.email"
+(click)="filterModel.email = null;startFilter() "
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 

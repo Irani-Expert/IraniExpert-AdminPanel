@@ -58,7 +58,7 @@ export class NotesComponent implements OnInit {
   stateOfChevron: string = 'default';
   page: Page = new Page();
   isDivExpanded: boolean = false;
-
+  filterHolder: FilterModel=new FilterModel;
   rows: CommentModel[];
   pageIsLoad: boolean = false;
   filterModel: FilterModel = new FilterModel();
@@ -132,6 +132,7 @@ export class NotesComponent implements OnInit {
       this.stateOfChevron === 'default' ? 'rotated' : 'default';
   }
   startFilter() {
+    this.filteredItems(this.filterModel )
     this._commentService
       .GetAllComment(
         this.page.pageNumber !== 0
@@ -148,5 +149,8 @@ export class NotesComponent implements OnInit {
         this.page.totalPages = res.data.totalPages - 1;
         this.page.pageNumber = res.data.pageNumber + 1;
       });
+  }
+  filteredItems(filter: FilterModel) {
+    this.filterHolder = { ...filter };
   }
 }

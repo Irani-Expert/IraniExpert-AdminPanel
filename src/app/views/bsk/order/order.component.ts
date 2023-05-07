@@ -98,8 +98,8 @@ export class OrderComponent implements OnInit {
   TCrtDate: any;
   FStrDate: any;
   TStrDate: any;
-  planTitle:string="انتخاب کنید";
-  productTitle:string="انتخاب کنید";
+  planTitle:string='همه';
+  productTitle:string='همه';
   filtered: boolean = false;
   filter: FilterModel = new FilterModel();
   licenseID: number;
@@ -108,6 +108,7 @@ export class OrderComponent implements OnInit {
   invoiceDetail: InvoiceModel = new InvoiceModel();
   invoiceStatus: number;
   filterModel: FilterModel = new FilterModel();
+  filterHolder: FilterModel=new FilterModel;
 
   addPlans: PlanModel[] = new Array<PlanModel>();
   AddproductModel: ProductModel[] = new Array<ProductModel>();
@@ -301,34 +302,7 @@ export class OrderComponent implements OnInit {
         }
       );
   }
-  // async getOrderList(pageNumber: number, seedNumber: number) {
-  //   this._orderService
-  //     .get(
-  //       pageNumber !== 0 ? pageNumber - 1 : pageNumber,
-  //       seedNumber,
-  //       'ID',
-  //       null,
-  //       'orders'
-  //     )
-  //     .subscribe(
-  //       (res: Result<Paginate<OrderModel[]>>) => {
-  //         this.rows = res.data.items;
-  //         this.page.totalElements = res.data.totalCount;
-  //         this.page.totalPages = res.data.totalPages - 1;
-  //         this.page.pageNumber = res.data.pageNumber + 1;
-  //       },
-  //       (_error) => {
-  //         this.toastr.error(
-  //           'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-  //           null,
-  //           {
-  //             closeButton: true,
-  //             positionClass: 'toast-top-left',
-  //           }
-  //         );
-  //       }
-  //     );
-  // }
+
   openDetailModal(item: OrderModel, openDetails: any) {
     this.orderDetail = item;
 
@@ -398,38 +372,7 @@ export class OrderComponent implements OnInit {
       this.isValidate = false;
     }
   }
-  // updateLicense(content: any, row: OrderModel) {
-  //   this.modalService
-  //     .open(content, {
-  //       size: 'lg',
-  //       ariaLabelledBy: 'modal-basic-title',
-  //       centered: true,
-  //     })
-  //     .result.then((result: boolean) => {
-  //       if (result != undefined) {
-  //         this.licenseModel.rowID = row.id;
-  //         this.licenseModel.id = row.licenseID;
-  //         console.log(this.licenseModel);
-  //         this.addOrUpdate2(this.licenseModel);
-  //         // this.addForm.reset();
-  //       }
-  //     });
-  // }
-  // async addOrUpdate2(item: LicenseModel) {
-  //   this._licenseService.update(item.id, item, 'License').subscribe((data) => {
-  //     if (data.success) {
-  //       this.toastr.success(data.message, null, {
-  //         closeButton: true,
-  //         positionClass: 'toast-top-left',
-  //       });
-  //     } else {
-  //       this.toastr.error(data.message, null, {
-  //         closeButton: true,
-  //         positionClass: 'toast-top-left',
-  //       });
-  //     }
-  //   });
-  // }
+
   uploadFile() {
     this._fileUploaderService
       .uploadLicence(this.licenseFile, 'licenses')
@@ -806,78 +749,6 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  openFilterModal(content: any) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
-      .result.then(
-        (_result) => {
-          if (this.FCrtDate != null) {
-            this.filterModel.fromCreateDate =
-              this.FCrtDate.year +
-              '-' +
-              this.FCrtDate.month +
-              '-' +
-              this.FCrtDate.day;
-          }
-          if (this.TCrtDate != null) {
-            this.filterModel.toCreateDate =
-              this.TCrtDate.year +
-              '-' +
-              this.TCrtDate.month +
-              '-' +
-              this.TCrtDate.day;
-          }
-          if (this.FStrDate != null) {
-            this.filterModel.fromStartDate =
-              this.FStrDate.year +
-              '-' +
-              this.FStrDate.month +
-              '-' +
-              this.FStrDate.day;
-          }
-          if (this.TStrDate != null) {
-            this.filterModel.toStartDate =
-              this.TStrDate.year +
-              '-' +
-              this.TStrDate.month +
-              '-' +
-              this.TStrDate.day;
-          }
-          if (this.FExpDate != null) {
-            this.filterModel.fromExpireDate =
-              this.FExpDate.year +
-              '-' +
-              this.FExpDate.month +
-              '-' +
-              this.FExpDate.day;
-          }
-          if (this.TExpDate != null) {
-            this.filterModel.toExpireDate =
-              this.TExpDate.year +
-              '-' +
-              this.TExpDate.month +
-              '-' +
-              this.TExpDate.day;
-          }
-          this.filter = this.filterModel;
-          this.getOrders(this.status, this.page.pageNumber, this.filterModel);
-          this.fillTheFiltersRow(this.filter);
-          this.filtered = true;
-          this.plans = [];
-        },
-        (_reason) => {
-          this.plans = [];
-          this.FCrtDate = null;
-          this.TCrtDate = null;
-          this.FStrDate = null;
-          this.TStrDate = null;
-          this.FExpDate = null;
-          this.TExpDate = null;
-          this.filterModel = new FilterModel();
-        }
-      );
-  }
-
   addSelectProduct($event: any) {
     if ($event != undefined) {
       this.AddOrderModel.productID = parseInt($event);
@@ -920,7 +791,6 @@ export class OrderComponent implements OnInit {
             });
             this.sortDeletedPart('planID',PlanIndex)
             this.plans=[]
-            this.planTitle = "انتخاب کنید";
             this.plans = res.data;
             if (res.data[0]) {
               this.filterModel.planID = res.data[0].id;
@@ -934,29 +804,7 @@ export class OrderComponent implements OnInit {
       this.filterModel.planID = parseInt($event);
     }
   }
-  deleteFilter(item: any) {
-   
-    if(item.label=='محصول' ){
-      this.productTitle = "انتخاب کنید";
-      this.planTitle = "انتخاب کنید";
-      delete this.filterModel.planID
-      this.plans=[]
-      delete this.filterModel.productID
-      let PlanIndex = this.filters.findIndex((filter) => {
-        return filter.label === 'پلن';
-      });
-      this.sortDeletedPart('planID',PlanIndex)
-    }
-    if(item.label=='پلن'){
-      this.planTitle = "انتخاب کنید";
-      delete this.filterModel.planID
-    }
-  
-  let tempIndex = this.filters.findIndex((filter) => {
-    return filter.title === item.title;
-  });
-   this.sortDeletedPart(item.id,tempIndex)
-    }
+
     sortDeletedPart(id:string,tempIndex:number){
 
       this.filters.splice(tempIndex, 1);
@@ -970,16 +818,6 @@ export class OrderComponent implements OnInit {
     this.getOrders(this.status, this.page.pageNumber, this.filter);
   
     }
-  deleteAllFilter() {
-    this.planTitle = "انتخاب کنید";
-    this.productTitle = "انتخاب کنید";
-    this.filtered = false;
-    this.filter = new FilterModel();
-    this.filters.forEach((item) => {
-      item.isFilled = false;
-    });
-    this.getOrders(this.status, this.page.pageNumber, this.filter);
-  }
 
   fillTheFiltersRow(filter: FilterModel) {
     this.filters = [];
@@ -1269,10 +1107,12 @@ this.filterdata()
             '-' +
             this.TExpDate.day;
         }
-        this.filter = this.filterModel;
-        debugger
+        this.filteredItems(this.filterModel)
         this.getOrders(this.status, this.page.pageNumber, this.filterModel);
         this.fillTheFiltersRow(this.filter);
         this.filtered = true;
+      }
+      filteredItems(filter: FilterModel) {
+        this.filterHolder = { ...filter };
       }
 }
