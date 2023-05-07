@@ -39,7 +39,14 @@
         <td>
           <a href="" class="m-0">
             <img
+              *ngIf="!item.fileExists"
               src="{{ 'https://dl.iraniexpert.com/' + item.cardImagePath }}"
+              class="m-0 img-card"
+              alt=""
+            />
+            <img
+              *ngIf="item.fileExists"
+              src="../../../../assets/images/darklogo.png"
               class="m-0 img-card"
               alt=""
             />

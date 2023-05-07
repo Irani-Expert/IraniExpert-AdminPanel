@@ -23,7 +23,7 @@ export class AddUpdateComponent implements OnInit {
   tableType: number = 6;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
-  ifDataExist:boolean=false;
+  ifDataExist: boolean = false;
   constructor(
     private _route: ActivatedRoute,
     private _formBuilder: FormBuilder,
@@ -35,7 +35,7 @@ export class AddUpdateComponent implements OnInit {
 
   async ngOnInit() {
     if (this.productId === 0) {
-      this.ifDataExist = true
+      this.ifDataExist = true;
       this.addUpdate = new ProductModel();
       this.addUpdate.id = this.productId;
       this.addUpdate.isActive = false;
@@ -43,29 +43,25 @@ export class AddUpdateComponent implements OnInit {
       this.getProductById();
     }
     this.addForm = this._formBuilder.group({
-      cardImagePath: [null],
       title: [null, Validators.compose([Validators.required])],
       type: [null, Validators.compose([Validators.required])],
       orderID: [null, Validators.compose([Validators.required])],
       isActive: [null, Validators.compose([Validators.required])],
       description: [null, Validators.compose([Validators.required])],
-      actionDescriptor: [null, Validators.compose([Validators.required])],
     });
   }
 
   async getProductById() {
     if (this.productId !== 0)
-      await this._productsService
+      this._productsService
         .getOneByID(this.productId, 'Product')
         .subscribe((res: Result<ProductModel>) => {
-          if(res.success){
+          if (res.success) {
             this.addUpdate = res.data;
-            this.ifDataExist=true
+            this.ifDataExist = true;
+          } else {
+            this._router.navigate(['/404']);
           }
-          else{
-            this._router.navigate(['/404'])
-          }
-        
         });
   }
   onFileChanged(event: any) {
@@ -79,72 +75,64 @@ export class AddUpdateComponent implements OnInit {
   imgFailed() {
     alert('image Failed to Show');
   }
-  uploadFile() {
+  async uploadFile() {
     this._fileUploaderService
       .uploadFile(this.cropImagePreview, 'products')
-      .subscribe(
-        (res: Result<string[]>) => {
-          if (res.success) {
-            this.addUpdate.cardImagePath = res.data[0];
-            this.toastr.success('با موفقیت آپلود شد', null, {
+      .subscribe((res: Result<string[]>) => {
+        if (res.success) {
+          this.addUpdate.cardImagePath = res.data[0];
+          this.addUpdate.fileExists = true;
+        } else {
+          this.addUpdate.cardImagePath = res.errors[0];
+        }
+      });
+  }
+
+  async addOrUpdate() {
+    if (this.cropImagePreview !== '') {
+      await this.uploadFile();
+    }
+    setTimeout(() => {
+      this.sendData();
+    }, 800);
+  }
+  sendData() {
+    if (this.addUpdate.id === 0) {
+      this._productsService
+        .create(this.addUpdate, 'product')
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
+            this._router.navigate(['prd/products-list']);
           } else {
-            this.addUpdate.cardImagePath = res.errors[0];
-            this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
+            this.toastr.error(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
           }
-        },
-        (_error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
+        });
+    } else {
+      this._productsService
+        .update(this.addUpdate.id, this.addUpdate, 'product')
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
-            }
-          );
-        }
-      );
-  }
-
-  async addOrUpdate(row: ProductModel) {
-    if (row.id === 0) {
-      this._productsService.create(row, 'product').subscribe((data) => {
-        if (data.success) {
-          this.toastr.success(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
-    } else {
-      this._productsService.update(row.id, row, 'product').subscribe((data) => {
-        row.id = 0;
-        if (data.success) {
-          this.toastr.success(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-          this._router.navigate(['prd/addUpdate/' + data.data]);
-        } else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
+            });
+            this._router.navigate(['prd/products-list']);
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        });
     }
   }
-
   selectType($event: any) {
     if ($event != undefined) {
       this.addUpdate.type = parseInt($event);
@@ -154,5 +142,25 @@ export class AddUpdateComponent implements OnInit {
     if ($event != undefined) {
       this.addUpdate.orderID = parseInt($event);
     }
+  }
+  deleteImg(filePath: string) {
+    this._fileUploaderService
+      .deleteFile(filePath)
+      .subscribe((res: Result<string[]>) => {
+        if (res.success) {
+          this.addUpdate.cardImagePath = undefined;
+          this.addUpdate.fileExists = false;
+
+          this.toastr.success('با موفقیت حذف شد', null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(res.message, 'خطا در حذف تصویر', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
   }
 }
