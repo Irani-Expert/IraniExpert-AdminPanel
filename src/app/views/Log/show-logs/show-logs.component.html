@@ -162,24 +162,24 @@
     <!-- Inputs -->
     <input
       type="text"
-      class="form-control m-1 radius col-lg-2 col-md-4 bg-white text-small"
+      class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
       placeholder="نام"
       [(ngModel)]="filter.firstName"
     />
     <span
-      *ngIf="filter.firstName"
+      *ngIf="filterHolder.firstName"
       (click)="filter.firstName = null; sendFilter()"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <input
       type="text"
-      class="form-control m-1 radius col-lg-2 col-md-4 bg-white text-small"
+      class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
       placeholder="نام خانوادگی"
       [(ngModel)]="filter.lastName"
     />
     <span
-      *ngIf="filter.lastName"
+      *ngIf="filterHolder.lastName"
       (click)="filter.lastName = null; sendFilter()"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
@@ -191,7 +191,7 @@
       [(ngModel)]="filter.title"
     />
     <span
-      *ngIf="filter.title"
+      *ngIf="filterHolder.title"
       (click)="filter.title = null; sendFilter()"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
@@ -215,7 +215,7 @@
       (click)="fromCreateDatePicker.toggle()"
     />
     <span
-      *ngIf="fromCreateDate"
+      *ngIf="filterHolder.fromCreateDate"
       (click)="
         filter.fromCreateDate = null; fromCreateDate = null; sendFilter()
       "
@@ -240,8 +240,8 @@
       placeholder=" روز / ماه / سال "
     />
     <span
-      *ngIf="toCreateDate"
-      (click)="filter.fromCreateDate = null; toCreateDate = null; sendFilter()"
+      *ngIf="filterHolder.toCreateDate"
+      (click)="filter.toCreateDate = null; toCreateDate = null; sendFilter()"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -254,7 +254,7 @@
       placeholder="شناسه کاربر"
     />
     <span
-      *ngIf="filter.userID"
+      *ngIf="filterHolder.userID"
       (click)="filter.userID = null; sendFilter()"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
@@ -266,7 +266,7 @@
       placeholder="شناسه محصول یا .. "
     />
     <span
-      *ngIf="filter.rowID"
+      *ngIf="filterHolder.rowID"
       (click)="filter.rowID = null; sendFilter()"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
@@ -290,7 +290,7 @@
       placeholder="شماره حساب"
     />
     <span
-      *ngIf="filter.accountNumber"
+      *ngIf="filterHolder.accountNumber"
       (click)="filter.accountNumber = null; sendFilter()"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
@@ -302,7 +302,7 @@
       placeholder="آدرس آی پی"
     />
     <span
-      *ngIf="filter.ipAddress"
+      *ngIf="filterHolder.ipAddress"
       (click)="filter.ipAddress = null; sendFilter()"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
@@ -311,7 +311,11 @@
       <strong class="m-1 text-small">موفق</strong>
       <label class="switch switch-primary mr-2 m-2">
         <strong class="text-small">نا موفق</strong>
-        <input type="checkbox" [(ngModel)]="filter.isSuccess" />
+        <input
+          type="checkbox"
+          [(ngModel)]="filter.isSuccess"
+          (change)="sendFilter()"
+        />
         <span class="slider"></span>
       </label>
     </div>
