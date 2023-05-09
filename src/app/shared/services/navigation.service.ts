@@ -68,6 +68,14 @@ export class NavigationService {
       privilege: 'Dashboard-Full Premission',
     },
     {
+      name: 'تقویم اقتصادی',
+      description: '',
+      navType: 'link',
+      icon: 'i-Eye',
+      state: '/calendar',
+      privilege: 'permissions-Full Premission',
+    },
+    {
       name: 'مشتریان من',
       description: 'پروفایل',
       navType: 'link',
@@ -188,10 +196,6 @@ export class NavigationService {
       state: '/crt/profits',
       privilege: 'profits-Full Premission',
     },
-
-   
-
-
 
     {
       name: 'کاربران',
