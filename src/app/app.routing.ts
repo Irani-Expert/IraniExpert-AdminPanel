@@ -66,6 +66,11 @@ const adminRoutes: Routes = [
     loadChildren: () =>
       import('./views/Log/log.module').then((m) => m.LogModule),
   },
+  {
+    path: 'calendar',
+    loadChildren: () =>
+      import('./views/cln/cln.module').then((m) => m.ClnModule),
+  },
 ];
 
 const routes: Routes = [
