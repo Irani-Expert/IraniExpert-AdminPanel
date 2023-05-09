@@ -21,31 +21,70 @@ import { UserRolesModel } from 'src/app/shared/models/userRoles';
 import { UserProfileService } from '../../dashboard/user-profile/user-profile.service';
 import { referralModel } from 'src/app/shared/models/referralModel';
 import { Observable } from 'rxjs';
+import * as moment from 'jalali-moment';
+import { FilterModel } from 'src/app/shared/models/Base/filter.model';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 
 @Component({
   selector: 'app-user-mangement',
   templateUrl: './user-mangement.component.html',
   styleUrls: ['./user-mangement.component.scss'],
+  animations: [
+    trigger('rotate90deg', [
+      state('default', style({ transform: 'rotate(0)' })),
+      state('rotated', style({ transform: 'rotate(-90deg)' })),
+      transition('rotated => default', animate('300ms ease-in-out')),
+      transition('default => rotated', animate('500ms ease-in-out')),
+    ]),
+    // trigger('pushDown', [
+    //   state('default', style({ margin: '0' })),
+    //   state('rotated', style({ margin: '2% 0 0 0' })),
+    //   transition('rotated => default', animate('100ms ease-in-out')),
+    //   transition('default => rotated', animate('300ms ease-in-out')),
+    // ]),
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-40%)', opacity: 0 }),
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'translateY(0%)', opacity: 1 })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms ease-in-out',
+          style({ transform: 'translateY(-40%)', opacity: 0 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class UserMangementComponent implements OnInit {
+  filterModel: FilterModel = new FilterModel();
   changeParentStatus: boolean;
   userParentToSend: {
     userId: number;
     newReferralCode: string;
   };
+  filterHolder: UsersModel=new UsersModel;
+  addupdateKeeper:UsersModel=new UsersModel;
   userParent: referralModel = new referralModel();
   isChangingParent: boolean = false;
   viewMode: 'list' | 'grid' = 'list';
   rows: UsersModel[] = new Array<UsersModel>();
   allSelected: boolean;
   page: Page = new Page();
-  addUpdate: UsersModel;
+  addUpdate: UsersModel=new UsersModel;
   addForm: FormGroup;
+  filterData:UsersModel=new UsersModel;
   dropdownList = [];
   selectedItems = [];
   roleKeeper = [];
+  isDivExpanded: boolean = false;
   removeIndexFromList: number;
   roleIdSaver: number;
+  stateOfChevron: string = 'default';
   dropdownSettings: IDropdownSettings;
   roleModel: UserRolesModel[] = new Array<UserRolesModel>();
   constructor(
@@ -54,7 +93,8 @@ export class UserMangementComponent implements OnInit {
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
     public _roleService: RoleService,
-    private _userReferralSevice: UserProfileService
+    private _userProfileSevice: UserProfileService
+
   ) {
     this.page.pageNumber = 0;
     this.page.size = 8;
@@ -86,41 +126,16 @@ export class UserMangementComponent implements OnInit {
     });
   }
   setPage(pageInfo: number) {
+    debugger
     this.page.pageNumber = pageInfo;
-
-    this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver);
+    
+   this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver);
   }
-  getUsersList(pageNumber: number, seedNumber: number, roleId: number) {
-    this.roleIdSaver = roleId;
-    this._usersService
-      .getUserByRoleID(
-        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
-        seedNumber,
-        roleId
-      )
-      .subscribe(
-        (res: Result<Paginate<UsersModel[]>>) => {
-          this.rows = res.data.items;
-          this.page.totalElements = res.data.totalCount;
-          this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber + 1;
-        },
-        (_error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
-        }
-      );
-  }
-  usersEdit(content: any, row: UsersModel) {
+ 
+  usersEdit(content: any, row: UsersModel,userID:number) {
     this.userParent.firstname = '';
     this.userParent.lastName = '';
-    //this.roleKeeper=row.roles
+    this.roleKeeper=row.roles
     if (row === undefined) {
       row = new UsersModel();
       row.id = 0;
@@ -133,8 +148,8 @@ export class UserMangementComponent implements OnInit {
 
       this.roleKeeper = this.selectedItems;
     }
-    this.addUpdate = row;
-    this._userReferralSevice.getParentLevelOne(row.id).subscribe((res) => {
+     this.addUpdate = row;
+    this._userProfileSevice.getParentLevelOne(row.id).subscribe((res) => {
       if (res.success) {
         this.userParent = res.data;
       }
@@ -154,7 +169,7 @@ export class UserMangementComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
-            this.addOrUpdate(this.addUpdate);
+            this.updateUserInfo(userID);
           }
         },
         (reason) => {
@@ -165,86 +180,47 @@ export class UserMangementComponent implements OnInit {
       );
   }
   async addOrUpdate(row: UsersModel) {
-    var indexFinder = this.rows.findIndex((item) => item.id === row.id);
+    // var indexFinder = this.rows.findIndex((item) => item.id === row.id);
 
-    // if (row.id === 0) {
-    //   this._usersService.create(row, 'aspnetuser').subscribe((data) => {
-    //     if (data.success) {
-    //       this.toastr.success(data.message, null, {
-    //         closeButton: true,
-    //         positionClass: 'toast-top-left',
-    //       });
-    //     } else {
-    //       this.toastr.error(data.message, null, {
-    //         closeButton: true,
-    //         positionClass: 'toast-top-left',
-    //       });
-    //     }
-    //   });
-    // } else {
-    var counter = 0;
+    if (row.id === 0) {
+      // this._usersService.create(row, 'aspnetuser').subscribe((data) => {
+      //   if (data.success) {
+      //     this.toastr.success(data.message, null, {
+      //       closeButton: true,
+      //       positionClass: 'toast-top-left',
+      //     });
+      //   } else {
+      //     this.toastr.error(data.message, null, {
+      //       closeButton: true,
+      //       positionClass: 'toast-top-left',
+      //     });
+      //   }
+      // });
+    } else {
+//     var counter = 0;
 
-    this.roleModel = [];
-    this.roleKeeper.forEach((x) => {
-      this.roleModel[counter] = new UserRolesModel();
-      this.roleModel[counter].userId = row.id;
-      this.roleModel[counter].roleId = x.item_id;
-      counter += 1;
-    });
 
-    this.updateRoleId();
 
-    this._usersService.update(row.id, row, 'aspnetuser').subscribe((data) => {
-      if (data.success) {
-        this.toastr.success(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-        this.getUsersList(
-          this.page.pageNumber,
-          this.page.size,
-          this.roleIdSaver
-        );
-      } else {
-        this.toastr.error(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-      }
-    });
+//     this.updateRoleId();
+// debugger
+//     this._usersService.update(row.id, row, 'aspnetuser').subscribe((data) => {
+//       debugger
+//       if (data.success) {
+//         this.toastr.success(data.message, null, {
+//           closeButton: true,
+//           positionClass: 'toast-top-left',
+//         });
+//         this.setPage(this.page.pageNumber-1);      } else {
+//         this.toastr.error(data.message, null, {
+//           closeButton: true,
+//           positionClass: 'toast-top-left',
+//         });
+//       }
+//     });
+  }
     this.isChangingParent = false;
   }
-  deleteUser(id: number, modal: any) {
-    this.modalService
-      .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then((_result) => {
-        if (_result)
-          this._usersService.delete(id, 'aspnetuser').subscribe((res) => {
-            var indexFinder = this.rows.findIndex((rows) => rows.id === id);
-            this.rows.splice(indexFinder, 1);
-            if (res.success) {
-              this.toastr.success(
-                'فرایند حذف موفقیت آمیز بود',
-                'موفقیت آمیز!',
-                {
-                  timeOut: 3000,
-                  positionClass: 'toast-top-left',
-                }
-              );
-            } else {
-              this.toastr.error('خطا در حذف', res.message, {
-                timeOut: 3000,
-                positionClass: 'toast-top-left',
-              });
-            }
-          });
-        this.getUsersList(
-          this.page.pageNumber,
-          this.page.size,
-          this.roleIdSaver
-        );
-      });
-  }
+ 
   getRoleList(pageNumber: number, seedNumber: number) {
     this._roleService
       .get(
@@ -262,7 +238,7 @@ export class UserMangementComponent implements OnInit {
 
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber + 1;
+          
         },
         (_error) => {
           this.toastr.error(
@@ -277,6 +253,7 @@ export class UserMangementComponent implements OnInit {
       );
   }
   onItemSelect(item: RoleModel) {
+    
     this.roleKeeper.push(item);
   }
   onDeSelect(item: any) {
@@ -333,7 +310,7 @@ export class UserMangementComponent implements OnInit {
             timeOut: 3000,
             positionClass: 'toast-top-left',
           });
-          this._userReferralSevice
+          this._userProfileSevice
             .getParentLevelOne(userId)
             .subscribe((res) => {
               if (res.success) {
@@ -365,4 +342,80 @@ export class UserMangementComponent implements OnInit {
   changeUserParentValue(e: string) {
     this.userParentToSend.newReferralCode = e;
   }
-}
+  getUsersList(pageNumber:any, pageSize:number, roleIdSaver:number){
+    this.filteredItems(this.filterData)
+    this.roleKeeper = [];
+    this._usersService.getUserByFilter(pageNumber,pageSize,this.filterData,null,roleIdSaver).subscribe((data) => {
+    this.rows=data['data'].items
+    this.rows.forEach(date=>{
+      date.persianSignUpDate= moment(date.signUpDate, 'YYYY/MM/DD')
+      .locale('fa')
+      .format('YYYY/MM/DD');
+    })
+    this.page.totalElements=data['data'].totalCount
+    
+    });
+  }
+  updateUserInfo(userID:number){
+    var finder =this.rows.findIndex(x=>x.id==userID)
+    this.roleModel = [];
+    var counter=0;
+    this.roleKeeper.forEach((x) => {
+      this.roleModel[counter] = new UserRolesModel();
+      this.roleModel[counter].userId = userID;
+      this.roleModel[counter].roleId = x.item_id;
+      counter += 1;
+    });
+    this._userProfileSevice
+      .updateUserbyAspnet(userID,this.addUpdate)
+      .subscribe((data) => {
+         if(data){
+          
+          this.setPage(this.page.pageNumber);
+          this.toastr.success(data.message, null, {
+                      closeButton: true,
+                      positionClass: 'toast-top-left',
+                    });
+                    this.updateRoleId()
+         }
+         else{
+          this.toastr.warning(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+         }
+      });
+  }
+
+  updateQuestion(modalInfo:any,userId:number){
+    this.modalService
+      .open(modalInfo, {
+        ariaLabelledBy: 'modal-basic-title',
+        centered: false,
+        size: 'xs',
+      })
+      .result.then(
+        (accept) => {
+          var finder=this.rows.findIndex(x=>x.id==userId)
+          this.addUpdate=this.rows[finder]
+          this.addUpdate.isActive=!this.addUpdate.isActive
+          this.updateUserInfo(userId)
+        },
+        (reject) => {
+          console.log(reject.message);
+        }
+      );
+  }
+  toggleFilters() {
+    this.isDivExpanded = !this.isDivExpanded;
+    this.stateOfChevron =
+      this.stateOfChevron === 'default' ? 'rotated' : 'default';
+  }
+  startFilter(){
+    this.setPage(this.page.pageNumber);
+  }
+  filteredItems(filter: UsersModel) {
+    this.filterHolder = { ...filter };
+  }
+  }
+

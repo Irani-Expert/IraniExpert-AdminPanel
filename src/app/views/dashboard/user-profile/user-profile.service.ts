@@ -54,8 +54,9 @@ export class UserProfileService {
         Expires: '0',
       }),
     };
+    debugger
     return this._http.put<Result<boolean>>(
-      environment.api.baseUrl + '/AspNetUser/' + id+'?authorID='+id,
+      environment.api.baseUrl + '/AspNetUser/' + id+'?authorID='+2217,
       t,
       _options
     );

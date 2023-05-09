@@ -190,4 +190,67 @@ export class UsersService extends BaseService<UsersModel, 0> {
       _options
     );
   }
+  getUserByFilter(
+    pageIndex: number,
+    pageSize: number,
+    filterData:UsersModel,
+    ref:number,
+    roleID:number
+  ): Observable<Result<Paginate<UsersModel[]>>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+        // Authorization: 'bearer ' + environment.jwtToken,
+      }),
+    };
+    return this._http.get<Result<Paginate<UsersModel[]>>>(
+      environment.api.baseUrl +
+        '/AspNetUser/?pageIndex='+pageIndex+'&pageSize='+pageSize+
+        (filterData.id == undefined || filterData.id == null
+          ? ''
+          : '&Id=' + filterData.id)+
+          (filterData.userName == undefined || filterData.userName == null
+            ? ''
+            : '&UserName=' + filterData.userName)+
+            
+            (filterData.email == undefined || filterData.email == null
+              ? ''
+              : '&Email=' + filterData.email)+
+              (filterData.phoneNumber == undefined || filterData.phoneNumber == null
+                ? ''
+                : '&PhoneNumber=' + filterData.phoneNumber)+
+                (filterData.phoneNumber == undefined || filterData.phoneNumber == null
+                  ? ''
+                  : '&PhoneNumber=' + filterData.phoneNumber)+
+                  (filterData.accountNumber == undefined || filterData.accountNumber == null
+                    ? ''
+                    : '&AccountNumber=' + filterData.accountNumber)+
+                    (filterData.firstName == undefined || filterData.firstName == null
+                      ? ''
+                      : '&FirstName=' + filterData.firstName)+
+             (filterData.lastName == undefined || filterData.lastName == null
+                        ? ''
+                        : '&LastName=' + filterData.lastName)+              
+              (roleID == undefined || roleID == null
+                          ? ''
+                          : '&RoleId=' + roleID)+
+       (filterData.referralCode == undefined || filterData.referralCode == null
+                          ? ''
+                          : '&ReferralCode=' + filterData.referralCode)+ 
+           (filterData.isActive == undefined || filterData.isActive == null
+                          ? ''
+                          : '&IsActive=' + filterData.isActive)+ 
+                          (filterData.fromSignUpDate == undefined || filterData.fromSignUpDate == null
+                            ? ''
+                            : '&FromSignUpDate=' + filterData.fromSignUpDate)+ 
+                            (filterData.signUpDate == undefined || filterData.signUpDate == null
+                              ? ''
+                              : '&ToSignUpDate=' + filterData.signUpDate),
+      _options
+    );
+  }
 }

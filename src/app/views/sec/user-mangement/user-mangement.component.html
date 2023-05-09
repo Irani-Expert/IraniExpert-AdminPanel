@@ -39,7 +39,187 @@
     </div>
   </div>
 </div>
+<div class="pb-3 d-flex flex-row row align-items-center">
 
+  <div class="d-flex row col-10 align-items-center">
+    <strong class="m-1 text-small"
+      ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
+      &nbsp; : &nbsp;</strong
+    >
+
+    <!-- TableType -->
+
+
+
+    <button
+    (click)="toggleFilters()"
+      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
+    >
+      <strong class="text-small mr-1">پیشرفته</strong>
+      <span class="d-inline-flex"
+        ><span
+          class="pi pi-chevron-left ml-1"
+          [@rotate90deg]="stateOfChevron"
+          style="font-size: 0.7rem"
+        ></span
+      ></span>
+    </button>
+    <!-- Expand The Div -->
+  </div>
+</div>
+<div @slideInOut *ngIf="isDivExpanded">
+    <div class="row d-flex align-items-center mb-3">
+
+
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="شناسه"
+[(ngModel)]="filterData.userId"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.userId"
+(click)="filterData.userId = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1  radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="ایمیل"
+[(ngModel)]="filterData.email"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.email"
+(click)="filterData.email = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1  radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="شماره تلفن"
+[(ngModel)]="filterData.phoneNumber"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.phoneNumber"
+(click)="filterData.phoneNumber = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="شماره حساب"
+[(ngModel)]="filterData.accountNumber"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.accountNumber"
+(click)="filterData.accountNumber = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
+<input
+type="text"
+class="form-control m-1  radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="نام"
+[(ngModel)]="filterData.firstName"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.firstName"
+(click)="filterData.firstName = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
+<input
+type="text"
+class="form-control m-1  radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="نام خانوادگی"
+[(ngModel)]="filterData.lastName"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.lastName"
+(click)="filterData.lastName = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
+<input
+type="text"
+class="form-control m-1  radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="کد معرف"
+[(ngModel)]="filterData.referralCode"
+/>
+<span
+*ngIf="filterHolder.referralCode"
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+(click)="filterData.referralCode = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>ازتاریخ ثبت نام</strong
+>
+<input
+type="text"
+ngbDatepicker
+#datePickerStatus1="ngbDatepicker"
+type="text"
+[navigation]="'select'"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="filterData.signUpDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+(click)="datePickerStatus1.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.signUpDate"
+(click)="filterData.signUpDate= null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>تا تاریخ ثبت نام</strong
+>
+<input
+type="text"
+[navigation]="'select'"
+#datePickerStatus2="ngbDatepicker"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="filterData.fromSignUpDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+#toCreateDatePicker="ngbDatepicker"
+(click)="datePickerStatus2.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterData.fromSignUpDate"
+(click)="filterData.fromSignUpDate = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
+<button
+type="button"
+ngbAutofocus
+class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
+(click)="startFilter()"
+>
+<i class="i-Filter-2 text-bigger mr-2"></i>
+<strong class="text-small">فیلتر </strong>
+</button>
+
+</div></div>
 <section class="main-table">
   <table class="table">
     <thead class="bg-dark text-white">
@@ -49,6 +229,7 @@
         <th>نام و نام خانوادگی</th>
         <th>شماره حساب</th>
         <th>شماره تماس</th>
+        <th>تاریخ ثبت نام</th>
         <th class="rounded--left">عملیات</th>
       </tr>
     </thead>
@@ -71,22 +252,32 @@
         <td>{{ item.firstName }}&nbsp;{{ item.lastName }}</td>
         <td>{{ item.accountNumber }}</td>
         <td>{{ item.phoneNumber }}</td>
+        <td>{{ item.persianSignUpDate }}</td>
         <td class="td-oprate">
           <button
             *appCanAccess="'Users-Edit'"
             class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
-            (click)="usersEdit(addUpdateModal, item)"
+            (click)="usersEdit(addUpdateModal, item,item.id)"
           >
             <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
           </button>
           <button
-            *appCanAccess="'Users-Delete'"
-            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
-            (click)="deleteUser(item.id, deleteModal)"
+           *ngIf="item.isActive==false"
+           (click)="updateQuestion(updateTrust,item.id)"
+            class="btn-delete  btn d-inline-flex justify-content-around py-btns radius align-items-center"
+            
           >
-            <i class="i-Close text-bigger mr-2"></i>
-            <strong>حذف</strong>
+            <i class=" i-Circular-Point text-bigger mr-2"></i>
+            <strong>فعال</strong>
           </button>
+          <button
+          *ngIf="item.isActive"
+           (click)="updateQuestion(updateTrust,item.id)"
+          class="btn-success btn d-inline-flex justify-content-around py-btns radius align-items-center"
+        >
+          <i class="i-Yes  text-bigger mr-2"></i>
+          <strong>غیرفعال</strong>
+        </button>
         </td>
       </tr>
     </tbody>
@@ -146,13 +337,14 @@
     <div class="modal-body">
       <div class="row">
         <div class="col-md-6 form-group mb-3 mt-3">
-          <label for="firstName ">نام کاربری</label>
+          <label for="firstName ">ایمیل</label>
           <input
             name="userName"
             id="userName"
             class="form-control text-small"
             [(ngModel)]="addUpdate.userName"
             [formControl]="addForm.controls['userName']"
+            disabled
           />
         </div>
         <div class="col-md-6 form-group mb-3 mt-3">
@@ -357,6 +549,40 @@
       (click)="modal.close(true)"
     >
       <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
+    </button>
+  </div>
+</ng-template>
+<ng-template #updateTrust let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title"> تغییر وضعیت کاربر</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close button"
+      aria-describedby="modal-basic-title"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>آیا از تغیر وضعیت کاربر اطمینان دارید؟</strong></p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+      (click)="modal.dismiss()"
+    >
+      <i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong>
+    </button>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
+      (click)="modal.close(true)"
+    >
+      <i class="i-Yes text-bigger mr-2"></i><strong>اعمال</strong>
     </button>
   </div>
 </ng-template>

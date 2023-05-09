@@ -81,7 +81,7 @@ export class SubUserComponent implements OnInit {
         positionClass: 'toast-top-left',
       });
     }
-    this.userId=54
+    this.userId=this._auth.currentUserValue.userID
     this.opendList.push(this.userId);
     this.getUnderUsers(this.userId);
     var strUserId=String(this.userId)

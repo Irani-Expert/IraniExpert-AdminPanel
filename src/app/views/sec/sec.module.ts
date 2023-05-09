@@ -13,6 +13,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { PermissionsComponent } from './permissions/permissions.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,9 @@ import { PermissionsComponent } from './permissions/permissions.component';
     ReactiveFormsModule,
     SharedPipesModule,
     SharedDirectivesModule,
-    NgMultiSelectDropDownModule
+    NgMultiSelectDropDownModule,
+    PerfectScrollbarModule,
+
   ],
 })
 export class SecModule {}
