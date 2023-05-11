@@ -24,6 +24,8 @@ h2 {
   border-radius: 10px;
 }
 .custom-table {
+  max-width: 1200px;
+  min-width: 900px;
   thead {
     tr,
     th {
@@ -45,6 +47,9 @@ h2 {
         color: darken(#ccc, 10%);
         font-weight: 300;
       }
+      span {
+        font-size: 0.75rem;
+      }
     }
     tr {
       &:not(.spacer) {
@@ -61,8 +66,19 @@ h2 {
         border: none;
 
         &:first-child {
+          width: 100px;
+
           border-top-right-radius: 10px;
           border-bottom-right-radius: 10px;
+        }
+        &:nth-child(2) {
+          width: 90px;
+        }
+        &:nth-child(3) {
+          width: 90px;
+        }
+        &:nth-child(n + 5) {
+          width: 100px;
         }
         &:last-child {
           border-top-left-radius: 10px;
@@ -84,66 +100,148 @@ h2 {
   }
 }
 
-// /* Custom Checkbox */
-// .control {
-//   display: block;
-//   position: relative;
-//   margin-bottom: 25px;
-//   cursor: pointer;
-//   font-size: 18px;
-// }
-// .control input {
-//   position: absolute;
-//   z-index: -1;
-//   opacity: 0;
-// }
-// .control__indicator {
-//   position: absolute;
-//   top: 2px;
-//   left: 0;
-//   height: 20px;
-//   width: 20px;
-//   border-radius: 4px;
-//   border: 2px solid #ccc;
-//   background: transparent;
-// }
-// .control--radio .control__indicator {
-//   border-radius: 50%;
-// }
-// .control:hover input ~ .control__indicator,
-// .control input:focus ~ .control__indicator {
-//   border: 2px solid $primary;
-// }
-// .control input:checked ~ .control__indicator {
-//   border: 2px solid $primary;
-//   background: $primary;
-// }
-// .control input:disabled ~ .control__indicator {
-//   background: #e6e6e6;
-//   opacity: 0.6;
-//   pointer-events: none;
-//   border: 2px solid #ccc;
-// }
-// .control__indicator:after {
-//   font-family: "icomoon";
-//   content: "\e5ca";
-//   position: absolute;
-//   display: none;
-// }
-// .control input:checked ~ .control__indicator:after {
-//   display: block;
-//   color: #fff;
-// }
-// .control--checkbox .control__indicator:after {
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -52%);
-// }
-// .control--checkbox input:disabled ~ .control__indicator:after {
-//   border-color: #7b7b7b;
-// }
-// .control--checkbox input:disabled:checked ~ .control__indicator {
-//   background-color: $primary;
-//   opacity: 0.2;
-//   border: 2px solid $primary;
-// }
+.blinking {
+  -webkit-animation: 2s blink ease infinite;
+  -moz-animation: 2s blink ease infinite;
+  -ms-animation: 2s blink ease infinite;
+  -o-animation: 2s blink ease infinite;
+  animation: 2s blink ease infinite;
+}
+.blinking-fast {
+  -webkit-animation: 0.7s blink ease infinite;
+  -moz-animation: 0.7s blink ease infinite;
+  -ms-animation: 0.7s blink ease infinite;
+  -o-animation: 0.7s blink ease infinite;
+  animation: 0.7s blink ease infinite;
+}
+.blinking-slow {
+  -webkit-animation: 3s blink ease infinite;
+  -moz-animation: 3s blink ease infinite;
+  -ms-animation: 3s blink ease infinite;
+  -o-animation: 3s blink ease infinite;
+  animation: 3s blink ease infinite;
+}
+.blinking-med {
+  -webkit-animation: 1.5s blink ease infinite;
+  -moz-animation: 1.5s blink ease infinite;
+  -ms-animation: 1.5s blink ease infinite;
+  -o-animation: 1.5s blink ease infinite;
+  animation: 1.5s blink ease infinite;
+}
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes blink {
+  from,
+  to {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes blink {
+  from,
+  to {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes blink {
+  from,
+  to {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes blink {
+  from,
+  to {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+// NoteBar Left
+
+.notebar-left {
+  position: fixed;
+  top: 70px;
+  height: calc(100vh - #{80px});
+  background: #fff;
+  box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+@media screen and (min-width: 577px) {
+  .notebar-left {
+    top: 80px;
+  }
+}
+.notebar-left {
+  left: calc(-#{400px} - #{20px});
+  z-index: 1057;
+  transition: all 0.24s ease-in-out;
+  &.open {
+    left: 0;
+  }
+  .aside-left {
+    list-style: none;
+    text-align: center;
+    width: 300px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    .aside-item {
+      position: relative;
+      display: block;
+      width: 100%;
+      color: #000;
+      &:focus,
+      &:active {
+        outline: none;
+      }
+      &.lvl1 {
+        padding: 0 12px;
+        text-align: justify;
+      }
+      .aside-item-hold {
+        width: 100%;
+        padding: 0 0;
+        &:focus,
+        &:active {
+          outline: none;
+        }
+        .aside-text {
+          font-size: 13px;
+          display: block;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+.bg-lightdark {
+  background-color: #3f4343f0;
+}
+.my-webKit::-webkit-scrollbar {
+  display: none;
+}
+.my-webKit {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
