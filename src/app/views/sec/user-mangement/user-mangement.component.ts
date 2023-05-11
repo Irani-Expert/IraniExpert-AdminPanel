@@ -68,6 +68,8 @@ export class UserMangementComponent implements OnInit {
     userId: number;
     newReferralCode: string;
   };
+  roles: RoleModel[] = new Array<RoleModel>();
+
   ToSignUpDate:string;
   fromSignUpDate:string;
   filterHolder: UsersModel=new UsersModel;
@@ -132,7 +134,8 @@ export class UserMangementComponent implements OnInit {
   }
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
-    
+    this.getRoleListservice();
+
    this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver);
   }
  
@@ -441,6 +444,27 @@ this.setPage(this.page.pageNumber);
 }
   filteredItems(filter: UsersModel) {
     this.filterHolder = { ...filter };
+  }
+  async getRoleListservice() {
+    this._roleService.get(0, 100, 'ID', null, 'aspnetrole').subscribe(
+      (res: Result<Paginate<RoleModel[]>>) => {
+        debugger
+        this.roles = res.data.items;
+        this.page.totalElements = res.data.totalCount;
+        this.page.totalPages = res.data.totalPages - 1;
+        this.page.pageNumber = res.data.pageNumber;
+      },
+      (_error) => {
+        this.toastr.error(
+          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+          null,
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          }
+        );
+      }
+    );
   }
   }
 

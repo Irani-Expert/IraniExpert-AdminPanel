@@ -7,12 +7,16 @@
     (click)="getUsersList(1, page.size, null)">
     تمامی کابران
   </a>
-
-
-
-
   </li>
-  <li ngbNavItem  >
+  <li ngbNavItem *ngFor="let item of roles" >
+    <a
+  ngbNavLink
+  (click)="getUsersList(page.pageNumber, page.size, item.id)"
+  >
+  {{ item.name }}
+</a>
+  </li>
+  <!-- <li ngbNavItem  >
     <a
     ngbNavLink
     (click)="getUsersList(1, page.size, 1)"
@@ -43,7 +47,7 @@ ngbNavLink
 (click)="getUsersList(page.pageNumber, page.size, 13)"
 >
 نویسنده</a>
-</li>
+</li> -->
 
 </ul>
 </div>
