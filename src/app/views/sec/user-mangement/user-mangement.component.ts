@@ -25,6 +25,7 @@ import * as moment from 'jalali-moment';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-mangement',
@@ -67,10 +68,13 @@ export class UserMangementComponent implements OnInit {
     userId: number;
     newReferralCode: string;
   };
+  ToSignUpDate:string;
+  fromSignUpDate:string;
   filterHolder: UsersModel=new UsersModel;
   addupdateKeeper:UsersModel=new UsersModel;
   userParent: referralModel = new referralModel();
   isChangingParent: boolean = false;
+  convertDate: { year: number; month: number; day: number };
   viewMode: 'list' | 'grid' = 'list';
   rows: UsersModel[] = new Array<UsersModel>();
   allSelected: boolean;
@@ -93,7 +97,8 @@ export class UserMangementComponent implements OnInit {
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
     public _roleService: RoleService,
-    private _userProfileSevice: UserProfileService
+    private _userProfileSevice: UserProfileService,
+    public datepipe: DatePipe
 
   ) {
     this.page.pageNumber = 0;
@@ -126,7 +131,6 @@ export class UserMangementComponent implements OnInit {
     });
   }
   setPage(pageInfo: number) {
-    debugger
     this.page.pageNumber = pageInfo;
     
    this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver);
@@ -170,6 +174,7 @@ export class UserMangementComponent implements OnInit {
         (result: boolean) => {
           if (result != undefined) {
             this.updateUserInfo(userID);
+
           }
         },
         (reason) => {
@@ -275,6 +280,8 @@ export class UserMangementComponent implements OnInit {
     this._usersService.updateUserRole(this.roleModel).subscribe((data) => {
       if (data.success) {
         this.roleKeeper = [];
+        this.setPage(this.page.pageNumber);
+
       } else {
       }
     });
@@ -346,7 +353,9 @@ export class UserMangementComponent implements OnInit {
     this.filteredItems(this.filterData)
     this.roleKeeper = [];
     this._usersService.getUserByFilter(pageNumber,pageSize,this.filterData,null,roleIdSaver).subscribe((data) => {
-    this.rows=data['data'].items
+    this.rows=[]
+    debugger
+      this.rows=data['data'].items
     this.rows.forEach(date=>{
       date.persianSignUpDate= moment(date.signUpDate, 'YYYY/MM/DD')
       .locale('fa')
@@ -412,8 +421,24 @@ export class UserMangementComponent implements OnInit {
       this.stateOfChevron === 'default' ? 'rotated' : 'default';
   }
   startFilter(){
+    if(this.ToSignUpDate!=null){
+    this.filterData.ToSignUpDate=  this.ToSignUpDate['year']  +
+    '-' +
+    this.ToSignUpDate['month'] +
+    '-' +
+    this.ToSignUpDate['day']
     this.setPage(this.page.pageNumber);
   }
+  if(this.fromSignUpDate!=null){
+  this.filterData.fromSignUpDate=  this.fromSignUpDate['year']  +
+  '-' +
+  this.fromSignUpDate['month'] +
+  '-' +
+  this.fromSignUpDate['day']
+}
+debugger
+this.setPage(this.page.pageNumber);
+}
   filteredItems(filter: UsersModel) {
     this.filterHolder = { ...filter };
   }

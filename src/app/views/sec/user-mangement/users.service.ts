@@ -207,6 +207,7 @@ export class UsersService extends BaseService<UsersModel, 0> {
         // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
+    debugger
     return this._http.get<Result<Paginate<UsersModel[]>>>(
       environment.api.baseUrl +
         '/AspNetUser/?pageIndex='+pageIndex+'&pageSize='+pageSize+
@@ -247,9 +248,9 @@ export class UsersService extends BaseService<UsersModel, 0> {
                           (filterData.fromSignUpDate == undefined || filterData.fromSignUpDate == null
                             ? ''
                             : '&FromSignUpDate=' + filterData.fromSignUpDate)+ 
-                            (filterData.signUpDate == undefined || filterData.signUpDate == null
+                            (filterData.ToSignUpDate == undefined || filterData.ToSignUpDate == null
                               ? ''
-                              : '&ToSignUpDate=' + filterData.signUpDate),
+                              : '&ToSignUpDate=' + filterData.ToSignUpDate),
       _options
     );
   }

@@ -4,13 +4,14 @@ import { IUsers } from './users.interface';
 
 export class UsersModel extends Base implements IUsers {
   userName: string;
-  userId:number
+  id:number
   firstName: string;
   lastName: string;
   email: string;
   phoneNumber: string;
   accountNumber:string;
   isActive:boolean;
+  ToSignUpDate:string;
   signUpDate:string;
   persianSignUpDate:string;
   fromSignUpDate:string;

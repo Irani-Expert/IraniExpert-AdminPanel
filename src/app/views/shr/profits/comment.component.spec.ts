@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { commentComponent } from './profits.component';
+import { commentComponent } from './comment.component';
 
 describe('ProfitsComponent', () => {
   let component: commentComponent;

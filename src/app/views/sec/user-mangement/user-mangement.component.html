@@ -1,44 +1,53 @@
-<div class="row g-0 p-0 m-0">
-  <div class="col-12 row g-0 p-0 flex-row mb-2">
-    <div class="col-auto mb-2">
-      <button
-        class="btn btn-secondary"
-        (click)="getUsersList(1, page.size, null)"
-      >
-        تمامی کابران
-      </button>
-    </div>
-    <div class="col-auto mb-2">
-      <button class="btn btn-primary" (click)="getUsersList(1, page.size, 1)">
-        ادمین
-      </button>
-    </div>
-    <div class="col-auto mb-2">
-      <button
-        class="btn btn-dark"
-        (click)="getUsersList(page.pageNumber, page.size, 14)"
-      >
-        کاربران
-      </button>
-    </div>
-    <div class="col-auto mb-2">
-      <button
-        class="btn btn-danger"
-        (click)="getUsersList(page.pageNumber, page.size, 15)"
-      >
-        فروشنده
-      </button>
-    </div>
-    <div class="col-auto mb-2">
-      <button
-        class="btn btn-warning"
-        (click)="getUsersList(page.pageNumber, page.size, 13)"
-      >
-        نویسنده
-      </button>
-    </div>
-  </div>
+
+<div class="mb-2">
+  <ul ngbNav #nav="ngbNav" class="nav-tabs p-0" >
+  <li ngbNavItem                    > 
+    <a
+    ngbNavLink
+    (click)="getUsersList(1, page.size, null)">
+    تمامی کابران
+  </a>
+
+
+
+
+  </li>
+  <li ngbNavItem  >
+    <a
+    ngbNavLink
+    (click)="getUsersList(1, page.size, 1)"
+  >
+  ادمین
+  
+  </a>
+  </li>
+  <li ngbNavItem  >
+    <a
+ngbNavLink
+(click)="getUsersList(page.pageNumber, page.size, 14)"
+>
+کاربران</a>
+
+</li>
+<li ngbNavItem  >
+  
+<a
+ngbNavLink
+(click)="getUsersList(page.pageNumber, page.size, 15)"
+>
+فروشنده</a>
+</li>
+<li ngbNavItem  >
+  <a
+ngbNavLink
+(click)="getUsersList(page.pageNumber, page.size, 13)"
+>
+نویسنده</a>
+</li>
+
+</ul>
 </div>
+
 <div class="pb-3 d-flex flex-row row align-items-center">
 
   <div class="d-flex row col-10 align-items-center">
@@ -75,12 +84,24 @@
 type="text"
 class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
 placeholder="شناسه"
-[(ngModel)]="filterData.userId"
+[(ngModel)]="filterData.id"
 />
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.userId"
-(click)="filterData.userId = null; startFilter()"
+*ngIf="filterHolder.id"
+(click)="filterData.id = null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+<input
+type="text"
+class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+placeholder="نام کاربری"
+[(ngModel)]="filterData.userName"
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.userName"
+(click)="filterData.userName = null; startFilter()"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <input
@@ -164,37 +185,12 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 >
 <input
 type="text"
-ngbDatepicker
-#datePickerStatus1="ngbDatepicker"
-type="text"
-[navigation]="'select'"
-placement="bottom-right"
-autocomplete="off"
-class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
-[(ngModel)]="filterData.signUpDate"
-ngbDatepicker
-[outsideDays]="'collapsed'"
-[footerTemplate]="toCRTfooterTemplate"
-(click)="datePickerStatus1.toggle()"
-placeholder=" روز / ماه / سال "
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.signUpDate"
-(click)="filterData.signUpDate= null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
->تا تاریخ ثبت نام</strong
->
-<input
-type="text"
 [navigation]="'select'"
 #datePickerStatus2="ngbDatepicker"
 placement="bottom-right"
 autocomplete="off"
 class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
-[(ngModel)]="filterData.fromSignUpDate"
+[(ngModel)]="fromSignUpDate"
 ngbDatepicker
 [outsideDays]="'collapsed'"
 [footerTemplate]="toCRTfooterTemplate"
@@ -203,11 +199,37 @@ ngbDatepicker
 placeholder=" روز / ماه / سال "
 />
 <span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterData.fromSignUpDate"
-(click)="filterData.fromSignUpDate = null; startFilter()"
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer "
+*ngIf="filterHolder.fromSignUpDate"
+(click)="filterData.fromSignUpDate = null;fromSignUpDate=null; startFilter()"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
+<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+>تا تاریخ ثبت نام</strong
+>
+<input
+type="text"
+ngbDatepicker
+#datePickerStatus1="ngbDatepicker"
+type="text"
+[navigation]="'select'"
+placement="bottom-right"
+autocomplete="off"
+class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+[(ngModel)]="ToSignUpDate"
+ngbDatepicker
+[outsideDays]="'collapsed'"
+[footerTemplate]="toCRTfooterTemplate"
+(click)="datePickerStatus1.toggle()"
+placeholder=" روز / ماه / سال "
+/>
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
+*ngIf="filterHolder.ToSignUpDate"
+(click)="filterData.ToSignUpDate= null;ToSignUpDate=null; startFilter()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
+
 
 <button
 type="button"
@@ -392,7 +414,7 @@ class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-
             class="form-control text-small"
           />
           <span
-            *ngIf="!isChangingParent && userParent.userID !== 0"
+            *ngIf="!isChangingParent && userParent.id !== 0"
             ngbTooltip="ویرایش معرف"
             [openDelay]="50"
             [closeDelay]="150"
@@ -402,7 +424,7 @@ class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-
             ><i class="i-Pen-5 text-bigger text-black"></i
           ></span>
           <span
-            *ngIf="!isChangingParent && userParent.userID == 0"
+            *ngIf="!isChangingParent && userParent.id == 0"
             ngbTooltip="ثبت معرف"
             [openDelay]="50"
             [closeDelay]="150"

@@ -8,6 +8,7 @@ export interface IUsers extends IBase {
   email: string;
   phoneNumber: string;
   accountNumber:string;
+  ToSignUpDate:string;
   signUpDate:string;
   isActive:boolean;
   roles:RoleModel[]

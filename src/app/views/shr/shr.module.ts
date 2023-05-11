@@ -13,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { NotesComponent } from './notes/notes.component';
 import { TreeModule } from 'primeng/tree';
-import { commentComponent } from './profits/profits.component';
+import { commentComponent } from './profits/comment.component';
 
 @NgModule({
   declarations: [
