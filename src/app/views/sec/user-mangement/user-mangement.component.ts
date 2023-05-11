@@ -86,6 +86,7 @@ export class UserMangementComponent implements OnInit {
   filterData:UsersModel=new UsersModel;
   dropdownList = [];
   selectedItems = [];
+  userType:string='همه';
   roleKeeper = [];
   isDivExpanded: boolean = false;
   removeIndexFromList: number;
@@ -134,9 +135,9 @@ export class UserMangementComponent implements OnInit {
   }
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
+    this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver,null);
     this.getRoleListservice();
 
-   this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver);
   }
  
   usersEdit(content: any, row: UsersModel,userID:number) {
@@ -210,9 +211,7 @@ export class UserMangementComponent implements OnInit {
 
 
 //     this.updateRoleId();
-// debugger
 //     this._usersService.update(row.id, row, 'aspnetuser').subscribe((data) => {
-//       debugger
 //       if (data.success) {
 //         this.toastr.success(data.message, null, {
 //           closeButton: true,
@@ -352,12 +351,14 @@ export class UserMangementComponent implements OnInit {
   changeUserParentValue(e: string) {
     this.userParentToSend.newReferralCode = e;
   }
-  getUsersList(pageNumber:any, pageSize:number, roleIdSaver:number){
+  getUsersList(pageNumber:any, pageSize:number, roleIdSaver:number,userType:string){
+    if(userType!=null){
+      this.userType=userType
+    }
     this.filteredItems(this.filterData)
     this.roleKeeper = [];
     this._usersService.getUserByFilter(pageNumber,pageSize,this.filterData,null,roleIdSaver).subscribe((data) => {
     this.rows=[]
-    debugger
       this.rows=data['data'].items
     this.rows.forEach(date=>{
       date.persianSignUpDate= moment(date.signUpDate, 'YYYY/MM/DD')
@@ -439,7 +440,6 @@ export class UserMangementComponent implements OnInit {
   '-' +
   this.fromSignUpDate['day']
 }
-debugger
 this.setPage(this.page.pageNumber);
 }
   filteredItems(filter: UsersModel) {
@@ -448,11 +448,9 @@ this.setPage(this.page.pageNumber);
   async getRoleListservice() {
     this._roleService.get(0, 100, 'ID', null, 'aspnetrole').subscribe(
       (res: Result<Paginate<RoleModel[]>>) => {
-        debugger
+        
         this.roles = res.data.items;
-        this.page.totalElements = res.data.totalCount;
-        this.page.totalPages = res.data.totalPages - 1;
-        this.page.pageNumber = res.data.pageNumber;
+    
       },
       (_error) => {
         this.toastr.error(

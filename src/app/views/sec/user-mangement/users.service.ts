@@ -207,7 +207,6 @@ export class UsersService extends BaseService<UsersModel, 0> {
         // Authorization: 'bearer ' + environment.jwtToken,
       }),
     };
-    debugger
     return this._http.get<Result<Paginate<UsersModel[]>>>(
       environment.api.baseUrl +
         '/AspNetUser/?pageIndex='+pageIndex+'&pageSize='+pageSize+

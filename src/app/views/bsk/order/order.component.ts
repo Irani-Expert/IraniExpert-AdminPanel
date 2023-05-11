@@ -219,7 +219,6 @@ export class OrderComponent implements OnInit {
       .get(0, null, 'ID', null, 'Product')
       .subscribe((res) => {
         this.productList = res.data.items;
-        debugger
         this.AddproductModel = res.data.items;
       });
   }
