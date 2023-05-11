@@ -1,9 +1,6 @@
-import { Component, OnInit, QueryList } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Calendar } from '../services/calendar.service';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs';
-import { Utils } from 'src/app/shared/utils';
-import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
