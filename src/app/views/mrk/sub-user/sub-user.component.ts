@@ -35,7 +35,7 @@ export class SubUserComponent implements OnInit {
   rawData: UserDataModel[];
   arrayData: UserDataModel[] = [
     {
-      userID: 54,
+      userID: this._auth.currentUserValue.userID,
       email: this._auth.currentUserValue['email'],
       firstName: this._auth.currentUserValue.firstName,
       lastName: this._auth.currentUserValue.lastName,
