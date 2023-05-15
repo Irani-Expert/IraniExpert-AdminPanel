@@ -20,7 +20,18 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let item of eventData">
+        <ng-container
+          *ngFor="
+            let item of eventData
+              | paginate
+                : {
+                    itemsPerPage: page.size,
+
+                    currentPage: page.pageNumber,
+                    totalItems: page.totalElements
+                  }
+          "
+        >
           <tr
             scope="row"
             (click)="openModal(detailsModal, 'lg', true, item)"
@@ -58,7 +69,7 @@
 </div>
 <div class="col-md-12 mt-3" *ngIf="page.totalElements > 25">
   <pagination-controls
-    (pageChange)="setPage($event, this.status)"
+    (pageChange)="setPage($event, null)"
     previousLabel=""
     nextLabel=""
     responsive="true"
@@ -219,7 +230,7 @@
           <span
             class="card py-2 px-4 radius"
             [ngClass]="{
-              'bg-danger': eventDetails.importance == 2,
+              'bg-danger text-white': eventDetails.importance == 2,
               'bg-light': eventDetails.importance == 1,
               'bg-warning': eventDetails.importance == 3,
               'bg-dark': eventDetails.importance == 0

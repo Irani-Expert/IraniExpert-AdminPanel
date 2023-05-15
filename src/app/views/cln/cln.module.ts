@@ -14,6 +14,7 @@ import { UnitPipe } from 'src/app/shared/pipes/unit.pipe';
 import { MultiplierPipe } from 'src/app/shared/pipes/multiplier.pipe';
 import { TimeModePipe } from 'src/app/shared/pipes/time-mode.pipe';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FileUploaderService } from 'src/app/shared/services/fileUploader.servic
     TimeModePipe,
   ],
   imports: [
+    NgxPaginationModule,
     CommonModule,
     ClnRoutingModule,
     NgbModule,
