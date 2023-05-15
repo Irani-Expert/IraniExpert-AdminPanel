@@ -38,7 +38,7 @@ export class AddUpdateComponent implements OnInit {
   groupList: any[] = new Array<any>();
   group: any = new Object();
   addForm: FormGroup;
-  ifDataExist:boolean=false;
+  ifDataExist: boolean = false;
   ckeConfig: CKEDITOR.config;
   @ViewChild('myckeditor') ckeditor: CKEditorComponent;
 
@@ -50,7 +50,7 @@ export class AddUpdateComponent implements OnInit {
     private toastr: ToastrService,
     private _groupService: GroupService,
     private _user: AuthenticateService,
-    private _router: Router,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -66,11 +66,19 @@ export class AddUpdateComponent implements OnInit {
         'https://dl.iraniexpert.com/FileUploader/FileUploadCkEditor',
       allowedContent: false,
       forcePasteAsPlainText: true,
-      skin: 'moono',
+      skin: 'moono-lisa',
       defaultLanguage: 'fa',
       language: 'fa',
-      removePlugins: 'elementspath,save,magicline,exportpdf',
-      extraPlugins: 'divarea,smiley,justify,indentblock,colordialog',
+      removeButtons:
+        'Underline,Subscript,Superscript,SpecialChar,Source,Save,NewPage,DocProps,Preview,Print,' +
+        'Templates,document,Cut,Copy,Paste,PasteText,PasteFromWord,Replace,SelectAll,Scayt,' +
+        'Radio,TextField,Textarea,Select,Button,HiddenField,Strike,RemoveFormat,' +
+        'Outdent,Indent,Blockquote,CreateDiv,Anchor,' +
+        'Flash,HorizontalRule,SpecialChar,PageBreak,InsertPre,' +
+        'UIColor,ShowBlocks,MediaEmbed,About,Language',
+      removePlugins:
+        'elementspath,save,magicline,exportpdf,pastefromword,forms,blockquote',
+      extraPlugins: 'smiley,justify,colordialog,divarea,indentblock',
     };
     this.addForm = this._formBuilder.group({
       title: [null, Validators.required],
@@ -156,17 +164,15 @@ export class AddUpdateComponent implements OnInit {
     this._articleService
       .getOneByID(id, 'Article')
       .subscribe((res: Result<ArticleModel>) => {
-        if(res.success){
-          this.ifDataExist=true
+        if (res.success) {
+          this.ifDataExist = true;
           this.addUpdate = res.data;
           this.group = this.groupList.find(
             (item) => item.value === this.addUpdate.groupID
           );
+        } else {
+          this._router.navigate(['/404']);
         }
-      else{
-        this._router.navigate(['/404'])
-
-      }
         //  this.page.totalElements = res.data.length;
       });
   }

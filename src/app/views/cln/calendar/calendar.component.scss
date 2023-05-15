@@ -12,6 +12,11 @@ a {
     text-decoration: none !important;
   }
 }
+.modal-header {
+  strong {
+    font-size: 1.1rem;
+  }
+}
 .content {
   padding: 1rem 0;
 }
@@ -178,70 +183,44 @@ h2 {
     opacity: 1;
   }
 }
-// NoteBar Left
 
-.notebar-left {
-  position: fixed;
-  top: 70px;
-  height: calc(100vh - #{80px});
-  background: #fff;
-  box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.08);
+// Modal Inputs
+.disabled-title-input {
+  cursor: pointer;
+  font-weight: 600;
+  border: 0.4px solid #fff !important;
+  outline: 0 !important;
+  transition: 0.3s all ease;
 }
-@media screen and (min-width: 577px) {
-  .notebar-left {
-    top: 80px;
-  }
+.disabled-title-input:hover {
+  border: 0.4px solid #d3d3d3 !important;
 }
-.notebar-left {
-  left: calc(-#{400px} - #{20px});
-  z-index: 1057;
-  transition: all 0.24s ease-in-out;
-  &.open {
-    left: 0;
-  }
-  .aside-left {
-    list-style: none;
-    text-align: center;
-    width: 300px;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    .aside-item {
-      position: relative;
-      display: block;
-      width: 100%;
-      color: #000;
-      &:focus,
-      &:active {
-        outline: none;
-      }
-      &.lvl1 {
-        padding: 0 12px;
-        text-align: justify;
-      }
-      .aside-item-hold {
-        width: 100%;
-        padding: 0 0;
-        &:focus,
-        &:active {
-          outline: none;
-        }
-        .aside-text {
-          font-size: 13px;
-          display: block;
-          font-weight: 400;
-        }
-      }
-    }
-  }
+.enabled-title-input {
+  pointer-events: all;
+  font-weight: 600;
+  border: 0.4px solid #969696 !important;
+  outline: 0 !important;
 }
-.bg-lightdark {
-  background-color: #3f4343f0;
+.enabled-title-input :focus {
+  border: 0.4px solid #898989 !important;
+  outline: 0 !important;
 }
-.my-webKit::-webkit-scrollbar {
-  display: none;
+
+.enabled-title-input :focus-within {
+  border: 0.4px solid #898989 !important;
+  outline: 0 !important;
 }
-.my-webKit {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+
+.enabled-title-input :focus-visible {
+  border: 0.4px solid #898989 !important;
+  outline: 0 !important;
+}
+.w-70 {
+  width: 75%;
+}
+.h-custom-header {
+  height: 68.17px;
+}
+.modal-height {
+  min-height: 715px !important;
 }
