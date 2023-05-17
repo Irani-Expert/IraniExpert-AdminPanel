@@ -303,35 +303,9 @@
     </div>
   </div>
 </ng-template>
-
-<ng-template let-modal #confirmModal>
-  <div class="shadow-lg radius">
-    <div class="modal-header">
-      <strong>ویرایش مقادیر رویداد</strong>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss()"
-      >
-        <span style="font-size: 1.7rem" aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body border-0">
-      <button
-        (click)="modal.close(true)"
-        class="btn btn-light d-inline-flex justify-content-around py-btns radius m-1 align-items-center"
-      >
-        <i class="i-Yes text-bigger mr-2"></i>
-        <strong class="text-small"> تائید</strong>
-      </button>
-      <button
-        (click)="modal.close(false)"
-        class="btn btn-light d-inline-flex justify-content-around py-btns radius m-1 align-items-center"
-      >
-        <i class="i-Close text-bigger mr-2"></i>
-        <strong class="text-small"> انصراف</strong>
-      </button>
-    </div>
-  </div>
-</ng-template>
+<input
+  type="file"
+  placeholder="Voice"
+  (input)="changeVoicePath($event.target.files[0])"
+/>
+<button class="btn btn-light" (click)="uploadVoice()">آپلود</button>

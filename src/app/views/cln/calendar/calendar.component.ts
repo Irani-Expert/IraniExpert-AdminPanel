@@ -10,6 +10,11 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { Page } from 'src/app/shared/models/Base/page';
 import { CalendarModel } from '../models/calendar.model';
 import { Countries } from '../models/countries.model';
+import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
+import { resolve } from 'path';
+import { resolve4, resolveAny } from 'dns';
+import { resolve6 } from 'dns/promises';
+import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 
 @Component({
   selector: 'app-calendar',
@@ -17,6 +22,7 @@ import { Countries } from '../models/countries.model';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
+  voiceFile: Blob;
   eventNameHolder: string = '';
   page: Page = new Page();
   eventDetails: CalendarModel;
@@ -29,7 +35,8 @@ export class CalendarComponent implements OnInit {
     public _calendarService: Calendar,
     public router: Router,
     private modal: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private fileUploader: FileUploaderService
   ) {
     this.ckeConfig = {
       filebrowserBrowseUrl: 'dl.iraniexpert.com//uploads/images/articles',
@@ -171,5 +178,22 @@ export class CalendarComponent implements OnInit {
           });
         }
       });
+  }
+
+  uploadVoice() {
+    this.fileUploader.uploadVoice(this.voiceFile, 'audio').subscribe((res) => {
+      if (res.success) {
+        this.toastr.success(res.message, null, {
+          timeOut: 1500,
+          positionClass: 'toast-top-left',
+        });
+      }
+    });
+  }
+
+  changeVoicePath(file: any) {
+    this.voiceFile = new Blob([file], {
+      type: 'audio/mpeg',
+    });
   }
 }
