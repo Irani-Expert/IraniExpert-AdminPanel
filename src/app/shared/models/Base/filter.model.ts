@@ -31,4 +31,15 @@ export class FilterModel implements IFilter {
   ipAddress: string;
   mainLoggingID: number;
   title: string;
+  type: number;
+  sector: number;
+  frequency: number;
+  timeMode: number;
+  unit: number;
+  importance: number;
+  multiplier: number;
+  digits: number;
+  sourceUrl: string;
+  eventCode: string;
+  countryID: number;
 }

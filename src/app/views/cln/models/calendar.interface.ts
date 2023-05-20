@@ -6,7 +6,7 @@ export interface ICalendar {
   sectorTitle: string;
   frequency: number;
   frequencyTitle: string;
-  timeMode: number;
+  time_Mode: number;
   timeModeTitle: string;
   unit: number;
   unitTitle: string;

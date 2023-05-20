@@ -1,43 +1,90 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Calendar } from '../services/calendar.service';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCalendar,
+  NgbDateStruct,
+  NgbModal,
+} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { CKEditorComponent } from 'ng2-ckeditor';
-import { Observable, Subscription } from 'rxjs';
-import { Paginate } from 'src/app/shared/models/Base/paginate.model';
-import { Result } from 'src/app/shared/models/Base/result.model';
 import { Page } from 'src/app/shared/models/Base/page';
 import { CalendarModel } from '../models/calendar.model';
 import { Countries } from '../models/countries.model';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
-import { resolve } from 'path';
-import { resolve4, resolveAny } from 'dns';
-import { resolve6 } from 'dns/promises';
-import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  state,
+} from '@angular/animations';
+import { FilterModel } from 'src/app/shared/models/Base/filter.model';
+import { EventEnumsModel } from '../models/eventEnums.model';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
+  animations: [
+    trigger('rotate90deg', [
+      state('default', style({ transform: 'rotate(0)' })),
+      state('rotated', style({ transform: 'rotate(-90deg)' })),
+      transition('rotated => default', animate('300ms ease-in-out')),
+      transition('default => rotated', animate('500ms ease-in-out')),
+    ]),
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-40%)', opacity: 0 }),
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'translateY(0%)', opacity: 1 })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms ease-in-out',
+          style({ transform: 'translateY(-40%)', opacity: 0 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class CalendarComponent implements OnInit {
-  voiceFile: Blob;
+  sectorIndexHolder: number = 0;
+  timeModeIndexHolder: number = 0;
+  unitIndexHolder: number = 0;
+  frequencyIndexHolder: number = 0;
+  importanceIndexHolder: number = 0;
+  multiplierIndexHolder: number = 0;
+  typeIndexHolder: number = 0;
+  eventEnums: EventEnumsModel = new EventEnumsModel();
+  isDivExpanded: boolean = false;
+  stateOfChevron: string = 'default';
+  // toCreateDate: NgbDateStruct;
+  // fromCreateDate: NgbDateStruct;
+  // today = this.calendar.getToday();
+  filter: FilterModel = new FilterModel();
+  filterHolder: FilterModel = new FilterModel();
+  // voiceFile: Blob;
   eventNameHolder: string = '';
   page: Page = new Page();
   eventDetails: CalendarModel;
-  eventData: (CalendarModel | Countries)[];
+  eventData: CalendarModel[];
   countriesData: (CalendarModel | Countries)[];
   changing: boolean = false;
+  isDataFetched: boolean = false;
   ckeConfig: CKEDITOR.config;
   @ViewChild('myckeditor') ckeditor: CKEditorComponent;
   constructor(
+    // private calendar: NgbCalendar,
     public _calendarService: Calendar,
     public router: Router,
     private modal: NgbModal,
     private toastr: ToastrService,
     private fileUploader: FileUploaderService
   ) {
+    this.page.pageNumber = 0;
     this.ckeConfig = {
       filebrowserBrowseUrl: 'dl.iraniexpert.com//uploads/images/articles',
       filebrowserUploadUrl:
@@ -61,16 +108,35 @@ export class CalendarComponent implements OnInit {
     };
   }
   async ngOnInit(): Promise<void> {
-    await this.setPage(this.page.pageNumber, null);
+    await this.setPage(this.page.pageNumber);
   }
-  async setPage(pageToSet: number, tableTypeToSet: number) {
+  async setPage(pageToSet: number) {
     this.page.pageNumber = pageToSet;
-    await this.getCalendarEvents(
-      pageToSet,
-      this.page.size,
-      tableTypeToSet,
-      null
-    );
+    await this.getCalendarEvents(pageToSet, this.page.size, this.filter);
+  }
+  async getCalendarEvents(
+    pageIndex: number,
+    pageSize: number,
+    filter: FilterModel
+  ) {
+    this._calendarService
+      .getCalendarEvent(
+        pageIndex == 0 ? pageIndex : pageIndex - 1,
+        pageSize,
+        filter
+      )
+      .subscribe((event) => {
+        this.eventData = event.data.items;
+
+        this.page.totalPages = event.data.totalPages;
+        this.page.totalElements = event.data.totalCount;
+        if (event.data.totalCount == 0) {
+          this.toastr.show('داده برای نمایش موجود نیست', '', {
+            positionClass: 'toast-top-left',
+            toastClass: 'bg-light text-small',
+          });
+        }
+      });
   }
   onChangeEditor(): void {
     console.log('onChange');
@@ -114,6 +180,13 @@ export class CalendarComponent implements OnInit {
         }
       );
   }
+
+  toggleFilters() {
+    this.isDivExpanded = !this.isDivExpanded;
+    this.stateOfChevron =
+      this.stateOfChevron === 'default' ? 'rotated' : 'default';
+  }
+
   onFocusIn() {
     this.changing = true;
     setTimeout(() => {
@@ -128,33 +201,6 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  async getCalendarEvents(
-    pageIndex: number,
-    pageSize: number,
-    tableType: number,
-    filter: any
-  ) {
-    this._calendarService
-      .get(
-        pageIndex == 0 ? pageIndex : pageIndex - 1,
-        pageSize,
-        'ID',
-        null,
-        'CalendarEvent'
-      )
-      .subscribe((event) => {
-        this.eventData = event.data.items;
-
-        this.page.totalPages = event.data.totalPages;
-        this.page.totalElements = event.data.totalCount;
-        if (event.data.totalCount == 0) {
-          this.toastr.show('داده برای نمایش موجود نیست', '', {
-            positionClass: 'toast-top-left',
-            toastClass: 'bg-light text-small',
-          });
-        }
-      });
-  }
   putEvent() {
     let eventToSend = { ...this.eventDetails };
     this._calendarService
@@ -169,8 +215,7 @@ export class CalendarComponent implements OnInit {
           this.getCalendarEvents(
             this.page.pageNumber,
             this.page.size,
-            null,
-            null
+            this.filter
           );
         } else {
           this.toastr.error(result.message, null, {
@@ -179,21 +224,36 @@ export class CalendarComponent implements OnInit {
         }
       });
   }
+  setFilter() {
+    this.filteredItems(this.filter);
 
-  uploadVoice() {
-    this.fileUploader.uploadVoice(this.voiceFile, 'audio').subscribe((res) => {
-      if (res.success) {
-        this.toastr.success(res.message, null, {
-          timeOut: 1500,
-          positionClass: 'toast-top-left',
-        });
-      }
-    });
+    this.setPage(0);
   }
 
-  changeVoicePath(file: any) {
-    this.voiceFile = new Blob([file], {
-      type: 'audio/mpeg',
-    });
+  filterWithEnter(value: any) {
+    console.log(value);
+
+    if (value !== undefined && value.trim().length !== 0) {
+      this.setFilter();
+    }
+  }
+  // uploadVoice() {
+  //   this.fileUploader.uploadVoice(this.voiceFile, 'audio').subscribe((res) => {
+  //     if (res.success) {
+  //       this.toastr.success(res.message, null, {
+  //         timeOut: 1500,
+  //         positionClass: 'toast-top-left',
+  //       });
+  //     }
+  //   });
+  // }
+
+  // changeVoicePath(file: any) {
+  //   this.voiceFile = new Blob([file], {
+  //     type: 'audio/mpeg',
+  //   });
+  // }
+  filteredItems(filter: FilterModel) {
+    this.filterHolder = { ...filter };
   }
 }

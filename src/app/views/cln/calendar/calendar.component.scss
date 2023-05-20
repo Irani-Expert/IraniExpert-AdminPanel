@@ -76,9 +76,6 @@ h2 {
           border-top-right-radius: 10px;
           border-bottom-right-radius: 10px;
         }
-        &:nth-child(2) {
-          width: 90px;
-        }
         &:nth-child(3) {
           width: 90px;
         }
@@ -223,4 +220,7 @@ h2 {
 }
 .modal-height {
   min-height: 715px !important;
+}
+.dropdown-menu {
+  z-index: 1 !important;
 }
