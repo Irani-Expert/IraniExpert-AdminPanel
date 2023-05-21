@@ -1,98 +1,27 @@
-@import "../../../../assets/styles/vendor/bootstrap/functions";
-@import "../../../../assets/styles/vendor/bootstrap/variables";
-@import "../../../../assets/styles/vendor/bootstrap/mixins";
-p {
-  color: darken(#ccc, 10%);
-  font-weight: 300;
+hr {
+  margin-top: 1.3rem;
+  margin-bottom: 1.3rem;
 }
-a {
-  transition: 0.3s all ease;
-  &,
-  &:hover {
-    text-decoration: none !important;
-  }
+.grid-gutter {
+  grid-column-gap: 4%;
 }
-.content {
-  padding: 1rem 0;
+ul {
+  padding-inline-start: 10px !important;
+  margin-block-end: 0px !important;
 }
-h2 {
-  font-size: 20px;
+input::placeholder {
+  color: #0b1136;
 }
-
-.custom-table-responsive {
-  padding: 20px;
-  border-radius: 10px;
+// input:: .datePicker {
+//   display: none;
+// }
+input:focus {
+  border-color: #ced4da !important;
+  border: 1px solid #ced4da !important;
+  color: #0b1136 !important;
+  box-shadow: none !important;
+  background: #f4f2f2 !important;
 }
-.custom-table {
-  max-width: 1200px;
-  min-width: 900px;
-  thead {
-    tr,
-    th {
-      border-top: none;
-      font-weight: 800;
-      border-bottom: none !important;
-      font-size: 0.81rem;
-    }
-  }
-  tbody {
-    th,
-    td {
-      color: #777;
-      font-weight: 700;
-      padding-top: 16px;
-      padding-bottom: 16px;
-      font-size: 0.79rem;
-      small {
-        color: darken(#ccc, 10%);
-        font-weight: 300;
-      }
-      span {
-        font-size: 0.75rem;
-      }
-    }
-    tr {
-      &:not(.spacer) {
-        border-radius: 10px;
-        overflow: hidden;
-        transition: 0.3s all ease;
-        &:hover {
-          box-shadow: 0 2px 10px -5px rgba($black, 0.5);
-        }
-      }
-      th,
-      td {
-        background: #efefef;
-        border: none;
-
-        &:first-child {
-          width: 100px;
-
-          border-top-right-radius: 10px;
-          border-bottom-right-radius: 10px;
-        }
-        &:nth-child(3) {
-          width: 90px;
-        }
-        &:nth-child(n + 5) {
-          width: 100px;
-        }
-        &:last-child {
-          border-top-left-radius: 10px;
-          border-bottom-left-radius: 10px;
-        }
-      }
-      &.spacer {
-        td {
-          padding: 0 !important;
-          height: 10px;
-          border-radius: 0 !important;
-          background: transparent !important;
-        }
-      }
-      &.active {
-        opacity: 0.4;
-      }
-    }
-  }
+.form-control {
+  width: auto !important;
 }

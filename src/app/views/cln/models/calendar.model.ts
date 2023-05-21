@@ -1,5 +1,5 @@
 import { ICalendar } from './calendar.interface';
-import { Countries } from './countries.model';
+import { CountriesModel } from './countries.model';
 
 export class CalendarModel implements ICalendar {
   id: number;
@@ -23,5 +23,7 @@ export class CalendarModel implements ICalendar {
   name: string;
   countryID: number;
   description: string;
-  countries: Countries[];
+  code: string;
+  currency: string;
+  codeFlag: string;
 }

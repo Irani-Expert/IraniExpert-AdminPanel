@@ -4,4 +4,5 @@ export interface ICountries {
   code: string;
   currency: string;
   currencySymbol: string;
+  codeFlag: string;
 }

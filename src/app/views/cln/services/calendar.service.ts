@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
-import { Countries } from '../models/countries.model';
+import { CountriesModel } from '../models/countries.model';
 import { CalendarModel } from '../models/calendar.model';
 import { Observable } from 'rxjs';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
@@ -13,7 +13,7 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 @Injectable({
   providedIn: 'root',
 })
-export class Calendar extends BaseService<Object, number> {
+export class CalendarService extends BaseService<Object, number> {
   constructor(public _http: HttpClient, public _auth: AuthenticateService) {
     super(_http, environment.api.baseUrl, _auth);
   }
@@ -78,6 +78,26 @@ export class Calendar extends BaseService<Object, number> {
         (filter.countryID == undefined || filter.countryID == null
           ? ''
           : '&CountryID=' + filter.countryID),
+      _options
+    );
+  }
+  getCalendarCountries(
+    name: string
+  ): Observable<Result<Paginate<CountriesModel[]>>> {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      }),
+    };
+    return this._http.get<Result<Paginate<CountriesModel[]>>>(
+      this._base +
+        '/CalendarCountry?pageIndex=' +
+        0 +
+        (name == undefined || name == null ? '' : '&Name=' + name),
       _options
     );
   }

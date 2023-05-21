@@ -9,9 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CountriesComponent } from './countries/countries.component';
+import { EventsComponent } from './events/events.component';
 
 @NgModule({
-  declarations: [CalendarComponent, CountriesComponent],
+  declarations: [CalendarComponent, CountriesComponent, EventsComponent],
   imports: [
     NgxPaginationModule,
     CommonModule,

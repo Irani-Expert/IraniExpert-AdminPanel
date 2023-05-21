@@ -20,4 +20,7 @@ export interface ICalendar {
   name: string;
   countryID: number;
   description: string;
+  code: string;
+  currency: string;
+  codeFlag: string;
 }
