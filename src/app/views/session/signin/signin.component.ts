@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  ActivatedRoute,
   ResolveEnd,
   ResolveStart,
   RouteConfigLoadEnd,
@@ -9,6 +10,8 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ToastrService } from 'ngx-toastr';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-signin',
@@ -24,6 +27,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class SigninComponent implements OnInit {
+  backUrl: string = '';
   loading: boolean;
   loadingText: string;
   signinForm: FormGroup;
@@ -31,7 +35,8 @@ export class SigninComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private auth: AuthenticateService
+    private auth: AuthenticateService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -58,9 +63,23 @@ export class SigninComponent implements OnInit {
   signin() {
     this.loading = true;
     this.loadingText = 'در حال ورود...';
-    this.auth.login(this.signinForm.value).subscribe((res) => {
-      this.router.navigateByUrl('/dashboard/v1');
-      this.loading = false;
-    });
+    this.auth.login(this.signinForm.value).subscribe(
+      (res) => {
+        this.router.navigateByUrl('dashboard/v1');
+        this.loading = false;
+        if (!res.success) {
+          this.loading = false;
+          this.toastr.error(res.message, null, {
+            positionClass: 'toast-top-left',
+          });
+        }
+      },
+      (err) => {
+        this.loading = false;
+        this.toastr.error('لطفا دوباره تلاش کنید', null, {
+          positionClass: 'toast-top-left',
+        });
+      }
+    );
   }
 }

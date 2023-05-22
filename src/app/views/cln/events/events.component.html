@@ -276,7 +276,7 @@
   </div>
 </div>
 <!-- Hidden Filtering Div -->
-<div class="content">
+<div class="content" *ngIf="page.totalElements >= 1">
   <div class="table-responsive custom-table-responsive">
     <table class="table custom-table">
       <thead>
@@ -287,6 +287,7 @@
           <th class="text-center">بخش خبر</th>
           <th class="text-center">حالت زمانی</th>
           <th class="text-center">دوره زمانی</th>
+          <th class="text-center">منبع رویداد</th>
         </tr>
       </thead>
       <tbody>
@@ -328,6 +329,11 @@
             <td class="text-center">{{ item.sectorTitle }}</td>
             <td class="text-center">{{ item.timeModeTitle }}</td>
             <td class="text-center">{{ item.frequencyTitle }}</td>
+            <td class="text-center">
+              <a href="https://{{ item.source_Url }}" target="blank">{{
+                item.source_Url
+              }}</a>
+            </td>
           </tr>
           <tr class="spacer">
             <td colspan="100"></td>
@@ -344,6 +350,14 @@
     nextLabel=""
     responsive="true"
   ></pagination-controls>
+</div>
+<div *ngIf="page.totalElements == 0" class="d-flex justify-content-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="img-fluid w-50 radius-lg"
+    style="opacity: 0.4"
+    alt=""
+  />
 </div>
 <ng-template let-modal #detailsModal>
   <div class="shadow-lg radius modal-height d-flex flex-column flex-wrap">
@@ -501,7 +515,26 @@
           >
         </div>
         <!-- Each Value -->
-
+        <!-- Each Value -->
+        <div class="d-flex flex-column mr-4 mb-1">
+          <div class="d-flex align-items-center justify-content-start mb-1">
+            <span
+              class="pi pi-circle-fill text-light m-1"
+              style="font-size: 0.82rem"
+            ></span
+            ><strong class="my-1 text-small" for="type">منبع</strong>
+          </div>
+          <span class="card py-2 px-4 radius bg-light"
+            ><a
+              class="text-small"
+              href="https://{{ eventDetails.source_Url }}"
+              target="blank"
+            >
+              {{ eventDetails.source_Url }}
+            </a></span
+          >
+        </div>
+        <!-- Each Value -->
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
@@ -534,7 +567,7 @@
               'bg-danger text-white': eventDetails.importance == 2,
               'bg-light': eventDetails.importance == 1,
               'bg-warning': eventDetails.importance == 3,
-              'bg-dark': eventDetails.importance == 0
+              'bg-dark text-white': eventDetails.importance == 0
             }"
             ><strong class="text-small">
               {{ eventDetails.importanceTitle }}

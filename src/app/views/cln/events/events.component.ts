@@ -139,21 +139,35 @@ export class EventsComponent implements OnInit {
         filter
       )
       .subscribe((event) => {
-        this.eventData = event.data.items;
-        this.eventData.forEach((item) => {
-          item.codeFlag = item.code.toLowerCase();
-          if (item.codeFlag == 'ww') {
-            item.codeFlag = 'un';
-          }
-        });
-        this.page.totalPages = event.data.totalPages;
-        this.page.totalElements = event.data.totalCount;
+        if (event.data.totalCount >= 1) {
+          this.eventData = event.data.items;
+          this.eventData.forEach((item) => {
+            item.source_Url = item.source_Url.slice(
+              8,
+              item.source_Url.length - 1
+            );
+            item.codeFlag = item.code.toLowerCase();
+            if (item.codeFlag == 'ww') {
+              item.codeFlag = 'un';
+            }
+          });
+        }
+
         if (event.data.totalCount == 0) {
+          this.eventData = [];
           this.toastr.show('داده برای نمایش موجود نیست', '', {
             positionClass: 'toast-top-left',
             toastClass: 'bg-light text-small',
           });
         }
+        if (!event.success) {
+          this.eventData = [];
+          this.toastr.error(event.message, '', {
+            positionClass: 'toast-top-left',
+          });
+        }
+        this.page.totalPages = event.data.totalPages;
+        this.page.totalElements = event.data.totalCount;
       });
   }
   onChangeEditor(): void {

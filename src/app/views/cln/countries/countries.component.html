@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center" *ngIf="countries?.length >= 1">
   <input
     type="text"
     placeholder="نام کشور"
@@ -24,78 +24,232 @@
 </div>
 
 <div class="d-flex flex-row flex-wrap justify-content-center mt-3">
-  <div
-    class="p-3 bg-white radius shadow-lg mx-3 my-2 col-10 col-sm-auto"
-    *ngFor="let country of countries"
-  >
+  <ng-container *ngFor="let country of countries">
     <div
-      class="d-flex radius align-items-center justify-content-center flex-column"
+      class="p-3 bg-white radius shadow-lg mx-3 my-2 col-10 col-sm-auto"
+      (click)="openDetailModal(detailsModal, country)"
     >
-      <span
-        class="shadow-lg fi"
-        [ngClass]="'fi-' + country.codeFlag"
-        style="font-size: 7.8rem; border-radius: 6px"
-      ></span>
-      <span class="text-small mt-3"
-        ><strong>{{ country.name }}</strong></span
+      <div
+        class="d-flex radius align-items-center justify-content-center flex-column"
       >
+        <span
+          class="shadow-lg fi"
+          [ngClass]="'fi-' + country.codeFlag"
+          style="font-size: 7.8rem; border-radius: 6px"
+        ></span>
+        <span class="text-small mt-3"
+          ><strong>{{ country.name }}</strong></span
+        >
+      </div>
+      <div class="d-flex flex-column mt-1 flex-wrap">
+        <!-- Each Value -->
+        <div class="d-flex flex-column mt-1">
+          <div class="d-flex align-items-center justify-content-start mb-1">
+            <span
+              class="pi pi-circle-fill text-light m-1"
+              style="font-size: 0.72rem"
+            ></span
+            ><label class="my-1 text-small" for="type">شناسه</label>
+          </div>
+          <span
+            class="card d-inline-flex py-1 px-2 bg-light"
+            style="border-radius: 3px"
+            ><strong class="text-small"> {{ country.id }} </strong></span
+          >
+        </div>
+        <!-- Each Value -->
+        <!-- Each Value -->
+        <div class="d-flex flex-column mt-1">
+          <div class="d-flex align-items-center justify-content-start mb-1">
+            <span
+              class="pi pi-circle-fill text-light m-1"
+              style="font-size: 0.72rem"
+            ></span
+            ><label class="my-1 text-small" for="type">کد کشور</label>
+          </div>
+          <span
+            class="card d-inline-flex py-1 px-2 bg-light"
+            style="border-radius: 3px"
+            ><strong class="text-small"> {{ country.code }} </strong></span
+          >
+        </div>
+        <!-- Each Value -->
+        <!-- Each Value -->
+        <div class="d-flex flex-column mt-1">
+          <div class="d-flex align-items-center justify-content-start mb-1">
+            <span
+              class="pi pi-circle-fill text-light m-1"
+              style="font-size: 0.72rem"
+            ></span
+            ><label class="my-1 text-small" for="type">ارز و نماد ارز</label>
+          </div>
+          <span
+            class="card d-inline-flex py-1 px-2 bg-light"
+            style="border-radius: 3px"
+            ><strong class="text-small"
+              >{{ country.currency }}&nbsp;-&nbsp;{{
+                country.currencySymbol
+              }}</strong
+            ></span
+          >
+        </div>
+        <!-- Each Value -->
+      </div>
     </div>
-
-    <div class="d-flex flex-column mt-1 flex-wrap">
-      <!-- Each Value -->
-      <div class="d-flex flex-column mt-1">
-        <div class="d-flex align-items-center justify-content-start mb-1">
-          <span
-            class="pi pi-circle-fill text-light m-1"
-            style="font-size: 0.72rem"
-          ></span
-          ><label class="my-1 text-small" for="type">شناسه</label>
-        </div>
-        <span
-          class="card d-inline-flex py-1 px-2 bg-light"
-          style="border-radius: 3px"
-          ><strong class="text-small"> {{ country.id }} </strong></span
-        >
-      </div>
-      <!-- Each Value -->
-
-      <!-- Each Value -->
-      <div class="d-flex flex-column mt-1">
-        <div class="d-flex align-items-center justify-content-start mb-1">
-          <span
-            class="pi pi-circle-fill text-light m-1"
-            style="font-size: 0.72rem"
-          ></span
-          ><label class="my-1 text-small" for="type">کد کشور</label>
-        </div>
-        <span
-          class="card d-inline-flex py-1 px-2 bg-light"
-          style="border-radius: 3px"
-          ><strong class="text-small"> {{ country.code }} </strong></span
-        >
-      </div>
-      <!-- Each Value -->
-
-      <!-- Each Value -->
-      <div class="d-flex flex-column mt-1">
-        <div class="d-flex align-items-center justify-content-start mb-1">
-          <span
-            class="pi pi-circle-fill text-light m-1"
-            style="font-size: 0.72rem"
-          ></span
-          ><label class="my-1 text-small" for="type">ارز و نماد ارز</label>
-        </div>
-        <span
-          class="card d-inline-flex py-1 px-2 bg-light"
-          style="border-radius: 3px"
-          ><strong class="text-small"
-            >{{ country.currency }}&nbsp;-&nbsp;{{
-              country.currencySymbol
-            }}</strong
-          ></span
-        >
-      </div>
-      <!-- Each Value -->
-    </div>
-  </div>
+  </ng-container>
 </div>
+<div *ngIf="countries?.length == 0" class="d-flex justify-content-center">
+  <img
+    src="../../../../../assets/images/97434-no-data-available.gif"
+    class="img-fluid w-50 radius-lg"
+    style="opacity: 0.4"
+    alt=""
+  />
+</div>
+<ng-template let-modal #detailsModal>
+  <div class="shadow-lg radius d-flex flex-column flex-wrap">
+    <div class="modal-header border-0">
+      <span class="d-inline-flex align-items-center">
+        <span class="pi pi-circle-fill text-light text-bigger"></span
+        >&nbsp;&nbsp;
+        <strong class="text-bigger">ویرایش</strong>
+      </span>
+
+      <button
+        ngbAutoFocus
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss()"
+      >
+        <span style="font-size: 1.7rem" aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body pt-2">
+      <div class="d-flex flex-column flex-wrap">
+        <div class="align-self-center mb-2">
+          <span
+            class="shadow-lg fi"
+            [ngClass]="'fi-' + countryDetail.codeFlag"
+            style="font-size: 5.8rem; border-radius: 6px"
+          ></span>
+        </div>
+        <!-- Each Value -->
+        <div class="d-flex flex-column mr-4 mb-1">
+          <span class="my-1 d-inline"
+            ><strong class="text-small">شناسه</strong></span
+          >
+          <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+            <span
+              class="pi pi-circle-fill text-primary m-1"
+              style="font-size: 0.82rem"
+            ></span>
+            <input
+              disabled
+              type="text"
+              class="form-control radius text-small border-0"
+              value="{{ countryDetail.id }}"
+            />
+          </div>
+        </div>
+        <!-- Each Value -->
+        <!-- Each Value -->
+        <div class="d-flex flex-column mr-4 mb-1">
+          <span class="my-1 d-inline"
+            ><strong class="text-small">کد کشور</strong></span
+          >
+          <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+            <span
+              class="pi pi-circle-fill text-primary m-1"
+              style="font-size: 0.82rem"
+            ></span>
+            <input
+              disabled
+              type="text"
+              class="form-control radius text-small border-0"
+              value="{{ countryDetail.code }}"
+            />
+          </div>
+        </div>
+        <!-- Each Value -->
+        <!-- Each Value -->
+        <div class="d-flex flex-column mr-4 mb-1">
+          <span class="my-1 d-inline"
+            ><strong class="text-small">نام کشور</strong></span
+          >
+          <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+            <span
+              class="pi pi-circle-fill text-primary m-1"
+              style="font-size: 0.82rem"
+            ></span>
+            <input
+              (input)="changeValue('name', $event.target.value)"
+              type="text"
+              class="form-control radius text-small border-0"
+              value="{{ countryDetail.name }}"
+            />
+          </div>
+        </div>
+        <!-- Each Value -->
+
+        <!-- Each Value -->
+        <div class="d-flex flex-column mr-4 mb-1">
+          <span class="my-1 d-inline"
+            ><strong class="text-small">ارز</strong></span
+          >
+          <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+            <span
+              class="pi pi-circle-fill text-primary m-1"
+              style="font-size: 0.82rem"
+            ></span>
+            <input
+              (input)="changeValue('currency', $event.target.value)"
+              type="text"
+              class="form-control radius text-small border-0"
+              value="{{ countryDetail.currency }}"
+            />
+          </div>
+        </div>
+        <!-- Each Value -->
+        <!-- Each Value -->
+        <div class="d-flex flex-column mr-4 mb-1">
+          <span class="my-1 d-inline"
+            ><strong class="text-small">نماد ارز</strong></span
+          >
+          <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+            <span
+              class="pi pi-circle-fill text-primary m-1"
+              style="font-size: 0.82rem"
+            ></span>
+            <input
+              (input)="changeValue('currencySymbol', $event.target.value)"
+              type="text"
+              class="form-control radius text-small border-0"
+              value="{{ countryDetail.currencySymbol }}"
+            />
+          </div>
+        </div>
+        <!-- Each Value -->
+      </div>
+    </div>
+    <div class="d-flex flex-grow-1"></div>
+    <div class="modal-footer border-0">
+      <button
+        (click)="putCountry()"
+        type="button"
+        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"
+      >
+        <i class="i-Yes text-bigger mr-2"></i
+        ><strong class="text-small">ذخیره</strong>
+      </button>
+      <button
+        (click)="modal.dismiss()"
+        type="button"
+        class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"
+      >
+        <i class="i-Close text-bigger mr-2"></i
+        ><strong class="text-small">انصراف</strong>
+      </button>
+    </div>
+  </div></ng-template
+>

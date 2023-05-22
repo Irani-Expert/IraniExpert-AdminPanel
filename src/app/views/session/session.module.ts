@@ -1,13 +1,13 @@
 import { SessionRoutingModule } from './session.routing';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import{MatIconModule} from '@angular/material/icon';
-import{MatCardModule} from '@angular/material/card';
-import{MatInputModule} from '@angular/material/input';
-import{MatCheckboxModule} from '@angular/material/checkbox';
-import{MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
 
 // import{MatIconModule,MatCardModule,MatInputModule,MatCheckboxModule,MatButtonModule} from '@angular/material'
 
@@ -30,7 +30,7 @@ import { SignupComponent } from './signup/signup.component';
     MatCheckboxModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [
     NotFoundComponent,
@@ -39,7 +39,7 @@ import { SignupComponent } from './signup/signup.component';
     SigninComponent,
     BtnLoadingComponent,
     SignupComponent,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-
 export class SessionModule {}
