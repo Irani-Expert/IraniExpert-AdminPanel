@@ -60,20 +60,12 @@ export class NavigationService {
       privilege: 'Dashboard-Full Premission',
     },
     {
-      name: 'فعالیت ها',
-      description: '',
+      name: 'پروفایل من',
+      description: 'پروفایل',
       navType: 'link',
-      icon: 'i-Clock-Forward',
-      state: '/log-info',
+      icon: 'i-Administrator',
+      state: '/dashboard/user-profile',
       privilege: 'Dashboard-Full Premission',
-    },
-    {
-      name: 'تقویم اقتصادی',
-      description: '',
-      navType: 'link',
-      icon: 'i-Calendar-4',
-      state: '/calendar',
-      privilege: 'CalendarEvent-Full Premission',
     },
     {
       name: 'مشتریان من',
@@ -83,21 +75,7 @@ export class NavigationService {
       state: '/mrk/sub-list-profit',
       privilege: 'sub-list-profit-Full Premission',
     },
-    {
-      name: '  دسترسی ها',
-      navType: 'link',
-      icon: 'i-Gears',
-      state: '/sec/permissions',
-      privilege: 'permissions-Full Premission',
-    },
-    {
-      name: 'پروفایل من',
-      description: 'پروفایل',
-      navType: 'link',
-      icon: 'i-Administrator',
-      state: '/dashboard/user-profile',
-      privilege: 'Dashboard-Full Premission',
-    },
+
     // {
     //   name: 'مشتریان من',
     //   description: 'پروفایل',
@@ -168,12 +146,13 @@ export class NavigationService {
     //     // },
     //   ],
     // },
+
     {
-      name: 'محصولات',
+      name: 'سودها',
       navType: 'link',
-      icon: 'i-Checkout-Basket',
-      state: '/prd/products-list',
-      privilege: 'Product-Full Premission',
+      icon: 'i-Dollar',
+      state: '/crt/profits',
+      privilege: 'profits-Full Premission',
     },
     {
       name: 'سفارشات',
@@ -182,32 +161,19 @@ export class NavigationService {
       privilege: 'Orders-Full Premission',
       state: '/bsk/orders',
     },
+
     {
-      icon: 'i-ID-3',
-      name: 'سفارشات من',
-      state: '/bsk/user-orders',
+      name: 'محصولات',
       navType: 'link',
-      privilege: 'CheckOrders-Full Premission',
-    },
-    {
-      name: 'سودها',
-      navType: 'link',
-      icon: 'i-Dollar',
-      state: '/crt/profits',
-      privilege: 'profits-Full Premission',
+      icon: 'i-Checkout-Basket',
+      state: '/prd/products-list',
+      privilege: 'Product-Full Premission',
     },
 
     {
-      name: 'کاربران',
-      navType: 'link',
-      icon: 'i-Business-ManWoman',
-      state: '/sec/user-management',
-      privilege: 'UserManangment-Full Premission',
-    },
-    {
       name: 'بنرها',
       navType: 'link',
-      icon: 'i-Tag-2',
+      icon: 'i-Landscape',
       state: '/cnt/banner',
       privilege: 'Banner-Full Premission',
     },
@@ -218,13 +184,56 @@ export class NavigationService {
       state: '/cnt/article',
       privilege: 'Article-Full Premission',
     },
-
+    {
+      name: 'آپلود سنتر',
+      navType: 'link',
+      icon: 'i-Share-on-Cloud',
+      state: '/mcm/upload-center',
+      privilege: 'Upload-Center-Full Premission',
+    },
+    {
+      name: '*',
+      navType: 'link',
+      icon: 'i-Video-2',
+      state: '/mcm/media-list',
+      privilege: 'Media-Full Premission',
+    },
     {
       name: 'گروه ها',
       navType: 'link',
       icon: 'i-Dropbox',
       state: '/bas/group',
       privilege: 'Group-Full Premission',
+    },
+    {
+      name: 'فعالیت ها',
+      description: '',
+      navType: 'link',
+      icon: 'i-Clock-Forward',
+      state: '/log-info',
+      privilege: 'Dashboard-Full Premission',
+    },
+    {
+      name: 'تقویم اقتصادی',
+      description: '',
+      navType: 'link',
+      icon: 'i-Calendar-4',
+      state: '/calendar',
+      privilege: 'CalendarEvent-Full Premission',
+    },
+    {
+      name: '  دسترسی ها',
+      navType: 'link',
+      icon: 'i-Gears',
+      state: '/sec/permissions',
+      privilege: 'permissions-Full Premission',
+    },
+    {
+      name: 'کاربران',
+      navType: 'link',
+      icon: 'i-Business-ManWoman',
+      state: '/sec/user-management',
+      privilege: 'UserManangment-Full Premission',
     },
     {
       name: 'درخواست مشتریان',
@@ -242,18 +251,26 @@ export class NavigationService {
     },
 
     {
-      name: 'نظرات من',
-      navType: 'link',
-      icon: 'i-Speach-Bubble-3',
-      state: '/shr/user-Comments',
-      privilege: 'comment-user-Special-Premission',
-    },
-    {
       name: 'نوشته ها',
       navType: 'link',
       icon: 'i-Speach-Bubbles',
       state: '/shr/comment',
       privilege: 'Comment-Full Premission',
+    },
+
+    {
+      icon: 'i-ID-3',
+      name: 'سفارشات من',
+      state: '/bsk/user-orders',
+      navType: 'link',
+      privilege: 'CheckOrders-Full Premission',
+    },
+    {
+      name: 'نظرات من',
+      navType: 'link',
+      icon: 'i-Speach-Bubble-3',
+      state: '/shr/user-Comments',
+      privilege: 'comment-user-Special-Premission',
     },
 
     // {

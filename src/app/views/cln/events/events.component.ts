@@ -267,22 +267,7 @@ export class EventsComponent implements OnInit {
       this.setFilter();
     }
   }
-  // uploadVoice() {
-  //   this.fileUploader.uploadVoice(this.voiceFile, 'audio').subscribe((res) => {
-  //     if (res.success) {
-  //       this.toastr.success(res.message, null, {
-  //         timeOut: 1500,
-  //         positionClass: 'toast-top-left',
-  //       });
-  //     }
-  //   });
-  // }
 
-  // changeVoicePath(file: any) {
-  //   this.voiceFile = new Blob([file], {
-  //     type: 'audio/mpeg',
-  //   });
-  // }
   filteredItems(filter: FilterModel) {
     this.filterHolder = { ...filter };
   }

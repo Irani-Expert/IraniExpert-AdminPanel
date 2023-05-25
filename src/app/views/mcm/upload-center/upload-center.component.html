@@ -1,0 +1,76 @@
+<section class="position-relative">
+  <div class="position-absolute" style="left: 0; top: 20">
+    <button
+      (click)="perviousSession()"
+      [disabled]="sessionIndetiftier == 1"
+      type="button"
+      class="close bg-light rounded-circle"
+      aria-label="Close"
+    >
+      <span class="p-2 d-inline-flex">
+        <span
+          aria-hidden="true"
+          class="pi pi-arrow-left back-forward-icons"
+        ></span>
+      </span>
+    </button>
+  </div>
+  <div class="position-absolute" style="right: 0; top: 20">
+    <button
+      (click)="nextSession()"
+      [disabled]="sessionIndetiftier == 3"
+      type="button"
+      class="close bg-light rounded-circle"
+    >
+      <span class="p-2 d-inline-flex">
+        <span class="pi pi-arrow-right back-forward-icons"></span>
+      </span>
+    </button>
+  </div>
+  <div
+    *ngIf="sessionIndetiftier == 1"
+    class="d-flex flex-row p-5 flex-wrap justify-content-center align-items-center"
+  >
+    <div
+      class="card cursor-pointer radius shadow-sm flex-grow-0 p-4 m-4 align-self-center select-type--card"
+    >
+      <span class="icon-color pi pi-video text-center icon-size"></span>
+      <span class="text-center mt-2"><strong>ویدئو</strong></span>
+    </div>
+    <div
+      class="card cursor-pointer radius shadow-sm flex-grow-0 p-4 m-4 align-self-center select-type--card"
+    >
+      <span class="icon-color pi pi-image text-center icon-size"></span>
+      <span class="text-center mt-2"><strong>عکس</strong></span>
+    </div>
+    <div
+      class="card cursor-pointer radius shadow-sm flex-grow-0 p-4 m-4 align-self-center select-type--card"
+    >
+      <span class="icon-color pi pi-microphone text-center icon-size"></span>
+      <span class="text-center mt-2"><strong>صوت</strong></span>
+    </div>
+  </div>
+  <div
+    *ngIf="sessionIndetiftier == 2"
+    class="d-flex flex-column p-5 flex-wrap justify-content-center align-items-center"
+  >
+    <label
+      for="images"
+      class="drop-container shadow-sm"
+      [ngClass]="{ 'file-over': this.fileOver == true }"
+    >
+      <span class="drop-title">فایل را اینجا بیاندازید</span>
+      یا
+      <span class="text-small d-inline-flex"
+        >انتخاب کنید&nbsp;&nbsp;<span
+          class="pi pi-arrow-down align-self-center"
+          style="font-size: 0.6rem"
+        ></span
+      ></span>
+      <input type="file" class="text-small" id="images" />
+    </label>
+    <!-- <div class="">
+      <img [src]="this.fileHolder" alt="" />
+    </div> -->
+  </div>
+</section>

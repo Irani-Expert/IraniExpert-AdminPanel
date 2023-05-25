@@ -71,6 +71,11 @@ const adminRoutes: Routes = [
     loadChildren: () =>
       import('./views/cln/cln.module').then((m) => m.ClnModule),
   },
+  {
+    path: 'mcm',
+    loadChildren: () =>
+      import('./views/mcm/mcm.module').then((m) => m.McmModule),
+  },
 ];
 
 const routes: Routes = [
