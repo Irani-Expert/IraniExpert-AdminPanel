@@ -211,7 +211,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Clock-Forward',
       state: '/log-info',
-      privilege: 'Dashboard-Full Premission',
+      privilege: 'Log-Full Premission',
     },
     {
       name: 'تقویم اقتصادی',

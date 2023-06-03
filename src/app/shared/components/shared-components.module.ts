@@ -10,11 +10,13 @@ import { SearchModule } from './search/search.module';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { LayoutsModule } from './layouts/layouts.module';
+import { VideoPlayerComponent } from './video-player/video-player.component';
+import { FileSizePipe } from '../pipes/file-size.pipe';
+import { AudioPlayerComponent } from './audio-player/audio-player.component';
 
 const components = [
   // BtnLoadingComponent,
   FeatherIconComponent,
-
 ];
 
 @NgModule({
@@ -27,10 +29,10 @@ const components = [
     SearchModule,
     BreadcrumbModule,
     PerfectScrollbarModule,
-    NgbModule
+    NgbModule,
   ],
-  declarations: components,
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  exports: components
+  declarations: [components],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: components,
 })
-export class SharedComponentsModule { }
+export class SharedComponentsModule {}

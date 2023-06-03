@@ -15,12 +15,18 @@ export class LoaderInterceptor implements HttpInterceptor {
   constructor(private loader: NgxSpinnerService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    this.loader.show();
-    //this.checkUserPermission()
-    return next.handle(req).pipe(
-      delay(100),
-      finalize(() => this.loader.hide())
-    );
+    let dontSpin: boolean;
+    dontSpin = req.url.includes('https://dl.iraniexpert.com/fileUploader');
+    if (!dontSpin) {
+      this.loader.show();
+      //this.checkUserPermission()
+      return next.handle(req).pipe(
+        delay(100),
+        finalize(() => this.loader.hide())
+      );
+    } else {
+      return next.handle(req);
+    }
   }
   // checkUserPermission() {
   //   let currentUser: UserInfoModel = JSON.parse(

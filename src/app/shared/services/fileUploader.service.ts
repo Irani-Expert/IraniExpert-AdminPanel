@@ -71,13 +71,13 @@ export class FileUploaderService {
       this._httpOptions
     );
   }
-  uploadVoice(_blob: Blob, folder: string): Observable<Result<string[]>> {
+  uploadVoice(_blob: Blob, folder: string) {
     const formData = new FormData();
-    formData.append('_file', _blob, 'siavash.mp3');
+    formData.append('_file', _blob, 'file.mp3');
     return this._http.post<Result<string[]>>(
       this.uploardUrl + '?folder=' + folder,
       formData,
-      this._httpOptions
+      { reportProgress: true, observe: 'events' }
     );
   }
   // dataURItoBlobForVoice(dataURI) {

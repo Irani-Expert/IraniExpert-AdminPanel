@@ -16,6 +16,9 @@ export class FileTypePipe implements PipeTransform {
       case 2:
         result = 'فایل PDF';
         break;
+      case 3:
+        result = 'صوتی';
+        break;
       default:
         result = 'دیگر';
     }
