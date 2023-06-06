@@ -1,4 +1,4 @@
-<div class="mb-4 d-block">
+<div class="mb-4 d-block" *appCanAccess="'ProductT-Edit'">
   <button
     class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
     type="button"
@@ -9,7 +9,10 @@
     <strong>ایجاد</strong>
   </button>
 </div>
-<div class="separator-breadcrumb border-top"></div>
+<div
+  class="separator-breadcrumb border-top"
+  *appCanAccess="'ProductT-Edit'"
+></div>
 
 <!--
   -
@@ -41,6 +44,7 @@
           </td>
           <td>
             <button
+              *appCanAccess="'ProductT-Edit'"
               class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
               (click)="deleteImg(item, deleteConfirmModal)"
             >

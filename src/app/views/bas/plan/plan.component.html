@@ -1,6 +1,7 @@
 <!--------------------------- Create Plan -->
 <div class="mb-4 d-block">
   <button
+    *appCanAccess="'ProductT-Edit'"
     class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
     type="button"
     (click)="addorEdit(addUpdateModal, undefined)"
@@ -74,6 +75,7 @@
                       <i class="i-Pen-5"></i>
                     </button>
                     <button
+                      *appCanAccess="'ProductT-Edit'"
                       (click)="
                         deletePlanOption(planOption.id, deleteConfirmModal)
                       "
@@ -86,6 +88,7 @@
                   <span class="span"></span>
                 </div>
                 <button
+                  *appCanAccess="'ProductT-Edit'"
                   class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
                   (click)="openPlanOptionModal(undefined, item.id)"
                 >
@@ -99,6 +102,7 @@
 
         <div class="row mt-3 p-2 justify-content-around">
           <button
+            *appCanAccess="'ProductT-Edit'"
             class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="addorEdit(addUpdateModal, item)"
           >
@@ -107,6 +111,7 @@
           </button>
 
           <button
+            *appCanAccess="'ProductT-Edit'"
             class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="deletePlan(item.id, deleteConfirmModal)"
           >
@@ -117,7 +122,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 mt-3"*ngIf="page.totalElements > page.size">
+  <div class="col-md-12 mt-3" *ngIf="page.totalElements > page.size">
     <pagination-controls
       (pageChange)="setPage($event)"
       previousLabel=""

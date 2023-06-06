@@ -1,4 +1,4 @@
-<div class="mb-4 d-block">
+<div class="mb-4 d-block" *appCanAccess="'ProductT-Edit'">
   <button
     class="btn btn-primary mb-4"
     type="button"
@@ -8,7 +8,10 @@
     ایجاد
   </button>
 </div>
-<div class="separator-breadcrumb border-top"></div>
+<div
+  class="separator-breadcrumb border-top"
+  *appCanAccess="'ProductT-Edit'"
+></div>
 
 <!--
   -
@@ -40,12 +43,14 @@
         <td *ngIf="item.isActive === true">فعال</td>
         <td>
           <button
+            *appCanAccess="'ProductT-Edit'"
             class="btn btn-warning"
             (click)="addorEdit(addUpdateModal, item)"
           >
             ویرایش
           </button>
           <button
+            *appCanAccess="'ProductT-Edit'"
             class="btn btn-danger"
             (click)="deleteLearn(item.id, deleteConfirmModal)"
           >

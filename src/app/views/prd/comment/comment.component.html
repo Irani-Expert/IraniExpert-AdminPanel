@@ -32,7 +32,7 @@
         </ng-component> -->
       </div>
       <div class="card-footer bg-secondary">
-        <div class="mb-2">
+        <div class="mb-2" *appCanAccess="'ProductT-Edit'">
           <button
             type="button"
             class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
@@ -43,7 +43,7 @@
             <strong>پذیرفتن</strong>
           </button>
         </div>
-        <div class="mb-2">
+        <div class="mb-2" *appCanAccess="'ProductT-Edit'">
           <button
             type="button"
             *ngIf="item.isAccepted === true"

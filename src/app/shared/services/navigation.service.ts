@@ -65,7 +65,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Administrator',
       state: '/dashboard/user-profile',
-      privilege: 'Dashboard-Full Premission',
+      privilege: 'UserProfile-Full',
     },
     {
       name: 'مشتریان من',
@@ -90,7 +90,7 @@ export class NavigationService {
       navType: '',
       icon: '',
       state: '/prd/addUpdate/:productId',
-      privilege: 'Product-Edit',
+      privilege: 'SingleProduct-Watch',
     },
     {
       name: '*',
@@ -98,7 +98,7 @@ export class NavigationService {
       navType: '',
       icon: '',
       state: '/prd/addUpdate',
-      privilege: 'Product-Add',
+      privilege: 'ProductT-Add',
     },
     {
       name: '*',
@@ -167,7 +167,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Checkout-Basket',
       state: '/prd/products-list',
-      privilege: 'Product-Full Premission',
+      privilege: 'ProductT-Watch',
     },
 
     {
@@ -211,7 +211,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Clock-Forward',
       state: '/log-info',
-      privilege: 'Log-Full Premission',
+      privilege: 'Logs-Watch',
     },
     {
       name: 'تقویم اقتصادی',
