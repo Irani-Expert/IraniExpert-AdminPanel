@@ -1,27 +1,4 @@
-<div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-3">
-  <button
-    type="button"
-    class="btn btn-details radius py-btns text-small"
-    id="dropdownBasic1"
-    ngbDropdownToggle
-  >
-    یادداشت: {{ dropDownTitleHolder }}
-  </button>
-  <div
-    ngbDropdownMenu
-    class="mt-1 shadow-lg radius"
-    aria-labelledby="dropdownBasic1"
-  >
-    <button
-      class="text-left btn"
-      ngbDropdownItem
-      *ngFor="let item of tableTypes"
-      (click)="getCommnetOfspecificTableTypes(item.id)"
-    >
-      <strong>{{ item.title }}</strong>
-    </button>
-  </div>
-</div>
+
 <div class="pb-3 d-flex flex-row row align-items-center">
 
   <div class="d-flex row col-10 align-items-center">
@@ -29,6 +6,30 @@
       ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
       &nbsp; : &nbsp;</strong
     >
+    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 ">
+      <button
+        type="button"
+        class="btn btn-details radius py-btns text-small"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        یادداشت: {{ dropDownTitleHolder }}
+      </button>
+      <div
+        ngbDropdownMenu
+        class="mt-1 shadow-lg radius"
+        aria-labelledby="dropdownBasic1"
+      >
+        <button
+          class="text-left btn"
+          ngbDropdownItem
+          *ngFor="let item of tableTypes"
+          (click)="getCommnetOfspecificTableTypes(item.id)"
+        >
+          <strong>{{ item.title }}</strong>
+        </button>
+      </div>
+    </div>
 
     <!-- TableType -->
 

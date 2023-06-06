@@ -39,6 +39,7 @@ export class CreateAddlogComponent implements OnInit {
   selectedFile: TreeData;
   selectedFiles: TreeData[];
   infoModal: AllCheckingLog;
+  infoModal2: AllCheckingLog;
   opendNodeList: TreeData[] = new Array<TreeData>();
   nodes: TreeData[];
   data: AllCheckingLog[] = new Array<AllCheckingLog>();
@@ -298,19 +299,24 @@ export class CreateAddlogComponent implements OnInit {
   }
   openDescriptionModal(content: any, node: number) {
     let finder = this.data.findIndex((finder) => finder.id == node);
-    if (finder != -1) {
-      this.infoModal = this.data[finder];
-      this.infoModal.createDate = moment(
-        this.infoModal.createDate,
-        'YYYY/MM/DD'
-      )
+    if(this.infoModal!=this.data[finder]){
+      if (finder != -1) {
+        this.infoModal=this.data[finder]
+    
+    
+        this.infoModal.createDate = moment(
+          this.infoModal.createDate,
+          'YYYY/MM/DD'
+        )
+          .locale('fa')
+          .format('YYYY/MM/DD');
+      }
+      this.infoModal.updateDate = moment(this.infoModal.updateDate, 'YYYY/MM/DD')
         .locale('fa')
         .format('YYYY/MM/DD');
+  
     }
-    this.infoModal.updateDate = moment(this.infoModal.updateDate, 'YYYY/MM/DD')
-      .locale('fa')
-      .format('YYYY/MM/DD');
-
+  
     this.modalService
       .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
       .result.then(
