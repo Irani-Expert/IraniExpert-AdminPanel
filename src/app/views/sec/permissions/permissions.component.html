@@ -1,18 +1,16 @@
-<ul ngbNav #nav="ngbNav" class="nav-tabs p-0" >
-  <li ngbNavItem *appCanAccess="'AddUserRole-Full Premission'" >
+<ul ngbNav #nav="ngbNav" class="nav-tabs p-0">
+  <li ngbNavItem *appCanAccess="'AddUserRole-Full Premission'">
     <a ngbNavLink>دسترسی نقش ها</a>
-      <ng-template ngbNavContent>
-          <app-user-privilege></app-user-privilege>
-      </ng-template>
+    <ng-template ngbNavContent>
+      <app-user-privilege></app-user-privilege>
+    </ng-template>
   </li>
-    <li ngbNavItem *appCanAccess="'Comment-Full Premission'" > 
-      <a ngbNavLink>تعریف دسترسی</a>
-  
-      <ng-template ngbNavContent>
-        <app-privilege></app-privilege>
-      </ng-template>
-    </li>
+  <li ngbNavItem *appCanAccess="'Comment-Full Premission'">
+    <a ngbNavLink>مدیریت دسترسی ها</a>
 
-  </ul>
-  <div [ngbNavOutlet]="nav"></div>
-  
+    <ng-template ngbNavContent>
+      <app-privilege></app-privilege>
+    </ng-template>
+  </li>
+</ul>
+<div [ngbNavOutlet]="nav"></div>

@@ -34,7 +34,7 @@
                   [alt]="addUpdate.title"
                 />
               </div>
-              <div class="col-md-6 col-5">
+              <div class="col-md-6 col-5" *appCanAccess="'ArticleT-Edit'">
                 <button
                   class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
                   (click)="deleteImg(addUpdate.cardImagePath)"
@@ -184,18 +184,20 @@
               </label>
             </div>
           </div>
-          <div class="row" *appCanAccess="'Article-Full Premission'">
+          <div class="row">
             <!-- *appCanAccess="'punisher' || 'hoas'" -->
-            <button
-              type="button"
-              class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
-              *ngIf="addUpdate.id !== 0"
-              [disabled]="!addForm.valid"
-              (click)="addOrUpdate(addUpdate)"
-            >
-              <i class="i-Pen-5 text-bigger mr-2"></i>
-              <strong class="ml-2 text-small">ویرایش</strong>
-            </button>
+            <ng-container *appCanAccess="'ArticleT-Edit'">
+              <button
+                type="button"
+                class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
+                *ngIf="addUpdate.id !== 0"
+                [disabled]="!addForm.valid"
+                (click)="addOrUpdate(addUpdate)"
+              >
+                <i class="i-Pen-5 text-bigger mr-2"></i>
+                <strong class="ml-2 text-small">ویرایش</strong>
+              </button>
+            </ng-container>
             <button
               type="button"
               class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
@@ -215,7 +217,7 @@
         </form>
       </ng-template>
     </li>
-    <li ngbNavItem>
+    <li ngbNavItem *appCanAccess="'ArticleComments-Watch'">
       <a ngbNavLink>نظرات </a>
       <ng-template ngbNavContent>
         <!-- [disabled]="articleId == 0 -->

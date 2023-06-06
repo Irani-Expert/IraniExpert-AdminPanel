@@ -29,7 +29,7 @@
         </p>
       </div>
       <div class="card-footer bg-secondary">
-        <div class="mb-2">
+        <div class="mb-2" *appCanAccess="'ArticleComments-Edit'">
           <button
             type="button"
             class="btn btn-light btn-rounded m-1"
@@ -39,7 +39,7 @@
             پذیرفتن
           </button>
         </div>
-        <div class="mb-2">
+        <div class="mb-2" *appCanAccess="'ArticleComments-Delete'">
           <button
             type="button"
             class="btn btn-danger btn-rounded m-1"
@@ -75,7 +75,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" *appCanAccess="'ArticleComments-Add'">
     <label class="text-black-50 mb-2"
       >درصورت نیاز یا علاقه پاسخ این نظر را بدهید</label
     >

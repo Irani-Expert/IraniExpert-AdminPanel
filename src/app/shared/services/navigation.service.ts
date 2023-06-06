@@ -106,7 +106,7 @@ export class NavigationService {
       navType: '',
       icon: '',
       state: '/cnt/article/addUpdate-article/:articleId',
-      privilege: 'Article-Edit',
+      privilege: 'ArticleSingleT-Watch',
     },
     {
       name: '*',
@@ -114,7 +114,7 @@ export class NavigationService {
       navType: '',
       icon: '',
       state: '/cnt/article/addUpdate-article',
-      privilege: 'Article-Add',
+      privilege: 'ArticleT-Add',
     },
 
     // {
@@ -158,7 +158,7 @@ export class NavigationService {
       name: 'سفارشات',
       navType: 'link',
       icon: 'i-Library',
-      privilege: 'Orders-Full Premission',
+      privilege: 'Orders-Watch',
       state: '/bsk/orders',
     },
 
@@ -182,7 +182,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-File-Edit',
       state: '/cnt/article',
-      privilege: 'Article-Full Premission',
+      privilege: 'ArticleT-Watch',
     },
     {
       name: 'آپلود سنتر',

@@ -1,5 +1,5 @@
 <a
-  *appCanAccess="'Article-Add'"
+  *appCanAccess="'ArticleT-Add'"
   type="button"
   class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   [routerLink]="'/cnt/article/addUpdate-article'"
@@ -72,15 +72,15 @@
         <td *ngIf="item.isActive === true">فعال</td>
         <td class="td-oprate">
           <a
-            *appCanAccess="'Article-Edit'"
+            *appCanAccess="'ArticleSingleT-Watch'"
             class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
             [routerLink]="'/cnt/article/addUpdate-article/' + item.id"
           >
-            <i class="i-Pen-5 text-bigger mr-2"></i>
-            <strong class="ml-2 text-small">ویرایش</strong>
+            <i class="i-Information text-bigger mr-2"></i>
+            <strong class="ml-2 text-small">جزئیات</strong>
           </a>
           <button
-            *appCanAccess="'Article-Delete'"
+            *appCanAccess="'ArticleT-Delete'"
             class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
             (click)="deleteArticle(item.id, deleteConfirmModal)"
           >

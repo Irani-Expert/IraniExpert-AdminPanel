@@ -6,6 +6,7 @@
 ></div>
 <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-2">
   <button
+    *appCanAccess="'Orders-Add'"
     class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mr-2"
     type="button"
     (click)="openAddModal(AddOrderModal)"
@@ -518,7 +519,7 @@
               [openDelay]="50"
               [closeDelay]="150"
               style="width: 32px; height: 32px"
-              *appCanAccess="'invoice-Full Premission'"
+              *appCanAccess="'OrderDetails-Watch'"
               class="btn-details btn rounded-circle d-flex justify-content-center m-1"
               (click)="openDetailModal(item, openDetails)"
             >
@@ -528,7 +529,7 @@
               ></i>
             </button>
             <span
-              *appCanAccess="'note-Full Premission'"
+              *appCanAccess="'OrdersNote-Watch'"
               (click)="toggleNotebar(item)"
               ngbTooltip=" یادداشت ها "
               [openDelay]="50"
@@ -781,7 +782,7 @@
             />
           </div>
 
-          <div class="col-md-4 form-group mb-3" *appCanAccess="'invoice-Edit'">
+          <div class="col-md-4 form-group mb-3" *appCanAccess="'Orders-Edit'">
             <strong for="status" class="mb-3">تغییر وضعیت پرداخت</strong>
             <select
               class="form-control mt-1 text-dark"
@@ -804,7 +805,7 @@
         "
       >
         <button
-          *appCanAccess="'Licence-Full Premission'"
+          *appCanAccess="'License-Watch'"
           type="button"
           class="btn-light btn d-inline-flex justify-content-around py-btns radius mr-1 align-items-center"
           (click)="openUpdateModal(sendLicense, orderDetail)"
@@ -862,12 +863,14 @@
             </div>
             <div class="col-md-6 col-5">
               <a
+                *appCanAccess="'LicenseFile-Watch'"
                 class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center m-1 ml-0"
                 href="https://dl.iraniExpert.com/{{ licenseModel.filePath }}"
                 ><i class="i-Download text-dark text-bigger mr-3"></i>
                 <strong>دانلود</strong></a
               >
               <button
+                *appCanAccess="'LicenseFile-Delete'"
                 class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
                 (click)="deleteModal(licenseModel, deletingModal, 1)"
               >
@@ -883,18 +886,22 @@
             (change)="onFileChanged($event)"
           />
         </div>
-        <ng-container *ngIf="!licenseModel.fileExists">
-          <strong class="text-danger col-12">فایل ارسالی باید zip باشد</strong>
-          <div class="col-12 mt-2 mb-2">
-            <button
-              class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
-              (click)="uploadFile()"
-              [disabled]="!isValidate"
+        <ng-container *appCanAccess="'LicenseFile-Add'">
+          <ng-container *ngIf="!licenseModel.fileExists">
+            <strong class="text-danger col-12"
+              >فایل ارسالی باید zip باشد</strong
             >
-              <i class="i-Upload text-dark text-bigger mr-3"></i>
-              <strong>آپلود</strong>
-            </button>
-          </div>
+            <div class="col-12 mt-2 mb-2">
+              <button
+                class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
+                (click)="uploadFile()"
+                [disabled]="!isValidate"
+              >
+                <i class="i-Upload text-dark text-bigger mr-3"></i>
+                <strong>آپلود</strong>
+              </button>
+            </div>
+          </ng-container>
         </ng-container>
         <div class="col-md-5 form-group mb-3" dir="ltr">
           <strong for="startDate" class="mb-3">تاریخ شروع</strong>
@@ -926,12 +933,13 @@
     </div>
     <div class="modal-footer">
       <button
+        *appCanAccess="'License-Add'"
         type="button"
         class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
         (click)="modal.close(true)"
       >
-        <i class="i-Upload text-dark text-bigger mr-3"></i>
-        <strong>ارسال</strong>
+        <i class="i-Yes text-dark text-bigger mr-3"></i>
+        <strong>ثبت</strong>
       </button>
     </div>
   </div>
@@ -946,8 +954,7 @@
 >
   <div class="mt-3 ml-3 mb-3">
     <i
-      (click)="clearNote()"
-      (click)="updateNotebar()"
+      (click)="clearNote(); updateNotebar()"
       ngbTooltip="بستن"
       [openDelay]="100"
       [closeDelay]="500"
@@ -955,7 +962,7 @@
       class="i-Close bg-dark text-white border-0 clickable-btn rounded-circle"
     ></i>
   </div>
-  <ng-container *appCanAccess="'note-Add'">
+  <ng-container *appCanAccess="'OrdersNote-Add'">
     <hr class="separator-breadcrumb mt-0 mb-1" />
     <div class="ml-3">
       <form action="">
