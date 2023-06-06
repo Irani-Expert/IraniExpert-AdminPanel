@@ -4,48 +4,49 @@
   (click)="clearNote()"
   (click)="updateNotebar()"
 ></div>
-<div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-2">
-  <button
-  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mr-2"
-  type="button"
-  (click)="openAddModal(AddOrderModal)"
->
-  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
-</button>
-
-  <button
-    type="button"
-    class="btn btn-details radius py-btns text-small"
-    id="dropdownBasic1"
-    ngbDropdownToggle
-  >
-    سفارشات {{ dropDownTitleHolder }}
-  </button>
-  <div
-    ngbDropdownMenu
-    class="mt-1 shadow-lg radius"
-    aria-labelledby="dropdownBasic1"
-  >
-
-    <button
-      class="text-left btn"
-      ngbDropdownItem
-      *ngFor="let item of statusTitles"
-      (click)="getOrders(item.id, 0, filter)"
-    >
-      <strong>{{ item.title }}</strong>
-    </button>
-  </div>
-</div>
 
 <div class="pb-3 d-flex flex-row row align-items-center">
 
   <div class="d-flex row col-10 align-items-center">
+    <button
+    class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mr-2"
+    type="button"
+    (click)="openAddModal(AddOrderModal)"
+  >
+    <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
+  </button>
     <strong class="m-1 text-small"
       ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
       &nbsp; : &nbsp;</strong
     >
-
+    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-2">
+    
+    
+      <button
+        type="button"
+        class="btn btn-details radius py-btns text-small"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        سفارشات {{ dropDownTitleHolder }}
+      </button>
+      <div
+        ngbDropdownMenu
+        class="mt-1 shadow-lg radius"
+        aria-labelledby="dropdownBasic1"
+      >
+    
+        <button
+          class="text-left btn"
+          ngbDropdownItem
+          *ngFor="let item of statusTitles"
+          (click)="getOrders(item.id, 1, filter)"
+        >
+          <strong>{{ item.title }}</strong>
+        </button>
+      </div>
+    </div>
+    
     
     <strong>محصول</strong>
     <!-- TableType -->
@@ -379,6 +380,12 @@ class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-sm
 placeholder="کد"
 [(ngModel)]="filterModel.code"
 />
+<span
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+*ngIf="filterHolder.code"
+(click)="filterModel.code = null;filterdata()"
+><span class="pi pi-times" style="font-size: 0.7rem"></span
+></span>
 <input
 type="text"
 class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
@@ -386,9 +393,9 @@ placeholder="نسخه لایسنس"
 [(ngModel)]="filterModel.versionNumber"
 />
 <span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.code"
-(click)="filterModel.code = null;filterdata()"
+class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
+*ngIf="filterHolder.versionNumber"
+(click)="filterModel.versionNumber = null;filterdata()"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 
@@ -1562,7 +1569,7 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
                 <option *ngIf="addPlans.length == 0">
                   <p class="text-small">لطفا اول محصول را انتخاب کنید</p>
                 </option>
-                <option *ngFor="let item of addPlans" value="{{ item.id }}">
+                <option  *ngFor="let item of addPlans" value="{{ item.id }}">
                   {{ item.title }}
                 </option>
               </select>

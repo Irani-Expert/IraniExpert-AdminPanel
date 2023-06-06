@@ -160,7 +160,7 @@ export class OrderComponent implements OnInit {
     private _planService: PlanService,
     private _decimalPipe: DecimalPipe
   ) {
-    this.page.pageNumber = 0;
+    this.page.pageNumber = 1;
     this.page.size = 6;
     setTimeout(() => {
       this.psContainerSecSidebar = this.psContainers.toArray()[1];
@@ -218,6 +218,7 @@ export class OrderComponent implements OnInit {
     this._productService
       .get(0, null, 'ID', null, 'Product')
       .subscribe((res) => {
+        
         this.productList = res.data.items;
         this.AddproductModel = res.data.items;
       });
@@ -228,8 +229,7 @@ export class OrderComponent implements OnInit {
   // }
   setPage(pageInfo: number, transactionStatus: any) {
     this.page.pageNumber = pageInfo;
-
-    this.getOrders(transactionStatus, pageInfo, this.filter);
+ this.getOrders(transactionStatus, pageInfo, this.filter);
   }
   changeHeaderValue() {
     if (this.headerValue != 'کد رهگیری') {
@@ -246,8 +246,9 @@ export class OrderComponent implements OnInit {
       this.dateValue = ' تاریخ ثبت به شمسی';
     }
   }
-
+  
   getOrders(status: any, pageNumber: number, filter: FilterModel) {
+    
     let finder = this.statusTitles.findIndex((item) => item.id == status);
     this.dropDownTitleHolder = this.statusTitles[finder].title;
     this.status = status;
@@ -255,9 +256,10 @@ export class OrderComponent implements OnInit {
       status = 8;
       filter.fromExpireDate = formatDate(new Date(), 'yyyy-MM-dd', 'en_US');
     }
+    
     this._orderService
       .getOrders(
-        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+        pageNumber-1,
         this.page.size,
         status,
         filter
@@ -286,8 +288,8 @@ export class OrderComponent implements OnInit {
             counter++;
           });
           this.page.totalElements = res.data.totalCount;
-          this.page.totalPages = res.data.totalPages - 1;
-          this.page.pageNumber = res.data.pageNumber + 1;
+          this.page.totalPages = res.data.totalPages;
+          this.page.pageNumber = res.data.pageNumber+1;
         },
         (_error) => {
           this.toastr.error(
@@ -788,7 +790,9 @@ export class OrderComponent implements OnInit {
             let PlanIndex = this.filters.findIndex((filter) => {
               return filter.label === 'پلن';
             });
-            this.sortDeletedPart('planID',PlanIndex)
+            // this.sortDeletedPart('planID',PlanIndex)
+            this.filter['planID'] = null;
+            
             this.plans=[]
             this.plans = res.data;
             if (res.data[0]) {
@@ -804,19 +808,20 @@ export class OrderComponent implements OnInit {
     }
   }
 
-    sortDeletedPart(id:string,tempIndex:number){
-
-      this.filters.splice(tempIndex, 1);
-    this.filter[id] = null;
-    let indexOfTheFilter = this.filters.findIndex(
-      (filter) => filter.isFilled == true
-    );
-    if (indexOfTheFilter == -1) {
-      this.filtered = false;
-    }
-    this.getOrders(this.status, this.page.pageNumber, this.filter);
+//     sortDeletedPart(id:string,tempIndex:number){
+// debugger
+//       this.filters.splice(tempIndex, 1);
+//     this.filter[id] = null;
+//     let indexOfTheFilter = this.filters.findIndex(
+//       (filter) => filter.isFilled == true
+//     );
+//     if (indexOfTheFilter == -1) {
+//       this.filtered = false;
+//     }
+    
+//     // this.getOrders(this.status, this.page.pageNumber, this.filter);
   
-    }
+//     }
 
   fillTheFiltersRow(filter: FilterModel) {
     this.filters = [];
@@ -1043,8 +1048,13 @@ export class OrderComponent implements OnInit {
     
     this.productTitle=productTitle
 this.filterModel.productID=productId
+if(productId==null){
+this.filterModel.planID=null
+}
 this.selectProduct(productId)
 
+this.filterModel.planID=null
+this.planTitle='همه'
 this.filterdata()
 }
   setPlan(planId:number,planTitle:string){
@@ -1107,7 +1117,7 @@ this.filterdata()
             this.TExpDate.day;
         }
         this.filteredItems(this.filterModel)
-        this.getOrders(this.status, this.page.pageNumber, this.filterModel);
+        this.getOrders(this.status, 1, this.filterModel);
         this.fillTheFiltersRow(this.filter);
         this.filtered = true;
       }

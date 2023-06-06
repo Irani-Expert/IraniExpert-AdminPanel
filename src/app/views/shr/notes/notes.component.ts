@@ -68,12 +68,12 @@ export class NotesComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal
   ) {
-    this.page.pageNumber = 0;
+    this.page.pageNumber = 1;
     this.page.size = 6;
   }
 
   ngOnInit(): void {
-    this.setPage(0, this.currentTableType);
+    this.setPage(1, this.currentTableType);
   }
   setPage(pageNumber: number, tableType: number) {
     this.page.pageNumber = pageNumber;
@@ -88,9 +88,8 @@ export class NotesComponent implements OnInit {
     });
     this._commentService
       .GetAllComment(
-        this.page.pageNumber !== 0
-          ? this.page.pageNumber - 1
-          : this.page.pageNumber,
+     
+        this.page.pageNumber-1,
         this.page.size,
         tableTypeId,
         this.filterModel
@@ -135,9 +134,7 @@ export class NotesComponent implements OnInit {
     this.filteredItems(this.filterModel )
     this._commentService
       .GetAllComment(
-        this.page.pageNumber !== 0
-          ? this.page.pageNumber - 1
-          : this.page.pageNumber,
+         0,
         this.page.size,
         this.currentTableType,
         this.filterModel

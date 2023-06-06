@@ -16,7 +16,6 @@ import { UsersService } from './users.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { RoleModel } from '../role-mangement/role.model';
 import { RoleService } from '../role-mangement/role.service';
-import { UserRoleModel } from '../user-role/user-role.model';
 import { UserRolesModel } from 'src/app/shared/models/userRoles';
 import { UserProfileService } from '../../dashboard/user-profile/user-profile.service';
 import { referralModel } from 'src/app/shared/models/referralModel';
@@ -26,6 +25,7 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { DatePipe } from '@angular/common';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 
 @Component({
   selector: 'app-user-mangement',
@@ -101,10 +101,11 @@ export class UserMangementComponent implements OnInit {
     private _formBuilder: FormBuilder,
     public _roleService: RoleService,
     private _userProfileSevice: UserProfileService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    private _auth :AuthenticateService
 
   ) {
-    this.page.pageNumber = 0;
+    this.page.pageNumber = 1;
     this.page.size = 8;
   }
 
@@ -134,6 +135,7 @@ export class UserMangementComponent implements OnInit {
     });
   }
   setPage(pageInfo: number) {
+
     this.page.pageNumber = pageInfo;
     this.getUsersList(this.page.pageNumber, this.page.size, this.roleIdSaver,null);
     this.getRoleListservice();
@@ -279,7 +281,8 @@ export class UserMangementComponent implements OnInit {
     this.roleKeeper = [];
   }
   updateRoleId() {
-    this._usersService.updateUserRole(this.roleModel).subscribe((data) => {
+    let userId=this._auth.currentUserValue.userID
+    this._usersService.updateUserRole(this.roleModel,userId).subscribe((data) => {
       if (data.success) {
         this.roleKeeper = [];
         this.setPage(this.page.pageNumber);
@@ -351,7 +354,8 @@ export class UserMangementComponent implements OnInit {
   changeUserParentValue(e: string) {
     this.userParentToSend.newReferralCode = e;
   }
-  getUsersList(pageNumber:any, pageSize:number, roleIdSaver:number,userType:string){
+  getUsersList(pageNumber:number, pageSize:number, roleIdSaver:number,userType:string){
+    pageNumber=pageNumber-1
     if(userType!=null){
       this.userType=userType
     }
@@ -365,6 +369,7 @@ export class UserMangementComponent implements OnInit {
       .locale('fa')
       .format('YYYY/MM/DD');
     })
+    
     this.page.totalElements=data['data'].totalCount
     
     });
@@ -389,7 +394,7 @@ export class UserMangementComponent implements OnInit {
                       closeButton: true,
                       positionClass: 'toast-top-left',
                     });
-                    this.updateRoleId()
+                    // this.updateRoleId()
          }
          else{
           this.toastr.warning(data.message, null, {
@@ -425,6 +430,8 @@ export class UserMangementComponent implements OnInit {
       this.stateOfChevron === 'default' ? 'rotated' : 'default';
   }
   startFilter(){
+    this.page.pageNumber=1
+    debugger
     if(this.ToSignUpDate!=null){
     this.filterData.ToSignUpDate=  this.ToSignUpDate['year']  +
     '-' +

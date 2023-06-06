@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { DashboadDefaultComponent } from './dashboad-default/dashboad-default.component';
-import { ReferralUserComponent } from './referral-user/referral-user.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NotFoundComponent } from '../session/not-found/not-found.component';
 
@@ -17,11 +16,7 @@ const routes: Routes = [
     component: UserProfileComponent,
     canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'referral-user',
-  //   component: ReferralUserComponent,
-  //   canActivate: [AuthGuard]
-  // },
+
 ];
 
 @NgModule({

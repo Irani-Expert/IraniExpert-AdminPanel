@@ -12,7 +12,6 @@ import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
 import { UserCountModel } from '../../dashboard/dashboad-default/userInfo.model';
 import { RoleModel } from '../role-mangement/role.model';
-import { UserRoleModel } from '../user-role/user-role.model';
 import { UsersModel } from './users.model';
 import { UpdatePasswordModel } from '../../dashboard/user-profile/updatePassword.model';
 
@@ -76,7 +75,8 @@ export class UsersService extends BaseService<UsersModel, 0> {
     );
   }
   updateUserRole(
-    roles: UserRolesModel[]
+    roles: UserRolesModel[],
+    authorID:number
   ): Observable<Result<UserRolesModel[]>> {
     let _options = {
       headers: new HttpHeaders({
@@ -89,7 +89,7 @@ export class UsersService extends BaseService<UsersModel, 0> {
       }),
     };
     return this._http.post<Result<UserRolesModel[]>>(
-      environment.api.baseUrl + '/AspNetUserRole/AddUpdateUserRoles',
+      environment.api.baseUrl + '/AspNetUserRole/AddUpdateUserRoles/?authorID='+authorID,
       roles,
       _options
     );

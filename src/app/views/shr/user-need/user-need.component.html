@@ -5,30 +5,7 @@
   (click)="updateNotebar()"
 ></div>
 
-<div ngbDropdown placement="bottom-end" class="d-inline-block m-1 mb-3">
-  <button
-    type="button"
-    class="btn btn-details radius py-btns text-small"
-    id="dropdownBasic1"
-    ngbDropdownToggle
-  >
-    درخواست: {{ dropDownTitleHolder }}
-  </button>
-  <div
-    ngbDropdownMenu
-    class="mt-1 shadow-lg radius"
-    aria-labelledby="dropdownBasic1"
-  >
-    <button
-      class="text-left btn"
-      ngbDropdownItem
-      *ngFor="let item of statusTitles"
-      (click)="getUserNeedByUserWant(item.id, 0)"
-    >
-      <strong>{{ item.title }}</strong>
-    </button>
-  </div>
-</div>
+
 <!-- <button
   class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
   (click)="openFilterModal(filterModal)"
@@ -43,6 +20,30 @@
       ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
       &nbsp; : &nbsp;</strong
     >
+    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 ">
+      <button
+        type="button"
+        class="btn btn-details radius py-btns text-small"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        درخواست: {{ dropDownTitleHolder }}
+      </button>
+      <div
+        ngbDropdownMenu
+        class="mt-1 shadow-lg radius"
+        aria-labelledby="dropdownBasic1"
+      >
+        <button
+          class="text-left btn"
+          ngbDropdownItem
+          *ngFor="let item of statusTitles"
+          (click)="getUserNeedByUserWant(item.id, 0)"
+        >
+          <strong>{{ item.title }}</strong>
+        </button>
+      </div>
+    </div>
 
     <!-- TableType -->
 

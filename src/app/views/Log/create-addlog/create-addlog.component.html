@@ -116,7 +116,11 @@
                 "
                 class="btn-details card text-white position-relative d-flex justify-content-center m-1 align-items-center"
               >
-              <div>{{node.nodeCount}}</div>
+              <div            		ngbTooltip="تعداد ثبت شده"
+              container="body"
+              [openDelay]="50"
+              [closeDelay]="150"
+              >{{node.nodeCount}}</div>
                 </span>
                </div>
           </div>
@@ -145,7 +149,7 @@
 
 <ng-template #changeParentModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">ایا از حذف نقش مطمئنید؟</h4>
+    <h4 class="modal-title" id="modal-title">ایا از حذف فعالیت مطمئنید؟</h4>
     <button
       type="button"
       class="close"
