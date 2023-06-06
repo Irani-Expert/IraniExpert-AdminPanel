@@ -1,0 +1,21 @@
+<div class="radius bg-gray radius shadow mt-3 p-2">
+  <audio
+    class="w-100 radius pt-3"
+    controls
+    muted
+    loop
+    [src]="filePreview"
+    style="border-bottom-left-radius: 0; border-bottom-right-radius: 0"
+  ></audio>
+  <div
+    class="bg-gray radius p-2 d-flex flex-column flex-wrap"
+    style="border-top-left-radius: 0; border-top-right-radius: 0"
+  >
+    <span class="font-size-name mb-1 text-white">
+      {{ fileName }}
+    </span>
+    <span class="font-size-name my-1 text-white">
+      {{ file.size | fileSize }}
+    </span>
+  </div>
+</div>

@@ -1,8 +1,9 @@
 <section class="position-relative">
   <div class="position-absolute" style="left: 0; top: 20">
     <button
+      *ngIf="steppedForward"
       (click)="perviousSession()"
-      [disabled]="sessionIndetiftier == 1"
+      [disabled]="sessionIdentiftier == 1"
       type="button"
       class="close bg-light rounded-circle"
       aria-label="Close"
@@ -17,8 +18,9 @@
   </div>
   <div class="position-absolute" style="right: 0; top: 20">
     <button
-      (click)="nextSession()"
-      [disabled]="sessionIndetiftier == 3"
+      *ngIf="steppedBack"
+      (click)="nextSession(null)"
+      [disabled]="sessionIdentiftier == 3"
       type="button"
       class="close bg-light rounded-circle"
     >
@@ -28,49 +30,240 @@
     </button>
   </div>
   <div
-    *ngIf="sessionIndetiftier == 1"
-    class="d-flex flex-row p-5 flex-wrap justify-content-center align-items-center"
+    @slideInOut
+    *ngIf="sessionIdentiftier == 1"
+    class="d-flex flex-row px-4 py-2 flex-wrap justify-content-center align-items-center"
   >
-    <div
-      class="card cursor-pointer radius shadow-sm flex-grow-0 p-4 m-4 align-self-center select-type--card"
-    >
-      <span class="icon-color pi pi-video text-center icon-size"></span>
-      <span class="text-center mt-2"><strong>ویدئو</strong></span>
+    <div class="w-100 text-center mb-4">
+      <strong class="font-size-sessions">
+        {{ session[0].title }}
+      </strong>
     </div>
-    <div
-      class="card cursor-pointer radius shadow-sm flex-grow-0 p-4 m-4 align-self-center select-type--card"
-    >
-      <span class="icon-color pi pi-image text-center icon-size"></span>
-      <span class="text-center mt-2"><strong>عکس</strong></span>
-    </div>
-    <div
-      class="card cursor-pointer radius shadow-sm flex-grow-0 p-4 m-4 align-self-center select-type--card"
-    >
-      <span class="icon-color pi pi-microphone text-center icon-size"></span>
-      <span class="text-center mt-2"><strong>صوت</strong></span>
-    </div>
+    <ng-container *ngFor="let type of types; let i = index">
+      <div
+        [ngClass]="{ 'selected-type-marker': selectedTypeIdentifier == i }"
+        (click)="nextSession(i)"
+        [disabled]="type.id == 2"
+        class="position-relative card cursor-pointer radius shadow-sm flex-grow-0 p-4 m-lg-4 m-2 m-sm-3 align-self-center select-type--card"
+      >
+        <span
+          *ngIf="selectedTypeIdentifier == i"
+          class="position-absolute"
+          style="
+            border-radius: 50%;
+            right: 7px;
+            top: 7px;
+            width: 15px;
+            display: inline-flex;
+            height: 15px;
+            background: #175974;
+          "
+        ></span>
+        <span
+          class="icon-color pi text-center icon-size"
+          [ngClass]="{
+            ' pi-image': type.id == 0,
+            'pi-video': type.id == 1,
+            'pi-book': type.id == 2,
+            ' pi-microphone': type.id == 3
+          }"
+        ></span>
+        <span class="text-center mt-2"
+          ><strong>{{ type.title }}</strong></span
+        >
+      </div>
+    </ng-container>
   </div>
   <div
-    *ngIf="sessionIndetiftier == 2"
-    class="d-flex flex-column p-5 flex-wrap justify-content-center align-items-center"
+    @slideInOut2
+    *ngIf="sessionIdentiftier == 2"
+    class="d-flex flex-column py-2 flex-wrap justify-content-center align-items-center"
   >
-    <label
-      for="images"
-      class="drop-container shadow-sm"
-      [ngClass]="{ 'file-over': this.fileOver == true }"
+    <div class="w-100 text-center mb-4">
+      <strong class="font-size-sessions">
+        {{ session[1].title }}
+      </strong>
+    </div>
+
+    <input
+      type="file"
+      class="text-small"
+      id="files"
+      (change)="
+        this.isFileValid = changeFilePath($event, selectedTypeIdentifier)
+      "
+    />
+    <div
+      class="d-flex flex-row flex-wrap justify-content-around align-items-center col-10 col-lg-4 col-md-8"
     >
-      <span class="drop-title">فایل را اینجا بیاندازید</span>
-      یا
-      <span class="text-small d-inline-flex"
-        >انتخاب کنید&nbsp;&nbsp;<span
-          class="pi pi-arrow-down align-self-center"
-          style="font-size: 0.6rem"
-        ></span
-      ></span>
-      <input type="file" class="text-small" id="images" />
-    </label>
-    <!-- <div class="">
-      <img [src]="this.fileHolder" alt="" />
-    </div> -->
+      <button
+        [disabled]="!isFileValid"
+        *ngIf="progress == 0"
+        class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
+        (click)="uploadVoice()"
+      >
+        <i class="i-Upload text-dark text-bigger mr-3"></i>
+        <strong class="text-small">آپلود</strong>
+      </button>
+      <div
+        *ngIf="progress > 0 && progress < 100"
+        class="progress bg-progress-container radius-progress m-2 flex-grow-1"
+        style="height: 32px"
+      >
+        <div
+          class="progress-bar bg-progressbar radius-progress pl-1"
+          [style.width]="progress + '%'"
+        >
+          {{ progress }}%
+        </div>
+      </div>
+
+      <!-- <div *ngIf="progress == undefined" class="">
+        <button
+          class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
+        >
+          <i class="i-Eye text-dark text-bigger mr-3"></i>
+          <strong class="text-small">نمایش</strong>
+        </button>
+        <button
+          class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
+        >
+          <i class="i-Close text-dark text-bigger mr-3"></i>
+          <strong class="text-small">حذف</strong>
+        </button>
+      </div> -->
+    </div>
+    <div class="col-8 col-md-6 col-lg-5" *ngIf="selectedTypeIdentifier == 0">
+      <image-cropper
+        [maintainAspectRatio]="false"
+        [resizeToWidth]="1280"
+        [imageChangedEvent]="imgChangeEvt"
+        format="webp"
+        (imageCropped)="cropImg($event)"
+      >
+      </image-cropper>
+    </div>
+    <div
+      class="col-11 col-md-8 col-lg-7"
+      *ngIf="selectedTypeIdentifier == 1 && fileChoosed"
+    >
+      <app-video-player
+        class="w-100"
+        [fileName]="fileName"
+        [file]="file"
+        [filePreview]="filePreview"
+      ></app-video-player>
+    </div>
+    <div
+      class="col-11 col-md-8 col-lg-7"
+      *ngIf="selectedTypeIdentifier == 3 && fileChoosed"
+    >
+      <app-audio-player
+        class="w-100"
+        [fileName]="fileName"
+        [file]="file"
+        [filePreview]="filePreview"
+      ></app-audio-player>
+    </div>
+    <div
+      class="col-11 col-md-6 col-lg-4 mt-3"
+      *ngIf="selectedTypeIdentifier == 2 && fileChoosed"
+    >
+      <div class="d-flex flex-row bg-white py-1 radius shadow border">
+        <div class="d-flex flex-column flex-grow-1 custom-border text-small">
+          <strong class="mb-2 px-2 py-1">عنوان</strong>
+          <hr class="my-1 text-dark w-100" />
+          <span class="px-2 py-1">{{ fileName }}</span>
+        </div>
+        <div class="d-flex flex-column flex-grow-0 text-small">
+          <strong class="mb-2 px-2 py-1">حجم فایل</strong>
+          <hr class="my-1 text-dark w-100" />
+          <span class="px-2 py-1">{{ file.size | fileSize }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div @slideInOut3 *ngIf="sessionIdentiftier == 3" class="px-5 py-2">
+    <div class="w-100 text-center mb-4">
+      <strong class="font-size-sessions">
+        {{ session[2].title }}
+      </strong>
+    </div>
+    <div class="card radius p-4 shadow">
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-4 col-10 col-sm-9 col-md-6 align-self-center">
+          <img
+            *ngIf="selectedTypeIdentifier == 0"
+            class="img-fluid align-self-center"
+            [src]="
+              filePreview == ''
+                ? '../../../../assets/images/photo-long-1.jpg'
+                : filePreview
+            "
+            alt="{{ filePreview }}"
+          />
+          <app-video-player
+            class="w-100 align-self-center"
+            *ngIf="selectedTypeIdentifier == 1"
+            [fileName]="fileName"
+            [file]="file"
+            [filePreview]="filePreview"
+          ></app-video-player
+          >.
+          <span
+            *ngIf="selectedTypeIdentifier == 2 || selectedTypeIdentifier == 3"
+            class="w-100 align-self-center"
+          >
+            <span
+              class="pi icon-color text-md-left text-center d-block"
+              [ngClass]="{
+                'pi-book': selectedTypeIdentifier == 2,
+                'pi-microphone': selectedTypeIdentifier == 3
+              }"
+              style="font-size: 4rem"
+            ></span>
+            <span class="d-block mt-1 px-1 py-2 bg-gray radius"
+              ><span class="text-bigger text-white">{{ fileName }}</span></span
+            >
+          </span>
+          <div class="d-inline-block">
+            <button
+              (click)="deleteFile()"
+              class="btn-delete btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
+            >
+              <i class="i-Close text-dark text-bigger mr-3"></i>
+              <strong class="text-small">حذف</strong>
+            </button>
+          </div>
+        </div>
+
+        <form [formGroup]="addForm" class="col-8">
+          <div
+            class="d-flex flex-row flex-wrap justify-content-start align-items-center"
+          >
+            <div class="d-flex flex-column flex-grow-0 m-4 flex">
+              <label for="title" class="text-small">عنوان</label>
+              <input
+                formControlName="title"
+                type="text"
+                id="title"
+                placeholder=""
+                class="form-control form-inputs radius text-small"
+              />
+            </div>
+            <div class="d-flex flex-column flex-grow-0 m-4">
+              <label for="description" class="text-small">توضیح مختصر</label>
+              <input
+                formControlName="description"
+                type="text"
+                id="description"
+                placeholder=""
+                class="form-control form-inputs radius text-small"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </section>

@@ -87,6 +87,7 @@ export class AddUpdateComponent implements OnInit {
       isActive: [null],
       description: [null, Validators.required],
       publishDate: [null],
+      isRTL: [null],
     });
   }
 

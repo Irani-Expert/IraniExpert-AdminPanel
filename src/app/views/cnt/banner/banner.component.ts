@@ -64,6 +64,7 @@ export class BannerComponent implements OnInit {
       filePath: [null],
       fileInfo: [null],
       rowID: [null],
+      isRTL:[null],
       orderID: [null, Validators.compose([Validators.required])],
     });
   }
