@@ -34,7 +34,10 @@
                   [alt]="addUpdate.title"
                 />
               </div>
-              <div class="col-md-6 col-5" *appCanAccess="'ArticleT-Edit'">
+              <div
+                class="col-md-6 col-5"
+                *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']"
+              >
                 <button
                   class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
                   (click)="deleteImg(addUpdate.cardImagePath)"
@@ -117,7 +120,10 @@
               </label>
             </div>
             <ng-container *ngIf="!addUpdate.fileExists">
-              <div class="col-md-7 mt-4">
+              <div
+                class="col-md-7 mt-4"
+                *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']"
+              >
                 <label class="d-block" for="picker1">انتخاب تصویر</label>
                 <input type="file" (change)="onFileChanged($event)" />
                 <div>
@@ -137,7 +143,10 @@
                   <img [src]="cropImagePreview" alt="" />
                 </div>
               </div>
-              <div class="col-12 mt-1 mb-2">
+              <div
+                class="col-12 mt-1 mb-2"
+                *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']"
+              >
                 <button
                   type="button"
                   [disabled]="!cropImagePreview"
@@ -185,7 +194,6 @@
             </div>
           </div>
           <div class="row">
-            <!-- *appCanAccess="'punisher' || 'hoas'" -->
             <ng-container *appCanAccess="'ArticleT-Edit'">
               <button
                 type="button"

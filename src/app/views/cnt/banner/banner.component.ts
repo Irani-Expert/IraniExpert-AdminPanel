@@ -64,7 +64,7 @@ export class BannerComponent implements OnInit {
       filePath: [null],
       fileInfo: [null],
       rowID: [null],
-      isRTL:[null],
+      isRTL: [null],
       orderID: [null, Validators.compose([Validators.required])],
     });
   }
@@ -199,7 +199,6 @@ export class BannerComponent implements OnInit {
     }
     this.filePathKeeper = row.filePath;
     this.addUpdate = row;
-    console.log(this.addUpdate.filePath);
     // /this.addUpdate.filePath=row.filePath.substring(row.filePath.indexOf('com/')+4)
     this.modalService
       .open(content, {
@@ -246,8 +245,6 @@ export class BannerComponent implements OnInit {
           }
         },
         (reason) => {
-          console.log(this.addUpdate.filePath);
-
           this.onFileChanged(null);
           this.cropImagePreview = null;
         }

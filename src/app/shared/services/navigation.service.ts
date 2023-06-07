@@ -175,7 +175,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Landscape',
       state: '/cnt/banner',
-      privilege: 'Banner-Full Premission',
+      privilege: 'Banners-Watch',
     },
     {
       name: 'مقالات',

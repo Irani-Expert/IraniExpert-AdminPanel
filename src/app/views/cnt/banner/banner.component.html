@@ -1,5 +1,5 @@
 <button
-  *appCanAccess="'Banner-Add'"
+  *appCanAccess="'Banners-Add'"
   type="button"
   class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   (click)="addorEdit(addUpdateModal, undefined)"
@@ -53,16 +53,16 @@
         <td *ngIf="item.isActive">فعال</td>
         <td class="td-oprate">
           <button
-            *appCanAccess="'Banner-Edit'"
+            *appCanAccess="'SingleBanners-Watch'"
             class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
             (click)="addorEdit(addUpdateModal, item)"
           >
-            <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
+            <i class="i-Pen-5 text-bigger mr-2"></i><strong>جزئیات</strong>
           </button>
 
           <button
             class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
-            *appCanAccess="'Banner-Delete'"
+            *appCanAccess="'Banners-Delete'"
             (click)="deleteModal(item, 0, deleteConfirmModal)"
           >
             <i class="i-Close text-bigger mr-2"></i>
@@ -177,6 +177,7 @@
         <div class="col-md-8 form-group mb-3">
           <label for="description">توضیحات</label>
           <textarea
+            *appCanAccess="'Banners-Edit'"
             formControlName="description"
             name=""
             rows="1"
@@ -319,6 +320,7 @@
               </div>
               <div class="col-md-6 col-5">
                 <button
+                  *appCanAccess="['Banners-Edit', 'Banners-Add']"
                   class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
                   (click)="deleteModal(addUpdate, 1, deleteConfirmModal)"
                 >
@@ -349,6 +351,7 @@
               </div>
               <div class="col-12 mt-2">
                 <button
+                  *appCanAccess="['Banners-Edit', 'Banners-Add']"
                   class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
                   [disabled]="!cropImagePreview"
                   (click)="uploadFile()"
@@ -387,7 +390,10 @@
         </div>
 
         <!-- isActive -->
-        <div class="col-md-6 form-group mb-3 mt-1">
+        <div
+          class="col-md-6 form-group mb-3 mt-1"
+          *appCanAccess="['Banners-Edit', 'Banners-Add']"
+        >
           <label class="m-1">نمایش</label>
           <label class="switch switch-primary mr-2 m-2">
             <span>عدم نمایش</span>
@@ -403,27 +409,32 @@
       </div>
     </form>
   </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
-      (click)="modal.close(true)"
-      *ngIf="addUpdate.id !== 0"
-    >
-      <!-- [disabled]="!addForm.valid"
-    [disabled]="!addForm.valid" -->
-      <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
-    </button>
-    <button
-      type="button"
-      class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
-      (click)="modal.close(true)"
-      *ngIf="addUpdate.id === 0"
-      [disabled]="!addForm.valid"
-    >
-      <i class="i-Add text-bigger mr-2"></i>
-      <strong>ایجاد</strong>
-    </button>
+  <div class="modal-footer" *appCanAccess="['Banners-Edit', 'Banners-Add']">
+    <ng-container *appCanAccess="'Banners-Edit'">
+      <button
+        type="button"
+        class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+        (click)="modal.close(true)"
+        *ngIf="addUpdate.id !== 0"
+      >
+        <!-- [disabled]="!addForm.valid"
+        [disabled]="!addForm.valid" -->
+        <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
+      </button>
+    </ng-container>
+
+    <ng-container *appCanAccess="'Banners-Add'">
+      <button
+        type="button"
+        class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
+        (click)="modal.close(true)"
+        *ngIf="addUpdate.id === 0"
+        [disabled]="!addForm.valid"
+      >
+        <i class="i-Add text-bigger mr-2"></i>
+        <strong>ایجاد</strong>
+      </button>
+    </ng-container>
   </div>
 </ng-template>
 

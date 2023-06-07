@@ -30,7 +30,10 @@
             </div>
           </ng-container>
           <ng-container *ngIf="!addUpdate.fileExists">
-            <div class="col-md-7 mt-4">
+            <div
+              class="col-md-7 mt-4"
+              *appCanAccess="['ProductT-Edit', 'ProductT-Add']"
+            >
               <label class="d-block" for="picker1">انتخاب تصویر</label>
               <input class="" type="file" (change)="onFileChanged($event)" />
               <div>
@@ -181,7 +184,7 @@
             <strong>ویرایش</strong>
           </button>
         </ng-container>
-        <ng-container *appCanAccess="'ProdcutT-Add'">
+        <ng-container *appCanAccess="'ProductT-Add'">
           <button
             type="button"
             class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
