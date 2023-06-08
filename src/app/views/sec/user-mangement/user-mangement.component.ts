@@ -69,7 +69,7 @@ export class UserMangementComponent implements OnInit {
     newReferralCode: string;
   };
   roles: RoleModel[] = new Array<RoleModel>();
-
+  addRole: RoleModel[] = new Array<RoleModel>();
   ToSignUpDate:string;
   fromSignUpDate:string;
   filterHolder: UsersModel=new UsersModel;
@@ -143,6 +143,7 @@ export class UserMangementComponent implements OnInit {
   }
  
   usersEdit(content: any, row: UsersModel,userID:number) {
+
     this.userParent.firstname = '';
     this.userParent.lastName = '';
     this.roleKeeper=row.roles
@@ -280,10 +281,19 @@ export class UserMangementComponent implements OnInit {
   onDeSelectAll(_item: any) {
     this.roleKeeper = [];
   }
-  updateRoleId() {
+  updateRoleId(dataChange:number) {
+
     let userId=this._auth.currentUserValue.userID
     this._usersService.updateUserRole(this.roleModel,userId).subscribe((data) => {
       if (data.success) {
+        var counter=0;
+        
+        this.roleKeeper.forEach((x) => {
+         this.addRole[counter].title= x.value;
+          this.addRole[counter].id = x.item_id;
+          counter += 1;
+        });       
+         this.rows[dataChange].roles=this.addRole
         this.roleKeeper = [];
         this.setPage(this.page.pageNumber);
 
@@ -363,6 +373,7 @@ export class UserMangementComponent implements OnInit {
     this.roleKeeper = [];
     this._usersService.getUserByFilter(pageNumber,pageSize,this.filterData,null,roleIdSaver).subscribe((data) => {
     this.rows=[]
+    debugger
       this.rows=data['data'].items
     this.rows.forEach(date=>{
       date.persianSignUpDate= moment(date.signUpDate, 'YYYY/MM/DD')
@@ -384,6 +395,8 @@ export class UserMangementComponent implements OnInit {
       this.roleModel[counter].roleId = x.item_id;
       counter += 1;
     });
+  // this.rows[finder].roles=this.roleModel
+    debugger
     this._userProfileSevice
       .updateUserbyAspnet(userID,this.addUpdate)
       .subscribe((data) => {
@@ -394,8 +407,8 @@ export class UserMangementComponent implements OnInit {
                       closeButton: true,
                       positionClass: 'toast-top-left',
                     });
-                    // this.updateRoleId()
-         }
+                    this.updateRoleId(finder)
+                  }
          else{
           this.toastr.warning(data.message, null, {
             closeButton: true,

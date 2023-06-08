@@ -38,6 +38,7 @@ export class PlanComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    debugger
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       title: [
@@ -196,8 +197,10 @@ export class PlanComponent implements OnInit {
 
         .subscribe(
           (data) => {
+            
             if (data.success) {
-              this.rows.push(row)
+              
+              this.rows
               this.toastr.success(data.message, null, {
                 closeButton: true,
                 positionClass: 'toast-top-left',
@@ -213,6 +216,7 @@ export class PlanComponent implements OnInit {
           }
         );
     } else {
+      debugger
       await this._planService
         .update(row.id, row, 'plan')
         .subscribe(
@@ -245,6 +249,7 @@ export class PlanComponent implements OnInit {
   }
 
   openPlanOptionModal(item: PlanOptionModel, planId: number) {
+   
     const modalRef = this.modalService.open(PlanOptionComponent, {
       size: 'md',
       ariaLabelledBy: 'modal-basic-title',
@@ -256,17 +261,25 @@ export class PlanComponent implements OnInit {
       item.planID = planId;
       item.id = 0;
     }
+    
     modalRef.componentInstance.addUpdate = item;
+
+
     modalRef.result.then(
       (result: boolean) => {
+   
         if (result != undefined) {
           this.addOrUpdate(this.addUpdate);
           this.addForm.reset();
+          this.rows=[]
+          this.setPage(this.page.pageNumber);
         }
       },
       (reason) => {
         console.log('Err!', reason);
         this.addForm.reset();
+        this.rows=[]
+        this.setPage(this.page.pageNumber);
       }
     );
     this.getPlanListByProductId();

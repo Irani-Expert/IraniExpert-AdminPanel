@@ -90,11 +90,14 @@ export class GalleryComponent implements OnInit {
 
       .subscribe((data) => {
         if (data.success) {
+          this.getFileByProductId(this.productId, 6);
+
+          
           this.toastr.success(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
-          this.rows.unshift(row);
+          // this.rows.unshift(row);
         } else {
           this.toastr.error(data.message, null, {
             closeButton: true,

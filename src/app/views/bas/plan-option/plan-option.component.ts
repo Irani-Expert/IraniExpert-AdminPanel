@@ -64,6 +64,7 @@ export class PlanOptionComponent implements OnInit {
         .subscribe(
           (data) => {
             if (data.success) {
+              
               this.toastr.success(data.message, null, {
                 closeButton: true,
                 positionClass: 'toast-top-left',

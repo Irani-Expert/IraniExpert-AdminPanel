@@ -125,6 +125,8 @@ export class FAQComponent implements OnInit {
     if(this.addUpdate.id===0){
       await this._FaqService.create(this.addUpdate,"FAQ").subscribe(data => {
         if (data.success) {
+          
+          this.setPage(0);
           this.toastr.success(data.message, null,
             {
               closeButton: true,

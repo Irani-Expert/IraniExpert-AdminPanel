@@ -256,7 +256,7 @@ export class OrderComponent implements OnInit {
       status = 8;
       filter.fromExpireDate = formatDate(new Date(), 'yyyy-MM-dd', 'en_US');
     }
-    
+    debugger
     this._orderService
       .getOrders(
         pageNumber-1,
@@ -992,6 +992,7 @@ export class OrderComponent implements OnInit {
               this.AddOrderForm.reset();
               this.userInfo = new UsersModel();
               if (res.success) {
+                this.setPage(1, 2);
                 this.callOrder();
 
                 this.toastr.success(res.message, null, {

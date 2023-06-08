@@ -187,6 +187,8 @@ export class BannerComponent implements OnInit {
     });
   }
   addorEdit(content: any, row: BannerModel) {
+    this.addForm.reset();
+
     this.imageFound = true;
     if (row === undefined) {
       row = new BannerModel();
@@ -261,7 +263,6 @@ export class BannerComponent implements OnInit {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
-          this.addForm.reset();
           this.onFileChanged(null);
           this.cropImagePreview = null;
           this.getBannerList(this.page.pageNumber, this.page.size);

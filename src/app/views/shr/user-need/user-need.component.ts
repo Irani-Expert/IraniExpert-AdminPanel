@@ -294,8 +294,9 @@ this.startFilter()
   getNoteList(rowID: number) {
     this.notes = new Array<CommentModel>();
     this._commentService
-      .GetByTableTypeAndRowId(0, 20, rowID, 10)
+      .GetByTableTypeAndRowId(0, 20, rowID, 8)
       .subscribe((res: Result<Paginate<CommentModel[]>>) => {
+        debugger
         this.notes = res.data.items;
         var counter = 0;
         this.notes.forEach((_x) => {

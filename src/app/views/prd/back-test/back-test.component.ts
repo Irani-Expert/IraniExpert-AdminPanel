@@ -69,6 +69,7 @@ export class BackTestComponent implements OnInit {
       )
       .subscribe(
         (res: Result<BackTestModel[]>) => {
+          debugger
           this.rows = res.data;
           //  this.page.totalElements = res.data.length;
         },
@@ -203,6 +204,7 @@ export class BackTestComponent implements OnInit {
         .subscribe(
           (data) => {
             if (data.success) {
+              this.rows.push(row)
               this.toastr.success(data.message, null, {
                 closeButton: true,
                 positionClass: 'toast-top-left',
@@ -220,6 +222,10 @@ export class BackTestComponent implements OnInit {
         .update(row.id, row, 'BackTest')
         .subscribe(
           (data) => {
+            var index=this.rows.findIndex(x=>x.id==row.id)
+            if(index!=-1){
+              this.rows[index]=row
+            }
             if (data.success) {
               this.toastr.success(data.message, null, {
                 closeButton: true,

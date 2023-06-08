@@ -31,7 +31,7 @@
       class="text-left btn"
       ngbDropdownItem
       *ngFor="let item of statusTitles"
-      (click)="getOrders(item.id, 0, filter)"
+      (click)="getOrders(item.id, 1, filter)"
     >
       <strong>{{ item.title }}</strong>
     </button>
