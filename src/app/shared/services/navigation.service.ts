@@ -65,7 +65,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Administrator',
       state: '/dashboard/user-profile',
-      privilege: 'Dashboard-Full Premission',
+      privilege: 'UserProfile-Full',
     },
     {
       name: 'مشتریان من',
@@ -90,7 +90,7 @@ export class NavigationService {
       navType: '',
       icon: '',
       state: '/prd/addUpdate/:productId',
-      privilege: 'Product-Edit',
+      privilege: 'SingleProduct-Watch',
     },
     {
       name: '*',
@@ -98,7 +98,7 @@ export class NavigationService {
       navType: '',
       icon: '',
       state: '/prd/addUpdate',
-      privilege: 'Product-Add',
+      privilege: 'ProductT-Add',
     },
     {
       name: '*',
@@ -106,7 +106,7 @@ export class NavigationService {
       navType: '',
       icon: '',
       state: '/cnt/article/addUpdate-article/:articleId',
-      privilege: 'Article-Edit',
+      privilege: 'ArticleSingleT-Watch',
     },
     {
       name: '*',
@@ -114,7 +114,7 @@ export class NavigationService {
       navType: '',
       icon: '',
       state: '/cnt/article/addUpdate-article',
-      privilege: 'Article-Add',
+      privilege: 'ArticleT-Add',
     },
 
     // {
@@ -158,7 +158,7 @@ export class NavigationService {
       name: 'سفارشات',
       navType: 'link',
       icon: 'i-Library',
-      privilege: 'Orders-Full Premission',
+      privilege: 'Orders-Watch',
       state: '/bsk/orders',
     },
 
@@ -167,7 +167,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Checkout-Basket',
       state: '/prd/products-list',
-      privilege: 'Product-Full Premission',
+      privilege: 'ProductT-Watch',
     },
 
     {
@@ -175,14 +175,14 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Landscape',
       state: '/cnt/banner',
-      privilege: 'Banner-Full Premission',
+      privilege: 'Banners-Watch',
     },
     {
       name: 'مقالات',
       navType: 'link',
       icon: 'i-File-Edit',
       state: '/cnt/article',
-      privilege: 'Article-Full Premission',
+      privilege: 'ArticleT-Watch',
     },
     {
       name: 'آپلود سنتر',
@@ -211,7 +211,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Clock-Forward',
       state: '/log-info',
-      privilege: 'Log-Full Premission',
+      privilege: 'Logs-Watch',
     },
     {
       name: 'تقویم اقتصادی',

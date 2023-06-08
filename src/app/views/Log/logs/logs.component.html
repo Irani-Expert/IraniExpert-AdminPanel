@@ -1,16 +1,16 @@
-<ul ngbNav #nav="ngbNav" class="nav-tabs p-0" >
-  <li ngbNavItem                  *appCanAccess="'Log-Watch'"   > 
+<ul ngbNav #nav="ngbNav" class="nav-tabs p-0">
+  <li ngbNavItem *appCanAccess="'Logs-Watch'">
     <a ngbNavLink>نمایش</a>
 
     <ng-template ngbNavContent>
       <app-show-logs></app-show-logs>
     </ng-template>
   </li>
-  <li ngbNavItem  *appCanAccess="'Log-Edit'">
+  <li ngbNavItem *appCanAccess="'LogsMain-Watch'">
     <a ngbNavLink>تنظیمات</a>
-      <ng-template ngbNavContent>
-        <app-create-addlog></app-create-addlog>
-      </ng-template>
+    <ng-template ngbNavContent>
+      <app-create-addlog></app-create-addlog>
+    </ng-template>
   </li>
 </ul>
 <div [ngbNavOutlet]="nav"></div>

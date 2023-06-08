@@ -67,7 +67,7 @@
         />
       </div> -->
       <!-- Order ID  -->
-      <div class="col-md-4 form-group mb-3">
+      <div class="col-md-4 form-group mb-3" *appCanAccess="'ProductT-Edit'">
         <label for="orderID">اولویت را مشخص کنید</label>
         <select
           [formControl]="addForm.controls['orderID']"
@@ -91,7 +91,10 @@
         >
       </div>
       <!-- isActive -->
-      <div class="form-group col-md-8 mb-3 mt-3 text-center">
+      <div
+        class="form-group col-md-8 mb-3 mt-3 text-center"
+        *appCanAccess="'ProductT-Edit'"
+      >
         <label class="m-2">فعال</label>
         <label class="switch switch-primary mr-2 m-2">
           <input
@@ -107,7 +110,7 @@
     </form>
   </div>
 
-  <div class="modal-footer">
+  <div class="modal-footer" *appCanAccess="'ProductT-Edit'">
     <button
       (click)="close()"
       type="button"

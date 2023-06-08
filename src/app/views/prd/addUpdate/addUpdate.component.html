@@ -21,6 +21,7 @@
             </div>
             <div class="col-md-6 col-5">
               <button
+                *appCanAccess="'ProductT-Edit'"
                 class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
                 (click)="deleteImg(addUpdate.cardImagePath)"
               >
@@ -29,7 +30,10 @@
             </div>
           </ng-container>
           <ng-container *ngIf="!addUpdate.fileExists">
-            <div class="col-md-7 mt-4">
+            <div
+              class="col-md-7 mt-4"
+              *appCanAccess="['ProductT-Edit', 'ProductT-Add']"
+            >
               <label class="d-block" for="picker1">انتخاب تصویر</label>
               <input class="" type="file" (change)="onFileChanged($event)" />
               <div>
@@ -168,26 +172,30 @@
             </div>
           </form>
         </div>
-        <button
-          type="button"
-          class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
-          (click)="addOrUpdate()"
-          *ngIf="addUpdate.id !== 0"
-          [disabled]="!addForm.valid"
-        >
-          <i class="i-Pen-5 text-bigger mr-2"></i>
-          <strong>ویرایش</strong>
-        </button>
-        <button
-          type="button"
-          class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
-          (click)="addOrUpdate()"
-          *ngIf="addUpdate.id === 0"
-          [disabled]="!addForm.valid"
-        >
-          <i class="i-Add text-bigger mr-2"></i>
-          <strong>ایجاد</strong>
-        </button>
+        <ng-container *appCanAccess="'ProductT-Edit'">
+          <button
+            type="button"
+            class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
+            (click)="addOrUpdate()"
+            *ngIf="addUpdate.id !== 0"
+            [disabled]="!addForm.valid"
+          >
+            <i class="i-Pen-5 text-bigger mr-2"></i>
+            <strong>ویرایش</strong>
+          </button>
+        </ng-container>
+        <ng-container *appCanAccess="'ProductT-Add'">
+          <button
+            type="button"
+            class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
+            (click)="addOrUpdate()"
+            *ngIf="addUpdate.id === 0"
+            [disabled]="!addForm.valid"
+          >
+            <i class="i-Add text-bigger mr-2"></i>
+            <strong>ایجاد</strong>
+          </button>
+        </ng-container>
       </ng-template>
     </li>
     <li ngbNavItem [disabled]="productId == 0">

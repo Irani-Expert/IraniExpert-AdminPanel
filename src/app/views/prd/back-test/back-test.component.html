@@ -1,4 +1,5 @@
 <button
+  *appCanAccess="'ProductT-Edit'"
   type="button"
   class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   (click)="addorEdit(addUpdateModal, undefined)"
@@ -7,7 +8,10 @@
   <strong>ایجاد</strong>
 </button>
 
-<div class="separator-breadcrumb border-top"></div>
+<div
+  class="separator-breadcrumb border-top"
+  *appCanAccess="'ProductT-Edit'"
+></div>
 
 <div class="row list-grid">
   <div
@@ -54,6 +58,7 @@
               </div>
               <div class="col-6 p-1">
                 <button
+                  *appCanAccess="'ProductT-Edit'"
                   class="btn col-12 p-1"
                   (click)="addorEdit(addUpdateModal, item)"
                 >
@@ -62,6 +67,7 @@
               </div>
               <div class="col-6 p-1">
                 <button
+                  *appCanAccess="'ProductT-Edit'"
                   class="btn col-12 p-1"
                   (click)="deleteBackTest(item.id, deleteConfirmModal)"
                 >

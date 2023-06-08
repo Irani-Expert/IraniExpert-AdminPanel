@@ -1,4 +1,4 @@
-<div class="mb-4 d-block">
+<div class="mb-4 d-block" *appCanAccess="'ProductT-Edit'">
   <button
     class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
     type="button"
@@ -21,7 +21,7 @@
         <div class="col-10 text-start mr-5">
           {{ item.description }}
         </div>
-        <div class="col-10 text-start">
+        <div class="col-10 text-start" *appCanAccess="'ProductT-Edit'">
           <button
             (click)="addorEdit(addUpdateModal, item)"
             class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center mt-4"

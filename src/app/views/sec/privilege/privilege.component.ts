@@ -16,14 +16,7 @@ import { PrivilegeService } from './privilege.service';
   styleUrls: ['./privilege.component.scss'],
 })
 export class PrivilegeComponent implements OnInit {
-  keys = [
-    'Watch',
-    'Delete',
-    'Add',
-    'Edit',
-    'Full Premission',
-    'Special-Premission',
-  ];
+  keys = ['Watch', 'Delete', 'Add', 'Edit', 'Full', 'Specials'];
   rows: PrivilegeModel[] = new Array<PrivilegeModel>();
   allSelected: boolean;
   page: Page = new Page();

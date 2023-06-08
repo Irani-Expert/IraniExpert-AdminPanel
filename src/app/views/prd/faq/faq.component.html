@@ -1,4 +1,4 @@
-<form [formGroup]="addForm">
+<form [formGroup]="addForm" *appCanAccess="'ProductT-Edit'">
   <div class="row">
     <div class="col-md-6 form-group mb-3">
       <label for="title">سوال</label>
@@ -58,7 +58,10 @@
     </button>
   </div>
 </form>
-<div class="separator-breadcrumb border-top"></div>
+<div
+  class="separator-breadcrumb border-top"
+  *appCanAccess="'ProductT-Edit'"
+></div>
 <ngb-accordion
   #acc="ngbAccordion"
   [closeOthers]="true"
@@ -71,7 +74,7 @@
         <div class="col-10 text-start mr-5">
           {{ item.answer }}
         </div>
-        <div class="col-10 text-start">
+        <div class="col-10 text-start" *appCanAccess="'ProductT-Edit'">
           <button
             (click)="addUpdate = item"
             class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center mt-4"

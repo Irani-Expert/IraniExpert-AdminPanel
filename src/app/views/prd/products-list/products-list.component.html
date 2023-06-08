@@ -1,5 +1,5 @@
 <a
-  *appCanAccess="'Product-Add'"
+  *appCanAccess="'ProductT-Add'"
   type="button"
   [routerLink]="'/prd/addUpdate'"
   class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
@@ -66,14 +66,14 @@
 
         <td class="td-oprate">
           <a
-            *appCanAccess="'Product-Edit'"
+            *appCanAccess="'SingleProduct-Watch'"
             class="btn-details btn d-inline-flex justify-content-around py-btns radius align-items-center"
             [routerLink]="'/prd/addUpdate/' + item.id"
             ><i class="i-Information mr-2" style="font-size: 1.2rem"></i
             ><strong>جزئیات</strong></a
           >
           <button
-            *appCanAccess="'Product-Delete'"
+            *appCanAccess="'ProductT-Delete'"
             class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="deleteProduct(item.id, deleteConfirmModal)"
           >
