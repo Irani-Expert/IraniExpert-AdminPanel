@@ -134,7 +134,6 @@ export class FacilityComponent implements OnInit {
         },
         (reason) => {
           console.log('Err!', reason);
-          this.addForm.reset();
         }
       );
   }

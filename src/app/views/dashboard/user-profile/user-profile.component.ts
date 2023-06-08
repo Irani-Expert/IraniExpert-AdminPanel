@@ -82,23 +82,23 @@ export class UserProfileComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result === true) {
-            debugger
+            
             this.passwordChange(this.password);
-            this.addForm.reset();
+            this.passwordForm.reset()
           }
         },
         (reason) => {
+          this.passwordForm.reset()
           console.log('Err!', reason);
-          this.addForm.reset;
         }
       );
   }
 
   async passwordChange(password: UpdatePasswordModel) {
-    debugger
+    
     password.id = this.addUpdate.id;
     this._userService.changePassword(this.password).subscribe((data) => {
-      debugger
+      
       if (data.success) {
         this.toastr.success(data.message, null, {
           closeButton: true,

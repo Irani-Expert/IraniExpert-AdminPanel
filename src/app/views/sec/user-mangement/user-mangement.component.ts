@@ -380,6 +380,7 @@ export class UserMangementComponent implements OnInit {
     });
   }
   updateUserInfo(userID: number) {
+   debugger
     var finder = this.rows.findIndex((x) => x.id == userID);
     this.roleModel = [];
     var counter = 0;
@@ -389,13 +390,22 @@ export class UserMangementComponent implements OnInit {
       this.roleModel[counter].roleId = x.item_id;
       counter += 1;
     });
-  // this.rows[finder].roles=this.roleModel
-    debugger
+    this.updateRoleId()
+    
     this._userProfileSevice
       .updateUserbyAspnet(userID, this.addUpdate)
       .subscribe((data) => {
         if (data) {
-          this.setPage(this.page.pageNumber);
+
+          if(!this.filterHolder){
+            debugger
+            this.page.pageNumber = 1;
+            this.setPage(this.page.pageNumber);
+          }
+          
+
+       
+
           this.toastr.success(data.message, null, {
                       closeButton: true,
                       positionClass: 'toast-top-left',
@@ -436,8 +446,8 @@ export class UserMangementComponent implements OnInit {
       this.stateOfChevron === 'default' ? 'rotated' : 'default';
   }
   startFilter() {
+   
     this.page.pageNumber = 1;
-    debugger;
     if (this.ToSignUpDate != null) {
       this.filterData.ToSignUpDate =
         this.ToSignUpDate['year'] +

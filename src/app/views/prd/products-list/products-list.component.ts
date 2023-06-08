@@ -42,6 +42,7 @@ export class ProductsListComponent implements OnInit {
       .get(pageNumber, seedNumber, 'ID', null, 'Product')
       .subscribe(
         (res: Result<Paginate<ProductModel[]>>) => {
+          
           this.rows = res.data.items;
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;

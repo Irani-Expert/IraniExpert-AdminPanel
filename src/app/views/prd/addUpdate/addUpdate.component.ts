@@ -34,6 +34,8 @@ export class AddUpdateComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    console.log(this.cropImagePreview)
+
     if (this.productId === 0) {
       this.ifDataExist = true;
       this.addUpdate = new ProductModel();
@@ -65,6 +67,7 @@ export class AddUpdateComponent implements OnInit {
         });
   }
   onFileChanged(event: any) {
+    console.log(this.cropImagePreview)
     this.imgChangeEvt = event;
   }
   cropImg(e: ImageCroppedEvent) {
@@ -76,6 +79,7 @@ export class AddUpdateComponent implements OnInit {
     alert('image Failed to Show');
   }
   async uploadFile() {
+    debugger
     this._fileUploaderService
       .uploadFile(this.cropImagePreview, 'products')
       .subscribe((res: Result<string[]>) => {
