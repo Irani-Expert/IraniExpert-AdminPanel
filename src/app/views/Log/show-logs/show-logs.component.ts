@@ -100,6 +100,7 @@ export class ShowLogsComponent implements OnInit {
     requestType: number,
     tableTypeToSet: number
   ) {
+    debugger
     this.filter.requestType = requestType;
     if (tableTypeToSet !== null) {
       this.index = tableTypeToSet + 1;
@@ -150,6 +151,7 @@ export class ShowLogsComponent implements OnInit {
         filter
       )
       .subscribe((data: Result<Paginate<LogsModel[]>>) => {
+        debugger
         if (data.success && data.data.totalCount !== 0) {
           this.logRows = data.data.items;
           this.page.totalPages = data.data.totalPages;

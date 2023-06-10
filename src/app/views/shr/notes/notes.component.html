@@ -57,12 +57,12 @@
   type="text"
   class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
   placeholder="شناسه"
-  [(ngModel)]="filterModel.iD"
+  [(ngModel)]="newFilterModel.iD"
 
 />
 <span
   *ngIf="filterHolder.iD"
-  (click)="filterModel.iD = null;startFilter() "
+  (click)="newFilterModel.iD = null;startFilter() "
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
@@ -70,13 +70,13 @@
 type="text"
 class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
 placeholder="ایدی کاربر"
-[(ngModel)]="filterModel.userID"
+[(ngModel)]="newFilterModel.userID"
 />
 
  
 <span
 *ngIf="filterHolder.userID"
-(click)="filterModel.userID = null;startFilter() "
+(click)="newFilterModel.userID = null;startFilter() "
     class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
     ><span class="pi pi-times" style="font-size: 0.7rem"></span
   ></span>
@@ -86,24 +86,24 @@ placeholder="ایدی کاربر"
   type="text"
   class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
   placeholder="نام و نام خانوادگی"
-  [(ngModel)]="filterModel.name"
+  [(ngModel)]="newFilterModel.name"
 />
 <span
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 *ngIf="filterHolder.name"
-(click)="filterModel.name = null;startFilter()"
+(click)="newFilterModel.name = null;startFilter()"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <input
 type="text"
 class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
 placeholder="ایمیل"
-[(ngModel)]="filterModel.email"
+[(ngModel)]="newFilterModel.email"
 />
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
 *ngIf="filterHolder.email"
-(click)="filterModel.email = null;startFilter() "
+(click)="newFilterModel.email = null;startFilter() "
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 

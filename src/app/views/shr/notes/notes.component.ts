@@ -62,7 +62,7 @@ export class NotesComponent implements OnInit {
   rows: CommentModel[];
   pageIsLoad: boolean = false;
   filterModel: FilterModel = new FilterModel();
-
+  newFilterModel: FilterModel = new FilterModel();
   constructor(
     public _commentService: CommentService,
     private toastr: ToastrService,
@@ -80,12 +80,14 @@ export class NotesComponent implements OnInit {
     this.getCommnetOfspecificTableTypes(tableType);
   }
   getCommnetOfspecificTableTypes(tableTypeId: number) {
+
     this.currentTableType = tableTypeId;
     this.tableTypes.forEach((item) => {
       if (item.id === tableTypeId) {
         this.dropDownTitleHolder = item.title;
       }
     });
+    debugger
     this._commentService
       .GetAllComment(
      
@@ -131,6 +133,7 @@ export class NotesComponent implements OnInit {
       this.stateOfChevron === 'default' ? 'rotated' : 'default';
   }
   startFilter() {
+    this.filterModel=this.newFilterModel
     this.filteredItems(this.filterModel )
     this._commentService
       .GetAllComment(

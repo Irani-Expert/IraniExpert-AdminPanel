@@ -115,11 +115,12 @@ export class UserMangementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getRoleListservice();
     this.userParentToSend = {
       userId: 0,
       newReferralCode: '',
     };
-    this.getRoleList(0, 100);
+    // this.getRoleList(0, 100);
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -140,6 +141,8 @@ export class UserMangementComponent implements OnInit {
     });
   }
   setPage(pageInfo: number) {
+    
+    console.log(this.filterData )
     this.page.pageNumber = pageInfo;
     this.getUsersList(
       this.page.pageNumber,
@@ -147,7 +150,6 @@ export class UserMangementComponent implements OnInit {
       this.roleIdSaver,
       null
     );
-    this.getRoleListservice();
   }
  
   usersEdit(content: any, row: UsersModel,userID:number) {
@@ -187,6 +189,7 @@ export class UserMangementComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
+            
             this.updateUserInfo(userID);
           }
         },
@@ -234,36 +237,35 @@ export class UserMangementComponent implements OnInit {
     this.isChangingParent = false;
   }
 
-  getRoleList(pageNumber: number, seedNumber: number) {
-    this._roleService
-      .get(
-        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
-        seedNumber,
-        'ID',
-        null,
-        'aspnetrole'
-      )
-      .subscribe(
-        (res: Result<Paginate<RoleModel[]>>) => {
-          res.data.items.forEach((x) => {
-            this.dropdownList.push({ item_id: x.id, item_text: x.name });
-          });
+  // getRoleList(pageNumber: number, seedNumber: number) {
+  //   debugger
+  //   this._roleService
+  //     .get(
+  //       pageNumber !== 0 ? pageNumber - 1 : pageNumber,
+  //       seedNumber,
+  //       'ID',
+  //       null,
+  //       'aspnetrole'
+  //     )
+  //     .subscribe(
+  //       (res: Result<Paginate<RoleModel[]>>) => {
+     
 
-          this.page.totalElements = res.data.totalCount;
-          this.page.totalPages = res.data.totalPages - 1;
-        },
-        (_error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
-        }
-      );
-  }
+  //         this.page.totalElements = res.data.totalCount;
+  //         this.page.totalPages = res.data.totalPages - 1;
+  //       },
+  //       (_error) => {
+  //         this.toastr.error(
+  //           'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+  //           null,
+  //           {
+  //             closeButton: true,
+  //             positionClass: 'toast-top-left',
+  //           }
+  //         );
+  //       }
+  //     );
+  // }
   onItemSelect(item: RoleModel) {
     this.roleKeeper.push(item);
   }
@@ -380,7 +382,7 @@ export class UserMangementComponent implements OnInit {
     });
   }
   updateUserInfo(userID: number) {
-   debugger
+   
     var finder = this.rows.findIndex((x) => x.id == userID);
     this.roleModel = [];
     var counter = 0;
@@ -398,11 +400,11 @@ export class UserMangementComponent implements OnInit {
         if (data) {
 
           if(!this.filterHolder){
-            debugger
+            
             this.page.pageNumber = 1;
             this.setPage(this.page.pageNumber);
           }
-          
+        this.startFilter()
 
        
 
@@ -474,6 +476,9 @@ export class UserMangementComponent implements OnInit {
     this._roleService.get(0, 100, 'ID', null, 'aspnetrole').subscribe(
       (res: Result<Paginate<RoleModel[]>>) => {
         this.roles = res.data.items;
+        res.data.items.forEach((x) => {
+          this.dropdownList.push({ item_id: x.id, item_text: x.name });
+        });
       },
       (_error) => {
         this.toastr.error(

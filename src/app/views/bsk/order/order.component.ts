@@ -229,7 +229,7 @@ export class OrderComponent implements OnInit {
   // }
   setPage(pageInfo: number, transactionStatus: any) {
     this.page.pageNumber = pageInfo;
- this.getOrders(transactionStatus, pageInfo, this.filter);
+ this.getOrders(transactionStatus, pageInfo, this.filterModel);
   }
   changeHeaderValue() {
     if (this.headerValue != 'کد رهگیری') {

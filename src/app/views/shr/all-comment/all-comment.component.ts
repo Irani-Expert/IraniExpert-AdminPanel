@@ -64,7 +64,7 @@ export class AllCommentComponent implements OnInit {
   rateNumber: number[] = [1,2,3,4,5]; 
   rateText:string='همه';   
   isDivExpanded: boolean = false;
-
+   newFilterModel: FilterModel = new FilterModel();
   tableType: number;
   filter: FilterModel = new FilterModel();
   rows: CommentModel[] = new Array<CommentModel>();
@@ -100,6 +100,7 @@ export class AllCommentComponent implements OnInit {
   }
 
   setPage(pageInfo: number, tableType: number) {
+    
     this.page.pageNumber = pageInfo;
     this.getCommentList(this.page.pageNumber, tableType, this.filter);
   }
@@ -109,7 +110,10 @@ export class AllCommentComponent implements OnInit {
     tableType: number,
     filter: FilterModel
   ) {
-    this.filteredItems(this.filterModel)
+    
+// if( !(Object.keys(filter).length === 0)){
+// }
+    
     this.tableType = tableType;
     let finder = this.tableTypeTitles.findIndex((item) => item.id == tableType);
     if(finder!=-1){
@@ -153,12 +157,13 @@ export class AllCommentComponent implements OnInit {
     this.parentComment.tableType = row.tableType;
     this.parentComment.rowID = row.rowID;
     this.parentComment.isActive = true;
-
+   
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
       .result.then(
         (result) => {
           if (result) this.acceptComment(row);
+
         },
         (reason) => {
           console.log('Err!', reason);
@@ -193,11 +198,8 @@ export class AllCommentComponent implements OnInit {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
-          this.getCommentList(
-            this.page.pageNumber,
-            this.tableType,
-            this.filter
-          );
+          this.sendFilter()
+
         } else {
           this.toastr.error(data.message, null, {
             closeButton: true,
@@ -246,10 +248,8 @@ export class AllCommentComponent implements OnInit {
 
 
   sendFilter(){
-    if (this.filterModel.rate != null) {
-      this.filterModel.rate = Number(this.filterModel.rate);
-    }
-
+this.filterModel=this.newFilterModel;
+ 
     if (this.ExpDate != null) {
       this.filterModel.toCreateDate =
         this.ExpDate.year +
@@ -268,10 +268,16 @@ export class AllCommentComponent implements OnInit {
     }
  
     this.getCommentList(0, this.tableType, this.filterModel);
+    this.filteredItems(this.filterModel)
     this.filter = new FilterModel();
   }
+ 
   setRate(rate:number){
     this.filterModel.rate=rate
+    if (this.filterModel.rate != null) {
+      this.filterModel.rate = Number(this.filterModel.rate);
+    }
+
     if(rate!=null){
       this.rateText=String(rate)
 
@@ -279,7 +285,7 @@ export class AllCommentComponent implements OnInit {
     else{
       this.rateText='همه'
     }
-    this.sendFilter()
+    this.getCommentList(0, this.tableType, this.filterModel);
     }
     toggleFilters() {
       this.isDivExpanded = !this.isDivExpanded;
@@ -287,6 +293,7 @@ export class AllCommentComponent implements OnInit {
         this.stateOfChevron === 'default' ? 'rotated' : 'default';
     }
     filteredItems(filter: FilterModel) {
+      
       this.filterHolder = { ...filter };
     }
 }

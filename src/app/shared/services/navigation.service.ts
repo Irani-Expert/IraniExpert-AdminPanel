@@ -158,7 +158,7 @@ export class NavigationService {
       name: 'سفارشات',
       navType: 'link',
       icon: 'i-Library',
-      privilege: 'Orders-Watch',
+      privilege: 'ProductT-Watch',
       state: '/bsk/orders',
     },
 
