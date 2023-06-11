@@ -102,7 +102,7 @@ export class AllCommentComponent implements OnInit {
   setPage(pageInfo: number, tableType: number) {
     
     this.page.pageNumber = pageInfo;
-    this.getCommentList(this.page.pageNumber, tableType, this.filter);
+    this.getCommentList(this.page.pageNumber, tableType, this.filterModel);
   }
 
   async getCommentList(
@@ -110,7 +110,6 @@ export class AllCommentComponent implements OnInit {
     tableType: number,
     filter: FilterModel
   ) {
-    
 // if( !(Object.keys(filter).length === 0)){
 // }
     

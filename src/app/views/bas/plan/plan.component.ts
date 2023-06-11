@@ -38,7 +38,6 @@ export class PlanComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       title: [
@@ -216,7 +215,6 @@ export class PlanComponent implements OnInit {
           }
         );
     } else {
-      debugger
       await this._planService
         .update(row.id, row, 'plan')
         .subscribe(

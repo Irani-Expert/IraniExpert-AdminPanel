@@ -256,7 +256,6 @@ export class OrderComponent implements OnInit {
       status = 8;
       filter.fromExpireDate = formatDate(new Date(), 'yyyy-MM-dd', 'en_US');
     }
-    debugger
     this._orderService
       .getOrders(
         pageNumber-1,
@@ -809,7 +808,6 @@ export class OrderComponent implements OnInit {
   }
 
 //     sortDeletedPart(id:string,tempIndex:number){
-// debugger
 //       this.filters.splice(tempIndex, 1);
 //     this.filter[id] = null;
 //     let indexOfTheFilter = this.filters.findIndex(
