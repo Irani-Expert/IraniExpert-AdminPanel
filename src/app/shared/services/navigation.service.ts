@@ -254,7 +254,7 @@ export class NavigationService {
       name: 'نوشته ها',
       navType: 'link',
       icon: 'i-Speach-Bubbles',
-      state: '/shr/writing',
+      state: '/shr/writings',
       privilege: 'Writings-Watch',
     },
 

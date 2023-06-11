@@ -19,7 +19,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'comment',
+    path: 'writings',
     component: commentComponent,
     canActivate: [AuthGuard],
   },
