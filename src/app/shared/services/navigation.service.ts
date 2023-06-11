@@ -76,14 +76,6 @@ export class NavigationService {
       privilege: 'MySubscribers-Full',
     },
 
-    // {
-    //   name: 'مشتریان من',
-    //   description: 'پروفایل',
-    //   navType: 'link',
-    //   icon: 'i-Add-UserStar',
-    //   state: '/mrk/sub-user',
-    //   privilege: 'Subuser-Full Premission',
-    // },
     {
       name: '*',
       description: '',
@@ -116,36 +108,6 @@ export class NavigationService {
       state: '/cnt/article/addUpdate-article',
       privilege: 'ArticleT-Add',
     },
-
-    // {
-    //   name: 'مشتریان من',
-    //   navType: 'dropDown',
-    //   icon: 'i-Add-UserStar',
-    //   privilege: 'Subuser-Full Premission',
-    //   sub: [
-    //     {
-    //       icon: 'i-File-Horizontal-Text',
-    //       name: 'license',
-    //       state: '/dashboard/referral-user',
-    //       navType: 'link',
-    //       privilege: 'Subuser-Full Premission',
-    //     },
-    //     // {
-    //     //   icon: 'i-File-Horizontal-Text',
-    //     //   name: 'investor',
-    //     //   state: '/dashboard/referral-user',
-    //     //   navType: 'link',
-    //     //   privilege:'Subuser-Full Premission'
-    //     // },
-    //     // {
-    //     //   icon: 'i-File-Horizontal-Text',
-    //     //   name: 'IB',
-    //     //   state: '/dashboard/referral-user',
-    //     //   navType: 'link',
-    //     //   privilege:'Subuser-Full Premission'
-    //     // },
-    //   ],
-    // },
 
     {
       name: 'کمیسیون ها',
@@ -272,62 +234,6 @@ export class NavigationService {
       state: '/shr/user-Comments',
       privilege: 'UserProfile-Full',
     },
-
-    // {
-    //     name: 'Data Tables',
-    //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-    //     navType: 'dropDown',
-    //     icon: 'i-File-Horizontal-Text',
-    //     sub: [
-    //         { icon: 'i-File-Horizontal-Text', name: 'List', state: '/tables/list', navType: 'link' },
-    //         { icon: 'i-Full-View-Window', name: 'Fullscreen', state: '/tables/full', navType: 'link' },
-    //         { icon: 'i-Code-Window', name: 'Paging', state: '/tables/paging', navType: 'link' },
-    //         { icon: 'i-Filter-2', name: 'Filter', state: '/tables/filter', navType: 'link' },
-    //     ]
-    // },
-    // {
-    //     name: 'Sessions',
-    //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-    //     navType: 'dropDown',
-    //     icon: 'i-Administrator',
-    //     sub: [
-    //         { icon: 'i-Add-User', name: 'Sign up', state: '/sessions/signup', navType: 'link' },
-    //         { icon: 'i-Checked-User', name: 'Sign in', state: '/sessions/signin', navType: 'link' },
-    //         { icon: 'i-Find-User', name: 'Forgot', state: '/sessions/forgot', navType: 'link' }
-    //     ]
-    // },
-    // {
-    //     name: 'Pages',
-    //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-    //     navType: 'dropDown',
-    //     icon: 'i-Windows-2',
-    //     sub: [
-    //         { icon: 'i-Male', name: 'User Profile', state: '/pages/profile', navType: 'link' }
-    //     ]
-    // },
-    // {
-    //     name: 'Icons',
-    //     description: '600+ premium icons',
-    //     navType: 'link',
-    //     icon: 'i-Cloud-Sun',
-    //     state: '/icons/iconsmind'
-    // },
-    // {
-    //     name: 'Others',
-    //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-    //     navType: 'dropDown',
-    //     icon: 'i-Double-Tap',
-    //     sub: [
-    //         { icon: 'i-Error-404-Window', name: 'Not found', state: '/others/404', navType: 'link' }
-    //     ]
-    // },
-    // {
-    //     name: 'Doc',
-    //     navType: 'extLink',
-    //     tooltip: 'Documentation',
-    //     icon: 'i-Safe-Box1',
-    //     state: 'http://demos.ui-lib.com/gull-doc'
-    // }
   ];
 
   // sets iconMenu as default;

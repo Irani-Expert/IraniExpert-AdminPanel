@@ -34,11 +34,10 @@ export class PlanComponent implements OnInit {
     private _formBuilder: FormBuilder
   ) {
     this.page.pageNumber = 0;
-    this.page.size = 12;
+    this.page.size = 100;
   }
 
   ngOnInit(): void {
-    debugger
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       title: [
@@ -88,29 +87,24 @@ export class PlanComponent implements OnInit {
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then(
         (_result) => {
-          this._planService
-            .delete(id, 'plan')
-            .subscribe((res) => {
-              if (res.success) {
-                this.toastr.success(
-                  'فرایند حذف موفقیت آمیز بود',
-                  'موفقیت آمیز!',
-                  {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-left',
-                  }
-                );
-              } else {
-
-                this.toastr.error('خطا در حذف', res.message, {
+          this._planService.delete(id, 'plan').subscribe((res) => {
+            if (res.success) {
+              this.toastr.success(
+                'فرایند حذف موفقیت آمیز بود',
+                'موفقیت آمیز!',
+                {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
-                });
-              }
-              this.getPlanListByProductId();
-  
-           
-            });
+                }
+              );
+            } else {
+              this.toastr.error('خطا در حذف', res.message, {
+                timeOut: 3000,
+                positionClass: 'toast-top-left',
+              });
+            }
+            this.getPlanListByProductId();
+          });
         },
         (error) => {
           this.toastr.error('انصراف از حذف', error.message, {
@@ -131,7 +125,7 @@ export class PlanComponent implements OnInit {
             .subscribe((res: { success: any; message: string }) => {
               if (res.success) {
                 var finder = this.rows.findIndex((rows) => rows.id === id);
-                this.rows.splice(finder,1)
+                this.rows.splice(finder, 1);
                 this.toastr.success(
                   'فرایند حذف موفقیت آمیز بود',
                   'موفقیت آمیز!',
@@ -141,14 +135,12 @@ export class PlanComponent implements OnInit {
                   }
                 );
               } else {
-
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
                 });
               }
-            })
-          
+            });
         },
         (error) => {
           this.toastr.error('انصراف از حذف', error.message, {
@@ -157,7 +149,6 @@ export class PlanComponent implements OnInit {
           });
         }
       );
-   
   }
   //__________________Add Or Edit
   addorEdit(content: any, row: PlanModel) {
@@ -173,20 +164,16 @@ export class PlanComponent implements OnInit {
       row.price = null;
       row.isFirstBuy = null;
     }
-    this.addUpdate = row;
+    this.addUpdate = { ...row };
     this.modalService
       .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
             this.addOrUpdate(this.addUpdate);
-            
           }
         },
-        (reason) => {
-          console.log('Err!', reason);
-          this.addForm.reset();
-        }
+        (reason) => {}
       );
   }
 
@@ -195,52 +182,40 @@ export class PlanComponent implements OnInit {
       await this._planService
         .create(row, 'plan')
 
-        .subscribe(
-          (data) => {
-            
-            if (data.success) {
-              
-              this.rows
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-              this.addForm.reset();
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-              this.addForm.reset();
-            }
+        .subscribe((data) => {
+          if (data.success) {
+            this.rows;
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+            this.addForm.reset();
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+            this.addForm.reset();
           }
-        );
+        });
     } else {
-      debugger
-      await this._planService
-        .update(row.id, row, 'plan')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              var finder = this.rows.findIndex((rows) => rows.id === row.id);
-              this.rows[finder]=row
+      await this._planService.update(row.id, row, 'plan').subscribe((data) => {
+        if (data.success) {
+          var finder = this.rows.findIndex((rows) => rows.id === row.id);
+          this.rows[finder] = row;
 
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-            
-          }
-        );
-
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     }
-
   }
   selectType($event: any) {
     if ($event != undefined) {
@@ -249,7 +224,6 @@ export class PlanComponent implements OnInit {
   }
 
   openPlanOptionModal(item: PlanOptionModel, planId: number) {
-   
     const modalRef = this.modalService.open(PlanOptionComponent, {
       size: 'md',
       ariaLabelledBy: 'modal-basic-title',
@@ -261,27 +235,21 @@ export class PlanComponent implements OnInit {
       item.planID = planId;
       item.id = 0;
     }
-    
-    modalRef.componentInstance.addUpdate = item;
 
+    modalRef.componentInstance.addUpdate = item;
 
     modalRef.result.then(
       (result: boolean) => {
-   
         if (result != undefined) {
           this.addOrUpdate(this.addUpdate);
           this.addForm.reset();
-          this.rows=[]
           this.setPage(this.page.pageNumber);
         }
       },
       (reason) => {
         console.log('Err!', reason);
         this.addForm.reset();
-        this.rows=[]
-        this.setPage(this.page.pageNumber);
       }
     );
-    this.getPlanListByProductId();
   }
 }

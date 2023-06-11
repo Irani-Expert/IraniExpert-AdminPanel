@@ -10,31 +10,28 @@
     <strong>ایجاد</strong>
   </button>
 </div>
-<div class="separator-breadcrumb border-top"></div>
+<div
+  class="separator-breadcrumb border-top"
+  *appCanAccess="'ProductT-Edit'"
+></div>
 <!--------------------------- Plan Cards -->
-<div class="row justify-content-lg-start justify-content-center">
-  <div
-    class="col-lg-4 col-md-6 col-sm-8 col-12"
-    *ngFor="
-      let item of rows
-        | paginate
-          : {
-              itemsPerPage: page.size,
-              page: page.pageNumber,
-              currentPage: page.pageNumber,
-              totalItems: page.totalElements
-            }
-    "
-  >
+<div
+  class="d-flex flex-row flex-wrap align-items-start justify-content-lg-start justify-content-center"
+>
+  <div class="col-lg-3 col-md-6 col-sm-8 col-12" *ngFor="let item of rows">
     <div class="card bg-dark mb-2">
       <div class="card-body">
         <div class="bg-secondary w-100 rounded-top rounded-bottom">
-          <h4 class="p-2 pt-3 mb-1 mr-1 text-white">پلن : {{ item.title }}</h4>
+          <h4 class="p-2 pt-3 mb-1 mr-1 text-white text-small">
+            پلن : {{ item.title }}
+          </h4>
         </div>
-        <div class="text-white my-3">قیمت: {{ item.price | currency }}</div>
+        <div class="text-white my-3 text-small">
+          قیمت: {{ item.price | currency }}
+        </div>
         <div class="bg-transparent w-100">
-          <label for="description" class="text-white-50">توضیحات</label>
-          <h5 class="p-2 pt-3 mb-1 mr-1 text-white brief-text">
+          <strong for="description" class="text-white-50">توضیحات</strong>
+          <h5 class="p-2 pt-3 mb-1 mr-1 text-white brief-text text-small">
             {{ item.description }}
           </h5>
         </div>
@@ -52,11 +49,13 @@
             فعال
           </div>
         </div>
-        <p class="mt-2 text-white">اولویت:{{ item.orderID | orderID }}</p>
+        <p class="mt-2 text-white text-small">
+          اولویت:{{ item.orderID | orderID }}
+        </p>
         <ngb-accordion #acc="ngbAccordion">
           <ngb-panel>
             <ng-template ngbPanelTitle>
-              <strong>امکانات</strong>
+              <strong class="text-small">امکانات</strong>
             </ng-template>
             <ng-template ngbPanelContent>
               <span>
@@ -64,7 +63,7 @@
                   class="mb-2 d-flex justify-content-evenly row"
                   *ngFor="let planOption of item.planOptions"
                 >
-                  <strong class="pt-1 mr-2 col-6">
+                  <strong class="pt-1 mr-2 col-6 text-small">
                     {{ planOption.title }}
                   </strong>
                   <span class="col-5">
@@ -72,7 +71,7 @@
                       (click)="openPlanOptionModal(planOption, item.id)"
                       class="btn-upload btn rounded-pill mr-1 font-bigger pt-2 mb-sm-1 mb-xl-0"
                     >
-                      <i class="i-Pen-5"></i>
+                      <i class="i-Pen-5 text-bigger"></i>
                     </button>
                     <button
                       *appCanAccess="'ProductT-Edit'"
@@ -82,7 +81,7 @@
                       type="button"
                       class="btn btn-delete rounded-pill mr-1 font-bigger pt-2 mb-sm-1 mb-xl-0"
                     >
-                      <i class="i-Remove"></i>
+                      <i class="i-Remove text-bigger"></i>
                     </button>
                   </span>
                   <span class="span"></span>
@@ -93,7 +92,7 @@
                   (click)="openPlanOptionModal(undefined, item.id)"
                 >
                   <i class="i-Add text-bigger mr-2"></i>
-                  <strong>ایجاد امکان</strong>
+                  <strong class="text-small">ایجاد امکان</strong>
                 </button>
               </span>
             </ng-template>
@@ -107,7 +106,7 @@
             (click)="addorEdit(addUpdateModal, item)"
           >
             <i class="i-Pen-5 text-bigger mr-2"></i>
-            <strong>ویرایش</strong>
+            <strong class="text-small">ویرایش</strong>
           </button>
 
           <button
@@ -116,20 +115,20 @@
             (click)="deletePlan(item.id, deleteConfirmModal)"
           >
             <i class="i-Close text-bigger mr-2"></i>
-            <strong>حذف</strong>
+            <strong class="text-small">حذف</strong>
           </button>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-12 mt-3" *ngIf="page.totalElements > page.size">
+  <!-- <div class="col-md-12 mt-3" *ngIf="page.totalElements > page.size">
     <pagination-controls
       (pageChange)="setPage($event)"
       previousLabel=""
       nextLabel=""
       responsive="true"
     ></pagination-controls>
-  </div>
+  </div> -->
 </div>
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
@@ -201,6 +200,7 @@
         <div class="col-md-4 form-group mb-3">
           <label for="orderID">اولویت را مشخص کنید</label>
           <select
+            id="orderID"
             [formControl]="addForm.controls['orderID']"
             class="form-control form-control-rounded"
             [ngModel]="addUpdate.orderID"
@@ -243,17 +243,6 @@
           >
         </div>
         <div class="col-md-4 form-group mb-3">
-          <label for="expireDate">تاریخ انقضا</label>
-          <input
-            type="date"
-            class="form-control form-control-rounded"
-            id="expireDate"
-            placeholder="آدرس فایل مورد نظر را وارد کنید "
-            [formControl]="addForm.controls['expireDate']"
-            [(ngModel)]="addUpdate.expireDate"
-          />
-        </div>
-        <div class="col-md-4 form-group mb-3">
           <label for="price">قیمت</label>
           <input
             type="number"
@@ -277,8 +266,8 @@
         </div>
         <!-- isActive -->
         <div class="form-group col-12 mb-3 mt-3 text-center">
-          <label class="m-2">فعال</label>
-          <label class="switch switch-primary mr-2 m-2">
+          <span class="m-2">فعال</span>
+          <label for="isActive" class="switch switch-primary mr-2 m-2">
             <input
               [(ngModel)]="addUpdate.isActive"
               [formControl]="addForm.controls['isActive']"
@@ -287,7 +276,7 @@
             />
             <span class="slider"></span>
           </label>
-          <label>غیرفعال</label>
+          <span>غیرفعال</span>
         </div>
       </div>
     </form>
