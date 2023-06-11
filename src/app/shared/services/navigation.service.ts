@@ -14,7 +14,7 @@ export interface IMenuItem {
   sub?: IChildItem[]; // Dropdown items
   badges?: IBadge[];
   active?: boolean;
-  privilege?: string;
+  privilege?: any;
 }
 export interface IChildItem {
   id?: string;
@@ -25,7 +25,7 @@ export interface IChildItem {
   icon?: string;
   sub?: IChildItem[];
   active?: boolean;
-  privilege?: string;
+  privilege?: any;
 }
 
 interface IBadge {
@@ -73,7 +73,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Add-UserStar',
       state: '/mrk/sub-list-profit',
-      privilege: 'sub-list-profit-Full Premission',
+      privilege: 'MySubscribers-Full',
     },
 
     // {
@@ -148,17 +148,17 @@ export class NavigationService {
     // },
 
     {
-      name: 'سودها',
+      name: 'کمیسیون ها',
       navType: 'link',
       icon: 'i-Dollar',
       state: '/crt/profits',
-      privilege: 'profits-Full Premission',
+      privilege: 'Comissions-Contracts-Watch',
     },
     {
       name: 'سفارشات',
       navType: 'link',
       icon: 'i-Library',
-      privilege: 'ProductT-Watch',
+      privilege: 'Orders-Watch',
       state: '/bsk/orders',
     },
 
@@ -189,7 +189,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Share-on-Cloud',
       state: '/mcm/upload-center',
-      privilege: 'Upload-Center-Full Premission',
+      privilege: 'Upload-Center-Full',
     },
     {
       name: '*',
@@ -203,7 +203,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Dropbox',
       state: '/bas/group',
-      privilege: 'Group-Full Premission',
+      privilege: 'Groups-Watch',
     },
     {
       name: 'فعالیت ها',
@@ -219,43 +219,43 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Calendar-4',
       state: '/calendar',
-      privilege: 'CalendarEvent-Full Premission',
+      privilege: 'Calendar-Watch',
     },
     {
-      name: '  دسترسی ها',
+      name: 'امنیت پنل',
       navType: 'link',
-      icon: 'i-Gears',
+      icon: 'i-Data-Security',
       state: '/sec/permissions',
-      privilege: 'permissions-Full Premission',
+      privilege: 'ManageSec-Watch',
     },
     {
       name: 'کاربران',
       navType: 'link',
       icon: 'i-Business-ManWoman',
       state: '/sec/user-management',
-      privilege: 'UserManangment-Full Premission',
+      privilege: 'User-Watch',
     },
     {
       name: 'درخواست مشتریان',
       navType: 'link',
       icon: 'i-Love-User',
       state: '/shr/user-need',
-      privilege: 'CustomerRequest-Full Premission',
+      privilege: 'CustomerRequest-Full',
     },
     {
       name: 'تخفیف ها',
       navType: 'link',
       icon: 'i-Dollar-Sign',
       state: '/dct/discount',
-      privilege: 'Comment-Full Premission',
+      privilege: 'Discount-Watch',
     },
 
     {
       name: 'نوشته ها',
       navType: 'link',
       icon: 'i-Speach-Bubbles',
-      state: '/shr/comment',
-      privilege: 'Comment-Full Premission',
+      state: '/shr/writing',
+      privilege: 'Writings-Watch',
     },
 
     {
@@ -263,14 +263,14 @@ export class NavigationService {
       name: 'سفارشات من',
       state: '/bsk/user-orders',
       navType: 'link',
-      privilege: 'CheckOrders-Full Premission',
+      privilege: 'UserProfile-Full',
     },
     {
       name: 'نظرات من',
       navType: 'link',
       icon: 'i-Speach-Bubble-3',
       state: '/shr/user-Comments',
-      privilege: 'comment-user-Special-Premission',
+      privilege: 'UserProfile-Full',
     },
 
     // {

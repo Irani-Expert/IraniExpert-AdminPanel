@@ -1,14 +1,15 @@
-<button
-  *appCanAccess="'Group-Add'"
-  _ngcontent-tco-c175=""
-  type="button"
-  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
-  (click)="addorEdit(addUpdateModal, undefined)"
->
-  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
-</button>
+<ng-container *appCanAccess="'Groups-Add'">
+  <button
+    _ngcontent-tco-c175=""
+    type="button"
+    class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
+    (click)="addorEdit(addUpdateModal, undefined)"
+  >
+    <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
+  </button>
 
-<div class="separator-breadcrumb border-top"></div>
+  <div class="separator-breadcrumb border-top"></div>
+</ng-container>
 
 <section class="main-table">
   <table class="table">
@@ -18,7 +19,12 @@
         <th>عنوان</th>
         <th>عنوان مجموعه اصلی</th>
         <th>وضعیت</th>
-        <th class="rounded--left">عملیات</th>
+        <th
+          class="rounded--left"
+          *appCanAccess="['Groups-Edit', 'Groups-Delete']"
+        >
+          عملیات
+        </th>
       </tr>
     </thead>
 
@@ -49,7 +55,7 @@
         </td>
         <td class="td-oprate">
           <button
-            *appCanAccess="'Group-Edit'"
+            *appCanAccess="'Groups-Edit'"
             class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="addorEdit(addUpdateModal, item)"
           >
@@ -57,7 +63,7 @@
             <strong class="ml-2 text-small">ویرایش</strong>
           </button>
           <button
-            *appCanAccess="'Group-Delete'"
+            *appCanAccess="'Groups-Delete'"
             class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
             (click)="deleteGroup(item, deleteConfirmModal)"
           >
@@ -89,7 +95,7 @@
 
 <ng-template #deleteConfirmModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">حذف محصول</h4>
+    <h4 class="modal-title" id="modal-title">حذف گروه</h4>
     <button
       type="button"
       class="close"

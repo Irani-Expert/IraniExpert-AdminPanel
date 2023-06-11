@@ -1,12 +1,10 @@
-
 <div class="pb-3 d-flex flex-row row align-items-center">
-
   <div class="d-flex row col-10 align-items-center">
     <strong class="m-1 text-small"
       ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
       &nbsp; : &nbsp;</strong
     >
-    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 ">
+    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1">
       <button
         type="button"
         class="btn btn-details radius py-btns"
@@ -16,9 +14,7 @@
         <ng-container *ngIf="tableType != 8 && tableType != 10"
           >دیدگاه های
         </ng-container>
-        <ng-container *ngIf="tableType == 8 || tableType == 10"
-          >یادداشت های </ng-container
-        >{{ dropDownTitleHolder }}
+        {{ dropDownTitleHolder }}
       </button>
       <div
         ngbDropdownMenu
@@ -45,36 +41,34 @@
         id="dropdownBasic1"
         ngbDropdownToggle
       >
-{{rateText}}
-    </button>
+        {{ rateText }}
+      </button>
       <div
         ngbDropdownMenu
         class="mt-1 shadow-lg radius dropDown-scroll"
         aria-labelledby="dropdownBasic1"
         style="height: 235px; overflow: auto"
-   
       >
-      <button
-      class="text-left btn mt-2"
-      ngbDropdownItem
-      (click)="setRate(null)"
-    >
-      <strong class="text-small">همه</strong>
-    </button>
-      <button
-      class="text-left btn mt-2"
-      ngbDropdownItem
-      *ngFor="let rate of rateNumber"
-      (click)="setRate(rate)"
-    >
-      <strong class="text-small">{{rate}}</strong>
-    </button>
+        <button
+          class="text-left btn mt-2"
+          ngbDropdownItem
+          (click)="setRate(null)"
+        >
+          <strong class="text-small">همه</strong>
+        </button>
+        <button
+          class="text-left btn mt-2"
+          ngbDropdownItem
+          *ngFor="let rate of rateNumber"
+          (click)="setRate(rate)"
+        >
+          <strong class="text-small">{{ rate }}</strong>
+        </button>
       </div>
     </div>
 
-
     <button
-    (click)="toggleFilters()"
+      (click)="toggleFilters()"
       class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
     >
       <strong class="text-small mr-1">پیشرفته</strong>
@@ -90,96 +84,89 @@
   </div>
 </div>
 <div @slideInOut *ngIf="isDivExpanded">
-    <div class="row d-flex align-items-center">
-  <input
-  type="text"
-  class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
-  placeholder="شناسه"
-  [(ngModel)]="newFilterModel.iD"
-
-/>
-<span
-  *ngIf="filterHolder.iD"
-  (click)="newFilterModel.iD = null;sendFilter() "
-  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-  ><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
-placeholder="ایدی کاربر"
-[(ngModel)]="newFilterModel.userID"
-/>
-
- 
-<span
-*ngIf="filterHolder.userID"
-(click)="newFilterModel.userID = null;sendFilter() "
-    class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-    ><span class="pi pi-times" style="font-size: 0.7rem"></span
-  ></span>
-
-  <input
-    type="text"
-    class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-    placeholder="ایدی محصول"
-    [(ngModel)]="newFilterModel.rowID"
+  <div class="row d-flex align-items-center">
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+      placeholder="شناسه"
+      [(ngModel)]="newFilterModel.iD"
     />
-  <span
-  *ngIf="filterHolder.rowID"
-  (click)="filter.rowID = null;sendFilter() "
-    class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-    ><span class="pi pi-times" style="font-size: 0.7rem"></span
-  ></span>
-  <input
-  type="text"
-  class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-  placeholder="نام و نام خانوادگی"
-  [(ngModel)]="newFilterModel.name"
-/>
-<span
-  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.name"
-(click)="newFilterModel.name = null;sendFilter() "
-  ><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="ایمیل"
-[(ngModel)]="newFilterModel.email"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.email"
-(click)="newFilterModel.email = null;sendFilter() "
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
+    <span
+      *ngIf="filterHolder.iD"
+      (click)="newFilterModel.iD = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+      placeholder="ایدی کاربر"
+      [(ngModel)]="newFilterModel.userID"
+    />
 
-  <div class="mb-1 mr-1">
-    <strong class="m-1 text-small">پذیرفته شده</strong>
-    <label class="switch switch-primary mr-2 m-2">
-      <strong class="text-small">عدم پذیرش</strong>
-      <input type="checkbox" [(ngModel)]="newFilterModel.isAccepted"
-      />
-      <span class="slider"></span>
+    <span
+      *ngIf="filterHolder.userID"
+      (click)="newFilterModel.userID = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
 
-    </label>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="ایدی محصول"
+      [(ngModel)]="newFilterModel.rowID"
+    />
+    <span
+      *ngIf="filterHolder.rowID"
+      (click)="filter.rowID = null; sendFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="نام و نام خانوادگی"
+      [(ngModel)]="newFilterModel.name"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.name"
+      (click)="newFilterModel.name = null; sendFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="ایمیل"
+      [(ngModel)]="newFilterModel.email"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.email"
+      (click)="newFilterModel.email = null; sendFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+
+    <div class="mb-1 mr-1">
+      <strong class="m-1 text-small">پذیرفته شده</strong>
+      <label class="switch switch-primary mr-2 m-2">
+        <strong class="text-small">عدم پذیرش</strong>
+        <input type="checkbox" [(ngModel)]="newFilterModel.isAccepted" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
+      (click)="sendFilter()"
+    >
+      <i class="i-Filter-2 text-bigger mr-2"></i>
+      <strong class="text-small">فیلتر </strong>
+    </button>
   </div>
-  <button
-    type="button"
-    ngbAutofocus
-    class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
-    (click)="sendFilter()"
-  >
-    <i class="i-Filter-2 text-bigger mr-2"></i>
-    <strong class="text-small">فیلتر </strong>
-  </button>
-</div></div>
-
-
-
-
+</div>
 
 <div class="my-css d-flex flex-wrap w-100">
   <div
@@ -237,7 +224,7 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
         </ng-container>
       </div>
       <div class="card-footer bg-gray">
-        <div class="mb-2">
+        <div class="mb-2" *appCanAccess="'Comment-Edit'">
           <button
             type="button"
             class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
@@ -247,7 +234,7 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
             <i class="i-Yes text-bigger mr-2"></i><strong>پذیرفتن</strong>
           </button>
         </div>
-        <div class="mb-2">
+        <div class="mb-2" *appCanAccess="'Comment-Delete'">
           <button
             type="button"
             *ngIf="item.isAccepted === true"
@@ -291,7 +278,7 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" *appCanAccess="'Comment-Add'">
     <label class="text-black-50 mb-2"
       >درصورت نیاز یا علاقه پاسخ این نظر را بدهید</label
     >

@@ -232,6 +232,7 @@
     <div class="d-flex flex-grow-1"></div>
     <div class="modal-footer border-0">
       <button
+        *appCanAccess="'Calendar-Countries-Edit'"
         (click)="putCountry()"
         type="button"
         class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"

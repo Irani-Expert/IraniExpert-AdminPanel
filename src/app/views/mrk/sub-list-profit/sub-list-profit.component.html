@@ -1,11 +1,11 @@
 <ul ngbNav #nav="ngbNav" class="nav-tabs p-0">
-  <li ngbNavItem *appCanAccess="'Subuser-Full'">
+  <li ngbNavItem *appCanAccess="'MySubscribers-Full'">
     <a ngbNavLink>کاربران زیر مجموعه</a>
     <ng-template ngbNavContent>
       <app-sub-user></app-sub-user>
     </ng-template>
   </li>
-  <li ngbNavItem *appCanAccess="'MyCommmission-Full'">
+  <li ngbNavItem *appCanAccess="'MySubscribers-Full'">
     <a ngbNavLink>پورسانت ها</a>
     <ng-template ngbNavContent>
       <app-commission></app-commission>

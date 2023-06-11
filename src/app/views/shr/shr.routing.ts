@@ -4,7 +4,7 @@ import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { AllCommentComponent } from './all-comment/all-comment.component';
 import { UserCommentComponent } from './user-comment/user-comment.component';
 import { UserNeedComponent } from './user-need/user-need.component';
-import { commentComponent } from './profits/comment.component';
+import { commentComponent } from './writings/comment.component';
 
 const routes: Routes = [
   {
@@ -18,7 +18,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
 
-  
   {
     path: 'comment',
     component: commentComponent,

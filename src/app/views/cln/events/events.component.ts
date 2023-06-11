@@ -179,6 +179,11 @@ export class EventsComponent implements OnInit {
     console.log('onPaste');
     //this.log += new Date() + "<br />";
   }
+  denyOpeningModal() {
+    setTimeout(() => {
+      this.modal.dismissAll();
+    }, 300);
+  }
   openModal(
     content: any,
     modalSize: string,

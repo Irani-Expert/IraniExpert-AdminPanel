@@ -13,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { NotesComponent } from './notes/notes.component';
 import { TreeModule } from 'primeng/tree';
-import { commentComponent } from './profits/comment.component';
+import { commentComponent } from './writings/comment.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { commentComponent } from './profits/comment.component';
     UserCommentComponent,
     AllCommentComponent,
     NotesComponent,
-    commentComponent
+    commentComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -36,7 +36,6 @@ import { commentComponent } from './profits/comment.component';
     FormsModule,
     DatePipe,
     TreeModule,
-    
   ],
 })
 export class ShrModule {}

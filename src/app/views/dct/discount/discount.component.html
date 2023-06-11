@@ -1,11 +1,13 @@
-<button
-  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
-  (click)="OpenModal(AddDiscount)"
->
-  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
-</button>
+<ng-container *appCanAccess="'Discount-Add'">
+  <button
+    class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
+    (click)="OpenModal(AddDiscount)"
+  >
+    <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
+  </button>
 
-<div class="separator-breadcrumb border-top"></div>
+  <div class="separator-breadcrumb border-top"></div>
+</ng-container>
 
 <section class="main-table">
   <table class="table">
@@ -18,7 +20,7 @@
         <th>تاریخ انقضا</th>
         <th>استفاده</th>
         <th>کد</th>
-        <th class="rounded--left">عملیات</th>
+        <th *appCanAccess="'Discount-Delete'" class="rounded--left">عملیات</th>
       </tr>
     </thead>
 
@@ -56,7 +58,7 @@
             {{ item.code }}
           </div>
         </td>
-        <td class="td-oprate">
+        <td *appCanAccess="'Discount-Delete'" class="td-oprate">
           <button
             class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="deleteDiscount(item.id)"

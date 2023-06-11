@@ -1,5 +1,5 @@
 <button
-  *appCanAccess="'Roles-Add'"
+  *appCanAccess="'Role-Add'"
   type="button"
   class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   (click)="roleNameEdit(addUpdateModal, undefined)"
@@ -14,6 +14,7 @@
       <div class="flex-row d-flex card-header text-center m-0 p-0">
         <div class="col-2 d-flex justify-content-center align-items-center">
           <button
+            *appCanAccess="'Role-Edit'"
             class="btn btn-primary m-1 pt-2"
             (click)="roleNameEdit(addUpdateModal, item)"
           >
@@ -24,10 +25,11 @@
         <p class="text-white col-8 align-self-center mt-2">نقش</p>
         <div class="col-2 d-flex justify-content-center align-items-center">
           <button
+            *appCanAccess="'Role-Delete'"
             class="btn btn-danger m-1 pt-2"
-            (click)="removerole(item.id,changeParentModal)"
+            (click)="removerole(item.id, changeParentModal)"
           >
-            <i class="text-white i-Close  h-5 nav-icon"></i>
+            <i class="text-white i-Close h-5 nav-icon"></i>
           </button>
         </div>
       </div>
@@ -40,6 +42,7 @@
           class="d-flex justify-content-around align-content-center align-items-center mt-3"
         >
           <button
+            *appCanAccess="'RolesPrivileges-Edit'"
             class="col-5 btn btn-warning"
             (click)="roleEdit(addOrDeletePermision, item.id)"
           >

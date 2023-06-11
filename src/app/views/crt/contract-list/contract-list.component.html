@@ -1,11 +1,13 @@
-<button
-  class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
-  type="button"
-  (click)="openModal(newcontract, undefined)"
->
-  <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
-</button>
-<div class="separator-breadcrumb border-top"></div>
+<ng-container *appCanAccess="'Contracts-Add'">
+  <button
+    class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
+    type="button"
+    (click)="openModal(newcontract, undefined)"
+  >
+    <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
+  </button>
+  <div class="separator-breadcrumb border-top"></div>
+</ng-container>
 
 <section class="main-table">
   <table class="table">
@@ -18,7 +20,7 @@
         <th>تاریخ شروع</th>
         <th>تاریخ پایان</th>
         <th>درصد دریافتی</th>
-        <th class="rounded--left">حذف</th>
+        <th *appCanAccess="'Contracts-Add'" class="rounded--left">حذف</th>
       </tr>
     </thead>
 
@@ -31,7 +33,7 @@
         <td>{{ item.fromDate }}</td>
         <td>{{ item.toDate }}</td>
         <td>{{ item.prcentReward }}</td>
-        <td>
+        <td *appCanAccess="'Contracts-Add'">
           <button
             class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="removeContract(item.id)"
