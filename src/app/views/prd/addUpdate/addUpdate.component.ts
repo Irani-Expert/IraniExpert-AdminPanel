@@ -79,7 +79,6 @@ export class AddUpdateComponent implements OnInit {
     alert('image Failed to Show');
   }
   async uploadFile() {
-    debugger
     this._fileUploaderService
       .uploadFile(this.cropImagePreview, 'products')
       .subscribe((res: Result<string[]>) => {

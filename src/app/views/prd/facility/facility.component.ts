@@ -145,7 +145,6 @@ export class FacilityComponent implements OnInit {
 
         .subscribe(
           (data) => {
-            debugger
             if (data.success) {
               this.rows.push(row);
               this.toastr.success(data.message, null, {

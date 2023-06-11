@@ -69,7 +69,6 @@ export class BackTestComponent implements OnInit {
       )
       .subscribe(
         (res: Result<BackTestModel[]>) => {
-          debugger
           this.rows = res.data;
           //  this.page.totalElements = res.data.length;
         },

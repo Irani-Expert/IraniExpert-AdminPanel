@@ -41,7 +41,6 @@ export class UsersService extends BaseService<UsersModel, 0> {
         Expires: '0',
       }),
     };
-    debugger
     return this._http.put<Result<boolean>>(
       environment.api.baseUrl + '/AspNetUser/ChangePassword'+'?authorID='+this.auth.currentUserValue.userID,
       t,

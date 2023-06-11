@@ -87,7 +87,6 @@ export class NotesComponent implements OnInit {
         this.dropDownTitleHolder = item.title;
       }
     });
-    debugger
     this._commentService
       .GetAllComment(
      
