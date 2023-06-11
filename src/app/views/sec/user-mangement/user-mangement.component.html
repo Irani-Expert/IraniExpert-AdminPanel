@@ -1,6 +1,4 @@
-
 <div class="pb-3 d-flex flex-row row align-items-center">
-
   <div class="d-flex row col-10 align-items-center">
     <strong class="m-1 text-small"
       ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
@@ -8,7 +6,6 @@
     >
 
     <!-- TableType -->
-
 
     <strong>نقش</strong>
     <!-- TableType -->
@@ -19,32 +16,32 @@
         id="dropdownBasic1"
         ngbDropdownToggle
       >
-      {{userType}}
+        {{ userType }}
       </button>
       <div
         ngbDropdownMenu
         class="mt-1 shadow-lg radius"
         aria-labelledby="dropdownBasic1"
       >
-      <button
-      class="text-left btn"
-      ngbDropdownItem
-      (click)="getUsersList(1, page.size, null,'همه')"
-      >
-      <strong>همه</strong>
-    </button>
+        <button
+          class="text-left btn"
+          ngbDropdownItem
+          (click)="getUsersList(1, page.size, null, 'همه')"
+        >
+          <strong>همه</strong>
+        </button>
         <button
           class="text-left btn"
           ngbDropdownItem
           *ngFor="let item of roles"
-          (click)="getUsersList(page.pageNumber, page.size, item.id,item.name)"
+          (click)="getUsersList(page.pageNumber, page.size, item.id, item.name)"
         >
           <strong>{{ item.name }}</strong>
         </button>
       </div>
     </div>
     <button
-    (click)="toggleFilters()"
+      (click)="toggleFilters()"
       class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
     >
       <strong class="text-small mr-1">پیشرفته</strong>
@@ -60,171 +57,172 @@
   </div>
 </div>
 <div @slideInOut *ngIf="isDivExpanded">
-    <div class="row d-flex align-items-center mb-3">
+  <div class="row d-flex align-items-center mb-3">
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="شناسه"
+      [(ngModel)]="filterData.id"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.id"
+      (click)="filterData.id = null; startFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="نام کاربری"
+      [(ngModel)]="filterData.userName"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.userName"
+      (click)="filterData.userName = null; startFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="ایمیل"
+      [(ngModel)]="filterData.email"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.email"
+      (click)="filterData.email = null; startFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="شماره تلفن"
+      [(ngModel)]="filterData.phoneNumber"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.phoneNumber"
+      (click)="filterData.phoneNumber = null; startFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="شماره حساب"
+      [(ngModel)]="filterData.accountNumber"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.accountNumber"
+      (click)="filterData.accountNumber = null; startFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
 
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="نام"
+      [(ngModel)]="filterData.firstName"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.firstName"
+      (click)="filterData.firstName = null; startFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
 
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="شناسه"
-[(ngModel)]="filterData.id"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.id"
-(click)="filterData.id = null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="نام کاربری"
-[(ngModel)]="filterData.userName"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.userName"
-(click)="filterData.userName = null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1  radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="ایمیل"
-[(ngModel)]="filterData.email"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.email"
-(click)="filterData.email = null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1  radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="شماره تلفن"
-[(ngModel)]="filterData.phoneNumber"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.phoneNumber"
-(click)="filterData.phoneNumber = null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="شماره حساب"
-[(ngModel)]="filterData.accountNumber"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.accountNumber"
-(click)="filterData.accountNumber = null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="نام خانوادگی"
+      [(ngModel)]="filterData.lastName"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.lastName"
+      (click)="filterData.lastName = null; startFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
 
-<input
-type="text"
-class="form-control m-1  radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="نام"
-[(ngModel)]="filterData.firstName"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.firstName"
-(click)="filterData.firstName = null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="کد معرف"
+      [(ngModel)]="filterData.referralCode"
+    />
+    <span
+      *ngIf="filterHolder.referralCode"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      (click)="filterData.referralCode = null; startFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
 
-<input
-type="text"
-class="form-control m-1  radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="نام خانوادگی"
-[(ngModel)]="filterData.lastName"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.lastName"
-(click)="filterData.lastName = null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
+    <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+      >ازتاریخ ثبت نام</strong
+    >
+    <input
+      type="text"
+      [navigation]="'select'"
+      #datePickerStatus2="ngbDatepicker"
+      placement="bottom-right"
+      autocomplete="off"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+      [(ngModel)]="fromSignUpDate"
+      ngbDatepicker
+      [outsideDays]="'collapsed'"
+      [footerTemplate]="toCRTfooterTemplate"
+      #toCreateDatePicker="ngbDatepicker"
+      (click)="datePickerStatus2.toggle()"
+      placeholder=" روز / ماه / سال "
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.fromSignUpDate"
+      (click)="
+        filterData.fromSignUpDate = null; fromSignUpDate = null; startFilter()
+      "
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+      >تا تاریخ ثبت نام</strong
+    >
+    <input
+      type="text"
+      ngbDatepicker
+      #datePickerStatus1="ngbDatepicker"
+      type="text"
+      [navigation]="'select'"
+      placement="bottom-right"
+      autocomplete="off"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+      [(ngModel)]="ToSignUpDate"
+      ngbDatepicker
+      [outsideDays]="'collapsed'"
+      [footerTemplate]="toCRTfooterTemplate"
+      (click)="datePickerStatus1.toggle()"
+      placeholder=" روز / ماه / سال "
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
+      *ngIf="filterHolder.ToSignUpDate"
+      (click)="
+        filterData.ToSignUpDate = null; ToSignUpDate = null; startFilter()
+      "
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
 
-<input
-type="text"
-class="form-control m-1  radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="کد معرف"
-[(ngModel)]="filterData.referralCode"
-/>
-<span
-*ngIf="filterHolder.referralCode"
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-(click)="filterData.referralCode = null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-
-<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
->ازتاریخ ثبت نام</strong
->
-<input
-type="text"
-[navigation]="'select'"
-#datePickerStatus2="ngbDatepicker"
-placement="bottom-right"
-autocomplete="off"
-class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
-[(ngModel)]="fromSignUpDate"
-ngbDatepicker
-[outsideDays]="'collapsed'"
-[footerTemplate]="toCRTfooterTemplate"
-#toCreateDatePicker="ngbDatepicker"
-(click)="datePickerStatus2.toggle()"
-placeholder=" روز / ماه / سال "
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer "
-*ngIf="filterHolder.fromSignUpDate"
-(click)="filterData.fromSignUpDate = null;fromSignUpDate=null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
->تا تاریخ ثبت نام</strong
->
-<input
-type="text"
-ngbDatepicker
-#datePickerStatus1="ngbDatepicker"
-type="text"
-[navigation]="'select'"
-placement="bottom-right"
-autocomplete="off"
-class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
-[(ngModel)]="ToSignUpDate"
-ngbDatepicker
-[outsideDays]="'collapsed'"
-[footerTemplate]="toCRTfooterTemplate"
-(click)="datePickerStatus1.toggle()"
-placeholder=" روز / ماه / سال "
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
-*ngIf="filterHolder.ToSignUpDate"
-(click)="filterData.ToSignUpDate= null;ToSignUpDate=null; startFilter()"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-
-
-<button
-type="button"
-ngbAutofocus
-class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
-(click)="startFilter()"
->
-<i class="i-Filter-2 text-bigger mr-2"></i>
-<strong class="text-small">فیلتر </strong>
-</button>
-
-</div></div>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
+      (click)="startFilter()"
+    >
+      <i class="i-Filter-2 text-bigger mr-2"></i>
+      <strong class="text-small">فیلتر </strong>
+    </button>
+  </div>
+</div>
 <section class="main-table">
   <table class="table">
     <thead class="bg-dark text-white">
@@ -235,7 +233,7 @@ class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-
         <th>شماره حساب</th>
         <th>شماره تماس</th>
         <th>تاریخ ثبت نام</th>
-        <th class="rounded--left">عملیات</th>
+        <th *appCanAccess="'User-Edit'" class="rounded--left">عملیات</th>
       </tr>
     </thead>
 
@@ -258,31 +256,29 @@ class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-
         <td>{{ item.accountNumber }}</td>
         <td>{{ item.phoneNumber }}</td>
         <td>{{ item.persianSignUpDate }}</td>
-        <td class="td-oprate">
+        <td *appCanAccess="'User-Edit'" class="td-oprate">
           <button
-            *appCanAccess="'Users-Edit'"
             class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
-            (click)="usersEdit(addUpdateModal, item,item.id)"
+            (click)="usersEdit(addUpdateModal, item, item.id)"
           >
             <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
           </button>
           <button
-           *ngIf="item.isActive==false"
-           (click)="updateQuestion(updateTrust,item.id)"
-            class="btn-delete  btn d-inline-flex justify-content-around py-btns radius align-items-center"
-            
+            *ngIf="item.isActive == false"
+            (click)="updateQuestion(updateTrust, item.id)"
+            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
           >
-            <i class=" i-Circular-Point text-bigger mr-2"></i>
+            <i class="i-Circular-Point text-bigger mr-2"></i>
             <strong>فعال کردن</strong>
           </button>
           <button
-          *ngIf="item.isActive"
-           (click)="updateQuestion(updateTrust,item.id)"
-          class="btn-success btn d-inline-flex justify-content-around py-btns radius align-items-center"
-        >
-          <i class="i-Yes  text-bigger mr-2"></i>
-          <strong>غیرفعال کردن</strong>
-        </button>
+            *ngIf="item.isActive"
+            (click)="updateQuestion(updateTrust, item.id)"
+            class="btn-success btn d-inline-flex justify-content-around py-btns radius align-items-center"
+          >
+            <i class="i-Yes text-bigger mr-2"></i>
+            <strong>غیرفعال کردن</strong>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -396,26 +392,28 @@ class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-
             [disabled]="!isChangingParent"
             class="form-control text-small"
           />
-          <span
-            *ngIf="!isChangingParent && userParent.id !== 0"
-            ngbTooltip="ویرایش معرف"
-            [openDelay]="50"
-            [closeDelay]="150"
-            placement="bottom"
-            class="d-inline-flex mt-2 p-2 radius bg-light"
-            (click)="changeParent(changeParentModal)"
-            ><i class="i-Pen-5 text-bigger text-black"></i
-          ></span>
-          <span
-            *ngIf="!isChangingParent && userParent.id == 0"
-            ngbTooltip="ثبت معرف"
-            [openDelay]="50"
-            [closeDelay]="150"
-            placement="bottom"
-            class="d-inline-flex mt-2 p-2 radius bg-light"
-            (click)="changeParent(changeParentModal)"
-            ><i class="i-Add text-bigger text-black"></i
-          ></span>
+          <ng-container *appCanAccess="'UserRefrall-Edit'">
+            <span
+              *ngIf="!isChangingParent && userParent.id !== 0"
+              ngbTooltip="ویرایش معرف"
+              [openDelay]="50"
+              [closeDelay]="150"
+              placement="bottom"
+              class="d-inline-flex mt-2 p-2 radius bg-light"
+              (click)="changeParent(changeParentModal)"
+              ><i class="i-Pen-5 text-bigger text-black"></i
+            ></span>
+            <span
+              *ngIf="!isChangingParent && userParent.id == 0"
+              ngbTooltip="ثبت معرف"
+              [openDelay]="50"
+              [closeDelay]="150"
+              placement="bottom"
+              class="d-inline-flex mt-2 p-2 radius bg-light"
+              (click)="changeParent(changeParentModal)"
+              ><i class="i-Add text-bigger text-black"></i
+            ></span>
+          </ng-container>
           <span
             *ngIf="isChangingParent"
             ngbTooltip="انصراف"
@@ -439,7 +437,7 @@ class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-
             ><i class="i-Yes text-bigger text-black"></i
           ></span>
         </div>
-        <div class="col-md-6 form-group mb-3">
+        <div *appCanAccess="'UserRole-Edit'" class="col-md-6 form-group mb-3">
           <label for="accountNumber ">دسترسی ها</label>
           <ng-multiselect-dropdown
             [formControl]="addForm.controls['permision']"
@@ -559,7 +557,7 @@ class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-
 </ng-template>
 <ng-template #updateTrust let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-title"> تغییر وضعیت کاربر</h4>
+    <h4 class="modal-title" id="modal-title">تغییر وضعیت کاربر</h4>
     <button
       type="button"
       class="close"

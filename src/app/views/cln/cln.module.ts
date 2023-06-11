@@ -11,9 +11,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CountriesComponent } from './countries/countries.component';
 import { EventsComponent } from './events/events.component';
 
+import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
+
 @NgModule({
   declarations: [CalendarComponent, CountriesComponent, EventsComponent],
   imports: [
+    SharedDirectivesModule,
     NgxPaginationModule,
     CommonModule,
     ClnRoutingModule,

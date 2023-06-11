@@ -1,0 +1,17 @@
+<ul ngbNav #nav="ngbNav" class="nav-tabs p-0">
+  <li ngbNavItem *appCanAccess="'Comments-Watch'">
+    <a ngbNavLink>کامنت ها</a>
+
+    <ng-template ngbNavContent>
+      <app-all-comment></app-all-comment>
+    </ng-template>
+  </li>
+
+  <li ngbNavItem *appCanAccess="'Notes-Watch'">
+    <a ngbNavLink>یاداشت ها</a>
+    <ng-template ngbNavContent>
+      <app-notes></app-notes>
+    </ng-template>
+  </li>
+</ul>
+<div [ngbNavOutlet]="nav"></div>

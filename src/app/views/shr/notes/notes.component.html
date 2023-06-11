@@ -1,12 +1,10 @@
-
 <div class="pb-3 d-flex flex-row row align-items-center">
-
   <div class="d-flex row col-10 align-items-center">
     <strong class="m-1 text-small"
       ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
       &nbsp; : &nbsp;</strong
     >
-    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 ">
+    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1">
       <button
         type="button"
         class="btn btn-details radius py-btns text-small"
@@ -33,10 +31,8 @@
 
     <!-- TableType -->
 
-
-
     <button
-    (click)="toggleFilters()"
+      (click)="toggleFilters()"
       class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
     >
       <strong class="text-small mr-1">پیشرفته</strong>
@@ -52,73 +48,69 @@
   </div>
 </div>
 <div @slideInOut *ngIf="isDivExpanded">
-    <div class="row d-flex align-items-center">
-  <input
-  type="text"
-  class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
-  placeholder="شناسه"
-  [(ngModel)]="newFilterModel.iD"
+  <div class="row d-flex align-items-center">
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+      placeholder="شناسه"
+      [(ngModel)]="newFilterModel.iD"
+    />
+    <span
+      *ngIf="filterHolder.iD"
+      (click)="newFilterModel.iD = null; startFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+      placeholder="ایدی کاربر"
+      [(ngModel)]="newFilterModel.userID"
+    />
 
-/>
-<span
-  *ngIf="filterHolder.iD"
-  (click)="newFilterModel.iD = null;startFilter() "
-  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-  ><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
-placeholder="ایدی کاربر"
-[(ngModel)]="newFilterModel.userID"
-/>
+    <span
+      *ngIf="filterHolder.userID"
+      (click)="newFilterModel.userID = null; startFilter()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
 
- 
-<span
-*ngIf="filterHolder.userID"
-(click)="newFilterModel.userID = null;startFilter() "
-    class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-    ><span class="pi pi-times" style="font-size: 0.7rem"></span
-  ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="نام و نام خانوادگی"
+      [(ngModel)]="newFilterModel.name"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.name"
+      (click)="newFilterModel.name = null; startFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="ایمیل"
+      [(ngModel)]="newFilterModel.email"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
+      *ngIf="filterHolder.email"
+      (click)="newFilterModel.email = null; startFilter()"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
 
-
-  <input
-  type="text"
-  class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-  placeholder="نام و نام خانوادگی"
-  [(ngModel)]="newFilterModel.name"
-/>
-<span
-  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.name"
-(click)="newFilterModel.name = null;startFilter()"
-  ><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="ایمیل"
-[(ngModel)]="newFilterModel.email"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
-*ngIf="filterHolder.email"
-(click)="newFilterModel.email = null;startFilter() "
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-
-
-  <button
-    type="button"
-    ngbAutofocus
-    class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
-    (click)="startFilter()"
-  >
-    <i class="i-Filter-2 text-bigger mr-2"></i>
-    <strong class="text-small">فیلتر </strong>
-  </button>
-</div></div>
-
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
+      (click)="startFilter()"
+    >
+      <i class="i-Filter-2 text-bigger mr-2"></i>
+      <strong class="text-small">فیلتر </strong>
+    </button>
+  </div>
+</div>
 
 <div class="my-css d-flex flex-wrap w-100" *ngIf="pageIsLoad">
   <div
@@ -163,11 +155,6 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
         <p class="text-white">
           {{ item.text }}
         </p>
-        <ng-container *ngIf="item.parentID !== null">
-          <p class="bg-dark text-white ml-3">
-            پاسخ:{{ item.parentComment.text }}
-          </p>
-        </ng-container>
       </div>
     </div>
   </div>

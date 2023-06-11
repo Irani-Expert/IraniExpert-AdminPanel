@@ -330,9 +330,12 @@
             <td class="text-center">{{ item.timeModeTitle }}</td>
             <td class="text-center">{{ item.frequencyTitle }}</td>
             <td class="text-center">
-              <a href="https://{{ item.source_Url }}" target="blank">{{
-                item.source_Url
-              }}</a>
+              <a
+                (click)="denyOpeningModal()"
+                href="https://{{ item.source_Url }}"
+                target="blank"
+                >{{ item.source_Url }}</a
+              >
             </td>
           </tr>
           <tr class="spacer">
@@ -619,6 +622,7 @@
     <div class="d-flex flex-grow-1"></div>
     <div class="modal-footer border-0">
       <button
+        *appCanAccess="'Calendar-Event-Edit'"
         (click)="putEvent()"
         type="button"
         class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"

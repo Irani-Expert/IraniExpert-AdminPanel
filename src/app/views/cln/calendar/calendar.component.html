@@ -5,14 +5,14 @@
 />
 <button class="btn btn-light" (click)="uploadVoice()">آپلود</button> -->
 <ul ngbNav #nav="ngbNav" class="nav-tabs p-0">
-  <li ngbNavItem>
+  <li ngbNavItem *appCanAccess="'Calendar-Events-Watch'">
     <a ngbNavLink class="text-small">رویداد های تقویم</a>
 
     <ng-template ngbNavContent>
       <app-events></app-events>
     </ng-template>
   </li>
-  <li ngbNavItem>
+  <li ngbNavItem *appCanAccess="'Calendar-Countries-Watch'">
     <a ngbNavLink class="text-small">کشور ها</a>
     <ng-template ngbNavContent><app-countries></app-countries></ng-template>
   </li>

@@ -1,12 +1,11 @@
 <button
-  *appCanAccess="'privilege-Add'"
+  *appCanAccess="'Privileges-Add'"
   type="button"
   class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
-
   (click)="addorEdit(addUpdateModal, undefined)"
 >
   <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
-</button> 
+</button>
 <div class="separator-breadcrumb border-top"></div>
 <div class="row d-md-flex flex-row justify-content-md-start">
   <div
@@ -24,12 +23,12 @@
   >
     <div class="card bg-gradient-grey order-card">
       <i
-        *appCanAccess="'privilege-Edit'"
+        *appCanAccess="'Privileges-Edit'"
         ngbTooltip="ویرایش"
         [openDelay]="0"
         [closeDelay]="50"
         (click)="addorEdit(addUpdateModal, item)"
-        class="i-Pen-5 top-left-card bg-gradient-yellow clickable-btn text-dark p-2 rounded-circle"
+        class="i-Pen-5 top-left-card bg-light clickable-btn text-dark p-2 rounded-circle"
       ></i>
       <div class="card-block">
         <div
@@ -52,9 +51,9 @@
       </div>
       <div class="">
         <button
-          *appCanAccess="'privilege-Delete'"
+          *appCanAccess="'Privileges-Delete'"
           (click)="deletePrivilege(item.id, deleteModal)"
-          class="btn d-block w-100 text-white bg-gradient-red float-right"
+          class="btn d-block w-100 text-white bg-secondary float-right"
         >
           حذف
         </button>

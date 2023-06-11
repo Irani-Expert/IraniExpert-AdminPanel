@@ -46,7 +46,9 @@
         <th>نام خانوادگی</th>
         <th>کل کمیسیون</th>
         <th>باقی مانده</th>
-        <th class="rounded--left">رسید ها</th>
+        <th *appCanAccess="'SingleCommissions-Watch'" class="rounded--left">
+          رسید ها
+        </th>
       </tr>
     </thead>
 
@@ -60,6 +62,7 @@
 
         <td class="td-oprate">
           <button
+            *appCanAccess="'SingleCommissions-Watch'"
             (click)="openModal(addReceiptModal, 'lg', item.contractID)"
             class="btn-details btn d-inline-flex justify-content-around py-btns radius align-items-center"
             type="button"
@@ -90,6 +93,7 @@
     </div>
     <div class="modal-body">
       <button
+        *appCanAccess="'Commissions-Add'"
         (click)="openModal(openDetails, 'sm')"
         class="btn btn-success text-white m-2 p-0 shadow-md"
         type="button"
@@ -330,7 +334,6 @@ font-weight: bold;"></i>
             [(ngModel)]="addReceiptModel.description"
             [formControl]="addRedeiptForm.controls['description']"
             maxlength="500"
-            
           >
           </textarea>
         </div>
@@ -338,6 +341,7 @@ font-weight: bold;"></i>
     </div>
     <div class="modal-footer">
       <button
+        *appCanAccess="'Commissions-Edit'"
         type="button"
         class="btn bg-white btn-rounded"
         (click)="modal.close(true)"
