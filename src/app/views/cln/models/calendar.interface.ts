@@ -23,4 +23,5 @@ export interface ICalendar {
   code: string;
   currency: string;
   codeFlag: string;
+  secondName: string;
 }

@@ -26,4 +26,5 @@ export class CalendarModel implements ICalendar {
   code: string;
   currency: string;
   codeFlag: string;
+  secondName: string;
 }

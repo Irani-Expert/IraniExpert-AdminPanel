@@ -308,10 +308,19 @@
             class="cursor-pointer"
           >
             <td>
-              <span class="fi" [ngClass]="'fi-' + item.codeFlag"></span>&nbsp;
-              {{ item.currency }}
+              <span
+                class="fi"
+                [ngClass]="'fi-' + item.codeFlag"
+                style="font-size: 2rem; border-radius: 6px"
+              ></span
+              >&nbsp;
+              <span>{{ item.currency }}</span>
             </td>
-            <td>{{ item.name }}</td>
+            <td>
+              <span> {{ item.name }}</span>
+              <br />
+              <span> {{ item.secondName }}</span>
+            </td>
             <td>
               <span class="d-inline-flex align-items-center">
                 <span
@@ -369,24 +378,26 @@
         <span class="d-inline-flex align-items-center">
           <span class="pi pi-circle-fill text-dark text-bigger"></span>&nbsp;
         </span>
-        <input
-          (click)="onFocusIn()"
-          type="text"
-          class="form-control-sm radius w-75 text-small disabled-title-input"
-          *ngIf="!changing"
-          value="{{ eventNameHolder }}"
-        />
-        <input
-          value="{{ eventNameHolder }}"
-          [(ngModel)]="eventDetails.name"
-          autocomplete="off"
-          *ngIf="changing"
-          type="text"
-          id="enabledInput"
-          (focusout)="onFocusOut()"
-          class="form-control-sm radius w-75 text-small enabled-title-input"
-        />
-        <div class="d-block">
+        <ng-container *appCanAccess="'Calendar-Event-Edit'">
+          <input
+            (click)="onFocusIn()"
+            type="text"
+            class="form-control-sm radius w-75 text-small disabled-title-input"
+            *ngIf="!changing"
+            value="{{ eventNameHolder }}"
+          />
+          <input
+            value="{{ eventNameHolder }}"
+            [(ngModel)]="eventDetails.name"
+            autocomplete="off"
+            *ngIf="changing"
+            type="text"
+            id="enabledInput"
+            (focusout)="onFocusOut()"
+            class="form-control-sm radius w-75 text-small enabled-title-input"
+          />
+        </ng-container>
+        <div class="d-block" *appCanAccess="'Calendar-Event-Edit'">
           <span
             *ngIf="changing"
             ngbTooltip="انصراف"
@@ -420,6 +431,17 @@
       </button>
     </div>
     <div class="modal-body">
+      <input
+        *appCanAccess="'Calendar-Event-Edit'"
+        class="text-small form-control radius col-10 mb-3"
+        type="text"
+        [placeholder]="
+          eventDetails.secondName
+            ? eventDetails.secondName
+            : 'نام ثانویه تعریف نشده است'
+        "
+        [(ngModel)]="eventDetails.secondName"
+      />
       <div class="d-flex flex-row flex-wrap">
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
@@ -620,9 +642,8 @@
     </div>
 
     <div class="d-flex flex-grow-1"></div>
-    <div class="modal-footer border-0">
+    <div class="modal-footer border-0" *appCanAccess="'Calendar-Event-Edit'">
       <button
-        *appCanAccess="'Calendar-Event-Edit'"
         (click)="putEvent()"
         type="button"
         class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"
