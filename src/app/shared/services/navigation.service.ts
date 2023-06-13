@@ -57,7 +57,7 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Home1',
       state: '/dashboard/v1',
-      privilege: 'Dashboard-Full Premission',
+      privilege: 'Dashboard-Full',
     },
     {
       name: 'پروفایل من',

@@ -86,21 +86,19 @@ export class UserPrivilegeComponent implements OnInit {
     if (row.id === 0) {
       await this._userPrivilageService
         .create(row, 'UserPrivilege')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
           }
-        );
+        });
     }
   }
   setPage(pageInfo: number) {
@@ -130,9 +128,8 @@ export class UserPrivilegeComponent implements OnInit {
     );
   }
   async getPrivilageList() {
-    this._privilegeService.get(0, 100, 'ID', null, 'Privilege').subscribe(
+    this._privilegeService.get(0, null, 'ID', null, 'Privilege').subscribe(
       (res: Result<Paginate<PrivilegeModel[]>>) => {
-
         this.privilages = [];
         res.data.items.forEach((it) => {
           it.child = new Array<PrivilegeModel>();
@@ -141,16 +138,12 @@ export class UserPrivilegeComponent implements OnInit {
           );
           //let x=res.data.items.findIndex(index=>index.parentID==it.id)
           it.child.forEach((y) => {
-            var finder=this.privilages.findIndex((ide) => ide.id == y.id)
-            if(finder!=-1){
-              this.privilages.splice(
-                finder,
-                1
-              );
+            var finder = this.privilages.findIndex((ide) => ide.id == y.id);
+            if (finder != -1) {
+              this.privilages.splice(finder, 1);
             }
-         
           });
-          
+
           this.privilages.push(it);
         });
         this.page.totalElements = res.data.totalCount;
@@ -195,7 +188,6 @@ export class UserPrivilegeComponent implements OnInit {
                 });
               }
               //this.getUserPrivilegeList(this.page.pageNumber, this.page.size);
-            
             });
         },
         (error) => {
@@ -342,52 +334,46 @@ export class UserPrivilegeComponent implements OnInit {
   async createOrUpdateRole(row: RoleModel) {
     if (row.id === 0) {
       row.title = row.name;
-      await this._roleService
-        .create(row, 'aspnetrole')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-             this.getRoleList()
-              // row.id = this.roles[0].id + 1;
-              // this.roles.unshift(row);
+      await this._roleService.create(row, 'aspnetrole').subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.getRoleList();
+          // row.id = this.roles[0].id + 1;
+          // this.roles.unshift(row);
 
-              this.addForm.reset();
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          }
-        );
+          this.addForm.reset();
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     } else {
       row.title = row.name;
       await this._roleService
         .update(row.id, row, 'aspnetrole')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
 
-              let rowIndexForUpdate = this.roles.findIndex(
-                (item) => item.id === row.id
-              );
-              this.roles[rowIndexForUpdate] = row;
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
+            let rowIndexForUpdate = this.roles.findIndex(
+              (item) => item.id === row.id
+            );
+            this.roles[rowIndexForUpdate] = row;
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
           }
-        );
+        });
     }
   }
   roleNameEdit(content: any, row: RoleModel) {
@@ -414,33 +400,28 @@ export class UserPrivilegeComponent implements OnInit {
         }
       );
   }
-  removerole(roleId:number,changeParentModal:any){
+  removerole(roleId: number, changeParentModal: any) {
     this.modalService
-    .open(changeParentModal, {
-      ariaLabelledBy: 'modal-basic-title',
-      centered: false,
-      size: 'xs',
-    })
-    .result.then(
-      (accept) => {
-        if (accept) {
-          this._roleService
-          .delete(roleId, 'aspnetrole')
-          .subscribe(
-            (data) => {
-            if(data.success){
-            let remove= this.roles.findIndex(x=> x.id===roleId)
-              this.roles.splice(remove,1)
-            }             
-            }
-          );
+      .open(changeParentModal, {
+        ariaLabelledBy: 'modal-basic-title',
+        centered: false,
+        size: 'xs',
+      })
+      .result.then(
+        (accept) => {
+          if (accept) {
+            this._roleService.delete(roleId, 'aspnetrole').subscribe((data) => {
+              if (data.success) {
+                let remove = this.roles.findIndex((x) => x.id === roleId);
+                this.roles.splice(remove, 1);
+              }
+            });
+          }
+        },
+        (reject) => {
+          console.log(reject.message);
         }
-      },
-      (reject) => {
-        console.log(reject.message);
-      }
-    );
-  
+      );
   }
   //   )
 }
