@@ -131,7 +131,7 @@ export class UserNeedComponent implements OnInit {
 
   setPage(pageInfo: number, userWant: number) {
     this.page.pageNumber = pageInfo;
-    debugger
+    
     this.getUserNeedByUserWant(userWant, pageInfo);
   }
 
