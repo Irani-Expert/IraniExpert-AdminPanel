@@ -428,6 +428,16 @@ this.getData()
         (res: Result<Paginate<UserNeedModel[]>>) => {
           
           this.rows = res.data.items;
+          
+          this.rows.forEach(x=>{
+            x.createDate= moment(
+              x.createDate,
+              'YYYY/MM/DD'
+            )
+            .locale('fa')
+            .format('YYYY/MM/DD');
+            
+          })
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages - 1;
           this.page.pageNumber = res.data.pageNumber + 1;
