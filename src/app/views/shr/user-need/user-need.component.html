@@ -395,6 +395,8 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       <div
         class="mb-2 card-footer bg-gray d-flex justify-content-end flex-wrap"
       >
+      <div class="col-2 d-flex justify-content-center align-items-center" >
+        <!-- <div class=" btn-light col-6 py-btns radius  d-flex justify-content-center align-items-center">2</div> --></div>
         <button
           type="button"
           class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
@@ -485,6 +487,14 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 
     <div></div>
   </div> -->
+  <div class="col-md-12 mt-3" >
+    <pagination-controls  *ngIf="page.totalElements > page.size"
+      (pageChange)="setPage($event,null)"
+      previousLabel=""
+      nextLabel=""
+      responsive="true"
+    ></pagination-controls>
+  </div>
 </div>
 
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
