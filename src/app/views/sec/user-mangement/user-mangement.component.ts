@@ -362,12 +362,16 @@ export class UserMangementComponent implements OnInit {
     roleIdSaver: number,
     userType: string
   ) {
+    if(roleIdSaver!=null){
+      this.roleIdSaver=roleIdSaver
+    }
     pageNumber = pageNumber - 1;
     if (userType != null) {
       this.userType = userType;
     }
     this.filteredItems(this.filterData);
     this.roleKeeper = [];
+    debugger
     this._usersService.getUserByFilter(pageNumber,pageSize,this.filterData,null,roleIdSaver).subscribe((data) => {
     this.rows=[]
       this.rows=data['data'].items
@@ -376,7 +380,7 @@ export class UserMangementComponent implements OnInit {
       .locale('fa')
       .format('YYYY/MM/DD');
     })
-    
+    this.page.pageNumber=data['data'].pageNumber+1
     this.page.totalElements=data['data'].totalCount
     
     });

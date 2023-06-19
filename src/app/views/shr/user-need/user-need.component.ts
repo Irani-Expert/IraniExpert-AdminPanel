@@ -131,6 +131,7 @@ export class UserNeedComponent implements OnInit {
 
   setPage(pageInfo: number, userWant: number) {
     this.page.pageNumber = pageInfo;
+    
     this.getUserNeedByUserWant(userWant, pageInfo);
   }
 
@@ -165,7 +166,7 @@ export class UserNeedComponent implements OnInit {
         this.dropDownTitleHolder = item.title;
       }
     });
-this.startFilter()
+this.getData()
     // this._UserNeedService
     //   .getByStatus(12, pageNumber !== 0 ? pageNumber - 1 : pageNumber, userWant)
     //   .subscribe(
@@ -390,8 +391,8 @@ this.startFilter()
   * 
   * 
   */
-
-  startFilter() {
+  startFilter(){
+    this.page.pageNumber = 0;
     if (this.fromCreateDate!=null) {
       this.filterModel.fromCreateDate =
         this.fromCreateDate.year +
@@ -408,6 +409,10 @@ this.startFilter()
         '-' +
         this.toCreateDate.day;
     }
+    this.getData()
+  }
+  getData() {
+  
     this.filteredItems(this.filterModel)
 
     this._UserNeedService
@@ -421,7 +426,21 @@ this.startFilter()
       )
       .subscribe(
         (res: Result<Paginate<UserNeedModel[]>>) => {
+          
           this.rows = res.data.items;
+          
+          this.rows.forEach(x=>{
+            x.createDate= moment(
+              x.createDate,
+              'YYYY/MM/DD'
+            )
+            .locale('fa')
+            .format('YYYY/MM/DD');
+            
+          })
+          this.page.totalElements = res.data.totalCount;
+          this.page.totalPages = res.data.totalPages - 1;
+          this.page.pageNumber = res.data.pageNumber + 1;
           this.filterExecutedModel = { ...this.filterModel };
 
           /*
@@ -543,7 +562,7 @@ this.startFilter()
 
     this.filterModel = { ...this.filterExecutedModel };
 
-    this.startFilter();
+    this.getData();
   }
   filteredItems(filter: FilterModel) {
     this.filterHolder = { ...filter };

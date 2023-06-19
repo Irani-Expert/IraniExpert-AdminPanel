@@ -68,6 +68,7 @@ export class PlanComponent implements OnInit {
     this._planService.getPlanByProductId(this.productId).subscribe(
       (res: Result<PlanModel[]>) => {
         this.rows = res.data;
+        
       },
       (_error) => {
         this.toastr.error(

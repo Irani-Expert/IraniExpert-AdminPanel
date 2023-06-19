@@ -9,4 +9,5 @@ export class UserNeedModel extends Base implements IUserNeed {
   text: string;
   userWant: number;
   createDate:string;
+  jalaliDate: any;
 }

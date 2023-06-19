@@ -34,7 +34,7 @@
           class="text-left btn"
           ngbDropdownItem
           *ngFor="let item of roles"
-          (click)="getUsersList(page.pageNumber, page.size, item.id, item.name)"
+          (click)="getUsersList(1, page.size, item.id, item.name)"
         >
           <strong>{{ item.name }}</strong>
         </button>

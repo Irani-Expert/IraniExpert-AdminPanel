@@ -18,7 +18,13 @@
 <div
   class="d-flex flex-row flex-wrap align-items-start justify-content-lg-start justify-content-center"
 >
-  <div class="col-lg-3 col-md-6 col-sm-8 col-12" *ngFor="let item of rows">
+  <div class="col-lg-3 col-md-6 col-sm-8 col-12" *ngFor="let item of rows| paginate
+  : {
+      itemsPerPage: page.size,
+      page: page.pageNumber,
+      currentPage: page.pageNumber,
+      totalItems: page.totalElements
+    }">
     <div class="card bg-dark mb-2">
       <div class="card-body">
         <div class="bg-secondary w-100 rounded-top rounded-bottom">
@@ -121,14 +127,14 @@
       </div>
     </div>
   </div>
-  <!-- <div class="col-md-12 mt-3" *ngIf="page.totalElements > page.size">
+   <div class="col-md-12 mt-3" *ngIf="page.totalElements > page.size">
     <pagination-controls
       (pageChange)="setPage($event)"
       previousLabel=""
       nextLabel=""
       responsive="true"
     ></pagination-controls>
-  </div> -->
+  </div>
 </div>
 <div *ngIf="rows?.length == 0" class="d-flex justify-content-center">
   <img
