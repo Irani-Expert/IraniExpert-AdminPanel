@@ -71,7 +71,7 @@ export class FileUploaderService {
       this._httpOptions
     );
   }
-  uploadVoice(_blob: Blob, folder: string) {
+  upload(_blob: Blob, folder: string) {
     const formData = new FormData();
     formData.append('_file', _blob, 'file.mp3');
     return this._http.post<Result<string[]>>(

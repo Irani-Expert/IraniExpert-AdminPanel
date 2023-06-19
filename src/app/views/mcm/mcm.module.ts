@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { McmRoutingModule } from './mcm.routing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -13,19 +13,22 @@ import { VideoPlayerComponent } from 'src/app/shared/components/video-player/vid
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FileSizePipe } from 'src/app/shared/pipes/file-size.pipe';
 import { AudioPlayerComponent } from 'src/app/shared/components/audio-player/audio-player.component';
-// import { MediaListComponent } from './media-list/media-list.component';
+import { MediaComponent } from './media/media.component';
+import { StationsComponent } from './stations/stations.component';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 @NgModule({
   declarations: [
-    // MediaListComponent
+    MediaComponent,
     UploadCenterComponent,
     VideoPlayerComponent,
     FileSizePipe,
     AudioPlayerComponent,
+    StationsComponent,
   ],
   imports: [
     CommonModule,
-
+    DragScrollModule,
     ImageCropperModule,
     McmRoutingModule,
     NgxPaginationModule,
@@ -37,5 +40,7 @@ import { AudioPlayerComponent } from 'src/app/shared/components/audio-player/aud
     NgxSpinnerModule,
   ],
   providers: [FileUploaderService],
+
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class McmModule {}
