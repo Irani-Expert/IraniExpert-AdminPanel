@@ -169,15 +169,35 @@
         </div>
 
         <div class="col-md-6 form-group mb-3">
-          <label for="videoUrl">آدرس اینترنتی ویدیو</label>
+          <label for="videoUrl">فایل ویدئو</label>
           <input
-            type="text"
-            class="form-control form-control-rounded"
+            type="file"
+            class="text-small d-block"
             id="videoUrl"
-            placeholder="ویدیو مورد نظر را وارد کنید "
-            [formControl]="addForm.controls['videoUrl']"
-            [(ngModel)]="addUpdate.videoUrl"
+            placeholder="ویدیو مورد نظر را انتخاب کنید "
+            (change)="this.isFileValid = videoChangePath($event)"
           />
+          <button
+            [disabled]="!isFileValid"
+            *ngIf="progress == 0"
+            class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
+            (click)="uploadVideo()"
+          >
+            <i class="i-Upload text-dark text-bigger mr-3"></i>
+            <strong class="text-small">آپلود</strong>
+          </button>
+          <div
+            *ngIf="progress > 0 && progress < 100"
+            class="progress bg-progress-container radius-progress m-2 flex-grow-1"
+            style="height: 32px"
+          >
+            <div
+              class="progress-bar bg-progressbar radius-progress pl-1"
+              [style.width]="progress + '%'"
+            >
+              {{ progress }}%
+            </div>
+          </div>
         </div>
 
         <div class="col-md-6 form-group mb-3">

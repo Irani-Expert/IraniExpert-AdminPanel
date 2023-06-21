@@ -93,7 +93,7 @@ export class UploadCenterComponent implements OnInit {
     },
   ];
   selectedTypeIdentifier: number;
-  sessionIdentiftier: number = 1;
+  sessionIdentiftier: number = 3;
   session = [
     {
       title: 'نوع فایل مورد نظر را انتخاب کنید',

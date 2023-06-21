@@ -121,3 +121,19 @@ input[type="file"]::file-selector-button:hover {
 .custom-border {
   border-left: 1px solid #e5d5f6;
 }
+.img-aspect {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  padding: 15px;
+  border-radius: 6px;
+  background-color: #cececfe8;
+}
+.drag-scroll {
+  height: inherit;
+  width: 100%;
+}
+.selected {
+  border: 1px solid #1b25e2 !important;
+}

@@ -11,6 +11,7 @@ import { Subscription, map, scan, takeWhile, tap } from 'rxjs';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ViewportScroller } from '@angular/common';
+import { Page } from 'src/app/shared/models/Base/page';
 
 @Component({
   selector: 'app-stations',
@@ -18,6 +19,9 @@ import { ViewportScroller } from '@angular/common';
   styleUrls: ['./stations.component.scss'],
 })
 export class StationsComponent implements OnInit {
+  imgToDelete: string;
+  stationToDeleteId: number;
+  page: Page = new Page();
   imgHolder: string;
   valueChanged: boolean = false;
   stationImg: any;
@@ -50,9 +54,15 @@ export class StationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mcmService
-      .getStations(0, 10)
-      .subscribe((res) => (this.stationsList = res.data.items));
+    this.getStationList();
+  }
+  getStationList() {
+    this.mcmService.getStations(0, null).subscribe((res) => {
+      this.stationsList = res.data.items;
+      this.page.size = 10;
+      this.page.totalElements = res.data.totalCount;
+      this.page.totalPages = res.data.totalPages;
+    });
   }
   openModal(content, event) {
     this.imgChangeEvt = event;
@@ -160,7 +170,9 @@ export class StationsComponent implements OnInit {
         }
       });
   }
-  deleteModal(content, type) {
+  deleteModal(content, type: string, item: StationModel) {
+    this.stationToDeleteId = item.id;
+    this.imgToDelete = item.cardImagePath;
     this.modalService
       .open(content, {
         centered: true,
@@ -176,21 +188,19 @@ export class StationsComponent implements OnInit {
       });
   }
   async deleteFile() {
-    this.uploaderService
-      .deleteFile(this.station.cardImagePath)
-      .subscribe((res) => {
-        if (res.success) {
-          this.station.cardImagePath = undefined;
-          this.imgChangeEvt = '';
-          this.toastr.success(res.message, '', {
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          this.toastr.error(res.message, '', {
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
+    this.uploaderService.deleteFile(this.imgToDelete).subscribe((res) => {
+      if (res.success) {
+        this.station.cardImagePath = undefined;
+        this.imgChangeEvt = '';
+        this.toastr.success(res.message, '', {
+          positionClass: 'toast-top-left',
+        });
+      } else {
+        this.toastr.error(res.message, '', {
+          positionClass: 'toast-top-left',
+        });
+      }
+    });
   }
   async confirm(type: string) {
     if (type === 'add') {
@@ -222,6 +232,11 @@ export class StationsComponent implements OnInit {
     this.mcmService.create(this.station, 'Station').subscribe(
       (res) => {
         if (res.success) {
+          this.addForm.controls['title'].setValue('');
+          this.addForm.controls['code'].setValue('');
+          this.imgChangeEvt = '';
+          this.isFileCropped = false;
+          this.getStationList();
           this.modalService.dismissAll('OK');
           this.toastr.success(res.message, null, {
             positionClass: 'toast-top-left',
@@ -243,6 +258,7 @@ export class StationsComponent implements OnInit {
     this.mcmService.update(this.station.id, this.station, 'Station').subscribe(
       (res) => {
         if (res.success) {
+          this.getStationList();
           this.modalService.dismissAll('OK');
           this.toastr.success(res.message, null, {
             positionClass: 'toast-top-left',
@@ -261,9 +277,14 @@ export class StationsComponent implements OnInit {
     );
   }
   deleteStation() {
-    this.mcmService.delete(this.station.id, 'Station').subscribe(
+    this.mcmService.delete(this.stationToDeleteId, 'Station').subscribe(
       (res) => {
         if (res.success) {
+          if (this.station.id == this.stationToDeleteId) {
+            this.station = new StationModel();
+          }
+          this.getStationList();
+
           this.modalService.dismissAll('OK');
           this.toastr.success(res.message, null, {
             positionClass: 'toast-top-left',

@@ -55,21 +55,26 @@
           "
         />
       </div>
-      <div class="img-container" *ngIf="station.id && !isFileCropped">
+      <div class="img-container" *ngIf="station.id">
         <img
           class="cursor-pointer"
           (click)="showPicture(imgFullScreen)"
-          [src]="'https://dl.iraniexpert.com/' + station.cardImagePath"
+          [src]="
+            station.cardImagePath
+              ? 'https://dl.iraniexpert.com/' + station.cardImagePath
+              : filePreview
+          "
           alt="
             
                پیش نمایش عکس
           "
         />
         <button
+          *ngIf="station.cardImagePath"
           ngbTooltip="حذف تصویر"
           type="button"
           class="btn-delete btn d-flex justify-content-around p-1 radius align-items-center my-2"
-          (click)="deleteModal(deleteConfirmationModal, 'img')"
+          (click)="deleteModal(deleteConfirmationModal, 'img', station)"
         >
           <span class="pi pi-trash"></span>
         </button>
@@ -148,8 +153,8 @@
               class="d-flex flex-row flex-wrap justify-content-around align-items-center"
             >
               <button
-                [disabled]="station.id == item.id"
-                (click)="deleteModal(deleteConfirmationModal, 'record')"
+                [disabled]="station.id == item.id && station.cardImagePath"
+                (click)="deleteModal(deleteConfirmationModal, 'record', item)"
                 type="button"
                 class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
               >
