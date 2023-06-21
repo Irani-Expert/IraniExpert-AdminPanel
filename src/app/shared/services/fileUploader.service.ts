@@ -72,8 +72,9 @@ export class FileUploaderService {
     );
   }
   upload(_blob: Blob, folder: string) {
+    let type = _blob.type.split('/');
     const formData = new FormData();
-    formData.append('_file', _blob, 'file.mp3');
+    formData.append('_file', _blob, `file.${type[1]}`);
     return this._http.post<Result<string[]>>(
       this.uploardUrl + '?folder=' + folder,
       formData,
