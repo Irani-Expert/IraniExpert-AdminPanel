@@ -109,6 +109,7 @@ export class AllCommissionComponent implements OnInit {
       });
   }
   descriptionfunc(content: any, description: string) {
+  
     this.descriptionText = description;
   
 
@@ -124,6 +125,7 @@ export class AllCommissionComponent implements OnInit {
     }
   }
   openModal(content: any, modalsize: string, contractId: number) {
+    
     if (modalsize != 'lg') {
       this.ChangeBackdrop = true;
 
