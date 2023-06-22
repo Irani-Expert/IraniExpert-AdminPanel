@@ -1,0 +1,41 @@
+<ul ngbNav #nav="ngbNav" class="nav-tabs p-0">
+  <li ngbNavItem>
+    <a ngbNavLink class="text-small"
+      ><span class="d-flex align-items-center"
+        ><span class="pi pi-list text-bigger"></span>&nbsp;&nbsp;&nbsp;<span
+          class="text-small"
+          >لیست فایل ها</span
+        ></span
+      ></a
+    >
+
+    <ng-template ngbNavContent>
+      <!-- <app-media-list></app-media-list> -->
+    </ng-template>
+  </li>
+
+  <li ngbNavItem>
+    <a ngbNavLink class="text-small"
+      ><span class="d-flex align-items-center"
+        ><span class="pi pi-upload text-bigger"></span>&nbsp;&nbsp;&nbsp;<span
+          class="text-small"
+          >آپلود فایل</span
+        ></span
+      ></a
+    >
+    <ng-template ngbNavContent
+      ><app-upload-center></app-upload-center
+    ></ng-template>
+  </li>
+
+  <li ngbNavItem>
+    <a ngbNavLink class="text-small"
+      ><span class="d-flex align-items-center"
+        ><span class="pi pi-map-marker text-bigger"></span
+        >&nbsp;&nbsp;&nbsp;<span class="text-small">جایگاه ها</span></span
+      ></a
+    >
+    <ng-template ngbNavContent><app-stations></app-stations></ng-template>
+  </li>
+</ul>
+<div [ngbNavOutlet]="nav"></div>

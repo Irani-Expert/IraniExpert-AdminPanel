@@ -1,0 +1,86 @@
+.spacer {
+  margin: 1.3rem;
+}
+ul {
+  padding-inline-start: 10px !important;
+  margin-block-end: 0px !important;
+}
+.header-border-bottom {
+  border-bottom: 2px solid #341d87;
+}
+input[type="file"] {
+  display: block;
+  color: #444;
+  padding: 5px;
+  background: #eff8fb;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+}
+// Input Button File
+input[type="file"]::file-selector-button {
+  margin-right: 4px;
+  border: none;
+  background: #5e6a69;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+input[type="file"]::file-selector-button:hover {
+  background: #4a5352;
+}
+input[type="text"] {
+  color: #444;
+  padding: 22px;
+  background: #eff8fb;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+  transition: all 400ms ease-in-out;
+}
+.border-card {
+  border: 0.7px solid #d7e3e0;
+}
+.img-container {
+  margin-right: 26px;
+  width: 200px;
+  height: auto;
+}
+.img-container img {
+  border-radius: 6px;
+  width: 100%;
+}
+.custom-close-btn {
+  color: #b2dbd5 !important;
+  position: absolute;
+  top: -26px;
+  right: -26px;
+}
+.add-modal-card {
+  background-color: #eff8fb;
+  border: 1px solid #efefef;
+}
+.item--card {
+  border: 1px solid #efefef;
+  display: inline-flex;
+  transition: all 400ms ease-in-out;
+}
+.img-aspect {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  padding: 15px;
+  border-radius: 6px;
+  background-color: #cececfe8;
+}
+.drag-scroll {
+  height: inherit;
+  width: 100%;
+}
+.border-on-change {
+  border: 1px solid #1b25e2 !important;
+}
+.selected {
+  border: 1px solid #4ed7d1 !important;
+}

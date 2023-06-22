@@ -1,0 +1,334 @@
+<div id="target"></div>
+<div class="bg-white px-2 py-3 radius shadow border-card">
+  <span
+    ><strong
+      *ngIf="station.id == undefined"
+      class="text-primary ml-2 header-border-bottom"
+      style="font-size: 1.3rem"
+      >ایجاد</strong
+    >
+    <strong
+      *ngIf="station.id"
+      class="text-primary ml-2 header-border-bottom"
+      style="font-size: 1.3rem"
+      >ویرایش</strong
+    >
+  </span>
+  <form [formGroup]="addForm">
+    <div
+      class="d-flex flex-row justify-content-start flex-wrap align-items-center"
+    >
+      <ng-container *ngFor="let item of controls; let i = index">
+        <div class="flex-grow-0 spacer">
+          <label [for]="item.for" class="text-small" [hidden]="i == 2">{{
+            item.name
+          }}</label>
+          <input
+            [ngClass]="{ 'border-on-change shadow': valueChanged }"
+            autocomplete="off"
+            formControlName="{{ item.for }}"
+            type="text"
+            [id]="item.for"
+            placeholder=""
+            [hidden]="i == 2"
+            class="form-control radius text-small"
+          />
+        </div>
+      </ng-container>
+      <div class="flex-grow-0 spacer">
+        <label for="files" class="text-small">عکس جایگاه</label>
+        <input
+          type="file"
+          class="text-small"
+          id="files"
+          (change)="openModal(imgCropper, $event)"
+        />
+      </div>
+      <div class="img-container" *ngIf="isFileCropped && !station.id">
+        <img
+          class="cursor-pointer"
+          (click)="showPicture(imgFullScreen)"
+          [src]="filePreview"
+          alt="
+            
+               پیش نمایش عکس
+          "
+        />
+      </div>
+      <div class="img-container" *ngIf="station.id">
+        <img
+          class="cursor-pointer"
+          (click)="showPicture(imgFullScreen)"
+          [src]="
+            station.cardImagePath
+              ? 'https://dl.iraniexpert.com/' + station.cardImagePath
+              : filePreview
+          "
+          alt="
+            
+               پیش نمایش عکس
+          "
+        />
+        <button
+          *ngIf="station.cardImagePath"
+          ngbTooltip="حذف تصویر"
+          type="button"
+          class="btn-delete btn d-flex justify-content-around p-1 radius align-items-center my-2"
+          (click)="deleteModal(deleteConfirmationModal, 'img', station)"
+        >
+          <span class="pi pi-trash"></span>
+        </button>
+      </div>
+    </div>
+    <div class="spacer mt-1 mb-0">
+      <div>
+        <button
+          (click)="editOrCreateModal(addUpdateModal, station.id)"
+          type="button"
+          class="btn-save btn d-inline-flex justify-content-around py-btns radius m-1"
+        >
+          <span class="pi pi-check mr-2"></span><strong>ثبت</strong>
+        </button>
+        <button
+          *ngIf="station.id"
+          (click)="resetForm()"
+          [disabled]="station.cardImagePath == undefined"
+          type="button"
+          class="btn-filters btn d-inline-flex justify-content-around py-btns radius m-1"
+        >
+          <span class="pi pi-times mr-2"></span><strong>انصراف</strong>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="bg-white px-2 py-3 radius shadow border-card mt-2">
+  <span
+    ><strong
+      class="text-primary ml-2 header-border-bottom"
+      style="font-size: 1.3rem"
+      >لیست جایگاه ها</strong
+    ></span
+  >
+
+  <drag-scroll style="width: 100%; height: auto; cursor: grab">
+    <ng-container *ngFor="let item of stationsList; let indexOfStation = index">
+      <div
+        [ngClass]="{ 'selected shadow': station.id == item.id }"
+        class="d-inline-flex flex-wrap col-8 col-md-4 col-lg-2 radius shadow-sm p-4 m-lg-4 m-2 m-sm-3 item--card"
+      >
+        <img
+          [src]="'https://dl.iraniexpert.com/' + item.cardImagePath"
+          class="img-aspect shadow"
+          alt=""
+        />
+        <hr class="w-100 d-block mt-2 mb-2" />
+        <ul class="list-unstyled w-100 mt-2">
+          <ng-container
+            *ngFor="let key of controls.slice().reverse(); let counter = index"
+            ><li class="list-item mb-3">
+              <span
+                placement="right"
+                ngbTooltip="{{ key.name }}"
+                class="d-flex flex-wrap align-items-center justify-content-start"
+                ><span
+                  class="d-inline-flex pi mr-2 p-2 bg-light rounded-circle"
+                  [ngClass]="{
+                    'pi-tag': counter == 2,
+                    'pi-key': counter == 1,
+                    'pi-info': counter == 0
+                  }"
+                ></span>
+                <span class="text-small">{{ item[key.for] }}</span></span
+              >
+              <hr
+                class="w-100 d-block my-2 mx-0"
+                *ngIf="counter !== controls.length - 1"
+              />
+            </li>
+          </ng-container>
+          <li class="list-item">
+            <div
+              class="d-flex flex-row flex-wrap justify-content-around align-items-center"
+            >
+              <button
+                [disabled]="station.id == item.id && station.cardImagePath"
+                (click)="deleteModal(deleteConfirmationModal, 'record', item)"
+                type="button"
+                class="btn-delete btn d-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+              >
+                <span class="pi pi-trash mr-2"></span>
+                <strong class="text-small">حذف</strong>
+              </button>
+              <button
+                (click)="fillForEdit(item); scroll()"
+                type="button"
+                class="btn-details btn d-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+              >
+                <span class="pi pi-pencil mr-2"></span>
+                <strong class="text-small">ویرایش</strong>
+              </button>
+            </div>
+          </li>
+          <!-- <li class="list-item my-2">
+            <span
+              class="d-flex flex-wrap align-items-center justify-content-start"
+              ><span class="pi pi-tag mr-1"></span>
+              <span>{{ item.title }}</span></span
+            >
+          </li>
+          <li class="list-item my-2">
+            <span
+              class="d-flex flex-wrap align-items-center justify-content-start"
+              ><span class="pi pi-tag mr-1"></span>
+              <span>{{ item.code }}</span></span
+            >
+          </li> -->
+        </ul>
+      </div>
+    </ng-container>
+  </drag-scroll>
+</div>
+
+<ng-template let-modal #imgCropper>
+  <div class="radius">
+    <div class="modal-body border-0">
+      <image-cropper
+        [maintainAspectRatio]="false"
+        [imageChangedEvent]="imgChangeEvt"
+        format="webp"
+        (imageCropped)="cropImg($event)"
+      >
+      </image-cropper>
+    </div>
+  </div>
+  <div class="modal-footer border-0">
+    <button
+      type="button"
+      class="btn-save btn d-flex justify-content-around py-btns radius align-items-center"
+      (click)="modal.close()"
+    >
+      <i class="i-Yes text-bigger mr-2"></i
+      ><strong class="text-small">تایید</strong>
+    </button>
+  </div>
+</ng-template>
+<ng-template let-modal #imgFullScreen>
+  <button
+    ngbAutoFocus
+    type="button"
+    class="close custom-close-btn"
+    aria-label="Close"
+    (click)="modal.dismiss()"
+  >
+    <span style="font-size: 2rem" aria-hidden="true">&times;</span>
+  </button>
+  <div class="radius">
+    <div class="modal-body border-0">
+      <img
+        *ngIf="station.id == undefined"
+        style="aspect-ratio: 16/10; object-fit: contain"
+        class="img-fluid"
+        [src]="filePreview"
+        alt="
+        
+           پیش نمایش عکس
+      "
+      />
+      <img
+        *ngIf="station.id"
+        style="aspect-ratio: 16/10; object-fit: contain"
+        class="img-fluid"
+        [src]="'https://dl.iraniexpert.com/' + station.cardImagePath"
+        alt="
+      
+         پیش نمایش عکس
+    "
+      />
+    </div>
+  </div>
+</ng-template>
+<ng-template let-modal #addUpdateModal>
+  <div class="radius">
+    <div class="modal-body border-0">
+      <span class="mt-1 header-border-bottom"
+        ><strong *ngIf="station.id == 0">جایگاه با مشخصات زیر ثبت میشود</strong>
+        <strong *ngIf="station.id !== 0"
+          >جایگاه به مشخصات زیر تغییر میکند</strong
+        ></span
+      >
+      <!-- Each Value -->
+      <ng-container *ngFor="let item of controls; let i = index">
+        <div *ngIf="i !== 2" class="d-flex flex-column mr-4 mb-1 mt-3">
+          <div class="d-flex align-items-center justify-content-start mb-1">
+            <span
+              class="pi pi-circle-fill text-light m-1"
+              style="font-size: 0.82rem"
+            ></span
+            ><strong class="my-1 text-small">{{ item.name }}</strong>
+          </div>
+          <span class="py-2 px-4 radius add-modal-card"
+            ><strong class="text-small">
+              {{ station[item.for] }}
+            </strong></span
+          >
+        </div>
+      </ng-container>
+      <!-- Each Value -->
+    </div>
+    <div class="modal-footer">
+      <button
+        ngbTooltip="انصراف"
+        type="button"
+        class="btn-light btn d-flex justify-content-around py-btns radius align-items-center mx-1"
+        (click)="modal.dismiss()"
+      >
+        <span class="pi pi-times"></span>
+      </button>
+      <button
+        *ngIf="station.id == 0"
+        ngbAutoFocus
+        type="button"
+        class="btn-save btn d-flex justify-content-around py-btns radius align-items-center mx-1"
+        (click)="confirm('add')"
+      >
+        <span class="pi pi-check"></span>
+      </button>
+      <button
+        *ngIf="station.id !== 0"
+        ngbAutoFocus
+        type="button"
+        class="btn-save btn d-flex justify-content-around py-btns radius align-items-center mx-1"
+        (click)="confirm('edit')"
+      >
+        <span class="pi pi-check"></span>
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template let-modal #deleteConfirmationModal>
+  <div class="radius">
+    <div class="modal-body border-0">
+      <p>آیا از حذف اطمینان دارید ؟</p>
+    </div>
+  </div>
+  <div class="modal-footer border-0">
+    <button
+      ngbTooltip="خیر"
+      type="button"
+      class="btn-light btn d-flex justify-content-around p-2 radius align-items-center mx-1"
+      (click)="modal.dismiss()"
+    >
+      <span class="pi pi-times"></span>
+    </button>
+    <button
+      ngbTooltip="حذف"
+      type="button"
+      class="btn-delete btn d-flex justify-content-around p-2 radius align-items-center mx-1"
+      (click)="modal.close()"
+    >
+      <span class="pi pi-trash"></span>
+    </button>
+  </div>
+</ng-template>

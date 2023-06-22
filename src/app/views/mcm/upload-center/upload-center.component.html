@@ -100,7 +100,7 @@
         [disabled]="!isFileValid"
         *ngIf="progress == 0"
         class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
-        (click)="uploadVoice()"
+        (click)="upload()"
       >
         <i class="i-Upload text-dark text-bigger mr-3"></i>
         <strong class="text-small">آپلود</strong>
@@ -251,6 +251,7 @@
                 class="form-control form-inputs radius text-small"
               />
             </div>
+
             <div class="d-flex flex-column flex-grow-0 m-4">
               <label for="description" class="text-small">توضیح مختصر</label>
               <input
@@ -260,6 +261,21 @@
                 placeholder=""
                 class="form-control form-inputs radius text-small"
               />
+            </div>
+            <div class="d-flex flex-column flex-grow-0 m-4">
+              <span class="text-small">جایگاه</span>
+              <drag-scroll style="width: 100%; height: auto; cursor: grab">
+                <div
+                  [ngClass]="{ 'selected shadow': station.id == item.id }"
+                  class="d-inline-flex flex-wrap radius shadow-sm p-4 m-lg-4 m-2 m-sm-3 item--card"
+                >
+                  <img
+                    src="../../../../assets/images/97434-no-data-available.png"
+                    class="img-aspect shadow"
+                    alt=""
+                  />
+                </div>
+              </drag-scroll>
             </div>
           </div>
         </form>

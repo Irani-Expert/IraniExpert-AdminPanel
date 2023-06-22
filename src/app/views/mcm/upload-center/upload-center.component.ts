@@ -93,7 +93,7 @@ export class UploadCenterComponent implements OnInit {
     },
   ];
   selectedTypeIdentifier: number;
-  sessionIdentiftier: number = 1;
+  sessionIdentiftier: number = 3;
   session = [
     {
       title: 'نوع فایل مورد نظر را انتخاب کنید',
@@ -215,10 +215,10 @@ export class UploadCenterComponent implements OnInit {
       this.steppedBack = true;
     }
   }
-  uploadVoice() {
+  upload() {
     this.progress = 1;
     this.fileUploader
-      .uploadVoice(this.file, 'audios')
+      .upload(this.file, 'audios')
       .pipe(
         map((event) => {
           if (event.type == HttpEventType.UploadProgress) {

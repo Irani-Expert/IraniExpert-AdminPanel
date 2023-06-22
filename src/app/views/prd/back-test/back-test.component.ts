@@ -7,6 +7,18 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { BackTestModel } from './back-test.model';
 import { BackTestService } from './back-test.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { NgxSpinnerService } from 'ngx-spinner';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscriber,
+  Subscription,
+  catchError,
+  map,
+  throwError,
+} from 'rxjs';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-back-test',
@@ -14,6 +26,11 @@ import { BackTestService } from './back-test.service';
   styleUrls: ['./back-test.component.scss'],
 })
 export class BackTestComponent implements OnInit {
+  isFileValid: boolean = false;
+  progress: number = 0;
+  videoFile: Blob;
+  videoName: any;
+  videoPreview: any = '';
   viewMode: 'list' | 'grid' = 'list';
   rows: BackTestModel[] = new Array<BackTestModel>();
   @Input() productId: number;
@@ -29,7 +46,9 @@ export class BackTestComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
-    private _fileUploaderService: FileUploaderService
+    private _fileUploaderService: FileUploaderService,
+    private sanitizer: DomSanitizer,
+    private loader: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +61,7 @@ export class BackTestComponent implements OnInit {
         videoUrl: [null],
         fileUrl: [null],
         cardImagePath: [null],
-        isActive: [null]
+        isActive: [null],
       },
       { validator: this.checkValidFileOrUrl }
     );
@@ -129,6 +148,71 @@ export class BackTestComponent implements OnInit {
       );
   }
 
+  // Video Downloader
+  async base64Maker(file) {
+    this.loader.show();
+    let url = URL.createObjectURL(file);
+    this.videoPreview = this.sanitizer.bypassSecurityTrustUrl(url);
+    this.loader.hide();
+  }
+  uploadVideo() {
+    this.progress = 1;
+    this._fileUploaderService
+      .upload(this.videoFile, 'backTests')
+      .pipe(
+        map((event) => {
+          if (event.type == HttpEventType.UploadProgress) {
+            this.progress = Math.round((100 * event.loaded) / event.total);
+          } else if (event.type == HttpEventType.Response) {
+            this.addUpdate.videoUrl = event.body.data[0];
+            if (event.body.success) {
+              this.toastr.success(event.body.message, '', {
+                positionClass: 'toast-top-left',
+                messageClass: 'text-small',
+              });
+              this.progress = 0;
+              this.isFileValid = false;
+            } else {
+              this.progress = 0;
+              this.toastr.success(event.body.message, '', {
+                positionClass: 'toast-top-left',
+                messageClass: 'text-small',
+              });
+            }
+          }
+        }),
+        catchError((err) => {
+          this.progress = 0;
+          this.toastr.error('آپلود با خطا مواجه شد', '', {
+            positionClass: 'toast-top-left',
+            messageClass: 'text-small',
+          });
+          return throwError(err.message);
+        })
+      )
+      .toPromise();
+  }
+  videoChangePath(event) {
+    let file = event.target.files[0];
+    let FileType = 'video/mp4|video/x-matroska';
+    let isFileAllowed = FileType.includes(file.type);
+    if (!isFileAllowed) {
+      this.toastr.show('فایل انتخابی باید ویدئو باشد', '', {
+        toastClass: 'text-small bg-danger text-white',
+        positionClass: 'toast-top-left',
+
+        timeOut: 2000,
+      });
+      return false;
+    } else {
+      this.videoName = file.name;
+      this.videoFile = new Blob([file], {
+        type: file.type,
+      });
+      this.base64Maker(file);
+      return true;
+    }
+  }
   deleteBackTest(id, modal) {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
@@ -148,14 +232,13 @@ export class BackTestComponent implements OnInit {
                   }
                 );
               } else {
-
                 this.toastr.error('خطا در حذف', res.message, {
                   timeOut: 3000,
                   positionClass: 'toast-top-left',
                 });
               }
               this.getBackTestListByProductId(this.pageIndex, this.pageSize);
-            })
+            });
         },
         (error) => {
           this.toastr.error('خطا در حذف', error.message, {
@@ -181,7 +264,10 @@ export class BackTestComponent implements OnInit {
     this.addUpdate = row;
     this.modalService
 
-      .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
+      .open(content, {
+        size: 'lg',
+        ariaLabelledBy: 'modal-basic-title',
+      })
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
@@ -190,7 +276,6 @@ export class BackTestComponent implements OnInit {
           }
         },
         (reason) => {
-          console.log('Err!', reason);
           this.addForm.reset();
         }
       );
@@ -198,46 +283,40 @@ export class BackTestComponent implements OnInit {
 
   async addOrUpdate(row: BackTestModel) {
     if (row.id === 0) {
-      await this._backtestService
-        .create(row, 'BackTest')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.rows.push(row)
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
-          },
-        );
+      await this._backtestService.create(row, 'BackTest').subscribe((data) => {
+        if (data.success) {
+          this.rows.push(row);
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
     } else {
       await this._backtestService
         .update(row.id, row, 'BackTest')
-        .subscribe(
-          (data) => {
-            var index=this.rows.findIndex(x=>x.id==row.id)
-            if(index!=-1){
-              this.rows[index]=row
-            }
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
+        .subscribe((data) => {
+          var index = this.rows.findIndex((x) => x.id == row.id);
+          if (index != -1) {
+            this.rows[index] = row;
           }
-        );
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        });
     }
 
     this.getBackTestListByProductId(this.pageIndex, this.pageIndex);
