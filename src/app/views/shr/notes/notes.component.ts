@@ -62,7 +62,6 @@ export class NotesComponent implements OnInit {
   rows: CommentModel[];
   pageIsLoad: boolean = false;
   filterModel: FilterModel = new FilterModel();
-  newFilterModel: FilterModel = new FilterModel();
   constructor(
     public _commentService: CommentService,
     private toastr: ToastrService,
@@ -93,7 +92,7 @@ export class NotesComponent implements OnInit {
         this.page.pageNumber-1,
         this.page.size,
         tableTypeId,
-        this.filterModel
+        this.filterHolder
       )
       .subscribe(
         (res: Result<Paginate<CommentModel[]>>) => {
@@ -132,14 +131,12 @@ export class NotesComponent implements OnInit {
       this.stateOfChevron === 'default' ? 'rotated' : 'default';
   }
   startFilter() {
-    this.filterModel=this.newFilterModel
-    this.filteredItems(this.filterModel )
     this._commentService
       .GetAllComment(
          0,
         this.page.size,
         this.currentTableType,
-        this.filterModel
+        this.filterHolder
       )
       .subscribe((res) => {
         this.pageIsLoad = true;
@@ -149,7 +146,17 @@ export class NotesComponent implements OnInit {
         this.page.pageNumber = res.data.pageNumber + 1;
       });
   }
+  filterButton(){
+    this.filteredItems(this.filterModel )
+    this.startFilter()
+  }
   filteredItems(filter: FilterModel) {
     this.filterHolder = { ...filter };
+  }
+  removeFilter(item:string){
+    delete this.filterHolder[item]
+    delete this.filterModel[item]
+    
+    this.startFilter()
   }
 }

@@ -89,11 +89,11 @@
       type="text"
       class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
       placeholder="شناسه"
-      [(ngModel)]="newFilterModel.iD"
+      [(ngModel)]="filterModel.iD"
     />
     <span
       *ngIf="filterHolder.iD"
-      (click)="newFilterModel.iD = null; sendFilter()"
+      (click)="removeFilter('iD')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -101,12 +101,12 @@
       type="text"
       class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
       placeholder="ایدی کاربر"
-      [(ngModel)]="newFilterModel.userID"
+      [(ngModel)]="filterModel.userID"
     />
 
     <span
       *ngIf="filterHolder.userID"
-      (click)="newFilterModel.userID = null; sendFilter()"
+      (click)="removeFilter('userID')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -115,11 +115,11 @@
       type="text"
       class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
       placeholder="ایدی محصول"
-      [(ngModel)]="newFilterModel.rowID"
+      [(ngModel)]="filterModel.rowID"
     />
     <span
       *ngIf="filterHolder.rowID"
-      (click)="filter.rowID = null; sendFilter()"
+      (click)="removeFilter('rowID')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -127,24 +127,24 @@
       type="text"
       class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
       placeholder="نام و نام خانوادگی"
-      [(ngModel)]="newFilterModel.name"
+      [(ngModel)]="filterModel.name"
     />
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.name"
-      (click)="newFilterModel.name = null; sendFilter()"
+      (click)="removeFilter('name')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <input
       type="text"
       class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
       placeholder="ایمیل"
-      [(ngModel)]="newFilterModel.email"
+      [(ngModel)]="filterModel.email"
     />
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.email"
-      (click)="newFilterModel.email = null; sendFilter()"
+      (click)="removeFilter('email')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
 
@@ -152,7 +152,7 @@
       <strong class="m-1 text-small">پذیرفته شده</strong>
       <label class="switch switch-primary mr-2 m-2">
         <strong class="text-small">عدم پذیرش</strong>
-        <input type="checkbox" [(ngModel)]="newFilterModel.isAccepted" />
+        <input type="checkbox" [(ngModel)]="filterModel.isAccepted" />
         <span class="slider"></span>
       </label>
     </div>
@@ -160,7 +160,7 @@
       type="button"
       ngbAutofocus
       class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
-      (click)="sendFilter()"
+      (click)="filterButton()"
     >
       <i class="i-Filter-2 text-bigger mr-2"></i>
       <strong class="text-small">فیلتر </strong>

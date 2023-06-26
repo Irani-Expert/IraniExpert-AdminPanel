@@ -76,7 +76,7 @@
 />
 <span
   *ngIf="filterHolder.iD"
-  (click)="filterModel.iD = null; startFilter()"
+  (click)="removeFilter('iD')"
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
@@ -91,7 +91,7 @@
 <span
   class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 *ngIf="filterHolder.firstName"
-(click)="filterModel.firstName = null; startFilter()"
+(click)="removeFilter('firstName')"
   ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <input
@@ -103,7 +103,7 @@ placeholder="نام خانوادگی"
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 *ngIf="filterHolder.lastName"
-(click)="filterModel.lastName = null; startFilter()"
+(click)="removeFilter('lastName')"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <input
@@ -115,7 +115,7 @@ placeholder="شماره تلفن"
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 *ngIf="filterHolder.phoneNumber"
-(click)="filterModel.phoneNumber = null; startFilter()"
+(click)=" removeFilter('phoneNumber')"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <input
@@ -127,19 +127,19 @@ placeholder="ایمیل"
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 *ngIf="filterHolder.email"
-(click)="filterModel.email = null; startFilter()"
+(click)="filterModel.email = null; removeFilter('email')"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <input
 type="text"
-class="form-control m-1 mr-5 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
 placeholder="میزان"
 [(ngModel)]="filterModel.amount"
 />
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 *ngIf="filterHolder.amount"
-(click)="filterModel.amount = null; startFilter()"
+(click)="filterModel.amount = null; removeFilter('amount')"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 
@@ -165,7 +165,7 @@ placeholder=" روز / ماه / سال "
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 *ngIf="filterHolder.fromCreateDate"
-(click)="filterModel.fromCreateDate = null;fromCreateDate=null; startFilter()"
+(click)="filterModel.fromCreateDate = null;fromCreateDate=null; removeFilter('fromCreateDate')"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
@@ -189,7 +189,7 @@ placeholder=" روز / ماه / سال "
 <span
 class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 *ngIf="filterHolder.toCreateDate"
-(click)="filterModel.toCreateDate = null;toCreateDate=null; startFilter()"
+(click)="toCreateDate=null; removeFilter('toCreateDate')"
 ><span class="pi pi-times" style="font-size: 0.7rem"></span
 ></span>
 <div class="mb-1 mr-1">
@@ -210,7 +210,7 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
     type="button"
     ngbAutofocus
     class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
-    (click)="startFilter()"
+    (click)="filterButton()"
   >
     <i class="i-Filter-2 text-bigger mr-2"></i>
     <strong class="text-small">فیلتر </strong>

@@ -34,7 +34,7 @@
           ngbDropdownItem
           *ngFor="let country of countriesData; let i = index"
           (click)="
-            filter.countryID = country.id; countryIndexHolder = i; setFilter()
+          filterHolder.countryID = country.id; countryIndexHolder = i; setFilter()
           "
         >
           <span
@@ -90,7 +90,7 @@
           ngbDropdownItem
           *ngFor="let frequency of eventEnums.eventFrequencies"
           (click)="
-            filter.frequency = frequency.value;
+          filterHolder.frequency = frequency.value;
             frequency.value == null
               ? (frequencyIndexHolder = 0)
               : (frequencyIndexHolder = frequency.value + 1);
@@ -124,7 +124,7 @@
           ngbDropdownItem
           *ngFor="let importance of eventEnums.eventImportances"
           (click)="
-            filter.importance = importance.value;
+          filterHolder.importance  = importance.value;
             importance.value == null
               ? (importanceIndexHolder = 0)
               : (importanceIndexHolder = importance.value + 1);
@@ -162,7 +162,7 @@
           ngbDropdownItem
           *ngFor="let sector of eventEnums.eventSector"
           (click)="
-            filter.sector = sector.value;
+          filterHolder.sector = sector.value;
             sector.value == null
               ? (sectorIndexHolder = 0)
               : (sectorIndexHolder = sector.value + 1);
@@ -198,7 +198,7 @@
           ngbDropdownItem
           *ngFor="let type of eventEnums.eventType"
           (click)="
-            filter.type = type.value;
+          filterHolder.type = type.value;
             type.value == null
               ? (typeIndexHolder = 0)
               : (typeIndexHolder = type.value + 1);
@@ -221,7 +221,7 @@
     />
     <span
       *ngIf="filterHolder.iD"
-      (click)="filter.iD = null; setFilter()"
+      (click)="filter.iD = null; removeFilter('iD')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -234,7 +234,7 @@
     />
     <span
       *ngIf="filterHolder.eventCode"
-      (click)="filter.eventCode = null; setFilter()"
+      (click)="filter.eventCode = null; removeFilter('eventCode')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -247,7 +247,7 @@
     />
     <span
       *ngIf="filterHolder.name"
-      (click)="filter.name = null; setFilter()"
+      (click)="filter.name = null; removeFilter('name')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -260,7 +260,7 @@
     />
     <span
       *ngIf="filterHolder.sourceUrl"
-      (click)="filter.sourceUrl = null; setFilter()"
+      (click)="filter.sourceUrl = null; removeFilter('sourceUrl')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -268,7 +268,7 @@
       type="button"
       ngbAutofocus
       class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center mx-2"
-      (click)="setFilter()"
+      (click)="filterButton()"
     >
       <i class="i-Filter-2 text-bigger mr-2"></i>
       <strong class="text-small">فیلتر </strong>

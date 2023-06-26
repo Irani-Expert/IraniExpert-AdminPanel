@@ -67,7 +67,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.id"
-      (click)="filterData.id = null; startFilter()"
+      (click)="filterData.id = null; removeFilter('id')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <input
@@ -79,7 +79,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.userName"
-      (click)="filterData.userName = null; startFilter()"
+      (click)="filterData.userName = null; removeFilter('userName')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <input
@@ -91,7 +91,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.email"
-      (click)="filterData.email = null; startFilter()"
+      (click)="filterData.email = null; removeFilter('email')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <input
@@ -103,7 +103,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.phoneNumber"
-      (click)="filterData.phoneNumber = null; startFilter()"
+      (click)="filterData.phoneNumber = null; removeFilter('phoneNumber')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <input
@@ -115,7 +115,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.accountNumber"
-      (click)="filterData.accountNumber = null; startFilter()"
+      (click)="filterData.accountNumber = null; removeFilter('accountNumber')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
 
@@ -128,7 +128,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.firstName"
-      (click)="filterData.firstName = null; startFilter()"
+      (click)="filterData.firstName = null; removeFilter('firstName')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
 
@@ -141,7 +141,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.lastName"
-      (click)="filterData.lastName = null; startFilter()"
+      (click)="filterData.lastName = null; removeFilter('lastName')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
 
@@ -154,7 +154,7 @@
     <span
       *ngIf="filterHolder.referralCode"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-      (click)="filterData.referralCode = null; startFilter()"
+      (click)="filterData.referralCode = null; removeFilter('referralCode')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
 
@@ -180,7 +180,7 @@
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.fromSignUpDate"
       (click)="
-        filterData.fromSignUpDate = null; fromSignUpDate = null; startFilter()
+        filterData.fromSignUpDate = null; fromSignUpDate = null; removeFilter('fromSignUpDate')
       "
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -207,7 +207,7 @@
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
       *ngIf="filterHolder.ToSignUpDate"
       (click)="
-        filterData.ToSignUpDate = null; ToSignUpDate = null; startFilter()
+        filterData.ToSignUpDate = null; ToSignUpDate = null; removeFilter('ToSignUpDate')
       "
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -216,7 +216,7 @@
       type="button"
       ngbAutofocus
       class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
-      (click)="startFilter()"
+      (click)="filterButton()"
     >
       <i class="i-Filter-2 text-bigger mr-2"></i>
       <strong class="text-small">فیلتر </strong>

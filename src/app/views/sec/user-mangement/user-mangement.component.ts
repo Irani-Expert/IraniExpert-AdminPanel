@@ -92,6 +92,7 @@ export class UserMangementComponent implements OnInit {
   filterData: UsersModel = new UsersModel();
   dropdownList = [];
   selectedItems = [];
+  updateRoleIdV:boolean=true;
   userType: string = 'همه';
   roleKeeper = [];
   isDivExpanded: boolean = false;
@@ -142,7 +143,6 @@ export class UserMangementComponent implements OnInit {
   }
   setPage(pageInfo: number) {
     
-    console.log(this.filterData )
     this.page.pageNumber = pageInfo;
     this.getUsersList(
       this.page.pageNumber,
@@ -369,10 +369,9 @@ export class UserMangementComponent implements OnInit {
     if (userType != null) {
       this.userType = userType;
     }
-    this.filteredItems(this.filterData);
     this.roleKeeper = [];
-    debugger
-    this._usersService.getUserByFilter(pageNumber,pageSize,this.filterData,null,roleIdSaver).subscribe((data) => {
+        debugger
+    this._usersService.getUserByFilter(pageNumber,pageSize,this.filterHolder,null,roleIdSaver).subscribe((data) => {
     this.rows=[]
       this.rows=data['data'].items
     this.rows.forEach(date=>{
@@ -396,8 +395,11 @@ export class UserMangementComponent implements OnInit {
       this.roleModel[counter].roleId = x.item_id;
       counter += 1;
     });
-    this.updateRoleId()
-    
+    if(this.updateRoleIdV){
+      this.updateRoleId()
+
+    }
+    this.updateRoleIdV=true
     this._userProfileSevice
       .updateUserbyAspnet(userID, this.addUpdate)
       .subscribe((data) => {
@@ -439,6 +441,7 @@ export class UserMangementComponent implements OnInit {
           var finder = this.rows.findIndex((x) => x.id == userId);
           this.addUpdate = this.rows[finder];
           this.addUpdate.isActive = !this.addUpdate.isActive;
+          this.updateRoleIdV=false
           this.updateUserInfo(userId);
         },
         (reject) => {
@@ -451,9 +454,7 @@ export class UserMangementComponent implements OnInit {
     this.stateOfChevron =
       this.stateOfChevron === 'default' ? 'rotated' : 'default';
   }
-  startFilter() {
-   
-    this.page.pageNumber = 1;
+  convertDatetoMiladi(){
     if (this.ToSignUpDate != null) {
       this.filterData.ToSignUpDate =
         this.ToSignUpDate['year'] +
@@ -471,10 +472,25 @@ export class UserMangementComponent implements OnInit {
         '-' +
         this.fromSignUpDate['day'];
     }
+  }
+  startFilter() {
+   this.convertDatetoMiladi()
+    this.page.pageNumber = 1;
+ 
     this.setPage(this.page.pageNumber);
   }
   filteredItems(filter: UsersModel) {
     this.filterHolder = { ...filter };
+  }
+  filterButton(){
+    this.filteredItems(this.filterData);
+    this.startFilter()
+  }
+  removeFilter(item:string){
+    delete this.filterHolder[item]
+    delete this.filterData[item]
+    this.startFilter()
+
   }
   async getRoleListservice() {
     this._roleService.get(0, 100, 'ID', null, 'aspnetrole').subscribe(

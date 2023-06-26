@@ -223,9 +223,7 @@ export class UsersService extends BaseService<UsersModel, 0> {
               (filterData.phoneNumber == undefined || filterData.phoneNumber == null
                 ? ''
                 : '&PhoneNumber=' + filterData.phoneNumber)+
-                (filterData.phoneNumber == undefined || filterData.phoneNumber == null
-                  ? ''
-                  : '&PhoneNumber=' + filterData.phoneNumber)+
+             
                   (filterData.accountNumber == undefined || filterData.accountNumber == null
                     ? ''
                     : '&AccountNumber=' + filterData.accountNumber)+
