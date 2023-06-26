@@ -73,7 +73,7 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
         (filter.firstName ? '&FirstName=' + filter.firstName : '') +
         (filter.lastName ? '&LastName=' + filter.lastName : '') +
         (filter.phoneNumber ? '&PhoneNumber=' + filter.phoneNumber : '') +
-        (filter.email ? '&Email=' + filter.phoneNumber : '') +
+        (filter.email ? '&Email=' + filter.email : '') +
         (userWant !== undefined ? '&UserWant=' + userWant : '') +
         (filter.amount ? '&Amount=' + filter.amount : '') +
         (filter.financialActivity

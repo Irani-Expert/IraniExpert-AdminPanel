@@ -64,7 +64,6 @@ export class AllCommentComponent implements OnInit {
   rateNumber: number[] = [1,2,3,4,5]; 
   rateText:string='همه';   
   isDivExpanded: boolean = false;
-   newFilterModel: FilterModel = new FilterModel();
   tableType: number;
   filter: FilterModel = new FilterModel();
   rows: CommentModel[] = new Array<CommentModel>();
@@ -102,7 +101,7 @@ export class AllCommentComponent implements OnInit {
   setPage(pageInfo: number, tableType: number) {
     
     this.page.pageNumber = pageInfo;
-    this.getCommentList(this.page.pageNumber, tableType, this.filterModel);
+    this.getCommentList(this.page.pageNumber, tableType, this.filterHolder);
   }
 
   async getCommentList(
@@ -247,7 +246,6 @@ export class AllCommentComponent implements OnInit {
 
 
   sendFilter(){
-this.filterModel=this.newFilterModel;
  
     if (this.ExpDate != null) {
       this.filterModel.toCreateDate =
@@ -265,16 +263,20 @@ this.filterModel=this.newFilterModel;
         '-' +
         this.CrtDate.day;
     }
- 
-    this.getCommentList(0, this.tableType, this.filterModel);
-    this.filteredItems(this.filterModel)
+ debugger
+    this.getCommentList(0, this.tableType, this.filterHolder);
     this.filter = new FilterModel();
   }
- 
+ filterButton(){
+  this.filteredItems(this.filterModel)
+  
+this.sendFilter()
+
+ }
   setRate(rate:number){
-    this.filterModel.rate=rate
+    this.filterHolder.rate=rate
     if (this.filterModel.rate != null) {
-      this.filterModel.rate = Number(this.filterModel.rate);
+      this.filterHolder.rate = Number(this.filterModel.rate);
     }
 
     if(rate!=null){
@@ -284,7 +286,13 @@ this.filterModel=this.newFilterModel;
     else{
       this.rateText='همه'
     }
-    this.getCommentList(0, this.tableType, this.filterModel);
+    this.getCommentList(0, this.tableType, this.filterHolder);
+    }
+    removeFilter(item:string){
+      delete this.filterHolder[item]
+      delete this.filterModel[item]
+      debugger
+      this.sendFilter()
     }
     toggleFilters() {
       this.isDivExpanded = !this.isDivExpanded;
@@ -292,7 +300,7 @@ this.filterModel=this.newFilterModel;
         this.stateOfChevron === 'default' ? 'rotated' : 'default';
     }
     filteredItems(filter: FilterModel) {
-      
+      debugger
       this.filterHolder = { ...filter };
     }
 }

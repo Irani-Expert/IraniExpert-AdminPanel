@@ -391,33 +391,46 @@ this.getData()
   * 
   * 
   */
+convertDate(){
+  if (this.fromCreateDate!=null) {
+    this.filterModel.fromCreateDate =
+      this.fromCreateDate.year +
+      '-' +
+      this.fromCreateDate.month +
+      '-' +
+      this.fromCreateDate.day;
+  }
+  if (this.toCreateDate!=null) {
+    this.filterModel.toCreateDate =
+      this.toCreateDate.year +
+      '-' +
+      this.toCreateDate.month +
+      '-' +
+      this.toCreateDate.day;
+  }
+}
   startFilter(){
+    this.convertDate()
     this.page.pageNumber = 0;
-    if (this.fromCreateDate!=null) {
-      this.filterModel.fromCreateDate =
-        this.fromCreateDate.year +
-        '-' +
-        this.fromCreateDate.month +
-        '-' +
-        this.fromCreateDate.day;
-    }
-    if (this.toCreateDate!=null) {
-      this.filterModel.toCreateDate =
-        this.toCreateDate.year +
-        '-' +
-        this.toCreateDate.month +
-        '-' +
-        this.toCreateDate.day;
-    }
+
     this.getData()
+  }
+  filterButton(){
+    this.filteredItems(this.filterModel)
+   this.startFilter()
+  }
+  removeFilter(item:string){
+    delete this.filterHolder[item]
+    delete this.filterModel[item]
+    this.startFilter()
+
   }
   getData() {
   
-    this.filteredItems(this.filterModel)
 
     this._UserNeedService
       .getUserNeed(
-        this.filterModel,
+        this.filterHolder,
         this.page.pageNumber !== 0
           ? this.page.pageNumber - 1
           : this.page.pageNumber,

@@ -159,7 +159,7 @@
     />
     <span
       *ngIf="filterHolder.iD"
-      (click)="filterModel.iD = null; filterdata()"
+      (click)="removeFilter('iD')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -172,7 +172,7 @@
 
     <span
       *ngIf="filterHolder.userID"
-      (click)="filterModel.userID = null; filterdata()"
+      (click)="removeFilter('userID')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -186,7 +186,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.firstName"
-      (click)="filterModel.firstName = null; filterdata()"
+      (click)="removeFilter('firstName')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <input
@@ -197,7 +197,7 @@
     />
     <span
       *ngIf="filterHolder.lastName"
-      (click)="filterModel.lastName = null; filterdata()"
+      (click)="removeFilter('lastName')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -211,7 +211,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.accountNumber"
-      (click)="filterModel.accountNumber = null; filterdata()"
+      (click)="removeFilter('accountNumber')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
 
@@ -236,7 +236,8 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.toCreateDate"
-      (click)="filterModel.toCreateDate = null; TCrtDate = null; filterdata()"
+      (click)="TCrtDate = null;removeFilter('toCreateDate')"
+
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
@@ -260,11 +261,11 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.fromCreateDate"
-      (click)="filterModel.fromCreateDate = null; FCrtDate = null; filterdata()"
+      (click)="FCrtDate = null; removeFilter('fromCreateDate')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
-      >تا ریخ شروع لایسنس</strong
+      >تاریخ شروع لایسنس</strong
     >
     <input
       type="text"
@@ -284,7 +285,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.fromStartDate"
-      (click)="filterModel.fromStartDate = null; FStrDate = null; filterdata()"
+      (click)="FStrDate = null;removeFilter('fromStartDate')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
@@ -308,11 +309,11 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.toStartDate"
-      (click)="filterModel.toStartDate = null; TStrDate = null; filterdata()"
+      (click)=" TStrDate = null;removeFilter('toStartDate')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
-      >تااریخ پایان لایسنس از</strong
+      >تاریخ پایان لایسنس از</strong
     >
     <input
       type="text"
@@ -332,7 +333,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.fromExpireDate"
-      (click)="filterModel.fromExpireDate = null; FExpDate = null; filterdata()"
+      (click)="FExpDate = null;removeFilter('fromExpireDate')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
     <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
@@ -356,7 +357,7 @@
     <span
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.toExpireDate"
-      (click)="filterModel.toExpireDate = null; TExpDate = null; filterdata()"
+      (click)="TExpDate = null;removeFilter('toExpireDate')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
 
@@ -366,6 +367,12 @@
       placeholder="کد"
       [(ngModel)]="filterModel.code"
     />
+    <span
+    class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+    *ngIf="filterHolder.code"
+    (click)="removeFilter('code')"
+    ><span class="pi pi-times" style="font-size: 0.7rem"></span
+  ></span>
     <input
       type="text"
       class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
@@ -373,9 +380,9 @@
       [(ngModel)]="filterModel.versionNumber"
     />
     <span
-      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-      *ngIf="filterHolder.code"
-      (click)="filterModel.code = null; filterdata()"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-1"
+      *ngIf="filterHolder.versionNumber"
+      (click)="removeFilter('versionNumber')"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
 
@@ -383,7 +390,7 @@
       type="button"
       ngbAutofocus
       class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
-      (click)="filterdata()"
+      (click)="filterButton()"
     >
       <i class="i-Filter-2 text-bigger mr-2"></i>
       <strong class="text-small">فیلتر </strong>

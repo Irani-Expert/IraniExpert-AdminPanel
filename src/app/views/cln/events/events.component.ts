@@ -103,7 +103,7 @@ export class EventsComponent implements OnInit {
   }
   async setPage(pageToSet: number) {
     this.page.pageNumber = pageToSet;
-    await this.getCalendarEvents(pageToSet, this.page.size, this.filter);
+    await this.getCalendarEvents(pageToSet, this.page.size, this.filterHolder);
   }
   async getCountries() {
     let allCountries = [
@@ -262,8 +262,8 @@ export class EventsComponent implements OnInit {
       });
   }
   setFilter() {
-    this.filteredItems(this.filter);
-
+    
+    console.log(this.filterHolder)
     this.setPage(0);
   }
 
@@ -272,8 +272,19 @@ export class EventsComponent implements OnInit {
       this.setFilter();
     }
   }
+filterButton(){
+  this.filteredItems(this.filter);
+  this.setFilter();
 
+}
   filteredItems(filter: FilterModel) {
     this.filterHolder = { ...filter };
   }
+removeFilter(item:string){
+  delete this.filterHolder[item]
+  delete this.filter[item]
+  this.setFilter();
+
+
+}
 }

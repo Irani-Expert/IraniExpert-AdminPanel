@@ -229,7 +229,7 @@ export class OrderComponent implements OnInit {
   // }
   setPage(pageInfo: number, transactionStatus: any) {
     this.page.pageNumber = pageInfo;
- this.getOrders(transactionStatus, pageInfo, this.filterModel);
+ this.getOrders(transactionStatus, pageInfo, this.filterHolder);
   }
   changeHeaderValue() {
     if (this.headerValue != 'کد رهگیری') {
@@ -1046,7 +1046,7 @@ export class OrderComponent implements OnInit {
   setProductId(productId:number,productTitle:string){
     
     this.productTitle=productTitle
-this.filterModel.productID=productId
+this.filterHolder.productID=productId
 if(productId==null){
 this.filterModel.planID=null
 }
@@ -1057,7 +1057,7 @@ this.planTitle='همه'
 this.filterdata()
 }
   setPlan(planId:number,planTitle:string){
-    this.filterModel.planID=planId
+    this.filterHolder.planID=planId
     this.planTitle=planTitle
     this.filterdata()
       }
@@ -1066,7 +1066,7 @@ this.filterdata()
         this.stateOfChevron =
           this.stateOfChevron === 'default' ? 'rotated' : 'default';
       }
-      filterdata(){
+      dateConvertor(){
         if (this.FCrtDate != null) {
           this.filterModel.fromCreateDate =
             this.FCrtDate.year +
@@ -1115,10 +1115,22 @@ this.filterdata()
             '-' +
             this.TExpDate.day;
         }
-        this.filteredItems(this.filterModel)
-        this.getOrders(this.status, 1, this.filterModel);
+      }
+      removeFilter(itemName:string){
+      delete this.filterHolder[itemName]
+      delete this.filterModel[itemName]
+      this.getOrders(this.status, 1, this.filterHolder);
+      }
+      filterdata(){
+        this.getOrders(this.status, 1, this.filterHolder);
         this.fillTheFiltersRow(this.filter);
         this.filtered = true;
+      }
+      filterButton(){
+        this.dateConvertor()
+
+        this.filteredItems(this.filterModel)
+        this.filterdata()
       }
       filteredItems(filter: FilterModel) {
         this.filterHolder = { ...filter };

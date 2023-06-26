@@ -100,7 +100,7 @@ export class ShowLogsComponent implements OnInit {
     requestType: number,
     tableTypeToSet: number
   ) {
-    this.filter.requestType = requestType;
+    this.filterHolder.requestType = requestType;
     if (tableTypeToSet !== null) {
       this.index = tableTypeToSet + 1;
     }
@@ -113,7 +113,7 @@ export class ShowLogsComponent implements OnInit {
       this.page.size,
       pageOrder,
       tableTypeToSet,
-      this.filter
+      this.filterHolder
     );
     if (this.tableTypes.length == 0) {
       this.getTableTypes();
@@ -176,10 +176,36 @@ export class ShowLogsComponent implements OnInit {
       .locale('fa')
       .format('YYYY/MM/DD');
   }
+
   sendFilter() {
+    this.convertDate()
+   
+    this.setPage(
+      0,
+      this.pageOrder,
+      this.requestType,
+      this.tableTypes[this.index].value
+    );
+  }
+  filterSuccess(){
+    this.filterHolder.isSuccess=this.filter.isSuccess
+    this.sendFilter()
+  }
+  removeFilter(item:string){
+
+    delete  this.filterHolder[item]
+    delete  this.filter[item]
+    this.sendFilter()
+  }
+  filterButton(){
+
     this.filteredItems(this.filter);
+    this.sendFilter()
+
+  }
+  convertDate(){
     if (this.fromCreateDate !== null && this.fromCreateDate !== undefined) {
-      this.filter.fromCreateDate =
+      this.filterHolder.fromCreateDate =
         this.fromCreateDate.year +
         '-' +
         this.fromCreateDate.month +
@@ -188,21 +214,14 @@ export class ShowLogsComponent implements OnInit {
     }
 
     if (this.toCreateDate !== null && this.toCreateDate !== undefined) {
-      this.filter.toCreateDate =
+      this.filterHolder.toCreateDate =
         this.toCreateDate.year +
         '-' +
         this.toCreateDate.month +
         '-' +
         this.toCreateDate.day;
     }
-    this.setPage(
-      0,
-      this.pageOrder,
-      this.requestType,
-      this.tableTypes[this.index].value
-    );
   }
-
   filteredItems(filter: FilterModel) {
     this.filterHolder = { ...filter };
   }
