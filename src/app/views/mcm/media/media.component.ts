@@ -7,6 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MediaComponent implements OnInit {
   constructor() {}
-
+  active: number = 2;
   ngOnInit(): void {}
 }

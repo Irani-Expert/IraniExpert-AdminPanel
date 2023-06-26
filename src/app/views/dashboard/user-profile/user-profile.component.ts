@@ -28,7 +28,7 @@ export class UserProfileComponent implements OnInit {
   userParent: referralModel = new referralModel();
   passwordForm: FormGroup;
   isEdit: boolean = true;
-  userId:number;
+  userId: number;
   password: UpdatePasswordModel = new UpdatePasswordModel();
   constructor(
     private _formBuilder: FormBuilder,
@@ -38,9 +38,8 @@ export class UserProfileComponent implements OnInit {
     private _userInfoService: UserProfileService,
     private router: Router,
     private _userReferralSevice: UserProfileService,
-    private _order:OrderService,
-    private _auth: AuthenticateService,
-
+    private _order: OrderService,
+    private _auth: AuthenticateService
   ) {
     this.addForm = this._formBuilder.group({
       lastName: [null, Validators.compose([Validators.required])],
@@ -56,21 +55,41 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userId=this._auth.currentUserValue.userID
-    this.userInfo(this.userId)
+    this.userId = this._auth.currentUserValue.userID;
+    this.userInfo(this.userId);
   }
   userInfo(userId: number) {
-   this._order.getUserbyUserId(userId).subscribe((data) => {
-    if (data.success) {
-     this.addUpdate=data['data']
-     this.isDataFetched = true;
-      
-    } else {
+    this._order.getUserbyUserId(userId).subscribe((data) => {
+      if (data.success) {
+        this.addUpdate = data['data'];
+        this.isDataFetched = true;
+      } else {
+      }
+    });
+  }
+  getReferral(modal: NgbModal, modal2: NgbModal) {
+    //
+    this._userInfoService.getParentLevelOne(this.addUpdate.id).subscribe(
+      (res) => {
+        if (res.data.firstname) {
+          this.referral = res.data;
 
-    }
-  });
-}
-
+          this.modalService.open(modal, {
+            size: 'xs',
+            centered: true,
+          });
+        } else {
+          this.sendUserReferralCreate(modal2);
+        }
+      },
+      (error) => {
+        this.toastr.error(error.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    );
+  }
 
   openPasswordChangeModal(content: any) {
     this.modalService
@@ -82,23 +101,20 @@ export class UserProfileComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result === true) {
-            
             this.passwordChange(this.password);
-            this.passwordForm.reset()
+            this.passwordForm.reset();
           }
         },
         (reason) => {
-          this.passwordForm.reset()
+          this.passwordForm.reset();
           console.log('Err!', reason);
         }
       );
   }
 
   async passwordChange(password: UpdatePasswordModel) {
-    
     password.id = this.addUpdate.id;
     this._userService.changePassword(this.password).subscribe((data) => {
-      
       if (data.success) {
         this.toastr.success(data.message, null, {
           closeButton: true,
@@ -112,8 +128,6 @@ export class UserProfileComponent implements OnInit {
       }
     });
   }
-
-
 
   sendUserReferralChange(modal: NgbModal) {
     this.modalService
@@ -205,23 +219,22 @@ export class UserProfileComponent implements OnInit {
         }
       );
   }
-  updateProfile(){
-    var userID=this._auth.currentUserValue.userID
+  updateProfile() {
+    var userID = this._auth.currentUserValue.userID;
     this._userInfoService
-      .updateUserbyAspnet(userID,this.addUpdate)
+      .updateUserbyAspnet(userID, this.addUpdate)
       .subscribe((data) => {
-         if(data){
+        if (data) {
           this.toastr.success(data.message, null, {
-                      closeButton: true,
-                      positionClass: 'toast-top-left',
-                    });
-         }
-         else{
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
           this.toastr.warning(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
-         }
+        }
       });
   }
 }
