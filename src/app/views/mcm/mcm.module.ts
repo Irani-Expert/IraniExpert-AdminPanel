@@ -16,6 +16,7 @@ import { AudioPlayerComponent } from 'src/app/shared/components/audio-player/aud
 import { MediaComponent } from './media/media.component';
 import { StationsComponent } from './stations/stations.component';
 import { DragScrollModule } from 'ngx-drag-scroll';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { DragScrollModule } from 'ngx-drag-scroll';
     StationsComponent,
   ],
   imports: [
+    DropdownModule,
     CommonModule,
     DragScrollModule,
     ImageCropperModule,

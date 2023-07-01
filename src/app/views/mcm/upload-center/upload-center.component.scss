@@ -1,3 +1,36 @@
+@font-face {
+  font-family: Vazir;
+  src: url("../../../../assets/fonts/Vazir.eot");
+  src: url("../../../../assets/fonts/Vazir.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../../../assets/fonts/Vazir.woff2") format("woff2"),
+    url("../../../../assets/fonts/Vazir.woff") format("woff"),
+    url("../../../../assets/fonts/Vazir.ttf") format("truetype");
+}
+.p-dropdown {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-label {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-trigger {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-panel {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-items-wrapper {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-items {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-item {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-open {
+  font-family: "Vazir" !important;
+}
 .icon-size {
   font-size: 115px;
   font-size: 6vw;
@@ -52,6 +85,14 @@ input[type="file"]::file-selector-button {
 
 input[type="file"]::file-selector-button:hover {
   background: #4a5352;
+}
+input[type="text"] {
+  color: #444;
+  padding: 22px;
+  background: #eff8fb;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+  transition: all 400ms ease-in-out;
 }
 .radius-progress {
   border-radius: 14px;
@@ -124,11 +165,10 @@ input[type="file"]::file-selector-button:hover {
 .img-aspect {
   max-width: 100%;
   height: auto;
-  aspect-ratio: 4/3;
+  aspect-ratio: 16/9;
   object-fit: contain;
   padding: 15px;
   border-radius: 6px;
-  background-color: #cececfe8;
 }
 .drag-scroll {
   height: inherit;
@@ -136,4 +176,21 @@ input[type="file"]::file-selector-button:hover {
 }
 .selected {
   border: 1px solid #1b25e2 !important;
+}
+.item--card {
+  border: 1px solid #efefef;
+  display: inline-flex;
+  transition: all 400ms ease-in-out;
+  cursor: pointer;
+}
+ul {
+  padding-inline-start: 10px !important;
+  margin-block-end: 0px !important;
+}
+.h-station-mob {
+  height: 205px !important;
+}
+.add-modal-card {
+  background-color: #eff8fb;
+  border: 1px solid #efefef;
 }

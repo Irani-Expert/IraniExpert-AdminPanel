@@ -562,6 +562,50 @@ Buttons
     }
   }
 }
+
+.p-dropdown {
+  background: #eff8fb !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  font-family: "Vazir" !important;
+}
+.p-dropdown-label {
+  font-size: 0.82rem !important;
+  padding: 12px !important;
+  font-family: "Vazir" !important;
+}
+.p-dropdown-trigger {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-panel {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-items-wrapper {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-items-wrapper::-webkit-scrollbar {
+  width: 6px;
+  margin-top: 2px;
+  background: #fff;
+  border-radius: 0 0 0 6px;
+}
+.p-dropdown-items-wrapper::-webkit-scrollbar-thumb {
+  background: #5e6a69;
+  border-radius: 10px;
+}
+.p-dropdown-items-wrapper::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+.p-dropdown-items {
+  font-family: "Vazir" !important;
+}
+.p-dropdown-item {
+  font-size: 0.82rem !important;
+  font-family: "Vazir" !important;
+}
+.p-dropdown-open {
+  font-family: "Vazir" !important;
+}
 .w-auto {
   width: auto;
 }

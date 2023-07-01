@@ -1,5 +1,5 @@
-<ul ngbNav #nav="ngbNav" class="nav-tabs p-0">
-  <li ngbNavItem>
+<ul ngbNav [(activeId)]="active" #nav="ngbNav" class="nav-tabs p-0">
+  <li [ngbNavItem]="1" [disabled]="true" ngbTooltip="به زودی">
     <a ngbNavLink class="text-small"
       ><span class="d-flex align-items-center"
         ><span class="pi pi-list text-bigger"></span>&nbsp;&nbsp;&nbsp;<span
@@ -14,7 +14,7 @@
     </ng-template>
   </li>
 
-  <li ngbNavItem>
+  <li [ngbNavItem]="2">
     <a ngbNavLink class="text-small"
       ><span class="d-flex align-items-center"
         ><span class="pi pi-upload text-bigger"></span>&nbsp;&nbsp;&nbsp;<span
@@ -28,7 +28,7 @@
     ></ng-template>
   </li>
 
-  <li ngbNavItem>
+  <li [ngbNavItem]="3">
     <a ngbNavLink class="text-small"
       ><span class="d-flex align-items-center"
         ><span class="pi pi-map-marker text-bigger"></span

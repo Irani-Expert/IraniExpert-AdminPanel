@@ -191,10 +191,10 @@
     </div>
     <div class="card radius p-4 shadow">
       <div class="row d-flex justify-content-center">
-        <div class="col-lg-4 col-10 col-sm-9 col-md-6 align-self-center">
+        <div class="col-lg-4 col-11 col-sm-10 col-md-6">
           <img
             *ngIf="selectedTypeIdentifier == 0"
-            class="img-fluid align-self-center"
+            class="img-aspect"
             [src]="
               filePreview == ''
                 ? '../../../../assets/images/photo-long-1.jpg'
@@ -208,8 +208,7 @@
             [fileName]="fileName"
             [file]="file"
             [filePreview]="filePreview"
-          ></app-video-player
-          >.
+          ></app-video-player>
           <span
             *ngIf="selectedTypeIdentifier == 2 || selectedTypeIdentifier == 3"
             class="w-100 align-self-center"
@@ -226,7 +225,7 @@
               ><span class="text-bigger text-white">{{ fileName }}</span></span
             >
           </span>
-          <div class="d-inline-block">
+          <div class="d-flex justify-content-center">
             <button
               (click)="deleteFile()"
               class="btn-delete btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
@@ -237,49 +236,393 @@
           </div>
         </div>
 
-        <form [formGroup]="addForm" class="col-8">
+        <form [formGroup]="addForm" class="col-12 col-lg-8">
           <div
-            class="d-flex flex-row flex-wrap justify-content-start align-items-center"
+            class="d-flex flex-row flex-wrap justify-content-center justify-content-lg-start align-items-center"
           >
-            <div class="d-flex flex-column flex-grow-0 m-4 flex">
-              <label for="title" class="text-small">عنوان</label>
-              <input
-                formControlName="title"
-                type="text"
-                id="title"
-                placeholder=""
-                class="form-control form-inputs radius text-small"
-              />
+            <div class="row w-100">
+              <div
+                class="d-flex flex-column m-lg-4 m-2 col-12 col-md-5 col-lg-4 col-xl-3"
+              >
+                <label for="title" class="text-small">عنوان</label>
+                <input
+                  formControlName="title"
+                  type="text"
+                  id="title"
+                  placeholder=""
+                  class="form-control radius text-small"
+                  autocomplete="off"
+                />
+              </div>
+              <div
+                class="d-flex flex-column m-lg-4 m-2 col-12 col-md-5 col-lg-4 col-xl-3"
+              >
+                <label for="description" class="text-small">توضیح مختصر</label>
+                <input
+                  formControlName="description"
+                  type="text"
+                  id="description"
+                  placeholder=""
+                  autocomplete="off"
+                  class="form-control radius text-small"
+                />
+              </div>
+              <div
+                class="d-flex flex-column m-lg-4 m-2 col-12 col-md-5 col-lg-4 col-xl-3"
+              >
+                <label for="key" class="text-small">کلید</label>
+                <input
+                  formControlName="key"
+                  type="text"
+                  id="key"
+                  placeholder=""
+                  autocomplete="off"
+                  class="form-control radius text-small"
+                />
+              </div>
             </div>
 
-            <div class="d-flex flex-column flex-grow-0 m-4">
-              <label for="description" class="text-small">توضیح مختصر</label>
-              <input
-                formControlName="description"
-                type="text"
-                id="description"
-                placeholder=""
-                class="form-control form-inputs radius text-small"
-              />
-            </div>
-            <div class="d-flex flex-column flex-grow-0 m-4">
-              <span class="text-small">جایگاه</span>
-              <drag-scroll style="width: 100%; height: auto; cursor: grab">
-                <div
-                  [ngClass]="{ 'selected shadow': station.id == item.id }"
-                  class="d-inline-flex flex-wrap radius shadow-sm p-4 m-lg-4 m-2 m-sm-3 item--card"
+            <div class="row w-100">
+              <div
+                class="d-flex flex-column m-lg-4 m-2 col-12 col-md-5 col-lg-4 col-xl-3"
+              >
+                <span class="text-small" style="margin-bottom: 0.5rem"
+                  >در بخش</span
                 >
-                  <img
-                    src="../../../../assets/images/97434-no-data-available.png"
-                    class="img-aspect shadow"
-                    alt=""
-                  />
-                </div>
-              </drag-scroll>
+                <p-dropdown
+                  id="tableType"
+                  [options]="tableTypes"
+                  [(ngModel)]="selectedTableType"
+                  [ngModelOptions]="{ standalone: true }"
+                  optionLabel="title"
+                  optionDisabled="inactive"
+                ></p-dropdown>
+              </div>
+              <div
+                class="d-flex flex-column m-lg-4 m-2 col-12 col-md-5 col-lg-4 col-xl-3"
+              >
+                <span class="text-small" style="margin-bottom: 0.5rem">
+                  محصول مربوطه</span
+                >
+                <p-dropdown
+                  id="rowID"
+                  [options]="rowList"
+                  [(ngModel)]="selectedRow"
+                  [ngModelOptions]="{ standalone: true }"
+                  optionLabel="title"
+                ></p-dropdown>
+              </div>
             </div>
           </div>
         </form>
+
+        <!-- Stations -->
+        <div class="d-flex p-2 w-100 flex-column">
+          <span class="mb-3">
+            <strong style="border-bottom: 2px solid #341d87; font-size: 1.3rem"
+              >جایگاه</strong
+            >
+          </span>
+          <form [formGroup]="stationForm">
+            <div class="row g-0 p-0 m-0">
+              <span class="col-12 col-md-6 col-lg-4 col-xl-2">
+                <label for="title" class="text-small">نام جایگاه</label>
+                <input
+                  (change)="searchStation('title', $event.target.value)"
+                  formControlName="title"
+                  autocomplete="off"
+                  type="text"
+                  id="title"
+                  placeholder=""
+                  class="form-control radius text-small"
+                />
+                <span
+                  *ngIf="isSearched"
+                  (click)="resetSearchForm('title')"
+                  class="d-inline-flex mt-2 p-2 bg-light rounded-circle cursor-pointer"
+                  ><span class="pi pi-times" style="font-size: 0.7rem"></span
+                ></span>
+              </span>
+              <!-- <span class="col-12 col-md-6 col-lg-4 col-xl-2">
+                <label for="code" class="text-small">کد جایگاه</label>
+                <input
+                  formControlName="code"
+                  (change)="searchStation('code', $event.target.value)"
+                  autocomplete="off"
+                  type="text"
+                  id="code"
+                  placeholder=""
+                  class="form-control radius text-small"
+                />
+                <span
+                  *ngIf="isSearched"
+                  (click)="isSearched = false"
+                  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+                  ><span class="pi pi-times" style="font-size: 0.7rem"></span
+                ></span>
+              </span> -->
+            </div>
+          </form>
+          <drag-scroll
+            class="mt-2"
+            style="width: 100%; height: auto; cursor: grab"
+          >
+            <ng-container *ngIf="!isSearched">
+              <div
+                (click)="selectStation(item)"
+                *ngFor="let item of stationsList"
+                [ngClass]="{
+                  'selected shadow':
+                    item.id == addForm.controls['stationID'].value
+                }"
+                class="d-inline-flex flex-wrap col-10 col-md-5 col-lg-4 col-xl-3 radius shadow-sm p-2 m-lg-4 m-2 m-sm-3 item--card"
+              >
+                <img
+                  [src]="'https://dl.iraniexpert.com/' + item.cardImagePath"
+                  class="img-aspect w-100"
+                  [ngClass]="{ 'h-station-mob': viewMode == 'list' }"
+                  alt=""
+                />
+                <hr class="w-100 d-block mt-2 mb-2" />
+                <ul class="list-unstyled w-100 mt-2">
+                  <li class="list-item mb-3">
+                    <span
+                      class="d-flex flex-wrap align-items-center justify-content-start"
+                      ><span
+                        class="d-inline-flex pi pi-tag mr-2 p-2 bg-light rounded-circle"
+                      ></span>
+                      <span class="text-small">{{ item.id }}</span></span
+                    >
+                  </li>
+                  <li class="list-item mb-3">
+                    <span
+                      class="d-flex flex-wrap align-items-center justify-content-start"
+                      ><span
+                        class="d-inline-flex pi pi-tag mr-2 p-2 bg-light rounded-circle"
+                      ></span>
+                      <span class="text-small">{{ item.title }}</span></span
+                    >
+                  </li>
+                  <li class="list-item mb-2">
+                    <span
+                      class="d-flex flex-wrap align-items-center justify-content-start"
+                      ><span
+                        class="d-inline-flex pi pi-tag mr-2 p-2 bg-light rounded-circle"
+                      ></span>
+                      <span class="text-small">{{ item.code }}</span></span
+                    >
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="isSearched && searchedStations.length > 0">
+              <div>
+                <div
+                  (click)="selectStation(item)"
+                  *ngFor="let item of searchedStations"
+                  [ngClass]="{
+                    'selected shadow':
+                      item.id == addForm.controls['stationID'].value
+                  }"
+                  class="d-inline-flex flex-wrap col-8 col-md-5 col-lg-4 col-xl-3 radius shadow-sm p-2 m-lg-4 m-2 m-sm-3 item--card"
+                >
+                  <img
+                    [src]="'https://dl.iraniexpert.com/' + item.cardImagePath"
+                    class="img-aspect w-100"
+                    alt=""
+                  />
+                  <hr class="w-100 d-block mt-2 mb-2" />
+                  <ul class="list-unstyled w-100 mt-2">
+                    <li class="list-item mb-3">
+                      <span
+                        class="d-flex flex-wrap align-items-center justify-content-start"
+                        ><span
+                          class="d-inline-flex pi pi-tag mr-2 p-2 bg-light rounded-circle"
+                        ></span>
+                        <span class="text-small">{{ item.id }}</span></span
+                      >
+                    </li>
+                    <li class="list-item mb-3">
+                      <span
+                        class="d-flex flex-wrap align-items-center justify-content-start"
+                        ><span
+                          class="d-inline-flex pi pi-tag mr-2 p-2 bg-light rounded-circle"
+                        ></span>
+                        <span class="text-small">{{ item.title }}</span></span
+                      >
+                    </li>
+                    <li class="list-item mb-2">
+                      <span
+                        class="d-flex flex-wrap align-items-center justify-content-start"
+                        ><span
+                          class="d-inline-flex pi pi-key mr-2 p-2 bg-light rounded-circle"
+                        ></span>
+                        <span class="text-small">{{ item.code }}</span></span
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="isSearched && searchedStations.length == 0">
+              <div
+                class="d-inline-flex flex-wrap radius shadow-sm p-2 m-lg-4 m-2 m-sm-3 item--card"
+              >
+                <img
+                  src="../../../../assets/images/97434-no-data-available.gif"
+                  class="img-aspect"
+                  style="opacity: 0.3"
+                  alt=""
+                />
+              </div>
+            </ng-container>
+          </drag-scroll>
+        </div>
+      </div>
+      <div class="row justify-content-end">
+        <button
+          [disabled]="!addForm.valid"
+          (click)="addFile(addModal)"
+          type="button"
+          class="btn-save btn d-inline-flex justify-content-around py-btns radius m-1"
+        >
+          <span class="pi pi-check mr-2"></span><strong>ثبت</strong>
+        </button>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Modals -->
+<!-- Add Modal -->
+<ng-template let-modal #addModal>
+  <div class="radius">
+    <div class="modal-body border-0">
+      <span class="mt-1 header-border-bottom"
+        ><strong>جایگاه با مشخصات زیر ثبت میشود</strong>
+      </span>
+
+      <!-- Each Value -->
+      <div class="d-flex flex-column mr-4 mb-1 mt-3">
+        <div class="d-flex align-items-center justify-content-start mb-1">
+          <span
+            class="pi pi-circle-fill text-light m-1"
+            style="font-size: 0.82rem"
+          ></span
+          ><strong class="my-1 text-small">عنوان</strong>
+        </div>
+        <span class="py-2 px-4 radius add-modal-card"
+          ><strong class="text-small">
+            {{ addForm.controls["title"].value }}
+          </strong></span
+        >
+      </div>
+      <!-- Each Value -->
+
+      <!-- Each Value -->
+      <div class="d-flex flex-column mr-4 mb-1 mt-3">
+        <div class="d-flex align-items-center justify-content-start mb-1">
+          <span
+            class="pi pi-circle-fill text-light m-1"
+            style="font-size: 0.82rem"
+          ></span
+          ><strong class="my-1 text-small">توضیح مختصر</strong>
+        </div>
+        <span class="py-2 px-4 radius add-modal-card"
+          ><strong class="text-small">
+            {{ addForm.controls["description"].value }}
+          </strong></span
+        >
+      </div>
+      <!-- Each Value -->
+
+      <!-- Each Value -->
+      <div class="d-flex flex-column mr-4 mb-1 mt-3">
+        <div class="d-flex align-items-center justify-content-start mb-1">
+          <span
+            class="pi pi-circle-fill text-light m-1"
+            style="font-size: 0.82rem"
+          ></span
+          ><strong class="my-1 text-small">کلید</strong>
+        </div>
+        <span class="py-2 px-4 radius add-modal-card"
+          ><strong class="text-small">
+            {{ addForm.controls["key"].value }}
+          </strong></span
+        >
+      </div>
+      <!-- Each Value -->
+
+      <!-- Each Value -->
+      <div class="d-flex flex-column mr-4 mb-1 mt-3">
+        <div class="d-flex align-items-center justify-content-start mb-1">
+          <span
+            class="pi pi-circle-fill text-light m-1"
+            style="font-size: 0.82rem"
+          ></span
+          ><strong class="my-1 text-small">بخش</strong>
+        </div>
+        <span class="py-2 px-4 radius add-modal-card"
+          ><strong class="text-small">
+            {{ selectedTableType.title }}
+          </strong></span
+        >
+      </div>
+      <!-- Each Value -->
+
+      <!-- Each Value -->
+      <div class="d-flex flex-column mr-4 mb-1 mt-3">
+        <div class="d-flex align-items-center justify-content-start mb-1">
+          <span
+            class="pi pi-circle-fill text-light m-1"
+            style="font-size: 0.82rem"
+          ></span
+          ><strong class="my-1 text-small" *ngIf="selectedTableType.value == 6"
+            >محصول</strong
+          >
+        </div>
+        <span class="py-2 px-4 radius add-modal-card"
+          ><strong class="text-small">
+            {{ selectedRow.title }}
+          </strong></span
+        >
+      </div>
+      <!-- Each Value -->
+
+      <!-- Each Value -->
+      <div class="d-flex flex-column mr-4 mb-1 mt-3">
+        <div class="d-flex align-items-center justify-content-start mb-1">
+          <span
+            class="pi pi-circle-fill text-light m-1"
+            style="font-size: 0.82rem"
+          ></span
+          ><strong class="my-1 text-small">شناسه جایگاه</strong>
+        </div>
+        <span class="py-2 px-4 radius add-modal-card"
+          ><strong class="text-small">
+            {{ addForm.controls["stationID"].value }}
+          </strong></span
+        >
+      </div>
+      <!-- Each Value -->
+    </div>
+    <div class="modal-footer">
+      <button
+        ngbTooltip="انصراف"
+        type="button"
+        class="btn-light btn d-flex justify-content-around py-btns radius align-items-center mx-1"
+        (click)="modal.dismiss()"
+      >
+        <span class="pi pi-times"></span>
+      </button>
+      <button
+        ngbAutoFocus
+        type="button"
+        class="btn-save btn d-flex justify-content-around py-btns radius align-items-center mx-1"
+        (click)="modal.close()"
+      >
+        <span class="pi pi-check"></span>
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -7,11 +7,12 @@ import { environment } from 'src/environments/environment.prod';
 import { StationModel } from './models/station.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { TableType } from '../Log/models/table-typeModel';
 
 @Injectable({
   providedIn: 'root',
 })
-export class McmService extends BaseService<Object, number> {
+export class McmService extends BaseService<any, number> {
   _options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -41,4 +42,10 @@ export class McmService extends BaseService<Object, number> {
       this._options
     );
   }
+  // getTableTypes(): Observable<Result<TableType[]>> {
+  //   return this._http.get<Result<TableType[]>>(
+  //     this._base + '/Public/GetTableType' + '?pageIndex=' + 0 + '&pageOrder=ID',
+  //     this._options
+  //   );
+  // }
 }
