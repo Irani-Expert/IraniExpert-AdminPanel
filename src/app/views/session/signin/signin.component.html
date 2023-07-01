@@ -14,7 +14,14 @@
               class="form-control form-control-rounded"
               formControlName="username"
               type="text"
+              
             />
+            <div class="text--primary text--smaller text-danger" *ngIf="signinForm.controls['username']?.hasError('email')">
+              فیلد وارد شده ایمیل نیست 
+  </div>
+  <div class="text--primary text--smaller text-danger" *ngIf="signinForm.controls['username']?.hasError('required')&&signinForm.controls['username'].dirty">
+    فیلد نام کاربری  نمیتواند خالی باشد 
+    </div>
           </div>
           <div class="form-group">
             <label for="password">رمز عبور</label>
@@ -24,6 +31,15 @@
               formControlName="password"
               type="password"
             />
+            <div
+            class="text--primary text--smaller text-danger"
+            *ngIf="
+            signinForm.controls['password'].invalid &&
+            signinForm.controls['password'].dirty
+            "
+          >
+            فیلد پسورد نمیتواند خالی باشد 
+          </div>
           </div>
           <!-- <button class="btn btn-rounded btn-primary btn-block mt-2">Sign In</button> -->
           <btn-loading
