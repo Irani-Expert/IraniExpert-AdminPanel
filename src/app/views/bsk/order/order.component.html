@@ -102,12 +102,14 @@
           <strong>همه</strong>
         </button>
         <button
-          class="text-left btn"
+          class="text-left btn d-flex"
           ngbDropdownItem
           *ngFor="let item of plans"
           (click)="setPlan(item.id, item.title)"
+          [ngClass]="{'text-secondary':!item.isActive}"
         >
-          <strong>{{ item.title }}</strong>
+          <strong>{{ item.title }} </strong>
+          <div class="d-flex justify-content-end align-content-right w-100"><strong>$ {{item.price}}</strong></div>
         </button>
       </div>
       <div

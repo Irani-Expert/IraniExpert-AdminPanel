@@ -55,7 +55,7 @@ export class SigninComponent implements OnInit {
     });
 
     this.signinForm = this.fb.group({
-      username: [null, Validators.required],
+      username: [null, Validators.compose([Validators.required,Validators.email])],
       password: [null, Validators.required],
     });
   }
