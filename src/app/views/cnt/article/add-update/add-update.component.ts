@@ -20,17 +20,20 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Base } from 'src/app/shared/models/Base/base.model';
 import { CliamxLicenseModel } from 'src/app/views/bsk/order/models/cliamaxLicense.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
-import { async, lastValueFrom } from 'rxjs';
+import { async, catchError, lastValueFrom, map, throwError } from 'rxjs';
 import { log } from 'console';
+import { HttpEventType } from '@angular/common/http';
 @Component({
   selector: 'app-add-update',
   templateUrl: './add-update.component.html',
   styleUrls: ['./add-update.component.scss'],
 })
 export class AddUpdateComponent implements OnInit {
+  isLoading: boolean = false;
   articleId: number = parseInt(
     this._route.snapshot.paramMap.get('articleId') ?? '0'
   );
+  file: Blob;
   tableType: number = 1;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
@@ -104,6 +107,10 @@ export class AddUpdateComponent implements OnInit {
   }
   onFileChanged(event: any) {
     this.imgChangeEvt = event;
+    let file = event.target.files[0];
+    this.file = new Blob([file], {
+      type: file.type,
+    });
   }
 
   cropImg(e: ImageCroppedEvent) {
@@ -115,7 +122,8 @@ export class AddUpdateComponent implements OnInit {
   initCropper() {}
 
   imgFailed() {
-    alert('image Failed to Show');
+    alert(`ناموفق! \n لطفا صحت فایل را بررسی کنید`);
+    this.cropImagePreview = '';
   }
   deleteImg(filePath: string) {
     this._fileUploaderService
@@ -139,26 +147,59 @@ export class AddUpdateComponent implements OnInit {
   }
 
   uploadFile() {
+    this.isLoading = true;
     this._fileUploaderService
-      .uploadFile(this.cropImagePreview, 'articles')
-      .subscribe((res: Result<string[]>) => {
-        if (res.success) {
-          this.addUpdate.cardImagePath = res.data[0];
-          this.addUpdate.fileExists = true;
-          this.toastr.success('با موفقیت آپلود شد', null, {
-            closeButton: true,
+      .upload(this.file, 'articles')
+      .pipe(
+        map((res) => {
+          if (res.type == HttpEventType.Response) {
+            if (res.body.success) {
+              this.isLoading = false;
+              this.addUpdate.cardImagePath = res.body.data[0];
+              this.addUpdate.fileExists = true;
+              this.toastr.success(res.body.message, '', {
+                positionClass: 'toast-top-left',
+                messageClass: 'text-small',
+              });
+            } else {
+              this.isLoading = false;
+              this.toastr.error(res.body.message, '', {
+                positionClass: 'toast-top-left',
+                messageClass: 'text-small',
+              });
+            }
+          }
+        }),
+        catchError((err) => {
+          this.isLoading = false;
+          this.toastr.error('آپلود با خطا مواجه شد', '', {
             positionClass: 'toast-top-left',
+            messageClass: 'text-small',
           });
-        } else {
-          //TODO Delete Set AddUpdate.cardImagePAth
-          this.addUpdate.cardImagePath = res.errors[0];
-          this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-        //Todo Image={}
-      });
+          return throwError(err.message);
+        })
+      )
+      .toPromise();
+    // this._fileUploaderService
+    //   .uploadFile(this.cropImagePreview, 'articles')
+    //   .subscribe((res: Result<string[]>) => {
+    //     if (res.success) {
+    //       this.addUpdate.cardImagePath = res.data[0];
+    //       this.addUpdate.fileExists = true;
+    //       this.toastr.success('با موفقیت آپلود شد', null, {
+    //         closeButton: true,
+    //         positionClass: 'toast-top-left',
+    //       });
+    //     } else {
+    //       //TODO Delete Set AddUpdate.cardImagePAth
+    //       this.addUpdate.cardImagePath = res.errors[0];
+    //       this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
+    //         closeButton: true,
+    //         positionClass: 'toast-top-left',
+    //       });
+    //     }
+    //     //Todo Image={}
+    //   });
   }
 
   async getArticleById(id: number) {
@@ -214,11 +255,6 @@ export class AddUpdateComponent implements OnInit {
           }
         });
     } else {
-      if (row.cardImagePath.indexOf('com/') != -1) {
-        row.cardImagePath = row.cardImagePath.substring(
-          row.cardImagePath.indexOf('com/') + 4
-        );
-      }
       this._articleService
         .update(row.id, row, 'article')
 
