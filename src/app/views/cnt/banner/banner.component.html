@@ -330,8 +330,52 @@
             </ng-container>
             <ng-container *ngIf="!addUpdate.fileExists">
               <div class="col-md-7 mt-4">
-                <input type="file" (change)="onFileChanged($event)" />
-                <div>
+                <input
+                type="file"
+                class="text-small"
+                id="files"
+                (change)="
+                  this.isFileValid = checkFileValidation($event)"
+                  *ngIf="imageUploadProccess==0"
+              />
+              <div
+              class="d-flex flex-row flex-wrap justify-content-around align-items-center col-10 col-lg-4 col-md-8"
+            >
+            <button
+            [disabled]="!isFileValid"
+            class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
+            (click)="uploadImg()"
+            *ngIf="imageUploadProccess==0"
+          >
+            <i class="i-Upload text-dark text-bigger mr-3"></i>
+            <strong class="text-small">آپلود</strong>
+          </button>
+          <div
+          *ngIf="imageUploadProccess > 0 && imageUploadProccess < 100"
+          class="progress bg-progress-container radius-progress m-2 flex-grow-1"
+          style="height: 32px"
+        >
+          <div
+            class="progress-bar bg-progressbar radius-progress pl-1"
+            [style.width]="progress + '%'"
+          >
+            {{ progress }}%
+          </div>
+        </div>
+        
+            </div>
+            <div class="col-8 col-md-6 col-lg-5">
+               <!-- <image-cropper
+                [maintainAspectRatio]="false"
+                [resizeToWidth]="1280"
+                format="webp"
+                (imageCropped)="cropImg($event)"
+                *ngIf="imageUploadProccess==0"
+              >
+              </image-cropper>  -->
+              </div>
+                <!-- <input type="file" (change)="onFileChanged($event)" /> -->
+                <!-- <div>
                   <image-cropper
                     [imageChangedEvent]="imgChangeEvt"
                     [maintainAspectRatio]="true"
@@ -344,13 +388,20 @@
                     (loadImageFailed)="imgFailed()"
                   >
                   </image-cropper>
-                </div>
-                <div class="float-left w-25">
-                  <img [src]="cropImagePreview" alt="" />
+                </div> -->
+                <div class="row float-left w-25">
+                  <img [src]="cropImagePreview"  alt="" />
+                  <button
+                  class="btn-delete btn mt-2 d-inline-flex justify-content-around py-btns radius align-items-center"
+                  (click)="deleteImg(addUpdate.filePath)"
+                   *ngIf="imageUploadProccess==100">
+                  <i class="i-Close text-bigger mr-2"></i>
+                  <strong>حذف</strong>
+                </button>
                 </div>
               </div>
               <div class="col-12 mt-2">
-                <button
+                <!-- <button
                   *appCanAccess="['Banners-Edit', 'Banners-Add']"
                   class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
                   [disabled]="!cropImagePreview"
@@ -358,7 +409,7 @@
                 >
                   <i class="i-Upload text-dark text-bigger mr-3"></i>
                   <strong>آپلود</strong>
-                </button>
+                </button> -->
               </div>
             </ng-container>
           </div>
@@ -367,7 +418,7 @@
         <!-- Url -->
 
         <!-- filePath vidoe -->
-        <div
+         <div
           class="col-md-12 form-group mb-3"
           *ngIf="addUpdate.fileType !== 0 && addUpdate.fileType !== null"
         >
@@ -387,7 +438,7 @@
             class="mat-text-warn m-t-negative"
             >آدرس URL ضروری است
           </small>
-        </div>
+        </div> 
 
         <!-- isActive -->
         <div

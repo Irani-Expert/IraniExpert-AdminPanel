@@ -8,6 +8,8 @@ import { FileUploaderService } from 'src/app/shared/services/fileUploader.servic
 import { ProductModel } from '../products-list/product.model';
 import { ProductService } from '../products-list/product.service';
 import { error } from 'console';
+import { HttpEventType } from '@angular/common/http';
+import { catchError, map, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-addUpdate',
@@ -20,8 +22,12 @@ export class AddUpdateComponent implements OnInit {
   );
   addUpdate: ProductModel = new ProductModel();
   addForm: FormGroup;
+  imageUploadProccess:number=0
   tableType: number = 6;
   imgChangeEvt: any = '';
+  imageUploadFile;
+  imageInputText:string;
+  isFileValid: boolean = false;
   cropImagePreview: any = '';
   ifDataExist: boolean = false;
   constructor(
@@ -29,12 +35,12 @@ export class AddUpdateComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     private _router: Router,
+    private fileUploader: FileUploaderService,
     private _productsService: ProductService,
     private _fileUploaderService: FileUploaderService
   ) {}
 
   async ngOnInit() {
-    console.log(this.cropImagePreview)
 
     if (this.productId === 0) {
       this.ifDataExist = true;
@@ -92,9 +98,7 @@ export class AddUpdateComponent implements OnInit {
   }
 
   async addOrUpdate() {
-    if (this.cropImagePreview !== '') {
-      await this.uploadFile();
-    }
+  
     setTimeout(() => {
       this.sendData();
     }, 800);
@@ -147,23 +151,100 @@ export class AddUpdateComponent implements OnInit {
     }
   }
   deleteImg(filePath: string) {
+    this.cropImagePreview=null
+    this.imageUploadProccess=0
+    this.imageInputText=''
     this._fileUploaderService
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.cardImagePath = undefined;
           this.addUpdate.fileExists = false;
-
-          this.toastr.success('با موفقیت حذف شد', null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
+          this.toastrFunction('با موفقیت حذف شد',1)
         } else {
-          this.toastr.error(res.message, 'خطا در حذف تصویر', {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
+          this.toastrFunction('خطا در حذف تصویر',2)
         }
       });
   }
+  toastrFunction(text:string,type:number){
+    switch(type) {
+     case 1:
+      this.toastr.success(text, null, {
+        timeOut: 2000,
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      })
+      break;
+      case 2:
+        this.toastr.error(text, null, {
+          timeOut: 2000,
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        })
+        break;
+        case 3:
+          this.toastr.show(text, null, {
+            timeOut: 2000,
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          })
+          break;
+    }
+   
+  }
+  checkFileValidation(event: any){
+    this.cropImagePreview=null
+    if(event.target.files[0]!=undefined){
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      
+      reader.onload = (_event) => {
+        this.cropImagePreview = reader.result; 
+      }
+    }
+   
+    this.imageUploadProccess=0
+    this.imgChangeEvt = event;
+    let eventFile = event.target.files[0];
+    if (eventFile.type=='image/webp') {
+      this.imageUploadFile = new Blob([eventFile], {
+        type: eventFile.type,
+      });
+      return true;
+
+    } else {
+      this.toastrFunction('فایل انتخابی باید webp باشد',3)
+      return false;
+    }
+  }
+ uploadImg(){
+  this.imageUploadProccess = 1;
+  // if (this.cropImagePreview !== '') {
+  //   this
+  // }
+  this.fileUploader
+    .upload(this.imageUploadFile, 'products')
+    .pipe(
+      map((event) => {
+        let toasterType=2
+        if (event.type == HttpEventType.UploadProgress) {
+          this.imageUploadProccess = Math.round((100 * event.loaded) / event.total);
+        } else if (event.type == HttpEventType.Response) {
+          this.addUpdate.cardImagePath = event.body.data[0];
+          if (event.body.success) {
+            this.isFileValid = false;
+            toasterType=1
+
+          } 
+          
+          this.toastrFunction(event.body.message,toasterType)
+        }
+      }),
+      catchError((err) => {
+        this.imageUploadProccess = 0;
+        return throwError(err.message);
+      })
+    )
+    .toPromise();
+ }
 }

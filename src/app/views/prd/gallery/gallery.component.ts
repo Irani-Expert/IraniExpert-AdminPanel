@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { FileModel } from './file.model';
 import { FileService } from './file.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-gallery',
@@ -19,16 +20,20 @@ export class GalleryComponent implements OnInit {
   pageLoad: boolean = true;
   addUpdate: FileModel = new FileModel();
   addForm: FormGroup;
+  isFileValid:boolean
   viewMode: 'list' | 'grid' = 'list';
   allSelected: boolean;
   rows: FileModel[];
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
+  imageUploadProccess:number=0
+  imageUploadFile
   constructor(
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _fileService: FileService,
-    private _fileUploaderService: FileUploaderService
+    private _fileUploaderService: FileUploaderService,
+    private fileUploader: FileUploaderService,
   ) {}
 
   ngOnInit(): void {
@@ -58,8 +63,9 @@ export class GalleryComponent implements OnInit {
   }
 
   //Add OR Edit!!!!!!!!!!!!!!!
-  addorEdit(content: any, row: FileModel) {
-    this.addUpdate = row;
+  addorEdit(content: any) {
+    this.addUpdate = new FileModel;
+    
     this.modalService
       .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
       .result.then(
@@ -119,38 +125,38 @@ export class GalleryComponent implements OnInit {
     alert('image Failed to Show');
   }
 
-  uploadFile() {
-    this._fileUploaderService
-      .uploadFile(this.cropImagePreview, 'products')
-      .subscribe(
-        (res: Result<string[]>) => {
-          if (res.success) {
-            this.addUpdate = new FileModel();
-            this.addUpdate.filePath = res.data[0];
-            this.toastr.success('با موفقیت آپلود شد', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            this.addUpdate.filePath = res.errors[0];
-            this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          }
-        },
-        (_error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
-        }
-      );
-  }
+  // uploadFile() {
+  //   this._fileUploaderService
+  //     .uploadFile(this.cropImagePreview, 'products')
+  //     .subscribe(
+  //       (res: Result<string[]>) => {
+  //         if (res.success) {
+  //           this.addUpdate = new FileModel();
+  //           this.addUpdate.filePath = res.data[0];
+  //           this.toastr.success('با موفقیت آپلود شد', null, {
+  //             closeButton: true,
+  //             positionClass: 'toast-top-left',
+  //           });
+  //         } else {
+  //           this.addUpdate.filePath = res.errors[0];
+  //           this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
+  //             closeButton: true,
+  //             positionClass: 'toast-top-left',
+  //           });
+  //         }
+  //       },
+  //       (_error) => {
+  //         this.toastr.error(
+  //           'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+  //           null,
+  //           {
+  //             closeButton: true,
+  //             positionClass: 'toast-top-left',
+  //           }
+  //         );
+  //       }
+  //     );
+  // }
   deleteImg(item: FileModel, _content: NgbModal) {
     this.modalService
       .open(_content, { ariaLabelledBy: 'modal-basic-title', centered: true })
@@ -180,4 +186,72 @@ export class GalleryComponent implements OnInit {
         }
       );
   }
+  checkFileValidation(event: any){
+    this.imgChangeEvt = event;
+    let eventFile = event.target.files[0];
+    if (eventFile.type=='image/webp') {
+      this.imageUploadFile = new Blob([eventFile], {
+        type: eventFile.type,
+      });
+      return true;
+
+    } else {
+      this.toastrFunction('فایل انتخابی باید webp باشد',3)
+      return false;
+    }
+  }
+  toastrFunction(text:string,type:number){
+    switch(type) {
+     case 1:
+      this.toastr.success(text, null, {
+        timeOut: 2000,
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      })
+      break;
+      case 2:
+        this.toastr.error(text, null, {
+          timeOut: 2000,
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        })
+        break;
+        case 3:
+          this.toastr.show(text, null, {
+            timeOut: 2000,
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          })
+          break;
+    }
+   
+  }
+  uploadImg(){
+    this.imageUploadProccess = 1;
+    this.fileUploader
+      .upload(this.imageUploadFile, 'audios')
+      .pipe(
+        map((event) => {
+          let toasterType=2
+          if (event.type == HttpEventType.UploadProgress) {
+            this.imageUploadProccess = Math.round((100 * event.loaded) / event.total);
+          } else if (event.type == HttpEventType.Response) {
+            
+            this.addUpdate.filePath = event.body.data[0];
+            if (event.body.success) {
+              this.isFileValid = false;
+              toasterType=1
+  
+            } 
+            
+            this.toastrFunction(event.body.message,toasterType)
+          }
+        }),
+        catchError((err) => {
+          this.imageUploadProccess = 0;
+          return throwError(err.message);
+        })
+      )
+      .toPromise();
+   }
 }

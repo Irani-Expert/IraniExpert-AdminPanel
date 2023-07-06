@@ -274,6 +274,7 @@ export class UploadCenterComponent implements OnInit, OnDestroy {
   }
   upload() {
     this.progress = 1;
+    debugger
     this.fileUploader
       .upload(this.file, 'audios')
       .pipe(
@@ -296,7 +297,7 @@ export class UploadCenterComponent implements OnInit, OnDestroy {
               this.isFileValid = false;
             } else {
               this.progress = 0;
-              this.toastr.success(event.body.message, '', {
+              this.toastr.error(event.body.message, '', {
                 positionClass: 'toast-top-left',
                 messageClass: 'text-small',
               });

@@ -10,6 +10,8 @@ import { BannerService } from './banner.service';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { catchError, map, throwError } from 'rxjs';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-banner',
@@ -29,6 +31,7 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 })
 export class BannerComponent implements OnInit {
   filePathKeeper: string;
+  imageUploadProccess:number=0
   imageFound: boolean = true;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
@@ -37,13 +40,17 @@ export class BannerComponent implements OnInit {
   allSelected: boolean;
   page: Page = new Page();
   image: any;
+  imageUploadFile
   cropperSettings: CropperSettings;
   addUpdate: BannerModel;
+  isFileValid: boolean = false;
   addForm: FormGroup;
+  imgValidation:boolean
   constructor(
     public _bannerService: BannerService,
     private toastr: ToastrService,
     private modalService: NgbModal,
+    private fileUploader: FileUploaderService,
     private _formBuilder: FormBuilder,
     private _fileUploaderService: FileUploaderService
   ) {
@@ -155,18 +162,10 @@ export class BannerComponent implements OnInit {
         if (res.success) {
           this.addUpdate.fileExists = false;
           this.addUpdate.filePath = this.filePathKeeper;
-
-          this.toastr.success('با موفقیت حذف شد', null, {
-            closeButton: true,
-            timeOut: 2000,
-            positionClass: 'toast-top-left',
-          });
+          this.toastrFunction('با موفقیت حذف شد',1);
+          this.imageUploadProccess=0
         } else {
-          this.toastr.error(res.message, 'خطا در حذف تصویر', {
-            closeButton: true,
-            timeOut: 2000,
-            positionClass: 'toast-top-left',
-          });
+          this.toastrFunction('خطا در حذف تصویر',2);
         }
       });
   }
@@ -334,4 +333,81 @@ export class BannerComponent implements OnInit {
         }
       });
   }
+  toastrFunction(text:string,type:number){
+    switch(type) {
+     case 1:
+      this.toastr.success(text, null, {
+        timeOut: 2000,
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      })
+      break;
+      case 2:
+        this.toastr.error(text, null, {
+          timeOut: 2000,
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        })
+        break;
+        case 3:
+          this.toastr.show(text, null, {
+            timeOut: 2000,
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          })
+          break;
+    }
+   
+  }
+  checkFileValidation(event: any,){
+    var reader = new FileReader();
+		reader.readAsDataURL(event.target.files[0]);
+		
+		reader.onload = (_event) => {
+			this.cropImagePreview = reader.result; 
+		}
+    this.imgChangeEvt = event;
+    let eventFile = event.target.files[0];
+    if (eventFile.type=='image/webp') {
+      this.imageUploadFile = new Blob([eventFile], {
+        type: eventFile.type,
+      });
+      this.cropImagePreview=this.imageUploadFile 
+      return true;
+
+    } else {
+      this.toastrFunction('فایل انتخابی باید webp باشد',3)
+      return false;
+    }
+  }
+ uploadImg(){
+  this.imageUploadProccess = 1;
+  this.fileUploader
+    .upload(this.imageUploadFile, 'banners')
+    .pipe(
+      map((event) => {
+        let toasterType=2
+        if (event.type == HttpEventType.UploadProgress) {
+          this.imageUploadProccess = Math.round((100 * event.loaded) / event.total);
+        } else if (event.type == HttpEventType.Response) {
+          this.addUpdate.filePath = event.body.data[0];
+          
+          if (event.body.success) {
+            this.addForm.controls['filePath'].setValue(
+              this.addUpdate.filePath
+            );
+            this.isFileValid = false;
+            toasterType=1
+          } 
+          this.toastrFunction(event.body.message,toasterType)
+        }
+      }),
+      catchError((err) => {
+        this.imageUploadProccess = 0;
+        return throwError(err.message);
+      })
+    )
+    .toPromise();
+ }
+
 }
