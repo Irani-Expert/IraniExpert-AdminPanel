@@ -21,6 +21,7 @@ export class GalleryComponent implements OnInit {
   addUpdate: FileModel = new FileModel();
   addForm: FormGroup;
   isFileValid:boolean
+  imageInputText:string;
   viewMode: 'list' | 'grid' = 'list';
   allSelected: boolean;
   rows: FileModel[];
@@ -64,10 +65,30 @@ export class GalleryComponent implements OnInit {
 
   //Add OR Edit!!!!!!!!!!!!!!!
   addorEdit(content: any) {
+    this.cropImagePreview=null
+   this.imageUploadProccess=0
     this.addUpdate = new FileModel;
     
     this.modalService
-      .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' })
+      .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', beforeDismiss: () => {
+     
+          if (this.imageUploadProccess == 100) {
+            this.toastr.show(
+              ' لطفا ایجاد را تکمیل کنید یا عکس آپلود شده را حذف کنید',
+              null,
+              {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+                toastClass: 'bg-light',
+                messageClass: 'text-small mt-2',
+              }
+            );
+            return false;
+          }
+       else {
+          return true;
+        }
+      }, })
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
@@ -81,7 +102,7 @@ export class GalleryComponent implements OnInit {
         }
       );
   }
-
+ 
   async addOrUpdate(row: FileModel) {
     row.description = '';
     row.id = 0;
@@ -157,6 +178,22 @@ export class GalleryComponent implements OnInit {
   //       }
   //     );
   // }
+  deleteUploadedImg(filePath: string) {
+    this.cropImagePreview=null
+    this.imageUploadProccess=0
+    this.imageInputText=''
+    this._fileUploaderService
+      .deleteFile(filePath)
+      .subscribe((res: Result<string[]>) => {
+        if (res.success) {
+          this.addUpdate.filePath = undefined;
+          this.addUpdate.fileExists = false;
+          this.toastrFunction('با موفقیت حذف شد',1)
+        } else {
+          this.toastrFunction('خطا در حذف تصویر',2)
+        }
+      });
+  }
   deleteImg(item: FileModel, _content: NgbModal) {
     this.modalService
       .open(_content, { ariaLabelledBy: 'modal-basic-title', centered: true })
@@ -187,7 +224,17 @@ export class GalleryComponent implements OnInit {
       );
   }
   checkFileValidation(event: any){
+    this.cropImagePreview=null
+    this.imageUploadProccess=0
     this.imgChangeEvt = event;
+    this.cropImagePreview=null
+    if(event.target.files[0]!=undefined){
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (_event) => {
+        this.cropImagePreview = reader.result; 
+      }
+      }
     let eventFile = event.target.files[0];
     if (eventFile.type=='image/webp') {
       this.imageUploadFile = new Blob([eventFile], {

@@ -81,19 +81,21 @@
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="addForm" (ngSubmit)="submit()">
+
       <div class="col-md-7 mt-4">
         <div class="col-md-7 mt-4">
 
 
-          <input
-          type="file"
-          class="text-small"
-          id="files"
-          (change)="
-            this.isFileValid = checkFileValidation($event)
-          "
-        />
+            <input
+            type="file"
+            class="text-small"
+            id="files"
+            (change)="
+              this.isFileValid = checkFileValidation($event)
+            "
+            [ngModel]="imageInputText"
+          />
+   
         <div
         class="d-flex flex-row flex-wrap justify-content-around align-items-center col-10 col-lg-4 col-md-8"
       >
@@ -121,7 +123,7 @@
   
       </div>
      <div>
-          <image-cropper
+          <!-- <image-cropper
             [imageChangedEvent]="imgChangeEvt"
             [maintainAspectRatio]="false"
             format="webp"
@@ -131,7 +133,7 @@
             (cropperReady)="initCropper()"
             (loadImageFailed)="imgFailed()"
           >
-          </image-cropper>
+          </image-cropper> -->
         </div>
         </div>
         <!-- <input type="file" (change)="onFileChanged($event)" /> -->
@@ -140,6 +142,13 @@
         <div class="float-left w-25">
           <img [src]="cropImagePreview" alt="" />
         </div>
+        <button
+        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-1"
+        (click)="deleteUploadedImg(addUpdate.filePath)"
+        *ngIf="imageUploadProccess==100"
+      >
+        <i class="i-Close text-bigger mr-2"></i><strong>حذف</strong>
+      </button>
       </div>
       <!-- <div class="col-12 mt-2 mb-3">
         <button
@@ -151,13 +160,14 @@
           <strong>آپلود</strong>
         </button>
       </div> -->
-    </form>
+   
   </div>
   <div class="modal-footer">
     <button
       type="button"
       class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
+      [disabled]="imageUploadProccess!=100"
     >
       <i class="i-Add text-bigger mr-2"></i>
       <strong>ایجاد</strong>
