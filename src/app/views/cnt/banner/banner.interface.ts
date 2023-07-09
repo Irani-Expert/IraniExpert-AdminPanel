@@ -10,5 +10,6 @@ export interface IBanner extends IBase {
   url: string;
   fileInfo: string;
   fileExists: boolean;
+  key:string
   isRTL: boolean;
 }

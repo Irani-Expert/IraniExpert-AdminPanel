@@ -72,6 +72,7 @@ export class BannerComponent implements OnInit {
       fileInfo: [null],
       rowID: [null],
       isRTL: [null],
+      key: [null],
       orderID: [null, Validators.compose([Validators.required])],
     });
   }
@@ -311,7 +312,13 @@ export class BannerComponent implements OnInit {
       this.addUpdate.fileType = parseInt($event);
     }
   }
+selectKey($event: any){
+  if ($event != undefined) {
+    debugger
+    this.addUpdate.key = $event;
 
+  }
+}
   uploadFile() {
     this._fileUploaderService
       .uploadFile(this.cropImagePreview, 'banners')
