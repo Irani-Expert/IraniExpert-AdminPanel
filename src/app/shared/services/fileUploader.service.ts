@@ -4,9 +4,12 @@ import { Observable, throwError } from 'rxjs';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Result } from '../models/Base/result.model';
+import { AuthenticateService } from './auth/authenticate.service';
+import { UserInfoModel } from '../models/userInfoModel';
 
 @Injectable()
 export class FileUploaderService {
+  userInfo: UserInfoModel = new UserInfoModel();
   uploardUrl = environment.uploadUrl;
   mainUrl = environment.api.baseUrl;
   _httpOptions = {
@@ -17,7 +20,12 @@ export class FileUploaderService {
       Expires: '0',
     }),
   };
-  constructor(public _http: HttpClient) {}
+  constructor(
+    public _http: HttpClient,
+    private authService: AuthenticateService
+  ) {
+    this.userInfo = this.authService.currentUserValue;
+  }
   /**
    *  درخواست ایجاد
    * @param t
@@ -38,7 +46,11 @@ export class FileUploaderService {
   // Delete Request
   deleteFile(filePath: string) {
     return this._http.post<Result<string[]>>(
-      this.mainUrl + '/Files/Delete?filePath=' + filePath,
+      this.mainUrl +
+        '/Files/Delete?filePath=' +
+        filePath +
+        '&authorID=' +
+        this.userInfo.userID,
       undefined,
       this._httpOptions
     );
