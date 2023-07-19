@@ -36,7 +36,6 @@
         <tr *ngIf="item.fileExists">
           <td>
             <img
-              (error)="splitRow(item)"
               [src]="'https://dl.iraniexpert.com/' + item.filePath"
               width="100"
               height="100"
@@ -81,48 +80,42 @@
     </button>
   </div>
   <div class="modal-body">
-
+    <div class="col-md-7 mt-4">
       <div class="col-md-7 mt-4">
-        <div class="col-md-7 mt-4">
+        <input
+          type="file"
+          class="text-small"
+          id="files"
+          (change)="this.isFileValid = checkFileValidation($event)"
+          [ngModel]="imageInputText"
+        />
 
-
-            <input
-            type="file"
-            class="text-small"
-            id="files"
-            (change)="
-              this.isFileValid = checkFileValidation($event)
-            "
-            [ngModel]="imageInputText"
-          />
-   
         <div
-        class="d-flex flex-row flex-wrap justify-content-around align-items-center col-10 col-lg-4 col-md-8"
-      >
-      <button
-      [disabled]="!isFileValid"
-      class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
-      (click)="uploadImg()"
-      *ngIf="imageUploadProccess==0"
-    >
-      <i class="i-Upload text-dark text-bigger mr-3"></i>
-      <strong class="text-small">آپلود</strong>
-    </button>
-    <div
-    *ngIf="imageUploadProccess > 0 && imageUploadProccess < 100"
-    class="progress bg-progress-container radius-progress m-2 flex-grow-1"
-    style="height: 32px"
-  >
-    <div
-      class="progress-bar bg-progressbar radius-progress pl-1"
-      [style.width]="progress + '%'"
-    >
-      {{ progress }}%
-    </div>
-  </div>
-  
-      </div>
-     <div>
+          class="d-flex flex-row flex-wrap justify-content-around align-items-center col-10 col-lg-4 col-md-8"
+        >
+          <button
+            [disabled]="!isFileValid"
+            class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
+            (click)="uploadImg()"
+            *ngIf="imageUploadProccess == 0"
+          >
+            <i class="i-Upload text-dark text-bigger mr-3"></i>
+            <strong class="text-small">آپلود</strong>
+          </button>
+          <div
+            *ngIf="imageUploadProccess > 0 && imageUploadProccess < 100"
+            class="progress bg-progress-container radius-progress m-2 flex-grow-1"
+            style="height: 32px"
+          >
+            <div
+              class="progress-bar bg-progressbar radius-progress pl-1"
+              [style.width]="progress + '%'"
+            >
+              {{ progress }}%
+            </div>
+          </div>
+        </div>
+        <div>
           <!-- <image-cropper
             [imageChangedEvent]="imgChangeEvt"
             [maintainAspectRatio]="false"
@@ -135,22 +128,21 @@
           >
           </image-cropper> -->
         </div>
-        </div>
-        <!-- <input type="file" (change)="onFileChanged($event)" /> -->
+      </div>
+      <!-- <input type="file" (change)="onFileChanged($event)" /> -->
 
-   
-        <div class="float-left w-25">
-          <img [src]="cropImagePreview" alt="" />
-        </div>
-        <button
+      <div class="float-left w-25">
+        <img [src]="cropImagePreview" alt="" />
+      </div>
+      <button
         class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-1"
         (click)="deleteUploadedImg(addUpdate.filePath)"
-        *ngIf="imageUploadProccess==100"
+        *ngIf="imageUploadProccess == 100"
       >
         <i class="i-Close text-bigger mr-2"></i><strong>حذف</strong>
       </button>
-      </div>
-      <!-- <div class="col-12 mt-2 mb-3">
+    </div>
+    <!-- <div class="col-12 mt-2 mb-3">
         <button
           type="button"
           class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
@@ -160,14 +152,13 @@
           <strong>آپلود</strong>
         </button>
       </div> -->
-   
   </div>
   <div class="modal-footer">
     <button
       type="button"
       class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
       (click)="modal.close(true)"
-      [disabled]="imageUploadProccess!=100"
+      [disabled]="imageUploadProccess != 100"
     >
       <i class="i-Add text-bigger mr-2"></i>
       <strong>ایجاد</strong>

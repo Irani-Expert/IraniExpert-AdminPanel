@@ -1,376 +1,434 @@
-<div class="pb-3 d-flex flex-column flex-md-row align-items-center">
-  <div class="d-flex flex-row flex-wrap align-items-center">
-    <strong class="m-1 text-small"
-      ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
-      &nbsp; : &nbsp;</strong
-    >
+<section class="position-relative">
+  <div class="pb-3 d-flex flex-column flex-md-row align-items-center">
+    <div class="d-flex flex-row flex-wrap align-items-center">
+      <strong class="m-1 text-small"
+        ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
+        &nbsp; : &nbsp;</strong
+      >
 
-    <!-- Country -->
-    <strong for="pageOrder" class="text-small"> کشور </strong>
-    <div ngbDropdown placement="bottom-end" class="col-auto">
-      <button
-        *ngIf="isDataFetched"
-        type="button"
-        class="btn btn-filter radius py-btns text-small"
-        id="dropdownBasic1"
-        ngbDropdownToggle
-      >
-        <span
-          class="fi"
-          [ngClass]="'fi-' + countriesData[countryIndexHolder].codeFlag"
-        ></span>
-        <strong class="ml-1" style="font-size: 0.76rem">{{
-          countriesData[countryIndexHolder].name
-        }}</strong>
-      </button>
-      <div
-        ngbDropdownMenu
-        class="mt-1 shadow-lg radius dropDown-scroll"
-        aria-labelledby="dropdownBasic1"
-        style="height: 300px; overflow: auto"
-      >
+      <!-- Country -->
+      <strong for="pageOrder" class="text-small"> کشور </strong>
+      <div ngbDropdown placement="bottom-end" class="col-auto">
         <button
-          class="text-left btn mt-2"
-          ngbDropdownItem
-          *ngFor="let country of countriesData; let i = index"
-          (click)="
-          filterHolder.countryID = country.id; countryIndexHolder = i; setFilter()
-          "
+          *ngIf="isDataFetched"
+          type="button"
+          class="btn btn-filter radius py-btns text-small"
+          id="dropdownBasic1"
+          ngbDropdownToggle
         >
           <span
             class="fi"
-            [ngClass]="'fi-' + country.codeFlag"
-            style="font-size: 0.8rem"
+            [ngClass]="'fi-' + countriesData[countryIndexHolder].codeFlag"
           ></span>
-          <strong class="text-small ml-1">{{ country.name }}</strong>
+          <strong class="ml-1" style="font-size: 0.76rem">{{
+            countriesData[countryIndexHolder].name
+          }}</strong>
         </button>
-      </div>
-    </div>
-
-    <!-- Country -->
-    <!-- Expand The Div -->
-    <button
-      (click)="toggleFilters()"
-      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
-    >
-      <strong class="text-small mr-1">پیشرفته</strong>
-      <span class="d-inline-flex"
-        ><span
-          class="pi pi-chevron-left ml-1"
-          [@rotate90deg]="stateOfChevron"
-          style="font-size: 0.7rem"
-        ></span
-      ></span>
-    </button>
-    <!-- Expand The Div -->
-  </div>
-</div>
-<!-- Hidden Filtering Div -->
-<div @slideInOut *ngIf="isDivExpanded">
-  <div class="flex-row d-flex flex-wrap align-items-center">
-    <!-- Frequency -->
-    <strong for="pageOrder" class="text-small"> دوره زمانی </strong>
-    <div ngbDropdown placement="bottom-end" class="col-auto mb-2 mb-lg-0">
-      <button
-        type="button"
-        class="btn btn-details radius py-btns text-small"
-        id="dropdownBasic1"
-        ngbDropdownToggle
-      >
-        {{ eventEnums.eventFrequencies[frequencyIndexHolder].title }}
-      </button>
-      <div
-        ngbDropdownMenu
-        class="mt-1 shadow-lg radius dropDown-scroll"
-        aria-labelledby="dropdownBasic1"
-        style="height: 245px; overflow: auto"
-      >
-        <button
-          class="text-left btn mt-2"
-          ngbDropdownItem
-          *ngFor="let frequency of eventEnums.eventFrequencies"
-          (click)="
-          filterHolder.frequency = frequency.value;
-            frequency.value == null
-              ? (frequencyIndexHolder = 0)
-              : (frequencyIndexHolder = frequency.value + 1);
-            setFilter()
-          "
+        <div
+          ngbDropdownMenu
+          class="mt-1 shadow-lg radius dropDown-scroll"
+          aria-labelledby="dropdownBasic1"
+          style="height: 300px; overflow: auto"
         >
-          <strong class="text-small">{{ frequency.title }}</strong>
-        </button>
-      </div>
-    </div>
-    <!-- Frequency -->
-    <!-- Importance -->
-    <strong for="pageOrder" class="text-small"> اهمیت خبر </strong>
-    <div ngbDropdown placement="bottom-end" class="col-auto mb-2 mb-lg-0">
-      <button
-        type="button"
-        class="btn btn-details radius py-btns text-small"
-        id="dropdownBasic1"
-        ngbDropdownToggle
-      >
-        {{ eventEnums.eventImportances[importanceIndexHolder].title }}
-      </button>
-      <div
-        ngbDropdownMenu
-        class="mt-1 shadow-lg radius dropDown-scroll"
-        aria-labelledby="dropdownBasic1"
-        style="height: 245px; overflow: auto"
-      >
-        <button
-          class="text-left btn mt-2"
-          ngbDropdownItem
-          *ngFor="let importance of eventEnums.eventImportances"
-          (click)="
-          filterHolder.importance  = importance.value;
-            importance.value == null
-              ? (importanceIndexHolder = 0)
-              : (importanceIndexHolder = importance.value + 1);
-            setFilter()
-          "
-        >
-          <strong class="text-small">{{ importance.title }}</strong>
-        </button>
-      </div>
-    </div>
-    <!-- Importance -->
-    <!-- Sector -->
-    <strong for="pageOrder" class="text-small"> بخش خبر </strong>
-    <div
-      ngbDropdown
-      placement="bottom-end"
-      class="col-auto mb-2 mb-lg-0 mb-2 mb-lg-0"
-    >
-      <button
-        type="button"
-        class="btn btn-details radius py-btns text-small"
-        id="dropdownBasic1"
-        ngbDropdownToggle
-      >
-        {{ eventEnums.eventSector[sectorIndexHolder].title }}
-      </button>
-      <div
-        ngbDropdownMenu
-        class="mt-1 shadow-lg radius dropDown-scroll"
-        aria-labelledby="dropdownBasic1"
-        style="height: 300px; overflow: auto"
-      >
-        <button
-          class="text-left btn mt-2"
-          ngbDropdownItem
-          *ngFor="let sector of eventEnums.eventSector"
-          (click)="
-          filterHolder.sector = sector.value;
-            sector.value == null
-              ? (sectorIndexHolder = 0)
-              : (sectorIndexHolder = sector.value + 1);
-            setFilter()
-          "
-        >
-          <strong class="text-small">{{ sector.title }}</strong>
-        </button>
-      </div>
-    </div>
-
-    <!-- Sector -->
-
-    <!-- Type -->
-    <strong for="pageOrder" class="text-small"> نوع خبر </strong>
-    <div ngbDropdown placement="bottom-end" class="col-auto mb-2 mb-lg-0">
-      <button
-        type="button"
-        class="btn btn-details radius py-btns text-small"
-        id="dropdownBasic1"
-        ngbDropdownToggle
-      >
-        {{ eventEnums.eventType[typeIndexHolder].title }}
-      </button>
-      <div
-        ngbDropdownMenu
-        class="mt-1 shadow-lg radius dropDown-scroll"
-        aria-labelledby="dropdownBasic1"
-        style="height: 200px; overflow: auto"
-      >
-        <button
-          class="text-left btn mt-2"
-          ngbDropdownItem
-          *ngFor="let type of eventEnums.eventType"
-          (click)="
-          filterHolder.type = type.value;
-            type.value == null
-              ? (typeIndexHolder = 0)
-              : (typeIndexHolder = type.value + 1);
-            setFilter()
-          "
-        >
-          <strong class="text-small">{{ type.title }}</strong>
-        </button>
-      </div>
-    </div>
-    <!-- Type -->
-
-    <!-- Inputs -->
-    <input
-      (keydown.enter)="filterWithEnter($event.target.value)"
-      type="text"
-      class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
-      placeholder="شناسه "
-      [(ngModel)]="filter.iD"
-    />
-    <span
-      *ngIf="filterHolder.iD"
-      (click)="filter.iD = null; removeFilter('iD')"
-      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-      ><span class="pi pi-times" style="font-size: 0.7rem"></span
-    ></span>
-    <input
-      (keydown.enter)="filterWithEnter($event.target.value)"
-      type="text"
-      class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
-      placeholder="کد شاخص "
-      [(ngModel)]="filter.eventCode"
-    />
-    <span
-      *ngIf="filterHolder.eventCode"
-      (click)="filter.eventCode = null; removeFilter('eventCode')"
-      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-      ><span class="pi pi-times" style="font-size: 0.7rem"></span
-    ></span>
-    <input
-      (keydown.enter)="filterWithEnter($event.target.value)"
-      type="text"
-      class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
-      placeholder="عنوان"
-      [(ngModel)]="filter.name"
-    />
-    <span
-      *ngIf="filterHolder.name"
-      (click)="filter.name = null; removeFilter('name')"
-      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-      ><span class="pi pi-times" style="font-size: 0.7rem"></span
-    ></span>
-    <input
-      (keydown.enter)="filterWithEnter($event.target.value)"
-      type="text"
-      class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
-      placeholder="لینک منبع"
-      [(ngModel)]="filter.sourceUrl"
-    />
-    <span
-      *ngIf="filterHolder.sourceUrl"
-      (click)="filter.sourceUrl = null; removeFilter('sourceUrl')"
-      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-      ><span class="pi pi-times" style="font-size: 0.7rem"></span
-    ></span>
-    <button
-      type="button"
-      ngbAutofocus
-      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center mx-2"
-      (click)="filterButton()"
-    >
-      <i class="i-Filter-2 text-bigger mr-2"></i>
-      <strong class="text-small">فیلتر </strong>
-    </button>
-  </div>
-</div>
-<!-- Hidden Filtering Div -->
-<div class="content" *ngIf="page.totalElements >= 1">
-  <div class="table-responsive custom-table-responsive">
-    <table class="table custom-table">
-      <thead>
-        <tr>
-          <th>ارز</th>
-          <th>توضیح خبر</th>
-          <th>اهمیت</th>
-          <th class="text-center">بخش خبر</th>
-          <th class="text-center">حالت زمانی</th>
-          <th class="text-center">دوره زمانی</th>
-          <th class="text-center">منبع رویداد</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container
-          *ngFor="
-            let item of eventData
-              | paginate
-                : {
-                    itemsPerPage: page.size,
-                    currentPage: page.pageNumber,
-                    totalItems: page.totalElements
-                  }
-          "
-        >
-          <tr
-            scope="row"
-            (click)="openModal(detailsModal, 'lg', true, item)"
-            class="cursor-pointer"
+          <button
+            class="text-left btn mt-2"
+            ngbDropdownItem
+            *ngFor="let country of countriesData; let i = index"
+            (click)="
+              filterHolder.countryID = country.id;
+              countryIndexHolder = i;
+              setFilter()
+            "
           >
-            <td>
-              <span
-                class="fi"
-                [ngClass]="'fi-' + item.codeFlag"
-                style="font-size: 2rem; border-radius: 6px"
-              ></span
-              >&nbsp;
-              <span>{{ item.currency }}</span>
-            </td>
-            <td>
-              <span> {{ item.name }}</span>
-              <br />
-              <span> {{ item.secondName }}</span>
-            </td>
-            <td>
-              <span class="d-inline-flex align-items-center">
-                <span
-                  class="pi pi-circle-fill"
-                  [ngClass]="{
-                    'text-dark': item.importance == 0,
-                    'blinking-med text-warning': item.importance == 3,
-                    'blinking-slow text-light': item.importance == 1,
-                    'blinking-fast text-danger': item.importance == 2
-                  }"
-                ></span
-                >&nbsp;&nbsp;{{ item.importanceTitle }}
-              </span>
-            </td>
-            <td class="text-center">{{ item.sectorTitle }}</td>
-            <td class="text-center">{{ item.timeModeTitle }}</td>
-            <td class="text-center">{{ item.frequencyTitle }}</td>
-            <td class="text-center">
-              <a
-                (click)="denyOpeningModal()"
-                href="https://{{ item.source_Url }}"
-                target="blank"
-                >{{ item.source_Url }}</a
-              >
-            </td>
-          </tr>
-          <tr class="spacer">
-            <td colspan="100"></td>
-          </tr>
-        </ng-container>
-      </tbody>
-    </table>
+            <span
+              class="fi"
+              [ngClass]="'fi-' + country.codeFlag"
+              style="font-size: 0.8rem"
+            ></span>
+            <strong class="text-small ml-1">{{ country.name }}</strong>
+          </button>
+        </div>
+      </div>
+
+      <!-- Country -->
+      <!-- Expand The Div -->
+      <button
+        (click)="toggleFilters()"
+        class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
+      >
+        <strong class="text-small mr-1">پیشرفته</strong>
+        <span class="d-inline-flex"
+          ><span
+            class="pi pi-chevron-left ml-1"
+            [@rotate90deg]="stateOfChevron"
+            style="font-size: 0.7rem"
+          ></span
+        ></span>
+      </button>
+      <!-- Expand The Div -->
+    </div>
   </div>
-</div>
-<div class="col-md-12 mt-3" *ngIf="page.totalElements > 25">
-  <pagination-controls
-    (pageChange)="setPage($event, null)"
-    previousLabel=""
-    nextLabel=""
-    responsive="true"
-  ></pagination-controls>
-</div>
-<div *ngIf="page.totalElements == 0" class="d-flex justify-content-center">
-  <img
-    src="../../../../../assets/images/97434-no-data-available.gif"
-    class="img-fluid w-50 radius-lg"
-    style="opacity: 0.4"
-    alt=""
-  />
-</div>
+  <!-- Hidden Filtering Div -->
+  <div @slideInOut *ngIf="isDivExpanded">
+    <div class="flex-row d-flex flex-wrap align-items-center">
+      <!-- Frequency -->
+      <strong for="pageOrder" class="text-small"> دوره زمانی </strong>
+      <div ngbDropdown placement="bottom-end" class="col-auto mb-2 mb-lg-0">
+        <button
+          type="button"
+          class="btn btn-details radius py-btns text-small"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          {{ eventEnums.eventFrequencies[frequencyIndexHolder].title }}
+        </button>
+        <div
+          ngbDropdownMenu
+          class="mt-1 shadow-lg radius dropDown-scroll"
+          aria-labelledby="dropdownBasic1"
+          style="height: 245px; overflow: auto"
+        >
+          <button
+            class="text-left btn mt-2"
+            ngbDropdownItem
+            *ngFor="let frequency of eventEnums.eventFrequencies"
+            (click)="
+              filterHolder.frequency = frequency.value;
+              frequency.value == null
+                ? (frequencyIndexHolder = 0)
+                : (frequencyIndexHolder = frequency.value + 1);
+              setFilter()
+            "
+          >
+            <strong class="text-small">{{ frequency.title }}</strong>
+          </button>
+        </div>
+      </div>
+      <!-- Frequency -->
+      <!-- Importance -->
+      <strong for="pageOrder" class="text-small"> اهمیت خبر </strong>
+      <div ngbDropdown placement="bottom-end" class="col-auto mb-2 mb-lg-0">
+        <button
+          type="button"
+          class="btn btn-details radius py-btns text-small"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          {{ eventEnums.eventImportances[importanceIndexHolder].title }}
+        </button>
+        <div
+          ngbDropdownMenu
+          class="mt-1 shadow-lg radius dropDown-scroll"
+          aria-labelledby="dropdownBasic1"
+          style="height: 245px; overflow: auto"
+        >
+          <button
+            class="text-left btn mt-2"
+            ngbDropdownItem
+            *ngFor="let importance of eventEnums.eventImportances"
+            (click)="
+              filterHolder.importance = importance.value;
+              importance.value == null
+                ? (importanceIndexHolder = 0)
+                : (importanceIndexHolder = importance.value + 1);
+              setFilter()
+            "
+          >
+            <strong class="text-small">{{ importance.title }}</strong>
+          </button>
+        </div>
+      </div>
+      <!-- Importance -->
+      <!-- Sector -->
+      <strong for="pageOrder" class="text-small"> بخش خبر </strong>
+      <div
+        ngbDropdown
+        placement="bottom-end"
+        class="col-auto mb-2 mb-lg-0 mb-2 mb-lg-0"
+      >
+        <button
+          type="button"
+          class="btn btn-details radius py-btns text-small"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          {{ eventEnums.eventSector[sectorIndexHolder].title }}
+        </button>
+        <div
+          ngbDropdownMenu
+          class="mt-1 shadow-lg radius dropDown-scroll"
+          aria-labelledby="dropdownBasic1"
+          style="height: 300px; overflow: auto"
+        >
+          <button
+            class="text-left btn mt-2"
+            ngbDropdownItem
+            *ngFor="let sector of eventEnums.eventSector"
+            (click)="
+              filterHolder.sector = sector.value;
+              sector.value == null
+                ? (sectorIndexHolder = 0)
+                : (sectorIndexHolder = sector.value + 1);
+              setFilter()
+            "
+          >
+            <strong class="text-small">{{ sector.title }}</strong>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sector -->
+
+      <!-- Type -->
+      <strong for="pageOrder" class="text-small"> نوع خبر </strong>
+      <div ngbDropdown placement="bottom-end" class="col-auto mb-2 mb-lg-0">
+        <button
+          type="button"
+          class="btn btn-details radius py-btns text-small"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          {{ eventEnums.eventType[typeIndexHolder].title }}
+        </button>
+        <div
+          ngbDropdownMenu
+          class="mt-1 shadow-lg radius dropDown-scroll"
+          aria-labelledby="dropdownBasic1"
+          style="height: 200px; overflow: auto"
+        >
+          <button
+            class="text-left btn mt-2"
+            ngbDropdownItem
+            *ngFor="let type of eventEnums.eventType"
+            (click)="
+              filterHolder.type = type.value;
+              type.value == null
+                ? (typeIndexHolder = 0)
+                : (typeIndexHolder = type.value + 1);
+              setFilter()
+            "
+          >
+            <strong class="text-small">{{ type.title }}</strong>
+          </button>
+        </div>
+      </div>
+      <!-- Type -->
+
+      <!-- Inputs -->
+      <input
+        (keydown.enter)="filterWithEnter($event.target.value)"
+        type="text"
+        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
+        placeholder="شناسه "
+        [(ngModel)]="filter.iD"
+      />
+      <span
+        *ngIf="filterHolder.iD"
+        (click)="filter.iD = null; removeFilter('iD')"
+        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+        ><span class="pi pi-times" style="font-size: 0.7rem"></span
+      ></span>
+      <input
+        (keydown.enter)="filterWithEnter($event.target.value)"
+        type="text"
+        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
+        placeholder="کد شاخص "
+        [(ngModel)]="filter.eventCode"
+      />
+      <span
+        *ngIf="filterHolder.eventCode"
+        (click)="filter.eventCode = null; removeFilter('eventCode')"
+        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+        ><span class="pi pi-times" style="font-size: 0.7rem"></span
+      ></span>
+      <input
+        (keydown.enter)="filterWithEnter($event.target.value)"
+        type="text"
+        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
+        placeholder="عنوان"
+        [(ngModel)]="filter.name"
+      />
+      <span
+        *ngIf="filterHolder.name"
+        (click)="filter.name = null; removeFilter('name')"
+        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+        ><span class="pi pi-times" style="font-size: 0.7rem"></span
+      ></span>
+      <input
+        (keydown.enter)="filterWithEnter($event.target.value)"
+        type="text"
+        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
+        placeholder="لینک منبع"
+        [(ngModel)]="filter.sourceUrl"
+      />
+      <span
+        *ngIf="filterHolder.sourceUrl"
+        (click)="filter.sourceUrl = null; removeFilter('sourceUrl')"
+        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+        ><span class="pi pi-times" style="font-size: 0.7rem"></span
+      ></span>
+      <button
+        type="button"
+        ngbAutofocus
+        class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center mx-2"
+        (click)="filterButton()"
+      >
+        <i class="i-Filter-2 text-bigger mr-2"></i>
+        <strong class="text-small">فیلتر </strong>
+      </button>
+    </div>
+  </div>
+  <!-- Hidden Filtering Div -->
+  <div class="row p-0 m-0 g-0 justify-content-center align-items-start">
+    <div class="col-12 row g-0 p-0 m-0">
+      <div class="content col-12">
+        <div class="table-responsive custom-table-responsive">
+          <table class="table custom-table">
+            <thead>
+              <tr>
+                <th>ارز</th>
+                <th>توضیح خبر</th>
+                <th>اهمیت</th>
+                <th class="text-center">بخش خبر</th>
+                <th class="text-center">حالت زمانی</th>
+                <th class="text-center">دوره زمانی</th>
+                <th class="text-center">منبع رویداد</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container
+                *ngFor="
+                  let item of eventData
+                    | paginate
+                      : {
+                          itemsPerPage: page.size,
+                          currentPage: page.pageNumber,
+                          totalItems: page.totalElements
+                        }
+                "
+              >
+                <tr
+                  scope="row"
+                  (click)="openModal(detailsModal, 'lg', true, item)"
+                  class="cursor-pointer"
+                >
+                  <td>
+                    <span
+                      class="fi"
+                      [ngClass]="'fi-' + item.codeFlag"
+                      style="font-size: 2rem; border-radius: 6px"
+                    ></span
+                    >&nbsp;
+                    <span>{{ item.currency }}</span>
+                  </td>
+                  <td>
+                    <span> {{ item.name }}</span>
+                    <br />
+                    <span> {{ item.secondName }}</span>
+                  </td>
+                  <td>
+                    <span class="d-inline-flex align-items-center">
+                      <span
+                        class="pi pi-circle-fill"
+                        [ngClass]="{
+                          'text-dark': item.importance == 0,
+                          'blinking-med text-warning': item.importance == 3,
+                          'blinking-slow text-light': item.importance == 1,
+                          'blinking-fast text-danger': item.importance == 2
+                        }"
+                      ></span
+                      >&nbsp;&nbsp;{{ item.importanceTitle }}
+                    </span>
+                  </td>
+                  <td class="text-center">{{ item.sectorTitle }}</td>
+                  <td class="text-center">{{ item.timeModeTitle }}</td>
+                  <td class="text-center">{{ item.frequencyTitle }}</td>
+                  <td class="text-center">
+                    <a
+                      (click)="denyOpeningModal()"
+                      href="https://{{ item.source_Url }}"
+                      target="blank"
+                      >{{ item.source_Url }}</a
+                    >
+                  </td>
+                </tr>
+                <tr class="spacer">
+                  <td colspan="100"></td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-12 mt-3" *ngIf="page.totalElements > 25">
+        <pagination-controls
+          (pageChange)="setPage($event, null)"
+          previousLabel=""
+          nextLabel=""
+          responsive="true"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="page.totalElements == 0" class="d-flex justify-content-center">
+    <img
+      src="../../../../../assets/images/97434-no-data-available.gif"
+      class="img-fluid w-50 radius-lg"
+      style="opacity: 0.4"
+      alt=""
+    />
+  </div>
+
+  <!-- TeleGramBtn -->
+  <div @fadeOut class="position-custom-telegram" *ngIf="showTelBtn">
+    <div
+      (click)="checkAndSendNews()"
+      [ngbTooltip]="
+        isMessageContainerClosed ? 'ارسال اخبار به ربات' : ' ارسال کن'
+      "
+      tooltipClass="text-small"
+      [placement]="isMessageContainerClosed ? 'right' : 'bottom'"
+      class="img-container"
+    >
+      <img
+        class="tele-img"
+        [src]="
+          isSendingReq
+            ? '../../../../assets/images/Telegram.gif'
+            : '../../../../assets/images/Telegram.png'
+        "
+        alt=""
+      />
+    </div>
+    <div
+      class="message-container"
+      [ngClass]="{ 'border-0': isMessageContainerClosed }"
+    >
+      <div @fadeOut class="message-blue" *ngIf="!isMessageContainerClosed">
+        <p class="message-content">
+          با این قابلیت میتونی اخبار رو به ربات تلگرام بفرستی
+        </p>
+        <br class="mt-1 mb-1" />
+        <p class="message-content">
+          روی لوگوی <strong>تلگرام</strong> کلیک کن !
+        </p>
+      </div>
+      <div
+        @fadeOut
+        class="d-flex justify-content-end"
+        *ngIf="!isMessageContainerClosed"
+      >
+        <p-button
+          (click)="isMessageContainerClosed = true"
+          styleClass="p-button-rounded p-button-danger m-1 text-small p-btn-small"
+          icon="pi pi-times"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modals -->
 <ng-template let-modal #detailsModal>
   <div class="shadow-lg radius modal-height d-flex flex-column flex-wrap">
     <div class="modal-header border-0">
@@ -659,6 +717,15 @@
         <i class="i-Close text-bigger mr-2"></i
         ><strong class="text-small">انصراف</strong>
       </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template let-modal #warningModal>
+  <div class="shadow-lg bg-info">
+    <div class="modal-body border-0 text-center">
+      <p class="text-black text-small">
+        شما تا {{ remainedTime.value }} دقیقه دیگر اجازه درخواست ندارید
+      </p>
     </div>
   </div>
 </ng-template>

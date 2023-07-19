@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserInfoModel } from './shared/models/userInfoModel';
 import { AuthenticateService } from './shared/services/auth/authenticate.service';
@@ -7,13 +13,16 @@ import { ToastrService } from 'ngx-toastr';
 import { Result } from './shared/models/Base/result.model';
 import { UserInforamationModel } from './shared/models/userInforamationModel';
 import { UsersService } from './views/sec/user-mangement/users.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
+  remainedTime: BehaviorSubject<number> = new BehaviorSubject(0);
+  intervalID;
   private _authService: AuthenticateService;
   constructor(
     private spinner: NgxSpinnerService,
@@ -21,6 +30,7 @@ export class AppComponent implements OnInit {
     private _userService: UsersService,
     private toastr: ToastrService
   ) {}
+  ngOnDestroy(): void {}
 
   ngOnInit() {
     /** spinner starts on init */

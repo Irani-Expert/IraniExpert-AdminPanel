@@ -40,4 +40,7 @@ export class Utils {
     }
     return text;
   }
+  static scrollTracker() {
+    return window && window.scrollY;
+  }
 }

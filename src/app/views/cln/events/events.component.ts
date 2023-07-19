@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Inject,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { EventEnumsModel } from '../models/eventEnums.model';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { CalendarModel } from '../models/calendar.model';
@@ -17,6 +24,8 @@ import {
   animate,
 } from '@angular/animations';
 import { Utils } from 'src/app/shared/utils';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-events',
@@ -28,6 +37,17 @@ import { Utils } from 'src/app/shared/utils';
       state('rotated', style({ transform: 'rotate(-90deg)' })),
       transition('rotated => default', animate('300ms ease-in-out')),
       transition('default => rotated', animate('500ms ease-in-out')),
+    ]),
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms ease-in-out', style({ opacity: 1 })),
+      ]),
+    ]),
+    trigger('fadeOut', [
+      transition(':leave', [
+        animate('300ms ease-in-out', style({ opacity: 0 })),
+      ]),
     ]),
     trigger('slideInOut', [
       transition(':enter', [
@@ -47,6 +67,15 @@ import { Utils } from 'src/app/shared/utils';
   ],
 })
 export class EventsComponent implements OnInit {
+  localStorageDate: any = '';
+  timeOut: number = 0;
+  @ViewChild('warningModal') warningModal!: TemplateRef<any>;
+  spinnerIntervalID;
+  intervalID;
+  remainedTime: BehaviorSubject<number> = new BehaviorSubject(99);
+  isSendingReq: boolean = false;
+  isMessageContainerClosed: boolean = false;
+  showTelBtn: boolean = true;
   countryIndexHolder: number = 0;
   sectorIndexHolder: number = 0;
   frequencyIndexHolder: number = 0;
@@ -57,7 +86,6 @@ export class EventsComponent implements OnInit {
   stateOfChevron: string = 'default';
   filter: FilterModel = new FilterModel();
   filterHolder: FilterModel = new FilterModel();
-  // voiceFile: Blob;
   eventNameHolder: string = '';
   page: Page = new Page();
   eventDetails: CalendarModel;
@@ -67,13 +95,22 @@ export class EventsComponent implements OnInit {
   isDataFetched: boolean = false;
   ckeConfig: CKEDITOR.config;
   @ViewChild('myckeditor') ckeditor: CKEditorComponent;
+  loading: boolean = false;
   constructor(
-    // private calendar: NgbCalendar,
+    private _ngxSpinner: NgxSpinnerService,
     public _calendarService: CalendarService,
     private modal: NgbModal,
-    private toastr: ToastrService,
-    private fileUploader: FileUploaderService
+    private toastr: ToastrService
   ) {
+    if (localStorage.getItem('remainedtimeToTryAgain')) {
+      this.localStorageDate = String(
+        localStorage.getItem('remainedtimeToTryAgain')
+      );
+      if (this.calculateDiff() > 5) {
+        localStorage.removeItem('remainedtimeToTryAgain');
+        this.remainedTime.next(99);
+      }
+    }
     this.page.pageNumber = 0;
     this.ckeConfig = {
       filebrowserBrowseUrl: 'dl.iraniexpert.com//uploads/images/articles',
@@ -100,6 +137,9 @@ export class EventsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.setPage(this.page.pageNumber);
     await this.getCountries();
+    if (Utils.isLMonitor()) {
+      this.isMessageContainerClosed = true;
+    }
   }
   async setPage(pageToSet: number) {
     this.page.pageNumber = pageToSet;
@@ -127,6 +167,7 @@ export class EventsComponent implements OnInit {
       });
     });
   }
+
   async getCalendarEvents(
     pageIndex: number,
     pageSize: number,
@@ -262,8 +303,7 @@ export class EventsComponent implements OnInit {
       });
   }
   setFilter() {
-    
-    console.log(this.filterHolder)
+    console.log(this.filterHolder);
     this.setPage(0);
   }
 
@@ -272,19 +312,133 @@ export class EventsComponent implements OnInit {
       this.setFilter();
     }
   }
-filterButton(){
-  this.filteredItems(this.filter);
-  this.setFilter();
-
-}
+  filterButton() {
+    this.filteredItems(this.filter);
+    this.setFilter();
+  }
   filteredItems(filter: FilterModel) {
     this.filterHolder = { ...filter };
   }
-removeFilter(item:string){
-  delete this.filterHolder[item]
-  delete this.filter[item]
-  this.setFilter();
+  removeFilter(item: string) {
+    delete this.filterHolder[item];
+    delete this.filter[item];
+    this.setFilter();
+  }
 
+  // Send News To Telegram
+  checkAndSendNews() {
+    if (this.remainedTime.value <= 5 && this.remainedTime.value > 0) {
+      this.modal.open(this.warningModal, {
+        size: 'sm',
+        centered: true,
+      });
+      return;
+    }
+    if (this.remainedTime.value <= 0 || this.remainedTime.value == 99) {
+      this.isSendingReq = true;
+      this._ngxSpinner.show();
+      this.setTimer();
+      this._calendarService.getTelegramStatus().subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.isSendingReq = false;
 
-}
+            this.toastr.success(res.message, null, {
+              positionClass: 'toast-top-left',
+            });
+          } else {
+            clearInterval(this.spinnerIntervalID);
+            this.isSendingReq = false;
+
+            this.toastr.error(res.message, null, {
+              positionClass: 'toast-top-left',
+              messageClass: 'text-small',
+            });
+          }
+          this._ngxSpinner.hide();
+        },
+        error: (err) => {
+          (this.isSendingReq = false),
+            localStorage.removeItem('remainedtimeToTryAgain');
+          clearInterval(this.intervalID);
+          clearInterval(this.spinnerIntervalID);
+          this.toastr.error('خطا در برقراری ارتباط  ', 'ناموفق', {
+            positionClass: 'toast-top-left',
+            messageClass: 'text-small',
+          });
+          this._ngxSpinner.hide();
+        },
+        complete: () => {
+          this.isSendingReq = false;
+          console.log('Send News Completed');
+          this._ngxSpinner.hide();
+        },
+      });
+    }
+  }
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    let offset = Utils.scrollTracker();
+    if (offset > 70) {
+      this.showTelBtn = false;
+    }
+    if (offset < 70) {
+      this.showTelBtn = true;
+    }
+
+    // console.log(this.document.documentElement.scrollTop);
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    let isLMonitor = Utils.isLMonitor();
+    if (isLMonitor) {
+      this.isMessageContainerClosed = true;
+    } else {
+      this.isMessageContainerClosed = false;
+    }
+  }
+  setTimer() {
+    localStorage.setItem('remainedtimeToTryAgain', String(new Date()));
+    this.localStorageDate = String(
+      localStorage.getItem('remainedtimeToTryAgain')
+    );
+    // this.remainedTime.next(this.dateNow.getMinutes() + 5);
+    this.reduceTimer();
+    this.spinnerTimeOut();
+  }
+  reduceTimer() {
+    this.intervalID = setInterval(() => {
+      if (this.calculateDiff() >= 5) {
+        this.remainedTime.next(99);
+        localStorage.removeItem('remainedtimeToTryAgain');
+        clearInterval(this.intervalID);
+      }
+    }, 1000);
+  }
+  spinnerTimeOut() {
+    this.spinnerIntervalID = setInterval(() => {
+      if (this.timeOut < 15) {
+        this.timeOut++;
+      }
+      if (this.timeOut == 15) {
+        this._ngxSpinner.hide();
+        this.toastr.show('اخبار در حال ارسال است', 'موفق', {
+          messageClass: 'text-small',
+          toastClass: 'bg-primary radius',
+          positionClass: 'toast-top-left',
+          progressBar: true,
+          timeOut: 5000,
+        });
+        clearInterval(this.spinnerIntervalID);
+      }
+    }, 1000);
+  }
+  calculateDiff() {
+    let currentDate: any = new Date();
+    this.localStorageDate = new Date(this.localStorageDate);
+    let diffMs = currentDate - this.localStorageDate;
+    let diffMinutes = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+    this.remainedTime.next(5 - diffMinutes);
+    return diffMinutes;
+  }
 }

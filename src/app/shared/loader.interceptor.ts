@@ -16,7 +16,9 @@ export class LoaderInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let dontSpin: boolean;
-    dontSpin = req.url.includes('https://dl.iraniexpert.com/fileUploader');
+    dontSpin =
+      req.url.includes('https://dl.iraniexpert.com/fileUploader') ||
+      req.url.includes('https://climax.iraniexpert.ir/api/Test/TelegramCal');
     if (!dontSpin) {
       this.loader.show();
       //this.checkUserPermission()

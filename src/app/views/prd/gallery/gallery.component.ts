@@ -20,30 +20,25 @@ export class GalleryComponent implements OnInit {
   pageLoad: boolean = true;
   addUpdate: FileModel = new FileModel();
   addForm: FormGroup;
-  isFileValid:boolean
-  imageInputText:string;
+  isFileValid: boolean;
+  imageInputText: string;
   viewMode: 'list' | 'grid' = 'list';
   allSelected: boolean;
   rows: FileModel[];
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
-  imageUploadProccess:number=0
-  imageUploadFile
+  imageUploadProccess: number = 0;
+  imageUploadFile;
   constructor(
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _fileService: FileService,
     private _fileUploaderService: FileUploaderService,
-    private fileUploader: FileUploaderService,
+    private fileUploader: FileUploaderService
   ) {}
 
   ngOnInit(): void {
     this.getFileByProductId(this.productId, 6);
-  }
-  splitRow(item: FileModel) {
-    var finder = this.rows.findIndex((row) => row.id === item.id);
-    this.rows.splice(finder, 1);
-    this.pageLoad = true;
   }
   async getFileByProductId(rowId: number, tableType: number) {
     this._fileService.getFilesByRowIdAndTableType(rowId, tableType).subscribe(
@@ -65,13 +60,15 @@ export class GalleryComponent implements OnInit {
 
   //Add OR Edit!!!!!!!!!!!!!!!
   addorEdit(content: any) {
-    this.cropImagePreview=null
-   this.imageUploadProccess=0
-    this.addUpdate = new FileModel;
-    
+    this.cropImagePreview = null;
+    this.imageUploadProccess = 0;
+    this.addUpdate = new FileModel();
+
     this.modalService
-      .open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', beforeDismiss: () => {
-     
+      .open(content, {
+        size: 'lg',
+        ariaLabelledBy: 'modal-basic-title',
+        beforeDismiss: () => {
           if (this.imageUploadProccess == 100) {
             this.toastr.show(
               ' لطفا ایجاد را تکمیل کنید یا عکس آپلود شده را حذف کنید',
@@ -84,11 +81,11 @@ export class GalleryComponent implements OnInit {
               }
             );
             return false;
+          } else {
+            return true;
           }
-       else {
-          return true;
-        }
-      }, })
+        },
+      })
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
@@ -102,7 +99,7 @@ export class GalleryComponent implements OnInit {
         }
       );
   }
- 
+
   async addOrUpdate(row: FileModel) {
     row.description = '';
     row.id = 0;
@@ -119,7 +116,6 @@ export class GalleryComponent implements OnInit {
         if (data.success) {
           this.getFileByProductId(this.productId, 6);
 
-          
           this.toastr.success(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -179,18 +175,18 @@ export class GalleryComponent implements OnInit {
   //     );
   // }
   deleteUploadedImg(filePath: string) {
-    this.cropImagePreview=null
-    this.imageUploadProccess=0
-    this.imageInputText=''
+    this.cropImagePreview = null;
+    this.imageUploadProccess = 0;
+    this.imageInputText = '';
     this._fileUploaderService
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.filePath = undefined;
           this.addUpdate.fileExists = false;
-          this.toastrFunction('با موفقیت حذف شد',1)
+          this.toastrFunction('با موفقیت حذف شد', 1);
         } else {
-          this.toastrFunction('خطا در حذف تصویر',2)
+          this.toastrFunction('خطا در حذف تصویر', 2);
         }
       });
   }
@@ -223,75 +219,73 @@ export class GalleryComponent implements OnInit {
         }
       );
   }
-  checkFileValidation(event: any){
-    this.cropImagePreview=null
-    this.imageUploadProccess=0
+  checkFileValidation(event: any) {
+    this.cropImagePreview = null;
+    this.imageUploadProccess = 0;
     this.imgChangeEvt = event;
-    this.cropImagePreview=null
-    if(event.target.files[0]!=undefined){
+    this.cropImagePreview = null;
+    if (event.target.files[0] != undefined) {
       var reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = (_event) => {
-        this.cropImagePreview = reader.result; 
-      }
-      }
+        this.cropImagePreview = reader.result;
+      };
+    }
     let eventFile = event.target.files[0];
-    if (eventFile.type=='image/webp') {
+    if (eventFile.type == 'image/webp') {
       this.imageUploadFile = new Blob([eventFile], {
         type: eventFile.type,
       });
       return true;
-
     } else {
-      this.toastrFunction('فایل انتخابی باید webp باشد',3)
+      this.toastrFunction('فایل انتخابی باید webp باشد', 3);
       return false;
     }
   }
-  toastrFunction(text:string,type:number){
-    switch(type) {
-     case 1:
-      this.toastr.success(text, null, {
-        timeOut: 2000,
-        closeButton: true,
-        positionClass: 'toast-top-left',
-      })
-      break;
+  toastrFunction(text: string, type: number) {
+    switch (type) {
+      case 1:
+        this.toastr.success(text, null, {
+          timeOut: 2000,
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+        break;
       case 2:
         this.toastr.error(text, null, {
           timeOut: 2000,
           closeButton: true,
           positionClass: 'toast-top-left',
-        })
+        });
         break;
-        case 3:
-          this.toastr.show(text, null, {
-            timeOut: 2000,
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          })
-          break;
+      case 3:
+        this.toastr.show(text, null, {
+          timeOut: 2000,
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+        break;
     }
-   
   }
-  uploadImg(){
+  uploadImg() {
     this.imageUploadProccess = 1;
     this.fileUploader
       .upload(this.imageUploadFile, 'audios')
       .pipe(
         map((event) => {
-          let toasterType=2
+          let toasterType = 2;
           if (event.type == HttpEventType.UploadProgress) {
-            this.imageUploadProccess = Math.round((100 * event.loaded) / event.total);
+            this.imageUploadProccess = Math.round(
+              (100 * event.loaded) / event.total
+            );
           } else if (event.type == HttpEventType.Response) {
-            
             this.addUpdate.filePath = event.body.data[0];
             if (event.body.success) {
               this.isFileValid = false;
-              toasterType=1
-  
-            } 
-            
-            this.toastrFunction(event.body.message,toasterType)
+              toasterType = 1;
+            }
+
+            this.toastrFunction(event.body.message, toasterType);
           }
         }),
         catchError((err) => {
@@ -300,5 +294,5 @@ export class GalleryComponent implements OnInit {
         })
       )
       .toPromise();
-   }
+  }
 }

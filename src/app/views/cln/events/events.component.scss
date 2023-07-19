@@ -238,3 +238,126 @@ input:focus {
   box-shadow: none !important;
   background: #f4f2f2 !important;
 }
+.tele-img {
+  width: 45px;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+  height: auto;
+}
+.position-custom-telegram {
+  position: fixed;
+  top: calc(100px + 1vh);
+  left: -1%;
+}
+.counter-timeOut-container {
+  background-color: #12111172;
+  padding: 6px;
+  border-radius: 6px;
+}
+.counter-time {
+  font-size: 1rem;
+  color: #0e0c0c;
+}
+.img-container {
+  position: absolute;
+  left: 30px;
+  max-width: 100%;
+  display: inline-flex;
+  align-self: center;
+  justify-content: center;
+  border-radius: 50%;
+  animation: 2s box-shadow ease infinite;
+  -webkit-animation: 2s box-shadow ease infinite;
+  -moz-animation: 2s box-shadow ease infinite;
+}
+
+@keyframes box-shadow {
+  from,
+  to {
+    box-shadow: unset;
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0px 0px 14px 4px #4a6f6dbf;
+  }
+}
+
+@-moz-keyframes box-shadow {
+  from,
+  to {
+    box-shadow: unset;
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0px 0px 14px 4px #4a6f6dbf;
+  }
+}
+
+@-webkit-keyframes box-shadow {
+  from,
+  to {
+    box-shadow: unset;
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0px 0px 14px 4px #4a6f6dbf;
+  }
+}
+.message-container {
+  position: relative;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  left: 65px;
+  margin-top: 50px;
+
+  width: 270px;
+  height: 58px;
+  border: 1px solid #97c6e3;
+  border-radius: 10px;
+}
+.message-blue {
+  text-align: right;
+  border-radius: 10px;
+
+  background-color: #5e6a69;
+  padding: 7px;
+}
+.message-content {
+  padding: 0;
+  margin: 0;
+  color: #e0e0e3;
+  font-size: 0.68rem;
+  font-weight: 400;
+  strong {
+    margin-left: 3px;
+    margin-right: 3px;
+    font-size: 0.74rem;
+    color: #0b1136;
+  }
+}
+.message-blue:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 15px solid #5e6a69;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  top: 0;
+  left: -15px;
+}
+
+.message-blue:before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 17px solid #97c6e3;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  top: -1px;
+  left: -17px;
+}

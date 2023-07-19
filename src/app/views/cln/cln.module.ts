@@ -10,6 +10,7 @@ import { FileUploaderService } from 'src/app/shared/services/fileUploader.servic
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CountriesComponent } from './countries/countries.component';
 import { EventsComponent } from './events/events.component';
+import { ButtonModule } from 'primeng/button';
 
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 
@@ -24,6 +25,7 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
     CKEditorModule,
     ReactiveFormsModule,
     FormsModule,
+    ButtonModule,
   ],
   providers: [FileUploaderService],
 })

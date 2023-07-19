@@ -197,8 +197,8 @@
   transition: all 500ms ease;
   height: 100%;
 }
-.text-secondary{
-color: #6c757d!important;
+.text-secondary {
+  color: #6c757d !important;
 }
 .btn-6:hover:after {
   transition: all 500ms ease;
@@ -639,4 +639,15 @@ Buttons
 }
 .date-picker:focus {
   background: #fff !important;
+}
+.p-button-rounded {
+  height: 1rem !important;
+}
+.p-button-icon-only {
+  width: 1rem !important;
+  padding: 0.75rem !important;
+  .pi {
+    font-size: 0.62rem !important;
+    margin-top: 1.5px;
+  }
 }
