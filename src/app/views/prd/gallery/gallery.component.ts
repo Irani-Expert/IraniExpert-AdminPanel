@@ -90,12 +90,10 @@ export class GalleryComponent implements OnInit {
         (result: boolean) => {
           if (result != undefined) {
             this.addOrUpdate(this.addUpdate);
-            this.addForm.reset();
           }
         },
         (reason) => {
           console.log('Err!', reason);
-          this.addForm.reset();
         }
       );
   }

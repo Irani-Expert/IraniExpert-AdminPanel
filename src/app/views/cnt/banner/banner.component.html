@@ -196,7 +196,7 @@
         </div>
 
         <!-- type  -->
-        <div class="col-md-6 form-group mb-3">
+        <div class="col-md-4 form-group mb-3">
           <label for="type">جایگاه را مشخص کنید</label>
           <select
             formControlName="type"
@@ -220,7 +220,7 @@
         </div>
 
         <!-- fileType -->
-        <div class="col-md-6 form-group mb-3">
+        <div class="col-md-4 form-group mb-3">
           <label for="fileType">نوع فایل</label>
           <select
             class="form-control form-control-rounded"
@@ -241,7 +241,27 @@
             >انتخاب نوع فایل ضروری است</small
           >
         </div>
-
+        <div class="col-md-4 form-group mb-3">
+          <label for="key">جایگاه</label>
+          <select
+            class="form-control form-control-rounded"
+            formControlName="key"
+            (ngModelChange)="selectKey($event)"
+            [ngModel]="addUpdate.key"
+          >
+            <option value="rightBannerHome">راست</option>
+            <option value="leftBannerHome">چپ</option>
+            <option value=null>وسط</option>
+          </select>
+          <small
+            *ngIf="
+              addForm.controls['key'].hasError('required') &&
+              addForm.controls['key'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >انتخاب نوع فایل ضروری است</small
+          >
+        </div>
         <!-- linkType -->
         <div class="col-md-4 form-group mb-3">
           <label for="linkType">خارجی داخلی </label>

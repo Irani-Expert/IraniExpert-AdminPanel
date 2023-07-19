@@ -12,4 +12,5 @@ export class BannerModel extends Base implements IBanner {
   tableType: number;
   rowID: number;
   url: string;
+  key:string
 }
