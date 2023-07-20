@@ -211,12 +211,10 @@ export class EventsComponent implements OnInit {
       });
   }
   onChangeEditor(): void {
-    console.log('onChange');
     //this.log += new Date() + "<br />";
   }
 
   onPasteEditor(): void {
-    console.log('onPaste');
     //this.log += new Date() + "<br />";
   }
   denyOpeningModal() {
@@ -272,7 +270,6 @@ export class EventsComponent implements OnInit {
   }
   onFocusOut() {
     if (this.eventNameHolder !== this.eventDetails.name) {
-      console.log('hasChanged');
     } else {
       this.changing = false;
     }
@@ -302,7 +299,6 @@ export class EventsComponent implements OnInit {
       });
   }
   setFilter() {
-    console.log(this.filterHolder);
     this.setPage(0);
   }
 
@@ -388,8 +384,6 @@ export class EventsComponent implements OnInit {
     if (offset < 70) {
       this.showTelBtn = true;
     }
-
-    // console.log(this.document.documentElement.scrollTop);
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
