@@ -274,7 +274,6 @@ export class UploadCenterComponent implements OnInit, OnDestroy {
   }
   upload() {
     this.progress = 1;
-    debugger
     this.fileUploader
       .upload(this.file, 'audios')
       .pipe(

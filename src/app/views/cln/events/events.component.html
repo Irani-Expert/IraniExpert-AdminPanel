@@ -721,11 +721,16 @@
   </div>
 </ng-template>
 <ng-template let-modal #warningModal>
-  <div class="shadow-lg bg-info">
+  <div class="shadow-lg bg-primary">
     <div class="modal-body border-0 text-center">
-      <p class="text-black text-small">
-        شما تا {{ remainedTime.value }} دقیقه دیگر اجازه درخواست ندارید
+      <p class="text-white text-small">
+        شما تا&nbsp; {{ remainedTime.value }} دقیقه دیگر اجازه درخواست ندارید
       </p>
     </div>
   </div>
 </ng-template>
+
+<ngx-spinner
+  name="mySpinner"
+  template="<img src='../../../../assets/images/Telegram.gif' class='spinner-img-position' />"
+></ngx-spinner>

@@ -72,7 +72,8 @@ export class EventsComponent implements OnInit {
   @ViewChild('warningModal') warningModal!: TemplateRef<any>;
   spinnerIntervalID;
   intervalID;
-  remainedTime: BehaviorSubject<number> = new BehaviorSubject(99);
+  remainedTime: BehaviorSubject<number> = new BehaviorSubject(100);
+  remainedSec: BehaviorSubject<number> = new BehaviorSubject(0);
   isSendingReq: boolean = false;
   isMessageContainerClosed: boolean = false;
   showTelBtn: boolean = true;
@@ -106,10 +107,8 @@ export class EventsComponent implements OnInit {
       this.localStorageDate = String(
         localStorage.getItem('remainedtimeToTryAgain')
       );
-      if (this.calculateDiff() > 5) {
-        localStorage.removeItem('remainedtimeToTryAgain');
-        this.remainedTime.next(99);
-      }
+
+      this.reduceTimer();
     }
     this.page.pageNumber = 0;
     this.ckeConfig = {
@@ -332,11 +331,16 @@ export class EventsComponent implements OnInit {
         size: 'sm',
         centered: true,
       });
+
       return;
     }
-    if (this.remainedTime.value <= 0 || this.remainedTime.value == 99) {
+    if (this.remainedTime.value == 100) {
       this.isSendingReq = true;
-      this._ngxSpinner.show();
+      this._ngxSpinner.show('mySpinner', {
+        size: 'medium',
+        bdColor: 'rgba(0, 0, 0, 0.8)',
+        fullScreen: true,
+      });
       this.setTimer();
       this._calendarService.getTelegramStatus().subscribe({
         next: (res) => {
@@ -355,7 +359,7 @@ export class EventsComponent implements OnInit {
               messageClass: 'text-small',
             });
           }
-          this._ngxSpinner.hide();
+          this._ngxSpinner.hide('mySpinner');
         },
         error: (err) => {
           (this.isSendingReq = false),
@@ -366,12 +370,11 @@ export class EventsComponent implements OnInit {
             positionClass: 'toast-top-left',
             messageClass: 'text-small',
           });
-          this._ngxSpinner.hide();
+          this._ngxSpinner.hide('mySpinner');
         },
         complete: () => {
           this.isSendingReq = false;
-          console.log('Send News Completed');
-          this._ngxSpinner.hide();
+          this._ngxSpinner.hide('mySpinner');
         },
       });
     }
@@ -409,7 +412,7 @@ export class EventsComponent implements OnInit {
   reduceTimer() {
     this.intervalID = setInterval(() => {
       if (this.calculateDiff() >= 5) {
-        this.remainedTime.next(99);
+        this.remainedTime.next(100);
         localStorage.removeItem('remainedtimeToTryAgain');
         clearInterval(this.intervalID);
       }
@@ -421,7 +424,7 @@ export class EventsComponent implements OnInit {
         this.timeOut++;
       }
       if (this.timeOut == 15) {
-        this._ngxSpinner.hide();
+        this._ngxSpinner.hide('mySpinner');
         this.toastr.show('اخبار در حال ارسال است', 'موفق', {
           messageClass: 'text-small',
           toastClass: 'bg-primary radius',
@@ -438,6 +441,7 @@ export class EventsComponent implements OnInit {
     this.localStorageDate = new Date(this.localStorageDate);
     let diffMs = currentDate - this.localStorageDate;
     let diffMinutes = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+
     this.remainedTime.next(5 - diffMinutes);
     return diffMinutes;
   }

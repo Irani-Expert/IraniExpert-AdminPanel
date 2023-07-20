@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ClnRoutingModule } from './cln.routing';
@@ -13,6 +13,7 @@ import { EventsComponent } from './events/events.component';
 import { ButtonModule } from 'primeng/button';
 
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [CalendarComponent, CountriesComponent, EventsComponent],
@@ -26,7 +27,9 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
     ReactiveFormsModule,
     FormsModule,
     ButtonModule,
+    NgxSpinnerModule,
   ],
   providers: [FileUploaderService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ClnModule {}
