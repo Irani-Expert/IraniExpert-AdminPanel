@@ -12,4 +12,5 @@ export interface IArticle extends IBase {
   updateByLastName: string;
   fileExists: boolean;
   isRTL: boolean;
+  meta: string;
 }

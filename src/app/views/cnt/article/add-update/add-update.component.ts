@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -28,7 +28,7 @@ import { HttpEventType } from '@angular/common/http';
   templateUrl: './add-update.component.html',
   styleUrls: ['./add-update.component.scss'],
 })
-export class AddUpdateComponent implements OnInit {
+export class AddUpdateComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   articleId: number = parseInt(
     this._route.snapshot.paramMap.get('articleId') ?? '0'
@@ -55,6 +55,11 @@ export class AddUpdateComponent implements OnInit {
     private _user: AuthenticateService,
     private _router: Router
   ) {}
+  ngOnDestroy(): void {
+    if (this.addUpdate.cardImagePath !== undefined && this.addUpdate.id) {
+      this.deleteImg(this.addUpdate.cardImagePath);
+    }
+  }
 
   ngOnInit(): void {
     this.getGroupList();
@@ -91,6 +96,7 @@ export class AddUpdateComponent implements OnInit {
       description: [null, Validators.required],
       publishDate: [null],
       isRTL: [null],
+      meta: [''],
     });
   }
 
@@ -146,7 +152,7 @@ export class AddUpdateComponent implements OnInit {
       });
   }
 
-  uploadFile() {
+  async uploadFile() {
     this.isLoading = true;
     this._fileUploaderService
       .upload(this.file, 'articles')
