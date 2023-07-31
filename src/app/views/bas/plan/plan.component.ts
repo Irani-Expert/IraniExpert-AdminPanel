@@ -176,7 +176,7 @@ export class PlanComponent implements OnInit {
               product: this.addUpdate.product,
               price: this.addUpdate.price,
               expireDate: new Date(
-                new Date().getFullYear(),
+                new Date().getFullYear() + 10,
                 new Date().getMonth(),
                 new Date().getDate() + 1
               ),
