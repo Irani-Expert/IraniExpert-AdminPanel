@@ -78,7 +78,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
       defaultLanguage: 'fa',
       language: 'fa',
       removeButtons:
-        'Underline,Subscript,Superscript,SpecialChar,Source,Save,NewPage,DocProps,Preview,Print,' +
+        'Underline,Subscript,Superscript,SpecialChar,Save,NewPage,DocProps,Preview,Print,' +
         'Templates,document,Cut,Copy,Paste,PasteText,PasteFromWord,Replace,SelectAll,Scayt,' +
         'Radio,TextField,Textarea,Select,Button,HiddenField,Strike,RemoveFormat,' +
         'Outdent,Indent,Blockquote,CreateDiv,Anchor,' +

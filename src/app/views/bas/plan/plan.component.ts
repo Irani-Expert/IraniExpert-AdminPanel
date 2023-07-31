@@ -41,21 +41,22 @@ export class PlanComponent implements OnInit {
     this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       title: [
-        null,
+        '',
         Validators.compose([
           Validators.required,
           Validators.maxLength(50),
           Validators.minLength(2),
         ]),
       ],
-      orderID: [null, Validators.compose([Validators.required])],
-      description: [null, Validators.compose([Validators.maxLength(500)])],
-      isActive: [null],
-      expireDate: [null],
-      price: [null],
+      orderID: [0, Validators.compose([Validators.required])],
+      description: ['', Validators.compose([Validators.maxLength(500)])],
+      isActive: [false],
+      expireDate: [new Date()],
+      price: [0],
       tableType: [6],
-      iconPath: [null],
-      isFirstBuy: [null],
+      iconPath: [''],
+      isFirstBuy: [false],
+      planType: [99, Validators.required],
     });
   }
   setPage(pageInfo: number) {
@@ -68,7 +69,6 @@ export class PlanComponent implements OnInit {
     this._planService.getPlanByProductId(this.productId).subscribe(
       (res: Result<PlanModel[]>) => {
         this.rows = res.data;
-        
       },
       (_error) => {
         this.toastr.error(
@@ -158,34 +158,48 @@ export class PlanComponent implements OnInit {
     if (row === undefined) {
       row = new PlanModel();
       row.id = 0;
-      row.productId = this.productId;
-      row.product = null;
-      row.expireDate = null;
-      row.iconPath = null;
-      row.price = null;
-      row.isFirstBuy = null;
     }
+    row.productId = this.productId;
     this.addUpdate = { ...row };
     this.modalService
       .open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
-            this.addOrUpdate(this.addUpdate);
+            let planToSend = {
+              orderID: this.addUpdate.orderID,
+              isActive: this.addUpdate.isActive,
+              description: this.addUpdate.description,
+              id: this.addUpdate.id,
+              title: this.addUpdate.title,
+              productId: this.addUpdate.productId,
+              product: this.addUpdate.product,
+              price: this.addUpdate.price,
+              expireDate: new Date(
+                new Date().getFullYear(),
+                new Date().getMonth(),
+                new Date().getDate() + 1
+              ),
+              iconPath: this.addUpdate.iconPath,
+              planOptions: this.addUpdate.planOptions,
+              isFirstBuy: this.addUpdate.isFirstBuy,
+              planType: this.addUpdate.planType,
+              maximumBalance: null,
+            };
+            this.addOrUpdate(planToSend);
           }
         },
         (reason) => {}
       );
   }
 
-  async addOrUpdate(row: PlanModel) {
+  async addOrUpdate(row: any) {
     if (row.id === 0) {
-      await this._planService
+      this._planService
         .create(row, 'plan')
 
         .subscribe((data) => {
           if (data.success) {
-            this.rows;
             this.toastr.success(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
@@ -199,12 +213,10 @@ export class PlanComponent implements OnInit {
             this.addForm.reset();
           }
         });
+      this.getPlanListByProductId();
     } else {
-      await this._planService.update(row.id, row, 'plan').subscribe((data) => {
+      this._planService.update(row.id, row, 'plan').subscribe((data) => {
         if (data.success) {
-          var finder = this.rows.findIndex((rows) => rows.id === row.id);
-          this.rows[finder] = row;
-
           this.toastr.success(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -216,11 +228,17 @@ export class PlanComponent implements OnInit {
           });
         }
       });
+      this.getPlanListByProductId();
     }
   }
   selectType($event: any) {
     if ($event != undefined) {
       this.addUpdate.orderID = parseInt($event);
+    }
+  }
+  selectPlanType($event: any) {
+    if ($event != undefined) {
+      this.addUpdate.planType = parseInt($event);
     }
   }
 
