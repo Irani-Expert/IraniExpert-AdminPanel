@@ -89,7 +89,11 @@ export class FileUploaderService {
     const formData = new FormData();
     formData.append('_file', _blob, `file.${type[1]}`);
     return this._http.post<Result<string[]>>(
-      this.uploardUrl + '?folder=' + folder,
+      this.uploardUrl +
+        '?folder=' +
+        folder +
+        '&authorID=' +
+        this.userInfo.userID,
       formData,
       { reportProgress: true, observe: 'events' }
     );

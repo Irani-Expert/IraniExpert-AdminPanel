@@ -39,46 +39,39 @@ export class PlanOptionComponent implements OnInit {
   }
   async addOrUpdate(item: PlanOptionModel) {
     if (item.id === 0) {
-      await this._planOptionService
-        .create(item, 'PlanOption')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-              this.addForm.reset();
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-              this.addForm.reset();
-            }
-          }
-        );
+      this._planOptionService.create(item, 'PlanOption').subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.addForm.reset();
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.addForm.reset();
+        }
+      });
     } else {
-      await this._planOptionService
+      this._planOptionService
         .update(item.id, item, 'PlanOption')
-        .subscribe(
-          (data) => {
-            if (data.success) {
-              
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-              this.addForm.reset();
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-              this.addForm.reset();
-            }
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+            this.addForm.reset();
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+            this.addForm.reset();
           }
-        );
+        });
     }
   }
   close() {

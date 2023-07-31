@@ -13,4 +13,5 @@ export class ArticleModel extends Base implements IArticle {
   cardImagePath: string;
   viewsCount: number;
   fileExists: boolean;
+  meta: string;
 }

@@ -366,3 +366,7 @@ input:focus {
   left: 50%;
   top: 50%;
 }
+.filter-bar {
+  position: relative;
+  z-index: 2;
+}

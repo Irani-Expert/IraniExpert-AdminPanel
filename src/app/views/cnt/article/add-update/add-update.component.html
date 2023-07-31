@@ -104,11 +104,23 @@
                 >انتخاب نوع گروه ضروری است</small
               >
             </div>
+            <!--  Meta  -->
+            <div class="col-md-6">
+              <label for="meta">متا مقاله</label>
+              <textarea
+                type="text"
+                class="form-control radius"
+                id="meta"
+                placeholder="متا را وارد نمایید"
+                [formControl]="addForm.controls['meta']"
+                [(ngModel)]="addUpdate.meta"
+              ></textarea>
+            </div>
 
             <!-- Is Rtl -->
 
             <div class="col-md-6 form-group mb-3 mt-1">
-              <label class="m-1">چپ چین</label>
+              <label class="m-1">راست به چپ</label>
               <label class="switch switch-primary mr-2 m-2">
                 <input
                   [formControl]="addForm.controls['isRTL']"

@@ -11,4 +11,7 @@ export interface IPlan extends IBase {
   iconPath: string;
   planOptions: PlanOptionModel[];
   isFirstBuy: boolean;
+  bgColor: string;
+  textColor: string;
+  planType: number;
 }

@@ -11,4 +11,7 @@ export class PlanModel extends Base implements IPlan {
   iconPath: string;
   planOptions: PlanOptionModel[];
   isFirstBuy: boolean;
+  bgColor: string = '';
+  textColor: string = '';
+  planType: number = 0;
 }

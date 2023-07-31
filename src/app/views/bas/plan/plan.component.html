@@ -18,13 +18,19 @@
 <div
   class="d-flex flex-row flex-wrap align-items-start justify-content-lg-start justify-content-center"
 >
-  <div class="col-lg-3 col-md-6 col-sm-8 col-12" *ngFor="let item of rows| paginate
-  : {
-      itemsPerPage: page.size,
-      page: page.pageNumber,
-      currentPage: page.pageNumber,
-      totalItems: page.totalElements
-    }">
+  <div
+    class="col-lg-3 col-md-6 col-sm-8 col-12"
+    *ngFor="
+      let item of rows.slice().reverse()
+        | paginate
+          : {
+              itemsPerPage: page.size,
+              page: page.pageNumber,
+              currentPage: page.pageNumber,
+              totalItems: page.totalElements
+            }
+    "
+  >
     <div class="card bg-dark mb-2">
       <div class="card-body">
         <div class="bg-secondary w-100 rounded-top rounded-bottom">
@@ -127,7 +133,7 @@
       </div>
     </div>
   </div>
-   <div class="col-md-12 mt-3" *ngIf="page.totalElements > page.size">
+  <div class="col-md-12 mt-3" *ngIf="page.totalElements > page.size">
     <pagination-controls
       (pageChange)="setPage($event)"
       previousLabel=""
@@ -225,6 +231,29 @@
             "
             class="mat-text-warn m-t-negative"
             >انتخاب اولویت ضروری است</small
+          >
+        </div>
+        <!-- Order ID  -->
+        <div class="col-md-4 form-group mb-3">
+          <label for="orderID">نوع پلن را انتخاب کنید</label>
+          <select
+            id="orderID"
+            [formControl]="addForm.controls['planType']"
+            class="form-control form-control-rounded"
+            [ngModel]="addUpdate.planType"
+            (ngModelChange)="selectPlanType($event)"
+          >
+            <option value="5">تجاری</option>
+            <option value="3">اعتماد</option>
+            <option value="4">تریدر</option>
+          </select>
+          <small
+            *ngIf="
+              addForm.controls['orderID'].hasError('required') &&
+              addForm.controls['orderID'].touched
+            "
+            class="mat-text-warn m-t-negative"
+            >انتخاب نوع پلن ضروری است</small
           >
         </div>
         <!-- Description -->
