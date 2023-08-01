@@ -26,6 +26,7 @@ import { HttpEventType } from '@angular/common/http';
   styleUrls: ['./back-test.component.scss'],
 })
 export class BackTestComponent implements OnInit {
+  fileName: string = '';
   isFileValid: boolean = false;
   progress: number = 0;
   videoFile: Blob;
@@ -105,6 +106,7 @@ export class BackTestComponent implements OnInit {
   }
   onFileChanged(event: any) {
     this.imgChangeEvt = event;
+    this.fileName = event.target.files[0].name;
   }
   cropImg(e: ImageCroppedEvent) {
     this.cropImagePreview = e.base64;
@@ -116,7 +118,7 @@ export class BackTestComponent implements OnInit {
   }
   uploadFile() {
     this._fileUploaderService
-      .uploadFile(this.cropImagePreview, 'backTests')
+      .uploadFile(this.cropImagePreview, 'backTests', this.fileName)
       .subscribe(
         (res: Result<string[]>) => {
           if (res.success) {
@@ -158,7 +160,7 @@ export class BackTestComponent implements OnInit {
   uploadVideo() {
     this.progress = 1;
     this._fileUploaderService
-      .upload(this.videoFile, 'backTests')
+      .upload(this.videoFile, 'backTests', this.fileName)
       .pipe(
         map((event) => {
           if (event.type == HttpEventType.UploadProgress) {

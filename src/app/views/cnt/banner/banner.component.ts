@@ -30,8 +30,9 @@ import { HttpEventType } from '@angular/common/http';
   // ],
 })
 export class BannerComponent implements OnInit {
+  fileName: string = '';
   filePathKeeper: string;
-  imageUploadProccess:number=0
+  imageUploadProccess: number = 0;
   imageFound: boolean = true;
   imgChangeEvt: any = '';
   cropImagePreview: any = '';
@@ -40,13 +41,13 @@ export class BannerComponent implements OnInit {
   allSelected: boolean;
   page: Page = new Page();
   image: any;
-  isImageUploaded:boolean=false
-  imageUploadFile
+  isImageUploaded: boolean = false;
+  imageUploadFile;
   cropperSettings: CropperSettings;
   addUpdate: BannerModel;
   isFileValid: boolean = false;
   addForm: FormGroup;
-  imgValidation:boolean
+  imgValidation: boolean;
   constructor(
     public _bannerService: BannerService,
     private toastr: ToastrService,
@@ -101,7 +102,7 @@ export class BannerComponent implements OnInit {
           this.page.pageNumber = res.data.pageNumber + 1;
         },
         (_error) => {
-          debugger
+          debugger;
           this.toastr.error(
             'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
             null,
@@ -122,7 +123,7 @@ export class BannerComponent implements OnInit {
   imgLoad() {}
   initCropper() {}
   imgFailed() {
-    debugger
+    debugger;
     this.toastr.error('لطفا از صحت فایل اطمینان حاصل فرمایید', null, {
       timeOut: 3000,
       positionClass: 'toast-top-left',
@@ -152,7 +153,7 @@ export class BannerComponent implements OnInit {
           }
         },
         (_error) => {
-          debugger
+          debugger;
           this.toastr.error('انصراف از حذف', null, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -167,10 +168,10 @@ export class BannerComponent implements OnInit {
         if (res.success) {
           this.addUpdate.fileExists = false;
           this.addUpdate.filePath = this.filePathKeeper;
-          this.toastrFunction('با موفقیت حذف شد',1);
-          this.imageUploadProccess=0
+          this.toastrFunction('با موفقیت حذف شد', 1);
+          this.imageUploadProccess = 0;
         } else {
-          this.toastrFunction('خطا در حذف تصویر',2);
+          this.toastrFunction('خطا در حذف تصویر', 2);
         }
       });
   }
@@ -182,7 +183,7 @@ export class BannerComponent implements OnInit {
           positionClass: 'toast-top-left',
         });
       } else {
-        debugger
+        debugger;
         this.toastr.error('خطا در حذف', res.message, {
           timeOut: 3000,
           positionClass: 'toast-top-left',
@@ -192,12 +193,10 @@ export class BannerComponent implements OnInit {
     });
   }
   addorEdit(content: any, row: BannerModel) {
-    
     this.addForm.reset();
-    
+
     this.imageFound = true;
     if (row === undefined) {
-     
       row = new BannerModel();
       row.id = 0;
       row.type = null;
@@ -226,7 +225,6 @@ export class BannerComponent implements OnInit {
                   messageClass: 'text-small mt-2',
                 }
               );
-         
             }
             if (this.addUpdate.id !== 0) {
               this.toastr.show(
@@ -239,7 +237,6 @@ export class BannerComponent implements OnInit {
                   messageClass: 'text-small mt-2',
                 }
               );
-            
             }
 
             return false;
@@ -262,11 +259,10 @@ export class BannerComponent implements OnInit {
       );
   }
   async addOrUpdate(row: BannerModel) {
-
-   if(this.isImageUploaded){
-    this.uploadImg();
-    this.isImageUploaded=false
-   }
+    if (this.isImageUploaded) {
+      this.uploadImg();
+      this.isImageUploaded = false;
+    }
     if (row.id === 0) {
       this._bannerService.create(row, 'Banner').subscribe((data) => {
         if (data.success) {
@@ -278,7 +274,7 @@ export class BannerComponent implements OnInit {
           this.cropImagePreview = null;
           this.getBannerList(this.page.pageNumber, this.page.size);
         } else {
-          debugger
+          debugger;
           this.toastr.error(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -297,7 +293,7 @@ export class BannerComponent implements OnInit {
           this.cropImagePreview = null;
           this.getBannerList(this.page.pageNumber, this.page.size);
         } else {
-          debugger
+          debugger;
           this.toastr.error(data.message, null, {
             closeButton: true,
             timeOut: 2000,
@@ -328,16 +324,15 @@ export class BannerComponent implements OnInit {
       this.addUpdate.fileType = parseInt($event);
     }
   }
-selectKey($event: any){
-  if ($event != undefined) {
-    debugger
-    this.addUpdate.key = $event;
-
+  selectKey($event: any) {
+    if ($event != undefined) {
+      debugger;
+      this.addUpdate.key = $event;
+    }
   }
-}
   uploadFile() {
     this._fileUploaderService
-      .uploadFile(this.cropImagePreview, 'banners')
+      .uploadFile(this.cropImagePreview, 'banners', this.fileName)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.filePath = res.data[0];
@@ -349,7 +344,6 @@ selectKey($event: any){
             positionClass: 'toast-top-left',
           });
         } else {
-          
           this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -357,84 +351,83 @@ selectKey($event: any){
         }
       });
   }
-  toastrFunction(text:string,type:number){
-    switch(type) {
-     case 1:
-      this.toastr.success(text, null, {
-        timeOut: 2000,
-        closeButton: true,
-        positionClass: 'toast-top-left',
-      })
-      break;
+  toastrFunction(text: string, type: number) {
+    switch (type) {
+      case 1:
+        this.toastr.success(text, null, {
+          timeOut: 2000,
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+        break;
       case 2:
-        debugger
+        debugger;
         this.toastr.error(text, null, {
           timeOut: 2000,
           closeButton: true,
           positionClass: 'toast-top-left',
-        })
+        });
         break;
-        case 3:
-          this.toastr.show(text, null, {
-            timeOut: 2000,
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          })
-          break;
+      case 3:
+        this.toastr.show(text, null, {
+          timeOut: 2000,
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+        break;
     }
-   
   }
-  checkFileValidation(event: any,){
-    
+  checkFileValidation(event: any) {
     var reader = new FileReader();
-		reader.readAsDataURL(event.target.files[0]);
-		
-		reader.onload = (_event) => {
-			this.cropImagePreview = reader.result; 
-		}
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = (_event) => {
+      this.cropImagePreview = reader.result;
+    };
     this.imgChangeEvt = event;
     let eventFile = event.target.files[0];
-    if (eventFile.type=='image/webp') {
+    this.fileName = eventFile.name;
+    if (eventFile.type == 'image/webp') {
       this.imageUploadFile = new Blob([eventFile], {
         type: eventFile.type,
       });
-      this.cropImagePreview=this.imageUploadFile 
+      this.cropImagePreview = this.imageUploadFile;
       return true;
-      this.isImageUploaded=true
-
+      this.isImageUploaded = true;
     } else {
-      this.toastrFunction('فایل انتخابی باید webp باشد',3)
+      this.toastrFunction('فایل انتخابی باید webp باشد', 3);
       return false;
     }
   }
- uploadImg(){
-  this.imageUploadProccess = 1;
-  this.fileUploader
-    .upload(this.imageUploadFile, 'banners')
-    .pipe(
-      map((event) => {
-        let toasterType=2
-        if (event.type == HttpEventType.UploadProgress) {
-          this.imageUploadProccess = Math.round((100 * event.loaded) / event.total);
-        } else if (event.type == HttpEventType.Response) {
-          this.addUpdate.filePath = event.body.data[0];
-          
-          if (event.body.success) {
-            this.addForm.controls['filePath'].setValue(
-              this.addUpdate.filePath
+  uploadImg() {
+    this.imageUploadProccess = 1;
+    this.fileUploader
+      .upload(this.imageUploadFile, 'banners', this.fileName)
+      .pipe(
+        map((event) => {
+          let toasterType = 2;
+          if (event.type == HttpEventType.UploadProgress) {
+            this.imageUploadProccess = Math.round(
+              (100 * event.loaded) / event.total
             );
-            this.isFileValid = false;
-            toasterType=1
-          } 
-          this.toastrFunction(event.body.message,toasterType)
-        }
-      }),
-      catchError((err) => {
-        this.imageUploadProccess = 0;
-        return throwError(err.message);
-      })
-    )
-    .toPromise();
- }
+          } else if (event.type == HttpEventType.Response) {
+            this.addUpdate.filePath = event.body.data[0];
 
+            if (event.body.success) {
+              this.addForm.controls['filePath'].setValue(
+                this.addUpdate.filePath
+              );
+              this.isFileValid = false;
+              toasterType = 1;
+            }
+            this.toastrFunction(event.body.message, toasterType);
+          }
+        }),
+        catchError((err) => {
+          this.imageUploadProccess = 0;
+          return throwError(err.message);
+        })
+      )
+      .toPromise();
+  }
 }

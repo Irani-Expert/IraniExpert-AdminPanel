@@ -19,6 +19,7 @@ import { Page } from 'src/app/shared/models/Base/page';
   styleUrls: ['./stations.component.scss'],
 })
 export class StationsComponent implements OnInit {
+  fileName: string = '';
   imgToDelete: string;
   stationToDeleteId: number;
   page: Page = new Page();
@@ -66,6 +67,7 @@ export class StationsComponent implements OnInit {
   }
   openModal(content, event) {
     this.imgChangeEvt = event;
+    this.fileName = event.target.files[0].name;
     this.modalService
       .open(content, {
         centered: true,
@@ -161,7 +163,7 @@ export class StationsComponent implements OnInit {
   async uploadFile() {
     this.loader.show();
     this.uploaderService
-      .uploadFile(this.filePreview, 'banners')
+      .uploadFile(this.filePreview, 'banners', this.fileName)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.station.cardImagePath = res.data[0];
