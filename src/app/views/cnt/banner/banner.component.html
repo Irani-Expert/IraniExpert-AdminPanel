@@ -131,7 +131,7 @@
   </div>
 </ng-template>
 
-<!--                                   ADD UPDATE MODAL                  -->
+<!--   ADD UPDATE MODAL   -->
 <ng-template #addUpdateModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" *ngIf="addUpdate.id === 0" id="modal-basic-title">
@@ -354,14 +354,14 @@
                 type="file"
                 class="text-small"
                 id="files"
-                (change)="
+                (change)="+
                   this.isFileValid = checkFileValidation($event)"
                   *ngIf="imageUploadProccess==0"
               />
               <div
               class="d-flex flex-row flex-wrap justify-content-around align-items-center col-10 col-lg-4 col-md-8"
             >
-            <button
+            <!-- <button
             [disabled]="!isFileValid"
             class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
             (click)="uploadImg()"
@@ -369,7 +369,7 @@
           >
             <i class="i-Upload text-dark text-bigger mr-3"></i>
             <strong class="text-small">آپلود</strong>
-          </button>
+          </button> -->
           <div
           *ngIf="imageUploadProccess > 0 && imageUploadProccess < 100"
           class="progress bg-progress-container radius-progress m-2 flex-grow-1"

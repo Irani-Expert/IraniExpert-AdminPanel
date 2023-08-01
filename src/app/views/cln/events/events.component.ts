@@ -193,6 +193,7 @@ export class EventsComponent implements OnInit {
     pageSize: number,
     filter: FilterModel
   ) {
+    debugger
     this.page.pageNumber = pageIndex;
     this._calendarService
       .getCalendarEvent(
@@ -312,7 +313,7 @@ export class EventsComponent implements OnInit {
           this.getCalendarEvents(
             this.page.pageNumber,
             this.page.size,
-            this.filter
+            this.filterHolder
           );
         } else {
           this.toastr.error(result.message, null, {
