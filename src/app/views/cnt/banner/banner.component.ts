@@ -40,6 +40,7 @@ export class BannerComponent implements OnInit {
   allSelected: boolean;
   page: Page = new Page();
   image: any;
+  isImageUploaded:boolean=false
   imageUploadFile
   cropperSettings: CropperSettings;
   addUpdate: BannerModel;
@@ -100,6 +101,7 @@ export class BannerComponent implements OnInit {
           this.page.pageNumber = res.data.pageNumber + 1;
         },
         (_error) => {
+          debugger
           this.toastr.error(
             'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
             null,
@@ -120,6 +122,7 @@ export class BannerComponent implements OnInit {
   imgLoad() {}
   initCropper() {}
   imgFailed() {
+    debugger
     this.toastr.error('لطفا از صحت فایل اطمینان حاصل فرمایید', null, {
       timeOut: 3000,
       positionClass: 'toast-top-left',
@@ -149,6 +152,7 @@ export class BannerComponent implements OnInit {
           }
         },
         (_error) => {
+          debugger
           this.toastr.error('انصراف از حذف', null, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -178,6 +182,7 @@ export class BannerComponent implements OnInit {
           positionClass: 'toast-top-left',
         });
       } else {
+        debugger
         this.toastr.error('خطا در حذف', res.message, {
           timeOut: 3000,
           positionClass: 'toast-top-left',
@@ -187,10 +192,12 @@ export class BannerComponent implements OnInit {
     });
   }
   addorEdit(content: any, row: BannerModel) {
+    
     this.addForm.reset();
-
+    
     this.imageFound = true;
     if (row === undefined) {
+     
       row = new BannerModel();
       row.id = 0;
       row.type = null;
@@ -219,6 +226,7 @@ export class BannerComponent implements OnInit {
                   messageClass: 'text-small mt-2',
                 }
               );
+         
             }
             if (this.addUpdate.id !== 0) {
               this.toastr.show(
@@ -231,6 +239,7 @@ export class BannerComponent implements OnInit {
                   messageClass: 'text-small mt-2',
                 }
               );
+            
             }
 
             return false;
@@ -253,6 +262,11 @@ export class BannerComponent implements OnInit {
       );
   }
   async addOrUpdate(row: BannerModel) {
+
+   if(this.isImageUploaded){
+    this.uploadImg();
+    this.isImageUploaded=false
+   }
     if (row.id === 0) {
       this._bannerService.create(row, 'Banner').subscribe((data) => {
         if (data.success) {
@@ -264,6 +278,7 @@ export class BannerComponent implements OnInit {
           this.cropImagePreview = null;
           this.getBannerList(this.page.pageNumber, this.page.size);
         } else {
+          debugger
           this.toastr.error(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -282,6 +297,7 @@ export class BannerComponent implements OnInit {
           this.cropImagePreview = null;
           this.getBannerList(this.page.pageNumber, this.page.size);
         } else {
+          debugger
           this.toastr.error(data.message, null, {
             closeButton: true,
             timeOut: 2000,
@@ -333,6 +349,7 @@ selectKey($event: any){
             positionClass: 'toast-top-left',
           });
         } else {
+          
           this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -350,6 +367,7 @@ selectKey($event: any){
       })
       break;
       case 2:
+        debugger
         this.toastr.error(text, null, {
           timeOut: 2000,
           closeButton: true,
@@ -367,6 +385,7 @@ selectKey($event: any){
    
   }
   checkFileValidation(event: any,){
+    
     var reader = new FileReader();
 		reader.readAsDataURL(event.target.files[0]);
 		
@@ -381,6 +400,7 @@ selectKey($event: any){
       });
       this.cropImagePreview=this.imageUploadFile 
       return true;
+      this.isImageUploaded=true
 
     } else {
       this.toastrFunction('فایل انتخابی باید webp باشد',3)
