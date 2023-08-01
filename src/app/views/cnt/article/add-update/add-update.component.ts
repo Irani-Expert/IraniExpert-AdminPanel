@@ -56,7 +56,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     private _router: Router
   ) {}
   ngOnDestroy(): void {
-    if (this.addUpdate.cardImagePath !== undefined && this.addUpdate.id) {
+    if (this.addUpdate.cardImagePath !== undefined && this.addUpdate.id == 0) {
       this.deleteImg(this.addUpdate.cardImagePath);
     }
   }
@@ -249,6 +249,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
 
         .subscribe((data) => {
           if (data.success) {
+            this.addUpdate.id = data.data;
             this.toastr.success(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
