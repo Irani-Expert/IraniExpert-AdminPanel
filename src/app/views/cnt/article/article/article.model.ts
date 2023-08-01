@@ -14,4 +14,5 @@ export class ArticleModel extends Base implements IArticle {
   viewsCount: number;
   fileExists: boolean;
   metaDescription: string;
+  browserTitle: string = '';
 }

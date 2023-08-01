@@ -97,6 +97,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
       publishDate: [null],
       isRTL: [null],
       metaDescription: [''],
+      browserTitle: [''],
     });
   }
 

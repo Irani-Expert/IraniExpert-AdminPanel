@@ -116,6 +116,18 @@
                 [(ngModel)]="addUpdate.metaDescription"
               ></textarea>
             </div>
+            <!--  Browser Title  -->
+            <div class="col-md-6">
+              <label for="browserTitle">عنوان مقاله در مرورگر</label>
+              <textarea
+                type="text"
+                class="form-control radius"
+                id="browserTitle"
+                placeholder="متا را وارد نمایید"
+                [formControl]="addForm.controls['browserTitle']"
+                [(ngModel)]="addUpdate.browserTitle"
+              ></textarea>
+            </div>
 
             <!-- Is Rtl -->
 

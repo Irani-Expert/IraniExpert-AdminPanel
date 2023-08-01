@@ -13,4 +13,5 @@ export interface IArticle extends IBase {
   fileExists: boolean;
   isRTL: boolean;
   metaDescription: string;
+  browserTitle: string;
 }
