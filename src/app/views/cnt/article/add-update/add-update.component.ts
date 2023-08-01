@@ -96,7 +96,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
       description: [null, Validators.required],
       publishDate: [null],
       isRTL: [null],
-      meta: [''],
+      metaDescription: [''],
     });
   }
 
