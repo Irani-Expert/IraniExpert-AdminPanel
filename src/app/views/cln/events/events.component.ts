@@ -16,6 +16,8 @@ import { CalendarService } from '../services/calendar.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+
 import {
   trigger,
   state,
@@ -82,6 +84,7 @@ export class EventsComponent implements OnInit {
   frequencyIndexHolder: number = 0;
   importanceIndexHolder: number = 0;
   typeIndexHolder: number = 0;
+  pageIndex:number
   eventEnums: EventEnumsModel = new EventEnumsModel();
   isDivExpanded: boolean = false;
   stateOfChevron: string = 'default';
@@ -101,16 +104,26 @@ export class EventsComponent implements OnInit {
     private _ngxSpinner: NgxSpinnerService,
     public _calendarService: CalendarService,
     private modal: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _route: ActivatedRoute,
+             private _router: Router
+
   ) {
+    this._route.queryParams.subscribe((params: Params) => {
+			if(params['pageIndex']!=undefined &&  !isNaN(params['pageIndex'])){
+         this.pageIndex=Number(params['pageIndex'])
+         this.page.pageNumber =this.pageIndex
+         this.setPage(this.pageIndex)
+         
+      }		
+
+		  });
     if (localStorage.getItem('remainedtimeToTryAgain')) {
       this.localStorageDate = String(
         localStorage.getItem('remainedtimeToTryAgain')
       );
-
       this.reduceTimer();
     }
-    this.page.pageNumber = 0;
     this.ckeConfig = {
       filebrowserBrowseUrl: 'dl.iraniexpert.com//uploads/images/articles',
       filebrowserUploadUrl:
@@ -134,6 +147,7 @@ export class EventsComponent implements OnInit {
     };
   }
   async ngOnInit(): Promise<void> {
+    this.page.pageNumber=1
     await this.setPage(this.page.pageNumber);
     await this.getCountries();
     if (Utils.isLMonitor()) {
@@ -141,8 +155,8 @@ export class EventsComponent implements OnInit {
     }
   }
   async setPage(pageToSet: number) {
-    this.page.pageNumber = pageToSet;
     await this.getCalendarEvents(pageToSet, this.page.size, this.filterHolder);
+    this.pageIndexParams(pageToSet)
   }
   async getCountries() {
     let allCountries = [
@@ -166,12 +180,20 @@ export class EventsComponent implements OnInit {
       });
     });
   }
-
+  pageIndexParams(pageNumber:number){
+    this._router.navigate([], {
+     queryParams: {
+      pageIndex: pageNumber
+     },
+     queryParamsHandling: 'merge',
+   });
+  }
   async getCalendarEvents(
     pageIndex: number,
     pageSize: number,
     filter: FilterModel
   ) {
+    this.page.pageNumber = pageIndex;
     this._calendarService
       .getCalendarEvent(
         pageIndex == 0 ? pageIndex : pageIndex - 1,
@@ -181,6 +203,7 @@ export class EventsComponent implements OnInit {
       .subscribe((event) => {
         if (event.data.totalCount >= 1) {
           this.eventData = event.data.items;
+          debugger
           this.eventData.forEach((item) => {
             item.source_Url = item.source_Url.slice(
               8,
