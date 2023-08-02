@@ -360,7 +360,7 @@ export class UploadCenterComponent implements OnInit, OnDestroy {
       this.fileName = file.name;
 
       this.file = new Blob([file], {
-        type: 'x/zip',
+        type: file.type,
       });
       this.fileChoosed = true;
       return true;
@@ -420,6 +420,7 @@ export class UploadCenterComponent implements OnInit, OnDestroy {
       );
       return false;
     } else {
+      this.fileName = file.name;
       this.file = new Blob([file], {
         type: file.type,
       });

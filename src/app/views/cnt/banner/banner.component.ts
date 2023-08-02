@@ -330,27 +330,6 @@ export class BannerComponent implements OnInit {
       this.addUpdate.key = $event;
     }
   }
-  uploadFile() {
-    this._fileUploaderService
-      .uploadFile(this.cropImagePreview, 'banners', this.fileName)
-      .subscribe((res: Result<string[]>) => {
-        if (res.success) {
-          this.addUpdate.filePath = res.data[0];
-          this.addUpdate.fileExists = true;
-
-          this.toastr.success('با موفقیت آپلود شد', null, {
-            timeOut: 2000,
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
-  }
   toastrFunction(text: string, type: number) {
     switch (type) {
       case 1:
