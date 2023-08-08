@@ -101,10 +101,11 @@ export class ShowLogsComponent implements OnInit {
     requestType: number,
     tableTypeToSet: number
   ) {
+    debugger
     this.filterHolder.requestType = requestType;
-    if(requestType != null){
+
       this.tableTypeSave=requestType
-    }
+    
     if (tableTypeToSet !== null) {
       this.index = tableTypeToSet + 1;
     }
@@ -113,7 +114,6 @@ export class ShowLogsComponent implements OnInit {
     }
     this.filterHolder.requestType=this.tableTypeSave
     this.page.pageNumber = pageToSet;
-    debugger
     this.getLogs(
       pageToSet,
       this.page.size,

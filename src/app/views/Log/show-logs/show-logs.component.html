@@ -455,7 +455,7 @@
 <div class="col-md-12 mt-3" *ngIf="logRows?.length > page.size">
   <pagination-controls
     (pageChange)="
-      setPage($event, pageOrder, filter.request, tableTypes[index].value)
+      setPage($event, pageOrder, filterHolder.requestType, tableTypes[index].value)
     "
     previousLabel=""
     nextLabel=""
