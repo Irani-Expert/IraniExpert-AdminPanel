@@ -194,14 +194,14 @@ export class NavigationService {
       name: 'کاربران',
       navType: 'link',
       icon: 'i-Business-ManWoman',
-      state: '/sec/user-management',
+      state: '/sec/user-management/1',
       privilege: 'User-Watch',
     },
     {
       name: 'درخواست مشتریان',
       navType: 'link',
       icon: 'i-Love-User',
-      state: '/shr/user-need',
+      state: '/shr/user-need/1',
       privilege: 'CustomerRequest-Full',
     },
     {
