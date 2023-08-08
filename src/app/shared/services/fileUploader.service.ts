@@ -32,10 +32,14 @@ export class FileUploaderService {
    * @param route
    * @returns insert
    */
-  uploadFile(t: string, folder: string): Observable<Result<string[]>> {
+  uploadFile(
+    t: string,
+    folder: string,
+    fileName: string
+  ): Observable<Result<string[]>> {
     const payload = new FormData();
     var myFile: Blob = this.dataURItoBlob(t);
-    payload.append('file', myFile, 'banner.jpg');
+    payload.append('file', myFile, `${fileName}`);
     return this._http.post<Result<string[]>>(
       this.uploardUrl + '?folder=' + folder,
       payload,
@@ -83,11 +87,9 @@ export class FileUploaderService {
       this._httpOptions
     );
   }
-  upload(_blob: Blob, folder: string) {
-    
-    let type = _blob.type.split('/');
+  upload(_blob: Blob, folder: string, fileName: string) {
     const formData = new FormData();
-    formData.append('_file', _blob, `file.${type[1]}`);
+    formData.append('_file', _blob, `${fileName}`);
     return this._http.post<Result<string[]>>(
       this.uploardUrl +
         '?folder=' +

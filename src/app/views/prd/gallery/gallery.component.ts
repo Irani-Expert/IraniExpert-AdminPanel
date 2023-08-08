@@ -16,6 +16,7 @@ import { HttpEventType } from '@angular/common/http';
   styleUrls: ['./gallery.component.scss'],
 })
 export class GalleryComponent implements OnInit {
+  fileName: string = '';
   @Input() productId: number;
   pageLoad: boolean = true;
   addUpdate: FileModel = new FileModel();
@@ -230,6 +231,7 @@ export class GalleryComponent implements OnInit {
       };
     }
     let eventFile = event.target.files[0];
+    this.fileName = eventFile.name;
     if (eventFile.type == 'image/webp') {
       this.imageUploadFile = new Blob([eventFile], {
         type: eventFile.type,
@@ -268,7 +270,7 @@ export class GalleryComponent implements OnInit {
   uploadImg() {
     this.imageUploadProccess = 1;
     this.fileUploader
-      .upload(this.imageUploadFile, 'audios')
+      .upload(this.imageUploadFile, 'audios', this.fileName)
       .pipe(
         map((event) => {
           let toasterType = 2;

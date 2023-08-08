@@ -17,16 +17,17 @@ import { catchError, map, throwError } from 'rxjs';
   styleUrls: ['./addUpdate.component.scss'],
 })
 export class AddUpdateComponent implements OnInit {
+  fileName: string = '';
   productId: number = parseInt(
     this._route.snapshot.paramMap.get('productId') ?? '0'
   );
   addUpdate: ProductModel = new ProductModel();
   addForm: FormGroup;
-  imageUploadProccess:number=0
+  imageUploadProccess: number = 0;
   tableType: number = 6;
   imgChangeEvt: any = '';
   imageUploadFile;
-  imageInputText:string;
+  imageInputText: string;
   isFileValid: boolean = false;
   cropImagePreview: any = '';
   ifDataExist: boolean = false;
@@ -41,7 +42,6 @@ export class AddUpdateComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-
     if (this.productId === 0) {
       this.ifDataExist = true;
       this.addUpdate = new ProductModel();
@@ -73,8 +73,9 @@ export class AddUpdateComponent implements OnInit {
         });
   }
   onFileChanged(event: any) {
-    console.log(this.cropImagePreview)
+    console.log(this.cropImagePreview);
     this.imgChangeEvt = event;
+    this.fileName = event.target.files[0].name;
   }
   cropImg(e: ImageCroppedEvent) {
     this.cropImagePreview = e.base64;
@@ -84,21 +85,20 @@ export class AddUpdateComponent implements OnInit {
   imgFailed() {
     alert('image Failed to Show');
   }
-  async uploadFile() {
-    this._fileUploaderService
-      .uploadFile(this.cropImagePreview, 'products')
-      .subscribe((res: Result<string[]>) => {
-        if (res.success) {
-          this.addUpdate.cardImagePath = res.data[0];
-          this.addUpdate.fileExists = true;
-        } else {
-          this.addUpdate.cardImagePath = res.errors[0];
-        }
-      });
-  }
+  // async uploadFile() {
+  //   this._fileUploaderService
+  //     .uploadFile(this.cropImagePreview, 'products',this.fileName)
+  //     .subscribe((res: Result<string[]>) => {
+  //       if (res.success) {
+  //         this.addUpdate.cardImagePath = res.data[0];
+  //         this.addUpdate.fileExists = true;
+  //       } else {
+  //         this.addUpdate.cardImagePath = res.errors[0];
+  //       }
+  //     });
+  // }
 
   async addOrUpdate() {
-  
     setTimeout(() => {
       this.sendData();
     }, 800);
@@ -151,100 +151,99 @@ export class AddUpdateComponent implements OnInit {
     }
   }
   deleteImg(filePath: string) {
-    this.cropImagePreview=null
-    this.imageUploadProccess=0
-    this.imageInputText=''
+    this.cropImagePreview = null;
+    this.imageUploadProccess = 0;
+    this.imageInputText = '';
     this._fileUploaderService
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
         if (res.success) {
           this.addUpdate.cardImagePath = undefined;
           this.addUpdate.fileExists = false;
-          this.toastrFunction('با موفقیت حذف شد',1)
+          this.toastrFunction('با موفقیت حذف شد', 1);
         } else {
-          this.toastrFunction('خطا در حذف تصویر',2)
+          this.toastrFunction('خطا در حذف تصویر', 2);
         }
       });
   }
-  toastrFunction(text:string,type:number){
-    switch(type) {
-     case 1:
-      this.toastr.success(text, null, {
-        timeOut: 2000,
-        closeButton: true,
-        positionClass: 'toast-top-left',
-      })
-      break;
+  toastrFunction(text: string, type: number) {
+    switch (type) {
+      case 1:
+        this.toastr.success(text, null, {
+          timeOut: 2000,
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+        break;
       case 2:
         this.toastr.error(text, null, {
           timeOut: 2000,
           closeButton: true,
           positionClass: 'toast-top-left',
-        })
+        });
         break;
-        case 3:
-          this.toastr.show(text, null, {
-            timeOut: 2000,
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          })
-          break;
+      case 3:
+        this.toastr.show(text, null, {
+          timeOut: 2000,
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+        break;
     }
-   
   }
-  checkFileValidation(event: any){
-    this.cropImagePreview=null
-    if(event.target.files[0]!=undefined){
+  checkFileValidation(event: any) {
+    this.cropImagePreview = null;
+    if (event.target.files[0] != undefined) {
       var reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
-      
+
       reader.onload = (_event) => {
-        this.cropImagePreview = reader.result; 
-      }
+        this.cropImagePreview = reader.result;
+      };
     }
-   
-    this.imageUploadProccess=0
+
+    this.imageUploadProccess = 0;
     this.imgChangeEvt = event;
     let eventFile = event.target.files[0];
-    if (eventFile.type=='image/webp') {
+    if (eventFile.type == 'image/webp') {
       this.imageUploadFile = new Blob([eventFile], {
         type: eventFile.type,
       });
       return true;
-
     } else {
-      this.toastrFunction('فایل انتخابی باید webp باشد',3)
+      this.toastrFunction('فایل انتخابی باید webp باشد', 3);
       return false;
     }
   }
- uploadImg(){
-  this.imageUploadProccess = 1;
-  // if (this.cropImagePreview !== '') {
-  //   this
-  // }
-  this.fileUploader
-    .upload(this.imageUploadFile, 'products')
-    .pipe(
-      map((event) => {
-        let toasterType=2
-        if (event.type == HttpEventType.UploadProgress) {
-          this.imageUploadProccess = Math.round((100 * event.loaded) / event.total);
-        } else if (event.type == HttpEventType.Response) {
-          this.addUpdate.cardImagePath = event.body.data[0];
-          if (event.body.success) {
-            this.isFileValid = false;
-            toasterType=1
+  uploadImg() {
+    this.imageUploadProccess = 1;
+    // if (this.cropImagePreview !== '') {
+    //   this
+    // }
+    this.fileUploader
+      .upload(this.imageUploadFile, 'products', this.fileName)
+      .pipe(
+        map((event) => {
+          let toasterType = 2;
+          if (event.type == HttpEventType.UploadProgress) {
+            this.imageUploadProccess = Math.round(
+              (100 * event.loaded) / event.total
+            );
+          } else if (event.type == HttpEventType.Response) {
+            this.addUpdate.cardImagePath = event.body.data[0];
+            if (event.body.success) {
+              this.isFileValid = false;
+              toasterType = 1;
+            }
 
-          } 
-          
-          this.toastrFunction(event.body.message,toasterType)
-        }
-      }),
-      catchError((err) => {
-        this.imageUploadProccess = 0;
-        return throwError(err.message);
-      })
-    )
-    .toPromise();
- }
+            this.toastrFunction(event.body.message, toasterType);
+          }
+        }),
+        catchError((err) => {
+          this.imageUploadProccess = 0;
+          return throwError(err.message);
+        })
+      )
+      .toPromise();
+  }
 }

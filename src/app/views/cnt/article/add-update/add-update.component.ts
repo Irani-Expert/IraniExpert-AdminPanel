@@ -29,6 +29,7 @@ import { HttpEventType } from '@angular/common/http';
   styleUrls: ['./add-update.component.scss'],
 })
 export class AddUpdateComponent implements OnInit, OnDestroy {
+  fileName: string = '';
   isLoading: boolean = false;
   articleId: number = parseInt(
     this._route.snapshot.paramMap.get('articleId') ?? '0'
@@ -115,6 +116,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   onFileChanged(event: any) {
     this.imgChangeEvt = event;
     let file = event.target.files[0];
+    this.fileName = file.name;
     this.file = new Blob([file], {
       type: file.type,
     });
@@ -156,7 +158,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   async uploadFile() {
     this.isLoading = true;
     this._fileUploaderService
-      .upload(this.file, 'articles')
+      .upload(this.file, 'articles', this.fileName)
       .pipe(
         map((res) => {
           if (res.type == HttpEventType.Response) {
