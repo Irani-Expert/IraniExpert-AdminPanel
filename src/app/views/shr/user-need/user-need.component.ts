@@ -5,7 +5,7 @@ import {
   ViewChildren,
   HostListener,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { ToastrService } from 'ngx-toastr';
@@ -107,10 +107,19 @@ export class UserNeedComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private auth: AuthenticateService,
-    private _commentService: CommentService
+    private _commentService: CommentService,
+    private _router: Router,
+    private _route: ActivatedRoute,
+
+
   ) {
-    this.page.pageNumber = 0;
     this.page.size = 12;
+    this._route.params.subscribe((params) => {
+      this.page.pageNumber = params['page']
+      this._router.navigateByUrl(`shr/user-need/${this.page.pageNumber}`);
+     this.setPage(this.page.pageNumber,undefined)
+		});
+
     setTimeout(() => {
       this.psContainerSecSidebar = this.psContainers.toArray()[1];
     });
@@ -131,7 +140,8 @@ export class UserNeedComponent implements OnInit {
 
   setPage(pageInfo: number, userWant: number) {
     this.page.pageNumber = pageInfo;
-    
+    this._router.navigateByUrl(`shr/user-need/${this.page.pageNumber}`);
+
     this.getUserNeedByUserWant(userWant, pageInfo);
   }
 
@@ -172,7 +182,6 @@ this.getData()
     //   .subscribe(
     //     (res: Result<Paginate<UserNeedModel[]>>) => {
     //       this.rows = res.data.items;
-    //       debugger
     //       // var scrollPart = document.getElementById('scrollPart');
 
     //       var counter = 0;

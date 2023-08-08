@@ -17,6 +17,7 @@ import {
   animate,
   state,
 } from '@angular/animations';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-comment',
@@ -78,14 +79,23 @@ export class AllCommentComponent implements OnInit {
     public _commentService: CommentService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _route: ActivatedRoute,
+    private _router: Router
+
   ) {
     this.page.pageNumber = 0;
     this.page.size = 6;
+
   }
 
 
   ngOnInit(): void {
+    this._route.params.subscribe({
+			next: (params) => {
+	this.page.pageNumber=parseInt(params['writeId']);
+			},
+		});
     this.setPage(this.page.pageNumber, 1);
     this.filterForm = this._formBuilder.group({
       userID: [null, Validators.compose([Validators.required])],
@@ -291,7 +301,6 @@ this.sendFilter()
     removeFilter(item:string){
       delete this.filterHolder[item]
       delete this.filterModel[item]
-      debugger
       this.sendFilter()
     }
     toggleFilters() {

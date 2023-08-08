@@ -74,6 +74,7 @@ export class ShowLogsComponent implements OnInit {
   page: Page = new Page();
   logRows: LogsModel[] = new Array<LogsModel>();
   isDataFetched: boolean = false;
+  tableTypeSave:number=null;
 
   constructor(
     private calendar: NgbCalendar,
@@ -101,13 +102,18 @@ export class ShowLogsComponent implements OnInit {
     tableTypeToSet: number
   ) {
     this.filterHolder.requestType = requestType;
+    if(requestType != null){
+      this.tableTypeSave=requestType
+    }
     if (tableTypeToSet !== null) {
       this.index = tableTypeToSet + 1;
     }
     if (tableTypeToSet == null) {
       this.index = 0;
     }
+    this.filterHolder.requestType=this.tableTypeSave
     this.page.pageNumber = pageToSet;
+    debugger
     this.getLogs(
       pageToSet,
       this.page.size,

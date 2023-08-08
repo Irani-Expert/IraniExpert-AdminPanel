@@ -8,7 +8,7 @@ import { commentComponent } from './writings/comment.component';
 
 const routes: Routes = [
   {
-    path: 'user-need',
+    path: 'user-need/:page',
     component: UserNeedComponent,
     canActivate: [AuthGuard],
   },
