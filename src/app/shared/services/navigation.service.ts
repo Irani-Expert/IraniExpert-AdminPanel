@@ -143,7 +143,7 @@ export class NavigationService {
       name: 'مقالات',
       navType: 'link',
       icon: 'i-File-Edit',
-      state: '/cnt/article',
+      state: '/cnt/article/1',
       privilege: 'ArticleT-Watch',
     },
     {

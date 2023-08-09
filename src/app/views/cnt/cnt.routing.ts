@@ -13,7 +13,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'article',
+    path: 'article/:pageIndex',
     component: ArticleComponent,
     canActivate: [AuthGuard],
   },
