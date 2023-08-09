@@ -1,0 +1,13 @@
+<div class="list-container">
+  <ul class="list-group flex-row flex-wrap list-unstyled">
+    <ng-container *ngFor="let i of listItem">
+      <li
+        dir="ltr"
+        [style.background]="i.backgroundColor"
+        class="d-inline-flex align-items-center m-2 px-3 py-2 radius"
+      >
+        <span><strong class="text-small">#DOTA2</strong></span>
+      </li>
+    </ng-container>
+  </ul>
+</div>

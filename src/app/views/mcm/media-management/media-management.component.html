@@ -1,0 +1,16 @@
+<ul ngbNav #nav="ngbNav" class="nav-tabs p-0">
+  <ng-container *ngFor="let item of navigations">
+    <li [ngbNavItem]="item.id">
+      <a [routerLink]="item.urlPath" ngbNavLink class="text-small">
+        <span class="d-flex align-items-center"
+          ><span class="pi {{ item.icon }} text-bigger"></span
+          >&nbsp;&nbsp;&nbsp;<span class="text-small">{{
+            item.title
+          }}</span></span
+        >
+      </a>
+    </li>
+  </ng-container>
+</ul>
+<div [ngbNavOutlet]="nav"></div>
+<router-outlet></router-outlet>

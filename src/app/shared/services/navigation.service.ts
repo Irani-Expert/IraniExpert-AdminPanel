@@ -150,7 +150,7 @@ export class NavigationService {
       name: 'آپلود سنتر',
       navType: 'link',
       icon: 'i-Share-on-Cloud',
-      state: '/mcm/media-uploader',
+      state: '/mcm/media-list',
       privilege: 'Upload-Center-Full',
     },
     {

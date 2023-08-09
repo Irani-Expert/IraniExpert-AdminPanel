@@ -16,6 +16,7 @@ import { CommentComponent } from './article/comment/comment.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
+import { TagsComponent } from './tags/tags.component';
 @NgModule({
   declarations: [
     BannerComponent,
@@ -25,6 +26,7 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
     FileTypePipe,
     AddUpdateComponent,
     CommentComponent,
+    TagsComponent,
   ],
   imports: [
     CommonModule,
