@@ -16,9 +16,10 @@ const routes: Routes = [
   {
     path: 'tags',
     component: TagsComponent,
+    canActivate: [AuthGuard],
   },
   {
-    path: 'article',
+    path: 'article/:pageIndex',
     component: ArticleComponent,
     canActivate: [AuthGuard],
   },

@@ -9,7 +9,7 @@ import { PermissionsComponent } from './permissions/permissions.component';
 const routes: Routes = [
 
   {
-    path: 'user-management',
+    path: 'user-management/:pageNumber',
     component: UserMangementComponent,
     canActivate: [AuthGuard],
   },

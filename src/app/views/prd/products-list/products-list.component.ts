@@ -7,6 +7,7 @@ import { ProductModel } from './product.model';
 import { ProductService } from './product.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
@@ -21,10 +22,18 @@ export class ProductsListComponent implements OnInit {
   constructor(
     public _productService: ProductService,
     private toastr: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private _route: ActivatedRoute,
+    private _router: Router,
+
   ) {
     this.page.pageNumber = 0;
     this.page.size = 12;
+    this._route.params.subscribe((params) => {
+      this.page.pageNumber = params['pageIndex']
+      this._router.navigateByUrl(`/prd/products-list/${this.page.pageNumber}`);
+     this.setPage(this.page.pageNumber)
+		});
   }
 
   ngOnInit(): void {
@@ -33,13 +42,14 @@ export class ProductsListComponent implements OnInit {
 
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
+    this._router.navigateByUrl(`prd/products-list/${this.page.pageNumber}`);
 
     this.getProductList(this.page.pageNumber, this.page.size);
   }
 
   async getProductList(pageNumber: number, seedNumber: number) {
     this._productService
-      .get(pageNumber, seedNumber, 'ID', null, 'Product')
+      .get( pageNumber !== 0 ? pageNumber - 1 : pageNumber, seedNumber, 'ID', null, 'Product')
       .subscribe(
         (res: Result<Paginate<ProductModel[]>>) => {
           
