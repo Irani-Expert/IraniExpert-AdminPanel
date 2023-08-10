@@ -164,7 +164,7 @@ export class NavigationService {
       name: 'گروه ها',
       navType: 'link',
       icon: 'i-Dropbox',
-      state: '/bas/group',
+      state: '/bas/group/1',
       privilege: 'Groups-Watch',
     },
     {
