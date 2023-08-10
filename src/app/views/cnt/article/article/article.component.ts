@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Page } from 'src/app/shared/models/Base/page';
@@ -24,18 +24,27 @@ export class ArticleComponent implements OnInit {
     private _articleService: ArticleService,
     private _route: ActivatedRoute,
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _router: Router,
   ) {
     this.page.pageNumber = 0;
     this.page.size = 6;
+    this._route.params.subscribe((params) => {
+      if(this.page.pageNumber!=params['pageIndex'] || this.rows.length==0){
+        this.page.pageNumber = params['pageIndex']
+        this.setPage(this.page.pageNumber)
+      }
+    
+		});
+
   }
 
   ngOnInit(): void {
-    this.setPage(this.page.pageNumber);
   }
 
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
+    this._router.navigateByUrl(`cnt/article/${this.page.pageNumber}`);
 
     this.getArticleList(this.page.pageNumber, this.page.size);
   }

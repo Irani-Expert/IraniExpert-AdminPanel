@@ -13,19 +13,21 @@ import { VideoPlayerComponent } from 'src/app/shared/components/video-player/vid
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FileSizePipe } from 'src/app/shared/pipes/file-size.pipe';
 import { AudioPlayerComponent } from 'src/app/shared/components/audio-player/audio-player.component';
-import { MediaComponent } from './media/media.component';
+import { MediaListComponent } from './media-list/media-list.component';
 import { StationsComponent } from './stations/stations.component';
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { DropdownModule } from 'primeng/dropdown';
+import { MediaManagementComponent } from './media-management/media-management.component';
 
 @NgModule({
   declarations: [
-    MediaComponent,
+    MediaListComponent,
     UploadCenterComponent,
     VideoPlayerComponent,
     FileSizePipe,
     AudioPlayerComponent,
     StationsComponent,
+    MediaManagementComponent,
   ],
   imports: [
     DropdownModule,

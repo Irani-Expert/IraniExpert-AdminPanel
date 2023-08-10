@@ -32,6 +32,7 @@ import {
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { DatePipe } from '@angular/common';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-mangement',
@@ -109,10 +110,21 @@ export class UserMangementComponent implements OnInit {
     public _roleService: RoleService,
     private _userProfileSevice: UserProfileService,
     public datepipe: DatePipe,
-    private _auth: AuthenticateService
+    private _auth: AuthenticateService,
+    private _route: ActivatedRoute,
+    private _router: Router,
+
   ) {
     this.page.pageNumber = 1;
     this.page.size = 8;
+    this._route.params.subscribe((params) => {
+      if(this.page.pageNumber!=params['pageNumber'] || this.rows.length==0){
+        
+        this.page.pageNumber = params['pageNumber']
+        this.setPage(this.page.pageNumber)
+      }
+
+		});
   }
 
   ngOnInit(): void {
@@ -132,7 +144,6 @@ export class UserMangementComponent implements OnInit {
       allowSearchFilter: true,
       searchPlaceholderText: 'جستجو',
     };
-    this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       userName: [null, Validators.compose([Validators.required])],
       firstName: [null, Validators.compose([Validators.required])],
@@ -150,6 +161,8 @@ export class UserMangementComponent implements OnInit {
       this.roleIdSaver,
       null
     );
+    this._router.navigateByUrl(`sec/user-management/${this.page.pageNumber}`);
+
   }
  
   usersEdit(content: any, row: UsersModel,userID:number) {
@@ -238,7 +251,6 @@ export class UserMangementComponent implements OnInit {
   }
 
   // getRoleList(pageNumber: number, seedNumber: number) {
-  //   debugger
   //   this._roleService
   //     .get(
   //       pageNumber !== 0 ? pageNumber - 1 : pageNumber,
@@ -370,7 +382,6 @@ export class UserMangementComponent implements OnInit {
       this.userType = userType;
     }
     this.roleKeeper = [];
-        debugger
     this._usersService.getUserByFilter(pageNumber,pageSize,this.filterHolder,null,roleIdSaver).subscribe((data) => {
     this.rows=[]
       this.rows=data['data'].items

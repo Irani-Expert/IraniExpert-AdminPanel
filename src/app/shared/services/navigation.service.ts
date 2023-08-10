@@ -121,14 +121,14 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Library',
       privilege: 'Orders-Watch',
-      state: '/bsk/orders',
+      state: '/bsk/orders/1',
     },
 
     {
       name: 'محصولات',
       navType: 'link',
       icon: 'i-Checkout-Basket',
-      state: '/prd/products-list',
+      state: '/prd/products-list/1',
       privilege: 'ProductT-Watch',
     },
 
@@ -143,14 +143,14 @@ export class NavigationService {
       name: 'مقالات',
       navType: 'link',
       icon: 'i-File-Edit',
-      state: '/cnt/article',
+      state: '/cnt/article/1',
       privilege: 'ArticleT-Watch',
     },
     {
       name: 'آپلود سنتر',
       navType: 'link',
       icon: 'i-Share-on-Cloud',
-      state: '/mcm/media-uploader',
+      state: '/mcm/media-list',
       privilege: 'Upload-Center-Full',
     },
     {
@@ -164,7 +164,7 @@ export class NavigationService {
       name: 'گروه ها',
       navType: 'link',
       icon: 'i-Dropbox',
-      state: '/bas/group',
+      state: '/bas/group/1',
       privilege: 'Groups-Watch',
     },
     {
@@ -194,14 +194,14 @@ export class NavigationService {
       name: 'کاربران',
       navType: 'link',
       icon: 'i-Business-ManWoman',
-      state: '/sec/user-management',
+      state: '/sec/user-management/1',
       privilege: 'User-Watch',
     },
     {
       name: 'درخواست مشتریان',
       navType: 'link',
       icon: 'i-Love-User',
-      state: '/shr/user-need',
+      state: '/shr/user-need/1',
       privilege: 'CustomerRequest-Full',
     },
     {

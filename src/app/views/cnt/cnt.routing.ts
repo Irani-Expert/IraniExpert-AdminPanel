@@ -5,6 +5,7 @@ import { AddUpdateComponent } from './article/add-update/add-update.component';
 import { ArticleComponent } from './article/article/article.component';
 import { CommentComponent } from './article/comment/comment.component';
 import { BannerComponent } from './banner/banner.component';
+import { TagsComponent } from './tags/tags.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'article',
+    path: 'tags',
+    component: TagsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'article/:pageIndex',
     component: ArticleComponent,
     canActivate: [AuthGuard],
   },
