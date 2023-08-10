@@ -30,14 +30,15 @@ export class ProductsListComponent implements OnInit {
     this.page.pageNumber = 0;
     this.page.size = 12;
     this._route.params.subscribe((params) => {
-      this.page.pageNumber = params['pageIndex']
-      this._router.navigateByUrl(`/prd/products-list/${this.page.pageNumber}`);
+      if(this.page.pageNumber!=params['pageIndex'] || this.rows.length==0){
+        this.page.pageNumber = params['pageIndex']
      this.setPage(this.page.pageNumber)
+      }
+    
 		});
   }
 
   ngOnInit(): void {
-    this.setPage(this.page.pageNumber);
   }
 
   setPage(pageInfo: number) {

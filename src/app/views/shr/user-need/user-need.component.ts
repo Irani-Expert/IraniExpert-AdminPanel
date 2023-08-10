@@ -115,9 +115,11 @@ export class UserNeedComponent implements OnInit {
   ) {
     this.page.size = 12;
     this._route.params.subscribe((params) => {
-      this.page.pageNumber = params['page']
-      this._router.navigateByUrl(`shr/user-need/${this.page.pageNumber}`);
-     this.setPage(this.page.pageNumber,undefined)
+      if(this.page.pageNumber!=params['page'] || this.rows.length==0){
+        this.page.pageNumber = params['page']
+        this.setPage(this.page.pageNumber,undefined)
+      }
+    
 		});
 
     setTimeout(() => {
@@ -170,7 +172,6 @@ export class UserNeedComponent implements OnInit {
 
   getUserNeedByUserWant(userWant: number, pageNumber: number) {
     this.userWant = userWant;
-
     this.statusTitles.forEach((item) => {
       if (item.id === userWant) {
         this.dropDownTitleHolder = item.title;
@@ -436,7 +437,7 @@ convertDate(){
   }
   getData() {
   
-
+debugger
     this._UserNeedService
       .getUserNeed(
         this.filterHolder,

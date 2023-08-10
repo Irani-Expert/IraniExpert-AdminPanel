@@ -38,7 +38,7 @@
           class="text-left btn"
           ngbDropdownItem
           *ngFor="let item of statusTitles"
-          (click)="getUserNeedByUserWant(item.id, 0)"
+          (click)="this.page.pageNumber = 1;getUserNeedByUserWant(item.id, 0);"
         >
           <strong>{{ item.title }}</strong>
         </button>

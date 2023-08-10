@@ -30,19 +30,19 @@ export class ArticleComponent implements OnInit {
     this.page.pageNumber = 0;
     this.page.size = 6;
     this._route.params.subscribe((params) => {
-      this.page.pageNumber = params['pageIndex']
-      this._router.navigateByUrl(`cnt/article/${this.page.pageNumber}`);
-     this.setPage(this.page.pageNumber)
+      if(this.page.pageNumber!=params['pageIndex'] || this.rows.length==0){
+        this.page.pageNumber = params['pageIndex']
+        this.setPage(this.page.pageNumber)
+      }
+    
 		});
 
   }
 
   ngOnInit(): void {
-    this.setPage(this.page.pageNumber);
   }
 
   setPage(pageInfo: number) {
-    debugger
     this.page.pageNumber = pageInfo;
     this._router.navigateByUrl(`cnt/article/${this.page.pageNumber}`);
 

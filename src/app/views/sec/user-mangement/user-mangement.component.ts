@@ -118,9 +118,12 @@ export class UserMangementComponent implements OnInit {
     this.page.pageNumber = 1;
     this.page.size = 8;
     this._route.params.subscribe((params) => {
-      this.page.pageNumber = params['pageNumber']
-      this._router.navigateByUrl(`sec/user-management/${this.page.pageNumber}`);
-      this.setPage(this.page.pageNumber)
+      if(this.page.pageNumber!=params['pageNumber'] || this.rows.length==0){
+        
+        this.page.pageNumber = params['pageNumber']
+        this.setPage(this.page.pageNumber)
+      }
+
 		});
   }
 
@@ -141,7 +144,6 @@ export class UserMangementComponent implements OnInit {
       allowSearchFilter: true,
       searchPlaceholderText: 'جستجو',
     };
-    this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       userName: [null, Validators.compose([Validators.required])],
       firstName: [null, Validators.compose([Validators.required])],

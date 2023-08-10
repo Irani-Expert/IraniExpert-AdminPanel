@@ -7,6 +7,7 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { GroupModel } from './group.model';
 import { GroupService } from './group.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-group',
@@ -25,14 +26,24 @@ export class GroupComponent implements OnInit {
     public _groupService: GroupService,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _route: ActivatedRoute,
+    private _router: Router,
   ) {
     this.page.pageNumber = 0;
     this.page.size = 8;
+    this._route.params.subscribe((params) => {
+      if(this.page.pageNumber!=params['pageIndex'] || this.rows.length==0){
+        debugger
+      this.page.pageNumber = params['pageIndex']
+      this.setPage(this.page.pageNumber)
+      }
+      
+		});
+
   }
 
   ngOnInit() {
-    this.setPage(this.page.pageNumber);
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       parentID: [null, Validators.compose([Validators.required])],
@@ -42,6 +53,7 @@ export class GroupComponent implements OnInit {
 
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
+    this._router.navigateByUrl(`bas/group/${pageInfo}`);
 
     this.getGroupList(this.page.pageNumber, this.page.size);
   }

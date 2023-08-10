@@ -7,7 +7,7 @@ import { GroupComponent } from "./group/group.component";
 
 const routes: Routes = [
   {
-    path: 'group',
+    path: 'group/:pageIndex',
     component: GroupComponent,
     canActivate: [AuthGuard]
   }
