@@ -7,7 +7,7 @@ import { UserOrderComponent } from './user-order/user-order.component';
 
 const routes: Routes = [
   {
-    path: 'orders',
+    path: 'orders/:pageIndex',
     component: OrderComponent,
     canActivate: [AuthGuard],
   },

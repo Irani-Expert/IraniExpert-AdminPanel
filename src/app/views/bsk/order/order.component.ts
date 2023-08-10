@@ -32,6 +32,7 @@ import { number } from 'echarts';
 import { UsersModel } from '../../sec/user-mangement/users.model';
 import { ProductService } from '../../prd/products-list/product.service';
 import { log } from 'console';
+
 import {
   trigger,
   transition,
@@ -117,7 +118,7 @@ export class OrderComponent implements OnInit {
   AddOrderForm: FormGroup;
   rows: OrderModel[] = new Array<OrderModel>();
   orderDetail: OrderModel;
-  status: any;
+  status: any=8;
 
   page: Page = new Page();
   viewMode: 'list' | 'grid' = 'list';
@@ -158,17 +159,27 @@ export class OrderComponent implements OnInit {
     private _productService: ProductService,
     private auth: AuthenticateService,
     private _planService: PlanService,
-    private _decimalPipe: DecimalPipe
+    private _decimalPipe: DecimalPipe,
+    private _route: ActivatedRoute,
+    private _router: Router,
   ) {
     this.page.pageNumber = 1;
     this.page.size = 6;
+    this._route.params.subscribe((params) => {
+      if(this.page.pageNumber!=params['pageIndex'] || this.rows.length==0){
+      this.page.pageNumber = params['pageIndex']
+      this.setPage(this.page.pageNumber,this.status)
+      }
+      
+		});
+
     setTimeout(() => {
       this.psContainerSecSidebar = this.psContainers.toArray()[1];
     });
   }
 
   ngOnInit(): void {
-    this.setPage(this.page.pageNumber, 8);
+    // this.setPage(this.page.pageNumber, 8);
     this.callOrder();
     this.AddOrderForm = this._formBuilder.group({
       userId: [null],
@@ -229,7 +240,7 @@ export class OrderComponent implements OnInit {
   // }
   setPage(pageInfo: number, transactionStatus: any) {
     this.page.pageNumber = pageInfo;
- this.getOrders(transactionStatus, pageInfo, this.filterHolder);
+    this.getOrders(transactionStatus, pageInfo, this.filterHolder);
   }
   changeHeaderValue() {
     if (this.headerValue != 'کد رهگیری') {
@@ -248,6 +259,7 @@ export class OrderComponent implements OnInit {
   }
   
   getOrders(status: any, pageNumber: number, filter: FilterModel) {
+ this._router.navigateByUrl(`bsk/orders/${pageNumber}`);
     
     let finder = this.statusTitles.findIndex((item) => item.id == status);
     this.dropDownTitleHolder = this.statusTitles[finder].title;

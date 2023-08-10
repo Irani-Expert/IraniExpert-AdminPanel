@@ -121,14 +121,14 @@ export class NavigationService {
       navType: 'link',
       icon: 'i-Library',
       privilege: 'Orders-Watch',
-      state: '/bsk/orders',
+      state: '/bsk/orders/1',
     },
 
     {
       name: 'محصولات',
       navType: 'link',
       icon: 'i-Checkout-Basket',
-      state: '/prd/products-list',
+      state: '/prd/products-list/1',
       privilege: 'ProductT-Watch',
     },
 
