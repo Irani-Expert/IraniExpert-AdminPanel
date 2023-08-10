@@ -6,6 +6,7 @@ import { OrderModel } from 'src/app/views/bsk/order/models/order.model';
 import { OrderService } from 'src/app/views/bsk/order/services/order.service';
 import { Result } from '../../models/Base/result.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-add-payment',
   templateUrl: './add-payment.component.html',
@@ -48,10 +49,13 @@ export class AddPaymentComponent implements OnInit {
         }
       );
   }
-  updateOrder(code: string) {
-    this.order.transactionStatus = 1;
+  async updateOrder(code: string) {
+    // this.order.transactionStatus = 1;
 
-    this.addOrUpdateOrder(this.order, code);
+    // let isOrderUpdated = await this.addOrUpdateOrder(this.order, code);
+    // if (isOrderUpdated) {
+    this.addOrUpdate(this.invoiceDetail, code);
+    // }
   }
   async addOrUpdate(item: InvoiceModel, code: string) {
     item.bankResponse = code;
@@ -71,16 +75,19 @@ export class AddPaymentComponent implements OnInit {
       }
     });
   }
-  async addOrUpdateOrder(order: OrderModel, code: string) {
-    this._orderService.update(order.id, order, 'Orders').subscribe((data) => {
-      if (data.success) {
-        this.addOrUpdate(this.invoiceDetail, code);
-      } else {
-        this.toastr.error(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-      }
-    });
+  async addOrUpdateOrder(order: OrderModel, code: string): Promise<boolean> {
+    let subscribeOrder = this._orderService
+      .update(order.id, order, 'Orders')
+      .subscribe((data) => {
+        if (data.success) {
+          subscribeOrder.unsubscribe();
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
+    return subscribeOrder.closed;
   }
 }

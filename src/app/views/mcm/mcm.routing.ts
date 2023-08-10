@@ -1,13 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MediaComponent } from './media/media.component';
+import { MediaListComponent } from './media-list/media-list.component';
 import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { UploadCenterComponent } from './upload-center/upload-center.component';
-
+import { MediaManagementComponent } from './media-management/media-management.component';
+import { StationsComponent } from './stations/stations.component';
+const childRoutes: Routes = [
+  {
+    path: 'media-list',
+    component: MediaListComponent,
+  },
+  {
+    path: 'upload-center',
+    component: UploadCenterComponent,
+  },
+  {
+    path: 'media-stations',
+    component: StationsComponent,
+  },
+];
 const routes: Routes = [
   {
-    path: 'media-uploader',
-    component: MediaComponent,
+    path: '',
+    component: MediaManagementComponent,
+    children: childRoutes,
   },
 ];
 

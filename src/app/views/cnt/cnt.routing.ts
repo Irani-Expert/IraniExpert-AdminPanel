@@ -5,11 +5,17 @@ import { AddUpdateComponent } from './article/add-update/add-update.component';
 import { ArticleComponent } from './article/article/article.component';
 import { CommentComponent } from './article/comment/comment.component';
 import { BannerComponent } from './banner/banner.component';
+import { TagsComponent } from './tags/tags.component';
 
 const routes: Routes = [
   {
     path: 'banner',
     component: BannerComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'tags',
+    component: TagsComponent,
     canActivate: [AuthGuard],
   },
   {
