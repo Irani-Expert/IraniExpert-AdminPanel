@@ -101,7 +101,6 @@ export class ShowLogsComponent implements OnInit {
     requestType: number,
     tableTypeToSet: number
   ) {
-    debugger
     this.filterHolder.requestType = requestType;
 
       this.tableTypeSave=requestType

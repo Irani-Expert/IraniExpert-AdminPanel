@@ -102,7 +102,6 @@ export class BannerComponent implements OnInit {
           this.page.pageNumber = res.data.pageNumber + 1;
         },
         (_error) => {
-          debugger;
           this.toastr.error(
             'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
             null,
@@ -123,7 +122,6 @@ export class BannerComponent implements OnInit {
   imgLoad() {}
   initCropper() {}
   imgFailed() {
-    debugger;
     this.toastr.error('لطفا از صحت فایل اطمینان حاصل فرمایید', null, {
       timeOut: 3000,
       positionClass: 'toast-top-left',
@@ -153,7 +151,6 @@ export class BannerComponent implements OnInit {
           }
         },
         (_error) => {
-          debugger;
           this.toastr.error('انصراف از حذف', null, {
             timeOut: 3000,
             positionClass: 'toast-top-left',
@@ -183,7 +180,6 @@ export class BannerComponent implements OnInit {
           positionClass: 'toast-top-left',
         });
       } else {
-        debugger;
         this.toastr.error('خطا در حذف', res.message, {
           timeOut: 3000,
           positionClass: 'toast-top-left',
@@ -274,7 +270,6 @@ export class BannerComponent implements OnInit {
           this.cropImagePreview = null;
           this.getBannerList(this.page.pageNumber, this.page.size);
         } else {
-          debugger;
           this.toastr.error(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -293,7 +288,6 @@ export class BannerComponent implements OnInit {
           this.cropImagePreview = null;
           this.getBannerList(this.page.pageNumber, this.page.size);
         } else {
-          debugger;
           this.toastr.error(data.message, null, {
             closeButton: true,
             timeOut: 2000,
@@ -326,7 +320,6 @@ export class BannerComponent implements OnInit {
   }
   selectKey($event: any) {
     if ($event != undefined) {
-      debugger;
       this.addUpdate.key = $event;
     }
   }
@@ -340,7 +333,6 @@ export class BannerComponent implements OnInit {
         });
         break;
       case 2:
-        debugger;
         this.toastr.error(text, null, {
           timeOut: 2000,
           closeButton: true,
