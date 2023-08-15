@@ -3,34 +3,33 @@
     <h4 class="modal-title text-light">ثبت کد پیگیری TX</h4>
   </div>
   <div class="modal-body bg-white">
-    <div>
-      <h5>آدرس والت :</h5>
-      <p class="text--left text-danger">TS8LqwFycRRNPPk6VkmQ7g2uE3Ky5UGNE1</p>
-    </div>
-    <form class="ng-untouched ng-pristine ng-invalid">
-      <div class="row">
-        <div class="col-md-12 form-group mb-3">
-          <input
-            type="text"
-            id="code"
-            name="code"
-            #code
-            placeholder="کد را وارد کنید"
-            class="form-control form-control-rounded ng-untouched ng-pristine ng-invalid"
-          />
+    <div class="d-flex">
+      <div class="d-flex flex-column">
+        <div>
+          <h5>آدرس والت :</h5>
+          <p class="text--left text-danger">TS8LqwFycRRNPPk6VkmQ7g2uE3Ky5UGNE1</p>
         </div>
+        <form class="ng-untouched ng-pristine ng-invalid">
+          <div class="row">
+            <div class="col-md-12 form-group mb-3">
+              <input type="text" id="code" name="code" #code placeholder="کد را وارد کنید"
+                class="form-control form-control-rounded ng-untouched ng-pristine ng-invalid" />
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
+      <div style="margin-right: 20px;">
+        <img src="../../../../assets/images/Wallet.webp" alt="">
+      </div>
+    </div>
   </div>
+
   <div class="modal-footer bg-white justify-content-center">
-    <button
-      type="button"
-      class="btn btn-primary text-white ng-star-inserted"
-      (click)="updateOrder(code.value)"
-    >
+    <button type="button" class="btn btn-primary text-white ng-star-inserted" (click)="updateOrder(code.value)">
       ذخیره
     </button>
   </div>
+
 </div>
 
 <!-- class="btn btn-outline-dark btn-rounded ng-star-inserted" -->
