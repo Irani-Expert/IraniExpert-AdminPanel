@@ -21,4 +21,8 @@ export interface IFilter {
   email: string;
   rate: number;
   isAccepted: boolean;
+  groupID:number;
+  TableType:number;
+  fromUpdateDate:string;
+  toUpdateDate:string
 }

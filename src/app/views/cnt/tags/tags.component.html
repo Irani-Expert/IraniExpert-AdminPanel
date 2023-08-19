@@ -1,13 +1,67 @@
+
+<div class="row">
+  <button
+  type="button"
+  class="btn-add m-2 btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
+  (click)="changeSituation(1)"
+  >
+  <strong>ایجاد</strong>
+  </button>
+  <button
+  type="button"
+  class="btn-delete btn m-2  d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
+  (click)="changeSituation(3)"
+  >
+  <strong>حذف</strong>
+  </button>
+  <button
+  type="button"
+  class="btn-details m-2 btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
+  (click)="changeSituation(2)"
+  >
+  <strong>به روزرسانی</strong>
+  </button>
+</div>
 <div class="list-container">
   <ul class="list-group flex-row flex-wrap list-unstyled">
+   
     <ng-container *ngFor="let i of listItem">
       <li
         dir="ltr"
         [style.background]="i.backgroundColor"
         class="d-inline-flex align-items-center m-2 px-3 py-2 radius"
-      >
-        <span><strong class="text-small">#DOTA2</strong></span>
+        [ngClass]="{'remove-tag': editeType ==3, 'edite-tag' : editeType ==2 }"
+
+        >
+        <span>
+          <div class="d-flex align-items-center">
+            <i class="i-Add text-bigger ml-2" *ngIf="editeType==2" (click)="onContentChange(i.id)"></i>
+            <i class="i-Remove text-bigger ml-2" *ngIf="editeType==3" (click)="deletetags(i.id)"></i>
+            <div  [contentEditable]="editable" (input)="editFunction(i.id,$event.target.innerText)">{{i.text}}</div>
+          </div>
+        </span>
       </li>
     </ng-container>
+    <li 
+    dir="ltr"
+    *ngIf="editeType==1"
+    class=" align-items-center  m-2 px-3 py-2 radius edite-tag ">
+    <span>
+      <div class="d-flex align-items-center">
+        <i (click)="addTagService()" class="i-Yes text-bigger ml-2" ></i>
+        
+        <input  class="visible-on-focus" [(ngModel)]="addItemIput" #firstNameField>
+        <i (click)="closeAddTag()" class="i-Close text-bigger m-1 p-1 bg-danger" ></i>
+
+      </div>
+    </span>
+  </li>
+    <li class="d-flex justify-content-center align-items-center" *ngIf="editeType==2">
+      <button (click)="onToggle()" type="button" class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mr-2  ">
+        <i class="i-Yes text-bigger"></i><strong ></strong></button>
+
+    </li>
   </ul>
 </div>
+
+<!-- <button (click)="onToggle()">Toggle</button> -->
