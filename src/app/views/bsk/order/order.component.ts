@@ -28,10 +28,8 @@ import { PlanService } from '../../bas/plan/plan.service';
 import { PlanModel } from '../../bas/plan/plan.model';
 import { DecimalPipe, formatDate } from '@angular/common';
 import { AddOrderModel } from './models/AddOrder.model';
-import { number } from 'echarts';
 import { UsersModel } from '../../sec/user-mangement/users.model';
 import { ProductService } from '../../prd/products-list/product.service';
-import { log } from 'console';
 
 import {
   trigger,
@@ -99,8 +97,8 @@ export class OrderComponent implements OnInit {
   TCrtDate: any;
   FStrDate: any;
   TStrDate: any;
-  planTitle:string='همه';
-  productTitle:string='همه';
+  planTitle: string = 'همه';
+  productTitle: string = 'همه';
   filtered: boolean = false;
   filter: FilterModel = new FilterModel();
   licenseID: number;
@@ -109,7 +107,7 @@ export class OrderComponent implements OnInit {
   invoiceDetail: InvoiceModel = new InvoiceModel();
   invoiceStatus: number;
   filterModel: FilterModel = new FilterModel();
-  filterHolder: FilterModel=new FilterModel;
+  filterHolder: FilterModel = new FilterModel();
 
   addPlans: PlanModel[] = new Array<PlanModel>();
   AddproductModel: ProductModel[] = new Array<ProductModel>();
@@ -118,7 +116,7 @@ export class OrderComponent implements OnInit {
   AddOrderForm: FormGroup;
   rows: OrderModel[] = new Array<OrderModel>();
   orderDetail: OrderModel;
-  status: any=8;
+  status: any = 8;
 
   page: Page = new Page();
   viewMode: 'list' | 'grid' = 'list';
@@ -161,17 +159,19 @@ export class OrderComponent implements OnInit {
     private _planService: PlanService,
     private _decimalPipe: DecimalPipe,
     private _route: ActivatedRoute,
-    private _router: Router,
+    private _router: Router
   ) {
     this.page.pageNumber = 1;
     this.page.size = 6;
     this._route.params.subscribe((params) => {
-      if(this.page.pageNumber!=params['pageIndex'] || this.rows.length==0){
-      this.page.pageNumber = params['pageIndex']
-      this.setPage(this.page.pageNumber,this.status)
+      if (
+        this.page.pageNumber != params['pageIndex'] ||
+        this.rows.length == 0
+      ) {
+        this.page.pageNumber = params['pageIndex'];
+        this.setPage(this.page.pageNumber, this.status);
       }
-      
-		});
+    });
 
     setTimeout(() => {
       this.psContainerSecSidebar = this.psContainers.toArray()[1];
@@ -228,7 +228,6 @@ export class OrderComponent implements OnInit {
     this._productService
       .get(0, null, 'ID', null, 'Product')
       .subscribe((res) => {
-        
         this.productList = res.data.items;
         this.AddproductModel = res.data.items;
       });
@@ -256,10 +255,10 @@ export class OrderComponent implements OnInit {
       this.dateValue = ' تاریخ ثبت به شمسی';
     }
   }
-  
+
   getOrders(status: any, pageNumber: number, filter: FilterModel) {
- this._router.navigateByUrl(`bsk/orders/${pageNumber}`);
-    
+    this._router.navigateByUrl(`bsk/orders/${pageNumber}`);
+
     let finder = this.statusTitles.findIndex((item) => item.id == status);
     this.dropDownTitleHolder = this.statusTitles[finder].title;
     this.status = status;
@@ -268,12 +267,7 @@ export class OrderComponent implements OnInit {
       filter.fromExpireDate = formatDate(new Date(), 'yyyy-MM-dd', 'en_US');
     }
     this._orderService
-      .getOrders(
-        pageNumber-1,
-        this.page.size,
-        status,
-        filter
-      )
+      .getOrders(pageNumber - 1, this.page.size, status, filter)
       .subscribe(
         (res: Result<Paginate<OrderModel[]>>) => {
           if (this.status == 9) {
@@ -299,7 +293,7 @@ export class OrderComponent implements OnInit {
           });
           this.page.totalElements = res.data.totalCount;
           this.page.totalPages = res.data.totalPages;
-          this.page.pageNumber = res.data.pageNumber+1;
+          this.page.pageNumber = res.data.pageNumber + 1;
         },
         (_error) => {
           this.toastr.error(
@@ -627,11 +621,10 @@ export class OrderComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result == true) {
-            if (this.clientId == null) {
-              this.licenseModel.rowID = row.id;
-              this.addOrUpdate(this.licenseModel, null);
-              // this.addForm.reset();
-            }
+            this.licenseModel.rowID = row.id;
+            this.addOrUpdate(this.licenseModel, null);
+            // this.addForm.reset();
+
             // else {
             //   let climax = new CliamxLicenseModel();
             //   climax.file = this.licenseFile;
@@ -802,8 +795,8 @@ export class OrderComponent implements OnInit {
             });
             // this.sortDeletedPart('planID',PlanIndex)
             this.filter['planID'] = null;
-            
-            this.plans=[]
+
+            this.plans = [];
             this.plans = res.data;
             if (res.data[0]) {
               this.filterModel.planID = res.data[0].id;
@@ -818,19 +811,19 @@ export class OrderComponent implements OnInit {
     }
   }
 
-//     sortDeletedPart(id:string,tempIndex:number){
-//       this.filters.splice(tempIndex, 1);
-//     this.filter[id] = null;
-//     let indexOfTheFilter = this.filters.findIndex(
-//       (filter) => filter.isFilled == true
-//     );
-//     if (indexOfTheFilter == -1) {
-//       this.filtered = false;
-//     }
-    
-//     // this.getOrders(this.status, this.page.pageNumber, this.filter);
-  
-//     }
+  //     sortDeletedPart(id:string,tempIndex:number){
+  //       this.filters.splice(tempIndex, 1);
+  //     this.filter[id] = null;
+  //     let indexOfTheFilter = this.filters.findIndex(
+  //       (filter) => filter.isFilled == true
+  //     );
+  //     if (indexOfTheFilter == -1) {
+  //       this.filtered = false;
+  //     }
+
+  //     // this.getOrders(this.status, this.page.pageNumber, this.filter);
+
+  //     }
 
   fillTheFiltersRow(filter: FilterModel) {
     this.filters = [];
@@ -1054,96 +1047,95 @@ export class OrderComponent implements OnInit {
     this.AddOrderForm.reset();
     this.userInfo = new UsersModel();
   }
-  setProductId(productId:number,productTitle:string){
-    
-    this.productTitle=productTitle
-this.filterHolder.productID=productId
-if(productId==null){
-this.filterModel.planID=null
-}
-this.selectProduct(productId)
+  setProductId(productId: number, productTitle: string) {
+    this.productTitle = productTitle;
+    this.filterHolder.productID = productId;
+    if (productId == null) {
+      this.filterModel.planID = null;
+    }
+    this.selectProduct(productId);
 
-this.filterModel.planID=null
-this.planTitle='همه'
-this.filterdata()
-}
-  setPlan(planId:number,planTitle:string){
-    this.filterHolder.planID=planId
-    this.planTitle=planTitle
-    this.filterdata()
-      }
-      toggleFilters() {
-        this.isDivExpanded = !this.isDivExpanded;
-        this.stateOfChevron =
-          this.stateOfChevron === 'default' ? 'rotated' : 'default';
-      }
-      dateConvertor(){
-        if (this.FCrtDate != null) {
-          this.filterModel.fromCreateDate =
-            this.FCrtDate.year +
-            '-' +
-            this.FCrtDate.month +
-            '-' +
-            this.FCrtDate.day;
-        }
-        if (this.TCrtDate != null) {
-          this.filterModel.toCreateDate =
-            this.TCrtDate.year +
-            '-' +
-            this.TCrtDate.month +
-            '-' +
-            this.TCrtDate.day;
-        }
-        if (this.FStrDate != null) {
-          this.filterModel.fromStartDate =
-            this.FStrDate.year +
-            '-' +
-            this.FStrDate.month +
-            '-' +
-            this.FStrDate.day;
-        }
-        if (this.TStrDate != null) {
-          this.filterModel.toStartDate =
-            this.TStrDate.year +
-            '-' +
-            this.TStrDate.month +
-            '-' +
-            this.TStrDate.day;
-        }
-        if (this.FExpDate != null) {
-          this.filterModel.fromExpireDate =
-            this.FExpDate.year +
-            '-' +
-            this.FExpDate.month +
-            '-' +
-            this.FExpDate.day;
-        }
-        if (this.TExpDate != null) {
-          this.filterModel.toExpireDate =
-            this.TExpDate.year +
-            '-' +
-            this.TExpDate.month +
-            '-' +
-            this.TExpDate.day;
-        }
-      }
-      removeFilter(itemName:string){
-      delete this.filterHolder[itemName]
-      delete this.filterModel[itemName]
-      this.getOrders(this.status, 1, this.filterHolder);
-      }
-      filterdata(){
-        this.getOrders(this.status, 1, this.filterHolder);
-        this.fillTheFiltersRow(this.filter);
-        this.filtered = true;
-      }
-      filterButton(){
-        this.dateConvertor()
+    this.filterModel.planID = null;
+    this.planTitle = 'همه';
+    this.filterdata();
+  }
+  setPlan(planId: number, planTitle: string) {
+    this.filterHolder.planID = planId;
+    this.planTitle = planTitle;
+    this.filterdata();
+  }
+  toggleFilters() {
+    this.isDivExpanded = !this.isDivExpanded;
+    this.stateOfChevron =
+      this.stateOfChevron === 'default' ? 'rotated' : 'default';
+  }
+  dateConvertor() {
+    if (this.FCrtDate != null) {
+      this.filterModel.fromCreateDate =
+        this.FCrtDate.year +
+        '-' +
+        this.FCrtDate.month +
+        '-' +
+        this.FCrtDate.day;
+    }
+    if (this.TCrtDate != null) {
+      this.filterModel.toCreateDate =
+        this.TCrtDate.year +
+        '-' +
+        this.TCrtDate.month +
+        '-' +
+        this.TCrtDate.day;
+    }
+    if (this.FStrDate != null) {
+      this.filterModel.fromStartDate =
+        this.FStrDate.year +
+        '-' +
+        this.FStrDate.month +
+        '-' +
+        this.FStrDate.day;
+    }
+    if (this.TStrDate != null) {
+      this.filterModel.toStartDate =
+        this.TStrDate.year +
+        '-' +
+        this.TStrDate.month +
+        '-' +
+        this.TStrDate.day;
+    }
+    if (this.FExpDate != null) {
+      this.filterModel.fromExpireDate =
+        this.FExpDate.year +
+        '-' +
+        this.FExpDate.month +
+        '-' +
+        this.FExpDate.day;
+    }
+    if (this.TExpDate != null) {
+      this.filterModel.toExpireDate =
+        this.TExpDate.year +
+        '-' +
+        this.TExpDate.month +
+        '-' +
+        this.TExpDate.day;
+    }
+  }
+  removeFilter(itemName: string) {
+    delete this.filterHolder[itemName];
+    delete this.filterModel[itemName];
+    this.getOrders(this.status, 1, this.filterHolder);
+  }
+  filterdata() {
+    this.getOrders(this.status, 1, this.filterHolder);
+    this.fillTheFiltersRow(this.filter);
+    this.filtered = true;
+  }
+  filterButton() {
+    this.dateConvertor();
 
-        this.filteredItems(this.filterModel)
-        this.filterdata()
-      }
-      filteredItems(filter: FilterModel) {
-        this.filterHolder = { ...filter };
-      }
+    this.filteredItems(this.filterModel);
+    this.filterdata();
+  }
+  filteredItems(filter: FilterModel) {
+    this.filterHolder = { ...filter };
+  }
 }
