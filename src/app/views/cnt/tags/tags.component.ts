@@ -6,6 +6,8 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { ToastrService } from 'ngx-toastr';
 import { number } from 'echarts';
+import { GroupService } from 'src/app/views/bas/group/group.service';
+import { Page } from 'src/app/shared/models/Base/page';
 
 @Component({
   selector: 'app-tags',
@@ -15,6 +17,7 @@ import { number } from 'echarts';
 export class TagsComponent implements OnInit {
   filterHolder: FilterModel=new FilterModel;
   @ViewChild("firstNameField") firstNameField;
+  page: Page = new Page();
 
   randomColor: string = '';
   colorHolder: string = '';
@@ -25,6 +28,9 @@ export class TagsComponent implements OnInit {
   addItemIput:string
   updateTitle:string
   editeType:number=0;
+  previousGroupId:number
+  dropDownTitleHolder:string='تمام هشتک‌ها'
+  groupList: any[] = new Array<any>();
   listItem = new Array<{
     backgroundColor: string;
     id: number;
@@ -33,16 +39,26 @@ export class TagsComponent implements OnInit {
   colors: string[] = ['#d2e2e1', '#74b3be', '#a6887d', '#e8d3cc', '#0cead0'];
   constructor(private _articleService: ArticleService,
     private toastr: ToastrService,
-    ) {}
+    private _groupService: GroupService,
+
+    ) {
+      this.page.pageNumber = 0;
+      this.page.size = 8;
+    }
 
   ngOnInit(): void {
-    this.getData()
+    this.getData(null)
+     this.getGroupList()
   
-  
+  }
+  setPage(pageInfo: number){
+   this.page.pageNumber=pageInfo
+   this.getData(this.previousGroupId)
   }
   pushData(){
     let counter=0;
     this.listItem=[]
+    this.randomColor =''
     this.items.forEach(xi=>{
       if(counter==5){
         counter=0
@@ -56,20 +72,33 @@ export class TagsComponent implements OnInit {
       }
       counter++
     })
+    console.log(this.listItem);
+    
   }
-  getData() {
-  
+  async getGroupList() {
+    this._groupService
+      .getTitleValues(0, 10000, 'ID', null, 'Group')
+      .subscribe((res: Result<Paginate<any[]>>) => {
+        this.groupList = res.data.items;
+        //  this.page.totalElements = res.data.length;
+      });
+  }
+
+  getData(groupID:number) {
+  this.previousGroupId=groupID 
+    this.filterHolder.groupID=groupID
     this._articleService
       .getTags(
         this.filterHolder,
-         0,
-         100,
+        this.page.pageNumber !== 0 ?  this.page.pageNumber - 1 :  this.page.pageNumber,
+         this.page.size,
          null
       )
-      .subscribe(
-        (res: Result<tagModel[]>) => {
-          
+      .subscribe((res: Result<Paginate<tagModel[]>>) => {
+        this.items=[] 
         this.items=res.data['items']
+        this.page.totalElements = res.data.totalCount;
+
         this.pushData()
         },
         (error) => {
@@ -77,6 +106,12 @@ export class TagsComponent implements OnInit {
         }
       );
   }
+  selectGroupId(id:number,Name:string){
+  
+  this.dropDownTitleHolder=Name
+  this.addItem.groupID=id
+  this.getData(id)  
+}
   editFunction(id:number,text:string){
   this.updateTitle=text
   this.updateId=id
@@ -86,7 +121,6 @@ export class TagsComponent implements OnInit {
   updateTags(id:number){
     var index= this.listItem.findIndex(x=>x.id==id)
     this.items[index].title= this.listItem[index].text
-    debugger
     this._articleService
     .updateTags(id, this.items[index])
     .subscribe(
@@ -106,9 +140,7 @@ export class TagsComponent implements OnInit {
     );
   }
   onContentChange(id:number){
-    debugger
-    console.log(this.updateId);
-    console.log(this.updateTitle);
+
     if(this.updateId==id){
        var index= this.listItem.findIndex(x=>x.id==id)
        if(this.listItem[index].text!=undefined){
@@ -133,8 +165,7 @@ export class TagsComponent implements OnInit {
           positionClass: 'toast-top-left',
         }
       );
-      this.listItem.slice()
-      this.getData()
+      this.getData(this.previousGroupId)
     } else {
       this.toastr.error('خطا در حذف', res.message, {
         timeOut: 3000,
@@ -147,10 +178,17 @@ export class TagsComponent implements OnInit {
     
     this.addItemIput=this.addItemIput.replace(/#/g,"")
     if(this.addItemIput[0]!='#'){
-      this.addItemIput='#'+this.addItemIput
+      var isPersian = /^[\u0600-\u06FF\s]+$/;
+
+      if (isPersian.test(this.addItemIput[0])) {
+        this.addItemIput=this.addItemIput+'#'
+      }
+      else{
+        this.addItemIput='#'+this.addItemIput
+      }
     }
+    
     this.addItem.title=this.addItemIput
-    this.addItem.groupID=1
     this._articleService
     .addLinkTag(this.addItem)
     .subscribe(
@@ -160,7 +198,7 @@ export class TagsComponent implements OnInit {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
-          this.getData()
+          this.getData(this.previousGroupId)
 
         } else {
           this.toastr.error(data.message, null, {

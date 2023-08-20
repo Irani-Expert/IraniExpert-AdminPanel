@@ -35,7 +35,7 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
     pageOrder:number,
   ) {
     
-    return this._http.get<Result<tagModel[]>>(
+    return this._http.get<Result<Paginate<tagModel[]>>>(
       this._base +
         '/LinkTag?pageIndex=' +
         pageIndex +
