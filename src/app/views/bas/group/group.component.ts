@@ -34,7 +34,6 @@ export class GroupComponent implements OnInit {
     this.page.size = 8;
     this._route.params.subscribe((params) => {
       if(this.page.pageNumber!=params['pageIndex'] || this.rows.length==0){
-        debugger
       this.page.pageNumber = params['pageIndex']
       this.setPage(this.page.pageNumber)
       }

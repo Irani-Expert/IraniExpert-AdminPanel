@@ -473,7 +473,6 @@ export class UserMangementComponent implements OnInit {
         this.ToSignUpDate['month'] +
         '-' +
         this.ToSignUpDate['day'];
-      this.setPage(this.page.pageNumber);
     }
     if (this.fromSignUpDate != null) {
       this.filterData.fromSignUpDate =
@@ -485,7 +484,6 @@ export class UserMangementComponent implements OnInit {
     }
   }
   startFilter() {
-   this.convertDatetoMiladi()
     this.page.pageNumber = 1;
  
     this.setPage(this.page.pageNumber);
@@ -494,6 +492,7 @@ export class UserMangementComponent implements OnInit {
     this.filterHolder = { ...filter };
   }
   filterButton(){
+    this.convertDatetoMiladi()
     this.filteredItems(this.filterData);
     this.startFilter()
   }

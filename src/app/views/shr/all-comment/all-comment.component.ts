@@ -273,7 +273,6 @@ export class AllCommentComponent implements OnInit {
         '-' +
         this.CrtDate.day;
     }
- debugger
     this.getCommentList(0, this.tableType, this.filterHolder);
     this.filter = new FilterModel();
   }
@@ -309,7 +308,6 @@ this.sendFilter()
         this.stateOfChevron === 'default' ? 'rotated' : 'default';
     }
     filteredItems(filter: FilterModel) {
-      debugger
       this.filterHolder = { ...filter };
     }
 }

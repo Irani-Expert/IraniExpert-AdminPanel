@@ -112,8 +112,12 @@ export class EventsComponent implements OnInit {
     this._route.queryParams.subscribe((params: Params) => {
 			if(params['pageIndex']!=undefined &&  !isNaN(params['pageIndex'])){
          this.pageIndex=Number(params['pageIndex'])
-         this.page.pageNumber =this.pageIndex
-         this.setPage(this.pageIndex)
+         if(this.pageIndex!=this.page.pageNumber)
+         {
+          this.page.pageNumber=this.pageIndex
+          this.setPage(this.pageIndex)
+
+         }
          
       }		
 
@@ -193,7 +197,6 @@ export class EventsComponent implements OnInit {
     pageSize: number,
     filter: FilterModel
   ) {
-    debugger
     this.page.pageNumber = pageIndex;
     this._calendarService
       .getCalendarEvent(
@@ -204,7 +207,6 @@ export class EventsComponent implements OnInit {
       .subscribe((event) => {
         if (event.data.totalCount >= 1) {
           this.eventData = event.data.items;
-          debugger
           this.eventData.forEach((item) => {
             item.source_Url = item.source_Url.slice(
               8,

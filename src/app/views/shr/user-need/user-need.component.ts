@@ -420,12 +420,13 @@ convertDate(){
   }
 }
   startFilter(){
-    this.convertDate()
     this.page.pageNumber = 0;
 
     this.getData()
   }
   filterButton(){
+    this.convertDate()
+
     this.filteredItems(this.filterModel)
    this.startFilter()
   }
@@ -437,7 +438,6 @@ convertDate(){
   }
   getData() {
   
-debugger
     this._UserNeedService
       .getUserNeed(
         this.filterHolder,
@@ -529,6 +529,7 @@ debugger
               value: this.filterExecutedModel.fromCreateDate,
               key: 'fromCreateDate',
             });
+            debugger
           }
 
           if (this.filterExecutedModel.toCreateDate) {
