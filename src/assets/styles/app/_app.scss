@@ -1,21 +1,13 @@
-/*
- *
- *   GULL - Angular Bootstrap Admin Template
- *
- *
-*/
-
-@import "perfect-scrollbar/css/perfect-scrollbar.css";
-@import "@swimlane/ngx-datatable/index.css";
-@import "@swimlane/ngx-datatable/themes/material.css";
-@import "@swimlane/ngx-datatable/assets/icons.css";
-@import "toaster.scss";
-@import "ngx-toastr/toastr.css";
-@import "angular-calendar/css/angular-calendar.css";
-@import "quill/dist/quill.core.css";
-@import "quill/dist/quill.snow.css";
-@import "highlight.js/styles/github.css";
-@import "ladda/dist/ladda.min.css";
+// @import "@swimlane/ngx-datatable/index.css";
+// @import "@swimlane/ngx-datatable/themes/material.css";
+// @import "@swimlane/ngx-datatable/assets/icons.css";
+// @import "toaster.scss";
+// @import "ngx-toastr/toastr.css";
+// @import "angular-calendar/css/angular-calendar.css";
+// @import "quill/dist/quill.core.css";
+// @import "quill/dist/quill.snow.css";
+// @import "highlight.js/styles/github.css";
+// @import "ladda/dist/ladda.min.css";
 @import "../primeicons/primeicons.css";
 @import "../iconsmind/iconsmind.css";
 @import "variables";
@@ -651,13 +643,13 @@ Buttons
     margin-top: 1.5px;
   }
 }
-.remove-tag{
+.remove-tag {
   color: #e9e1e1 !important;
   background-color: #a70000b7 !important;
-  transition: all 0.15s ease-in-out;}
-.edite-tag{
+  transition: all 0.15s ease-in-out;
+}
+.edite-tag {
   color: #e9e1e1 !important;
   background-color: #4b92db !important;
-  transition: all 0.15s ease-in-out;}
-
-
+  transition: all 0.15s ease-in-out;
+}
