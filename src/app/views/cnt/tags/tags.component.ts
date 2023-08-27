@@ -25,7 +25,7 @@ export class TagsComponent implements OnInit {
   addItem:tagModel=new tagModel;
   editable = false;
   updateId:number;
-  addItemIput:string
+  addItemIput:string=''
   updateTitle:string
   editeType:number=0;
   previousGroupId:number
@@ -43,7 +43,7 @@ export class TagsComponent implements OnInit {
 
     ) {
       this.page.pageNumber = 0;
-      this.page.size = 8;
+      this.page.size = 60;
     }
 
   ngOnInit(): void {
@@ -72,7 +72,6 @@ export class TagsComponent implements OnInit {
       }
       counter++
     })
-    console.log(this.listItem);
     
   }
   async getGroupList() {
@@ -175,40 +174,42 @@ export class TagsComponent implements OnInit {
   });
   }
   addTagService(){
-    
-    this.addItemIput=this.addItemIput.replace(/#/g,"")
-    if(this.addItemIput[0]!='#'){
-      var isPersian = /^[\u0600-\u06FF\s]+$/;
-
-      if (isPersian.test(this.addItemIput[0])) {
-        this.addItemIput=this.addItemIput+'#'
-      }
-      else{
-        this.addItemIput='#'+this.addItemIput
-      }
-    }
-    
-    this.addItem.title=this.addItemIput
-    this._articleService
-    .addLinkTag(this.addItem)
-    .subscribe(
-      (data) => {
-        if (data.success) {
-          this.toastr.success(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-          this.getData(this.previousGroupId)
-
-        } else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
+    if(this.addItemIput.length>0){
+      this.addItemIput=this.addItemIput.replace(/#/g,"")
+      if(this.addItemIput[0]!='#'){
+        var isPersian = /^[\u0600-\u06FF\s]+$/;
+  
+        if (isPersian.test(this.addItemIput[0])) {
+          this.addItemIput=this.addItemIput+'#'
+        }
+        else{
+          this.addItemIput='#'+this.addItemIput
         }
       }
-    );
-    this.addItemIput=''
+      
+      this.addItem.title=this.addItemIput
+      this._articleService
+      .addLinkTag(this.addItem)
+      .subscribe(
+        (data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+            this.getData(this.previousGroupId)
+  
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        }
+      );
+      this.addItemIput=''
+    }
+ 
   }
   changeSituation(type:number){
     this.editable=false
