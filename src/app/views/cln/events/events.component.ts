@@ -16,7 +16,7 @@ import { CalendarService } from '../services/calendar.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import {
   trigger,
@@ -84,7 +84,7 @@ export class EventsComponent implements OnInit {
   frequencyIndexHolder: number = 0;
   importanceIndexHolder: number = 0;
   typeIndexHolder: number = 0;
-  pageIndex:number
+  pageIndex: number;
   eventEnums: EventEnumsModel = new EventEnumsModel();
   isDivExpanded: boolean = false;
   stateOfChevron: string = 'default';
@@ -106,22 +106,17 @@ export class EventsComponent implements OnInit {
     private modal: NgbModal,
     private toastr: ToastrService,
     private _route: ActivatedRoute,
-             private _router: Router
-
+    private _router: Router
   ) {
     this._route.queryParams.subscribe((params: Params) => {
-			if(params['pageIndex']!=undefined &&  !isNaN(params['pageIndex'])){
-         this.pageIndex=Number(params['pageIndex'])
-         if(this.pageIndex!=this.page.pageNumber)
-         {
-          this.page.pageNumber=this.pageIndex
-          this.setPage(this.pageIndex)
-
-         }
-         
-      }		
-
-		  });
+      if (params['pageIndex'] != undefined && !isNaN(params['pageIndex'])) {
+        this.pageIndex = Number(params['pageIndex']);
+        if (this.pageIndex != this.page.pageNumber) {
+          this.page.pageNumber = this.pageIndex;
+          this.setPage(this.pageIndex);
+        }
+      }
+    });
     if (localStorage.getItem('remainedtimeToTryAgain')) {
       this.localStorageDate = String(
         localStorage.getItem('remainedtimeToTryAgain')
@@ -135,23 +130,23 @@ export class EventsComponent implements OnInit {
       allowedContent: false,
       forcePasteAsPlainText: true,
       skin: 'moono-lisa',
-      defaultLanguage: 'fa',
-      language: 'fa',
+      defaultLanguage: 'en',
+      language: 'en',
       readOnly: false,
       removeButtons:
-        'Underline,Subscript,Superscript,SpecialChar,Source,Save,NewPage,DocProps,Preview,Print,' +
-        'Templates,document,Cut,Copy,Paste,PasteText,PasteFromWord,Replace,SelectAll,Scayt,' +
-        'Radio,TextField,Textarea,Select,Button,HiddenField,Strike,RemoveFormat,' +
-        'Outdent,Indent,Blockquote,CreateDiv,Anchor,' +
-        'Flash,HorizontalRule,SpecialChar,PageBreak,InsertPre,' +
-        'UIColor,ShowBlocks,MediaEmbed,About,Language',
-      removePlugins:
-        'elementspath,save,magicline,exportpdf,pastefromword,forms,blockquote',
-      extraPlugins: 'smiley,justify,colordialog,divarea,indentblock',
+        'Underline,Subscript,Superscript,Save,NewPage,Preview,Print,' +
+        'Scayt,' +
+        'Radio,Select,Button,HiddenField,Strike,RemoveFormat,' +
+        'Outdent,Indent,Blockquote,Anchor,' +
+        'Flash,HorizontalRule,PageBreak,InsertPre,' +
+        'ShowBlocks,MediaEmbed,About,Language',
+      removePlugins: 'elementspath,save,magicline,blockquote',
+      extraPlugins:
+        'smiley,justify,colordialog,divarea,indentblock,forms,exportpdf,pastefromword',
     };
   }
   async ngOnInit(): Promise<void> {
-    this.page.pageNumber=1
+    this.page.pageNumber = 1;
     await this.setPage(this.page.pageNumber);
     await this.getCountries();
     if (Utils.isLMonitor()) {
@@ -160,7 +155,7 @@ export class EventsComponent implements OnInit {
   }
   async setPage(pageToSet: number) {
     await this.getCalendarEvents(pageToSet, this.page.size, this.filterHolder);
-    this.pageIndexParams(pageToSet)
+    this.pageIndexParams(pageToSet);
   }
   async getCountries() {
     let allCountries = [
@@ -184,13 +179,13 @@ export class EventsComponent implements OnInit {
       });
     });
   }
-  pageIndexParams(pageNumber:number){
+  pageIndexParams(pageNumber: number) {
     this._router.navigate([], {
-     queryParams: {
-      pageIndex: pageNumber
-     },
-     queryParamsHandling: 'merge',
-   });
+      queryParams: {
+        pageIndex: pageNumber,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
   async getCalendarEvents(
     pageIndex: number,

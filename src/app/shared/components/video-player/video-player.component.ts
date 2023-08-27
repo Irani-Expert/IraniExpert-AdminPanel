@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./video-player.component.scss'],
 })
 export class VideoPlayerComponent implements OnInit {
+  @Input() modal: boolean = false;
   @Input() filePreview: any;
   @Input() fileName: string;
   @Input() file: any;

@@ -1,6 +1,7 @@
 <div class="radius bg-gray radius shadow mt-3">
   <video
-    class="w-100 radius"
+    [ngClass]="modal ? 'img-aspect' : 'w-100'"
+    class="radius"
     controls
     muted
     loop

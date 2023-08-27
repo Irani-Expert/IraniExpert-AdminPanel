@@ -3,3 +3,10 @@
   font-size: 1.4vw;
   font-size: calc(49% + 0.6vw);
 }
+.img-aspect {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/12;
+  object-fit: contain;
+  border-radius: 6px;
+}

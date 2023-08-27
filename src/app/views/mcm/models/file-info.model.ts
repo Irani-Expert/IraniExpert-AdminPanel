@@ -1,0 +1,19 @@
+export class FileInfoModel {
+  id: number = 0;
+  updateDate: string = '';
+  createDate: string = '';
+  createBy: number = 0;
+  updateBy: number = 0;
+  title: string = '';
+  fileName: string = '';
+  description: string = '';
+  isActive: boolean = false;
+  rowID: number = 0;
+  tableType: number = 0;
+  tableTypeTitle: string = '';
+  filePath: string = '';
+  stationID: number = 0;
+  fileType: string = '';
+  fileSize: number = 0;
+  fileActualPath: string = '';
+}

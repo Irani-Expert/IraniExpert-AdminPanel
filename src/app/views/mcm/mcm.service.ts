@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment.prod';
 import { StationModel } from './models/station.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { FileModel } from '../prd/gallery/file.model';
+import { FileInfoModel } from './models/file-info.model';
 
 type FilterFiles = {
   fileName: string;
@@ -20,7 +20,7 @@ type FilterFiles = {
   isActive: boolean;
 };
 type ResultFiles = {
-  files: Array<FileModel>;
+  files: Array<FileInfoModel>;
   folders: Array<string>;
 };
 @Injectable({
@@ -60,9 +60,12 @@ export class McmService extends BaseService<any, number> {
     return this._http.get<Result<ResultFiles>>(
       this._base +
         '/Files/GetDirectoriesContent' +
+        (filterModel.filePath
+          ? `?FilePath=${filterModel.filePath}`
+          : '?FilePath=') +
         (filterModel.fileName == undefined || filterModel.fileName == null
           ? ''
-          : '?FileName=' + filterModel.fileName) +
+          : '&FileName=' + filterModel.fileName) +
         (filterModel.id == undefined || filterModel.id == null
           ? ''
           : '&ID=' + filterModel.id) +
@@ -75,9 +78,6 @@ export class McmService extends BaseService<any, number> {
         (filterModel.fileType == undefined || filterModel.fileType == null
           ? ''
           : '&FileType=' + filterModel.fileType) +
-        (filterModel.filePath == undefined || filterModel.filePath == null
-          ? ''
-          : '&FilePath=' + filterModel.filePath) +
         (filterModel.stationId == undefined || filterModel.stationId == null
           ? ''
           : '&StationID=' + filterModel.stationId) +
