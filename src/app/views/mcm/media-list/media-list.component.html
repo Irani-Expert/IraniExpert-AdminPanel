@@ -1,11 +1,351 @@
-<div class="list-container">
-  <ul class="list-group flex-row flex-wrap list-unstyled">
-    <ng-container *ngFor="let i of files">
-      <li class="d-inline-flex align-items-center m-2 px-3 py-2 radius">
-        <ng-container *ngIf="false"> class </ng-container>
-        <ng-container *ngIf="false"> class </ng-container>
-        <ng-container *ngIf="false"> class </ng-container>
-      </li>
-    </ng-container>
-  </ul>
+<div
+  class="focus-clearer"
+  *ngIf="focusedElement"
+  (click)="changeBg(undefined)"
+></div>
+<div
+  class="d-flex align-items-center justify-content-start justify-content-md-end"
+>
+  <div class="radius bg-white m-1">
+    <!-- Navigate Back to 0 = Home -->
+    <button
+      (click)="navigateBack(0)"
+      [disabled]="currentFolderIndex <= 1"
+      [ngbTooltip]="currentFolderIndex <= 1 ? '' : 'پوشه اصلی'"
+      tooltipClass="text-small"
+      [ngClass]="currentFolderIndex <= 1 ? 'disabled bg-white' : 'bg-primary'"
+      class="d-inline-flex p-2 radius btn"
+    >
+      <span
+        class="pi pi-home"
+        style="font-size: 1.175rem; color: #d0cdcd"
+      ></span>
+    </button>
+  </div>
+  <div class="radius bg-white m-1">
+    <!-- List Mode -->
+    <div
+      ngbTooltip="لیست"
+      tooltipClass="text-small"
+      (click)="viewMode = 'list'"
+      class="d-inline-flex p-2 btn-view__mode radius radius-left-none cursor-pointer"
+      [ngClass]="viewMode == 'list' ? 'bg-primary' : 'bg-white'"
+    >
+      <span
+        class="pi pi-bars"
+        style="font-size: 1.175rem; color: #d0cdcd"
+      ></span>
+    </div>
+    <!-- Grid Mode -->
+    <div
+      ngbTooltip="شبکه"
+      tooltipClass="text-small"
+      (click)="viewMode = 'grid'"
+      class="d-inline-flex p-2 btn-view__mode radius radius-right-none cursor-pointer"
+      [ngClass]="viewMode == 'grid' ? 'bg-primary' : 'bg-white'"
+    >
+      <span
+        class="pi pi-th-large"
+        style="font-size: 1.175rem; color: #d0cdcd"
+      ></span>
+    </div>
+  </div>
+  <div class="m-1 radius bg-white">
+    <button
+      [disabled]="currentFolderIndex == 0"
+      (click)="navigateBack(1)"
+      [ngbTooltip]="
+        currentFolderIndex <= 1 ? ' بازگشت' : folderView[currentFolderIndex - 1]
+      "
+      tooltipClass="text-small"
+      [ngClass]="currentFolderIndex == 0 ? 'disabled bg-white' : 'bg-primary'"
+      class="d-inline-flex p-2 radius btn"
+    >
+      <span
+        class="pi pi-arrow-left"
+        style="font-size: 1.175rem; color: #d0cdcd"
+      ></span>
+    </button>
+  </div>
 </div>
+
+<!-- Show All Files -->
+<ng-container *ngIf="showModel == 0">
+  <!-- Grid View -->
+  <div *ngIf="viewMode == 'grid'" class="list-container">
+    <ul
+      class="list-group gap-custom align-items-baseline justify-content-start flex-row flex-wrap list-unstyled"
+    >
+      <ng-container *ngFor="let folder of folders; let j = index">
+        <li
+          [ngClass]="focusedElement == folder ? 'focused' : ''"
+          (click)="changeBg(folder)"
+          class="d-inline-flex grid-item align-items-center m-2 px-3 py-2 radius"
+        >
+          <div
+            class="d-flex w-100 flex-column flex-wrap"
+            style="position: relative"
+          >
+            <img
+              loading="lazy"
+              class="img-aspect"
+              src="
+                  ../../../../assets/images/Folder-Icon.png
+                "
+              alt="{{ folder }}"
+            />
+            <hr class="mt-2 mb-2 w-100" />
+            <div class="row text-center">
+              <strong class="text-small col-12 mb-1">{{ folder }}</strong>
+            </div>
+          </div>
+        </li>
+      </ng-container>
+      <ng-container *ngFor="let item of files; let i = index">
+        <li
+          placement="bottom"
+          ngbTooltip="{{ item.fileSize | fileSize }}"
+          tooltipClass="text-small"
+          [ngClass]="focusedElement == item ? 'focused' : ''"
+          (click)="changeBg(item)"
+          class="d-inline-flex grid-item align-items-center m-2 px-3 py-2 radius"
+        >
+          <div
+            class="d-flex w-100 flex-column flex-wrap"
+            style="position: relative"
+          >
+            <ng-container
+              *ngIf="
+                item.fileType == 'jpg' ||
+                item.fileType == 'jpeg' ||
+                item.fileType == 'png' ||
+                item.fileType == 'svg' ||
+                item.fileType == 'ico' ||
+                item.fileType == 'webp'
+              "
+            >
+              <img
+                loading="lazy"
+                class="img-aspect"
+                [src]="
+                  'https://dl.iraniexpert.com/' +
+                  item.fileActualPath +
+                  '/' +
+                  item.fileName
+                "
+                alt="{{ item.title }}"
+              />
+            </ng-container>
+            <ng-container
+              *ngIf="
+                item.fileType == 'mp4' ||
+                item.fileType == 'mkv' ||
+                item.fileType == 'avi' ||
+                item.fileType == 'wmv'
+              "
+            >
+              <img
+                loading="lazy"
+                class="play-btn"
+                (click)="playVideoModal(videoPlayer, item)"
+                src="../../../../assets/images/VideoPlyBtn.png"
+                alt="نمایش ویدئو"
+              />
+              <canvas
+                loading="lazy"
+                [id]="'videoThumbnail' + i"
+                class="img-aspect"
+                style="object-fit: fill !important"
+              ></canvas>
+            </ng-container>
+            <ng-container
+              *ngIf="item.fileType == 'rar' || item.fileType == 'zip'"
+            >
+              <img
+                class="img-aspect"
+                loading="lazy"
+                src="../../../../assets/images/zip-file-icon.png"
+                alt="{{ item.title }}"
+              />
+            </ng-container>
+            <hr class="mt-2 mb-2 w-100" />
+            <div class="text-center file__name-container w-100">
+              <p
+                dir="ltr"
+                [ngClass]="focusedElement == item ? 'selected' : 'not-selected'"
+                class="text-small mb-1"
+              >
+                {{ item.fileName }}
+              </p>
+            </div>
+          </div>
+          <a
+            style="position: absolute; top: 0; left: 0"
+            class="btn-download btn d-inline-flex justify-content-around p-1 radius align-items-center"
+            [href]="
+              'https://dl.iraniexpert.com/' +
+              item.fileActualPath +
+              '/' +
+              item.fileName
+            "
+            download
+          >
+            <i class="i-Download text-black text-bigger"></i>
+          </a>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+
+  <!-- Table View -->
+  <div *ngIf="viewMode == 'list'">
+    <drag-scroll
+      style="width: 100%; height: auto"
+      [ngStyle]="{ cursor: isDeviceMobile ? 'grab' : 'unset' }"
+    >
+      <table class="table-custom">
+        <thead>
+          <tr>
+            <th></th>
+            <ng-container *ngFor="let header of listModeHeader">
+              <th>{{ header }}</th>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let folder of folders">
+            <tr
+              [ngClass]="focusedElement == folder ? 'focused' : ''"
+              scope="row"
+              (click)="changeBg(folder)"
+            >
+              <td>
+                <img
+                  loading="lazy"
+                  class="img-aspect"
+                  src="
+                    ../../../../assets/images/Folder-Icon.png
+                  "
+                  alt="{{ folder }}"
+                />
+              </td>
+              <td>
+                <span class="text-small">{{ folder }}</span>
+              </td>
+              <td><span class="text-small">پوشه فایل</span></td>
+              <td><span class="text-small"></span></td>
+              <td><span class="text-small"></span></td>
+              <td><span class="text-small"></span></td>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngFor="let item of files; let i = index">
+            <tr
+              [ngClass]="focusedElement == item ? 'focused' : ''"
+              scope="row"
+              (click)="changeBg(item)"
+            >
+              <td>
+                <div class="text-small img-container">
+                  <ng-container
+                    *ngIf="
+                      item.fileType == 'jpg' ||
+                      item.fileType == 'jpeg' ||
+                      item.fileType == 'png' ||
+                      item.fileType == 'svg' ||
+                      item.fileType == 'ico' ||
+                      item.fileType == 'webp'
+                    "
+                  >
+                    <img
+                      loading="lazy"
+                      class="img-aspect"
+                      [src]="
+                        'https://dl.iraniexpert.com/' +
+                        item.fileActualPath +
+                        '/' +
+                        item.fileName
+                      "
+                      alt="{{ item.title }}"
+                    />
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      item.fileType == 'mp4' ||
+                      item.fileType == 'mkv' ||
+                      item.fileType == 'avi' ||
+                      item.fileType == 'wmv'
+                    "
+                  >
+                    <canvas
+                      loading="lazy"
+                      [id]="'videoThumbnail' + i"
+                      class="img-aspect"
+                      style="object-fit: fill !important"
+                    ></canvas>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="item.fileType == 'rar' || item.fileType == 'zip'"
+                  >
+                    <img
+                      class="img-aspect"
+                      loading="lazy"
+                      src="../../../../assets/images/zip-file-icon.png"
+                      alt="{{ item.title }}"
+                    />
+                  </ng-container>
+                </div>
+              </td>
+              <td>
+                <span class="text-small">{{ item.fileName }}</span>
+              </td>
+              <td>
+                <span class="text-small">{{ item.fileType }}</span>
+              </td>
+              <td>
+                <span class="text-small">{{ item.fileSize | fileSize }}</span>
+              </td>
+              <td>
+                <span class="text-small">{{
+                  item.createDate | date : "yyyy/M/d"
+                }}</span>
+              </td>
+              <td>
+                <span class="text-small">{{
+                  item.updateDate | date : "yyyy/M/d"
+                }}</span>
+              </td>
+              <!-- <div class="text-small col">{{ item.fileName }}</div>
+            <div class="text-small col">{{ item.fileName }}</div> -->
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </drag-scroll>
+  </div>
+</ng-container>
+
+<!-- Show Detail Of File -->
+<ng-container *ngIf="showModel == 1"> </ng-container>
+<ng-template let-modal #videoPlayer>
+  <button
+    ngbAutoFocus
+    type="button"
+    class="close custom-close-btn"
+    aria-label="Close"
+    (click)="modal.dismiss()"
+  >
+    <span style="font-size: 2rem" aria-hidden="true">&times;</span>
+  </button>
+  <div class="radius">
+    <div class="modal-body border-0">
+      <app-video-player
+        class="w-100 h-auto"
+        [modal]="true"
+        [fileName]="videoModalFile.fileName"
+        [file]="videoModalFile"
+        [filePreview]="videoModalFile.filePath"
+      ></app-video-player>
+    </div>
+  </div>
+</ng-template>

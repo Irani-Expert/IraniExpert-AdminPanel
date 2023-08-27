@@ -76,18 +76,18 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
       allowedContent: false,
       forcePasteAsPlainText: true,
       skin: 'moono-lisa',
-      defaultLanguage: 'fa',
-      language: 'fa',
+      defaultLanguage: 'en',
+      language: 'en',
       removeButtons:
-        'Underline,Subscript,Superscript,SpecialChar,Save,NewPage,DocProps,Preview,Print,' +
-        'Templates,document,Cut,Copy,Paste,PasteText,PasteFromWord,Replace,SelectAll,Scayt,' +
-        'Radio,TextField,Textarea,Select,Button,HiddenField,Strike,RemoveFormat,' +
-        'Outdent,Indent,Blockquote,CreateDiv,Anchor,' +
-        'Flash,HorizontalRule,SpecialChar,PageBreak,InsertPre,' +
-        'UIColor,ShowBlocks,MediaEmbed,About,Language',
-      removePlugins:
-        'elementspath,save,magicline,exportpdf,pastefromword,forms,blockquote',
-      extraPlugins: 'smiley,justify,colordialog,divarea,indentblock',
+        'Underline,Subscript,Superscript,Save,NewPage,Preview,Print,' +
+        'Scayt,' +
+        'Radio,Select,Button,HiddenField,Strike,RemoveFormat,' +
+        'Outdent,Indent,Blockquote,Anchor,' +
+        'Flash,HorizontalRule,PageBreak,InsertPre,' +
+        'ShowBlocks,MediaEmbed,About,Language',
+      removePlugins: 'elementspath,save,magicline,blockquote',
+      extraPlugins:
+        'smiley,justify,colordialog,divarea,indentblock,forms,exportpdf,pastefromword',
     };
     this.addForm = this._formBuilder.group({
       title: [null, Validators.required],
