@@ -1,52 +1,28 @@
 <section class="position-relative">
-  <div
-    class="pb-3 d-flex flex-column flex-md-row align-items-center filter-bar"
-  >
+  <div class="pb-3 d-flex flex-column flex-md-row align-items-center filter-bar">
     <div class="d-flex flex-row flex-wrap align-items-center">
-      <strong class="m-1 text-small"
-        ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
-        &nbsp; : &nbsp;</strong
-      >
+      <strong class="m-1 text-small"><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
+        &nbsp; : &nbsp;</strong>
 
       <!-- Country -->
       <strong for="pageOrder" class="text-small"> کشور </strong>
       <div ngbDropdown placement="bottom-end" class="col-auto">
-        <button
-          *ngIf="isDataFetched"
-          type="button"
-          class="btn btn-filter radius py-btns text-small"
-          id="dropdownBasic1"
-          ngbDropdownToggle
-        >
-          <span
-            class="fi"
-            [ngClass]="'fi-' + countriesData[countryIndexHolder].codeFlag"
-          ></span>
+        <button *ngIf="isDataFetched" type="button" class="btn btn-filter radius py-btns text-small" id="dropdownBasic1"
+          ngbDropdownToggle>
+          <span class="fi" [ngClass]="'fi-' + countriesData[countryIndexHolder].codeFlag"></span>
           <strong class="ml-1" style="font-size: 0.76rem">{{
             countriesData[countryIndexHolder].name
-          }}</strong>
+            }}</strong>
         </button>
-        <div
-          ngbDropdownMenu
-          class="mt-1 shadow-lg radius dropDown-scroll"
-          aria-labelledby="dropdownBasic1"
-          style="height: 300px; overflow: auto"
-        >
-          <button
-            class="text-left btn mt-2"
-            ngbDropdownItem
-            *ngFor="let country of countriesData; let i = index"
+        <div ngbDropdownMenu class="mt-1 shadow-lg radius dropDown-scroll" aria-labelledby="dropdownBasic1"
+          style="height: 300px; overflow: auto">
+          <button class="text-left btn mt-2" ngbDropdownItem *ngFor="let country of countriesData; let i = index"
             (click)="
               filterHolder.countryID = country.id;
               countryIndexHolder = i;
               setFilter()
-            "
-          >
-            <span
-              class="fi"
-              [ngClass]="'fi-' + country.codeFlag"
-              style="font-size: 0.8rem"
-            ></span>
+            ">
+            <span class="fi" [ngClass]="'fi-' + country.codeFlag" style="font-size: 0.8rem"></span>
             <strong class="text-small ml-1">{{ country.name }}</strong>
           </button>
         </div>
@@ -54,18 +30,11 @@
 
       <!-- Country -->
       <!-- Expand The Div -->
-      <button
-        (click)="toggleFilters()"
-        class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
-      >
+      <button (click)="toggleFilters()"
+        class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1">
         <strong class="text-small mr-1">پیشرفته</strong>
-        <span class="d-inline-flex"
-          ><span
-            class="pi pi-chevron-left ml-1"
-            [@rotate90deg]="stateOfChevron"
-            style="font-size: 0.7rem"
-          ></span
-        ></span>
+        <span class="d-inline-flex"><span class="pi pi-chevron-left ml-1" [@rotate90deg]="stateOfChevron"
+            style="font-size: 0.7rem"></span></span>
       </button>
       <!-- Expand The Div -->
     </div>
@@ -76,32 +45,19 @@
       <!-- Frequency -->
       <strong for="pageOrder" class="text-small"> دوره زمانی </strong>
       <div ngbDropdown placement="bottom-end" class="col-auto mb-2 mb-lg-0">
-        <button
-          type="button"
-          class="btn btn-details radius py-btns text-small"
-          id="dropdownBasic1"
-          ngbDropdownToggle
-        >
+        <button type="button" class="btn btn-details radius py-btns text-small" id="dropdownBasic1" ngbDropdownToggle>
           {{ eventEnums.eventFrequencies[frequencyIndexHolder].title }}
         </button>
-        <div
-          ngbDropdownMenu
-          class="mt-1 shadow-lg radius dropDown-scroll"
-          aria-labelledby="dropdownBasic1"
-          style="height: 245px; overflow: auto"
-        >
-          <button
-            class="text-left btn mt-2"
-            ngbDropdownItem
-            *ngFor="let frequency of eventEnums.eventFrequencies"
+        <div ngbDropdownMenu class="mt-1 shadow-lg radius dropDown-scroll" aria-labelledby="dropdownBasic1"
+          style="height: 245px; overflow: auto">
+          <button class="text-left btn mt-2" ngbDropdownItem *ngFor="let frequency of eventEnums.eventFrequencies"
             (click)="
               filterHolder.frequency = frequency.value;
               frequency.value == null
                 ? (frequencyIndexHolder = 0)
                 : (frequencyIndexHolder = frequency.value + 1);
               setFilter()
-            "
-          >
+            ">
             <strong class="text-small">{{ frequency.title }}</strong>
           </button>
         </div>
@@ -110,32 +66,19 @@
       <!-- Importance -->
       <strong for="pageOrder" class="text-small"> اهمیت خبر </strong>
       <div ngbDropdown placement="bottom-end" class="col-auto mb-2 mb-lg-0">
-        <button
-          type="button"
-          class="btn btn-details radius py-btns text-small"
-          id="dropdownBasic1"
-          ngbDropdownToggle
-        >
+        <button type="button" class="btn btn-details radius py-btns text-small" id="dropdownBasic1" ngbDropdownToggle>
           {{ eventEnums.eventImportances[importanceIndexHolder].title }}
         </button>
-        <div
-          ngbDropdownMenu
-          class="mt-1 shadow-lg radius dropDown-scroll"
-          aria-labelledby="dropdownBasic1"
-          style="height: 245px; overflow: auto"
-        >
-          <button
-            class="text-left btn mt-2"
-            ngbDropdownItem
-            *ngFor="let importance of eventEnums.eventImportances"
+        <div ngbDropdownMenu class="mt-1 shadow-lg radius dropDown-scroll" aria-labelledby="dropdownBasic1"
+          style="height: 245px; overflow: auto">
+          <button class="text-left btn mt-2" ngbDropdownItem *ngFor="let importance of eventEnums.eventImportances"
             (click)="
               filterHolder.importance = importance.value;
               importance.value == null
                 ? (importanceIndexHolder = 0)
                 : (importanceIndexHolder = importance.value + 1);
               setFilter()
-            "
-          >
+            ">
             <strong class="text-small">{{ importance.title }}</strong>
           </button>
         </div>
@@ -143,37 +86,19 @@
       <!-- Importance -->
       <!-- Sector -->
       <strong for="pageOrder" class="text-small"> بخش خبر </strong>
-      <div
-        ngbDropdown
-        placement="bottom-end"
-        class="col-auto mb-2 mb-lg-0 mb-2 mb-lg-0"
-      >
-        <button
-          type="button"
-          class="btn btn-details radius py-btns text-small"
-          id="dropdownBasic1"
-          ngbDropdownToggle
-        >
+      <div ngbDropdown placement="bottom-end" class="col-auto mb-2 mb-lg-0 mb-2 mb-lg-0">
+        <button type="button" class="btn btn-details radius py-btns text-small" id="dropdownBasic1" ngbDropdownToggle>
           {{ eventEnums.eventSector[sectorIndexHolder].title }}
         </button>
-        <div
-          ngbDropdownMenu
-          class="mt-1 shadow-lg radius dropDown-scroll"
-          aria-labelledby="dropdownBasic1"
-          style="height: 300px; overflow: auto"
-        >
-          <button
-            class="text-left btn mt-2"
-            ngbDropdownItem
-            *ngFor="let sector of eventEnums.eventSector"
-            (click)="
+        <div ngbDropdownMenu class="mt-1 shadow-lg radius dropDown-scroll" aria-labelledby="dropdownBasic1"
+          style="height: 300px; overflow: auto">
+          <button class="text-left btn mt-2" ngbDropdownItem *ngFor="let sector of eventEnums.eventSector" (click)="
               filterHolder.sector = sector.value;
               sector.value == null
                 ? (sectorIndexHolder = 0)
                 : (sectorIndexHolder = sector.value + 1);
               setFilter()
-            "
-          >
+            ">
             <strong class="text-small">{{ sector.title }}</strong>
           </button>
         </div>
@@ -184,32 +109,18 @@
       <!-- Type -->
       <strong for="pageOrder" class="text-small"> نوع خبر </strong>
       <div ngbDropdown placement="bottom-end" class="col-auto mb-2 mb-lg-0">
-        <button
-          type="button"
-          class="btn btn-details radius py-btns text-small"
-          id="dropdownBasic1"
-          ngbDropdownToggle
-        >
+        <button type="button" class="btn btn-details radius py-btns text-small" id="dropdownBasic1" ngbDropdownToggle>
           {{ eventEnums.eventType[typeIndexHolder].title }}
         </button>
-        <div
-          ngbDropdownMenu
-          class="mt-1 shadow-lg radius dropDown-scroll"
-          aria-labelledby="dropdownBasic1"
-          style="height: 200px; overflow: auto"
-        >
-          <button
-            class="text-left btn mt-2"
-            ngbDropdownItem
-            *ngFor="let type of eventEnums.eventType"
-            (click)="
+        <div ngbDropdownMenu class="mt-1 shadow-lg radius dropDown-scroll" aria-labelledby="dropdownBasic1"
+          style="height: 200px; overflow: auto">
+          <button class="text-left btn mt-2" ngbDropdownItem *ngFor="let type of eventEnums.eventType" (click)="
               filterHolder.type = type.value;
               type.value == null
                 ? (typeIndexHolder = 0)
                 : (typeIndexHolder = type.value + 1);
               setFilter()
-            "
-          >
+            ">
             <strong class="text-small">{{ type.title }}</strong>
           </button>
         </div>
@@ -217,64 +128,33 @@
       <!-- Type -->
 
       <!-- Inputs -->
-      <input
-        (keydown.enter)="filterWithEnter($event.target.value)"
-        type="text"
-        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
-        placeholder="شناسه "
-        [(ngModel)]="filter.iD"
-      />
-      <span
-        *ngIf="filterHolder.iD"
-        (click)="filter.iD = null; removeFilter('iD')"
-        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-        ><span class="pi pi-times" style="font-size: 0.7rem"></span
-      ></span>
-      <input
-        (keydown.enter)="filterWithEnter($event.target.value)"
-        type="text"
-        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
-        placeholder="کد شاخص "
-        [(ngModel)]="filter.eventCode"
-      />
-      <span
-        *ngIf="filterHolder.eventCode"
-        (click)="filter.eventCode = null; removeFilter('eventCode')"
-        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-        ><span class="pi pi-times" style="font-size: 0.7rem"></span
-      ></span>
-      <input
-        (keydown.enter)="filterWithEnter($event.target.value)"
-        type="text"
-        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
-        placeholder="عنوان"
-        [(ngModel)]="filter.name"
-      />
-      <span
-        *ngIf="filterHolder.name"
-        (click)="filter.name = null; removeFilter('name')"
-        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-        ><span class="pi pi-times" style="font-size: 0.7rem"></span
-      ></span>
-      <input
-        (keydown.enter)="filterWithEnter($event.target.value)"
-        type="text"
-        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small"
-        placeholder="لینک منبع"
-        [(ngModel)]="filter.sourceUrl"
-      />
-      <span
-        *ngIf="filterHolder.sourceUrl"
-        (click)="filter.sourceUrl = null; removeFilter('sourceUrl')"
-        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-        ><span class="pi pi-times" style="font-size: 0.7rem"></span
-      ></span>
-      <button
-        type="button"
-        ngbAutofocus
+      <input (keydown.enter)="filterWithEnter($event.target.value)" type="text"
+        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small" placeholder="شناسه "
+        [(ngModel)]="filter.iD" />
+      <span *ngIf="filterHolder.iD" (click)="filter.iD = null; removeFilter('iD')"
+        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"><span class="pi pi-times"
+          style="font-size: 0.7rem"></span></span>
+      <input (keydown.enter)="filterWithEnter($event.target.value)" type="text"
+        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small" placeholder="کد شاخص "
+        [(ngModel)]="filter.eventCode" />
+      <span *ngIf="filterHolder.eventCode" (click)="filter.eventCode = null; removeFilter('eventCode')"
+        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"><span class="pi pi-times"
+          style="font-size: 0.7rem"></span></span>
+      <input (keydown.enter)="filterWithEnter($event.target.value)" type="text"
+        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small" placeholder="عنوان"
+        [(ngModel)]="filter.name" />
+      <span *ngIf="filterHolder.name" (click)="filter.name = null; removeFilter('name')"
+        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"><span class="pi pi-times"
+          style="font-size: 0.7rem"></span></span>
+      <input (keydown.enter)="filterWithEnter($event.target.value)" type="text"
+        class="form-control m-1 radius col-9 col-lg-2 col-md-4 bg-white text-small" placeholder="لینک منبع"
+        [(ngModel)]="filter.sourceUrl" />
+      <span *ngIf="filterHolder.sourceUrl" (click)="filter.sourceUrl = null; removeFilter('sourceUrl')"
+        class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"><span class="pi pi-times"
+          style="font-size: 0.7rem"></span></span>
+      <button type="button" ngbAutofocus
         class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center mx-2"
-        (click)="filterButton()"
-      >
+        (click)="filterButton()">
         <i class="i-Filter-2 text-bigger mr-2"></i>
         <strong class="text-small">فیلتر </strong>
       </button>
@@ -298,8 +178,7 @@
               </tr>
             </thead>
             <tbody>
-              <ng-container
-                *ngFor="
+              <ng-container *ngFor="
                   let item of eventData
                     | paginate
                       : {
@@ -307,20 +186,11 @@
                           currentPage: page.pageNumber,
                           totalItems: page.totalElements
                         }
-                "
-              >
-                <tr
-                  scope="row"
-                  (click)="openModal(detailsModal, 'lg', true, item)"
-                  class="cursor-pointer"
-                >
+                ">
+                <tr scope="row" (click)="openModal(detailsModal, 'lg', true, item)" class="cursor-pointer">
                   <td>
-                    <span
-                      class="fi"
-                      [ngClass]="'fi-' + item.codeFlag"
-                      style="font-size: 2rem; border-radius: 6px"
-                    ></span
-                    >&nbsp;
+                    <span class="fi" [ngClass]="'fi-' + item.codeFlag"
+                      style="font-size: 2rem; border-radius: 6px"></span>&nbsp;
                     <span>{{ item.currency }}</span>
                   </td>
                   <td>
@@ -330,28 +200,20 @@
                   </td>
                   <td>
                     <span class="d-inline-flex align-items-center">
-                      <span
-                        class="pi pi-circle-fill"
-                        [ngClass]="{
+                      <span class="pi pi-circle-fill" [ngClass]="{
                           'text-dark': item.importance == 0,
                           'blinking-med text-warning': item.importance == 3,
                           'blinking-slow text-light': item.importance == 1,
                           'blinking-fast text-danger': item.importance == 2
-                        }"
-                      ></span
-                      >&nbsp;&nbsp;{{ item.importanceTitle }}
+                        }"></span>&nbsp;&nbsp;{{ item.importanceTitle }}
                     </span>
                   </td>
                   <td class="text-center">{{ item.sectorTitle }}</td>
                   <td class="text-center">{{ item.timeModeTitle }}</td>
                   <td class="text-center">{{ item.frequencyTitle }}</td>
                   <td class="text-center">
-                    <a
-                      (click)="denyOpeningModal()"
-                      href="https://{{ item.source_Url }}"
-                      target="blank"
-                      >{{ item.source_Url }}</a
-                    >
+                    <a (click)="denyOpeningModal()" href="https://{{ item.source_Url }}" target="blank">{{
+                      item.source_Url }}</a>
                   </td>
                 </tr>
                 <tr class="spacer">
@@ -363,49 +225,28 @@
         </div>
       </div>
       <div class="col-md-12 mt-3" *ngIf="page.totalElements > 25">
-        <pagination-controls
-          (pageChange)="setPage($event, null)"
-          previousLabel=""
-          nextLabel=""
-          responsive="true"
-        ></pagination-controls>
+        <pagination-controls (pageChange)="setPage($event, null)" previousLabel="" nextLabel=""
+          responsive="true"></pagination-controls>
       </div>
     </div>
   </div>
   <div *ngIf="page.totalElements == 0" class="d-flex justify-content-center">
-    <img
-      src="../../../../../assets/images/97434-no-data-available.gif"
-      class="img-fluid w-50 radius-lg"
-      style="opacity: 0.4"
-      alt=""
-    />
+    <img src="../../../../../assets/images/97434-no-data-available.gif" class="img-fluid w-50 radius-lg"
+      style="opacity: 0.4" alt="" />
   </div>
 
   <!-- TeleGramBtn -->
   <div @fadeOut class="position-custom-telegram" *ngIf="showTelBtn">
-    <div
-      (click)="checkAndSendNews()"
-      [ngbTooltip]="
+    <div (click)="checkAndSendNews()" [ngbTooltip]="
         isMessageContainerClosed ? 'ارسال اخبار به ربات' : ' ارسال کن'
-      "
-      tooltipClass="text-small"
-      [placement]="isMessageContainerClosed ? 'right' : 'bottom'"
-      class="img-container"
-    >
-      <img
-        class="tele-img"
-        [src]="
+      " tooltipClass="text-small" [placement]="isMessageContainerClosed ? 'right' : 'bottom'" class="img-container">
+      <img class="tele-img" [src]="
           isSendingReq
             ? '../../../../assets/images/Telegram.gif'
             : '../../../../assets/images/Telegram.png'
-        "
-        alt=""
-      />
+        " alt="" />
     </div>
-    <div
-      class="message-container"
-      [ngClass]="{ 'border-0': isMessageContainerClosed }"
-    >
+    <div class="message-container" [ngClass]="{ 'border-0': isMessageContainerClosed }">
       <div @fadeOut class="message-blue" *ngIf="!isMessageContainerClosed">
         <p class="message-content">
           با این قابلیت میتونی اخبار رو به ربات تلگرام بفرستی
@@ -415,16 +256,9 @@
           روی لوگوی <strong>تلگرام</strong> کلیک کن !
         </p>
       </div>
-      <div
-        @fadeOut
-        class="d-flex justify-content-end"
-        *ngIf="!isMessageContainerClosed"
-      >
-        <p-button
-          (click)="isMessageContainerClosed = true"
-          styleClass="p-button-rounded p-button-danger m-1 text-small p-btn-small"
-          icon="pi pi-times"
-        ></p-button>
+      <div @fadeOut class="d-flex justify-content-end" *ngIf="!isMessageContainerClosed">
+        <p-button (click)="isMessageContainerClosed = true"
+          styleClass="p-button-rounded p-button-danger m-1 text-small p-btn-small" icon="pi pi-times"></p-button>
       </div>
     </div>
   </div>
@@ -439,242 +273,150 @@
           <span class="pi pi-circle-fill text-dark text-bigger"></span>&nbsp;
         </span>
         <ng-container *appCanAccess="'Calendar-Event-Edit'">
-          <input
-            (click)="onFocusIn()"
-            type="text"
-            class="form-control-sm radius w-75 text-small disabled-title-input"
-            *ngIf="!changing"
-            value="{{ eventNameHolder }}"
-          />
-          <input
-            value="{{ eventNameHolder }}"
-            [(ngModel)]="eventDetails.name"
-            autocomplete="off"
-            *ngIf="changing"
-            type="text"
-            id="enabledInput"
-            (focusout)="onFocusOut()"
-            class="form-control-sm radius w-75 text-small enabled-title-input"
-          />
+          <input (click)="onFocusIn()" type="text" class="form-control-sm radius w-75 text-small disabled-title-input"
+            *ngIf="!changing" value="{{ eventNameHolder }}" />
+          <input value="{{ eventNameHolder }}" [(ngModel)]="eventDetails.name" autocomplete="off" *ngIf="changing"
+            type="text" id="enabledInput" (focusout)="onFocusOut()"
+            class="form-control-sm radius w-75 text-small enabled-title-input" />
         </ng-container>
         <div class="d-block" *appCanAccess="'Calendar-Event-Edit'">
-          <span
-            *ngIf="changing"
-            ngbTooltip="انصراف"
-            [openDelay]="50"
-            [closeDelay]="150"
-            placement="bottom"
+          <span *ngIf="changing" ngbTooltip="انصراف" [openDelay]="50" [closeDelay]="150" placement="bottom"
             class="d-inline-flex mt-2 p-2 radius bg-light"
-            (click)="changing = fasle; eventDetails.name = eventNameHolder"
-            ><i class="i-Close text-bigger text-black"></i
-          ></span>
-          <span
-            *ngIf="changing"
-            (click)="eventNameHolder = eventDetails.name; changing = false"
-            ngbTooltip="ثبت"
-            [openDelay]="50"
-            [closeDelay]="150"
-            placement="bottom"
-            class="d-inline-flex mt-2 p-2 radius btn-save ml-2"
-            ><i class="i-Yes text-bigger text-black"></i
-          ></span>
+            (click)="changing = fasle; eventDetails.name = eventNameHolder"><i
+              class="i-Close text-bigger text-black"></i></span>
+          <span *ngIf="changing" (click)="eventNameHolder = eventDetails.name; changing = false" ngbTooltip="ثبت"
+            [openDelay]="50" [closeDelay]="150" placement="bottom"
+            class="d-inline-flex mt-2 p-2 radius btn-save ml-2"><i class="i-Yes text-bigger text-black"></i></span>
         </div>
       </div>
-      <button
-        ngbAutoFocus
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="eventDetails.name = eventNameHolder; modal.dismiss()"
-      >
+      <button ngbAutoFocus type="button" class="close" aria-label="Close"
+        (click)="eventDetails.name = eventNameHolder; modal.dismiss()">
         <span style="font-size: 1.7rem" aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <input
-        *appCanAccess="'Calendar-Event-Edit'"
-        class="text-small form-control radius col-10 mb-3"
-        type="text"
+      <input *appCanAccess="'Calendar-Event-Edit'" class="text-small form-control radius col-10 mb-3" type="text"
         [placeholder]="
           eventDetails.secondName
             ? eventDetails.secondName
             : 'نام ثانویه تعریف نشده است'
-        "
-        [(ngModel)]="eventDetails.secondName"
-      />
+        " [(ngModel)]="eventDetails.secondName" />
       <div class="d-flex flex-row flex-wrap">
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
-            <span
-              class="pi pi-circle-fill text-light m-1"
-              style="font-size: 0.82rem"
-            ></span>
+            <span class="pi pi-circle-fill text-light m-1" style="font-size: 0.82rem"></span>
           </div>
-          <span
-            class="fi"
-            [ngClass]="'fi-' + eventDetails.codeFlag"
-            style="font-size: 6rem; border-radius: 6px"
-          ></span>
+          <span class="fi" [ngClass]="'fi-' + eventDetails.codeFlag" style="font-size: 6rem; border-radius: 6px"></span>
         </div>
         <!-- Each Value -->
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
-            <span
-              class="pi pi-circle-fill text-light m-1"
-              style="font-size: 0.82rem"
-            ></span
-            ><strong class="my-1 text-small" for="type">شناسه</strong>
+            <span class="pi pi-circle-fill text-light m-1" style="font-size: 0.82rem"></span><strong
+              class="my-1 text-small" for="type">شناسه</strong>
           </div>
-          <span class="card py-2 px-4 radius bg-light"
-            ><strong class="text-small">
+          <span class="card py-2 px-4 radius bg-light"><strong class="text-small">
               {{ eventDetails.id }}
-            </strong></span
-          >
+            </strong></span>
         </div>
         <!-- Each Value -->
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
-            <span
-              class="pi pi-circle-fill text-light m-1"
-              style="font-size: 0.82rem"
-            ></span
-            ><strong class="my-1 text-small" for="type">نوع خبر</strong>
+            <span class="pi pi-circle-fill text-light m-1" style="font-size: 0.82rem"></span><strong
+              class="my-1 text-small" for="type">نوع خبر</strong>
           </div>
-          <span class="card py-2 px-4 radius bg-light"
-            ><strong class="text-small">
+          <span class="card py-2 px-4 radius bg-light"><strong class="text-small">
               {{ eventDetails.typeTitle }}
-            </strong></span
-          >
+            </strong></span>
         </div>
         <!-- Each Value -->
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
-            <span
-              class="pi pi-circle-fill text-light m-1"
-              style="font-size: 0.82rem"
-            ></span
-            ><strong class="my-1 text-small" for="type">حالت زمان</strong>
+            <span class="pi pi-circle-fill text-light m-1" style="font-size: 0.82rem"></span><strong
+              class="my-1 text-small" for="type">حالت زمان</strong>
           </div>
-          <span class="card py-2 px-4 radius bg-light"
-            ><strong class="text-small">
+          <span class="card py-2 px-4 radius bg-light"><strong class="text-small">
               {{ eventDetails.timeModeTitle }}
-            </strong></span
-          >
+            </strong></span>
         </div>
         <!-- Each Value -->
 
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
-            <span
-              class="pi pi-circle-fill text-light m-1"
-              style="font-size: 0.82rem"
-            ></span
-            ><strong class="my-1 text-small" for="type">بخش مربوطه</strong>
+            <span class="pi pi-circle-fill text-light m-1" style="font-size: 0.82rem"></span><strong
+              class="my-1 text-small" for="type">بخش مربوطه</strong>
           </div>
-          <span class="card py-2 px-4 radius bg-light"
-            ><strong class="text-small">
+          <span class="card py-2 px-4 radius bg-light"><strong class="text-small">
               {{ eventDetails.sectorTitle }}
-            </strong></span
-          >
+            </strong></span>
         </div>
         <!-- Each Value -->
 
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
-            <span
-              class="pi pi-circle-fill text-light m-1"
-              style="font-size: 0.82rem"
-            ></span
-            ><strong class="my-1 text-small" for="type">معیار محاسبه</strong>
+            <span class="pi pi-circle-fill text-light m-1" style="font-size: 0.82rem"></span><strong
+              class="my-1 text-small" for="type">معیار محاسبه</strong>
           </div>
-          <span class="card py-2 px-4 radius bg-light"
-            ><strong class="text-small">
+          <span class="card py-2 px-4 radius bg-light"><strong class="text-small">
               {{ eventDetails.unitTitle }}
-            </strong></span
-          >
+            </strong></span>
         </div>
         <!-- Each Value -->
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
-            <span
-              class="pi pi-circle-fill text-light m-1"
-              style="font-size: 0.82rem"
-            ></span
-            ><strong class="my-1 text-small" for="type">منبع</strong>
+            <span class="pi pi-circle-fill text-light m-1" style="font-size: 0.82rem"></span><strong
+              class="my-1 text-small" for="type">منبع</strong>
           </div>
-          <span class="card py-2 px-4 radius bg-light"
-            ><a
-              class="text-small"
-              href="https://{{ eventDetails.source_Url }}"
-              target="blank"
-            >
+          <span class="card py-2 px-4 radius bg-light"><a class="text-small"
+              href="https://{{ eventDetails.source_Url }}" target="blank">
               {{ eventDetails.source_Url }}
-            </a></span
-          >
+            </a></span>
         </div>
         <!-- Each Value -->
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
-            <span
-              class="pi pi-circle-fill text-light m-1"
-              style="font-size: 0.82rem"
-            ></span
-            ><strong class="my-1 text-small" for="type">دوره تناوب</strong>
+            <span class="pi pi-circle-fill text-light m-1" style="font-size: 0.82rem"></span><strong
+              class="my-1 text-small" for="type">دوره تناوب</strong>
           </div>
-          <span class="card py-2 px-4 radius bg-light"
-            ><strong class="text-small">
+          <span class="card py-2 px-4 radius bg-light"><strong class="text-small">
               {{ eventDetails.frequencyTitle }}
-            </strong></span
-          >
+            </strong></span>
         </div>
         <!-- Each Value -->
 
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
-            <span
-              class="pi pi-circle-fill text-light m-1"
-              style="font-size: 0.82rem"
-            ></span
-            ><strong class="my-1 text-small" for="type">اهمیت خبر</strong>
+            <span class="pi pi-circle-fill text-light m-1" style="font-size: 0.82rem"></span><strong
+              class="my-1 text-small" for="type">اهمیت خبر</strong>
           </div>
-          <span
-            class="card py-2 px-4 radius"
-            [ngClass]="{
+          <span class="card py-2 px-4 radius" [ngClass]="{
               'bg-danger text-white': eventDetails.importance == 2,
               'bg-light': eventDetails.importance == 1,
               'bg-warning': eventDetails.importance == 3,
               'bg-dark text-white': eventDetails.importance == 0
-            }"
-            ><strong class="text-small">
+            }"><strong class="text-small">
               {{ eventDetails.importanceTitle }}
-            </strong></span
-          >
+            </strong></span>
         </div>
         <!-- Each Value -->
 
         <!-- Each Value -->
         <div class="d-flex flex-column mr-4 mb-1">
           <div class="d-flex align-items-center justify-content-start mb-1">
-            <span
-              class="pi pi-circle-fill text-light m-1"
-              style="font-size: 0.82rem"
-            ></span
-            ><strong class="my-1 text-small" for="type">مضرب</strong>
+            <span class="pi pi-circle-fill text-light m-1" style="font-size: 0.82rem"></span><strong
+              class="my-1 text-small" for="type">مضرب</strong>
           </div>
-          <span class="card py-2 px-4 radius bg-light"
-            ><strong class="text-small">
+          <span class="card py-2 px-4 radius bg-light"><strong class="text-small">
               {{ eventDetails.multiplierTitle }}
-            </strong></span
-          >
+            </strong></span>
         </div>
         <!-- Each Value -->
       </div>
@@ -688,14 +430,22 @@
         </div>
         <hr class="d-flex flex-grow-1" style="margin: 13px 8px 13px 10px" />
       </div>
-      <ckeditor
-        (paste)="onPasteEditor($event)"
-        (change)="onChangeEditor($event)"
-        name="myckeditor"
-        [config]="ckeConfig"
-        debounce="100"
-        [(ngModel)]="eventDetails.description"
-      >
+      <ckeditor (paste)="onPasteEditor($event)" (change)="onChangeEditor($event)" name="myckeditor" [config]="ckeConfig"
+        debounce="100" [(ngModel)]="eventDetails.description">
+      </ckeditor>
+
+      <!-- CKEDITOR -->
+      <!-- CKEDITOR IraniExpert event-->
+
+      <div class="row my-3">
+        <hr class="d-flex flex-grow-1" style="margin: 13px 10px 13px 8px" />
+        <div class="col-auto">
+          <strong class="text-small">رویداد ایرانی اکسپرت</strong>
+        </div>
+        <hr class="d-flex flex-grow-1" style="margin: 13px 8px 13px 10px" />
+      </div>
+      <ckeditor (paste)="onPasteEditor($event)" (change)="onChangeEditor($event)" name="myckeditor" [config]="ckeConfig"
+        debounce="100" [(ngModel)]="eventDetails.iraniExpertDescription">
       </ckeditor>
 
       <!-- CKEDITOR -->
@@ -703,21 +453,13 @@
 
     <div class="d-flex flex-grow-1"></div>
     <div class="modal-footer border-0" *appCanAccess="'Calendar-Event-Edit'">
-      <button
-        (click)="putEvent()"
-        type="button"
-        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"
-      >
-        <i class="i-Yes text-bigger mr-2"></i
-        ><strong class="text-small">ذخیره</strong>
+      <button (click)="putEvent()" type="button"
+        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right">
+        <i class="i-Yes text-bigger mr-2"></i><strong class="text-small">ذخیره</strong>
       </button>
-      <button
-        (click)="modal.close(false)"
-        type="button"
-        class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"
-      >
-        <i class="i-Close text-bigger mr-2"></i
-        ><strong class="text-small">انصراف</strong>
+      <button (click)="modal.close(false)" type="button"
+        class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right">
+        <i class="i-Close text-bigger mr-2"></i><strong class="text-small">انصراف</strong>
       </button>
     </div>
   </div>
@@ -732,7 +474,5 @@
   </div>
 </ng-template>
 
-<ngx-spinner
-  name="mySpinner"
-  template="<img src='../../../../assets/images/Telegram.gif' class='spinner-img-position' />"
-></ngx-spinner>
+<ngx-spinner name="mySpinner"
+  template="<img src='../../../../assets/images/Telegram.gif' class='spinner-img-position' />"></ngx-spinner>
