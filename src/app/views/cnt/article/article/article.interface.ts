@@ -1,4 +1,5 @@
 import { IBase } from 'src/app/shared/interfaces/Base/base.interface';
+import { TableType } from 'src/app/views/Log/models/table-typeModel';
 
 export interface IArticle extends IBase {
   groupID: number;
@@ -14,4 +15,5 @@ export interface IArticle extends IBase {
   isRTL: boolean;
   metaDescription: string;
   browserTitle: string;
+  linkTags:TableType[]
 }

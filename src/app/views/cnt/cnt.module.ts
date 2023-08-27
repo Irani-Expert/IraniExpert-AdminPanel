@@ -17,6 +17,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { TagsComponent } from './tags/tags.component';
+import {MultiSelectModule} from 'primeng/multiselect';
+
 @NgModule({
   declarations: [
     BannerComponent,
@@ -37,7 +39,9 @@ import { TagsComponent } from './tags/tags.component';
     ImageCropperModule,
     NgxPaginationModule,
     NgbModule,
+    MultiSelectModule,
     SharedPipesModule,
+    
     SharedDirectivesModule,
   ],
   providers: [FileUploaderService],

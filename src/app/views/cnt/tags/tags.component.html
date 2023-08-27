@@ -56,10 +56,11 @@
     <div class=" card btn-details  " dir="ltr">  
       <span class="m-1" *ngIf="editeType==1">
       <div class="d-flex align-items-center">
-        <i (click)="addTagService()" class="i-Yes i-cirlce text-bigger ml-2" ></i>
-        
-        <input  class="visible-on-focus" [(ngModel)]="addItemIput" #firstNameField>
-        <i (click)="closeAddTag()" class="i-Close text-bigger m-1 p-1 bg-danger" ></i>
+        <i (click)="addTagService()"  *ngIf="addItemIput.length>0" class="i-Yes i-cirlce bg-success ml-2" ></i>
+        <i *ngIf="addItemIput.length===0"   class="i-Yes i-cirlce  ml-2" ></i>
+
+        <input  class="visible-on-focus" (keydown.space)="$event.preventDefault()" [(ngModel)]="addItemIput" #firstNameField>
+        <i (click)="closeAddTag()"  class="i-Close text-bigger m-1 p-1 bg-danger" ></i>
     
       </div>
     </span></div>
@@ -121,6 +122,11 @@
     responsive="true"
   ></pagination-controls>
 </div>
+
+
+
+
+
 
 
 <!-- <button (click)="onToggle()">Toggle</button> -->

@@ -9,6 +9,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { tagModel } from '../../tags/tagModel/tag.model';
+import { tagRelationModel } from '../tagModel/tagRelation.model';
 
 @Injectable({
   providedIn: 'root',
@@ -69,6 +70,14 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
     return this._http.post<Result<tagModel>>(
       this._base + '/LinkTag?authorID=' + loggedUserID,
       tagsModel,
+      this._options
+    );
+  }
+  addTagToArticle(tagRelation:tagRelationModel[]){
+    let loggedUserID = this.auth.currentUserValue.userID;
+    return this._http.post<Result<tagModel>>(
+      this._base + '/LinkTagRelation/AddUpdateLinkTagRelations?authorID=' + loggedUserID,
+      tagRelation,
       this._options
     );
   }
