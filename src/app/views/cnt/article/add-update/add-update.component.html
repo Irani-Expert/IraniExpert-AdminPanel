@@ -130,14 +130,15 @@
             </div>
 
             <!-- Is Rtl -->
+            <ng-container *appCanAccess="'Aََrticle-tags-Edit'" > 
             <div class="col-md-6 "*ngIf="addUpdate.id !== 0" >
               <label for="browserTitle">هشتک ها</label>
                   <!-- <p-multiSelect [options]="groupedCities" (onChange)="sectorFilter()" [(ngModel)]="selectedSector"  optionLabel="name"></p-multiSelect> -->
-                  <p-multiSelect *ngIf="tetst" dir="ltr" [options]="Tags"    [formControl]="addForm.controls['selectedItems']"
+                  <p-multiSelect  *ngIf="tetst"  dir="ltr" [options]="Tags"    [formControl]="addForm.controls['selectedItems']"
                   [(ngModel)]="selectedTags" optionLabel="name"
                   display="chip"></p-multiSelect>
             </div>
-            
+          </ng-container>
             <div class="col-md-6 form-group mb-3 mt-1">
               <label class="m-1">راست به چپ</label>
               <label class="switch switch-primary mr-2 m-2">
@@ -150,7 +151,9 @@
                 <span class="slider"></span>
               </label>
             </div>
-            <div class="col-md-6" *ngIf="addUpdate.id !== 0">
+            <ng-container *appCanAccess="'Aََrticle-tags-Edit'" > 
+
+            <div class="col-md-6" *ngIf="addUpdate.id !== 0" >
               <button 
               (click)="setTags()"
               class="btn-save btn d-inline-flex justify-content-around "
@@ -158,6 +161,8 @@
               <i class="i-Yes text-bigger"></i>
             </button>
             </div>
+          </ng-container>
+
             <ng-container *ngIf="!addUpdate.fileExists">
               <div
                 class="col-md-7 mt-4"
