@@ -129,6 +129,7 @@ export class BannerComponent implements OnInit {
     });
   }
   deleteModal(item: BannerModel, type: number, modal: any) {
+    debugger
     let modalCentered: boolean;
     if (type == 0) {
       modalCentered = false;
@@ -159,9 +160,11 @@ export class BannerComponent implements OnInit {
       );
   }
   deleteImg(filePath: string) {
+    
     this._fileUploaderService
       .deleteFile(filePath)
       .subscribe((res: Result<string[]>) => {
+        debugger
         if (res.success) {
           this.addUpdate.fileExists = false;
           this.addUpdate.filePath = this.filePathKeeper;
@@ -245,7 +248,8 @@ export class BannerComponent implements OnInit {
       .result.then(
         (result) => {
           if (result === true) {
-            this.addOrUpdate(this.addUpdate);
+            this.uploadImg();
+
           }
         },
         (reason) => {
@@ -255,11 +259,8 @@ export class BannerComponent implements OnInit {
       );
   }
   async addOrUpdate(row: BannerModel) {
-    if (this.isImageUploaded) {
-      this.uploadImg();
-      this.isImageUploaded = false;
-    }
-    if (row.id === 0) {
+  debugger
+    if (row.id === 0 && this.isImageUploaded) {
       this._bannerService.create(row, 'Banner').subscribe((data) => {
         if (data.success) {
           this.toastr.success(data.message, null, {
@@ -276,7 +277,7 @@ export class BannerComponent implements OnInit {
           });
         }
       });
-    } else {
+    } else if(this.isImageUploaded) {
       this._bannerService.update(row.id, row, 'Banner').subscribe((data) => {
         if (data.success) {
           this.toastr.success(data.message, null, {
@@ -294,6 +295,13 @@ export class BannerComponent implements OnInit {
             positionClass: 'toast-top-left',
           });
         }
+      });
+    }
+    else{
+      this.toastr.error('اپلود با خطا مواجه شد لطفا نوع فایل رو چک کنید', null, {
+        closeButton: true,
+        timeOut: 2000,
+        positionClass: 'toast-top-left',
       });
     }
   }
@@ -363,14 +371,15 @@ export class BannerComponent implements OnInit {
         type: eventFile.type,
       });
       this.cropImagePreview = this.imageUploadFile;
-      return true;
       this.isImageUploaded = true;
+      return true;
     } else {
       this.toastrFunction('فایل انتخابی باید webp باشد', 3);
       return false;
     }
   }
   uploadImg() {
+    
     this.imageUploadProccess = 1;
     this.fileUploader
       .upload(this.imageUploadFile, 'banners', this.fileName)
@@ -390,6 +399,9 @@ export class BannerComponent implements OnInit {
               );
               this.isFileValid = false;
               toasterType = 1;
+            }
+            if(this.imageUploadProccess==100){
+              this.addOrUpdate(this.addUpdate);
             }
             this.toastrFunction(event.body.message, toasterType);
           }

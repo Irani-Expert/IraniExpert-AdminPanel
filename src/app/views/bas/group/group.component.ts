@@ -85,9 +85,11 @@ export class GroupComponent implements OnInit {
               timeOut: 3000,
               positionClass: 'toast-top-left',
             });
-            this.rows.forEach((element, index) => {
-              if (element.id == id) this.rows.splice(index, 1);
-            });
+            // this.rows.forEach((element, index) => {
+            //   if (element.id == id) this.rows.splice(index, 1);
+            // });
+            this.setPage(this.page.pageNumber)
+
           } else {
             this.toastr.error('خطا در حذف', res.message, {
               timeOut: 3000,
@@ -124,8 +126,9 @@ export class GroupComponent implements OnInit {
             closeButton: true,
             positionClass: 'toast-top-left',
           });
+          //this.rows.unshift(row);
+          this.setPage(this.page.pageNumber)
 
-          this.rows.unshift(row);
           this.addForm.reset;
         } else {
           this.toastr.error(data.message, null, {
