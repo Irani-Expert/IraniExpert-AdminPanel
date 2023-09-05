@@ -14,266 +14,168 @@
 <ng-container>
   <ul ngbNav #nav="ngbNav" class="nav-tabs">
     <li ngbNavItem>
-      <a ngbNavLink
-        ><p *ngIf="addUpdate.id == 0">ایجاد</p>
-        <p *ngIf="addUpdate.id !== 0">ویرایش</p></a
-      >
+      <a ngbNavLink>
+        <p *ngIf="addUpdate.id == 0">ایجاد</p>
+        <p *ngIf="addUpdate.id !== 0">ویرایش</p>
+      </a>
       <ng-template ngbNavContent>
         <form class="card container p-4">
           <div class="row">
             <ng-container *ngIf="addUpdate.fileExists">
-              <div
-                class="d-flex justify-content-end align-items-end col-md-3 col-5 mb-5 mt-1"
-              >
-                <img
-                  (error)="addUpdate.fileExists = false"
-                  class="align-self-center w-100 radius-md"
-                  [src]="
+              <div class="d-flex justify-content-end align-items-end col-md-3 col-5 mb-5 mt-1">
+                <img (error)="addUpdate.fileExists = false" class="align-self-center w-100 radius-md" [src]="
                     'https://dl.iraniexpert.com/' + addUpdate.cardImagePath
-                  "
-                  [alt]="addUpdate.title"
-                />
+                  " [alt]="addUpdate.title" />
               </div>
-              <div
-                class="col-md-6 col-5"
-                *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']"
-              >
+              <div class="col-md-6 col-5" *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']">
                 <button
                   class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
-                  (click)="deleteImg(addUpdate.cardImagePath)"
-                >
+                  (click)="deleteImg(addUpdate.cardImagePath)">
                   <i class="i-Close text-bigger mr-2"></i><strong>حذف</strong>
                 </button>
               </div>
             </ng-container>
             <div class="col-md-6">
               <label for="title">عنوان</label>
-              <input
-                type="text"
-                class="form-control radius"
-                id="title"
-                placeholder="عنوان را وارد نمایید."
-                [formControl]="addForm.controls['title']"
-                [(ngModel)]="addUpdate.title"
-              />
-              <small
-                *ngIf="
+              <input type="text" class="form-control radius" id="title" placeholder="عنوان را وارد نمایید."
+                [formControl]="addForm.controls['title']" [(ngModel)]="addUpdate.title" />
+              <small *ngIf="
                   addForm.controls['title'].hasError('required') &&
                   addForm.controls['title'].touched
-                "
-                class="mat-text-warn m-t-negative"
-                >ورود عنوان ضروری است</small
-              >
+                " class="mat-text-warn m-t-negative">ورود عنوان ضروری است</small>
             </div>
             <div class="col-md-6">
               <label for="brief">متن کوتاه</label>
-              <textarea
-                type="text"
-                class="form-control radius"
-                id="brief"
-                placeholder="متن کوتاه را وارد نمایید."
-                [formControl]="addForm.controls['brief']"
-                [(ngModel)]="addUpdate.brief"
-              ></textarea>
-              <small
-                *ngIf="
+              <textarea type="text" class="form-control radius" id="brief" placeholder="متن کوتاه را وارد نمایید."
+                [formControl]="addForm.controls['brief']" [(ngModel)]="addUpdate.brief"></textarea>
+              <small *ngIf="
                   addForm.controls['brief'].hasError('required') &&
                   addForm.controls['brief'].touched
-                "
-                class="mat-text-warn m-t-negative"
-                >ورود متن کوتاه ضروری است</small
-              >
+                " class="mat-text-warn m-t-negative">ورود متن کوتاه ضروری است</small>
             </div>
             <div class="col-md-6">
               <label for="picker1">انتخاب گروه</label>
-              <select
-                [formControl]="addForm.controls['groupID']"
-                class="form-control radius"
-                [(ngModel)]="addUpdate.groupID"
-              >
+              <select [formControl]="addForm.controls['groupID']" class="form-control radius"
+                [(ngModel)]="addUpdate.groupID">
                 <option *ngFor="let item of groupList" value="{{ item.value }}">
                   {{ item.title }}
                 </option>
               </select>
-              <small
-                *ngIf="
+              <small *ngIf="
                   addForm.controls['groupID'].hasError('required') &&
                   addForm.controls['groupID'].touched
-                "
-                class="mat-text-warn m-t-negative"
-                >انتخاب نوع گروه ضروری است</small
-              >
+                " class="mat-text-warn m-t-negative">انتخاب نوع گروه ضروری است</small>
             </div>
             <!--  Meta  -->
             <div class="col-md-6">
               <label for="meta">متا مقاله</label>
-              <textarea
-                type="text"
-                class="form-control radius"
-                id="meta"
-                placeholder="متا را وارد نمایید"
-                [formControl]="addForm.controls['metaDescription']"
-                [(ngModel)]="addUpdate.metaDescription"
-              ></textarea>
+              <textarea type="text" class="form-control radius" id="meta" placeholder="متا را وارد نمایید"
+                [formControl]="addForm.controls['metaDescription']" [(ngModel)]="addUpdate.metaDescription"></textarea>
             </div>
             <!--  Browser Title  -->
             <div class="col-md-6">
               <label for="browserTitle">عنوان مقاله در مرورگر</label>
-              <textarea
-                type="text"
-                class="form-control radius"
-                id="browserTitle"
-                placeholder="متا را وارد نمایید"
-                [formControl]="addForm.controls['browserTitle']"
-                [(ngModel)]="addUpdate.browserTitle"
-              ></textarea>
+              <textarea type="text" class="form-control radius" id="browserTitle" placeholder="متا را وارد نمایید"
+                [formControl]="addForm.controls['browserTitle']" [(ngModel)]="addUpdate.browserTitle"></textarea>
             </div>
 
             <!-- Is Rtl -->
-            <ng-container *appCanAccess="'Aََrticle-tags-Edit'" > 
-            <div class="col-md-6 "*ngIf="addUpdate.id !== 0" >
-              <label for="browserTitle">هشتک ها</label>
-                  <!-- <p-multiSelect [options]="groupedCities" (onChange)="sectorFilter()" [(ngModel)]="selectedSector"  optionLabel="name"></p-multiSelect> -->
-                  <p-multiSelect  *ngIf="tetst"  dir="ltr" [options]="Tags"    [formControl]="addForm.controls['selectedItems']"
-                  [(ngModel)]="selectedTags" optionLabel="name"
+            <ng-container *appCanAccess="'Aََrticle-tags-Edit'">
+              <div class="col-md-6 " *ngIf="addUpdate.id !== 0">
+                <label for="browserTitle">هشتک ها</label>
+                <!-- <p-multiSelect [options]="groupedCities" (onChange)="sectorFilter()" [(ngModel)]="selectedSector"  optionLabel="name"></p-multiSelect> -->
+                <p-multiSelect *ngIf="tetst" dir="ltr" [options]="Tags"
+                  [formControl]="addForm.controls['selectedItems']" [(ngModel)]="selectedTags" optionLabel="name"
                   display="chip"></p-multiSelect>
-            </div>
-          </ng-container>
+              </div>
+            </ng-container>
             <div class="col-md-6 form-group mb-3 mt-1">
               <label class="m-1">راست به چپ</label>
               <label class="switch switch-primary mr-2 m-2">
-                <input
-                  [formControl]="addForm.controls['isRTL']"
-                  [(ngModel)]="addUpdate.isRTL"
-                  type="checkbox"
-                  id="isRTL"
-                />
+                <input [formControl]="addForm.controls['isRTL']" [(ngModel)]="addUpdate.isRTL" type="checkbox"
+                  id="isRTL" />
                 <span class="slider"></span>
               </label>
             </div>
-            <ng-container *appCanAccess="'Aََrticle-tags-Edit'" > 
+            <ng-container *appCanAccess="'Aََrticle-tags-Edit'">
 
-            <div class="col-md-6" *ngIf="addUpdate.id !== 0" >
-              <button 
-              (click)="setTags()"
-              class="btn-save btn d-inline-flex justify-content-around "
-            >
-              <i class="i-Yes text-bigger"></i>
-            </button>
-            </div>
-          </ng-container>
+              <div class="col-md-6" *ngIf="addUpdate.id !== 0">
+                <button (click)="setTags()" class="btn-save btn d-inline-flex justify-content-around ">
+                  <i class="i-Yes text-bigger"></i>
+                </button>
+              </div>
+            </ng-container>
 
             <ng-container *ngIf="!addUpdate.fileExists">
-              <div
-                class="col-md-7 mt-4"
-                *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']"
-              >
+              <div class="col-md-7 mt-4" *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']">
                 <label class="d-block" for="picker1">انتخاب تصویر</label>
                 <input type="file" (change)="onFileChanged($event)" />
                 <div>
-                  <image-cropper
-                    [imageChangedEvent]="imgChangeEvt"
-                    [maintainAspectRatio]="false"
-                    format="webp"
-                    [resizeToWidth]="1280"
-                    (imageCropped)="cropImg($event)"
-                    (imageLoaded)="imgLoad()"
-                    (cropperReady)="initCropper()"
-                    (loadImageFailed)="imgFailed()"
-                  >
+                  <image-cropper [imageChangedEvent]="imgChangeEvt" [maintainAspectRatio]="false" format="webp"
+                    [resizeToWidth]="1280" (imageCropped)="cropImg($event)" (imageLoaded)="imgLoad()"
+                    (cropperReady)="initCropper()" (loadImageFailed)="imgFailed()">
                   </image-cropper>
                 </div>
                 <div class="float-left w-25">
                   <img [src]="cropImagePreview" alt="" />
                 </div>
               </div>
-              <div
-                class="col-12 mt-1 mb-2"
-                *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']"
-              >
-                <button
-                  type="button"
-                  [disabled]="!cropImagePreview || isLoading"
+              <div class="col-12 mt-1 mb-2" *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']">
+                <button type="button" [disabled]="!cropImagePreview || isLoading"
                   class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
-                  (click)="uploadFile()"
-                >
+                  (click)="uploadFile()">
                   <i class="i-Upload text-bigger mr-2"></i>
                   <strong>آپلود کن</strong>
                 </button>
               </div>
             </ng-container>
             <div class="col-md-12 form-group mb-3 mt-3">
-              <ckeditor
-                [formControl]="addForm.controls['description']"
-                [(ngModel)]="addUpdate.description"
-                name="myckeditor"
-                required
-                [config]="ckeConfig"
-                debounce="100"
-                (paste)="onPasteEditor($event)"
-                (change)="onChangeEditor($event)"
-              >
+              <ckeditor [formControl]="addForm.controls['description']" [(ngModel)]="addUpdate.description"
+                name="myckeditor" required [config]="ckeConfig" debounce="100" (paste)="onPasteEditor($event)"
+                (change)="onChangeEditor($event)">
               </ckeditor>
-              <small
-                *ngIf="
+              <small *ngIf="
                   addForm.controls['description'].hasError('required') &&
                   addForm.controls['description'].touched
-                "
-                class="mat-text-warn m-t-negative"
-                >توضیحات ضروری است</small
-              >
+                " class="mat-text-warn m-t-negative">توضیحات ضروری است</small>
             </div>
             <div class="col-12">
               <h4>تگ ها</h4>
-              <ng-container  *ngFor="let item of selectedTags">
-                <div dir="ltr" class="tags-bg m-2 btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4">
+              <ng-container *ngFor="let item of selectedTags">
+                <div dir="ltr"
+                  class="tags-bg m-2 btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4">
                   {{item.name}}
                 </div>
               </ng-container>
-            
+
             </div>
             <div class="col-md-6 form-group mb-3 mt-3">
               <label class="m-1">نمایش داده شود</label>
               <label class="switch switch-primary mr-2 m-2">
                 <span>عدم نمایش</span>
-                <input
-                  [(ngModel)]="addUpdate.isActive"
-                  [formControl]="addForm.controls['isActive']"
-                  type="checkbox"
-                  id="isActive"
-                />
+                <input [(ngModel)]="addUpdate.isActive" [formControl]="addForm.controls['isActive']" type="checkbox"
+                  id="isActive" />
                 <span class="slider"></span>
               </label>
             </div>
           </div>
           <div class="row">
             <ng-container *appCanAccess="'ArticleT-Edit'">
-              <button
-                type="button"
+              <button type="button"
                 class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
-                *ngIf="addUpdate.id !== 0"
-                [disabled]="!addForm.valid"
-                (click)="addOrUpdate(addUpdate)"
-              >
+                *ngIf="addUpdate.id !== 0" [disabled]="!addForm.valid" (click)="addOrUpdate(addUpdate)">
                 <i class="i-Pen-5 text-bigger mr-2"></i>
                 <strong class="ml-2 text-small">ویرایش</strong>
               </button>
             </ng-container>
-            <button
-              type="button"
+            <button type="button"
               class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
-              *ngIf="addUpdate.id === 0"
-              (click)="addOrUpdate(addUpdate)"
-            >
+              *ngIf="addUpdate.id === 0" (click)="addOrUpdate(addUpdate)">
               <i class="i-Yes text-bigger mr-2"></i><strong>ذخیره</strong>
             </button>
-            <a
-              type="button"
+            <a type="button"
               class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2"
-              [routerLink]="'/cnt/article'"
-              ><i class="i-Close text-bigger mr-2"></i
-              ><strong>انصراف</strong></a
-            >
+              [routerLink]="'/cnt/article/1'"><i class="i-Close text-bigger mr-2"></i><strong>انصراف</strong></a>
           </div>
         </form>
       </ng-template>
@@ -291,6 +193,3 @@
 
   <div [ngbNavOutlet]="nav"></div>
 </ng-container>
-
-
-

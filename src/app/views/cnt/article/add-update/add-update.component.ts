@@ -28,9 +28,9 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { tagModel } from '../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../tagModel/tagRelation.model';
 
-interface  Tag {
-  name: string,
-  code: number
+interface Tag {
+  name: string;
+  code: number;
 }
 
 @Component({
@@ -38,11 +38,10 @@ interface  Tag {
   templateUrl: './add-update.component.html',
   styleUrls: ['./add-update.component.scss'],
 })
-
 export class AddUpdateComponent implements OnInit, OnDestroy {
   fileName: string = '';
-  addTagsData:tagRelationModel[]=new Array<tagRelationModel>()
-  Tags: Tag[]=new Array<Tag>();
+  addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
+  Tags: Tag[] = new Array<Tag>();
   selectedCityCodes: string[];
   isLoading: boolean = false;
   articleId: number = parseInt(
@@ -55,15 +54,15 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   addUpdate: ArticleModel = new ArticleModel();
   groupList: any[] = new Array<any>();
   group: any = new Object();
-  selectedTags: Tag[]=new Array<Tag>();
+  selectedTags: Tag[] = new Array<Tag>();
   countries: any[];
   addForm: FormGroup;
   ifDataExist: boolean = false;
   selectedItems: string[] = [];
-  filterHolder: FilterModel=new FilterModel;
-  items:tagModel[]=new Array<tagModel>();;
-  formcontrol:FormGroup
-  tetst:boolean=false
+  filterHolder: FilterModel = new FilterModel();
+  items: tagModel[] = new Array<tagModel>();
+  formcontrol: FormGroup;
+  tetst: boolean = false;
   ckeConfig: CKEDITOR.config;
   @ViewChild('myckeditor') ckeditor: CKEditorComponent;
 
@@ -75,73 +74,47 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private _groupService: GroupService,
     private _user: AuthenticateService,
-    private _router: Router,
+    private _router: Router
   ) {
-    
-
-this.getTags
-   
+    this.getTags;
   }
-  pushSectionItem(){
-    this.items.forEach(x=>{
-      
-       let index= this.addUpdate.linkTags.findIndex(i=>i.value==x.id)
-      if(index!=-1){
-         
-        this.selectedTags.push({name: x.title, code: x.id} );
-       
-        this.Tags.unshift({name: x.title, code: x.id} )
+  pushSectionItem() {
+    this.items.forEach((x) => {
+      let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
+      if (index != -1) {
+        this.selectedTags.push({ name: x.title, code: x.id });
 
-       }
-       else{
-        this.Tags.push({name: x.title, code: x.id} )
-
-       }
-
-       
-    })
-    setTimeout(() => {
-      this.tetst=true
-    }, 500);
+        this.Tags.unshift({ name: x.title, code: x.id });
+      } else {
+        this.Tags.push({ name: x.title, code: x.id });
       }
-     async getTags() {
-          this._articleService
-            .getTags(
-              this.filterHolder,
-              0,
-               1000,
-               null
-            )
-            .subscribe((res: Result<Paginate<tagModel[]>>) => {
-              this.items=[] 
-              this.items=res.data['items']
-              this.pushSectionItem() 
-              debugger
-            },
-              (error) => {
-            
-              }
-            );
-        }
+    });
+    setTimeout(() => {
+      this.tetst = true;
+    }, 500);
+  }
+  async getTags() {
+    this._articleService.getTags(this.filterHolder, 0, 1000, null).subscribe(
+      (res: Result<Paginate<tagModel[]>>) => {
+        this.items = [];
+        this.items = res.data['items'];
+        this.pushSectionItem();
+      },
+      (error) => {}
+    );
+  }
   ngOnDestroy(): void {
     if (this.addUpdate.cardImagePath !== undefined && this.addUpdate.id == 0) {
       this.deleteImg(this.addUpdate.cardImagePath);
     }
   }
-  pushSelectedFilterItem(){
+  pushSelectedFilterItem() {}
+  onSelectAll() {}
+  onDeSelectAll() {}
+  async ngOnInit() {
+    this.getGroupList();
 
-  }
-  onSelectAll(){
-
-  }
-  onDeSelectAll(){
-
-  }
- async ngOnInit() {
-  this.getGroupList();
-
-    this.getTags()
-
+    this.getTags();
 
     this.addUpdate = new ArticleModel();
     this.addUpdate.id = parseInt(
@@ -178,9 +151,8 @@ this.getTags
       isRTL: [null],
       metaDescription: [''],
       browserTitle: [''],
-      selectedItems:['']
+      selectedItems: [''],
     });
-      
   }
 
   selectGroup() {}
@@ -301,8 +273,7 @@ this.getTags
           this.group = this.groupList.find(
             (item) => item.value === this.addUpdate.groupID
           );
-          this.pushSectionItem()
-
+          this.pushSectionItem();
         } else {
           this._router.navigate(['/404']);
         }
@@ -365,18 +336,20 @@ this.getTags
         });
     }
   }
-  setTags(){
-    let counter=0;
-    this.selectedTags.forEach(x=>{
-      this.addTagsData.push({linkTagID: x['code'], rowID: this.articleId, tableType: 1,} )
-      counter++
-    })
-   this.addTags()
+  setTags() {
+    let counter = 0;
+    this.selectedTags.forEach((x) => {
+      this.addTagsData.push({
+        linkTagID: x['code'],
+        rowID: this.articleId,
+        tableType: 1,
+      });
+      counter++;
+    });
+    this.addTags();
   }
-  addTags(){   
-    this._articleService
-    .addTagToArticle(this.addTagsData)
-    .subscribe((data) => {
+  addTags() {
+    this._articleService.addTagToArticle(this.addTagsData).subscribe((data) => {
       if (data.success) {
         this.toastr.success(data.message, null, {
           closeButton: true,
@@ -390,6 +363,4 @@ this.getTags
       }
     });
   }
-
-
 }
