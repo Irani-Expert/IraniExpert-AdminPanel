@@ -21,8 +21,6 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  remainedTime: BehaviorSubject<number> = new BehaviorSubject(0);
-  intervalID;
   private _authService: AuthenticateService;
   constructor(
     private spinner: NgxSpinnerService,
@@ -55,19 +53,4 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       });
   }
-  // checkUserPermission() {
-  //   let currentUser: UserInfoModel = JSON.parse(
-  //     localStorage.getItem('currentUser') ?? '{}'
-  //   );
-  //   if (currentUser.token != undefined) {
-  //     this._authService
-  //       .checkUserPermission(currentUser.token)
-  //       .subscribe((res) => {
-  //         if (!res) {
-  //           localStorage.clear();
-  //           this._authService.logout();
-  //         }
-  //       });
-  //   }
-  // }
 }
