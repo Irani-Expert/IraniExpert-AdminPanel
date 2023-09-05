@@ -147,6 +147,13 @@ export class NavigationService {
       privilege: 'ArticleT-Watch',
     },
     {
+      name: 'تگ ها',
+      navType: 'link',
+      icon: 'i-Tag-2',
+      state: 'cnt/tags',
+      privilege: 'Tags-Watch',
+    },
+    {
       name: 'آپلود سنتر',
       navType: 'link',
       icon: 'i-Share-on-Cloud',

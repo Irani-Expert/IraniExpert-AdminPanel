@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Page } from 'src/app/shared/models/Base/page';
-import { DiscountModel } from './Discount.model';
+import { DiscountModel } from '../discount/discount.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -143,6 +143,7 @@ export class DiscountComponent implements OnInit {
         .create(this.ShowModel, 'Discount')
         .subscribe(
           (data) => {
+            debugger
             if (data.success) {
               this.toastr.success(data.message, null, {
                 closeButton: true,

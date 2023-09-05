@@ -4,6 +4,7 @@
   type="button"
   class="btn-add m-2 btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   (click)="changeSituation(1)"
+  *appCanAccess="'Tags-Add'"
   >
   <strong>ایجاد</strong>
   </button>
@@ -11,6 +12,7 @@
   type="button"
   class="btn-delete btn m-2  d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   (click)="changeSituation(3)"
+  *appCanAccess="'Tags-Delete'"
   >
   <strong>حذف</strong>
   </button>
@@ -18,8 +20,9 @@
   type="button"
   class="edite-tag m-2 btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
   (click)="changeSituation(2)"
+  *appCanAccess="'Tags-Edit'"
   >
-  <strong>به روزرسانی</strong>
+  <strong>ویرایش</strong>
   </button>
   <div ngbDropdown placement="bottom-end" class="d-flex justify-content-center align-items-center m-1 mb-3">
     <button
