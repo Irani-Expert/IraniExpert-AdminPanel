@@ -8,7 +8,7 @@ import {
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserInfoModel } from './shared/models/userInfoModel';
 import { AuthenticateService } from './shared/services/auth/authenticate.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from './shared/models/Base/result.model';
 import { UserInforamationModel } from './shared/models/userInforamationModel';
@@ -22,12 +22,17 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private _authService: AuthenticateService;
+  token = '';
   constructor(
     private spinner: NgxSpinnerService,
     private router: Router,
     private _userService: UsersService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private _route: ActivatedRoute,
+
+  ) {
+
+  }
   ngOnDestroy(): void {}
 
   ngOnInit() {
@@ -38,7 +43,11 @@ export class AppComponent implements OnInit, OnDestroy {
       /** spinner ends after 1 seconds */
       this.spinner.hide();
     }, 1000);
-    this._userService
+    let token ='' 
+   token= localStorage.getItem('token');
+    
+    if(token !== ''){
+      this._userService
       .getUserByToken()
       .subscribe((res: Result<UserInforamationModel>) => {
         if (!res.success) {
@@ -51,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
             this.router.navigate(['/sessions/signin']);
           }, 1000);
         }
-      });
+      });    }
+     
   }
 }
