@@ -128,6 +128,7 @@ export class UsersService extends BaseService<UsersModel, 0> {
    * @returns one by id
    */
   getUserByToken(): Observable<Result<UserInforamationModel>> {
+    
     let token = localStorage.getItem('token');
     let _options = {
       headers: new HttpHeaders({

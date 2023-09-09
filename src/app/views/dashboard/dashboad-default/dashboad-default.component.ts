@@ -34,6 +34,7 @@ export class DashboadDefaultComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.getUserInfo();
     this.getUser();
   }

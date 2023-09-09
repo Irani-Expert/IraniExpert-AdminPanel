@@ -38,6 +38,7 @@ import {
   animate,
   state,
 } from '@angular/animations';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -159,7 +160,9 @@ export class OrderComponent implements OnInit {
     private _planService: PlanService,
     private _decimalPipe: DecimalPipe,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private spinner: NgxSpinnerService,
+
   ) {
     this.page.pageNumber = 1;
     this.page.size = 6;
@@ -379,9 +382,14 @@ export class OrderComponent implements OnInit {
   }
 
   uploadFile() {
+    this.spinner.show();
+
+
+    let token ='' 
     this._fileUploaderService
       .uploadLicence(this.licenseFile, 'licenses')
       .subscribe((res: Result<string[]>) => {
+        this.spinner.hide();
         if (res.success) {
           this.licenseModel.filePath = res.data[0];
           this.licenseModel.fileExists = true;
