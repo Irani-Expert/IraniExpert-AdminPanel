@@ -45,8 +45,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }, 1000);
     let token ='' 
    token= localStorage.getItem('token');
+    console.log(token);
     
-    if(token !== ''){
+    if(token !== '' &&token != null){
       this._userService
       .getUserByToken()
       .subscribe((res: Result<UserInforamationModel>) => {
