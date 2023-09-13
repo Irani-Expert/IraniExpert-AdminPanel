@@ -9,6 +9,15 @@ import { UserInfoModel } from '../models/userInfoModel';
 
 @Injectable()
 export class FileUploaderService {
+  _httpDeleteOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Cache-Control':
+        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      Pragma: 'no-cache',
+      Expires: '0',
+    }),
+  };
   userInfo: UserInfoModel = new UserInfoModel();
   uploardUrl = environment.uploadUrl;
   mainUrl = environment.api.baseUrl;
@@ -50,13 +59,9 @@ export class FileUploaderService {
   // Delete Request
   deleteFile(filePath: string) {
     return this._http.post<Result<string[]>>(
-      this.mainUrl +
-        '/Files/Delete?filePath=' +
-        filePath +
-        '&authorID=' +
-        this.userInfo.userID,
-      undefined,
-      this._httpOptions
+      this.mainUrl + '/Files/Delete?authorID=' + this.userInfo.userID,
+      `"${filePath}"`,
+      this._httpDeleteOptions
     );
   }
 
