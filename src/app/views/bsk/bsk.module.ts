@@ -18,6 +18,8 @@ import { UserOrderComponent } from './user-order/user-order.component';
 // import { JalaliPipe } from 'src/app/shared/pipes/jalali-time.pipe';
 import { CommissionComponent } from './commission/commission.component';
 import { TreeModule } from 'primeng/tree';
+// import { OrdersComponent } from './order/components/orders/orders.component';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 @NgModule({
   declarations: [
@@ -30,12 +32,14 @@ import { TreeModule } from 'primeng/tree';
     IsConfirmedPipe,
     // LicenseComponent,
     UserOrderComponent,
-    
+    // OrdersComponent,
+
     // LicenseUpdateComponent, //Deleted
 
     // CommissionComponent,
   ],
   imports: [
+    DragScrollModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
@@ -45,7 +49,7 @@ import { TreeModule } from 'primeng/tree';
     SharedPipesModule,
     PerfectScrollbarModule,
     SharedDirectivesModule,
-  
+
     DatePipe,
     TreeModule,
   ],

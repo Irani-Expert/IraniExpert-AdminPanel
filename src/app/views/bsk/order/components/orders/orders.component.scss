@@ -1,0 +1,102 @@
+.content {
+  padding: 1rem 0;
+}
+.custom-table-responsive {
+  padding: 20px;
+  border-radius: 10px;
+}
+.custom-table {
+  max-width: 100%;
+  min-width: 900px;
+  thead {
+    tr,
+    th {
+      border-top: none;
+      font-weight: 800;
+      border-bottom: none !important;
+      font-size: 0.81rem;
+    }
+  }
+  tbody {
+    th,
+    td {
+      vertical-align: middle;
+      color: #777;
+      font-weight: 700;
+      padding-top: 16px;
+      padding-bottom: 16px;
+      font-size: 0.79rem;
+      small {
+        color: darken(#ccc, 10%);
+        font-weight: 300;
+      }
+      span {
+        font-size: 0.75rem;
+      }
+    }
+    tr {
+      &:not(.spacer) {
+        border-radius: 10px;
+        overflow: hidden;
+        transition: 0.3s all ease;
+        &:hover {
+          box-shadow: 0 2px 10px -5px rgba(0, 0, 0, 0.5);
+        }
+      }
+      th,
+      td {
+        background: #efefef;
+        border: none;
+
+        &:first-child {
+          width: 111px;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+        }
+        &:nth-child(2) {
+          width: 111px;
+        }
+        &:nth-child(4) {
+          width: 200px;
+        }
+        &:last-child {
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+          .td-oprations {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            button {
+              width: 32px;
+              height: 32px;
+              display: flex;
+              justify-content: center;
+              margin: 0.6rem;
+              i {
+                font-size: 1.2rem;
+              }
+            }
+          }
+        }
+      }
+      &.spacer {
+        td {
+          padding: 0 !important;
+          height: 10px;
+          border-radius: 0 !important;
+          background: transparent !important;
+        }
+      }
+      &.active {
+        opacity: 0.4;
+      }
+    }
+  }
+}
+
+.drag-scroll {
+  height: inherit;
+  width: 100%;
+}

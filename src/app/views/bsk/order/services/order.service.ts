@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
@@ -11,6 +11,10 @@ import { UsersModel } from 'src/app/views/sec/user-mangement/users.model';
 import { environment } from 'src/environments/environment.prod';
 import { referraluserModel } from '../../../dashboard/referral-user/referral-user.model';
 import { OrderModel } from '../models/order.model';
+import { Page } from 'src/app/shared/models/Base/page';
+import { OrdersModel } from '../models/orders-new.model';
+import { BehaviorSubject, map } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 interface INoteSidebar {
   sidenavOpen?: boolean;
 }
@@ -20,19 +24,28 @@ interface INoteSidebar {
 export class OrderService extends BaseService<OrderModel, 0> {
   userGuid = environment.jwtToken;
   userID: number;
-
-  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
+  ordersSubject: BehaviorSubject<OrdersModel[]> = new BehaviorSubject<
+    Array<OrdersModel>
+  >(new Array<OrdersModel>());
+  constructor(
+    public _http: HttpClient,
+    public _auth: AuthenticateService,
+    private toastrService: ToastrService
+  ) {
     super(_http, environment.api.baseUrl, _auth);
   }
   public sidebarState: INoteSidebar = {
     sidenavOpen: true,
   };
+  public get ordersValue() {
+    return this.ordersSubject.value;
+  }
   /**
    * درخواست دریافت همه
    * @param route
    * @returns all
    */
-  getUserbyUserId(userId) {
+  getUserbyUserId(userId: number) {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -209,5 +222,40 @@ export class OrderService extends BaseService<OrderModel, 0> {
           : '&UserID=' + filter.userID),
       _options
     );
+  }
+
+  getOrdersNew(page: Page, filter: FilterModel) {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      }),
+    };
+    return this._http.get<Result<Paginate<OrdersModel[]>>>(
+      this._base +
+        '/OrderNew/GetOrders?pageIndex=' +
+        page.pageNumber +
+        '&pageSize=' +
+        page.size +
+        '&pageOrder=ID',
+      _options
+    );
+    // .pipe(
+    //   map((res) => {
+    //     if (res.success) {
+
+    //       return res;
+    //     } else {
+    //       this.toastrService.error(res.message, '', {
+    //         positionClass: 'toast-top-left',
+    //         timeOut: 2000,
+    //         progressBar: true,
+    //       });
+    //     }
+    //   })
+    // );
   }
 }

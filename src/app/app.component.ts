@@ -28,11 +28,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private _userService: UsersService,
     private toastr: ToastrService,
-    private _route: ActivatedRoute,
-
-  ) {
-
-  }
+    private _route: ActivatedRoute
+  ) {}
   ngOnDestroy(): void {}
 
   ngOnInit() {
@@ -43,25 +40,24 @@ export class AppComponent implements OnInit, OnDestroy {
       /** spinner ends after 1 seconds */
       this.spinner.hide();
     }, 1000);
-    let token ='' 
-   token= localStorage.getItem('token');
-    console.log(token);
-    
-    if(token !== '' &&token != null){
+    let token = '';
+    token = localStorage.getItem('token');
+
+    if (token !== '' && token != null) {
       this._userService
-      .getUserByToken()
-      .subscribe((res: Result<UserInforamationModel>) => {
-        if (!res.success) {
-          localStorage.removeItem('currentUser');
-          this.toastr.error(res.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-          setTimeout(() => {
-            this.router.navigate(['/sessions/signin']);
-          }, 1000);
-        }
-      });    }
-     
+        .getUserByToken()
+        .subscribe((res: Result<UserInforamationModel>) => {
+          if (!res.success) {
+            localStorage.removeItem('currentUser');
+            this.toastr.error(res.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+            setTimeout(() => {
+              this.router.navigate(['/sessions/signin']);
+            }, 1000);
+          }
+        });
+    }
   }
 }

@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { CommissionComponent } from './commission/commission.component';
 import { OrderComponent } from './order/order.component';
 import { UserOrderComponent } from './user-order/user-order.component';
+// import { OrdersComponent } from './order/components/orders/orders.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
     component: OrderComponent,
     canActivate: [AuthGuard],
   },
+  // {
+  //   path: 'new-orders',
+  //   component: OrdersComponent
+  // },
   {
     path: 'user-orders',
     component: UserOrderComponent,
