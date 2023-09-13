@@ -1,59 +1,59 @@
 <div class="row p-0 m-0 g-0 justify-content-center align-items-start">
   <div class="content col-12">
     <div class="table-responsive custom-table-responsive">
-      <drag-scroll style="width: 100%; height: auto">
-        <table class="table custom-table">
-          <thead>
-            <tr>
-              <ng-container *ngFor="let header of table.headers; let i = index">
-                <th>
-                  <span class="mr-1">{{ header }}</span>
-                  <ng-container *ngIf="i <= 1">
-                    <span
-                      (click)="changeHeaderValue(i)"
-                      class="pi pi-arrow-right-arrow-left ml-1 p-1 bg-light cursor-pointer rounded-circle"
-                      style="font-size: 0.78rem"
-                    ></span>
-                  </ng-container>
-                </th>
-              </ng-container>
-            </tr>
-          </thead>
-          <tbody>
-            <ng-container *ngFor="let data of table.data">
-              <tr scope="row">
-                <td>{{ isCode ? data.code : data.id }}</td>
-                <td>
-                  {{
-                    isHijri
-                      ? data.hijriCreateDate
-                      : (data.createDate | date : "yyyy/M/d")
-                  }}
-                </td>
-                <td>{{ data.accountNumber }}</td>
-                <td>{{ data.firstName }}&nbsp;{{ data.lastName }}</td>
-                <td>{{ data.productTitle }}<br />{{ data.planTitle }}</td>
-                <td>
-                  <div class="td-oprations">
-                    <button
-                      ngbTooltip="جزئیات سفارش"
-                      [openDelay]="50"
-                      [closeDelay]="150"
-                      style="width: 32px; height: 32px"
-                      class="btn-details btn rounded-circle"
-                    >
-                      <i class="i-Information fix-to-center"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="spacer">
-                <td colspan="100"></td>
-              </tr>
+      <!-- <drag-scroll style="width: 100%; height: auto"> -->
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <ng-container *ngFor="let header of table.headers; let i = index">
+              <th>
+                <span class="mr-1">{{ header }}</span>
+                <ng-container *ngIf="i <= 1">
+                  <span
+                    (click)="changeHeaderValue(i)"
+                    class="pi pi-arrow-right-arrow-left ml-1 p-1 bg-light cursor-pointer rounded-circle"
+                    style="font-size: 0.78rem"
+                  ></span>
+                </ng-container>
+              </th>
             </ng-container>
-          </tbody>
-        </table>
-      </drag-scroll>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let data of table.data">
+            <tr scope="row">
+              <td>{{ isCode ? data.code : data.id }}</td>
+              <td>
+                {{
+                  isHijri
+                    ? data.hijriCreateDate
+                    : (data.createDate | date : "yyyy/M/d")
+                }}
+              </td>
+              <td>{{ data.accountNumber }}</td>
+              <td>{{ data.firstName }}&nbsp;{{ data.lastName }}</td>
+              <td>{{ data.productTitle }}<br />{{ data.planTitle }}</td>
+              <td>
+                <div class="td-oprations">
+                  <button
+                    ngbTooltip="جزئیات سفارش"
+                    [openDelay]="50"
+                    [closeDelay]="150"
+                    style="width: 32px; height: 32px"
+                    class="btn-details btn rounded-circle"
+                  >
+                    <i class="i-Information fix-to-center"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr class="spacer">
+              <td colspan="100"></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <!-- </drag-scroll> -->
     </div>
   </div>
 </div>
