@@ -1,27 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
-import { CommissionComponent } from './commission/commission.component';
-import { OrderComponent } from './order/order.component';
+// import { OrderComponent } from './order/order.component';
 import { UserOrderComponent } from './user-order/user-order.component';
-// import { OrdersComponent } from './order/components/orders/orders.component';
+import { OrdersComponent } from './order/components/orders/orders.component';
 
 const routes: Routes = [
-  {
-    path: 'orders/:pageIndex',
-    component: OrderComponent,
-    canActivate: [AuthGuard],
-  },
   // {
-  //   path: 'new-orders',
-  //   component: OrdersComponent
+  //   path: 'orders/:pageIndex',
+  //   component: OrderComponent,
+  //   canActivate: [AuthGuard],
   // },
+  {
+    path: 'new-orders/:pageId',
+    component: OrdersComponent,
+  },
   {
     path: 'user-orders',
     component: UserOrderComponent,
     canActivate: [AuthGuard],
   },
-
 ];
 
 @NgModule({

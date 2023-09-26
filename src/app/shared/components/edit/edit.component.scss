@@ -1,0 +1,36 @@
+.gap_2 {
+  gap: 0.5rem;
+}
+.gap_1 {
+  gap: 0.35rem;
+}
+
+.input-item {
+  flex: 1 0 49%;
+}
+@media (max-width: 300px) {
+  .container__custom {
+    width: 225px;
+  }
+}
+@media (min-width: 300px) and (max-width: 640px) {
+  .container__custom {
+    width: 250px;
+  }
+}
+@media (min-width: 640px) and (max-width: 767px) {
+  .container__custom {
+    width: 320px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 950px) {
+  .container__custom {
+    width: 450px;
+  }
+}
+@media (min-width: 950px) {
+  .container__custom {
+    width: 460px;
+  }
+}

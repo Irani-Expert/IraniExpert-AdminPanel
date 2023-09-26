@@ -31,6 +31,15 @@ export class Utils {
       element.scrollTop = 0;
     }
   }
+  static scrollTopWindow() {
+    if (window) {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
+  }
   static genId() {
     let text = '';
     const possible =

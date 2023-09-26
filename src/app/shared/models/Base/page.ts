@@ -1,4 +1,4 @@
-export class Page{
+export class Page {
   size: number = 25;
   // The total number of elements
   totalElements: number = 0;
@@ -6,6 +6,7 @@ export class Page{
   totalPages: number = 0;
   // The current page number
   pageNumber: number = 0;
-  hasNextPage:boolean;
-  hasPreviousPage:boolean;
+  currentPage: number = 1;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
 }

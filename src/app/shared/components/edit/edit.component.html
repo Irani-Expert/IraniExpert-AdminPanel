@@ -1,0 +1,27 @@
+<section class="container__custom">
+  <div class="d-flex flex-row flex-wrap gap_2">
+    <ng-container *ngFor="let formControl of formGroup; let i = index">
+      <div class="d-inline-flex flex-column input-item">
+        <label class="text-small" htmlFor="{{ formControl.engLabel }}">{{
+          formControl.label
+        }}</label>
+        <input
+          (input)="onChangeInput(formControl.model, formControl.engLabel)"
+          pInputText
+          [id]="formControl.engLabel"
+          class="p-inputtext-sm"
+          [(ngModel)]="formControl.model"
+          [disabled]="formControl.isEnable"
+        />
+      </div>
+    </ng-container>
+  </div>
+  <p-button
+    (click)="closeModal()"
+    dir="ltr"
+    label="ویرایش"
+    icon="pi pi-pencil"
+    styleClass="p-button-raised p-button-sm"
+    iconPos="right"
+  ></p-button>
+</section>

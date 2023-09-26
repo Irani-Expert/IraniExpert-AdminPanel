@@ -3,6 +3,8 @@
 @import "@swimlane/ngx-datatable/assets/icons.css";
 @import "toaster.scss";
 @import "ngx-toastr/toastr.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
 // @import "angular-calendar/css/angular-calendar.css";
 // @import "quill/dist/quill.core.css";
 // @import "quill/dist/quill.snow.css";
@@ -10,15 +12,19 @@
 // @import "ladda/dist/ladda.min.css";
 @import "../primeicons/primeicons.css";
 @import "../iconsmind/iconsmind.css";
-@import "variables";
 
 // @import 'themes/lite-blue';
+@import "variables";
 @import "themes/lite-purple";
 @import "../vendor/bootstrap/bootstrap.scss";
 @import "bootstrap-rtl.scss";
 @import "globals/globals";
-@import "primeng/resources/themes/lara-light-blue/theme.css";
-@import "primeng/resources/primeng.css";
+.p-component {
+  font-family: $font-family-base !important;
+}
+.p-sidebar {
+  background: rgba(63, 67, 67, 0.9411764706) !important;
+}
 
 .edit {
   font-size: 18px !important;
@@ -541,10 +547,6 @@ Buttons
 }
 
 .logNode {
-  .p-treenode-label {
-    font-family: "Vazir", sans-serif !important;
-  }
-
   .p-treenode-leaf {
     display: none !important;
   }
@@ -562,22 +564,13 @@ Buttons
   background: #eff8fb !important;
   border-radius: 10px !important;
   display: flex !important;
-  font-family: "Vazir" !important;
 }
 .p-dropdown-label {
   font-size: 0.82rem !important;
   padding: 12px !important;
   font-family: "Vazir" !important;
 }
-.p-dropdown-trigger {
-  font-family: "Vazir" !important;
-}
-.p-dropdown-panel {
-  font-family: "Vazir" !important;
-}
-.p-dropdown-items-wrapper {
-  font-family: "Vazir" !important;
-}
+
 .p-dropdown-items-wrapper::-webkit-scrollbar {
   width: 6px;
   margin-top: 2px;
@@ -591,16 +584,10 @@ Buttons
 .p-dropdown-items-wrapper::-webkit-scrollbar-track {
   border-radius: 10px;
 }
-.p-dropdown-items {
-  font-family: "Vazir" !important;
-}
 .p-dropdown-item {
   font-size: 0.82rem !important;
-  font-family: "Vazir" !important;
 }
-.p-dropdown-open {
-  font-family: "Vazir" !important;
-}
+
 .w-auto {
   width: auto;
 }
@@ -655,4 +642,45 @@ Buttons
 }
 .p-multiselect-chip {
   width: 100%;
+}
+.p-tabview-nav-content {
+  font-size: 0.88rem;
+  .p-tabview-nav-link {
+    &:focus {
+      box-shadow: none !important;
+    }
+    color: #325691 !important;
+    .p-tabview-title {
+      margin: 0 8px 0 0;
+    }
+  }
+}
+.p-dialog-header {
+  padding: 0.5rem !important;
+  background: #e1dbdb !important;
+}
+.p-dialog-content {
+  padding: 0.5rem 1.5rem 2rem 1.5rem !important;
+}
+.p-dialog {
+  max-height: 96% !important;
+}
+.p-contextmenu
+  .p-menuitem.p-menuitem-active
+  > .p-menuitem-link
+  .p-menuitem-icon,
+.p-contextmenu
+  .p-menuitem.p-menuitem-active
+  > .p-menuitem-link
+  .p-submenu-icon {
+  color: #1e2637;
+}
+.p-contextmenu
+  .p-menuitem.p-menuitem-active
+  > .p-menuitem-link
+  .p-menuitem-text {
+  color: #1e2637;
+}
+.p-menuitem-icon {
+  margin-left: 0.5rem;
 }
