@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   api: {
-    baseUrl: 'https://dev.iraniexpert.com/api',
+    baseUrl: 'https://api.iraniexpert.com/api',
     appVersion: '1.2.41',
     apiVersion: '1.0.0',
   },
