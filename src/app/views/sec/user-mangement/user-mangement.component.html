@@ -180,7 +180,9 @@
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       *ngIf="filterHolder.fromSignUpDate"
       (click)="
-        filterData.fromSignUpDate = null; fromSignUpDate = null; removeFilter('fromSignUpDate')
+        filterData.fromSignUpDate = null;
+        fromSignUpDate = null;
+        removeFilter('fromSignUpDate')
       "
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -207,7 +209,9 @@
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer mr-2"
       *ngIf="filterHolder.ToSignUpDate"
       (click)="
-        filterData.ToSignUpDate = null; ToSignUpDate = null; removeFilter('ToSignUpDate')
+        filterData.ToSignUpDate = null;
+        ToSignUpDate = null;
+        removeFilter('ToSignUpDate')
       "
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -458,7 +462,6 @@
     <div class="modal-footer">
       <ng-container *ngIf="addUpdate.id !== 0">
         <button
-          *appCanAccess="'user-management-final-Edit'"
           ngbAutofocus
           type="button"
           class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
