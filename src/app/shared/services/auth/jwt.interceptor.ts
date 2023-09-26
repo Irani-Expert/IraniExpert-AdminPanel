@@ -39,7 +39,7 @@ export class JwtInterceptor implements HttpInterceptor {
         setHeaders: {
           'Access-Control-Allow-Origin': '*',
           // 'Content-Type': 'application/json',
-          Authorization: 'Bearer anonymous',
+          Authorization: `Bearer ${this.token}`,
         },
       });
     }

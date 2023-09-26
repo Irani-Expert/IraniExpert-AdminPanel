@@ -1,6 +1,7 @@
 import { Component, HostListener, Type } from '@angular/core';
 import * as moment from 'jalali-moment';
 import {
+  C_E_OrderDetailItem,
   OrderDetailHeader,
   OrdersModel,
   SingleOrderModel,
@@ -249,6 +250,7 @@ export class OrdersComponent {
   // Actions & Modal
   ref: DynamicDialogRef | undefined;
   async openActionsDialog(label: string, action: string) {
+    let _itemToChange = new C_E_OrderDetailItem(this.selectedBskItem);
     this.ref = this.dialogService.open(this.getActionComponent(action), {
       data: {
         item: this.selectedBskItem,

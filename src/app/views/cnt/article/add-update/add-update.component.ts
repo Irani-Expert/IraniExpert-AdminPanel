@@ -1,28 +1,17 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-  Form,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleModel } from '../article/article.model';
 import { CKEditorComponent } from 'ng2-ckeditor';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { ToastrService } from 'ngx-toastr';
 import { ArticleService } from '../article/article.service';
-import { GroupModel } from 'src/app/views/bas/group/group.model';
 import { GroupService } from 'src/app/views/bas/group/group.service';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
-import { Base } from 'src/app/shared/models/Base/base.model';
-import { CliamxLicenseModel } from 'src/app/views/bsk/order/models/cliamaxLicense.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
-import { async, catchError, lastValueFrom, map, throwError } from 'rxjs';
-import { log } from 'console';
+import { catchError, map, throwError } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { tagModel } from '../../tags/tagModel/tag.model';

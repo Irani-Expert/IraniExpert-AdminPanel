@@ -1,11 +1,27 @@
-import { BehaviorSubject } from 'rxjs';
-
+type C_E_OrderDetailItemModel = {
+  id: number;
+  updateDate: string;
+  createDate: string;
+  createBy: number;
+  updateBy: number;
+  userID: number;
+  tableType: number;
+  rowID: number;
+  count: number;
+  accountnumber: string;
+  invoiceID: number;
+  unitPrice: number;
+  ipAddress: string;
+  authorID: number;
+  discountPrice: number;
+  totalPrice: number;
+};
 export class TableModel<T> {
   headers: string[];
   data: T;
 }
 export class OrdersModel {
-  id = 0;
+  readonly id: number;
   createDate = '';
   productTitle = '';
   planTitle = '';
@@ -53,5 +69,12 @@ export class OrderDetailHeader {
     Object.keys(detailItem).forEach((key) => {
       this.header.push({ value: detailItem[key], key: key });
     });
+  }
+}
+export class C_E_OrderDetailItem {
+  private workingItem: C_E_OrderDetailItemModel;
+  constructor(item: any) {
+    this.workingItem = { ...item };
+    console.log(this.workingItem);
   }
 }

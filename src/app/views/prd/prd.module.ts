@@ -1,9 +1,7 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
 import { AddUpdateComponent } from './addUpdate/addUpdate.component';
 import { ProductsRoutingModule } from './prd.routing';
 import { FAQComponent } from './faq/faq.component';
@@ -20,7 +18,6 @@ import { PlanOptionComponent } from '../bas/plan-option/plan-option.component';
 import { FacilityComponent } from './facility/facility.component';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
-import { ProductModel } from './products-list/product.model';
 import { GalleryComponent } from './gallery/gallery.component';
 @NgModule({
   declarations: [

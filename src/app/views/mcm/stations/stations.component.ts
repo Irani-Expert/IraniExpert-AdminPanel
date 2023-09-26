@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { StationModel } from '../models/station.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 import { ToastrService } from 'ngx-toastr';
 import { McmService } from '../mcm.service';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
-import { HttpEventType } from '@angular/common/http';
-import { Subscription, map, scan, takeWhile, tap } from 'rxjs';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ViewportScroller } from '@angular/common';

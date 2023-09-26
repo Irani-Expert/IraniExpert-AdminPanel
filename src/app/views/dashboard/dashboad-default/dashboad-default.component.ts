@@ -34,44 +34,43 @@ export class DashboadDefaultComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.getUserInfo();
+    // this.getUser();
+  }
+  // getUserInfo() {
+  //   this._userService.getUserInfo().subscribe(
+  //     (res: Result<UserCountModel>) => {
+  //       this.userprofile = res.data;
+  //     },
+  //     (_error) => {
+  //       this.toastr.error(
+  //         'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
+  //         null,
+  //         {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         }
+  //       );
+  //     }
+  //   );
+  // }
 
-    this.getUserInfo();
-    this.getUser();
-  }
-  getUserInfo() {
-    this._userService.getUserInfo().subscribe(
-      (res: Result<UserCountModel>) => {
-        this.userprofile = res.data;
-      },
-      (_error) => {
-        this.toastr.error(
-          'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-          null,
-          {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          }
-        );
-      }
-    );
-  }
-
-  getUser() {
-    this._userService
-      .getUserByToken()
-      .subscribe((res: Result<UserInforamationModel>) => {
-        this.userModel = res.data;
-        if (!res.success) {
-          localStorage.removeItem('currentUser');
-          this.toastr.error(res.message, null, {
-            timeOut: 900,
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-          setTimeout(() => {
-            this.router.navigate(['/sessions/signin']);
-          }, 1000);
-        }
-      });
-  }
+  // getUser() {
+  //   this._userService
+  //     .getUserByToken()
+  //     .subscribe((res: Result<UserInforamationModel>) => {
+  //       this.userModel = res.data;
+  //       if (!res.success) {
+  //         localStorage.removeItem('currentUser');
+  //         this.toastr.error(res.message, null, {
+  //           timeOut: 900,
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //         setTimeout(() => {
+  //           this.router.navigate(['/sessions/signin']);
+  //         }, 1000);
+  //       }
+  //     });
+  // }
 }

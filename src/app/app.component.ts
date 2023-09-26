@@ -1,19 +1,11 @@
-import {
-  Component,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { UserInfoModel } from './shared/models/userInfoModel';
 import { AuthenticateService } from './shared/services/auth/authenticate.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from './shared/models/Base/result.model';
 import { UserInforamationModel } from './shared/models/userInforamationModel';
 import { UsersService } from './views/sec/user-mangement/users.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -21,14 +13,12 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private _authService: AuthenticateService;
   token = '';
   constructor(
     private spinner: NgxSpinnerService,
     private router: Router,
     private _userService: UsersService,
-    private toastr: ToastrService,
-    private _route: ActivatedRoute
+    private toastr: ToastrService
   ) {}
   ngOnDestroy(): void {}
 
