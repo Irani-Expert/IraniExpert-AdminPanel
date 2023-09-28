@@ -40,6 +40,9 @@ export class OrderDetailPipe implements PipeTransform {
       case 'lastName':
         val.key = 'نام خانوادگی';
         break;
+      case 'userID':
+        val.key = 'شناسه کاربر';
+        break;
       case 'phoneNumber':
         val.key = 'شماره تماس';
         break;
@@ -86,9 +89,10 @@ export class OrderDetailPipe implements PipeTransform {
         } else {
           val.key = 'ورژن لایسنس';
         }
-
-        break;
       case 'licenseID':
+        isSpliced = true;
+        break;
+      case 'invoiceID':
         isSpliced = true;
         break;
       case 'peresentorFName':

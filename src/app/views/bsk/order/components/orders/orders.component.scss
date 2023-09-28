@@ -109,30 +109,3 @@
   border: 2px solid #dfe3e3;
   border-radius: 5px;
 }
-.basket-price-section {
-  margin: 10px 0 !important;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  .basket-price-container {
-    width: 243.891px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 5px 0 !important;
-    span {
-      flex: 0 0 50%;
-      max-width: 50%;
-      text-align: center;
-      padding: 0.75rem;
-      &:is(.right-span) {
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
-      }
-      &:is(.left-span) {
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-      }
-    }
-  }
-}

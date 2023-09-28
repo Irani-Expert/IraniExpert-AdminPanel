@@ -1,1 +1,48 @@
-<p>items-basket works!</p>
+<drag-scroll
+  style="width: 100%; height: auto"
+  [ngStyle]="{ cursor: isDeviceMedium ? 'grab' : 'unset' }"
+>
+  <table class="table custom-table">
+    <thead>
+      <tr>
+        <ng-container
+          *ngFor="
+            let header of basketTable.headers | tableHeader : 'changeName'
+          "
+          ><th>
+            <span>{{ header }}</span>
+          </th></ng-container
+        >
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let data of basketTable.data">
+        <tr #trItem (contextmenu)="this.setSelectingItem(data)" scope="row">
+          <td *ngFor="let header of basketTable.headers | tableHeader">
+            <span>{{ data[header] }}</span>
+          </td>
+        </tr>
+        <p-contextMenu
+          [target]="trItem"
+          appendTo="body"
+          [model]="menuItems"
+        ></p-contextMenu>
+        <tr class="spacer">
+          <td colspan="100"></td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</drag-scroll>
+<div class="basket-price-section">
+  <ng-container *ngFor="let item of basketFinalPrices | orderDetail">
+    <div class="basket-price-container" style="width: 243.891px">
+      <span class="bg-dark right-span"
+        ><strong class="text-small text-white">{{ item.key }}</strong></span
+      >
+      <span class="bg-light left-span"
+        ><strong class="text-small">{{ item.value }}</strong></span
+      >
+    </div>
+  </ng-container>
+</div>

@@ -33,6 +33,8 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { EditComponent } from 'src/app/shared/components/edit/edit.component';
+import { OrderDetailComponent } from './order/components/order-detail/order-detail.component';
+import { ItemsBasketComponent } from './order/components/items-basket/items-basket.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { EditComponent } from 'src/app/shared/components/edit/edit.component';
     OrdersComponent,
     TableHeaderPipe,
     EditComponent,
+    OrderDetailComponent,
+    ItemsBasketComponent,
   ],
   imports: [
     InputTextModule,

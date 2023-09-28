@@ -1,1 +1,18 @@
-<p>order-detail works!</p>
+<div class="d-flex flex-row flex-wrap">
+  <ng-container *ngFor="let detail of detailOrderArray | orderDetail">
+    <!-- Each Value -->
+    <div class="d-flex flex-column mr-4 mb-1">
+      <div class="d-flex align-items-center justify-content-start mb-1">
+        <span
+          class="pi pi-circle-fill text-light m-1"
+          style="font-size: 0.82rem"
+        ></span
+        ><strong class="my-1 text-small">{{ detail.key }}</strong>
+      </div>
+      <span class="card py-2 px-4 radius bg-light"
+        ><strong class="text-small">{{ detail.value }}</strong></span
+      >
+    </div>
+    <!-- Each Value -->
+  </ng-container>
+</div>
