@@ -1,21 +1,3 @@
-type C_E_OrderDetailItemModel = {
-  id: number;
-  updateDate: string;
-  createDate: string;
-  createBy: number;
-  updateBy: number;
-  userID: number;
-  tableType: number;
-  rowID: number;
-  count: number;
-  accountnumber: string;
-  invoiceID: number;
-  unitPrice: number;
-  ipAddress: string;
-  authorID: number;
-  discountPrice: number;
-  totalPrice: number;
-};
 export class TableModel<T> {
   headers: string[];
   data: T;
@@ -51,6 +33,8 @@ class OrderDetail extends OrdersModel {
   bankResponse = '';
   phoneNumber = '';
   description = '';
+  userID = 0;
+  invoiceID = 0;
 }
 class OrderDetailItem {
   id = 0;
@@ -72,9 +56,8 @@ export class OrderDetailHeader {
   }
 }
 export class C_E_OrderDetailItem {
-  private workingItem: C_E_OrderDetailItemModel;
-  constructor(item: any) {
-    this.workingItem = { ...item };
-    console.log(this.workingItem);
+  workingItem;
+  constructor(item: OrderDetailItem, args: any) {
+    this.workingItem = { ...item, ...args };
   }
 }

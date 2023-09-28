@@ -34,3 +34,16 @@
     width: 460px;
   }
 }
+input {
+  font-size: 1rem;
+  color: #444;
+  padding: 9px;
+  background: #eff8fb;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+  transition: all 400ms ease-in-out;
+  &:disabled {
+    color: rgb(45 45 45 / 50%);
+    background: #a8a8a89f;
+  }
+}

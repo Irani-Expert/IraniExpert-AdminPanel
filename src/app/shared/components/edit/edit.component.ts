@@ -8,11 +8,21 @@ import { TableHeaderPipe } from 'src/app/views/bsk/order/components/table-header
 import { BaseService } from '../../services/baseService/baseService';
 import { lastValueFrom, map } from 'rxjs';
 import { ActionsService } from '../../services/actions.service';
+import { debug } from 'console';
 type FormControl = {
   model: any;
   isEnable: boolean;
   label: string;
   engLabel: string;
+  type:
+    | 'string'
+    | 'number'
+    | 'bigint'
+    | 'boolean'
+    | 'symbol'
+    | 'undefined'
+    | 'object'
+    | 'function';
 };
 
 @Component({
@@ -23,6 +33,7 @@ type FormControl = {
 })
 export class EditComponent {
   private readonly actionRoute: string;
+  private _sendingItem: any;
   dialogData: any;
   formGroup: Array<FormControl> = new Array<FormControl>();
   item: any;
@@ -35,6 +46,7 @@ export class EditComponent {
   ) {
     this.actionRoute = this.config.data.routeOfAction;
     this.dialogData = this.config.data;
+    this._sendingItem = this.config.data.sendingItem;
   }
   ngOnInit() {
     this.getReadyToEdit();
@@ -57,6 +69,7 @@ export class EditComponent {
           model: this.item[arrayOfControls[counter]],
           isEnable: false,
           label: this.tranlate.changeNameAlone(arrayOfControls[counter]),
+          type: typeof this.item[arrayOfControls[counter]],
         });
       } else {
         this.formGroup.push({
@@ -64,6 +77,7 @@ export class EditComponent {
           model: this.item[arrayOfControls[counter]],
           isEnable: true,
           label: this.tranlate.changeNameAlone(arrayOfControls[counter]),
+          type: typeof this.item[arrayOfControls[counter]],
         });
       }
     }
@@ -72,6 +86,9 @@ export class EditComponent {
     Object.keys(item).forEach((label) => {
       this.formGroup.find((it) => {
         if (it.engLabel == label) {
+          if (it.type == 'number') {
+            it.model = item[label];
+          }
           it.model = item[label];
           return;
         }
@@ -80,17 +97,14 @@ export class EditComponent {
     this.item = { ...item };
   }
   onChangeInput(value, label) {
-    this.item[label] = value;
+    if (typeof this.item[label] == 'number') this.item[label] = parseInt(value);
+    else this.item[label] = value;
+
     const command = this.config.data.command;
     this.updateFormControl(command(this.item));
   }
   async confirm() {
-    let itemToSend = {
-      id: this.item.id,
-      count: this.item.count,
-      accountNumber: ' ',
-      discountPrice: parseInt(this.item.discountPrice),
-    };
+    let itemToSend = { ...this._sendingItem, ...this.item };
     const result = this.actionService
       .update(itemToSend.id | 0, itemToSend, this.actionRoute)
       .pipe(

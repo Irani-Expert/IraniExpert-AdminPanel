@@ -20,6 +20,8 @@ import { EditComponent } from 'src/app/shared/components/edit/edit.component';
 import { DeleteComponent } from 'src/app/shared/components/delete/delete.component';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
+import { stringify } from 'querystring';
 type DetailHeader = { value: string | number; key: string };
 type OrderDetailItem = {
   id: number;
@@ -54,6 +56,7 @@ const Action = ActionTypes;
   providers: [DialogService],
 })
 export class OrdersComponent {
+  openedModalID = 0;
   private _actionRoute: string = '';
   itemToChange = new BehaviorSubject<OrderDetailItem>(itemToChangeInit);
   menuItems: MenuItem[] | undefined;
@@ -80,6 +83,7 @@ export class OrdersComponent {
   table: TableModel<OrdersModel[]>;
   basketTable = new TableModel<Array<OrderDetailItem>>();
   constructor(
+    private auth: AuthenticateService,
     private toastr: ToastrService,
     public dialogService: DialogService,
     private orderService: OrderService,
@@ -206,6 +210,7 @@ export class OrdersComponent {
 
   //get Details of Selected Order
   async getOrderDetails(id: number) {
+    this.openedModalID = id;
     const result = this.orderService.getOrderById(id).pipe(
       map((res) => {
         if (res.success) {
@@ -250,7 +255,11 @@ export class OrdersComponent {
   // Actions & Modal
   ref: DynamicDialogRef | undefined;
   async openActionsDialog(label: string, action: string) {
-    let _itemToChange = new C_E_OrderDetailItem(this.selectedBskItem);
+    let details = this.singleOrder.orderDetails;
+    let _itemToChange = new C_E_OrderDetailItem(
+      this.selectedBskItem,
+      this.getArgsToC_E(details)
+    );
     this.ref = this.dialogService.open(this.getActionComponent(action), {
       data: {
         item: this.selectedBskItem,
@@ -265,6 +274,7 @@ export class OrdersComponent {
                 'toPayPrice',
               ]
             : undefined,
+        sendingItem: _itemToChange.workingItem,
         routeOfAction: this._actionRoute,
         command: (item) => {
           return this.calculatePrice(item);
@@ -278,27 +288,39 @@ export class OrdersComponent {
     });
   }
   async modalConfirmed(result: Result<any>) {
-    result
-      ? this.toastr.success(result.message, '', {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        })
-      : this.toastr.error(
-          result.message || 'خطا در برقراری اتصال ! با واحد فناوری تماس بگیرید',
-          '',
-          {
+    if (result) {
+      result.success
+        ? this.toastr.success(result.message, '', {
             closeButton: true,
             positionClass: 'toast-top-left',
-          }
-        );
+          })
+        : this.toastr.error(
+            result.message ||
+              'خطا در برقراری اتصال ! با واحد فناوری تماس بگیرید',
+            '',
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+    } else {
+      this.toastr.error(
+        result.message || 'خطا در برقراری اتصال ! با واحد فناوری تماس بگیرید',
+        '',
+        {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        }
+      );
+    }
   }
   getActionComponent(action: string) {
     if (action == 'PUT') {
-      this._actionRoute = 'OrderNew/UpdateOrderItemAdminAccess';
+      this._actionRoute = 'OrderItemNew';
       return EditComponent;
     }
     if (action == 'DELETE') {
-      this._actionRoute = 'OrderNew/UpdateOrderItemAdminAccess';
+      this._actionRoute = 'OrderItemNew';
       return DeleteComponent;
     }
     if (action == 'ADD') {
@@ -329,21 +351,14 @@ export class OrdersComponent {
     }
     return item;
   }
+  getArgsToC_E(item) {
+    let args = {
+      accountnumber: item.accountNumber,
+      authorID: this.auth.currentUserValue.userID,
+      invoiceID: item.invoiceID,
+      userID: item.userID,
+      orderID: this.openedModalID,
+    };
+    return args;
+  }
 }
-
-//     res.success
-//       ? this.toastr.success(res.message, '', {
-//           closeButton: true,
-//           positionClass: 'toast-top-left',
-//         })
-//       : this.toastr.error(res.message, '', {
-//           closeButton: true,
-//           positionClass: 'toast-top-left',
-//         }),
-//   error: () => {
-//     this.toastr.error('لطفا اتصال خود را بررسی کنید', '', {
-//       closeButton: true,
-//       positionClass: 'toast-top-left',
-//     });
-//   },
-// });

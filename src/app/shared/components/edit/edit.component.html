@@ -7,9 +7,7 @@
         }}</label>
         <input
           (input)="onChangeInput(formControl.model, formControl.engLabel)"
-          pInputText
           [id]="formControl.engLabel"
-          class="p-inputtext-sm"
           [(ngModel)]="formControl.model"
           [disabled]="formControl.isEnable"
         />
