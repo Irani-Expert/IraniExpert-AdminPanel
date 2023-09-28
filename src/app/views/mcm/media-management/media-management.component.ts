@@ -1,13 +1,6 @@
-import {
-  AfterViewInit,
-  Component,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
-import { ActivationEnd, Event, NavigationEnd, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 class Navigation {
   id: number = 0;
   title: string = '';

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
@@ -11,40 +11,59 @@ import { UsersModel } from 'src/app/views/sec/user-mangement/users.model';
 import { environment } from 'src/environments/environment.prod';
 import { referraluserModel } from '../../../dashboard/referral-user/referral-user.model';
 import { OrderModel } from '../models/order.model';
+import { Page } from 'src/app/shared/models/Base/page';
+import { OrdersModel, SingleOrderModel } from '../models/orders-new.model';
+import { BehaviorSubject, map } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 interface INoteSidebar {
   sidenavOpen?: boolean;
 }
 @Injectable({
   providedIn: 'root',
 })
-export class OrderService extends BaseService<OrderModel, 0> {
+export class OrderService extends BaseService<any, 0> {
+  _options = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Cache-Control':
+        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      Pragma: 'no-cache',
+      Expires: '0',
+    }),
+  };
   userGuid = environment.jwtToken;
   userID: number;
-
-  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
+  ordersSubject: BehaviorSubject<OrdersModel[]> = new BehaviorSubject<
+    Array<OrdersModel>
+  >(new Array<OrdersModel>());
+  singleOrderSubject = new BehaviorSubject<SingleOrderModel>(
+    new SingleOrderModel()
+  );
+  constructor(
+    public _http: HttpClient,
+    public _auth: AuthenticateService,
+    private toastrService: ToastrService
+  ) {
     super(_http, environment.api.baseUrl, _auth);
   }
   public sidebarState: INoteSidebar = {
     sidenavOpen: true,
   };
+  public get ordersValue() {
+    return this.ordersSubject.value;
+  }
+  public get singleOrderValue() {
+    return this.singleOrderSubject.value;
+  }
   /**
    * درخواست دریافت همه
    * @param route
    * @returns all
    */
-  getUserbyUserId(userId) {
-    let _options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        Pragma: 'no-cache',
-        Expires: '0',
-      }),
-    };
+  getUserbyUserId(userId: number) {
     return this._http.get<Result<UsersModel>>(
       this._base + '/AspNetUser/' + userId,
-      _options
+      this._options
     );
   }
   getMyOrder(
@@ -54,15 +73,7 @@ export class OrderService extends BaseService<OrderModel, 0> {
     filter: string
   ): Observable<Result<Paginate<OrderModel[]>>> {
     this.userID = this._auth.currentUserValue.userID;
-    let _options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        Pragma: 'no-cache',
-        Expires: '0',
-      }),
-    };
+
     return this._http.get<Result<Paginate<OrderModel[]>>>(
       this._base +
         '/Orders/GetByUserIDe' +
@@ -76,63 +87,23 @@ export class OrderService extends BaseService<OrderModel, 0> {
         filter +
         '&userID=' +
         this.userID,
-      _options
+      this._options
     );
   }
   getBysellingTypeQuery(userId: string, sellingType: number) {
-    let _options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        Pragma: 'no-cache',
-        Expires: '0',
-      }),
-    };
     return this._http.get<Result<referraluserModel>>(
       this._base +
         '/Orders/GetCommissionByUserIDBySellingTypeQuery?userId=' +
         userId +
         '&SellingType=' +
         sellingType,
-      _options
+      this._options
     );
   }
-  // getByStatus(pageSize: number, pageIndex: number, transactionStatus: number) {
-  //   let _options = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //       'Cache-Control':
-  //         'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-  //       Pragma: 'no-cache',
-  //       Expires: '0',
-  //       // Authorization: 'bearer ' + environment.jwtToken,
-  //     }),
-  //   };
-  //   return this._http.get<Result<Paginate<OrderModel[]>>>(
-  //     this._base +
-  //       '/Orders/GetByStatus?pageIndex=' +
-  //       pageIndex +
-  //       '&pageSize=' +
-  //       pageSize +
-  //       '&transactionStatus=' +
-  //       transactionStatus,
-  //     _options
-  //   );
-  // }
   getProduct() {
-    let _options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        Pragma: 'no-cache',
-        Expires: '0',
-      }),
-    };
     return this._http.get<Result<ProductModel[]>>(
-      this._base + '/Product?pageIndex=0&pageSize=100',
-      _options
+      this._base + '/Product?pageIndex=0',
+      this._options
     );
   }
   getOrders(
@@ -141,16 +112,6 @@ export class OrderService extends BaseService<OrderModel, 0> {
     transactionStatus: number,
     filter: FilterModel
   ) {
-    let _options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Cache-Control':
-          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-        Pragma: 'no-cache',
-        Expires: '0',
-        // Authorization: 'bearer ' + environment.jwtToken,
-      }),
-    };
     return this._http.get<Result<Paginate<OrderModel[]>>>(
       this._base +
         '/Orders?pageIndex=' +
@@ -207,7 +168,25 @@ export class OrderService extends BaseService<OrderModel, 0> {
         (filter.userID == undefined || filter.userID == null
           ? ''
           : '&UserID=' + filter.userID),
-      _options
+      this._options
+    );
+  }
+
+  getOrdersNew(page: Page, filter: FilterModel) {
+    return this._http.get<Result<Paginate<OrdersModel[]>>>(
+      this._base +
+        '/OrderNew/GetOrders?pageIndex=' +
+        page.pageNumber +
+        '&pageSize=' +
+        page.size +
+        '&pageOrder=ID',
+      this._options
+    );
+  }
+  getOrderById(id: number) {
+    return this._http.get<Result<SingleOrderModel>>(
+      `${this._base}/OrderNew/${id}`,
+      this._options
     );
   }
 }

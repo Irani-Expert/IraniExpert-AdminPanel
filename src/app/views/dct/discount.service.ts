@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { DiscountModel } from './discount/Discount.model';
+import { DiscountModel } from './discount/discount.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 @Injectable({
   providedIn: 'root',

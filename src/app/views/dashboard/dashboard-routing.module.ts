@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { DashboadDefaultComponent } from './dashboad-default/dashboad-default.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { NotFoundComponent } from '../session/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -16,7 +15,6 @@ const routes: Routes = [
     component: UserProfileComponent,
     canActivate: [AuthGuard],
   },
-
 ];
 
 @NgModule({

@@ -6,36 +6,37 @@ import { LockscreenComponent } from './lockscreen/lockscreen.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { NgModule } from '@angular/core';
-import { LoginAsUserComponent } from '../dashboard/login-as-user/login-as-user.component';
 
- const SessionRoutes: Routes = [
+const SessionRoutes: Routes = [
   {
     path: '',
-    children: [{
-      path: '404',
-      component: NotFoundComponent
-    }, {
-      path: '401',
-      component: ErrorComponent
-    },  {
-      path: 'lockscreen',
-      component: LockscreenComponent
-    }, {
-      path: 'signin',
-      component: SigninComponent
-    }, {
-      path: 'signup',
-      component: SignupComponent
-    },
-
-  ]
-  }
+    children: [
+      {
+        path: '404',
+        component: NotFoundComponent,
+      },
+      {
+        path: '401',
+        component: ErrorComponent,
+      },
+      {
+        path: 'lockscreen',
+        component: LockscreenComponent,
+      },
+      {
+        path: 'signin',
+        component: SigninComponent,
+      },
+      {
+        path: 'signup',
+        component: SignupComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(SessionRoutes),
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(SessionRoutes)],
+  exports: [RouterModule],
 })
-export class SessionRoutingModule { }
+export class SessionRoutingModule {}

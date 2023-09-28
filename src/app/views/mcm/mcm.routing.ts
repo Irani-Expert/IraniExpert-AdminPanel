@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MediaListComponent } from './media-list/media-list.component';
-import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { UploadCenterComponent } from './upload-center/upload-center.component';
 import { MediaManagementComponent } from './media-management/media-management.component';
 import { StationsComponent } from './stations/stations.component';

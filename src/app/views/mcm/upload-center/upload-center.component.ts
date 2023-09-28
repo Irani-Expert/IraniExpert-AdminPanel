@@ -1,23 +1,13 @@
-import {
-  Component,
-  HostListener,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { BannerModel } from '../../cnt/banner/banner.model';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, delay, filter, map, retry, throwError } from 'rxjs';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { catchError, filter, map, throwError } from 'rxjs';
+import { HttpEventType } from '@angular/common/http';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { error, log } from 'console';
 import { DomSanitizer } from '@angular/platform-browser';
-import { VideoPlayerComponent } from 'src/app/shared/components/video-player/video-player.component';
-import { EventEmitter } from 'stream';
 import { McmService } from '../mcm.service';
 import { StationModel } from '../models/station.model';
 import { NavigationEnd, Router } from '@angular/router';

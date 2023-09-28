@@ -22,9 +22,9 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-                "echarts",
-                "highlight.js",
-                "angular2-text-mask"
+              "echarts",
+              "highlight.js",
+              "angular2-text-mask"
             ],
             "outputPath": "dist",
             "index": "src/index.html",
@@ -38,14 +38,9 @@
             ],
             "styles": [
               "src/assets/styles/app/_app.scss",
-              "src/styles.css",
-              "node_modules/ngx-spinner/animations/square-jelly-box.css",
-              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
-              "node_modules/primeng/resources/primeng.min.css"
+              "node_modules/ngx-spinner/animations/square-jelly-box.css"
             ],
-            "scripts": [
-              "node_modules/echarts/dist/echarts.min.js"
-            ],
+            "scripts": ["node_modules/echarts/dist/echarts.min.js"],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
@@ -104,11 +99,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/styles.css"
-            ],
-            "scripts": [
-            ],
+            "styles": ["src/styles.css"],
+            "scripts": [],
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -119,13 +111,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -150,9 +137,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

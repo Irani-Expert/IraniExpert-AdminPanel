@@ -10,7 +10,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeModule } from 'primeng/tree';
 import { NodeService } from './nodeservice';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 
 @NgModule({
@@ -26,7 +25,7 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
     FormsModule,
     TreeModule,
     SharedDirectivesModule,
-        NgbModule,
+    NgbModule,
   ],
   providers: [NodeService],
 })
