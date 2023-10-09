@@ -48,7 +48,7 @@ import {
     ]),
   ],
 })
-export class NotesComponent implements OnInit {
+export class AllNotesComponent implements OnInit {
   tableTypes = [
     { title: 'سفارشات', id: 8 },
     { title: 'درخواست مشتریان', id: 10 },
@@ -58,7 +58,7 @@ export class NotesComponent implements OnInit {
   stateOfChevron: string = 'default';
   page: Page = new Page();
   isDivExpanded: boolean = false;
-  filterHolder: FilterModel=new FilterModel;
+  filterHolder: FilterModel = new FilterModel();
   rows: CommentModel[];
   pageIsLoad: boolean = false;
   filterModel: FilterModel = new FilterModel();
@@ -79,7 +79,6 @@ export class NotesComponent implements OnInit {
     this.getCommnetOfspecificTableTypes(tableType);
   }
   getCommnetOfspecificTableTypes(tableTypeId: number) {
-
     this.currentTableType = tableTypeId;
     this.tableTypes.forEach((item) => {
       if (item.id === tableTypeId) {
@@ -88,8 +87,7 @@ export class NotesComponent implements OnInit {
     });
     this._commentService
       .GetAllComment(
-     
-        this.page.pageNumber-1,
+        this.page.pageNumber - 1,
         this.page.size,
         tableTypeId,
         this.filterHolder
@@ -124,7 +122,6 @@ export class NotesComponent implements OnInit {
   *
   */
 
-
   toggleFilters() {
     this.isDivExpanded = !this.isDivExpanded;
     this.stateOfChevron =
@@ -133,7 +130,7 @@ export class NotesComponent implements OnInit {
   startFilter() {
     this._commentService
       .GetAllComment(
-         0,
+        0,
         this.page.size,
         this.currentTableType,
         this.filterHolder
@@ -146,17 +143,17 @@ export class NotesComponent implements OnInit {
         this.page.pageNumber = res.data.pageNumber + 1;
       });
   }
-  filterButton(){
-    this.filteredItems(this.filterModel )
-    this.startFilter()
+  filterButton() {
+    this.filteredItems(this.filterModel);
+    this.startFilter();
   }
   filteredItems(filter: FilterModel) {
     this.filterHolder = { ...filter };
   }
-  removeFilter(item:string){
-    delete this.filterHolder[item]
-    delete this.filterModel[item]
-    
-    this.startFilter()
+  removeFilter(item: string) {
+    delete this.filterHolder[item];
+    delete this.filterModel[item];
+
+    this.startFilter();
   }
 }

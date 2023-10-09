@@ -15,6 +15,7 @@ import { Page } from 'src/app/shared/models/Base/page';
 import { OrdersModel, SingleOrderModel } from '../models/orders-new.model';
 import { BehaviorSubject, map } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { CommentModel } from 'src/app/shared/models/comment.model';
 interface INoteSidebar {
   sidenavOpen?: boolean;
 }
@@ -39,16 +40,19 @@ export class OrderService extends BaseService<any, 0> {
   singleOrderSubject = new BehaviorSubject<SingleOrderModel>(
     new SingleOrderModel()
   );
-  constructor(
-    public _http: HttpClient,
-    public _auth: AuthenticateService,
-    private toastrService: ToastrService
-  ) {
+  notesOrderSubject = new BehaviorSubject<CommentModel[]>(
+    new Array<CommentModel>()
+  );
+  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
     super(_http, environment.api.baseUrl, _auth);
   }
   public sidebarState: INoteSidebar = {
     sidenavOpen: true,
   };
+
+  public get notes() {
+    return this.notesOrderSubject.value;
+  }
   public get ordersValue() {
     return this.ordersSubject.value;
   }
@@ -172,14 +176,19 @@ export class OrderService extends BaseService<any, 0> {
     );
   }
 
-  getOrdersNew(page: Page, filter: FilterModel) {
+  getOrdersNew(page: Page, _filter: FilterModel) {
+    let filterRow = '';
+    Object.keys(_filter).forEach((key) => {
+      key ? (filterRow += `&${key + '=' + _filter[key]}`) : filterRow;
+    });
     return this._http.get<Result<Paginate<OrdersModel[]>>>(
       this._base +
         '/OrderNew/GetOrders?pageIndex=' +
         page.pageNumber +
         '&pageSize=' +
         page.size +
-        '&pageOrder=ID',
+        '&pageOrder=ID' +
+        filterRow,
       this._options
     );
   }

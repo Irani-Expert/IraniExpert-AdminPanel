@@ -94,11 +94,6 @@
     }
   }
 }
-// :is(.my-css) .badge {
-//   width: 80px !important;
-//   padding: 4px 0;
-//   font-size: 16px;
-// }
 .clickable-btn {
   cursor: pointer;
   font-size: 25px !important;
@@ -144,61 +139,6 @@
   width: 100%;
   overflow: visible;
 }
-
-.rounded-4 {
-  border-radius: 15px !important;
-}
-.rounded-alt {
-  border-radius: 15px !important;
-  border-bottom-left-radius: 0px !important;
-  border-bottom-right-radius: 0px !important;
-}
-.bg-notes {
-  background-color: #c4ccd1;
-}
-.bg-notes-header {
-  background-color: #5c65b3;
-}
-
-// @media (min-width: 409px) {
-//   .updateNoteBar {
-
-//     width: 0%;
-
-//   }
-// }
-// @media (max-width: 576px) {
-//   .updateNoteBar {
-
-//     width: 23%;
-
-//   }
-// }
-// @media (max-width: 767px) {
-//   .updateNoteBar {
-
-//     width: 37%;
-
-//   }
-// }
-// }
-// @media (max-width: 991px) {
-//   .updateNoteBar {
-
-//     width: 42%;
-
-//   }
-// }
-// }
-// @media (max-width: 1024px) {
-//   .updateNoteBar {
-
-//     width: 42%;
-
-//   }
-// }
-// }
-
 .main-table {
   overflow-x: scroll;
 }
@@ -210,7 +150,6 @@
 table th,
 td {
   min-width: 150px;
-  // border: 1px solid black;
   padding: 20px;
   text-align: center;
   white-space: nowrap;
@@ -240,23 +179,6 @@ td {
   position: absolute;
 }
 
-// .btn-filter {
-//   color: #e9e1e1 !important;
-//   background-color: #e5dbdef4;
-//   transition: all 0.15s ease-in-out;
-// }
-// .btn-filter:hover {
-//   background-color: #797576f4;
-//   transition: all 0.15s ease-in-out;
-// }
-// .btn-filter i {
-//   margin: 0;
-//   transition: all 0.15s ease-in-out;
-// }
-// .btn-filter:hover i {
-//   margin-top: 1.75px !important;
-//   transition: all 0.15s ease-in-out;
-// }
 .btn-scale-1 {
   transition: transform 0.15s ease-in-out;
 }

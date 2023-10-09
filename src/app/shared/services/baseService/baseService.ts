@@ -226,7 +226,37 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
       _options
     );
   }
+  getByTableTypeandRowId(
+    pageIndex: number,
+    pageSize: number,
+    filter: string,
+    rowID: number,
+    tableType: number,
+    route: string
+  ) {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      }),
+    };
 
+    return this._http.get<Result<Paginate<T[]>>>(
+      this._base +
+        '/' +
+        route +
+        '/' +
+        'GetByTableTypeAndRowId' +
+        `/${
+          rowID + '/' + tableType
+        }?pageIndex=${pageIndex}&pageSize=${pageSize}`,
+      _options
+    );
+  }
+  // Comment/GetByTableTypeAndRowId/2/0
   // private handleError<T>(operation = 'operation', result?: T) {
   //   return (error: any): Observable<T> => {
   //     let errMsg = `error in ${operation}()`;

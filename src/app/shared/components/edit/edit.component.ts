@@ -1,14 +1,12 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   DialogService,
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { TableHeaderPipe } from 'src/app/views/bsk/order/components/table-header.pipe';
-import { BaseService } from '../../services/baseService/baseService';
 import { lastValueFrom, map } from 'rxjs';
 import { ActionsService } from '../../services/actions.service';
-import { debug } from 'console';
 type FormControl = {
   model: any;
   isEnable: boolean;

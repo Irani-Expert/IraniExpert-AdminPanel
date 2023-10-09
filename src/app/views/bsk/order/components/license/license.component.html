@@ -1,0 +1,117 @@
+<ng-container *ngIf="licenseExist">
+  <form
+    [formGroup]="licenseForm"
+    (ngSubmit)="validateAndSend()"
+    (keydown.enter)="validateAndSend()"
+  >
+    <div class="d-flex flex-column gap-custom">
+      <input
+        type="file"
+        class="text-small"
+        id="files"
+        *ngIf="!fileExists"
+        (change)="isFileValid = setFileReady($event)"
+      />
+      <ng-container *ngIf="fileExists">
+        <div class="row m-0 p-0 gap-custom align-items-baseline">
+          <a
+            target="_blank"
+            [href]="
+              'https://dl.iraniexpert.com/' + license._licenseItem.filePath
+            "
+            download
+          >
+            <p-button
+              dir="ltr"
+              label="دانلود"
+              icon="pi pi-download"
+              styleClass="p-button-raised p-button-sm"
+              iconPos="right"
+            ></p-button
+          ></a>
+
+          <p-button
+            (click)="deleteFile()"
+            dir="ltr"
+            label="حذف فایل"
+            icon="pi pi-trash"
+            styleClass="p-button-raised p-button-sm p-button-danger"
+            iconPos="right"
+          ></p-button>
+        </div>
+      </ng-container>
+      <div class="row m-0 p-0 gap-custom align-baseline">
+        <div class="col-8 px-0 col-sm-6 col-md-5 col-lg-4 d-flex flex-column">
+          <p-calendar
+            appendTo="body"
+            class="p-inputtext-sm"
+            dir="ltr"
+            (onSelect)="changeStrDate($event)"
+            [maxDate]="maxDate"
+            inputId="startDate"
+            formControlName="startDate"
+            [showIcon]="true"
+          ></p-calendar>
+          <label for="startDate" class="text-small">تاریخ شروع</label>
+        </div>
+        <div class="col-8 px-0 col-sm-6 col-md-5 col-lg-4 d-flex flex-column">
+          <p-calendar
+            appendTo="body"
+            class="p-inputtext-sm"
+            dir="ltr"
+            (onSelect)="changeExpDate($event)"
+            inputId="expireDate"
+            [minDate]="minDate"
+            formControlName="expireDate"
+            [showIcon]="true"
+          ></p-calendar>
+          <label for="expireDate" class="text-small">تاریخ انقضاء</label>
+        </div>
+        <div class="col-8 col-sm-6 col-md-5 col-lg-4 px-0 d-flex flex-column">
+          <input
+            pInputText
+            formControlName="versionNumber"
+            class="p-inputtext-sm"
+            inputId="versionNumber"
+          />
+          <label for="versionNumber" class="text-small">ورژن لایسنس</label>
+        </div>
+      </div>
+      <div class="row m-0 p-0 gap-custom align-baseline">
+        <p-button
+          [disabled]="fileExists"
+          type="submit"
+          dir="ltr"
+          [label]="licenseID ? 'ویرایش' : 'ایجاد'"
+          [icon]="licenseID ? 'pi pi-pencil' : 'pi pi-plus'"
+          [styleClass]="
+            licenseID
+              ? 'p-button-raised p-button-sm p-button-secondary'
+              : 'p-button-raised p-button-sm'
+          "
+          iconPos="right"
+        ></p-button>
+        <p-button
+          *ngIf="licenseID"
+          type="submit"
+          dir="ltr"
+          label="حذف"
+          [disabled]="fileExists"
+          (click)="deleteLicense()"
+          icon="pi pi-trash"
+          styleClass="
+        
+              p-button-raised p-button-sm p-button-danger"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </div>
+  </form>
+</ng-container>
+
+<!-- [minDate]="minDate" [maxDate]="maxDate" -->
+<ngx-spinner
+  type=""
+  name="upload"
+  template="<span class='pi pi-upload upload-icon' style='font-size:3.5rem'></span>"
+></ngx-spinner>

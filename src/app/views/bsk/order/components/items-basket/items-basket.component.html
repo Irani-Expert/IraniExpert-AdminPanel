@@ -1,48 +1,174 @@
-<drag-scroll
-  style="width: 100%; height: auto"
-  [ngStyle]="{ cursor: isDeviceMedium ? 'grab' : 'unset' }"
->
-  <table class="table custom-table">
-    <thead>
-      <tr>
-        <ng-container
-          *ngFor="
-            let header of basketTable.headers | tableHeader : 'changeName'
-          "
-          ><th>
-            <span>{{ header }}</span>
-          </th></ng-container
-        >
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let data of basketTable.data">
-        <tr #trItem (contextmenu)="this.setSelectingItem(data)" scope="row">
-          <td *ngFor="let header of basketTable.headers | tableHeader">
-            <span>{{ data[header] }}</span>
-          </td>
-        </tr>
-        <p-contextMenu
-          [target]="trItem"
-          appendTo="body"
-          [model]="menuItems"
-        ></p-contextMenu>
-        <tr class="spacer">
-          <td colspan="100"></td>
-        </tr>
+<ng-container *ngIf="session == 'Watch and Edit'">
+  <ng-container *ngIf="isTableCreated">
+    <drag-scroll
+      style="width: 100%; height: auto"
+      [ngStyle]="{ cursor: isDeviceMedium ? 'grab' : 'unset' }"
+    >
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <ng-container
+              *ngFor="
+                let header of basketTable.headers | tableHeader : 'changeName'
+              "
+              ><th>
+                <span>{{ header }}</span>
+              </th></ng-container
+            >
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let data of basketTable.data">
+            <tr #trItem (contextmenu)="this.setSelectingItem(data)" scope="row">
+              <td *ngFor="let header of basketTable.headers | tableHeader">
+                <span>{{ data[header] }}</span>
+              </td>
+            </tr>
+            <p-contextMenu
+              [target]="trItem"
+              appendTo="body"
+              [model]="menuItems"
+            ></p-contextMenu>
+            <tr class="spacer">
+              <td colspan="100"></td>
+            </tr>
+          </ng-container>
+          <tr (click)="changeSession()" #addItem scope="row">
+            <td colspan="100">
+              <div class="d-flex align-items-center">
+                <span
+                  class="pi pi-plus mx-2 p-2 font-weight-900 radius bg-warning text-info"
+                  style="font-size: 13px !important"
+                ></span>
+                <span class="text-small mx-2"
+                  ><strong style="font-size: 12px !important"
+                    >افزودن آیتم
+                  </strong></span
+                >
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </drag-scroll>
+    <div class="basket-price-section">
+      <ng-container *ngFor="let item of basketFinalPrices | orderDetail">
+        <div class="basket-price-container" style="width: 243.891px">
+          <span class="bg-dark right-span"
+            ><strong class="text-small text-white">{{ item.key }}</strong></span
+          >
+          <span class="bg-light left-span"
+            ><strong class="text-small">{{ item.value }}</strong></span
+          >
+        </div>
       </ng-container>
-    </tbody>
-  </table>
-</drag-scroll>
-<div class="basket-price-section">
-  <ng-container *ngFor="let item of basketFinalPrices | orderDetail">
-    <div class="basket-price-container" style="width: 243.891px">
-      <span class="bg-dark right-span"
-        ><strong class="text-small text-white">{{ item.key }}</strong></span
-      >
-      <span class="bg-light left-span"
-        ><strong class="text-small">{{ item.value }}</strong></span
-      >
     </div>
   </ng-container>
-</div>
+  <ng-container *ngIf="!isTableCreated">
+    <div class="d-flex justify-content-center">
+      <img
+        src="../../../../../assets/images/97434-no-data-available.gif"
+        class="img-fluid w-50 radius-lg"
+        style="opacity: 0.4"
+        alt=""
+      />
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="session == 'Addition'">
+  <section class="position-relative">
+    <div class="gap-custom row flex-column h-custom align-items-start">
+      <div class="row gap-custom m-0 p-0 flex-wrap align-items-center w-100">
+        <div
+          *ngFor="let type of addTypes"
+          class="col-auto d-inline-flex flex-row flex-wrap align-items-center"
+        >
+          <p-radioButton
+            [inputId]="type.key"
+            name="type"
+            [value]="type"
+            [disabled]="type.disabled"
+            [(ngModel)]="selectedAddType"
+          ></p-radioButton>
+          <label [for]="type.key" class="ml-2 mt-2 font-weight-900">{{
+            type.name
+          }}</label>
+        </div>
+      </div>
+      <div
+        class="row gap-custom flex-wrap m-0 p-0 align-items-baseline w-100"
+        *ngIf="isPlanOptionsExist"
+      >
+        <div class="col-8 col-sm-6 col-md-5 col-lg-4">
+          <p-dropdown
+            (onChange)="changeDropDown($event)"
+            class="p-dropdown-flex"
+            [options]="planOptions"
+            [(ngModel)]="selectedPlanOption"
+            optionLabel="title"
+          ></p-dropdown>
+        </div>
+        <div class="col-auto">
+          <p-inputNumber
+            [(ngModel)]="selectedPlanOption.price"
+            [disabled]="true"
+            class="p-inputtext-sm"
+            inputId="price"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+          ></p-inputNumber>
+          <label class="d-block font-weight-500 mt-2" for="price">قیمت</label>
+        </div>
+      </div>
+      <div
+        *ngIf="isPlanOptionsExist"
+        class="row gap-custom flex-wrap m-0 p-0 align-items-baseline w-100"
+      >
+        <div class="col-auto">
+          <p-inputNumber
+            class="p-inputtext-sm"
+            [disabled]="selectedPlanOption.price == 0"
+            (onInput)="changeInput('discountPrice')"
+            [(ngModel)]="discountPrice"
+            inputId="discountPrice"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+            [min]="0"
+            [max]="selectedPlanOption.price"
+          >
+          </p-inputNumber>
+          <label class="d-block font-weight-500 mt-2" for="discountPrice"
+            >تخفیف</label
+          >
+        </div>
+        <div class="col-12">
+          <p-button
+            (click)="openActionsDialog('ایجاد', 'ADD')"
+            dir="ltr"
+            label="ایجاد"
+            icon="pi pi-plus"
+            styleClass="p-button-raised p-button-sm"
+            iconPos="right"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+    <div class="position-absolute" style="left: 0; top: 0">
+      <button
+        (click)="changeSession()"
+        type="button"
+        class="close bg-info rounded-circle"
+        aria-label="Close"
+      >
+        <span class="p-2 d-inline-flex">
+          <span
+            aria-hidden="true"
+            class="pi pi-arrow-left text-white font-weight-900"
+          ></span>
+        </span>
+      </button>
+    </div>
+  </section>
+</ng-container>

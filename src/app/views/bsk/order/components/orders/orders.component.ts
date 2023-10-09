@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import * as moment from 'jalali-moment';
 import {
   OrderDetailHeader,
@@ -14,26 +14,40 @@ import { Utils } from 'src/app/shared/utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
+import { ItemsBasketComponent } from '../items-basket/items-basket.component';
+import { CommentModel } from 'src/app/shared/models/comment.model';
+import { CreateNote } from '../notes/create-note';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AdditionComponent } from 'src/app/shared/components/addition/addition.component';
+import { Result } from 'src/app/shared/models/Base/result.model';
+import { OrderDetailComponent } from '../order-detail/order-detail.component';
+import { LicenseComponent } from '../license/license.component';
 type DetailHeader = { value: string | number; key: string };
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss'],
+  providers: [DialogService],
 })
 export class OrdersComponent {
+  @ViewChild(LicenseComponent, { static: false })
+  licenseComponent: LicenseComponent;
+  @ViewChild(OrderDetailComponent, { static: false })
+  orderDetail: OrderDetailComponent;
+  @ViewChild(ItemsBasketComponent, { static: false })
+  itemsInBsk: ItemsBasketComponent;
   openedModalID = 0;
   // private _actionRoute: string = '';
   wannaSeeModal: boolean = false;
   detailOrderArray = new Array<DetailHeader>();
   singleOrder = new SingleOrderModel();
   modalVisible: boolean = false;
-  sidebarVisible: boolean = false;
   isDeviceMedium: boolean = false;
   isHijri: boolean = false;
   isCode: boolean = true;
   page: Page = new Page();
-  filter: FilterModel = new FilterModel();
+  filter = new FilterModel();
   headers = [
     'کد رهگیری',
     'تاریخ ثبت',
@@ -47,6 +61,7 @@ export class OrdersComponent {
   constructor(
     private auth: AuthenticateService,
     private toastr: ToastrService,
+    public dialogService: DialogService,
     private orderService: OrderService,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -71,7 +86,7 @@ export class OrdersComponent {
     this.updateIsMobileValue();
   }
   async getOrders() {
-    this.router.navigateByUrl(`bsk/new-orders/${this.page.pageNumber + 1}`);
+    this.router.navigateByUrl(`bsk/orders/${this.page.pageNumber + 1}`);
     return this.orderService
       .getOrdersNew(this.page, this.filter)
       .pipe(
@@ -106,7 +121,7 @@ export class OrdersComponent {
   //Paginate and Filter
   setPage(pageIndex: number) {
     this.page.pageNumber = pageIndex - 1;
-    this.router.navigateByUrl(`bsk/new-orders/${pageIndex}`);
+    this.router.navigateByUrl(`bsk/orders/${pageIndex}`);
     Utils.scrollTopWindow();
   }
   changeHeaderValue(type: number) {
@@ -144,6 +159,11 @@ export class OrdersComponent {
       this.detailOrderArray = detailComponent.header;
       this.modalVisible = true;
       this.wannaSeeModal = true;
+      setTimeout(() => {
+        this.orderDetail.createInvoiceClass();
+        this.itemsInBsk.makeTable(this.singleOrder.items);
+        this.licenseComponent.createLicenseObj();
+      }, 90);
     }
   }
 
@@ -160,5 +180,107 @@ export class OrdersComponent {
     );
     const finalResult = await lastValueFrom(result);
     return finalResult;
+  }
+  closeModal() {
+    this.modalVisible = false;
+    this.orderService.singleOrderSubject.next(new SingleOrderModel());
+    this.itemsInBsk.ngOnDestroy();
+    this.orderDetail.destroyInvoiceModel();
+    this.licenseComponent.destroyLicenseObj();
+    this.licenseComponent.deleteFile();
+  }
+  refreshPage() {
+    this.modalVisible = false;
+    this.itemsInBsk.ngOnDestroy();
+    this.orderDetail.destroyInvoiceModel();
+    this.licenseComponent.destroyLicenseObj();
+    this.orderService.singleOrderSubject.next(new SingleOrderModel());
+    this.getOrders();
+  }
+
+  // Notes
+  orderID: number = -1;
+  compileNotesComponent = false;
+  sidebarVisible: boolean = false;
+  notes = new Array<CommentModel>();
+  async openNotesComponent(rowID: number, commentCount: number) {
+    this.sidebarVisible = true;
+    if (await this.getNotes(rowID, commentCount)) {
+      this.notes = this.orderService.notes;
+      this.compileNotesComponent = true;
+    }
+  }
+  async getNotes(rowID: number, commentCount: number) {
+    if (commentCount > 0 && this.orderID !== rowID) {
+      this.orderID = rowID;
+      const notesServerRes = this.orderService
+        .getByTableTypeandRowId(0, 123456789, null, rowID, 8, 'Comment')
+        .pipe(
+          map((res) => {
+            if (res.success && res.data.totalCount > 0) {
+              this.orderService.notesOrderSubject.next(res.data.items);
+            }
+            return res.success;
+          })
+        );
+      return lastValueFrom(notesServerRes);
+    } else {
+      if (commentCount == 0) {
+        this.notes = new Array<CommentModel>();
+      }
+      this.orderID = rowID;
+      return false;
+    }
+  }
+  noteText = '';
+  createNote() {
+    let note = new CreateNote(
+      this.noteText,
+      this.auth.currentUserValue,
+      this.orderID
+    );
+    this.openAdditionModal(note.noteToSend);
+  }
+  modalRef: DynamicDialogRef | undefined;
+  openAdditionModal(_note) {
+    this.modalRef = this.dialogService.open(AdditionComponent, {
+      data: {
+        sendingItem: _note,
+        routeOfAction: 'Comment',
+      },
+      header: 'ایجاد',
+      draggable: false,
+    });
+    this.modalRef.onClose.subscribe((res) => {
+      this.modalConfirmed(res);
+    });
+  }
+  modalConfirmed(result: Result<any>) {
+    if (result) {
+      result.success
+        ? this.toastr.success(result.message, '', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          })
+        : this.toastr.error(
+            result.message ||
+              'خطا در برقراری اتصال ! با واحد فناوری تماس بگیرید',
+            '',
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+      this.orderID = -1;
+      this.closeSideBar();
+      this.getOrders();
+      // this.noteText = '';
+    } else {
+      console.log('Denied Or Server Err');
+    }
+  }
+  closeSideBar() {
+    this.sidebarVisible = false;
+    this.noteText = '';
   }
 }

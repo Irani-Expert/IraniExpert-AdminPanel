@@ -1,0 +1,16 @@
+<div class="timeline-card rounded-4 bg-notes shadow-lg card mt-2">
+  <div class="rounded-alt bg-notes-header m-0 p-0">
+    <div class="d-flex justify-content-between">
+      <p class="m-0 p-2 text-white">{{ note.name }}</p>
+    </div>
+  </div>
+  <div class="card-body">
+    <b class="text-black text-small"> {{ note.text }}</b>
+  </div>
+  <div class="text-black mt-2 p-2 pb-0">
+    <small class="m-1">{{ note.jalaliDate }}</small>
+    <small class="m-1">{{
+      note.createDate | date : "  h:mm , yyyy/M/d "
+    }}</small>
+  </div>
+</div>

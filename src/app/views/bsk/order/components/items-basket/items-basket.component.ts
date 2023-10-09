@@ -1,10 +1,18 @@
-import { Component, HostListener, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import {
   C_E_OrderDetailItem,
   SingleOrderModel,
   TableModel,
 } from '../../models/orders-new.model';
-import { BehaviorSubject } from 'rxjs';
+
+import { BehaviorSubject, Observable, lastValueFrom, map } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Result } from 'src/app/shared/models/Base/result.model';
@@ -14,6 +22,8 @@ import { DeleteComponent } from 'src/app/shared/components/delete/delete.compone
 import { AdditionComponent } from 'src/app/shared/components/addition/addition.component';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { Utils } from 'src/app/shared/utils';
+import { OrderService } from '../../services/order.service';
+import { PlanService } from 'src/app/views/bas/plan/plan.service';
 
 type DetailHeader = { value: string | number; key: string };
 type OrderDetailItem = {
@@ -41,37 +51,65 @@ enum ActionTypes {
   DELETE = 'DELETE',
   ADD = 'ADD',
 }
+enum Sessions {
+  WatchAndEdit = 'Watch and Edit',
+  ADD = 'Addition',
+}
+class PlanOption {
+  title = '';
+  id = 0;
+  price = 0;
+}
 const Action = ActionTypes;
-
 @Component({
   selector: 'app-items-basket',
   templateUrl: './items-basket.component.html',
   styleUrls: ['./items-basket.component.scss'],
   providers: [DialogService],
 })
-export class ItemsBasketComponent {
+export class ItemsBasketComponent implements OnDestroy {
+  selectedPlanOption = new PlanOption();
+  isPlanOptionsExist = false;
+  productID = 0;
+  planId = 0;
+  planOptions = new Array<PlanOption>();
+  selectedAddType: any = null;
+  addTypes = [
+    {
+      tableType: 6,
+      name: 'پلن',
+      key: 'plan',
+      disabled: true,
+    },
+    {
+      tableType: 17,
+      name: 'پلن آپشن',
+      key: 'planOption',
+      disabled: false,
+    },
+  ];
+  session = Sessions.WatchAndEdit;
+  @Output() result = new EventEmitter<boolean>(false);
+  isTableCreated: boolean = false;
   @Input('id') openedModalID = 0;
-  @Input('data') singleOrder = new SingleOrderModel();
+  data: SingleOrderModel = new SingleOrderModel();
   isDeviceMedium: boolean = false;
   constructor(
+    private planService: PlanService,
+    private orderService: OrderService,
     public dialogService: DialogService,
     private toastr: ToastrService,
     private auth: AuthenticateService
-  ) {}
-  ngOnInit() {
-    this.makeTable(this.singleOrder.items);
-    this.updateIsMobileValue();
+  ) {
+    this.selectedAddType = this.addTypes[1];
   }
+
   updateIsMobileValue() {
     if (Utils.isLMonitor()) {
       this.isDeviceMedium = true;
     } else {
       this.isDeviceMedium = false;
     }
-  }
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.updateIsMobileValue();
   }
 
   private _actionRoute: string = '';
@@ -100,6 +138,10 @@ export class ItemsBasketComponent {
 
   basketTable = new TableModel<Array<OrderDetailItem>>();
 
+  async ngOnInit() {
+    // this.makeTable(this.data.items);
+    this.updateIsMobileValue();
+  }
   get selectedBskItem() {
     return this.itemToChange.value;
   }
@@ -109,24 +151,39 @@ export class ItemsBasketComponent {
     this.basketFinalPrices.push(
       {
         key: 'totalPrice',
-        value: this.singleOrder.orderDetails.totalPrice,
+        value: this.orderService.singleOrderValue.orderDetails.totalPrice,
       },
       {
         key: 'discountPrice',
-        value: this.singleOrder.orderDetails.discountPrice,
+        value: this.orderService.singleOrderValue.orderDetails.discountPrice,
       },
       {
         key: 'toPayPrice',
-        value: this.singleOrder.orderDetails.toPayPrice,
+        value: this.orderService.singleOrderValue.orderDetails.toPayPrice,
       }
     );
+    this.isTableCreated = true;
   }
   async makeTable(tableItems: Array<OrderDetailItem>) {
+    let findProductIndex = tableItems.findIndex((it) => it.tableType == 6);
+    let findPlanIndex = tableItems.findIndex((it) => it.tableType == 17);
+    if (findPlanIndex >= 0) {
+      this.planId = tableItems[findPlanIndex].rowID;
+    }
+    if (findProductIndex >= 0) {
+      this.productID = tableItems[findProductIndex].rowID;
+    }
     this.basketTable = {
       data: tableItems,
       headers: Object.keys(tableItems[0]),
     };
     this.basketCardMaker();
+    if (this.planId > 0) {
+      if (await this.getPlans()) {
+        await this.getPlanOptions();
+      }
+    }
+
     return true;
   }
   setSelectingItem(item: OrderDetailItem) {
@@ -136,7 +193,7 @@ export class ItemsBasketComponent {
   // Actions Modal
   ref: DynamicDialogRef | undefined;
   async openActionsDialog(label: string, action: string) {
-    let details = this.singleOrder.orderDetails;
+    let details = this.orderService.singleOrderValue.orderDetails;
     let _itemToChange = new C_E_OrderDetailItem(
       this.selectedBskItem,
       this.getArgsToC_E(details)
@@ -184,15 +241,9 @@ export class ItemsBasketComponent {
               positionClass: 'toast-top-left',
             }
           );
+      this.result.emit(true);
     } else {
-      this.toastr.error(
-        result.message || 'خطا در برقراری اتصال ! با واحد فناوری تماس بگیرید',
-        '',
-        {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        }
-      );
+      console.log('Denied Or Server Err');
     }
   }
   getActionComponent(action: string) {
@@ -205,7 +256,7 @@ export class ItemsBasketComponent {
       return DeleteComponent;
     }
     if (action == 'ADD') {
-      this._actionRoute = 'OrderNew/CreateOrderAdminAccess';
+      this._actionRoute = 'OrderItemNew/InsertOrderItemAdminAccess';
       return AdditionComponent;
     }
   }
@@ -241,5 +292,107 @@ export class ItemsBasketComponent {
       orderID: this.openedModalID,
     };
     return args;
+  }
+
+  ngOnDestroy() {
+    this.isTableCreated = false;
+    this.basketTable = new TableModel<Array<OrderDetailItem>>();
+    this.basketFinalPrices = new Array<DetailHeader>();
+    this.planOptions = new Array<PlanOption>();
+    this.selectedPlanOption = null;
+    this.session = Sessions.WatchAndEdit;
+    this.itemToChange.next(itemToChangeInit);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateIsMobileValue();
+  }
+  // Addittion Section
+  async getPlans() {
+    const plansResult = this.planService
+      .getPlanByProductId(this.productID)
+      .pipe(
+        map((res) => {
+          if (res.success) {
+            // if (res.data.length > 0) {
+            //   this.isPlanOptionsExist = true;
+            // }
+
+            this.planService.plans$.next(res.data);
+          }
+          return res;
+        })
+      );
+    return await lastValueFrom(plansResult);
+  }
+  async getPlanOptions() {
+    if (await this.pushPlansToArray()) {
+      this.selectedPlanOption = this.planOptions[0];
+      setTimeout(() => {
+        this.isPlanOptionsExist = true;
+      }, 200);
+      return true;
+    } else {
+      return false;
+    }
+  }
+  async pushPlansToArray() {
+    let value = false;
+    if (this.planService.plansOfProductId) {
+      let plans = this.planService.plansOfProductId;
+      let plan = plans.find((it) => it.id == this.planId);
+      if (plan) {
+        if (plan.planOptions) {
+          plan.planOptions.forEach((planOption) => {
+            this.planOptions.push({
+              id: planOption.id,
+              price: planOption.price,
+              title: planOption.title,
+            });
+          });
+          return !value;
+        }
+      } else {
+        return value;
+      }
+    } else {
+      return !value;
+    }
+    return false;
+  }
+  changeSession() {
+    if (this.session == Sessions.WatchAndEdit) {
+      this.session = Sessions.ADD;
+      let itemToChange = { ...itemToChangeInit };
+      itemToChange.unitPrice = this.selectedPlanOption.price;
+      itemToChange.count = 1;
+      itemToChange.rowID = this.selectedPlanOption.id;
+      itemToChange.totalPrice = itemToChange.count * itemToChange.unitPrice;
+      itemToChange.toPayPrice = itemToChange.totalPrice;
+      itemToChange.tableType = 16;
+      this.itemToChange.next(itemToChange);
+    } else {
+      this.session = Sessions.WatchAndEdit;
+      this.itemToChange.next(itemToChangeInit);
+    }
+  }
+  discountPrice = 0;
+  changeInput(label: string) {
+    let sub = this.itemToChange.subscribe({
+      next: (res) => {
+        res[label] = this.discountPrice;
+        res.toPayPrice = res.totalPrice - this.discountPrice;
+      },
+      complete: () => {
+        sub.unsubscribe();
+      },
+    });
+  }
+  changeDropDown(event) {
+    if (event.value) {
+      this.discountPrice = 0;
+      this.changeInput('discountPrice');
+    }
   }
 }

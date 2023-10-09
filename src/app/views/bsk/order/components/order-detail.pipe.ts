@@ -89,11 +89,12 @@ export class OrderDetailPipe implements PipeTransform {
         } else {
           val.key = 'ورژن لایسنس';
         }
+        break;
       case 'licenseID':
         isSpliced = true;
         break;
       case 'invoiceID':
-        isSpliced = true;
+        val.key = 'شناسه فاکتور';
         break;
       case 'peresentorFName':
         val.key = 'نام معرف';

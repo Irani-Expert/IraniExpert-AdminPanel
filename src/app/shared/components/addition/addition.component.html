@@ -1,1 +1,17 @@
-<p>addition works!</p>
+<p>آیا از ایجاد این رکورد مطمئن هستید ؟</p>
+<p-button
+  (click)="closeModal(true)"
+  dir="ltr"
+  label="بله"
+  icon="pi pi-check"
+  styleClass="p-button-raised p-button-success p-button-sm mt-4 mx-2"
+  iconPos="right"
+></p-button>
+<p-button
+  (click)="closeModal(false)"
+  dir="ltr"
+  label="خیر"
+  icon="pi pi-times"
+  styleClass="p-button-raised p-button-danger p-button-sm mt-4 mx-2"
+  iconPos="right"
+></p-button>

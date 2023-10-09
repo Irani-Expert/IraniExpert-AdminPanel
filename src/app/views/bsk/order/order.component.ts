@@ -17,7 +17,6 @@ import { Utils } from 'src/app/shared/utils';
 import { CommentService } from '../../shr/all-comment/comment.service';
 import { InvoiceModel } from './models/invoice.model';
 import { InvoiceService } from './services/invoice.service';
-import { CliamxLicenseModel } from './models/cliamaxLicense.model';
 import { LicenseModel } from './models/license.model';
 import { LicenseService } from './services/license.service';
 import { OrderModel } from './models/order.model';
@@ -161,8 +160,7 @@ export class OrderComponent implements OnInit {
     private _decimalPipe: DecimalPipe,
     private _route: ActivatedRoute,
     private _router: Router,
-    private spinner: NgxSpinnerService,
-
+    private spinner: NgxSpinnerService
   ) {
     this.page.pageNumber = 1;
     this.page.size = 6;
@@ -384,8 +382,7 @@ export class OrderComponent implements OnInit {
   uploadFile() {
     this.spinner.show();
 
-
-    let token ='' 
+    let token = '';
     this._fileUploaderService
       .uploadLicence(this.licenseFile, 'licenses')
       .subscribe((res: Result<string[]>) => {
@@ -662,7 +659,7 @@ export class OrderComponent implements OnInit {
       );
   }
 
-  addOrUpdate(item: LicenseModel, _climax: CliamxLicenseModel) {
+  addOrUpdate(item: LicenseModel, _climax: any) {
     if (this.licenseID == null) {
       item = new LicenseModel();
     }

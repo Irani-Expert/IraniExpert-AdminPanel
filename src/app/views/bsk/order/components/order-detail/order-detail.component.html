@@ -1,18 +1,51 @@
-<div class="d-flex flex-row flex-wrap">
-  <ng-container *ngFor="let detail of detailOrderArray | orderDetail">
-    <!-- Each Value -->
-    <div class="d-flex flex-column mr-4 mb-1">
-      <div class="d-flex align-items-center justify-content-start mb-1">
-        <span
-          class="pi pi-circle-fill text-light m-1"
-          style="font-size: 0.82rem"
-        ></span
-        ><strong class="my-1 text-small">{{ detail.key }}</strong>
+<section class="d-flex gap-custom flex-column flex-wrap">
+  <!-- Details of Order -->
+  <div class="d-flex flex-row flex-wrap">
+    <ng-container *ngFor="let detail of detailOrderArray | orderDetail">
+      <!-- Each Value -->
+      <div class="d-flex flex-column mr-4 mb-1">
+        <div class="d-flex align-items-center justify-content-start mb-1">
+          <span
+            class="pi pi-circle-fill text-light m-1"
+            style="font-size: 0.82rem"
+          ></span
+          ><strong class="my-1 text-small">{{ detail.key }}</strong>
+        </div>
+        <span class="card py-2 px-4 radius bg-light"
+          ><strong class="text-small">{{ detail.value }}</strong></span
+        >
       </div>
-      <span class="card py-2 px-4 radius bg-light"
-        ><strong class="text-small">{{ detail.value }}</strong></span
-      >
+      <!-- Each Value -->
+    </ng-container>
+  </div>
+  <!-- Details of Order -->
+
+  <!-- Change The Status -->
+  <div class="row m-0 p-0 align-items-end w-100" *ngIf="invoiceCreated">
+    <div class="col-8 col-sm-6 col-md-5 col-lg-4">
+      <strong class="text-14 font-weight-500">تغییر وضعیت پرداخت</strong>
+      <p-dropdown
+        (onChange)="changeDropDown($event)"
+        class="p-dropdown-flex"
+        [options]="invoice.statusOption"
+        [(ngModel)]="currentInvoiceStatus"
+        optionLabel="title"
+      ></p-dropdown>
     </div>
-    <!-- Each Value -->
-  </ng-container>
-</div>
+    <div
+      class="col-auto gap-custom flex-row m-0 p-0 flex-wrap"
+      *ngIf="invoiceStatusChanged"
+    >
+      <p-button
+        (click)="action('confirm')"
+        styleClass="p-button-rounded p-button-success m-1  text-small p-btn-small"
+        icon="pi pi-check"
+      ></p-button>
+      <p-button
+        (click)="action('deny')"
+        styleClass="p-button-rounded p-button-danger m-1 text-small p-btn-small"
+        icon="pi pi-times"
+      ></p-button>
+    </div>
+  </div>
+</section>

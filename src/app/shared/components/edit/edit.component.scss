@@ -46,4 +46,15 @@ input {
     color: rgb(45 45 45 / 50%);
     background: #a8a8a89f;
   }
+  &:focus {
+    outline: 0 !important;
+
+    border: 1px solid #97b1cb !important;
+    box-shadow: none !important;
+  }
+  &:focus-visible {
+    outline: 0 !important;
+    border: 1px solid #97b1cb !important;
+    box-shadow: none !important;
+  }
 }

@@ -7,7 +7,7 @@ import {
 } from '@angular/common';
 import { BskRoutingModule } from './bsk.routing';
 import { NgxPaginationModule } from 'ngx-pagination';
-// import { OrderComponent } from './order/order.component';
+import { OrderComponent } from './order/order.component';
 import { TransactionStatusPipe } from 'src/app/shared/pipes/transaction-status.pipe';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { PaymentStatusPipe } from 'src/app/shared/pipes/payment-status.pipe';
@@ -17,12 +17,12 @@ import { IsConfirmedPipe } from 'src/app/shared/pipes/is-confirmed.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { UserOrderComponent } from './user-order/user-order.component';
 // import { TreeModule } from 'primeng/tree';
 import { OrdersComponent } from './order/components/orders/orders.component';
 import { DragScrollModule } from 'ngx-drag-scroll';
+import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { DialogModule } from 'primeng/dialog';
@@ -35,10 +35,18 @@ import { InputTextModule } from 'primeng/inputtext';
 import { EditComponent } from 'src/app/shared/components/edit/edit.component';
 import { OrderDetailComponent } from './order/components/order-detail/order-detail.component';
 import { ItemsBasketComponent } from './order/components/items-basket/items-basket.component';
-
+import { DeleteComponent } from 'src/app/shared/components/delete/delete.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { AdditionComponent } from 'src/app/shared/components/addition/addition.component';
+import { NotesComponent } from './order/components/notes/notes.component';
+import { LicenseComponent } from './order/components/license/license.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [
-    // OrderComponent,
+    OrderComponent,
+    NotesComponent,
     TransactionStatusPipe,
     PaymentStatusPipe,
     BankTypePipe,
@@ -49,11 +57,18 @@ import { ItemsBasketComponent } from './order/components/items-basket/items-bask
     OrdersComponent,
     TableHeaderPipe,
     EditComponent,
+    DeleteComponent,
     OrderDetailComponent,
     ItemsBasketComponent,
+    AdditionComponent,
+    LicenseComponent,
   ],
   imports: [
+    CalendarModule,
+    InputNumberModule,
+    DropdownModule,
     InputTextModule,
+    RadioButtonModule,
     DynamicDialogModule,
     ContextMenuModule,
     SidebarModule,
@@ -66,10 +81,10 @@ import { ItemsBasketComponent } from './order/components/items-basket/items-bask
     BskRoutingModule,
     NgxPaginationModule,
     SharedPipesModule,
-    PerfectScrollbarModule,
     SharedDirectivesModule,
     DialogModule,
     TabViewModule,
+    NgxSpinnerModule,
   ],
   providers: [
     FileUploaderService,

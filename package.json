@@ -1,6 +1,6 @@
 {
-  "name": "gull",
-  "version": "13.0.0",
+  "name": "IE-Panel",
+  "version": "22.02.08",
   "license": "https://themeforest.net/licenses/terms/regular",
   "scripts": {
     "ng": "ng",

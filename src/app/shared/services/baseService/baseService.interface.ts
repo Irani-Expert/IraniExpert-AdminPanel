@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs';
-import { FilterModel } from '../../models/Base/filter.model';
 import { Paginate } from '../../models/Base/paginate.model';
 import { Result } from '../../models/Base/result.model';
 
@@ -26,4 +25,12 @@ export interface IBaseService<T, ID> {
     route: string
   ): Observable<Result<Paginate<T[]>>>;
   delete(id: number, route: string): Observable<Result<T>>;
+  getByTableTypeandRowId(
+    pageIndex: number,
+    pageSize: number,
+    filter: string,
+    rowID: number,
+    tableType: number,
+    route: string
+  );
 }
