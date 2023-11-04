@@ -1,23 +1,26 @@
-import { Base } from 'src/app/shared/models/Base/base.model';
 import { IAddOrder } from './AddOrder.interface';
 
-
-export class AddOrderModel extends Base implements IAddOrder {
-  id:number=0;
-  orderID: number=0;
-  isActive: boolean=true;
-  userID: number;
-  token: string;
-  productID: number;
-  planID: number;
-  price: number;
-  email: string;
+export class AddOrderModel implements IAddOrder {
+  orderItems: [
+    { tableType: number; rowID: number; count: number; price: number }
+  ];
   accountNumber: string;
+  acceptRules: true;
+  startDate: string;
+  transactionCode: string;
+  discountCode: string;
+  token: string;
+  totalPrice: number;
+  userID: number;
+  discountPrice: number;
+  toPayPrice: number;
+  paymentStatus: number;
+  clientID: number;
+  code: string;
+  transactionStatus: number;
+  ipAddress: string;
+  email: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  transactionCode: string;
-  discountPrice: number;
-  bankType: number=0;
-  isGenerated:boolean=false;
 }

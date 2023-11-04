@@ -1,0 +1,196 @@
+<div class="position-relative">
+  <div class="mb-3">
+    <p-selectButton
+      (onChange)="changeAddType()"
+      [options]="addTypeOptions"
+      [(ngModel)]="value"
+      optionLabel="icon"
+      dir="ltr"
+    >
+      <ng-template let-item pTemplate>
+        <span
+          tooltipPosition="top"
+          [pTooltip]="item.toolTip"
+          [class]="item.icon"
+          style="font-size: 0.87rem"
+        ></span>
+      </ng-template>
+    </p-selectButton>
+  </div>
+  <ng-container *ngIf="view == 1">
+    <div class="row gap-custom m-0 p-0 flex-wrap align-items-center w-100">
+      <span class="col-12 p-0 my-2">
+        <strong class="section-title">انتخاب کاربر</strong>
+      </span>
+      <div class="d-inline-flex align-items-center">
+        <span class="pi pi-search text-small mx-1"></span
+        ><strong class="text-small mx-1">جستجو کاربر بر اساس</strong>
+      </div>
+      <div
+        *ngFor="let type of searchTypes"
+        class="col-auto d-inline-flex flex-row flex-wrap align-items-center mx-1"
+      >
+        <p-radioButton
+          [(ngModel)]="selectedSearchType"
+          [inputId]="type.name"
+          name="type"
+          [value]="type"
+          (onClick)="changeSearchType($event.value)"
+        ></p-radioButton>
+        <label [for]="type.name" class="ml-2 mt-2 font-weight-900 text-small">{{
+          type.name
+        }}</label>
+      </div>
+    </div>
+    <div class="col-6 col-md-5 col-lg-3 col-xl-2 p-0 my-2">
+      <p-dropdown
+        (onFilter)="filterUser($event)"
+        [options]="dropDownItems"
+        optionDisabled="inactive"
+        [(ngModel)]="selectedUser"
+        optionLabel="name"
+        emptyFilterMessage=" "
+        emptyMessage=" "
+        [filter]="true"
+        [filterBy]="searchType == 0 ? 'id' : 'name'"
+        [showClear]="true"
+        placeholder="جستجو {{ selectedSearchType.name }}..."
+      >
+        <ng-template pTemplate="selectedItem">
+          <div
+            class="d-flex align-items-center gap-custom"
+            *ngIf="selectedUser"
+          >
+            <span class="pi pi-user"></span>
+            <div>{{ selectedUser.id }}&nbsp;-&nbsp;{{ selectedUser.name }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-user pTemplate="item">
+          <div class="d-flex align-items-center gap-custom">
+            <span class="pi pi-user"></span>
+            <div>{{ user.id }}&nbsp;-&nbsp;{{ user.name }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+  </ng-container>
+  <hr class="m-0" *ngIf="view == 1" />
+  <div class="row m-0 p-0 gap-custom position-relative">
+    <span class="col-12 p-0 d-flex my-2"
+      ><strong class="section-title">انتخاب محصول و پلن آن</strong></span
+    >
+    <div class="col-6 col-md-5 col-lg-3 col-xl-2 p-0 my-2">
+      <p-dropdown
+        [options]="products"
+        optionLabel="title"
+        (onChange)="changeProduct($event.value)"
+        emptyMessage=" "
+        placeholder="انتخاب محصول"
+      >
+        <ng-template let-product pTemplate="item">
+          <div class="d-flex align-items-center gap-custom">
+            <span
+              ><img
+                style="
+                  width: 35px;
+                  height: auto;
+                  aspect-ratio: 3/4;
+                  object-fit: contain;
+                "
+                loading="lazy"
+                [src]="'https://dl.iraniexpert.com/' + product.cardImagePath"
+                [alt]="product.title"
+            /></span>
+            <div>{{ product.id }}&nbsp;-&nbsp;{{ product.title }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div
+      *ngIf="plans.length > 0"
+      class="col-6 col-md-5 col-lg-3 col-xl-2 p-0 my-2"
+    >
+      <p-dropdown
+        (onChange)="changePlan($event.value)"
+        [options]="plans"
+        optionLabel="title"
+        emptyMessage=" "
+        placeholder="انتخاب پلن"
+      >
+        <ng-template let-plan pTemplate="item">
+          <div class="d-flex align-items-center gap-custom">
+            <div>
+              {{ plan.id }}&nbsp;-&nbsp;{{ plan.title }}&nbsp;-&nbsp;{{
+                plan.planType | planType
+              }}
+            </div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div
+      *ngIf="planOptions.length > 0"
+      class="col-6 col-md-5 col-lg-3 p-0 my-2"
+    >
+      <p-multiSelect
+        (onChange)="changePlanOptions($event.value)"
+        display="chip"
+        [options]="planOptions"
+        [(ngModel)]="selectedPlanOptions"
+        optionLabel="title"
+      ></p-multiSelect>
+    </div>
+    <div class="position-absolute shop-cart">
+      <div class="position-relative">
+        <button
+          type="button"
+          class="p-0 shop-cart-icon border-0 shadow-lg rounded-circle"
+          style="cursor: pointer"
+        >
+          <span class="p-2 d-inline-flex">
+            <span class="pi pi-cart-plus shop-icon text-dark"></span>
+          </span>
+        </button>
+        <span class="counter-container"
+          ><strong>{{ orderService.basketItemsToAdd.length }}</strong></span
+        >
+      </div>
+    </div>
+  </div>
+  <form class="position-relative" (ngSubmit)="emit()" [formGroup]="addOrder">
+    <div class="row align-items-center gap-custom mx-0 p-0 my-4">
+      <ng-container *ngFor="let control of formControls">
+        <div class="d-flex flex-column my-3 my-md-1 p-0" *ngIf="control.show">
+          <span class="p-float-label">
+            <input
+              pInputText
+              [id]="control.name"
+              formControlName="{{ control.name }}"
+            />
+            <label [htmlFor]="control.name">{{ control.label }}</label>
+          </span>
+        </div>
+      </ng-container>
+    </div>
+    <p-button
+      [disabled]="addOrder.invalid"
+      type="submit"
+      dir="ltr"
+      label="ایجاد"
+      icon="pi pi-plus"
+      styleClass="p-button-raised p-button-sm"
+      iconPos="right"
+    ></p-button>
+  </form>
+  <div class="position-absolute" style="left: 0; top: 0">
+    <button
+      (click)="dismiss()"
+      type="button"
+      class="close bg-light rounded-circle"
+    >
+      <span class="p-2 d-inline-flex">
+        <span class="pi pi-arrow-left back-icon"></span>
+      </span>
+    </button>
+  </div>
+</div>

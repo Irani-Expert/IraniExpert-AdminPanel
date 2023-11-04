@@ -22,8 +22,12 @@ import { AdditionComponent } from 'src/app/shared/components/addition/addition.c
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { LicenseComponent } from '../license/license.component';
+import { ProductModel } from 'src/app/views/prd/products-list/product.model';
 type DetailHeader = { value: string | number; key: string };
-
+enum View {
+  ViewAll,
+  Add,
+}
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -31,6 +35,8 @@ type DetailHeader = { value: string | number; key: string };
   providers: [DialogService],
 })
 export class OrdersComponent {
+  products = new Array<ProductModel>();
+  view = View.ViewAll;
   @ViewChild(LicenseComponent, { static: false })
   licenseComponent: LicenseComponent;
   @ViewChild(OrderDetailComponent, { static: false })
@@ -83,6 +89,7 @@ export class OrdersComponent {
         this.getOrders();
       }
     });
+    this.getProducts();
     this.updateIsMobileValue();
   }
   async getOrders() {
@@ -282,5 +289,17 @@ export class OrdersComponent {
   closeSideBar() {
     this.sidebarVisible = false;
     this.noteText = '';
+  }
+  addOrder(event: boolean) {
+    console.log(event);
+    if (event) console.log('z');
+    else this.view = 0;
+  }
+  async getProducts() {
+    if (await this.orderService.getProducts()) {
+      this.products = this.orderService.productValue;
+    } else {
+      console.log('Get Product Failed');
+    }
   }
 }

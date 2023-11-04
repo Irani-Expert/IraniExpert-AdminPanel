@@ -1,168 +1,175 @@
-<p-button
-  dir="ltr"
-  label="ایجاد سفارش"
-  icon="pi pi-plus"
-  styleClass="p-button-raised p-button-sm"
-  iconPos="right"
-></p-button>
-<div
-  id="firstSection"
-  class="row p-0 m-0 g-0 justify-content-center align-items-start"
->
-  <div class="content col-12">
-    <div class="table-responsive custom-table-responsive">
-      <drag-scroll
-        style="width: 100%; height: auto"
-        [ngStyle]="{ cursor: isDeviceMedium ? 'grab' : 'unset' }"
-      >
-        <table class="table custom-table">
-          <thead>
-            <tr>
-              <ng-container *ngFor="let header of table.headers; let i = index">
-                <th
-                  [style]="
-                    i == table.headers.length - 1
-                      ? 'text-align:center'
-                      : 'text-align:start'
-                  "
+<ng-container *ngIf="view == 0">
+  <p-button
+    dir="ltr"
+    (click)="view = 1"
+    label="ایجاد سفارش"
+    icon="pi pi-plus"
+    styleClass="p-button-raised p-button-sm"
+    iconPos="right"
+  ></p-button>
+  <div
+    id="firstSection"
+    class="row p-0 m-0 g-0 justify-content-center align-items-start"
+  >
+    <div class="content col-12">
+      <div class="table-responsive custom-table-responsive">
+        <drag-scroll
+          style="width: 100%; height: auto"
+          [ngStyle]="{ cursor: isDeviceMedium ? 'grab' : 'unset' }"
+        >
+          <table class="table custom-table">
+            <thead>
+              <tr>
+                <ng-container
+                  *ngFor="let header of table.headers; let i = index"
                 >
-                  <span class="mr-1">{{ header }}</span>
-                  <ng-container *ngIf="i <= 1">
-                    <span
-                      (click)="changeHeaderValue(i)"
-                      class="pi pi-arrow-right-arrow-left ml-1 p-1 bg-light cursor-pointer rounded-circle"
-                      style="font-size: 0.78rem"
-                    ></span>
-                  </ng-container>
-                </th>
-              </ng-container>
-            </tr>
-          </thead>
-          <tbody>
-            <ng-container
-              *ngFor="
-                let data of table.data
-                  | paginate
-                    : {
-                        itemsPerPage: page.size,
-                        currentPage: page.currentPage,
-                        totalItems: page.totalElements
-                      }
-              "
-            >
-              <tr scope="row">
-                <td>
-                  <span>{{ isCode ? data.code : data.id }}</span>
-                </td>
-                <td>
-                  <span>
-                    {{
-                      isHijri
-                        ? data.hijriCreateDate
-                        : (data.createDate | date : "yyyy/M/d")
-                    }}
-                  </span>
-                </td>
-                <td>
-                  <span>{{ data.accountNumber }}</span>
-                </td>
-                <td>
-                  <span>{{ data.firstName }}&nbsp;{{ data.lastName }}</span>
-                </td>
-                <td>
-                  <span>{{ data.productTitle }}<br />{{ data.planTitle }}</span>
-                </td>
-                <td>
-                  <div class="td-oprations">
-                    <button
-                      (click)="showModalDialog(data.id)"
-                      ngbTooltip="جزئیات سفارش"
-                      [openDelay]="50"
-                      [closeDelay]="150"
-                      class="btn-details btn rounded-circle"
-                    >
-                      <i class="i-Information"></i>
-                    </button>
-                    <span
-                      placement="bottom"
-                      ngbTooltip="یادداشت ها"
-                      [openDelay]="50"
-                      [closeDelay]="150"
-                      style="
-                        width: 32px;
-                        height: 32px;
-                        padding-top: 2.5px;
-                        cursor: pointer;
-                      "
-                      (click)="openNotesComponent(data.id, data.commentCount)"
-                      class="bg-light card position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
-                    >
-                      <i class="i-Pen-5" style="font-size: 1.2rem"></i>
+                  <th
+                    [style]="
+                      i == table.headers.length - 1
+                        ? 'text-align:center'
+                        : 'text-align:start'
+                    "
+                  >
+                    <span class="mr-1">{{ header }}</span>
+                    <ng-container *ngIf="i <= 1">
                       <span
-                        style="padding-top: 7px"
-                        class="top-left-card top-0 start-100 translate-middle badge rounded-pill btn-details text-dark"
-                      >
-                        {{ data.commentCount }}
-                      </span>
+                        (click)="changeHeaderValue(i)"
+                        class="pi pi-arrow-right-arrow-left ml-1 p-1 bg-light cursor-pointer rounded-circle"
+                        style="font-size: 0.78rem"
+                      ></span>
+                    </ng-container>
+                  </th>
+                </ng-container>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container
+                *ngFor="
+                  let data of table.data
+                    | paginate
+                      : {
+                          itemsPerPage: page.size,
+                          currentPage: page.currentPage,
+                          totalItems: page.totalElements
+                        }
+                "
+              >
+                <tr scope="row">
+                  <td>
+                    <span>{{ isCode ? data.code : data.id }}</span>
+                  </td>
+                  <td>
+                    <span>
+                      {{
+                        isHijri
+                          ? data.hijriCreateDate
+                          : (data.createDate | date : "yyyy/M/d")
+                      }}
                     </span>
-                  </div>
-                </td>
-              </tr>
-              <tr class="spacer">
-                <td colspan="100"></td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
-      </drag-scroll>
+                  </td>
+                  <td>
+                    <span>{{ data.accountNumber }}</span>
+                  </td>
+                  <td>
+                    <span>{{ data.firstName }}&nbsp;{{ data.lastName }}</span>
+                  </td>
+                  <td>
+                    <span
+                      >{{ data.productTitle }}<br />{{ data.planTitle }}</span
+                    >
+                  </td>
+                  <td>
+                    <div class="td-oprations">
+                      <button
+                        (click)="showModalDialog(data.id)"
+                        ngbTooltip="جزئیات سفارش"
+                        [openDelay]="50"
+                        [closeDelay]="150"
+                        class="btn-details btn rounded-circle"
+                      >
+                        <i class="i-Information"></i>
+                      </button>
+                      <span
+                        placement="bottom"
+                        ngbTooltip="یادداشت ها"
+                        [openDelay]="50"
+                        [closeDelay]="150"
+                        style="
+                          width: 32px;
+                          height: 32px;
+                          padding-top: 2.5px;
+                          cursor: pointer;
+                        "
+                        (click)="openNotesComponent(data.id, data.commentCount)"
+                        class="bg-light card position-relative rounded-circle d-flex justify-content-center m-1 align-items-center"
+                      >
+                        <i class="i-Pen-5" style="font-size: 1.2rem"></i>
+                        <span
+                          style="padding-top: 7px"
+                          class="top-left-card top-0 start-100 translate-middle badge rounded-pill btn-details text-dark"
+                        >
+                          {{ data.commentCount }}
+                        </span>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="spacer">
+                  <td colspan="100"></td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </drag-scroll>
+      </div>
+    </div>
+    <div class="col-md-12 mt-3" *ngIf="page.totalElements >= 12">
+      <pagination-controls
+        (pageChange)="setPage($event)"
+        previousLabel=""
+        nextLabel=""
+        responsive="true"
+      ></pagination-controls>
     </div>
   </div>
-  <div class="col-md-12 mt-3" *ngIf="page.totalElements >= 12">
-    <pagination-controls
-      (pageChange)="setPage($event)"
-      previousLabel=""
-      nextLabel=""
-      responsive="true"
-    ></pagination-controls>
-  </div>
-</div>
-<p-sidebar
-  (onHide)="closeSideBar()"
-  [(visible)]="sidebarVisible"
-  position="left"
->
-  <div>
-    <form (keydown.enter)="createNote()" (ngSubmit)="createNote()">
-      <div class="row g-0 p-0 m-0">
-        <div class="col-12 form-group mb-3 mt-3">
-          <label class="text-white" for="text">ایجاد یادداشت</label>
-          <textarea
-            name="text"
-            id="text"
-            type="text"
-            [(ngModel)]="noteText"
-            class="form-control bg-white text-dark textarea-font"
-          ></textarea>
+  <p-sidebar
+    (onHide)="closeSideBar()"
+    [(visible)]="sidebarVisible"
+    position="left"
+  >
+    <div>
+      <form (keydown.enter)="createNote()" (ngSubmit)="createNote()">
+        <div class="row g-0 p-0 m-0">
+          <div class="col-12 form-group mb-3 mt-3">
+            <label class="text-white" for="text">ایجاد یادداشت</label>
+            <textarea
+              name="text"
+              id="text"
+              type="text"
+              [(ngModel)]="noteText"
+              class="form-control bg-white text-dark textarea-font"
+            ></textarea>
+          </div>
         </div>
-      </div>
-      <div class="d-flex justify-content-end mr-3">
-        <button
-          type="submit"
-          class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-2"
-        >
-          <span class="pi pi-plus mr-2"></span
-          ><strong class="text-smaller">ایجاد</strong>
-        </button>
-      </div>
-    </form>
+        <div class="d-flex justify-content-end mr-3">
+          <button
+            type="submit"
+            class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-2"
+          >
+            <span class="pi pi-plus mr-2"></span
+            ><strong class="text-smaller">ایجاد</strong>
+          </button>
+        </div>
+      </form>
 
-    <ng-container *ngIf="compileNotesComponent">
-      <ng-container *ngFor="let note of notes">
-        <app-notes [data]="note"></app-notes>
+      <ng-container *ngIf="compileNotesComponent">
+        <ng-container *ngFor="let note of notes">
+          <app-notes [data]="note"></app-notes>
+        </ng-container>
       </ng-container>
-    </ng-container>
-  </div>
-</p-sidebar>
+    </div>
+  </p-sidebar>
+</ng-container>
 <ng-container *ngIf="wannaSeeModal">
   <p-dialog
     [closable]="false"
@@ -231,4 +238,7 @@
       </div>
     </ng-template>
   </p-dialog>
+</ng-container>
+<ng-container *ngIf="view == 1">
+  <app-add-order (output)="addOrder($event)"></app-add-order>
 </ng-container>

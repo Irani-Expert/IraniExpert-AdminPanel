@@ -61,7 +61,7 @@ export class UserProfileComponent implements OnInit {
   userInfo(userId: number) {
     this._order.getUserbyUserId(userId).subscribe((data) => {
       if (data.success) {
-        this.addUpdate = data['data'];
+        this.addUpdate = data.data[0];
         this.isDataFetched = true;
       } else {
       }

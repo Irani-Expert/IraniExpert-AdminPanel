@@ -687,3 +687,44 @@ Buttons
 .p-datepicker {
   direction: ltr !important;
 }
+.p-tooltip-text {
+  font-size: 0.75rem !important;
+}
+.p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+  padding-right: 1.75rem;
+  margin-right: 0;
+}
+.p-float-label label {
+  right: 4%;
+}
+.p-multiselect-panel .p-multiselect-header {
+  padding: 0.5rem 0;
+}
+.p-multiselect .p-multiselect-label {
+  padding: 0.56rem 0.59rem;
+}
+.p-multiselect-filter-container {
+  margin: 0 5px;
+}
+.p-multiselect.p-multiselect-chip .p-multiselect-token {
+  font-size: 0.76rem;
+}
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+  font-size: 0.85rem;
+}
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+.p-multiselect.p-multiselect-chip
+  .p-multiselect-token
+  .p-multiselect-token-icon {
+  margin-right: 0.5rem;
+}
+.p-multiselect {
+  border-radius: 9px;
+}
+.p-multiselect-panel .p-multiselect-header .p-multiselect-filter-container .p-inputtext {
+  padding:0.15rem 0.75rem;
+  font-size: 0.85rem; 
+}

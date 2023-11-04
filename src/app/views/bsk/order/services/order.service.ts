@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
@@ -13,9 +13,9 @@ import { referraluserModel } from '../../../dashboard/referral-user/referral-use
 import { OrderModel } from '../models/order.model';
 import { Page } from 'src/app/shared/models/Base/page';
 import { OrdersModel, SingleOrderModel } from '../models/orders-new.model';
-import { BehaviorSubject, map } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, lastValueFrom, map } from 'rxjs';
 import { CommentModel } from 'src/app/shared/models/comment.model';
+import { OrderItemBasket } from '../models/AddOrder.interface';
 interface INoteSidebar {
   sidenavOpen?: boolean;
 }
@@ -43,6 +43,10 @@ export class OrderService extends BaseService<any, 0> {
   notesOrderSubject = new BehaviorSubject<CommentModel[]>(
     new Array<CommentModel>()
   );
+  itemsInBsk = new BehaviorSubject<Array<OrderItemBasket>>([]);
+  productsBSubject = new BehaviorSubject<ProductModel[]>(
+    new Array<ProductModel>()
+  );
   constructor(public _http: HttpClient, public _auth: AuthenticateService) {
     super(_http, environment.api.baseUrl, _auth);
   }
@@ -50,6 +54,9 @@ export class OrderService extends BaseService<any, 0> {
     sidenavOpen: true,
   };
 
+  public get basketItemsToAdd() {
+    return this.itemsInBsk.value;
+  }
   public get notes() {
     return this.notesOrderSubject.value;
   }
@@ -59,14 +66,23 @@ export class OrderService extends BaseService<any, 0> {
   public get singleOrderValue() {
     return this.singleOrderSubject.value;
   }
+  public get productValue() {
+    return this.productsBSubject.value;
+  }
   /**
    * درخواست دریافت همه
    * @param route
    * @returns all
    */
   getUserbyUserId(userId: number) {
-    return this._http.get<Result<UsersModel>>(
-      this._base + '/AspNetUser/' + userId,
+    return this._http.get<Result<Paginate<UsersModel[]>>>(
+      this._base + '/AspNetUser?pageIndex=0' + `&ID=${userId}`,
+      this._options
+    );
+  }
+  getUserbyFirstName(name: string) {
+    return this._http.get<Result<Paginate<UsersModel[]>>>(
+      this._base + '/AspNetUser?pageIndex=0' + `&FirstName=${name}`,
       this._options
     );
   }
@@ -104,78 +120,6 @@ export class OrderService extends BaseService<any, 0> {
       this._options
     );
   }
-  getProduct() {
-    return this._http.get<Result<ProductModel[]>>(
-      this._base + '/Product?pageIndex=0',
-      this._options
-    );
-  }
-  getOrders(
-    pageIndex: number,
-    pageSize: number,
-    transactionStatus: number,
-    filter: FilterModel
-  ) {
-    return this._http.get<Result<Paginate<OrderModel[]>>>(
-      this._base +
-        '/Orders?pageIndex=' +
-        pageIndex +
-        '&pageSize=' +
-        pageSize +
-        '&TransactionStatus=' +
-        transactionStatus +
-        (filter.iD == undefined || filter.iD == null
-          ? ''
-          : '&ID=' + filter.iD) +
-        (filter.firstName == undefined || filter.firstName == null
-          ? ''
-          : '&FirstName=' + filter.firstName) +
-        (filter.lastName == undefined || filter.lastName == null
-          ? ''
-          : '&LastName=' + filter.lastName) +
-        (filter.accountNumber == undefined || filter.accountNumber == null
-          ? ''
-          : '&AccountNumber=' + filter.accountNumber) +
-        (filter.fromCreateDate == undefined || filter.fromCreateDate == null
-          ? ''
-          : '&FromCreateDate=' + filter.fromCreateDate) +
-        (filter.toCreateDate == undefined || filter.toCreateDate == null
-          ? ''
-          : '&ToCreateDate=' + filter.toCreateDate) +
-        (filter.phoneNumber == undefined || filter.phoneNumber == null
-          ? ''
-          : '&PhoneNumber=' + filter.phoneNumber) +
-        (filter.planID == undefined || filter.planID == null
-          ? ''
-          : '&PlanID=' + filter.planID) +
-        (filter.productID == undefined || filter.productID == null
-          ? ''
-          : '&ProductID=' + filter.productID) +
-        (filter.code == undefined || filter.code == null
-          ? ''
-          : '&Code=' + filter.code) +
-        (filter.fromStartDate == undefined || filter.fromStartDate == null
-          ? ''
-          : '&FromStartDate=' + filter.fromStartDate) +
-        (filter.toStartDate == undefined || filter.toStartDate == null
-          ? ''
-          : '&ToStartDate=' + filter.toStartDate) +
-        (filter.fromExpireDate == undefined || filter.fromExpireDate == null
-          ? ''
-          : '&FromExpireDate=' + filter.fromExpireDate) +
-        (filter.toExpireDate == undefined || filter.toExpireDate == null
-          ? ''
-          : '&ToExpireDate=' + filter.toExpireDate) +
-        (filter.versionNumber == undefined || filter.versionNumber == null
-          ? ''
-          : '&VersionNumber=' + filter.versionNumber) +
-        (filter.userID == undefined || filter.userID == null
-          ? ''
-          : '&UserID=' + filter.userID),
-      this._options
-    );
-  }
-
   getOrdersNew(page: Page, _filter: FilterModel) {
     let filterRow = '';
     Object.keys(_filter).forEach((key) => {
@@ -197,5 +141,14 @@ export class OrderService extends BaseService<any, 0> {
       `${this._base}/OrderNew/${id}`,
       this._options
     );
+  }
+  async getProducts() {
+    const res = this.get(0, null, 'ID', null, 'Product').pipe(
+      map((res) => {
+        this.productsBSubject.next(res.data.items);
+        return res.success;
+      })
+    );
+    return await lastValueFrom(res);
   }
 }

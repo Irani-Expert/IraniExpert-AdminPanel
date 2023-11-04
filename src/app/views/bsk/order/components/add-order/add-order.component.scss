@@ -1,0 +1,44 @@
+.back-icon {
+  font-size: 40px;
+  font-size: 1.4vw;
+  font-size: calc(70% + 0.2vw);
+}
+.gap-custom {
+  gap: 0.2rem;
+}
+.section-title {
+  padding: 5px 10px 4px 10px;
+  background: #afbbba;
+  border-radius: 0.4rem;
+}
+.shop-icon {
+  font-size: 1.3695rem;
+}
+.shop-cart {
+  cursor: pointer !important;
+  left: 0px;
+  top: 5px;
+}
+.shop-cart-icon {
+  transition: all 0.3s ease;
+  border: 1px solid #efefef;
+  background-color: #9fd4d6de;
+  &:focus {
+    outline: 0 !important;
+  }
+  &:hover {
+    background-color: #26ccc69f;
+    transform: translate(2px, 2px);
+  }
+}
+.counter-container {
+  position: absolute;
+  transform: translate(50%, 50%);
+  width: 18px;
+  height: 18px;
+  right: 2px;
+  bottom: 2px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #fe6d6dba !important;
+}
