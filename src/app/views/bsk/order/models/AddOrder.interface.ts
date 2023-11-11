@@ -1,7 +1,7 @@
 export interface IAddOrder {
   orderItems: OrderItemBasket[];
   accountNumber: string;
-  acceptRules: true;
+  acceptRules: boolean;
   startDate: string;
   transactionCode: string;
   discountCode: string;

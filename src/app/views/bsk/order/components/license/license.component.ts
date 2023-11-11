@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { License } from './license';
 import { LicenseService } from '../../services/license.service';
 import { LicenseModel } from '../../models/license.model';
-import { catchError, lastValueFrom, map } from 'rxjs';
+import { lastValueFrom, map } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { HttpEventType } from '@angular/common/http';
@@ -188,11 +188,9 @@ export class LicenseComponent implements OnInit {
   }
   changeStrDate(date: Date) {
     this.minDate = date;
-    console.log(date);
   }
   changeExpDate(date: Date) {
     this.maxDate = date;
-    console.log(date);
   }
   validateAndSend() {
     if (this.licenseForm.valid) {

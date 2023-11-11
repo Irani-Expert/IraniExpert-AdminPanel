@@ -44,6 +44,7 @@
     </div>
     <div class="col-6 col-md-5 col-lg-3 col-xl-2 p-0 my-2">
       <p-dropdown
+        (onChange)="changeUser($event.value)"
         (onFilter)="filterUser($event)"
         [options]="dropDownItems"
         optionDisabled="inactive"
@@ -99,7 +100,7 @@
                 "
                 loading="lazy"
                 [src]="'https://dl.iraniexpert.com/' + product.cardImagePath"
-                [alt]="product.title"
+                [alt]="product.id"
             /></span>
             <div>{{ product.id }}&nbsp;-&nbsp;{{ product.title }}</div>
           </div>
@@ -133,6 +134,7 @@
       class="col-6 col-md-5 col-lg-3 p-0 my-2"
     >
       <p-multiSelect
+        emptyMessage=" "
         (onChange)="changePlanOptions($event.value)"
         display="chip"
         [options]="planOptions"
@@ -143,6 +145,8 @@
     <div class="position-absolute shop-cart">
       <div class="position-relative">
         <button
+          [@addingToKart]="state"
+          (click)="showCartList = true"
           type="button"
           class="p-0 shop-cart-icon border-0 shadow-lg rounded-circle"
           style="cursor: pointer"
@@ -155,9 +159,78 @@
           ><strong>{{ orderService.basketItemsToAdd.length }}</strong></span
         >
       </div>
+      <div *ngIf="showCartList" class="shop-cart-list">
+        <ul class="list-unstyled px-2">
+          <ng-container *ngIf="orderService.basketItemsToAdd.length > 0">
+            <ng-container
+              *ngFor="let it of orderService.basketItemsToAdd; let i = index"
+            >
+              <li class="my-3 row mx-0 p-0 align-items-center">
+                <div
+                  class="col-6 m-0 p-0 d-flex align-items-center justify-content-between"
+                >
+                  <small>{{ it.rowID }}&nbsp;-&nbsp;{{ it.title }}</small>
+                  <span class="mx-2">
+                    <input
+                      (input)="changeCount($event.target.value, it)"
+                      [ngClass]="{ 'opacity-25': it.tableType == 6 }"
+                      disabled
+                      [id]="i + '_' + it.rowID"
+                      type="number"
+                      class="input-count"
+                      [value]="it.count"
+                      min="1"
+                    />
+                    <label [for]="i + '_' + it.rowID" class="d-none"></label>
+                  </span>
+                </div>
+                <div
+                  class="col-6 m-0 p-0 d-flex flex-row align-items-center justify-content-between"
+                >
+                  <span class="mx-2"
+                    ><small>{{ it.price | currency }}</small></span
+                  >
+                  <span class="mx-1"
+                    ><button
+                      *ngIf="false"
+                      (click)="removeItem(it)"
+                      class="btn-delete-item btn-danger rounded-circle"
+                    >
+                      <span
+                        class="pi pi-trash"
+                        style="font-size: 0.85rem"
+                      ></span></button
+                  ></span>
+                </div>
+              </li>
+              <hr class="m-0" />
+            </ng-container>
+            <li class="my-3 row mx-0 p-0 align-items-center">
+              <div class="col-6 m-0 p-0 d-flex justify-content-start">
+                <small>مجموع کل</small>
+              </div>
+              <div class="col-6 m-0 p-0 d-flex justify-content-end">
+                <small>{{ orderService.basketTotalPrice | currency }}</small>
+              </div>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="orderService.basketItemsToAdd.length == 0">
+            <li
+              class="d-flex align-items-center pt-3 justify-content-center flex-column gap-custom"
+            >
+              <span class="pi pi-ban"></span
+              ><strong>سبد خرید خالی میباشد</strong>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
     </div>
   </div>
-  <form class="position-relative" (ngSubmit)="emit()" [formGroup]="addOrder">
+  <form
+    class="position-relative"
+    (ngSubmit)="openModal()"
+    [formGroup]="addOrder"
+  >
     <div class="row align-items-center gap-custom mx-0 p-0 my-4">
       <ng-container *ngFor="let control of formControls">
         <div class="d-flex flex-column my-3 my-md-1 p-0" *ngIf="control.show">
@@ -171,9 +244,21 @@
           </span>
         </div>
       </ng-container>
+      <div class="col-8 px-0 col-sm-6 col-md-5 col-lg-4 d-flex flex-column">
+        <p-calendar
+          appendTo="body"
+          class="p-inputtext-sm"
+          dir="ltr"
+          (onSelect)="changeStrtDate($event)"
+          inputId="startDate"
+          [showIcon]="true"
+        ></p-calendar>
+        <label for="startDate" class="text-small d-none">تاریخ شروع</label>
+      </div>
     </div>
+
     <p-button
-      [disabled]="addOrder.invalid"
+      [disabled]="!addOrder.valid"
       type="submit"
       dir="ltr"
       label="ایجاد"
@@ -194,3 +279,8 @@
     </button>
   </div>
 </div>
+<div
+  class="backdrop-shop-cart"
+  *ngIf="showCartList"
+  (click)="showCartList = false"
+></div>

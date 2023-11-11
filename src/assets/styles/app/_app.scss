@@ -724,7 +724,23 @@ Buttons
 .p-multiselect {
   border-radius: 9px;
 }
-.p-multiselect-panel .p-multiselect-header .p-multiselect-filter-container .p-inputtext {
-  padding:0.15rem 0.75rem;
-  font-size: 0.85rem; 
+.p-multiselect-panel
+  .p-multiselect-header
+  .p-multiselect-filter-container
+  .p-inputtext {
+  padding: 0.15rem 0.75rem;
+  font-size: 0.85rem;
 }
+// .p-inputnumber-buttons-vertical .p-button.p-inputnumber-button-up {
+//   padding: 0.2rem 0 !important;
+//   width: 100% !important;
+// }
+// .p-inputnumber-buttons-vertical .p-button.p-inputnumber-button-down {
+//   padding: 0.2rem 0 !important;
+//   width: 100% !important;
+// }
+// .p-inputnumber-buttons-vertical .p-inputnumber-input {
+//   padding: 0.25rem 0 !important;
+//   font-size: 0.83rem;
+//   max-width: 33px;
+// }

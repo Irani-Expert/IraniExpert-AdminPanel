@@ -151,4 +151,9 @@ export class OrderService extends BaseService<any, 0> {
     );
     return await lastValueFrom(res);
   }
+  get basketTotalPrice() {
+    let price = 0;
+    this.basketItemsToAdd.forEach((it) => (price += it.price));
+    return price;
+  }
 }

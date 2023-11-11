@@ -12,7 +12,7 @@ import {
   TableModel,
 } from '../../models/orders-new.model';
 
-import { BehaviorSubject, Observable, lastValueFrom, map } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, map } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Result } from 'src/app/shared/models/Base/result.model';
