@@ -109,3 +109,11 @@
   border: 2px solid #dfe3e3;
   border-radius: 5px;
 }
+.dropdown-menu {
+  z-index: 1 !important;
+}
+.dropdown-btn-custom {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+}

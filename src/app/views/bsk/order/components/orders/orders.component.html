@@ -7,6 +7,48 @@
     styleClass="p-button-raised p-button-sm"
     iconPos="right"
   ></p-button>
+  <div class="d-block mt-4">
+    <!-- Country -->
+    <strong for="pageOrder" class="text-small"> وضعیت سفارش </strong>
+    <div ngbDropdown placement="bottom-end" class="col-auto mt-3">
+      <button
+        type="button"
+        class="btn btn-filter radius py-btns text-small dropdown-btn-custom"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        <span
+          class="pi"
+          [ngClass]="'pi-' + transactions[transactionIndexHolder].icon"
+        ></span>
+        <strong class="ml-1" style="font-size: 0.76rem">{{
+          transactions[transactionIndexHolder].title
+        }}</strong>
+      </button>
+      <div
+        ngbDropdownMenu
+        class="mt-1 shadow-lg radius dropDown-scroll"
+        aria-labelledby="dropdownBasic1"
+        style="height: 300px; overflow: auto"
+      >
+        <button
+          class="text-left btn mt-2"
+          ngbDropdownItem
+          *ngFor="let transaction of transactions; let i = index"
+          (click)="setFilter(i)"
+        >
+          <span
+            class="pi"
+            [ngClass]="'pi-' + transaction.icon"
+            style="font-size: 0.8rem"
+          ></span>
+          <strong class="text-small ml-1">{{ transaction.title }}</strong>
+        </button>
+      </div>
+    </div>
+
+    <!-- Country -->
+  </div>
   <div
     id="firstSection"
     class="row p-0 m-0 g-0 justify-content-center align-items-start"

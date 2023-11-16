@@ -23,6 +23,42 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { LicenseComponent } from '../license/license.component';
 import { ProductModel } from 'src/app/views/prd/products-list/product.model';
+const transactionsInit: Array<{
+  title: string;
+  value: number;
+  icon?: string;
+}> = [
+  {
+    title: ' تمامی سفارشات',
+    value: null,
+    icon: 'inbox',
+  },
+  {
+    title: ' در انتظار پرداخت',
+    value: 1,
+    icon: 'hourglass',
+  },
+  {
+    title: ' تایید شده',
+    value: 2,
+    icon: 'check-circle',
+  },
+  {
+    title: ' خطا در پرداخت',
+    value: 5,
+    icon: 'exclamation-triangle',
+  },
+  {
+    title: ' در انتظار تایید',
+    value: 6,
+    icon: 'pause',
+  },
+  {
+    title: ' نهایی',
+    value: 8,
+    icon: 'check-square',
+  },
+];
 type DetailHeader = { value: string | number; key: string };
 enum View {
   ViewAll,
@@ -35,6 +71,8 @@ enum View {
   providers: [DialogService],
 })
 export class OrdersComponent {
+  transactions = transactionsInit;
+  transactionIndexHolder = 0;
   products = new Array<ProductModel>();
   view = View.ViewAll;
   @ViewChild(LicenseComponent, { static: false })
@@ -301,5 +339,12 @@ export class OrdersComponent {
     } else {
       console.log('Get Product Failed');
     }
+  }
+
+  setFilter(index: number) {
+    this.transactionIndexHolder = index;
+    this.filter.TransactionStatus = this.transactions[index].value;
+    this.page.pageNumber = 0;
+    this.getOrders();
   }
 }

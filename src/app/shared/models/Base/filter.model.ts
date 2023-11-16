@@ -42,8 +42,9 @@ export class FilterModel implements IFilter {
   sourceUrl: string;
   eventCode: string;
   countryID: number;
-  groupID:number;
-  TableType:number;
-  fromUpdateDate:string;
-  toUpdateDate:string
+  groupID: number;
+  TableType: number;
+  fromUpdateDate: string;
+  toUpdateDate: string;
+  TransactionStatus: number;
 }
