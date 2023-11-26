@@ -329,9 +329,8 @@ export class OrdersComponent {
     this.noteText = '';
   }
   addOrder(event: boolean) {
-    console.log(event);
-    if (event) console.log('z');
-    else this.view = 0;
+    if (event) this.view = 0;
+    else this.view = 1;
   }
   async getProducts() {
     if (await this.orderService.getProducts()) {

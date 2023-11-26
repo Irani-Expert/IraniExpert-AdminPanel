@@ -163,7 +163,7 @@ export class AddOrderComponent {
       ),
       token: new FormControl<string>(this.auth.currentUserValue.token),
       discountCode: new FormControl<string | null>(null),
-      clientID: new FormControl<number | null>(null, Validators.required),
+      clientID: new FormControl<number | null>(1, Validators.required),
       userID: new FormControl<number>(this.auth.currentUserValue.userID),
     });
   }
@@ -285,7 +285,7 @@ export class AddOrderComponent {
     });
   }
   async changeUser(value) {
-    this.controls['clientID'].setValue(value.id);
+    this.controls['userID'].setValue(value.id);
   }
   async changeProduct(product: ProductModel) {
     let bskHasPrd = this.basket.findIndex((it) => it.tableType == 6);
@@ -534,7 +534,7 @@ export class AddOrderComponent {
   }
   async setUserOnFormControls() {
     if (this.view == ADDTYPE.CURRENT_USER)
-      this.controls['clientID'].setValue(this.selectedUser.id);
+      this.controls['userID'].setValue(this.selectedUser.id);
     return true;
   }
   async changeStrtDate(date: Date) {
