@@ -28,11 +28,11 @@ const transactionsInit: Array<{
   value: number;
   icon?: string;
 }> = [
-  {
-    title: ' تمامی سفارشات',
-    value: null,
-    icon: 'inbox',
-  },
+  // {
+  //   title: ' تمامی سفارشات',
+  //   value: null,
+  //   icon: 'inbox',
+  // },
   {
     title: ' در انتظار پرداخت',
     value: 1,

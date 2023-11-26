@@ -33,31 +33,34 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
     filter: FilterModel,
     pageIndex: number,
     pageSize: number,
-    pageOrder:number,
+    pageOrder: number
   ) {
-    
     return this._http.get<Result<Paginate<tagModel[]>>>(
       this._base +
         '/LinkTag?pageIndex=' +
         pageIndex +
         '&pageSize=' +
         pageSize +
-        '&pageOrder='+
-        pageOrder+
+        '&pageOrder=' +
+        pageOrder +
         (filter.iD ? '&ID=' + filter.iD : '') +
         (filter.title ? '&Title=' + filter.title : '') +
         (filter.groupID ? '&GroupID=' + filter.groupID : '') +
         (filter.rowID ? '&RowID=' + filter.rowID : '') +
         (filter.TableType ? '&TableType=' + filter.TableType : '') +
-        (filter.fromCreateDate !== undefined ? '&FromCreateDate=' + filter.fromCreateDate : '') +
+        (filter.fromCreateDate !== undefined
+          ? '&FromCreateDate=' + filter.fromCreateDate
+          : '') +
         (filter.toCreateDate ? '&ToCreateDate=' + filter.toCreateDate : '') +
-        (filter.fromUpdateDate? '&FromUpdateDate=' + filter.fromUpdateDate: '') +
+        (filter.fromUpdateDate
+          ? '&FromUpdateDate=' + filter.fromUpdateDate
+          : '') +
         (filter.toUpdateDate ? '&ToUpdateDate=' + filter.toUpdateDate : ''),
 
       this._options
     );
   }
-  updateTags(id:number,tagsModel:tagModel){
+  updateTags(id: number, tagsModel: tagModel) {
     let loggedUserID = this.auth.currentUserValue.userID;
     return this._http.put<Result<tagModel>>(
       this._base + '/LinkTag/' + id + '?authorID=' + loggedUserID,
@@ -65,7 +68,7 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
       this._options
     );
   }
-  addLinkTag(tagsModel:tagModel){
+  addLinkTag(tagsModel: tagModel) {
     let loggedUserID = this.auth.currentUserValue.userID;
     return this._http.post<Result<tagModel>>(
       this._base + '/LinkTag?authorID=' + loggedUserID,
@@ -73,12 +76,27 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
       this._options
     );
   }
-  addTagToArticle(tagRelation:tagRelationModel[]){
+  addTagToArticle(tagRelation: tagRelationModel[]) {
     let loggedUserID = this.auth.currentUserValue.userID;
     return this._http.post<Result<tagModel>>(
-      this._base + '/LinkTagRelation/AddUpdateLinkTagRelations?authorID=' + loggedUserID,
+      this._base +
+        '/LinkTagRelation/AddUpdateLinkTagRelations?authorID=' +
+        loggedUserID,
       tagRelation,
       this._options
     );
+  }
+  getDetails(id: number, route: string) {
+    let _options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control':
+          'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+        // Authorization: 'bearer ' + environment.jwtToken,
+      }),
+    };
+    return this._http.get(this._base + '/' + route + '?id=' + id, _options);
   }
 }

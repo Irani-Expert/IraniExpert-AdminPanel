@@ -254,7 +254,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
 
   async getArticleById(id: number) {
     this._articleService
-      .getOneByID(id, 'Article')
+      .getDetails(id, 'Article/details')
       .subscribe((res: Result<ArticleModel>) => {
         if (res.success) {
           this.ifDataExist = true;
