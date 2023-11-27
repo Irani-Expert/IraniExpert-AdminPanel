@@ -80,6 +80,12 @@ export class OrderService extends BaseService<any, 0> {
       this._options
     );
   }
+  getMyProfile(id:number) {
+    return this._http.get<Result<UsersModel>>(
+      this._base + '/AspNetUser/' + id,
+      this._options
+    );
+  }
   getUserbyFirstName(name: string) {
     return this._http.get<Result<Paginate<UsersModel[]>>>(
       this._base + '/AspNetUser?pageIndex=0' + `&FirstName=${name}`,

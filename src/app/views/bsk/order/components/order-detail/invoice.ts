@@ -10,10 +10,10 @@ export class Invoice {
       value: 3,
       title: 'پرداخت شده',
     },
-    {
-      value: 98,
-      title: 'پرداخت ناموفق',
-    },
+    // {
+    //   value: 98,
+    //   title: 'پرداخت ناموفق',
+    // },
     {
       value: 99,
       title: 'رد سفارش',
