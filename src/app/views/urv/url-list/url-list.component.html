@@ -11,6 +11,49 @@
 
 <!-- Button - Create -->
 
+<!-- Filter -->
+
+<div class="d-flex flex-row flex-wrap align-items-center mt-5">
+  <strong class="m-1 text-small"
+    ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس &nbsp;
+    : &nbsp;</strong
+  >
+
+  <!-- TableType -->
+  <strong for="pageOrder" class="text-small"> بخش </strong>
+  <div ngbDropdown placement="bottom-end" class="col-auto">
+    <button
+      type="button"
+      class="btn btn-filter radius py-btns text-small"
+      id="dropdownBasic1"
+      ngbDropdownToggle
+    >
+      <strong class="ml-1" style="font-size: 0.76rem">{{
+        selectedTableType.title
+      }}</strong>
+    </button>
+    <div
+      ngbDropdownMenu
+      class="mt-1 shadow-lg radius dropDown-scroll"
+      aria-labelledby="dropdownBasic1"
+      style="height: auto; overflow: auto; z-index: 0"
+    >
+      <button
+        class="text-left btn mt-2"
+        ngbDropdownItem
+        *ngFor="let table of tableTypes"
+        (click)="setFilter(table)"
+      >
+        <strong class="text-small ml-1">{{ table.title }}</strong>
+      </button>
+    </div>
+  </div>
+
+  <!-- TableType -->
+</div>
+
+<!-- Filter -->
+
 <div class="table-responsive custom-table-responsive">
   <table class="table custom-table">
     <thead>
@@ -27,7 +70,16 @@
     </thead>
     <tbody>
       <ng-container *ngIf="pageHasItems">
-        <tr *ngFor="let item of items">
+        <tr
+          *ngFor="
+            let item of items
+              | paginate
+                : {
+                    itemsPerPage: 10,
+                    currentPage: page.pageNumber
+                  }
+          "
+        >
           <td>{{ item.id }}</td>
           <td>
             {{ item.updateDate | date : "yyyy/M/d" }} <br />
@@ -39,10 +91,23 @@
           <td>{{ item.fromUrl || "_" }}</td>
           <td>{{ item.destUrl || "_" }}</td>
           <td class="td-actions">
-            <div class="flex flex-col gap-2">
-              <button class="btn" (click)="goToDetails(item.id)">
+            <div class="d-flex flex-row justify-content-around">
+              <button
+                ngbTooltip="جزئیات"
+                class="btn"
+                (click)="goToDetails(item.id)"
+              >
                 <span class="d-inline-flex"
                   ><span class="pi pi-arrow-up-right text-white"></span
+                ></span>
+              </button>
+              <button
+                ngbTooltip=" حذف"
+                class="btn delete"
+                (click)="deleteItem(item)"
+              >
+                <span class="d-inline-flex"
+                  ><span class="pi pi-times text-white"></span
                 ></span>
               </button>
             </div>

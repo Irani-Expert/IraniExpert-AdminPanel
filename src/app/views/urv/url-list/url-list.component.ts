@@ -6,29 +6,61 @@ import { SingleUrlModel } from '../models/single-url.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Page } from 'src/app/shared/models/Base/page';
-
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DeleteComponent } from 'src/app/shared/components/delete/delete.component';
+import { TableType } from '../../Log/models/table-typeModel';
+class FilterTableModel {
+  tableType: number;
+  fromUrl: string;
+  destUrl: string;
+}
 @Component({
   selector: 'app-url-list',
   templateUrl: './url-list.component.html',
   styleUrls: ['./url-list.component.scss'],
+  providers: [DialogService],
 })
 export class UrlListComponent implements OnInit {
+  tableTypes: TableType[] = [
+    {
+      title: 'همه',
+      value: -1,
+    },
+    {
+      title: 'بروکر ها',
+      value: 36,
+    },
+    {
+      title: 'مقالات',
+      value: 1,
+    },
+    {
+      title: 'محصولات',
+      value: 6,
+    },
+  ];
+
+  selectedTableType: TableType = this.tableTypes[0];
+
   items = new Array<UrlModel>();
   page = new Page();
+  filter = new FilterTableModel();
   pageHasItems = false;
   constructor(
     private urvService: UrvService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialogService: DialogService
   ) {}
 
   async ngOnInit() {
-    if ((await this.get(0)).length !== 0) {
+    this.page.pageNumber = 0;
+    if ((await this.get(this.page, this.filter)).length !== 0) {
       this.pageHasItems = true;
     }
   }
-  async get(id: number) {
-    const res = this.urvService.get(id, 10, 'ID', null, 'URLRedirect').pipe(
+  async get(page: Page, filter: FilterTableModel) {
+    const res = this.urvService.getUrls(page, filter).pipe(
       map((it) => {
         if (it.success) {
           this.items = it.data.items;
@@ -66,5 +98,55 @@ export class UrlListComponent implements OnInit {
         });
       }
     }
+  }
+
+  ref: DynamicDialogRef | undefined;
+
+  deleteItem(item) {
+    this.ref = this.dialogService.open(DeleteComponent, {
+      data: {
+        item: item,
+        routeOfAction: 'URLRedirect',
+      },
+      header: 'حذف',
+      draggable: false,
+    });
+    this.ref.onClose.subscribe((res) => {
+      this.modalConfirmed(res);
+    });
+  }
+  modalConfirmed(res) {
+    if (res) {
+      res.success
+        ? this.toastr.success(res.message, '', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          })
+        : this.toastr.error(
+            res.message || 'خطا در برقراری اتصال ! با واحد فناوری تماس بگیرید',
+            '',
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+    } else {
+      console.log('Denied Or Server Err');
+    }
+    this.page.pageNumber = 0;
+    this.filter = new FilterTableModel();
+    this.get(this.page, this.filter);
+  }
+
+  // Filter Methods
+  setFilter(item: TableType) {
+    this.selectedTableType = item;
+    if (item.value == -1) {
+      this.filter = new FilterTableModel();
+    } else {
+      this.filter.tableType = item.value;
+    }
+    this.page.pageNumber = 0;
+    this.get(this.page, this.filter);
   }
 }

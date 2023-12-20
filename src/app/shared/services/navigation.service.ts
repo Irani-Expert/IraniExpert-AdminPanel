@@ -168,6 +168,13 @@ export class NavigationService {
       privilege: 'Media-Full Premission',
     },
     {
+      name: 'ریدایرکشن',
+      navType: 'link',
+      icon: 'i-Share',
+      state: '/urv',
+      privilege: 'URV-Watch',
+    },
+    {
       name: 'گروه ها',
       navType: 'link',
       icon: 'i-Dropbox',

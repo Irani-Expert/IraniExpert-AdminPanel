@@ -10,6 +10,10 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {
+  NgbDropdownModule,
+  NgbTooltipModule,
+} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [UrlListComponent, SingleUrlComponent],
@@ -21,6 +25,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     DynamicDialogModule,
     DialogModule,
+    NgbTooltipModule,
+    NgbDropdownModule,
     DropdownModule,
     NgxPaginationModule,
   ],

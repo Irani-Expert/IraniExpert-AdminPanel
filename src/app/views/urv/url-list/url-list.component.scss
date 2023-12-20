@@ -83,6 +83,9 @@
             margin: 0 !important;
             background-color: #2b9a9e;
             font-size: 0.725rem;
+            &.delete {
+              background-color: #ee3232;
+            }
           }
         }
       }
