@@ -57,6 +57,11 @@ const adminRoutes: Routes = [
       import('./views/crt/contract.module').then((m) => m.ContractModule),
   },
   {
+    path: 'urv',
+    loadChildren: () =>
+      import('./views/urv/urv.module').then((m) => m.UrvModule),
+  },
+  {
     path: 'dct',
     loadChildren: () =>
       import('./views/dct/discount.module').then((m) => m.DiscountModule),
