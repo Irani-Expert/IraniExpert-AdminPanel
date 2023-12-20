@@ -123,6 +123,7 @@ export class OrdersComponent {
         this.page.currentPage != params['pageId'] ||
         this.table.data.length == 0
       ) {
+        this.filter.TransactionStatus = 1;
         this.page.pageNumber = parseInt(params['pageId']) - 1;
         this.getOrders();
       }
@@ -330,7 +331,8 @@ export class OrdersComponent {
   }
   addOrder(event: boolean) {
     if (event) this.view = 0;
-    else this.view = 1;
+    // Another Methods Later !!!
+    else this.view = 0;
   }
   async getProducts() {
     if (await this.orderService.getProducts()) {

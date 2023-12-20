@@ -27,7 +27,6 @@ export class AdditionComponent implements OnInit {
     this.actionRoute = this.config.data.routeOfAction;
   }
   async confirm() {
-    debugger;
     const result = this.actionService
       .create(this.itemToAdd, this.config.data.routeOfAction)
       .pipe(

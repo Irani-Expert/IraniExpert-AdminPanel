@@ -1,0 +1,152 @@
+<ng-container *ngIf="dataExist">
+  <form [formGroup]="formGroup" class="d-flex flex-column">
+    <div class="row m-0 p-0 g-0 w-100">
+      <!-- Each Input -->
+      <div class="d-flex flex-column m-2 col-12 col-md-5 col-lg-4 col-xl-3">
+        <span
+          class="text-small text-primary"
+          style="margin-bottom: 0.5rem; font-weight: 700"
+          >در بخش</span
+        >
+        <p-dropdown
+          [options]="tableTypes"
+          (onChange)="changeTableType($event.value)"
+          formControlName="tableType"
+          optionLabel="title"
+          optionValue="value"
+        >
+          <ng-template pTemplate="selectedItem">
+            <div class="d-flex align-items-center">
+              <div>{{ selectedTableType.title }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-tableType pTemplate="item">
+            <div class="d-flex align-items-center">
+              <div>{{ tableType.title }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+        <div class="mt-2">
+          <strong *ngIf="!formGroup.disabled" class="text-danger text-14"
+            >** حتما بخش مربوط به url قبلی را وارد کنید **</strong
+          >
+          <strong *ngIf="formGroup.disabled" class="text-danger text-14"
+            >&nbsp;</strong
+          >
+        </div>
+      </div>
+      <!-- Each Input -->
+      <div class="d-flex flex-column m-2 col-12 col-md-5 col-lg-4 col-xl-3">
+        <label for="fromUrl" class="text-small">از لینک</label>
+        <input
+          autocomplete="off"
+          formControlName="fromUrl"
+          type="text"
+          id="fromUrl"
+          class="form-control radius text-small"
+        />
+        <div class="mt-2">
+          <strong *ngIf="!formGroup.disabled" class="text-danger text-14"
+            >** حتما از com. به بعد را قرار دهید **</strong
+          >
+          <strong *ngIf="formGroup.disabled" class="text-danger text-14"
+            >&nbsp;</strong
+          >
+        </div>
+      </div>
+      <!-- Each Input -->
+      <!-- Each Input -->
+      <div class="d-flex flex-column m-2 col-12 col-md-5 col-lg-4 col-xl-3">
+        <label for="destUrl" class="text-small">به لینک</label>
+        <input
+          autocomplete="off"
+          formControlName="destUrl"
+          type="text"
+          id="destUrl"
+          class="form-control radius text-small"
+        />
+        <div class="mt-2">
+          <strong *ngIf="!formGroup.disabled" class="text-danger text-14"
+            >** حتما از com. به بعد را قرار دهید **</strong
+          >
+          <strong *ngIf="formGroup.disabled" class="text-danger text-14"
+            >&nbsp;</strong
+          >
+        </div>
+      </div>
+      <!-- Each Input -->
+    </div>
+    <div class="my-2 ml-3">
+      <button
+        *ngIf="_item.id !== -1"
+        [disabled]="!formGroup.disabled"
+        (click)="formGroup.enable()"
+        type="button"
+        class="btn-info btn d-inline-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+      >
+        <span class="pi pi-pencil mr-2"></span>
+        <strong class="text-small">ویرایش</strong>
+      </button>
+
+      <button
+        (click)="addOrUpdate()"
+        type="button"
+        [disabled]="formGroup.disabled || formGroup.invalid"
+        class="btn-success btn d-inline-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+      >
+        <span class="pi pi-check-circle mr-2"></span>
+        <strong class="text-small">اعمال</strong>
+      </button>
+      <button
+        *ngIf="_item.id !== -1"
+        (click)="formGroup.disable(); formGroup.reset()"
+        type="button"
+        [disabled]="formGroup.disabled"
+        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+      >
+        <span class="pi pi-times mr-2"></span>
+        <strong class="text-small">لغو</strong>
+      </button>
+      <button
+        *ngIf="_item.id == -1"
+        [routerLink]="'/urv'"
+        type="button"
+        [disabled]="formGroup.disabled"
+        class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+      >
+        <span class="pi pi-times mr-2"></span>
+        <strong class="text-small">لغو</strong>
+      </button>
+    </div>
+  </form>
+</ng-container>
+<!-- [ngClass]="{ 'border-on-change shadow': valueChanged }" -->
+<ng-container *ngIf="wannaPutSmth">
+  <p-dialog
+    [closable]="true"
+    [closeOnEscape]="true"
+    [(visible)]="wannaPutSmth"
+    [draggable]="false"
+    header="ویرایش"
+    [modal]="true"
+  >
+    <p><b>آیا از تغییر روی این آیتم مطمئن هستید ؟ </b></p>
+
+    <button
+      (click)="put()"
+      type="button"
+      class="btn-success btn d-inline-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+    >
+      <span class="pi pi-check-circle mr-2"></span>
+      <strong class="text-small">بله</strong>
+    </button>
+    <button
+      (click)="wannaPutSmth = false"
+      type="button"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+    >
+      <span class="pi pi-times mr-2"></span>
+      <strong class="text-small">خیر</strong>
+    </button>
+  </p-dialog>
+</ng-container>

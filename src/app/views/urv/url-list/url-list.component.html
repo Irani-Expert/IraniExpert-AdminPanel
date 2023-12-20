@@ -1,0 +1,70 @@
+<!-- Button - Create -->
+
+<p-button
+  dir="ltr"
+  (click)="goToDetails(-1)"
+  label="ایجاد سفارش"
+  icon="pi pi-plus"
+  styleClass="p-button-raised p-button-sm"
+  iconPos="right"
+></p-button>
+
+<!-- Button - Create -->
+
+<div class="table-responsive custom-table-responsive">
+  <table class="table custom-table">
+    <thead>
+      <tr>
+        <th>شناسه</th>
+        <th>تاریخ تغییر</th>
+        <th>بخش</th>
+        <th>شناسه قبلی</th>
+        <th>شناسه کنونی</th>
+        <th>لینک قبلی</th>
+        <th>لینک مقصد</th>
+        <th>جزئیات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="pageHasItems">
+        <tr *ngFor="let item of items">
+          <td>{{ item.id }}</td>
+          <td>
+            {{ item.updateDate | date : "yyyy/M/d" }} <br />
+            توسط کاربر شماره:&nbsp;{{ item.updateBy }}
+          </td>
+          <td>{{ item.tableTypeTitle || "_" }}</td>
+          <td>{{ item.fromRowID || "_" }}</td>
+          <td>{{ item.toRowID || "_" }}</td>
+          <td>{{ item.fromUrl || "_" }}</td>
+          <td>{{ item.destUrl || "_" }}</td>
+          <td class="td-actions">
+            <div class="flex flex-col gap-2">
+              <button class="btn" (click)="goToDetails(item.id)">
+                <span class="d-inline-flex"
+                  ><span class="pi pi-arrow-up-right text-white"></span
+                ></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  <div class="col-md-12 mt-3" *ngIf="items.length > 10">
+    <pagination-controls
+      (pageChange)="get($event)"
+      previousLabel=""
+      nextLabel=""
+      responsive="true"
+    ></pagination-controls>
+  </div>
+  <div *ngIf="!pageHasItems" class="d-flex justify-content-center">
+    <img
+      src="../../../../../assets/images/97434-no-data-available.gif"
+      class="img-fluid w-50 radius-lg"
+      style="opacity: 0.4"
+      alt=""
+    />
+  </div>
+</div>
