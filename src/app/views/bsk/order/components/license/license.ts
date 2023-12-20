@@ -36,6 +36,7 @@ export class License {
     );
   }
   async post(item) {
+    item.id = 0;
     item.startDate = await this.startDate(item);
     item.expireDate = await this.expireDate(item);
     return await lastValueFrom(
