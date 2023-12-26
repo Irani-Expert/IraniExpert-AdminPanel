@@ -4,7 +4,7 @@ import { ProductsListComponent } from './products-list/products-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddUpdateComponent } from './addUpdate/addUpdate.component';
 import { ProductsRoutingModule } from './prd.routing';
-import { FAQComponent } from './faq/faq.component';
+import { FAQComponent } from '../../shared/components/faq/faq.component';
 import { LearnComponent } from './learn/learn.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BackTestComponent } from './back-test/back-test.component';
@@ -19,11 +19,11 @@ import { FacilityComponent } from './facility/facility.component';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { GalleryComponent } from './gallery/gallery.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     ProductsListComponent,
     AddUpdateComponent,
-    FAQComponent,
     LearnComponent,
     BackTestComponent,
     PlanComponent,
@@ -43,6 +43,7 @@ import { GalleryComponent } from './gallery/gallery.component';
     ImageCropperModule,
     SharedPipesModule,
     SharedDirectivesModule,
+    SharedModule,
   ],
 
   providers: [FileUploaderService],

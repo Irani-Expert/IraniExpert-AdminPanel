@@ -1,0 +1,141 @@
+.btn-save,
+.btn-cancel,
+.btn-change,
+.btn-delete {
+  min-width: 85px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px !important;
+  margin: 0 0.25rem;
+}
+.fix-custom {
+  left: 35px;
+  transform: translateY(-100%);
+}
+.max-w-custom {
+  max-width: 83%;
+}
+.btn-cancel {
+  color: #fff;
+  background-color: #2b9a9e;
+}
+.cursor-default {
+  cursor: default !important;
+}
+.h-custom {
+  overflow-y: auto;
+  min-height: 500px;
+}
+input[type="text"] {
+  color: #444;
+  padding: 22px;
+  background: #eff8fb;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+  transition: all 400ms ease-in-out;
+}
+input[type="number"] {
+  color: #444;
+  padding: 22px;
+  background: #eff8fb;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+  transition: all 400ms ease-in-out;
+}
+textarea {
+  min-height: 48px;
+  outline: 0;
+  color: #444;
+  padding: 0.15rem 0.25rem;
+  background: #eff8fb;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+  transition: all 400ms ease-in-out;
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(102, 51, 153, 0.25);
+  }
+}
+.top-custom {
+  &-2 {
+    position: relative;
+    top: -2px;
+  }
+}
+.slider-text {
+  color: #70657b;
+  font-weight: 400;
+}
+.isRtl {
+  .switch .slider {
+    background-color: #3d4497;
+  }
+  .switch input:checked + .slider {
+    background-color: #70657b;
+  }
+  .slider::before {
+    background-color: #8bd5ba !important;
+  }
+}
+// Input File Div Style
+input[type="file"] {
+  width: 350px;
+  max-width: 100%;
+  color: #444;
+  padding: 5px;
+  background: #fbfbfb;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+}
+// Input Button File
+input[type="file"]::file-selector-button {
+  margin-right: 4px;
+  border: none;
+  background: #5e6a69;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+input[type="file"]::file-selector-button:hover {
+  background: #4a5352;
+}
+.radius-progress {
+  border-radius: 14px;
+}
+.bg-progress-container {
+  background: rgba(229, 219, 222, 0.9568627451);
+}
+.bg-progressbar {
+  background: #5e6a69;
+}
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+}
+.btn-change {
+  background-color: #0081b3;
+  color: #fff;
+}
+.btn-delete {
+  color: #fff;
+  background-color: #ee3232;
+}
+.img-holder {
+  display: flex;
+  justify-content: center;
+  img {
+    max-height: 450px;
+    aspect-ratio: 16/9;
+    object-fit: contain;
+  }
+}
+.gap-15 {
+  gap: 1.5rem;
+}
+.border-err {
+  border: 1px solid #fd2424;
+}

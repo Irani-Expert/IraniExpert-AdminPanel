@@ -1,0 +1,37 @@
+.gap-5 {
+  gap: 0.5rem;
+}
+input[type="text"] {
+  color: #444;
+  padding: 22px;
+  background: #eff8fb;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+  transition: all 400ms ease-in-out;
+}
+textarea {
+  min-width: 260px;
+  overflow: hidden;
+  min-height: 68px;
+  outline: 0;
+  color: #444;
+  padding: 0.15rem 0.25rem;
+  background: #eff8fb;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+  transition: all 400ms ease-in-out;
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(102, 51, 153, 0.25);
+  }
+}
+// .btn-save,
+// .btn-cancel,
+// .btn-change,
+// .btn-delete {
+//   min-width: 85px !important;
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   min-height: 30px !important;
+//   margin: 0 0.25rem;
+// }

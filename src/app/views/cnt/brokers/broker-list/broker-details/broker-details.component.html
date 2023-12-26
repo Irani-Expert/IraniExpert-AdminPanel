@@ -1,0 +1,599 @@
+<ul
+  [destroyOnHide]="false"
+  ngbNav
+  #nav="ngbNav"
+  class="nav-tabs p-0 max-w-custom"
+>
+  <!-- Details -->
+  <li ngbNavItem>
+    <a ngbNavLink class="text-small">
+      <span class="d-flex align-items-center"
+        ><span class="text-bigger pi pi-file-edit"></span
+        >&nbsp;&nbsp;&nbsp;<span class="text-small">جزئیات</span></span
+      >
+    </a>
+    <ng-template ngbNavContent>
+      <div class="h-custom">
+        <form [formGroup]="formGroup">
+          <div
+            class="row m-0 p-0 g-0 align-items-end justify-content-center justify-content-md-start"
+          >
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-11 col-md-5 col-lg-4 col-xl-3"
+            >
+              <label for="title" class="text-small">عنوان</label>
+              <input
+                formControlName="title"
+                autocomplete="off"
+                type="text"
+                id="title"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-11 col-md-5 col-lg-4 col-xl-3"
+            >
+              <label for="secondTitle" class="text-small">نام بروکر</label>
+              <input
+                formControlName="secondTitle"
+                autocomplete="off"
+                type="text"
+                id="secondTitle"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-5 col-md-4 col-lg-3 col-xl-2"
+            >
+              <label for="minDeposit" class="text-small">حداقل واریزی</label>
+              <input
+                formControlName="minDeposit"
+                autocomplete="off"
+                type="number"
+                id="minDeposit"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-11 col-md-5 col-lg-4 col-xl-3"
+            >
+              <label for="webSiteLink" class="text-small">لینک وب سایت</label>
+              <input
+                formControlName="webSiteLink"
+                autocomplete="off"
+                type="text"
+                id="webSiteLink"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-11 col-md-5 col-lg-4 col-xl-3"
+            >
+              <label for="telegramSupportLink" class="text-small"
+                >لینک پشتیبان تلگرام</label
+              >
+              <input
+                formControlName="telegramSupportLink"
+                autocomplete="off"
+                type="text"
+                id="telegramSupportLink"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-11 col-md-5 col-lg-4 col-xl-3"
+            >
+              <label for="videoLink" class="text-small">لینک ویدئو</label>
+              <input
+                formControlName="videoLink"
+                autocomplete="off"
+                type="text"
+                id="videoLink"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-5 col-md-4 col-lg-3 col-xl-2"
+            >
+              <label for="leverage" class="text-small">اهرم(لوریج)</label>
+              <input
+                formControlName="leverage"
+                autocomplete="off"
+                type="number"
+                id="leverage"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-11 col-md-5 col-lg-4 col-xl-3"
+            >
+              <label for="browserTitle" class="text-small"
+                >عنوان در مرورگر</label
+              >
+              <input
+                formControlName="browserTitle"
+                autocomplete="off"
+                type="text"
+                id="browserTitle"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-5 col-md-4 col-lg-3 col-xl-2"
+            >
+              <label for="establishedYear" class="text-small">سال تاًسیس</label>
+              <input
+                formControlName="establishedYear"
+                autocomplete="off"
+                type="text"
+                id="establishedYear"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-5 col-md-4 col-lg-3 col-xl-2"
+            >
+              <label for="email" class="text-small">ایمیل</label>
+              <input
+                formControlName="email"
+                autocomplete="off"
+                type="text"
+                id="email"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-11 col-md-5 col-lg-4 col-xl-3"
+            >
+              <label for="tradingSymbols" class="text-small"
+                >نماد های معاملاتی</label
+              >
+              <input
+                formControlName="tradingSymbols"
+                autocomplete="off"
+                type="text"
+                id="tradingSymbols"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Seperator -->
+            <span class="col-12"></span>
+            <!-- Seperator -->
+            <!-- Each Input -->
+            <div class="d-flex flex-column m-2 col-11 col-md-10 col-lg-5">
+              <label for="brief" class="text-small">توضیح مختصر</label>
+              <textarea
+                formControlName="brief"
+                autocomplete="off"
+                type="text"
+                id="brief"
+                class="radius text-small"
+              ></textarea>
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div class="d-flex flex-column m-2 col-11 col-md-10 col-lg-5">
+              <label for="metaDescription" class="text-small">متا بروکر</label>
+              <textarea
+                formControlName="metaDescription"
+                autocomplete="off"
+                type="text"
+                id="metaDescription"
+                class="radius text-small"
+              ></textarea>
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-11 col-md-5 col-lg-4 col-xl-3"
+            >
+              <label for="referralLink" class="text-small"
+                >کد رفرال (معرف)</label
+              >
+              <input
+                formControlName="referralLink"
+                autocomplete="off"
+                type="text"
+                id="referralLink"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div
+              class="d-flex flex-column m-2 col-11 col-md-5 col-lg-4 col-xl-3"
+            >
+              <label for="phoneNumber" class="text-small"
+                >شماره تماس بروکر</label
+              >
+              <input
+                formControlName="phoneNumber"
+                autocomplete="off"
+                type="text"
+                id="phoneNumber"
+                class="form-control radius text-small"
+              />
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+
+            <div class="d-flex flex-column m-2 col-auto">
+              <label for="staticRate" class="text-small">امتیاز</label>
+              <p-dropdown formControlName="staticRate" [options]="rates">
+                <ng-template pTemplate="selectedItem">
+                  <div class="d-flex align-items-center">
+                    <span class="pi pi-star-fill text-warning text-14"></span
+                    >&nbsp;&nbsp;
+                    <strong style="padding-top: 5px">{{
+                      formGroup.controls["staticRate"].value || "1"
+                    }}</strong>
+                  </div>
+                </ng-template>
+                <ng-template let-item pTemplate="item">
+                  <div class="d-flex align-items-center">
+                    <span class="pi pi-star-fill text-warning text-14"></span
+                    >&nbsp;&nbsp;
+                    <strong style="padding-top: 5px">{{ item.value }}</strong>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
+
+            <!-- Each Input -->
+            <!-- Seperator -->
+            <span class="col-12"></span>
+            <!-- Seperator -->
+            <!-- Each Input -->
+            <div class="col-auto form-group mb-3 mt-3 isRtl">
+              <b class="d-block text-center mb-1 text-14 text-primary"
+                >زبان متن</b
+              >
+              <span class="m-1 text-12 slider-text top-custom-2">فارسی</span>
+              <label for="isRTL" class="switch switch-secondary mr-2 m-2">
+                <span>انگلیسی</span>
+                <input formControlName="isRTL" type="checkbox" id="isRTL" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div class="col-auto form-group mb-3 mt-3">
+              <b class="d-block text-center mb-1 text-14 text-primary"
+                >حساب سِنتی</b
+              >
+              <span class="m-1 text-12 slider-text top-custom-2">دارد</span>
+              <label for="accountCent" class="switch switch-primary mr-2 m-2">
+                <span>ندارد</span>
+                <input
+                  formControlName="accountCent"
+                  type="checkbox"
+                  id="accountCent"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div class="col-auto form-group mb-3 mt-3">
+              <b class="d-block text-center mb-1 text-14 text-primary"
+                >پشتیبانی از ایران</b
+              >
+              <span class="m-1 text-12 slider-text top-custom-2">دارد</span>
+              <label for="isIRSupport" class="switch switch-primary mr-2 m-2">
+                <span>ندارد</span>
+                <input
+                  formControlName="isIRSupport"
+                  type="checkbox"
+                  id="isIRSupport"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div class="col-auto form-group mb-3 mt-3">
+              <b class="d-block text-center mb-1 text-14 text-primary"
+                >کپی ترید</b
+              >
+              <span class="m-1 text-12 slider-text top-custom-2">دارد</span>
+              <label for="copyTrade" class="switch switch-primary mr-2 m-2">
+                <span>ندارد</span>
+                <input
+                  formControlName="copyTrade"
+                  type="checkbox"
+                  id="copyTrade"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div class="col-auto form-group mb-3 mt-3">
+              <b class="d-block text-center mb-1 text-14 text-primary"
+                >بروکر زبان فارسی</b
+              >
+              <span class="m-1 text-12 slider-text top-custom-2">دارد</span>
+              <label
+                for="isPersianSupport"
+                class="switch switch-primary mr-2 m-2"
+              >
+                <span>ندارد</span>
+                <input
+                  formControlName="isPersianSupport"
+                  type="checkbox"
+                  id="isPersianSupport"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <!-- Each Input -->
+            <!-- Each Input -->
+            <div class="col-auto form-group mb-3 mt-3">
+              <b class="d-block text-center mb-1 text-14 text-primary">نمایش</b>
+              <span class="m-1 text-12 slider-text top-custom-2">داده شود</span>
+              <label for="isActive" class="switch switch-primary mr-2 m-2">
+                <span>داده نشود</span>
+                <input
+                  formControlName="isActive"
+                  type="checkbox"
+                  id="isActive"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <!-- Each Input -->
+            <!-- CKEDITOR -->
+            <div class="row col-12 my-3 mx-0 p-0 g-0">
+              <hr
+                class="d-flex flex-grow-1"
+                style="margin: 13px 10px 13px 8px"
+              />
+              <div class="col-auto">
+                <strong class="text-small">توضیحات</strong>
+              </div>
+              <hr
+                class="d-flex flex-grow-1"
+                style="margin: 13px 8px 13px 10px"
+              />
+            </div>
+            <div class="col-12">
+              <ckeditor
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="item.description"
+                [config]="ckeConfig"
+                debounce="100"
+              >
+              </ckeditor>
+            </div>
+            <!-- CKEDITOR -->
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </li>
+  <!-- Details -->
+
+  <!-- Images -->
+
+  <li ngbNavItem>
+    <a ngbNavLink class="text-small">
+      <span class="d-flex align-items-center"
+        ><span class="text-small"> تصاویر </span></span
+      >
+    </a>
+    <ng-template ngbNavContent>
+      <div class="h-custom">
+        <div class="row mx-0 my-4 p-0 g-0 align-items-stretch">
+          <div class="col-6 d-flex flex-column gap-15 justify-content-between">
+            <strong class="d-block text-secondary text-center text-16"
+              >عکس شاخص اول</strong
+            >
+            <ng-container *ngIf="item.cardImagePath !== ''">
+              <div class="img-holder">
+                <img
+                  [src]="'https://dl.iraniexpert.com/' + item.cardImagePath"
+                  alt="عکس شاخص"
+                />
+              </div>
+              <div class="buttons-container">
+                <button *ngIf="false" class="btn btn-change radius">
+                  <span class="pi pi-sync mr-2"></span
+                  ><span>تبدیل به عکس دوم</span>
+                </button>
+                <button
+                  (click)="deleteFile(item.cardImagePath, 0)"
+                  class="btn btn-delete radius"
+                >
+                  <span class="pi pi-trash mr-2"></span><span>حذف</span>
+                </button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="item.cardImagePath == ''">
+              <div class="img-holder" *ngIf="filePreview !== ''">
+                <img [src]="filePreview" alt="عکس شاخص" />
+              </div>
+              <input
+                (change)="changeFilePath($event, 0)"
+                *ngIf="!item.fileExists"
+                type="file"
+                class="text-small align-self-center"
+                id="primaryImg"
+              />
+              <button
+                [disabled]="!isFileValid"
+                (click)="uploadOnClick(0)"
+                class="btn-upload btn d-inline-flex align-self-center justify-content-start py-btns radius align-items-center m-1 w-fit-content"
+              >
+                <!-- (click)="upload()" -->
+                <i class="i-Upload text-dark text-bigger mr-3"></i>
+                <strong class="text-small">آپلود</strong>
+              </button>
+            </ng-container>
+          </div>
+          <div class="col-6 d-flex flex-column gap-15 justify-content-between">
+            <strong class="d-block text-secondary text-center text-16"
+              >عکس شاخص دوم</strong
+            >
+            <ng-container *ngIf="item.secondCardImagePath !== ''">
+              <div class="img-holder">
+                <img
+                  [src]="
+                    'https://dl.iraniexpert.com/' + item.secondCardImagePath
+                  "
+                  alt="عکس شاخص دوم"
+                />
+              </div>
+              <div class="buttons-container">
+                <button *ngIf="false" class="btn btn-change radius">
+                  <span class="pi pi-sync mr-2"></span
+                  ><span>تبدیل به عکس اصلی</span>
+                </button>
+                <button
+                  (click)="deleteFile(item.secondCardImagePath, 1)"
+                  class="btn btn-delete radius"
+                >
+                  <span class="pi pi-trash mr-2"></span><span>حذف</span>
+                </button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="item.secondCardImagePath == ''">
+              <div class="img-holder" *ngIf="secondFilePreview !== ''">
+                <img [src]="secondFilePreview" alt="عکس شاخص" />
+              </div>
+              <input
+                type="file"
+                (change)="changeFilePath($event, 1)"
+                class="text-small align-self-center"
+                id="secondaryImg"
+              />
+              <button
+                [disabled]="!isSecondFileValid"
+                (click)="uploadOnClick(1)"
+                class="btn-upload btn d-inline-flex align-self-center justify-content-start py-btns radius align-items-center m-1 w-fit-content"
+              >
+                <!-- (click)="upload()" -->
+                <i class="i-Upload text-dark text-bigger mr-3"></i>
+                <strong class="text-small">آپلود</strong>
+              </button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </li>
+  <!-- Images -->
+
+  <!-- Advantage -->
+
+  <li ngbNavItem>
+    <a ngbNavLink class="text-small">
+      <span class="d-flex align-items-center"
+        ><span class="text-small">مزیت و معایب</span></span
+      >
+    </a>
+    <ng-template ngbNavContent>
+      <div class="h-custom">
+        <app-benefits
+          (result)="changeBenefits($event)"
+          [data]="{
+            disadvantages: item.disAdvantages,
+            advantages: item.advantages
+          }"
+        ></app-benefits>
+      </div>
+    </ng-template>
+  </li>
+
+  <!-- Advantage -->
+
+  <!-- Tags -->
+  <li ngbNavItem>
+    <a
+      ngbNavLink
+      class="text-small"
+      [ngClass]="disableLinks ? 'disabled cursor-default' : ''"
+    >
+      <span class="d-flex align-items-center"
+        ><span class="text-small">تگ ها</span></span
+      >
+    </a>
+    <ng-template ngbNavContent>
+      <div class="h-custom">
+        <div class="col-md-6">
+          <label>هشتک ها</label>
+          <p-multiSelect
+            dir="ltr"
+            [options]="tags"
+            optionLabel="name"
+            [(ngModel)]="selectedTags"
+            display="chip"
+          ></p-multiSelect>
+        </div>
+        <button
+          (click)="setTags()"
+          class="btn-save btn d-inline-flex justify-content-around my-5"
+        >
+          <i class="i-Yes text-bigger"></i>
+          <span>تائید</span>
+        </button>
+      </div>
+    </ng-template>
+  </li>
+  <!-- Tags -->
+
+  <!-- FAQ -->
+
+  <li ngbNavItem>
+    <a
+      ngbNavLink
+      class="text-small"
+      [ngClass]="disableLinks ? 'disabled cursor-default' : ''"
+    >
+      <span class="d-flex align-items-center"
+        ><span class="text-small">پرسش های متداول </span></span
+      >
+    </a>
+    <ng-template ngbNavContent>
+      <div class="h-custom p-3">
+        <ng-container *ngIf="itemFetched">
+          <app-faq [productId]="item.id" [tableType]="36"></app-faq>
+        </ng-container>
+      </div>
+    </ng-template>
+  </li>
+  <!-- FAQ -->
+</ul>
+<div [ngbNavOutlet]="nav"></div>
+
+<div class="d-flex justify-content-end align-items-center">
+  <button (click)="getReadyForPost()" class="btn btn-save">
+    <i class="i-Yes text-bigger mr-2"></i><strong>ثبت</strong>
+  </button>
+  <button [routerLink]="'../broker-list'" class="btn btn-cancel">
+    <span class="pi pi-times-circle text-bigger mr-2"></span
+    ><strong>انصراف</strong>
+  </button>
+</div>

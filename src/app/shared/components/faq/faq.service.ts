@@ -11,8 +11,6 @@ import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.s
   providedIn: 'root',
 })
 export class FaqService extends BaseService<FaqModel, 0> {
-  userGuid = environment.jwtToken;
-
   constructor(public _http: HttpClient, public auth: AuthenticateService) {
     super(_http, environment.api.baseUrl, auth);
   }
@@ -23,10 +21,6 @@ export class FaqService extends BaseService<FaqModel, 0> {
    * @returns all
    */
   getFaqByProductId(
-    pageIndex: number,
-    pageSize: number,
-    pageOrder: string,
-    filter: string,
     productId: number,
     tableType: number
   ): Observable<Result<FaqModel[]>> {
@@ -40,23 +34,7 @@ export class FaqService extends BaseService<FaqModel, 0> {
       }),
     };
     return this._http.get<Result<FaqModel[]>>(
-      this._base +
-        '/Faq/GetByTableTypeAndRowID/' +
-        productId +
-        '/' +
-        tableType +
-        '?pagIndex=' +
-        pageIndex +
-        '&pageSize=' +
-        pageSize +
-        '&pageOrder=' +
-        pageOrder +
-        '&filter=' +
-        filter +
-        '&productId=' +
-        productId +
-        '&tabletype=' +
-        tableType,
+      this._base + '/Faq/GetByTableTypeAndRowID/' + productId + '/' + tableType,
       _options
     );
   }

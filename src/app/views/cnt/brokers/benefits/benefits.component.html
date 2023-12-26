@@ -1,0 +1,62 @@
+<div class="row my-3 mx-0 p-0 justify-content-center">
+  <div class="col-10 col-md-5 col-lg-4">
+    <p class="text-center">
+      <strong class="text-success text-25">مزایا</strong>
+    </p>
+    <div class="d-flex flex-column gap-5" id="advantage">
+      <ng-container *ngFor="let item of advantagesArr">
+        <textarea
+          [disabled]="!isChanging"
+          [id]="'adv-' + item.id"
+          [(ngModel)]="item.value"
+          (keydown.enter)="toAdd(1, item, $event)"
+        ></textarea>
+      </ng-container>
+    </div>
+  </div>
+  <div class="col-10 col-md-5 col-lg-4">
+    <p class="text-center">
+      <strong class="text-danger text-25">معایب</strong>
+    </p>
+
+    <div class="d-flex flex-column gap-5" id="disadvantage">
+      <ng-container *ngFor="let item of disAdvantageArr">
+        <textarea
+          [disabled]="!isChanging"
+          [id]="'dis-' + item.id"
+          [(ngModel)]="item.value"
+          (keydown.enter)="toAdd(0, item, $event)"
+        ></textarea>
+      </ng-container>
+    </div>
+  </div>
+  <div class="col-10 my-4 d-flex flex-row justify-content-center gap-5">
+    <button
+      (click)="isChanging = true"
+      [disabled]="isChanging"
+      type="button"
+      class="btn-info btn d-inline-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+    >
+      <span class="pi pi-pencil mr-2"></span>
+      <strong class="text-small">ویرایش</strong>
+    </button>
+    <button
+      (click)="sendBackToParent()"
+      type="button"
+      [disabled]="!isChanging"
+      class="btn-success btn d-inline-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+    >
+      <span class="pi pi-check-circle mr-2"></span>
+      <strong class="text-small">اعمال</strong>
+    </button>
+    <button
+      (click)="isChanging = false"
+      type="button"
+      [disabled]="!isChanging"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center my-1 mx-1"
+    >
+      <span class="pi pi-times mr-2"></span>
+      <strong class="text-small">لغو</strong>
+    </button>
+  </div>
+</div>

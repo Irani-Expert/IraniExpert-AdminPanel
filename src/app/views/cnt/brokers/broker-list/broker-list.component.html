@@ -1,0 +1,125 @@
+<!-- Search Input -->
+<div
+  *ngIf="pageHasItems"
+  class="d-flex flex-column m-2 col-12 col-md-5 col-lg-4 col-xl-3 position-relative"
+>
+  <input
+    autocomplete="off"
+    type="text"
+    id="destUrl"
+    (input)="_searchinput.next($event.target.value)"
+    class="form-control radius text-small icon-after"
+    placeholder="جستجو نام بروکر"
+  />
+  <div (click)="setFilter()" class="position-absolute abs-custom">
+    <span class="pi pi-search"></span>
+  </div>
+</div>
+<!-- Search Input -->
+
+<div class="table-responsive custom-table-responsive">
+  <table class="table custom-table">
+    <thead>
+      <tr>
+        <th>شناسه</th>
+        <th>عکس</th>
+        <th>نام بروکر</th>
+        <th>حداقل واریزی</th>
+        <th>نویسنده</th>
+        <th>امتیاز</th>
+        <th>عملیات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="pageHasItems">
+        <tr
+          *ngFor="
+            let item of items
+              | paginate
+                : {
+                    itemsPerPage: 10,
+                    currentPage: page.pageNumber + 1
+                  }
+          "
+        >
+          <td>{{ item.id }}</td>
+          <td class="td-img">
+            <img
+              [src]="'https://dl.iraniexpert.com/' + item.cardImagePath"
+              alt="broker-img"
+            />
+          </td>
+          <td class="broker-name">{{ item.secondTitle }}</td>
+          <td class="min-deposit">{{ item.minDeposit }}</td>
+          <td class="td-author">
+            <img
+              [src]="'https://dl.iraniexpert.com/' + item.authorIconPath"
+              alt="author-icon"
+            />
+            <span>{{ item.author }}</span>
+          </td>
+          <td class="rate">
+            {{ item.staticRate }}
+            <span class="pi pi-star-fill text-warning text-12"></span>
+          </td>
+          <td class="td-actions">
+            <div class="d-flex flex-row justify-content-center">
+              <button
+                (click)="goToDetails(item.id)"
+                ngbTooltip="جزئیات"
+                class="btn"
+              >
+                <span class="d-inline-flex"
+                  ><span class="pi pi-arrow-up-right text-white"></span
+                ></span>
+              </button>
+              <button
+                (click)="deleteItem(item)"
+                ngbTooltip=" حذف"
+                class="btn delete"
+              >
+                <span class="d-inline-flex"
+                  ><span class="pi pi-times text-white"></span
+                ></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+      <tr (click)="add()">
+        <button
+          ngbTooltip="افزودن بروکر"
+          placement="bottom"
+          class="btn btn-primary d-inline-flex justify-content-center align-items-center"
+        >
+          <span class="d-inline-flex"
+            ><span class="pi pi-plus text-white"></span
+          ></span>
+        </button>
+
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="col-md-12 mt-3" *ngIf="items.length > 10">
+    <pagination-controls
+      (pageChange)="get($event - 1)"
+      previousLabel=""
+      nextLabel=""
+      responsive="true"
+    ></pagination-controls>
+  </div>
+  <div *ngIf="!pageHasItems" class="d-flex justify-content-center">
+    <img
+      src="../../../../../assets/images/97434-no-data-available.gif"
+      class="img-fluid w-50 radius-lg"
+      style="mix-blend-mode: hard-light"
+      alt=""
+    />
+  </div>
+</div>

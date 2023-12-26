@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CntRoutingModule } from './cnt.routing';
 import { BannerComponent } from './banner/banner.component';
@@ -17,7 +17,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { TagsComponent } from './tags/tags.component';
-import {MultiSelectModule} from 'primeng/multiselect';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { BrokersComponent } from './brokers/brokers.component';
+import { BrokerItemsComponent } from './brokers/broker-items/broker-items.component';
+import { BrokerListComponent } from './brokers/broker-list/broker-list.component';
+import { BrokerDetailsComponent } from './brokers/broker-list/broker-details/broker-details.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { BenefitsComponent } from './brokers/benefits/benefits.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +36,11 @@ import {MultiSelectModule} from 'primeng/multiselect';
     AddUpdateComponent,
     CommentComponent,
     TagsComponent,
+    BrokersComponent,
+    BrokerItemsComponent,
+    BrokerListComponent,
+    BrokerDetailsComponent,
+    BenefitsComponent,
   ],
   imports: [
     CommonModule,
@@ -38,12 +50,15 @@ import {MultiSelectModule} from 'primeng/multiselect';
     CntRoutingModule,
     ImageCropperModule,
     NgxPaginationModule,
+    DropdownModule,
     NgbModule,
     MultiSelectModule,
     SharedPipesModule,
-    
+    SharedModule,
+
     SharedDirectivesModule,
   ],
   providers: [FileUploaderService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CntModule {}

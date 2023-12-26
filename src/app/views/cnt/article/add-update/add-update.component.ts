@@ -16,6 +16,7 @@ import { HttpEventType } from '@angular/common/http';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { tagModel } from '../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../tagModel/tagRelation.model';
+import { ckeConfig } from 'src/app/shared/ckconfig';
 
 interface Tag {
   name: string;
@@ -52,7 +53,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   items: tagModel[] = new Array<tagModel>();
   formcontrol: FormGroup;
   tetst: boolean = false;
-  ckeConfig: CKEDITOR.config;
+  ckeConfig = ckeConfig;
   @ViewChild('myckeditor') ckeditor: CKEditorComponent;
 
   constructor(
@@ -110,26 +111,6 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
       this._route.snapshot.paramMap.get('articleId') ?? '0'
     );
     if (this.addUpdate.id != 0) this.getArticleById(this.addUpdate.id);
-    this.ckeConfig = {
-      filebrowserBrowseUrl: 'dl.iraniexpert.com//uploads/images/articles',
-      filebrowserUploadUrl:
-        'https://dl.iraniexpert.com/FileUploader/FileUploadCkEditor',
-      allowedContent: false,
-      forcePasteAsPlainText: true,
-      skin: 'moono-lisa',
-      defaultLanguage: 'en',
-      language: 'en',
-      removeButtons:
-        'Underline,Subscript,Superscript,Save,NewPage,Preview,Print,' +
-        'Scayt,' +
-        'Radio,Select,Button,HiddenField,Strike,RemoveFormat,' +
-        'Outdent,Indent,Blockquote,Anchor,' +
-        'Flash,HorizontalRule,PageBreak,InsertPre,' +
-        'ShowBlocks,MediaEmbed,About,Language',
-      removePlugins: 'elementspath,save,magicline,blockquote',
-      extraPlugins:
-        'smiley,justify,colordialog,divarea,indentblock,forms,exportpdf,pastefromword',
-    };
     this.addForm = this._formBuilder.group({
       title: [null, Validators.required],
       brief: [null, Validators.required],

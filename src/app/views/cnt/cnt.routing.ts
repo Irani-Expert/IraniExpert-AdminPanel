@@ -6,6 +6,26 @@ import { ArticleComponent } from './article/article/article.component';
 import { CommentComponent } from './article/comment/comment.component';
 import { BannerComponent } from './banner/banner.component';
 import { TagsComponent } from './tags/tags.component';
+import { BrokersComponent } from './brokers/brokers.component';
+import { BrokerListComponent } from './brokers/broker-list/broker-list.component';
+import { BrokerItemsComponent } from './brokers/broker-items/broker-items.component';
+import { BrokerDetailsComponent } from './brokers/broker-list/broker-details/broker-details.component';
+
+const brokersChilds: Routes = [
+  {
+    path: '',
+    redirectTo: 'broker-list',
+    pathMatch: 'full',
+  },
+  {
+    path: 'broker-list',
+    component: BrokerListComponent,
+  },
+  {
+    path: 'broker-items',
+    component: BrokerItemsComponent,
+  },
+];
 
 const routes: Routes = [
   {
@@ -28,6 +48,13 @@ const routes: Routes = [
     component: CommentComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'brokers',
+    component: BrokersComponent,
+    children: brokersChilds,
+    // canActivate: [AuthGuard],
+  },
+  { path: 'brokers/:id', pathMatch: 'full', component: BrokerDetailsComponent },
   {
     path: 'addUpdate-article',
     component: AddUpdateComponent,
