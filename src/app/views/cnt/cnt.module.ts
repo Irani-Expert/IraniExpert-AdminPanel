@@ -25,6 +25,9 @@ import { BrokerDetailsComponent } from './brokers/broker-list/broker-details/bro
 import { DropdownModule } from 'primeng/dropdown';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BenefitsComponent } from './brokers/benefits/benefits.component';
+import { BrokerItemsRelComponent } from './brokers/broker-items-rel/broker-items-rel.component';
+import { PickListModule } from 'primeng/picklist';
+import { ItemType } from './brokers/broker-items-rel/item-type.pipe';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,8 @@ import { BenefitsComponent } from './brokers/benefits/benefits.component';
     BrokerListComponent,
     BrokerDetailsComponent,
     BenefitsComponent,
+    BrokerItemsRelComponent,
+    ItemType,
   ],
   imports: [
     CommonModule,
@@ -49,6 +54,7 @@ import { BenefitsComponent } from './brokers/benefits/benefits.component';
     ReactiveFormsModule,
     CntRoutingModule,
     ImageCropperModule,
+    PickListModule,
     NgxPaginationModule,
     DropdownModule,
     NgbModule,

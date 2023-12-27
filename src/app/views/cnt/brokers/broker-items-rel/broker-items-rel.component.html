@@ -1,0 +1,40 @@
+<p-pickList
+  dir="ltr"
+  [source]="sourceItems"
+  [target]="targetItems"
+  sourceHeader="کل آیتم ها"
+  targetHeader="انتخاب شده ها"
+  [dragdrop]="true"
+  [responsive]="true"
+  [showSourceControls]="false"
+  [showTargetControls]="false"
+  breakpoint="768px"
+  [sourceStyle]="{ height: '15rem' }"
+  [targetStyle]="{ height: '15rem' }"
+  filterBy="title"
+  sourceFilterPlaceholder="جستجو"
+  targetFilterPlaceholder="جستجو"
+>
+  <ng-template pTemplate="movealltotargeticon">
+    <div>سلام</div>
+  </ng-template>
+  <ng-template let-item pTemplate="item">
+    <div
+      dir="ltr"
+      class="d-flex flex-wrap align-items-center justify-content-between"
+    >
+      <div class="d-flex flex-column align-items-baseline">
+        <span class="fw-bold m-2">{{ item.title }}</span>
+        <span class="pi pi-tag"> </span>
+      </div>
+      <span class="fw-bold text-16 m-2">{{
+        item.brokerItemType | itemType
+      }}</span>
+    </div>
+  </ng-template>
+</p-pickList>
+<div class="d-flex justify-content-start my-4 align-items-center">
+  <button (click)="post()" class="btn btn-save py-btns">
+    <i class="i-Yes text-bigger mr-2"></i><strong>ثبت</strong>
+  </button>
+</div>

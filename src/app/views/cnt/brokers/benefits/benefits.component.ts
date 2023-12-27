@@ -1,15 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 class BenefitsModel {
-  advantages: string;
-  disadvantages: string;
+  advantages: string = '';
+  disadvantages: string = '';
 }
 class SimpleArr {
   value: string;
@@ -28,18 +20,33 @@ export class BenefitsComponent implements OnInit {
   advantagesArr = new Array<SimpleArr>();
   advantages: string[] = new Array<string>('');
   disadvantages: string[] = new Array<string>('');
-  constructor(private renderer2: Renderer2) {}
+  constructor() {}
   ngOnInit(): void {
+    this.advantages = this.data.advantages.split('@');
+    this.disadvantages = this.data.disadvantages.split('@');
+
     this.setArrys(this.advantages, this.disadvantages);
   }
 
   setArrys(advantage: string[], disadvantages: string[]) {
-    advantage.forEach((it, counter) => {
-      this.advantagesArr.push({ id: counter + 1, value: it });
-    });
-    disadvantages.forEach((it, counter) => {
-      this.disAdvantageArr.push({ id: counter + 1, value: it });
-    });
+    if (advantage.length == 0) {
+      this.advantagesArr.push({ id: 1, value: '' });
+    } else {
+      advantage.forEach((it, counter) => {
+        this.advantagesArr.push({ id: counter + 1, value: it });
+      });
+    }
+
+    if (disadvantages.length == 0) {
+      this.disAdvantageArr.push({ id: 1, value: '' });
+    } else {
+      disadvantages.forEach((it, counter) => {
+        this.disAdvantageArr.push({ id: counter + 1, value: it });
+      });
+    }
+    // disadvantages.forEach((it, counter) => {
+    //   this.disAdvantageArr.push({ id: counter + 1, value: it });
+    // });
   }
   toAdd(type: number, item: SimpleArr, event: any) {
     event.preventDefault();

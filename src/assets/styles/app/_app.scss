@@ -733,6 +733,17 @@ Buttons
   padding: 0.15rem 0.75rem;
   font-size: 0.85rem;
 }
+.p-picklist-item {
+  margin: 0.75rem !important;
+  background-color: #f1efef !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 28px;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s !important;
+  &:hover {
+    background-color: #3a93a7 !important;
+    color: #fff !important;
+  }
+}
 // .p-inputnumber-buttons-vertical .p-button.p-inputnumber-button-up {
 //   padding: 0.2rem 0 !important;
 //   width: 100% !important;

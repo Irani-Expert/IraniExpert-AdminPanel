@@ -14,6 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { tagModel } from '../../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../../../article/tagModel/tagRelation.model';
+import { Utils } from 'src/app/shared/utils';
 
 interface Tag {
   name: string;
@@ -32,13 +33,13 @@ interface Navigation {
   templateUrl: './broker-details.component.html',
   styleUrls: ['./broker-details.component.scss'],
 })
-export class BrokerDetailsComponent implements OnInit {
+export class BrokerDetailsComponent {
   isFileValid = false;
+  navId = 0;
   isSecondFileValid = false;
   imgSrc = '/uploads/images/articles/8536cf59721a481e883faaba8b0c6bdf.jpg';
   selectedRate: number = 10;
   rates = rates;
-  disableLinks = false;
   routeSubscriber: Subscription;
   item = new BrokerModel();
   ckeConfig = ckeConfig;
@@ -69,10 +70,53 @@ export class BrokerDetailsComponent implements OnInit {
               let urlValue = event.routerEvent.urlAfterRedirects.split('/')[3];
 
               if (urlValue == 'add') {
-                this.disableLinks = true;
+                this.formGroup = this._formBuilder.group({
+                  title: [this.item.title, [Validators.required]],
+                  isActive: [this.item.isActive, [Validators.required]],
+                  brief: [this.item.brief, [Validators.required]],
+                  secondTitle: [this.item.secondTitle, [Validators.required]],
+                  copyTrade: [this.item.copyTrade, [Validators.required]],
+                  isRTL: [this.item.isRTL, [Validators.required]],
+                  metaDescription: [
+                    this.item.metaDescription,
+                    [Validators.required],
+                  ],
+                  browserTitle: [this.item.browserTitle, [Validators.required]],
+                  isIRSupport: [this.item.isIRSupport, [Validators.required]],
+                  referralLink: [this.item.referralLink],
+                  staticRate: [this.item.staticRate, [Validators.required]],
+                  tradingSymbols: [
+                    this.item.tradingSymbols,
+                    [Validators.required],
+                  ],
+                  telegramSupportLink: [
+                    this.item.telegramSupportLink,
+                    [Validators.required],
+                  ],
+                  videoLink: [this.item.videoLink, [Validators.required]],
+                  webSiteLink: [this.item.webSiteLink, [Validators.required]],
+                  accountCent: [this.item.accountCent, [Validators.required]],
+                  leverage: [this.item.leverage, [Validators.required]],
+                  minDeposit: [this.item.minDeposit, [Validators.required]],
+                  isPersianSupport: [
+                    this.item.isPersianSupport,
+                    [Validators.required],
+                  ],
+                  establishedYear: [
+                    this.item.establishedYear,
+                    [Validators.required],
+                  ],
+                  email: [
+                    this.item.email,
+                    [Validators.required, Validators.email],
+                  ],
+                  phoneNumber: [this.item.phoneNumber],
+                });
+                this.showForm = true;
               } else {
                 if (await this.get(parseInt(urlValue))) {
                   this.itemFetched = true;
+                  this.showForm = true;
                   if ((await this.getTags()).res) {
                     this.pushSectionItem();
                   }
@@ -91,43 +135,47 @@ export class BrokerDetailsComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-    this.formGroup = this._formBuilder.group({
-      title: [this.item.title, [Validators.required]],
-      isActive: [this.item.isActive, [Validators.required]],
-      brief: [this.item.brief, [Validators.required]],
-      secondTitle: [this.item.secondTitle, [Validators.required]],
-      copyTrade: [this.item.copyTrade, [Validators.required]],
-      isRTL: [this.item.isRTL, [Validators.required]],
-      metaDescription: [this.item.metaDescription, [Validators.required]],
-      browserTitle: [this.item.browserTitle, [Validators.required]],
-      isIRSupport: [this.item.isIRSupport, [Validators.required]],
-      referralLink: [this.item.referralLink],
-      staticRate: [this.item.staticRate, [Validators.required]],
-      tradingSymbols: [this.item.tradingSymbols, [Validators.required]],
-      telegramSupportLink: [
-        this.item.telegramSupportLink,
-        [Validators.required],
-      ],
-      videoLink: [this.item.videoLink, [Validators.required]],
-      webSiteLink: [this.item.webSiteLink, [Validators.required]],
-      accountCent: [this.item.accountCent, [Validators.required]],
-      leverage: [this.item.leverage, [Validators.required]],
-      minDeposit: [this.item.minDeposit, [Validators.required]],
-      isPersianSupport: [this.item.isPersianSupport, [Validators.required]],
-      establishedYear: [this.item.establishedYear, [Validators.required]],
-      email: [this.item.email, [Validators.required, Validators.email]],
-      phoneNumber: [this.item.phoneNumber],
-    });
-  }
+  ngOnInit() {}
+  showForm = false;
   ngOnDestroy() {
     this.routeSubscriber.unsubscribe();
   }
   async get(id: number): Promise<boolean> {
+    Utils.scrollTopWindow();
     const result = this.brokerService.getBrokerDetails(id).pipe(
       map((res) => {
         if (res.success) {
           this.item = res.data;
+          this.formGroup = this._formBuilder.group({
+            title: [this.item.title, [Validators.required]],
+            isActive: [this.item.isActive, [Validators.required]],
+            brief: [this.item.brief, [Validators.required]],
+            secondTitle: [this.item.secondTitle, [Validators.required]],
+            copyTrade: [this.item.copyTrade, [Validators.required]],
+            isRTL: [this.item.isRTL, [Validators.required]],
+            metaDescription: [this.item.metaDescription, [Validators.required]],
+            browserTitle: [this.item.browserTitle, [Validators.required]],
+            isIRSupport: [this.item.isIRSupport, [Validators.required]],
+            referralLink: [this.item.referralLink],
+            staticRate: [this.item.staticRate, [Validators.required]],
+            tradingSymbols: [this.item.tradingSymbols, [Validators.required]],
+            telegramSupportLink: [
+              this.item.telegramSupportLink,
+              [Validators.required],
+            ],
+            videoLink: [this.item.videoLink, [Validators.required]],
+            webSiteLink: [this.item.webSiteLink, [Validators.required]],
+            accountCent: [this.item.accountCent, [Validators.required]],
+            leverage: [this.item.leverage, [Validators.required]],
+            minDeposit: [this.item.minDeposit, [Validators.required]],
+            isPersianSupport: [
+              this.item.isPersianSupport,
+              [Validators.required],
+            ],
+            establishedYear: [this.item.establishedYear, [Validators.required]],
+            email: [this.item.email, [Validators.required, Validators.email]],
+            phoneNumber: [this.item.phoneNumber],
+          });
         }
         return res.success;
       })
@@ -248,6 +296,7 @@ export class BrokerDetailsComponent implements OnInit {
     this.item.advantages = event.advantages;
     this.item.disAdvantages = event.disadvantages;
   }
+
   getReadyForPost() {
     if (!this.formGroup.valid) {
       this.toastr.error('فیلد های خواسته شده را چک کنید', null, {
@@ -305,18 +354,47 @@ export class BrokerDetailsComponent implements OnInit {
       // Forcing True Will Change Later
       referralLink: this._controls['referralLink'].value,
       phoneNumber: this._controls['phoneNumber'].value,
-      id: 0,
+      id: item.id ? item.id : 0,
       description: item.description,
       isActive: this._controls['isActive'].value,
     };
-    this.brokerService
-      .create(sendingItem, 'Broker')
-      .subscribe((it) => console.log(it));
+    if (sendingItem.id == 0) {
+      this.brokerService.create(sendingItem, 'Broker').subscribe((it) => {
+        this.showToast(it.success, it.message);
+        if (it.success) {
+          this.get(it.data);
+        }
+      });
+    } else {
+      this.brokerService
+        .update(sendingItem.id, sendingItem, 'Broker')
+        .subscribe((it) => {
+          this.showToast(it.success, it.message);
+          if (it.success) {
+            this.get(this.item.id);
+          }
+        });
+    }
   }
   get _controls() {
-    return this.formGroup.controls;
+    if (this.formGroup) {
+      return this.formGroup.controls;
+    } else {
+      return false;
+    }
   }
 
+  showToast(res: boolean, message: string) {
+    res
+      ? this.toastr.success(message, 'موفق !', {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        })
+      : this.toastr.error(message, 'خطا !', {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+  }
   // Tags
 
   addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
@@ -405,5 +483,14 @@ export class BrokerDetailsComponent implements OnInit {
           });
         }
       });
+  }
+  // confirm(id: number) {
+  //   if (id == undefined) {
+  //     this.getReadyForPost();
+  //   } else {
+  //   }
+  // }
+  changeNavId(event: string) {
+    this.navId = parseInt(event.split('-')[2]);
   }
 }

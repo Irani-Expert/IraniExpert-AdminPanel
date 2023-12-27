@@ -8,9 +8,15 @@ import { BaseService } from 'src/app/shared/services/baseService/baseService';
 import { environment } from 'src/environments/environment.prod';
 import { BrokerModel } from './models/broker.model';
 import { tagModel } from '../tags/tagModel/tag.model';
+import { BrokerItem } from './models/broker-item.model';
 interface FilterBrokers {
   title: string;
   items: number[];
+}
+class FilterBrokerItem {
+  accending: boolean = true;
+  title: string;
+  brokerItemType: number;
 }
 @Injectable({
   providedIn: 'root',
@@ -52,6 +58,16 @@ export class BrokersService extends BaseService<any, 0> {
   getTags() {
     return this._http.get<Result<Paginate<tagModel[]>>>(
       this._base + '/LinkTag?pageIndex=0',
+      this._options
+    );
+  }
+  getBrokerItems(_filter: FilterBrokerItem) {
+    let filterRow = '';
+    Object.keys(_filter).forEach((key) => {
+      key ? (filterRow += `&${key + '=' + _filter[key]}`) : filterRow;
+    });
+    return this._http.get<Result<Paginate<BrokerItem[]>>>(
+      this._base + '/BrokerItem?pageIndex=0' + filterRow,
       this._options
     );
   }

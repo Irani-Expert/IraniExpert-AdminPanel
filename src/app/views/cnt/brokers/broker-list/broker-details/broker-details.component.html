@@ -1,6 +1,7 @@
 <ul
   [destroyOnHide]="false"
   ngbNav
+  (activeIdChange)="changeNavId($event)"
   #nav="ngbNav"
   class="nav-tabs p-0 max-w-custom"
 >
@@ -14,7 +15,7 @@
     </a>
     <ng-template ngbNavContent>
       <div class="h-custom">
-        <form [formGroup]="formGroup">
+        <form [formGroup]="formGroup" *ngIf="showForm">
           <div
             class="row m-0 p-0 g-0 align-items-end justify-content-center justify-content-md-start"
           >
@@ -26,6 +27,7 @@
               <input
                 formControlName="title"
                 autocomplete="off"
+                [value]="item.title"
                 type="text"
                 id="title"
                 class="form-control radius text-small"
@@ -41,6 +43,7 @@
                 formControlName="secondTitle"
                 autocomplete="off"
                 type="text"
+                [value]="item.secondTitle"
                 id="secondTitle"
                 class="form-control radius text-small"
               />
@@ -54,6 +57,7 @@
               <input
                 formControlName="minDeposit"
                 autocomplete="off"
+                [value]="item.minDeposit"
                 type="number"
                 id="minDeposit"
                 class="form-control radius text-small"
@@ -70,6 +74,7 @@
                 autocomplete="off"
                 type="text"
                 id="webSiteLink"
+                [value]="item.webSiteLink"
                 class="form-control radius text-small"
               />
             </div>
@@ -84,6 +89,7 @@
               <input
                 formControlName="telegramSupportLink"
                 autocomplete="off"
+                [value]="item.telegramSupportLink"
                 type="text"
                 id="telegramSupportLink"
                 class="form-control radius text-small"
@@ -101,6 +107,7 @@
                 type="text"
                 id="videoLink"
                 class="form-control radius text-small"
+                [value]="item.videoLink"
               />
             </div>
             <!-- Each Input -->
@@ -114,6 +121,7 @@
                 autocomplete="off"
                 type="number"
                 id="leverage"
+                [value]="item.leverage"
                 class="form-control radius text-small"
               />
             </div>
@@ -129,6 +137,7 @@
                 formControlName="browserTitle"
                 autocomplete="off"
                 type="text"
+                [value]="item.browserTitle"
                 id="browserTitle"
                 class="form-control radius text-small"
               />
@@ -144,6 +153,7 @@
                 autocomplete="off"
                 type="text"
                 id="establishedYear"
+                [value]="item.establishedYear"
                 class="form-control radius text-small"
               />
             </div>
@@ -157,6 +167,7 @@
                 formControlName="email"
                 autocomplete="off"
                 type="text"
+                [value]="item.email"
                 id="email"
                 class="form-control radius text-small"
               />
@@ -174,6 +185,7 @@
                 formControlName="tradingSymbols"
                 autocomplete="off"
                 type="text"
+                [value]="item.tradingSymbols"
                 id="tradingSymbols"
                 class="form-control radius text-small"
               />
@@ -189,6 +201,7 @@
                 formControlName="brief"
                 autocomplete="off"
                 type="text"
+                [value]="item.brief"
                 id="brief"
                 class="radius text-small"
               ></textarea>
@@ -202,6 +215,7 @@
                 autocomplete="off"
                 type="text"
                 id="metaDescription"
+                [value]="item.metaDescription"
                 class="radius text-small"
               ></textarea>
             </div>
@@ -218,6 +232,7 @@
                 autocomplete="off"
                 type="text"
                 id="referralLink"
+                [value]="item.referralLink"
                 class="form-control radius text-small"
               />
             </div>
@@ -233,6 +248,7 @@
                 formControlName="phoneNumber"
                 autocomplete="off"
                 type="text"
+                [value]="item.phoneNumber"
                 id="phoneNumber"
                 class="form-control radius text-small"
               />
@@ -248,7 +264,7 @@
                     <span class="pi pi-star-fill text-warning text-14"></span
                     >&nbsp;&nbsp;
                     <strong style="padding-top: 5px">{{
-                      formGroup.controls["staticRate"].value || "1"
+                      formGroup.controls["staticRate"].value || "5"
                     }}</strong>
                   </div>
                 </ng-template>
@@ -274,7 +290,12 @@
               <span class="m-1 text-12 slider-text top-custom-2">فارسی</span>
               <label for="isRTL" class="switch switch-secondary mr-2 m-2">
                 <span>انگلیسی</span>
-                <input formControlName="isRTL" type="checkbox" id="isRTL" />
+                <input
+                  formControlName="isRTL"
+                  type="checkbox"
+                  id="isRTL"
+                  [value]="item.isRTL"
+                />
                 <span class="slider"></span>
               </label>
             </div>
@@ -288,6 +309,7 @@
               <label for="accountCent" class="switch switch-primary mr-2 m-2">
                 <span>ندارد</span>
                 <input
+                  [value]="item.accountCent"
                   formControlName="accountCent"
                   type="checkbox"
                   id="accountCent"
@@ -305,6 +327,7 @@
               <label for="isIRSupport" class="switch switch-primary mr-2 m-2">
                 <span>ندارد</span>
                 <input
+                  [value]="item.isIRSupport"
                   formControlName="isIRSupport"
                   type="checkbox"
                   id="isIRSupport"
@@ -322,6 +345,7 @@
               <label for="copyTrade" class="switch switch-primary mr-2 m-2">
                 <span>ندارد</span>
                 <input
+                  [value]="item.copyTrade"
                   formControlName="copyTrade"
                   type="checkbox"
                   id="copyTrade"
@@ -342,6 +366,7 @@
               >
                 <span>ندارد</span>
                 <input
+                  [value]="item.isPersianSupport"
                   formControlName="isPersianSupport"
                   type="checkbox"
                   id="isPersianSupport"
@@ -357,6 +382,7 @@
               <label for="isActive" class="switch switch-primary mr-2 m-2">
                 <span>داده نشود</span>
                 <input
+                  [value]="item.isActive"
                   formControlName="isActive"
                   type="checkbox"
                   id="isActive"
@@ -516,13 +542,15 @@
     </a>
     <ng-template ngbNavContent>
       <div class="h-custom">
-        <app-benefits
-          (result)="changeBenefits($event)"
-          [data]="{
-            disadvantages: item.disAdvantages,
-            advantages: item.advantages
-          }"
-        ></app-benefits>
+        <ng-container *ngIf="itemFetched || showForm">
+          <app-benefits
+            (result)="changeBenefits($event)"
+            [data]="{
+              disadvantages: item.disAdvantages || '',
+              advantages: item.advantages || ''
+            }"
+          ></app-benefits>
+        </ng-container>
       </div>
     </ng-template>
   </li>
@@ -530,11 +558,11 @@
   <!-- Advantage -->
 
   <!-- Tags -->
-  <li ngbNavItem>
+  <li ngbNavItem [disabled]="!itemFetched">
     <a
       ngbNavLink
       class="text-small"
-      [ngClass]="disableLinks ? 'disabled cursor-default' : ''"
+      [ngClass]="!itemFetched ? 'disabled cursor-default' : ''"
     >
       <span class="d-flex align-items-center"
         ><span class="text-small">تگ ها</span></span
@@ -564,13 +592,38 @@
   </li>
   <!-- Tags -->
 
-  <!-- FAQ -->
-
-  <li ngbNavItem>
+  <!-- Items -->
+  <li ngbNavItem [disabled]="!itemFetched">
     <a
       ngbNavLink
       class="text-small"
-      [ngClass]="disableLinks ? 'disabled cursor-default' : ''"
+      [ngClass]="!itemFetched ? 'disabled cursor-default' : ''"
+    >
+      <span class="d-flex align-items-center"
+        ><span class="text-small"> آیتم ها </span></span
+      >
+    </a>
+    <ng-template ngbNavContent>
+      <div class="h-custom p-3">
+        <ng-container *ngIf="itemFetched">
+          <app-broker-items-rel
+            [brokerId]="item.id"
+            [selectedTargets]="item.items"
+          ></app-broker-items-rel>
+        </ng-container>
+      </div>
+    </ng-template>
+  </li>
+
+  <!-- Items -->
+
+  <!-- FAQ -->
+
+  <li ngbNavItem [disabled]="!itemFetched">
+    <a
+      ngbNavLink
+      class="text-small"
+      [ngClass]="!itemFetched ? 'disabled cursor-default' : ''"
     >
       <span class="d-flex align-items-center"
         ><span class="text-small">پرسش های متداول </span></span
@@ -588,7 +641,7 @@
 </ul>
 <div [ngbNavOutlet]="nav"></div>
 
-<div class="d-flex justify-content-end align-items-center">
+<div class="d-flex justify-content-end align-items-center" *ngIf="navId <= 2">
   <button (click)="getReadyForPost()" class="btn btn-save">
     <i class="i-Yes text-bigger mr-2"></i><strong>ثبت</strong>
   </button>
