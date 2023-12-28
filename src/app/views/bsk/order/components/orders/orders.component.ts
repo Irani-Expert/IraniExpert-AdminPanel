@@ -118,12 +118,14 @@ export class OrdersComponent {
   }
 
   async ngOnInit() {
+    this.filter.TransactionStatus = 8;
+    this.transactionIndexHolder = 4;
     this.activatedRoute.params.subscribe((params) => {
+      this.view = View.ViewAll;
       if (
         this.page.currentPage != params['pageId'] ||
         this.table.data.length == 0
       ) {
-        this.filter.TransactionStatus = 1;
         this.page.pageNumber = parseInt(params['pageId']) - 1;
         this.getOrders();
       }

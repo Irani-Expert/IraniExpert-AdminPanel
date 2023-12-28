@@ -80,7 +80,7 @@ export class OrderService extends BaseService<any, 0> {
       this._options
     );
   }
-  getMyProfile(id:number) {
+  getMyProfile(id: number) {
     return this._http.get<Result<UsersModel>>(
       this._base + '/AspNetUser/' + id,
       this._options
@@ -137,7 +137,6 @@ export class OrderService extends BaseService<any, 0> {
         page.pageNumber +
         '&pageSize=' +
         page.size +
-        '&pageOrder=ID' +
         filterRow,
       this._options
     );
