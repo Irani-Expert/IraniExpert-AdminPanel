@@ -24,13 +24,14 @@ export class BrokersComponent implements OnInit {
       isActive: true,
       icon: 'pi-list',
     },
-    {
-      id: 2,
-      title: 'بروکر آیتم ها',
-      urlPath: 'broker-items',
-      isActive: false,
-      icon: 'pi-info',
-    },
+    // ,
+    // {
+    //   id: 2,
+    //   title: 'بروکر آیتم ها',
+    //   urlPath: 'broker-items',
+    //   isActive: false,
+    //   icon: 'pi-info',
+    // },
   ];
   private routeSubject = new Subject();
   constructor(private router: Router) {

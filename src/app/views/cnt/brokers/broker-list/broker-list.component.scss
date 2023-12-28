@@ -84,7 +84,7 @@
         }
         &.td-img {
           width: 150px;
-          padding: 0 !important;
+          padding: 6px !important;
           img {
             width: 150px;
             aspect-ratio: 16/9;
@@ -154,4 +154,8 @@ input[type="text"] {
   span::before {
     color: #d5c5c5;
   }
+}
+.custom-position {
+  transform: translateX(50%);
+  right: 50%;
 }

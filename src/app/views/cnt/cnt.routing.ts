@@ -20,10 +20,12 @@ const brokersChilds: Routes = [
   {
     path: 'broker-list',
     component: BrokerListComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'broker-items',
     component: BrokerItemsComponent,
+    canActivate: [AuthGuard],
   },
 ];
 
@@ -52,7 +54,7 @@ const routes: Routes = [
     path: 'brokers',
     component: BrokersComponent,
     children: brokersChilds,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   { path: 'brokers/:id', pathMatch: 'full', component: BrokerDetailsComponent },
   {

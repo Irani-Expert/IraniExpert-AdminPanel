@@ -55,13 +55,27 @@ export class BrokerItemsRelComponent implements OnInit {
     return sourceItemsRes;
   }
   async post() {
-    let postItem: Array<{ brokerID: number; itemID: number }>;
-    postItem = new Array<{ brokerID: number; itemID: number }>();
+    let postItem: Array<{
+      brokerID: number;
+      itemID: number;
+    }>;
+    postItem = new Array<{
+      brokerID: number;
+      itemID: number;
+    }>();
+
     this.targetItems.forEach((item) => {
-      postItem.push({ brokerID: this.brokerId, itemID: item.id });
+      postItem.push({
+        brokerID: this.brokerId,
+        itemID: item.id,
+      });
     });
+    debugger;
+    let itemToSend = {
+      relations: postItem,
+    };
     this._brokerService
-      .create(postItem, 'BrokerItemRelation/AddUpdateBrokerItemRel')
+      .create(itemToSend, 'BrokerItemRelation/AddUpdateBrokerItemRel')
       .subscribe((it) => this.showToast(it.success, it.message));
   }
   showToast(res: boolean, message: string) {

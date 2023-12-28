@@ -11,7 +11,7 @@
 
 i {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: "iconsmind" !important;
+  font-family: "iconsmind";
   speak-as: none;
   font-style: normal;
   font-weight: normal;

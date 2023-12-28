@@ -2,6 +2,7 @@ import { Base } from 'src/app/shared/models/Base/base.model';
 import { BrokerItem } from './broker-item.model';
 
 export class BrokerModel extends Base {
+  description: string = '';
   updateDate: string;
   createDate: string;
   createBy: number;

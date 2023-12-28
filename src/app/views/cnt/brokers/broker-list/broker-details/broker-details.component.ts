@@ -70,47 +70,30 @@ export class BrokerDetailsComponent {
               let urlValue = event.routerEvent.urlAfterRedirects.split('/')[3];
 
               if (urlValue == 'add') {
+                this.item = new BrokerModel();
                 this.formGroup = this._formBuilder.group({
-                  title: [this.item.title, [Validators.required]],
-                  isActive: [this.item.isActive, [Validators.required]],
-                  brief: [this.item.brief, [Validators.required]],
-                  secondTitle: [this.item.secondTitle, [Validators.required]],
-                  copyTrade: [this.item.copyTrade, [Validators.required]],
-                  isRTL: [this.item.isRTL, [Validators.required]],
-                  metaDescription: [
-                    this.item.metaDescription,
-                    [Validators.required],
-                  ],
-                  browserTitle: [this.item.browserTitle, [Validators.required]],
-                  isIRSupport: [this.item.isIRSupport, [Validators.required]],
-                  referralLink: [this.item.referralLink],
-                  staticRate: [this.item.staticRate, [Validators.required]],
-                  tradingSymbols: [
-                    this.item.tradingSymbols,
-                    [Validators.required],
-                  ],
-                  telegramSupportLink: [
-                    this.item.telegramSupportLink,
-                    [Validators.required],
-                  ],
-                  videoLink: [this.item.videoLink, [Validators.required]],
-                  webSiteLink: [this.item.webSiteLink, [Validators.required]],
-                  accountCent: [this.item.accountCent, [Validators.required]],
-                  leverage: [this.item.leverage, [Validators.required]],
-                  minDeposit: [this.item.minDeposit, [Validators.required]],
-                  isPersianSupport: [
-                    this.item.isPersianSupport,
-                    [Validators.required],
-                  ],
-                  establishedYear: [
-                    this.item.establishedYear,
-                    [Validators.required],
-                  ],
-                  email: [
-                    this.item.email,
-                    [Validators.required, Validators.email],
-                  ],
-                  phoneNumber: [this.item.phoneNumber],
+                  title: [null, [Validators.required]],
+                  isActive: [null, [Validators.required]],
+                  brief: [null, [Validators.required]],
+                  secondTitle: [null, [Validators.required]],
+                  copyTrade: [null, [Validators.required]],
+                  isRTL: [null, [Validators.required]],
+                  metaDescription: [null, [Validators.required]],
+                  browserTitle: [null, [Validators.required]],
+                  isIRSupport: [null, [Validators.required]],
+                  referralLink: [null],
+                  staticRate: [null, [Validators.required]],
+                  tradingSymbols: [null, [Validators.required]],
+                  telegramSupportLink: [null, [Validators.required]],
+                  videoLink: [null, [Validators.required]],
+                  webSiteLink: [null, [Validators.required]],
+                  accountCent: [null, [Validators.required]],
+                  leverage: [null, [Validators.required]],
+                  minDeposit: [null, [Validators.required]],
+                  isPersianSupport: [null, [Validators.required]],
+                  establishedYear: [null, [Validators.required]],
+                  email: [null, [Validators.required, Validators.email]],
+                  phoneNumber: [null],
                 });
                 this.showForm = true;
               } else {

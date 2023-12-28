@@ -1,3 +1,13 @@
+<button
+  (click)="add()"
+  ngbTooltip="افزودن بروکر"
+  placement="bottom"
+  class="btn btn-primary d-inline-flex justify-content-center align-items-center radius mx-4 my-3"
+>
+  <span class="pi pi-plus text-white"></span>
+  <span class="mx-4"> ایجاد بروکر جدید</span>
+</button>
+
 <!-- Search Input -->
 <div
   *ngIf="pageHasItems"
@@ -30,7 +40,7 @@
         <th>عملیات</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="position-relative">
       <ng-container *ngIf="pageHasItems">
         <tr
           *ngFor="
@@ -74,6 +84,7 @@
                 ></span>
               </button>
               <button
+                *appCanAccess="'Brokers-Delete'"
                 (click)="deleteItem(item)"
                 ngbTooltip=" حذف"
                 class="btn delete"
@@ -86,24 +97,6 @@
           </td>
         </tr>
       </ng-container>
-      <tr (click)="add()">
-        <button
-          ngbTooltip="افزودن بروکر"
-          placement="bottom"
-          class="btn btn-primary d-inline-flex justify-content-center align-items-center"
-        >
-          <span class="d-inline-flex"
-            ><span class="pi pi-plus text-white"></span
-          ></span>
-        </button>
-
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
     </tbody>
   </table>
   <div class="col-md-12 mt-3" *ngIf="items.length > 10">

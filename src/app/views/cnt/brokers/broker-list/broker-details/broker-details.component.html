@@ -6,7 +6,7 @@
   class="nav-tabs p-0 max-w-custom"
 >
   <!-- Details -->
-  <li ngbNavItem>
+  <li ngbNavItem [domId]="'custom-nav-' + 0">
     <a ngbNavLink class="text-small">
       <span class="d-flex align-items-center"
         ><span class="text-bigger pi pi-file-edit"></span
@@ -424,14 +424,14 @@
 
   <!-- Images -->
 
-  <li ngbNavItem>
+  <li ngbNavItem [domId]="'custom-nav-' + 1">
     <a ngbNavLink class="text-small">
       <span class="d-flex align-items-center"
         ><span class="text-small"> تصاویر </span></span
       >
     </a>
     <ng-template ngbNavContent>
-      <div class="h-custom">
+      <div class="h-custom" *appCanAccess="'Brokers-Edit'">
         <div class="row mx-0 my-4 p-0 g-0 align-items-stretch">
           <div class="col-6 d-flex flex-column gap-15 justify-content-between">
             <strong class="d-block text-secondary text-center text-16"
@@ -534,14 +534,14 @@
 
   <!-- Advantage -->
 
-  <li ngbNavItem>
+  <li ngbNavItem [domId]="'custom-nav-' + 2">
     <a ngbNavLink class="text-small">
       <span class="d-flex align-items-center"
         ><span class="text-small">مزیت و معایب</span></span
       >
     </a>
     <ng-template ngbNavContent>
-      <div class="h-custom">
+      <div *appCanAccess="'Brokers-Edit'" class="h-custom">
         <ng-container *ngIf="itemFetched || showForm">
           <app-benefits
             (result)="changeBenefits($event)"
@@ -558,7 +558,7 @@
   <!-- Advantage -->
 
   <!-- Tags -->
-  <li ngbNavItem [disabled]="!itemFetched">
+  <li ngbNavItem [disabled]="!itemFetched" [domId]="'custom-nav-' + 3">
     <a
       ngbNavLink
       class="text-small"
@@ -569,7 +569,7 @@
       >
     </a>
     <ng-template ngbNavContent>
-      <div class="h-custom">
+      <div *appCanAccess="'Brokers-Edit'" class="h-custom">
         <div class="col-md-6">
           <label>هشتک ها</label>
           <p-multiSelect
@@ -593,7 +593,7 @@
   <!-- Tags -->
 
   <!-- Items -->
-  <li ngbNavItem [disabled]="!itemFetched">
+  <li ngbNavItem [disabled]="!itemFetched" [domId]="'custom-nav-' + 4">
     <a
       ngbNavLink
       class="text-small"
@@ -604,7 +604,7 @@
       >
     </a>
     <ng-template ngbNavContent>
-      <div class="h-custom p-3">
+      <div *appCanAccess="'Brokers-Edit'" class="h-custom p-3">
         <ng-container *ngIf="itemFetched">
           <app-broker-items-rel
             [brokerId]="item.id"
@@ -619,7 +619,7 @@
 
   <!-- FAQ -->
 
-  <li ngbNavItem [disabled]="!itemFetched">
+  <li ngbNavItem [disabled]="!itemFetched" [domId]="'custom-nav-' + 5">
     <a
       ngbNavLink
       class="text-small"
@@ -630,7 +630,7 @@
       >
     </a>
     <ng-template ngbNavContent>
-      <div class="h-custom p-3">
+      <div *appCanAccess="'Brokers-Edit'" class="h-custom p-3">
         <ng-container *ngIf="itemFetched">
           <app-faq [productId]="item.id" [tableType]="36"></app-faq>
         </ng-container>
@@ -642,7 +642,11 @@
 <div [ngbNavOutlet]="nav"></div>
 
 <div class="d-flex justify-content-end align-items-center" *ngIf="navId <= 2">
-  <button (click)="getReadyForPost()" class="btn btn-save">
+  <button
+    *appCanAccess="'Brokers-Edit'"
+    (click)="getReadyForPost()"
+    class="btn btn-save"
+  >
     <i class="i-Yes text-bigger mr-2"></i><strong>ثبت</strong>
   </button>
   <button [routerLink]="'../broker-list'" class="btn btn-cancel">

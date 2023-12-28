@@ -147,6 +147,13 @@ export class NavigationService {
       privilege: 'ArticleT-Watch',
     },
     {
+      name: 'بروکر ها',
+      navType: 'link',
+      icon: 'pi pi-bitcoin',
+      state: '/cnt/brokers/broker-list',
+      privilege: 'Brokers-Watch',
+    },
+    {
       name: 'تگ ها',
       navType: 'link',
       icon: 'i-Tag-2',
