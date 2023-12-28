@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticateService } from './shared/services/auth/authenticate.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from './shared/models/Base/result.model';
 import { UserInforamationModel } from './shared/models/userInforamationModel';
 import { UsersService } from './views/sec/user-mangement/users.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -30,24 +31,54 @@ export class AppComponent implements OnInit, OnDestroy {
       /** spinner ends after 1 seconds */
       this.spinner.hide();
     }, 1000);
-    let token = '';
-    token = localStorage.getItem('token');
-
-    if (token !== '' && token != null) {
-      this._userService
-        .getUserByToken()
-        .subscribe((res: Result<UserInforamationModel>) => {
-          if (!res.success) {
-            localStorage.removeItem('currentUser');
-            this.toastr.error(res.message, null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-            setTimeout(() => {
-              this.router.navigate(['/sessions/signin']);
-            }, 1000);
+    // let token = '';
+    // token = localStorage.getItem('token');
+    let subscriber = this.router.events
+      .pipe(takeUntil(new Subject()))
+      .subscribe({
+        next: (event) => {
+          if (event instanceof Scroll) {
+            if (event.routerEvent instanceof NavigationEnd) {
+              let url = event.routerEvent.urlAfterRedirects;
+              if (url.includes('checkUserPermission')) {
+                subscriber.unsubscribe();
+              } else {
+                this.checkUser();
+              }
+            }
           }
-        });
-    }
+        },
+      });
+
+    // if (token !== '' && token != null) {
+    // this._userService
+    //   .getUserByToken()
+    //   .subscribe((res: Result<UserInforamationModel>) => {
+    //     if (!res.success) {
+    //       localStorage.removeItem('currentUser');
+    //       this.toastr.error(res.message, null, {
+    //         closeButton: true,
+    //         positionClass: 'toast-top-left',
+    //       });
+    //       setTimeout(() => {
+    //         this.router.navigate(['/sessions/signin']);
+    //       }, 1000);
+    //     }
+    //   });
+    // }
+  }
+  checkUser() {
+    this._userService
+      .getUserByToken()
+      .subscribe((res: Result<UserInforamationModel>) => {
+        if (!res.success) {
+          localStorage.removeItem('currentUser');
+          this.toastr.error(res.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.router.navigate(['/sessions/signin']);
+        }
+      });
   }
 }

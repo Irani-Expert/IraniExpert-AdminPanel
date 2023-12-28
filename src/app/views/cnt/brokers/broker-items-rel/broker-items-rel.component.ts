@@ -70,12 +70,15 @@ export class BrokerItemsRelComponent implements OnInit {
         itemID: item.id,
       });
     });
-    debugger;
+    let route =
+      postItem.length == 0
+        ? 'DeleteBrokerItemRelation'
+        : 'AddUpdateBrokerItemRel';
     let itemToSend = {
       relations: postItem,
     };
     this._brokerService
-      .create(itemToSend, 'BrokerItemRelation/AddUpdateBrokerItemRel')
+      .create(itemToSend, `BrokerItemRelation/${route}`)
       .subscribe((it) => this.showToast(it.success, it.message));
   }
   showToast(res: boolean, message: string) {

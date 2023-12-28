@@ -9,6 +9,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { ToastrService } from 'ngx-toastr';
 import { UserInforamationModel } from 'src/app/shared/models/userInforamationModel';
 import { Router } from '@angular/router';
+import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 
 @Component({
   selector: 'app-dashboad-default',
@@ -21,6 +22,7 @@ export class DashboadDefaultComponent implements OnInit {
   userModel: UserInforamationModel = new UserInforamationModel();
 
   constructor(
+    private authService: AuthenticateService,
     private _userService: UsersService,
     private toastr: ToastrService,
     private router: Router
@@ -35,7 +37,6 @@ export class DashboadDefaultComponent implements OnInit {
 
   ngOnInit() {
     this.getUserInfo();
-    this.getUser();
   }
   getUserInfo() {
     this._userService.getUserInfo().subscribe(
@@ -53,24 +54,5 @@ export class DashboadDefaultComponent implements OnInit {
         );
       }
     );
-  }
-
-  getUser() {
-    this._userService
-      .getUserByToken()
-      .subscribe((res: Result<UserInforamationModel>) => {
-        this.userModel = res.data;
-        if (!res.success) {
-          localStorage.removeItem('currentUser');
-          this.toastr.error(res.message, null, {
-            timeOut: 900,
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-          setTimeout(() => {
-            this.router.navigate(['/sessions/signin']);
-          }, 1000);
-        }
-      });
   }
 }

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "gull": {
+    "ie-panel": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -78,18 +78,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "gull:build"
+            "browserTarget": "ie-panel:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "gull:build:production"
+              "browserTarget": "ie-panel:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "gull:build"
+            "browserTarget": "ie-panel:build"
           }
         },
         "test": {
@@ -117,7 +117,7 @@
         }
       }
     },
-    "gull-e2e": {
+    "ie-panel-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -125,11 +125,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "gull:serve"
+            "devServerTarget": "ie-panel:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "gull:serve:production"
+              "devServerTarget": "ie-panel:serve:production"
             }
           }
         },
