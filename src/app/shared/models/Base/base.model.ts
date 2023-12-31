@@ -5,5 +5,5 @@ export class Base implements IBase {
   id: number;
   description: string;
   orderID: number;
-  isActive: boolean = false;
+  isActive: boolean = null;
 }
