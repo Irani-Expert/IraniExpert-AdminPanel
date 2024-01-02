@@ -270,6 +270,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     // }
     // row.groupID = this.group.value;
     if (row.id === 0) {
+      delete row.isActive;
       this._articleService
         .create(row, 'article')
 

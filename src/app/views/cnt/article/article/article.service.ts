@@ -33,7 +33,7 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
     filter: FilterModel,
     pageIndex: number,
     pageSize: number,
-    pageOrder: number
+    pageOrder: string = 'ID'
   ) {
     return this._http.get<Result<Paginate<tagModel[]>>>(
       this._base +
