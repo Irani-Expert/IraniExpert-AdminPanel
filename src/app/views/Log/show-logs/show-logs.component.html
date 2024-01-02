@@ -168,7 +168,7 @@
     />
     <span
       *ngIf="filterHolder.firstName"
-      (click)=" removeFilter('firstName')"
+      (click)="removeFilter('firstName')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -180,7 +180,7 @@
     />
     <span
       *ngIf="filterHolder.lastName"
-      (click)=" removeFilter('lastName')"
+      (click)="removeFilter('lastName')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -192,7 +192,7 @@
     />
     <span
       *ngIf="filterHolder.title"
-      (click)=" removeFilter('title')"
+      (click)="removeFilter('title')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -216,10 +216,7 @@
     />
     <span
       *ngIf="filterHolder.fromCreateDate"
-      (click)="
-       fromCreateDate = null; removeFilter('fromCreateDate')
-      "
-
+      (click)="fromCreateDate = null; removeFilter('fromCreateDate')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -242,7 +239,7 @@
     />
     <span
       *ngIf="filterHolder.toCreateDate"
-      (click)="toCreateDate=null ;removeFilter('toCreateDate')"
+      (click)="toCreateDate = null; removeFilter('toCreateDate')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -256,7 +253,7 @@
     />
     <span
       *ngIf="filterHolder.userID"
-      (click)=" removeFilter('userID')"
+      (click)="removeFilter('userID')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -268,7 +265,7 @@
     />
     <span
       *ngIf="filterHolder.rowID"
-      (click)=" removeFilter('rowID')"
+      (click)="removeFilter('rowID')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -292,7 +289,7 @@
     />
     <span
       *ngIf="filterHolder.accountNumber"
-      (click)=" removeFilter('accountNumber')"
+      (click)="removeFilter('accountNumber')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -304,7 +301,7 @@
     />
     <span
       *ngIf="filterHolder.ipAddress"
-      (click)=" removeFilter('ipAddress')"
+      (click)="removeFilter('ipAddress')"
       class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       ><span class="pi pi-times" style="font-size: 0.7rem"></span
     ></span>
@@ -452,10 +449,15 @@
     </div>
   </ng-container>
 </div>
-<div class="col-md-12 mt-3" *ngIf="logRows?.length > page.size">
+<div class="col-md-12 mt-3" *ngIf="page.totalElements > logRows?.length">
   <pagination-controls
     (pageChange)="
-      setPage($event, pageOrder, filterHolder.requestType, tableTypes[index].value)
+      setPage(
+        $event,
+        pageOrder,
+        filterHolder.requestType,
+        tableTypes[index].value
+      )
     "
     previousLabel=""
     nextLabel=""
