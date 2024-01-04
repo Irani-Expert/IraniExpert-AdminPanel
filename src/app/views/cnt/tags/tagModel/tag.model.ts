@@ -1,8 +1,6 @@
-
-import { Base } from 'src/app/shared/models/Base/base.model';
 import { Itag } from './tag.interface';
 
-export class tagModel extends Base implements Itag{
+export class tagModel implements Itag {
   id: number;
   updateDate: string;
   createDate: string;
@@ -12,8 +10,6 @@ export class tagModel extends Base implements Itag{
   description: string;
   orderID: number;
   isActive: boolean;
-  groupID: number
-  groupTitle: string
+  groupID: number;
+  groupTitle: string;
 }
-
-

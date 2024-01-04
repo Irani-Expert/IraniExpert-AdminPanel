@@ -1,6 +1,5 @@
-import { IBase } from "src/app/shared/interfaces/Base/base.interface";
 
-export interface Itag extends IBase{
+export interface Itag {
   id: number;
   updateDate: string;
   createDate: string;
