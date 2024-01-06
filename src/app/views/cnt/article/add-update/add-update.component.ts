@@ -65,9 +65,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     private _groupService: GroupService,
     private _user: AuthenticateService,
     private _router: Router
-  ) {
-    this.getTags;
-  }
+  ) {}
   pushSectionItem() {
     this.items.forEach((x) => {
       let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
@@ -84,7 +82,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     }, 500);
   }
   async getTags() {
-    this._articleService.getTags(this.filterHolder, 0, 1000, null).subscribe(
+    this._articleService.getTags(this.filterHolder, 0, 1000).subscribe(
       (res: Result<Paginate<tagModel[]>>) => {
         this.items = [];
         this.items = res.data['items'];
