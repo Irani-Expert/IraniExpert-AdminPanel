@@ -141,7 +141,8 @@ export class UsersService extends BaseService<UsersModel, 0> {
     };
     return this._http
       .post<Result<UserInforamationModel>>(
-        `${environment.api.baseUrl}/auth/check-user-permission?token=${token}`,
+        // `${environment.api.baseUrl}/auth/check-user-permission?token=${token}`,
+        `${environment.api.baseUrl}/auth/check-user-permission`,
         undefined,
         _options
       )
