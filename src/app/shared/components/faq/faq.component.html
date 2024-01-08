@@ -27,17 +27,13 @@
 
     <div class="col-md-6 form-group mb-3">
       <label for="title">پاسخ</label>
-      <textarea
-        name=""
-        cols="30"
-        rows="5"
-        type="text"
-        class="form-control form-control-rounded"
-        id="answer"
-        placeholder="پاسخ را وارد نمایید."
-        [formControl]="addForm.controls['answer']"
+      <ckeditor
+        [ngModelOptions]="{ standalone: true }"
         [(ngModel)]="addUpdate.answer"
-      ></textarea>
+        [config]="ckeConfig"
+        debounce="100"
+      >
+      </ckeditor>
       <small
         *ngIf="
           addForm.controls['answer'].hasError('required') &&

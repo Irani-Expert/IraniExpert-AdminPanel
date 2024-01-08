@@ -92,6 +92,8 @@ export class BrokerDetailsComponent {
                   minDeposit: [null, [Validators.required]],
                   isPersianSupport: [false, [Validators.required]],
                   establishedYear: [null, [Validators.required]],
+                  countryName: [null],
+                  countryIcon: [null],
                   email: [null, [Validators.required, Validators.email]],
                   phoneNumber: [null],
                 });
@@ -157,6 +159,8 @@ export class BrokerDetailsComponent {
             ],
             establishedYear: [this.item.establishedYear, [Validators.required]],
             email: [this.item.email, [Validators.required, Validators.email]],
+            countryName: [this.item.countryName],
+            countryIcon: [this.item.countryIcon],
             phoneNumber: [this.item.phoneNumber],
           });
         }
@@ -340,6 +344,8 @@ export class BrokerDetailsComponent {
       id: item.id ? item.id : 0,
       description: item.description,
       isActive: this._controls['isActive'].value,
+      countryName: this._controls['countryName'].value,
+      countryIcon: this._controls['countryIcon'].value,
     };
     if (sendingItem.id == 0) {
       this.brokerService.create(sendingItem, 'Broker').subscribe((it) => {

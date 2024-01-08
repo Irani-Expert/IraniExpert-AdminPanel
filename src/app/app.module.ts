@@ -17,8 +17,6 @@ import { JwtInterceptor } from './shared/services/auth/jwt.interceptor';
 import { ErrorInterceptor } from './shared/services/auth/error.interceptor';
 import { LoaderInterceptor } from './shared/loader.interceptor';
 import { DatePipe } from '@angular/common';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,12 +39,6 @@ import { environment } from '../environments/environment';
     }),
     NgxSpinnerModule,
     SelectDropDownModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000',
-    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

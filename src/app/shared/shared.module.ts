@@ -11,6 +11,7 @@ import { SharedDirectivesModule } from './directives/shared-directives.module';
 import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FAQComponent } from './components/faq/faq.component';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
   declarations: [FAQComponent],
@@ -26,6 +27,7 @@ import { FAQComponent } from './components/faq/faq.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    CKEditorModule,
   ],
   exports: [FAQComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
