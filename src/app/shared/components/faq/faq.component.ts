@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { FaqModel } from './faq.model';
 import { FaqService } from './faq.service';
+import { ckeConfig } from 'src/app/shared/ckconfig';
 
 @Component({
   selector: 'app-faq',
@@ -13,6 +13,8 @@ import { FaqService } from './faq.service';
   styleUrls: ['./faq.component.scss'],
 })
 export class FAQComponent implements OnInit {
+  ckeConfig = ckeConfig;
+
   rows: FaqModel[] = new Array<FaqModel>();
   @Input() productId: number = 0;
   @Input() tableType: number = 6;
@@ -25,7 +27,9 @@ export class FAQComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+    // this.ckeConfig.
+  }
 
   ngOnInit(): void {
     this.addUpdate.id = 0;
