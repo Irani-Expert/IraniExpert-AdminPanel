@@ -34,13 +34,8 @@
         debounce="100"
       >
       </ckeditor>
-      <small
-        *ngIf="
-          addForm.controls['answer'].hasError('required') &&
-          addForm.controls['answer'].touched
-        "
-        class="mat-text-warn m-t-negative"
-        >ورود پاسخ ضروری است</small
+      <small *ngIf="addUpdate.answer == ''" class="mat-text-warn m-t-negative"
+        >نوشتن پاسخ ضروری است</small
       >
     </div>
 
@@ -48,7 +43,7 @@
       type="button"
       class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
       (click)="addOrUpdate()"
-      [disabled]="!addForm.valid"
+      [disabled]="!addForm.valid || addUpdate.answer.trim().length == 0"
     >
       <i class="i-Yes text-bigger mr-2"></i>
       <strong>ذخیره</strong>

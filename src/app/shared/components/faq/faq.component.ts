@@ -36,7 +36,7 @@ export class FAQComponent implements OnInit {
 
     this.addForm = this._formBuilder.group({
       question: [null, Validators.compose([Validators.required])],
-      answer: [null, Validators.compose([Validators.required])],
+      answer: [null],
     });
 
     this.setPage();

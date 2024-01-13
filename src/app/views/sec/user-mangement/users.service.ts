@@ -42,7 +42,10 @@ export class UsersService extends BaseService<UsersModel, 0> {
       }),
     };
     return this._http.put<Result<boolean>>(
-      environment.api.baseUrl + '/AspNetUser/ChangePassword'+'?authorID='+this.auth.currentUserValue.userID,
+      environment.api.baseUrl +
+        '/AspNetUser/ChangePassword' +
+        '?authorID=' +
+        this.auth.currentUserValue.userID,
       t,
       _options
     );
@@ -76,7 +79,7 @@ export class UsersService extends BaseService<UsersModel, 0> {
   }
   updateUserRole(
     roles: UserRolesModel[],
-    authorID:number
+    authorID: number
   ): Observable<Result<UserRolesModel[]>> {
     let _options = {
       headers: new HttpHeaders({
@@ -89,7 +92,9 @@ export class UsersService extends BaseService<UsersModel, 0> {
       }),
     };
     return this._http.post<Result<UserRolesModel[]>>(
-      environment.api.baseUrl + '/AspNetUserRole/AddUpdateUserRoles/?authorID='+authorID,
+      environment.api.baseUrl +
+        '/AspNetUserRole/AddUpdateUserRoles/?authorID=' +
+        authorID,
       roles,
       _options
     );
@@ -128,7 +133,6 @@ export class UsersService extends BaseService<UsersModel, 0> {
    * @returns one by id
    */
   getUserByToken(): Observable<Result<UserInforamationModel>> {
-    
     let token = localStorage.getItem('token');
     let _options = {
       headers: new HttpHeaders({
@@ -142,7 +146,7 @@ export class UsersService extends BaseService<UsersModel, 0> {
     return this._http
       .post<Result<UserInforamationModel>>(
         // `${environment.api.baseUrl}/auth/check-user-permission?token=${token}`,
-        `${environment.api.baseUrl}/auth/check-user-permission`,
+        `${environment.api.baseUrl}/auth/check-user-permission-new`,
         undefined,
         _options
       )
@@ -195,9 +199,9 @@ export class UsersService extends BaseService<UsersModel, 0> {
   getUserByFilter(
     pageIndex: number,
     pageSize: number,
-    filterData:UsersModel,
-    ref:number,
-    roleID:number
+    filterData: UsersModel,
+    ref: number,
+    roleID: number
   ): Observable<Result<Paginate<UsersModel[]>>> {
     let _options = {
       headers: new HttpHeaders({
@@ -211,45 +215,46 @@ export class UsersService extends BaseService<UsersModel, 0> {
     };
     return this._http.get<Result<Paginate<UsersModel[]>>>(
       environment.api.baseUrl +
-        '/AspNetUser/?pageIndex='+pageIndex+'&pageSize='+pageSize+
+        '/AspNetUser/?pageIndex=' +
+        pageIndex +
+        '&pageSize=' +
+        pageSize +
         (filterData.id == undefined || filterData.id == null
           ? ''
-          : '&Id=' + filterData.id)+
-          (filterData.userName == undefined || filterData.userName == null
-            ? ''
-            : '&UserName=' + filterData.userName)+
-            
-            (filterData.email == undefined || filterData.email == null
-              ? ''
-              : '&Email=' + filterData.email)+
-              (filterData.phoneNumber == undefined || filterData.phoneNumber == null
-                ? ''
-                : '&PhoneNumber=' + filterData.phoneNumber)+
-             
-                  (filterData.accountNumber == undefined || filterData.accountNumber == null
-                    ? ''
-                    : '&AccountNumber=' + filterData.accountNumber)+
-                    (filterData.firstName == undefined || filterData.firstName == null
-                      ? ''
-                      : '&FirstName=' + filterData.firstName)+
-             (filterData.lastName == undefined || filterData.lastName == null
-                        ? ''
-                        : '&LastName=' + filterData.lastName)+              
-              (roleID == undefined || roleID == null
-                          ? ''
-                          : '&RoleId=' + roleID)+
-       (filterData.referralCode == undefined || filterData.referralCode == null
-                          ? ''
-                          : '&ReferralCode=' + filterData.referralCode)+ 
-           (filterData.isActive == undefined || filterData.isActive == null
-                          ? ''
-                          : '&IsActive=' + filterData.isActive)+ 
-                          (filterData.fromSignUpDate == undefined || filterData.fromSignUpDate == null
-                            ? ''
-                            : '&FromSignUpDate=' + filterData.fromSignUpDate)+ 
-                            (filterData.ToSignUpDate == undefined || filterData.ToSignUpDate == null
-                              ? ''
-                              : '&ToSignUpDate=' + filterData.ToSignUpDate),
+          : '&Id=' + filterData.id) +
+        (filterData.userName == undefined || filterData.userName == null
+          ? ''
+          : '&UserName=' + filterData.userName) +
+        (filterData.email == undefined || filterData.email == null
+          ? ''
+          : '&Email=' + filterData.email) +
+        (filterData.phoneNumber == undefined || filterData.phoneNumber == null
+          ? ''
+          : '&PhoneNumber=' + filterData.phoneNumber) +
+        (filterData.accountNumber == undefined ||
+        filterData.accountNumber == null
+          ? ''
+          : '&AccountNumber=' + filterData.accountNumber) +
+        (filterData.firstName == undefined || filterData.firstName == null
+          ? ''
+          : '&FirstName=' + filterData.firstName) +
+        (filterData.lastName == undefined || filterData.lastName == null
+          ? ''
+          : '&LastName=' + filterData.lastName) +
+        (roleID == undefined || roleID == null ? '' : '&RoleId=' + roleID) +
+        (filterData.referralCode == undefined || filterData.referralCode == null
+          ? ''
+          : '&ReferralCode=' + filterData.referralCode) +
+        (filterData.isActive == undefined || filterData.isActive == null
+          ? ''
+          : '&IsActive=' + filterData.isActive) +
+        (filterData.fromSignUpDate == undefined ||
+        filterData.fromSignUpDate == null
+          ? ''
+          : '&FromSignUpDate=' + filterData.fromSignUpDate) +
+        (filterData.ToSignUpDate == undefined || filterData.ToSignUpDate == null
+          ? ''
+          : '&ToSignUpDate=' + filterData.ToSignUpDate),
       _options
     );
   }
