@@ -62,7 +62,7 @@
   <ngb-panel class="ngb-panel text-white" title="{{ item.question }}">
     <ng-template ngbPanelContent>
       <div class="row">
-        <div class="col-10 text-start mr-5">
+        <div class="col-10 text-start mr-5" [innerHTML]="item.answer">
           {{ item.answer }}
         </div>
         <div class="col-10 text-start">
