@@ -6,6 +6,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { FaqModel } from './faq.model';
 import { FaqService } from './faq.service';
 import { ckeConfig } from 'src/app/shared/ckconfig';
+import { Utils } from '../../utils';
 
 @Component({
   selector: 'app-faq',
@@ -98,7 +99,9 @@ export class FAQComponent implements OnInit {
         }
       );
   }
-
+  scroll() {
+    Utils.scrollTopWindow();
+  }
   addOrUpdate() {
     this.addUpdate.tableType = this.tableType;
     this.addUpdate.rowId = this.productId;
@@ -107,11 +110,10 @@ export class FAQComponent implements OnInit {
     this.addUpdate.isActive = true;
     //TODO Order Id Must Fill From Input
     this.addUpdate.orderID = 1;
-    if (this.addUpdate.id === 0) {
+    if (this.addUpdate.id == 0) {
       this._FaqService.create(this.addUpdate, 'FAQ').subscribe({
         next: (data) => {
           if (data.success) {
-            this.rows.push(this.addUpdate);
             this.toastr.success(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
@@ -139,7 +141,6 @@ export class FAQComponent implements OnInit {
         .subscribe({
           next: (data) => {
             if (data.success) {
-              this.rows.push(this.addUpdate);
               this.toastr.success(data.message, null, {
                 closeButton: true,
                 positionClass: 'toast-top-left',

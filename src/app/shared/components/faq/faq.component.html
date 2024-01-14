@@ -43,7 +43,7 @@
       type="button"
       class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
       (click)="addOrUpdate()"
-      [disabled]="!addForm.valid || addUpdate.answer.trim().length == 0"
+      [disabled]="!addForm.valid || addUpdate.answer?.trim().length == 0"
     >
       <i class="i-Yes text-bigger mr-2"></i>
       <strong>ذخیره</strong>
@@ -68,7 +68,7 @@
         <div class="col-10 text-start">
           <!-- *appCanAccess="'ProductT-Edit'" -->
           <button
-            (click)="addUpdate = item"
+            (click)="addUpdate = item; scroll()"
             class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center mt-4"
           >
             <i class="i-Pen-5 text-bigger mr-2"></i>
