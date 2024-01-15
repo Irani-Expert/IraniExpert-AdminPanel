@@ -31,3 +31,73 @@
 .bg-success{
   background-color: #4CAF50;
 }
+.btn-modal-edited{
+  background-color: #2eb9ac;
+  display: flex;
+  border: 0;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  aspect-ratio: 1/1;
+  color: white;
+  margin-right: 0.5rem;
+}
+.btn-modal-delet{
+  border-radius: 30px;
+  display: flex;
+  width: 2.5rem;
+  aspect-ratio: 1/1;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.5rem;
+  background-color: #e15858;
+  color: white;
+}
+.btn-reject{
+  padding: 0.5rem 1.25rem;
+  border: 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: #d54912;
+}
+.btn-reject:hover{
+  background-color: #804731;
+  transition: all 0.15s ease-in-out;
+}
+.btn-accept{
+  padding: 0.5rem 1.25rem;
+  border: 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: #1a936b;
+}
+.btn-accept:hover{
+  background-color: #116247;;
+  transition: all 0.15s ease-in-out;
+}
+.modal-footer{
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid gray;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+.row-switvh{
+  display: flex;
+  margin-right: 1rem;
+}
+.creat-tag{
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 2rem;
+}
+.row-btn{
+  display: flex;
+  justify-content: space-between;
+}

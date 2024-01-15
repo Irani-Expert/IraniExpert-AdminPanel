@@ -28,6 +28,8 @@ import { BenefitsComponent } from './brokers/benefits/benefits.component';
 import { BrokerItemsRelComponent } from './brokers/broker-items-rel/broker-items-rel.component';
 import { PickListModule } from 'primeng/picklist';
 import { ItemType } from './brokers/broker-items-rel/item-type.pipe';
+import { DialogModule } from 'primeng/dialog';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -61,8 +63,9 @@ import { ItemType } from './brokers/broker-items-rel/item-type.pipe';
     MultiSelectModule,
     SharedPipesModule,
     SharedModule,
-
+    DialogModule,
     SharedDirectivesModule,
+    InputSwitchModule
   ],
   providers: [FileUploaderService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

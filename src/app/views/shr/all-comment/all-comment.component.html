@@ -224,7 +224,7 @@
         </ng-container>
       </div>
       <div class="card-footer bg-gray">
-        <div class="mb-2" *appCanAccess="'Comment-Edit'">
+        <div class="mb-2 btn-row" *appCanAccess="'Comment-Edit'">
           <button
             type="button"
             class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
@@ -233,16 +233,36 @@
           >
             <i class="i-Yes text-bigger mr-2"></i><strong>پذیرفتن</strong>
           </button>
-        </div>
-        <div class="mb-2" *appCanAccess="'Comment-Delete'">
           <button
-            type="button"
-            *ngIf="item.isAccepted === true"
-            (click)="deleteComment(item.id, deleteModal)"
-            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
+          type="button"
+          *ngIf="item.isAccepted === false"
+          (click)="deleteComment(item.id, deleteModal)"
+          class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
+        >
+        <i class="pi pi-trash mr-2"></i><strong>حذف پیام</strong>
+        </button>
+        </div>
+        <div class="mb-2 btn-row" *appCanAccess="'Comment-Delete'">
+          <button type="button" class="btn btn-reject"
+          *ngIf="item.isAccepted === true"
+          (click)="modalReject(rejectModal , item)"
           >
-            <i class="i-Close text-bigger mr-2"></i><strong>حذف پیام</strong>
+          <i class="i-Close text-bigger mr-2"></i><strong>عدم پذیرش</strong>
           </button>
+          <button type="button" class="btn-reply btn"
+          *ngIf="item.isAccepted === true"
+          (click)="modalReply(replyModal, item)"
+          >
+            <i class="pi pi-reply mr-2"></i><strong>پاسخ</strong>
+          </button>
+          <button
+          type="button"
+          *ngIf="item.isAccepted === true"
+          (click)="deleteComment(item.id, deleteModal)"
+          class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
+        >
+        <i class="pi pi-trash mr-2"></i><strong>حذف پیام</strong>
+        </button>
         </div>
       </div>
     </div>
@@ -334,6 +354,66 @@
     </button>
   </div>
 </ng-template>
+<!-- // ===========[نپذیرفتن]========= -->
+
+<ng-template #rejectModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      آیا از عدم پذیرش نظر مطمئن هستید
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
+      (click)="modal.close(true)"
+    >
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
+    </button>
+    <button
+      type="button"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
+      (click)="modal.dismiss()"
+    >
+      <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
+    </button>
+  </div>
+</ng-template>
+<!-- // ===========[پاسخ]========= -->
+<ng-template #replyModal let-modal>
+  <div class="modal-body" *appCanAccess="'Comment-Add'">
+    <label class="text-black-50 mb-2"
+      >ارسال پاسخ برای این نظر</label
+    >
+    <textarea [(ngModel)]="replyText" class="form-control"></textarea>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center"
+      (click)="modal.close(true)"
+    >
+      <i class="i-Yes text-bigger mr-2"></i><strong>بله</strong>
+    </button>
+    <button
+      type="button"
+      class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
+      (click)="modal.dismiss()"
+    >
+      <i class="i-Close text-bigger mr-2"></i><strong>خیر</strong>
+    </button>
+  </div>
+</ng-template>
+
 <!-- <ng-template #filterModal let-modal>
   <div class="d-flex align-items-center bg-gray">
     <div class="col-11 container mt-2 mb-2 contrast">

@@ -9,6 +9,7 @@ export interface Itag {
   description: string;
   orderID: number;
   isActive: boolean;
-  groupID: number
-  groupTitle: string
+  groupID: number;
+  groupTitle: string;
+  isSharp : boolean;
 }

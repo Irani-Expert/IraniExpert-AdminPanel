@@ -12,4 +12,6 @@ export class tagModel implements Itag {
   isActive: boolean;
   groupID: number;
   groupTitle: string;
+  isSharp : boolean;
+
 }

@@ -38,22 +38,40 @@ export class TagsComponent implements OnInit {
   previousGroupId: number;
   dropDownTitleHolder: string = 'تمام هشتک‌ها';
   groupList: any[] = new Array<any>();
+  checkedMeta: boolean = false;
+  selectedID: number;
+  selectedText:string;
+  selectedMeta:boolean;
+
   listItem = new Array<{
     backgroundColor: string;
     id: number;
     text: string;
+    isMeta : boolean;
   }>();
   colors: string[] = ['#d2e2e1', '#74b3be', '#a6887d', '#e8d3cc', '#0cead0'];
   constructor(
     private _articleService: ArticleService,
     private toastr: ToastrService,
-    private _groupService: GroupService
+    private _groupService: GroupService,
+
   ) {
     this.page.pageNumber = 0;
     this.page.size = 60;
   }
+  // =========[مدال]======
+  visible: boolean = false;
 
+  showDialog(id:number , text:any , meta:boolean) {
+      this.selectedID = id;
+      this.selectedText = text;
+      this.visible = true;
+      this.selectedMeta =meta;
+  }
+
+  // ==========
   ngOnInit(): void {
+    
     this.getData(null);
     this.getGroupList();
   }
@@ -77,6 +95,7 @@ export class TagsComponent implements OnInit {
           backgroundColor: this.randomColor,
           id: xi.id,
           text: xi.title,
+          isMeta :xi.isSharp
         });
       }
       counter++;
@@ -118,13 +137,15 @@ export class TagsComponent implements OnInit {
     this.addItem.groupID = id;
     this.getData(id);
   }
-  editFunction(id: number, text: string) {
+  editFunction(id: number, text: string , isMeta : boolean) {
     this.updateTitle = text;
     this.updateId = id;
+    this.checkedMeta = isMeta;
   }
   updateTags(id: number) {
     var index = this.listItem.findIndex((x) => x.id == id);
     this.items[index].title = this.listItem[index].text;
+    this.items[index].isSharp = this.listItem[index].isMeta;
     this._articleService.updateTags(id, this.items[index]).subscribe((data) => {
       if (data.success) {
         this.toastr.success(data.message, null, {
@@ -140,16 +161,19 @@ export class TagsComponent implements OnInit {
     });
   }
   onContentChange(id: number) {
+    console.log(this.checkedMeta);
     if (this.updateId == id) {
       var index = this.listItem.findIndex((x) => x.id == id);
       if (this.listItem[index].text != undefined) {
         this.listItem[index].text = this.updateTitle;
+        this.listItem[index].isMeta = this.checkedMeta;
         if (this.listItem[index].text[0] != '#') {
           this.listItem[index].text = '#' + this.listItem[index].text;
         }
         this.updateTags(id);
       }
     }
+    this.visible = false;
   }
   deletetags(id: number) {
     this._articleService.delete(id, 'LinkTag').subscribe((res) => {
@@ -166,6 +190,7 @@ export class TagsComponent implements OnInit {
         });
       }
     });
+    this.visible = false;
   }
   addTagService() {
     if (this.addItemIput.length > 0) {
@@ -179,8 +204,9 @@ export class TagsComponent implements OnInit {
           this.addItemIput = '#' + this.addItemIput;
         }
       }
-
+      this.addItem.isSharp = this.checkedMeta;
       this.addItem.title = this.addItemIput;
+      console.log(this.checkedMeta);
       this._articleService.addLinkTag(this.addItem).subscribe((data) => {
         if (data.success) {
           this.toastr.success(data.message, null, {
@@ -197,12 +223,14 @@ export class TagsComponent implements OnInit {
       });
       this.addItemIput = '';
     }
+    this.visible = false;
   }
   changeSituation(type: number) {
     this.editable = false;
-
+    
     if (type == 1) {
       this.setFocus();
+      this.visible = true;
     }
     if (type == this.editeType) {
       this.editeType = 0;
@@ -221,7 +249,8 @@ export class TagsComponent implements OnInit {
     this.editable = false;
     this.editeType = 0;
   }
-  closeAddTag() {
-    this.editeType = 0;
+  closeModal(){
+    this.visible = false;
   }
+  
 }

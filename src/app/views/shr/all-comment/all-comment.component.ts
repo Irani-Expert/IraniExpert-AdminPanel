@@ -179,6 +179,105 @@ export class AllCommentComponent implements OnInit {
       );
   }
 
+  modalReply(content : any , row : any){
+    this.parentComment = new CommentModel();
+    this.parentComment.parentID = row.id;
+    this.parentComment.rate = 0;
+    this.parentComment.email = 'admin@iraniexpert.com';
+    this.parentComment.name = 'پشتیبان سایت';
+    this.parentComment.isAccepted = true;
+    this.parentComment.tableType = row.tableType;
+    this.parentComment.rowID = row.rowID;
+    this.parentComment.isActive = true;
+    this.modalService
+    .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
+    .result.then(
+      (result) => {
+        if (result) this.replyComment(row);
+
+      },
+      (reason) => {
+        console.log('Err!', reason);
+      }
+    );
+  }
+  replyComment(row : CommentModel){
+    if (this.replyText !== null && this.replyText.length > 0) {
+      this.parentComment.text = this.replyText;
+      this._commentService
+        .create(this.parentComment, 'comment')
+        .subscribe((data) => {
+          if (data.success) {
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        });
+    }
+
+    row.isAccepted = true;
+    row.isActive = true;
+    this._commentService
+      .update(row.id, row, 'comment')
+
+      .subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.sendFilter()
+
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
+  }
+// ===========[نپذیرفتن]=========
+  modalReject(content : any , row : any){
+    this.modalService
+    .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'md' })
+    .result.then(
+      (result) => {
+        if (result) this.rejectComment(row);
+
+      },
+      (reason) => {
+        console.log('Err!', reason);
+      }
+    );
+  }
+
+rejectComment(row: CommentModel){
+
+  row.isAccepted = false;
+  row.isActive = false;
+  this._commentService
+    .update(row.id, row, 'comment')
+
+    .subscribe((data) => {
+      if (data.success) {
+        this.toastr.success(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+        this.sendFilter()
+
+      } else {
+        this.toastr.error(data.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+      }
+    });
+}
+
+
   acceptComment(row: CommentModel) {
     if (this.replyText !== null && this.replyText.length > 0) {
       this.parentComment.text = this.replyText;

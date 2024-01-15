@@ -7,7 +7,36 @@
 .contrast {
   filter: contrast(120%);
 }
-
+.btn-reject{
+  padding: 0.5rem 1.25rem;
+  border: 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: #d54912;
+}
+.btn-reject:hover{
+  background-color: #804731;
+  transition: all 0.15s ease-in-out;
+}
+.btn-reply{
+  padding: 0.5rem 1.25rem;
+  border: 0;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  color: white;
+  background-color: #10a7bf;
+}
+.btn-reply:hover{
+  background-color: #26b2c880;
+  transition: all 0.15s ease-in-out;
+}
+.btn-row{
+  display: flex;
+  justify-content: space-between;
+}
 // .btn-filter {
 //   color: #e9e1e1 !important;
 //   background-color: #e5dbdef4;

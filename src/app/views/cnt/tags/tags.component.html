@@ -15,7 +15,7 @@
   *appCanAccess="'Tags-Delete'"
   >
   <strong>حذف</strong>
-  </button>
+</button>
   <button
   type="button"
   class="edite-tag m-2 btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
@@ -55,19 +55,7 @@
       </button>
     </div>
   </div>
-  <div>
-    <div class=" card btn-details  " dir="ltr">  
-      <span class="m-1" *ngIf="editeType==1">
-      <div class="d-flex align-items-center">
-        <i (click)="addTagService()"  *ngIf="addItemIput.length>0" class="i-Yes i-cirlce bg-success ml-2" ></i>
-        <i *ngIf="addItemIput.length===0"   class="i-Yes i-cirlce  ml-2" ></i>
 
-        <input  class="visible-on-focus" (keydown.space)="$event.preventDefault()" [(ngModel)]="addItemIput" #firstNameField>
-        <i (click)="closeAddTag()"  class="i-Close text-bigger m-1 p-1 bg-danger" ></i>
-    
-      </div>
-    </span></div>
-  </div>
 
 
   <!-- <div class="row" >
@@ -107,9 +95,15 @@
         >
         <span>
           <div class="d-flex align-items-center">
-            <i class="i-Pen-5 i-cirlce text-bigger ml-2" *ngIf="editeType==2" (click)="onContentChange(i.id)"></i>
-            <i class="i-Remove text-bigger ml-2" *ngIf="editeType==3" (click)="deletetags(i.id)"></i>
-            <div  [contentEditable]="editable" (input)="editFunction(i.id,$event.target.innerText)">{{i.text}}</div>
+            <!-- ========[ویرایش]===== -->
+            <button class="btn-modal-edited btn" (click)="showDialog(i.id , i.text)" *ngIf="editeType==2">
+            <i class="pi pi-file-edit"></i>
+            </button>
+            <!-- ========[حذف]===== -->
+            <button class="btn btn-modal-delet" (click)="showDialog(i.id)" *ngIf="editeType==3">
+              <i class="pi pi-trash"></i>
+            </button>
+            <div >{{i.text}}</div>
           </div>
         </span>
       </li>
@@ -127,9 +121,61 @@
 </div>
 
 
+<p-dialog  header="آیا از عملیات مطمئن هستید" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+  <!-- =========[مدال ویرایش]====== -->
+  <div *ngIf="editeType==2">
+    <div>
+      <div class="mb-4" [contentEditable]="editable" (input)="editFunction(selectedID ,$event.target.innerText , selectedMeta)">{{selectedText}}</div>
+  
+      <p>نوع تگ را تعیین کنید:</p>
+      <div class="row-switvh">
+        <p class="mr-4"> متا تگ و هشتگ </p>
+        <p-inputSwitch [(ngModel)]="checkedMeta" ></p-inputSwitch>
+        <p class="ml-4">فقط متاتگ</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-accept btn" (click)="onContentChange(selectedID)">
+        <i class="pi pi-check mr-2"></i>انجام ویرایش
+      </button>
+      <button class="btn-reject btn" (click)="closeModal()">
+        <i class="pi pi-times"></i>کنسل
+      </button>
+    </div>
+  </div>
+  <!-- =========[مدال ایجاد]====== -->
+  <div *ngIf="editeType==1">
+    <div class="creat-tag">
+      <p class="mr-4">لطفا مقادیر تگ را وارد کنید:</p>
+      <input  class="visible-on-focus" (keydown.space)="$event.preventDefault()" [(ngModel)]="addItemIput" #firstNameField>
+    </div>
+    <p>نوع تگ را تعیین کنید:</p>
+    <div class="row-switvh">
+      <p class="mr-4"> متا تگ و هشتگ </p>
+      <p-inputSwitch [(ngModel)]="checkedMeta" ></p-inputSwitch>
+      <p class="ml-4">فقط متاتگ</p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-accept btn" (click)="addTagService()" *ngIf="addItemIput.length>0">
+        <i class="pi pi-check mr-2"></i>ایجاد تگ
+      </button>
+      <button class="btn-reject btn" (click)="closeModal()">
+        <i class="pi pi-times"></i>کنسل
+      </button>
+    </div>
+  </div>
+  <!-- =========[مدال حذف]====== -->
+  <div *ngIf="editeType==3">
+    <div class="row-btn">
+      <button class="btn-accept btn" (click)="deletetags(selectedID)">
+        <i class="pi pi-check mr-2"></i>حذف تگ
+      </button>
+      <button class="btn-reject btn" (click)="closeModal()">
+        <i class="pi pi-times mr-2"></i>کنسل
+      </button>
+    </div>
+  </div>
+</p-dialog>
 
 
-
-
-
-<!-- <button (click)="onToggle()">Toggle</button> -->
