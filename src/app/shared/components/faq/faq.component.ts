@@ -6,6 +6,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { FaqModel } from './faq.model';
 import { FaqService } from './faq.service';
 import { ckeConfig } from 'src/app/shared/ckconfig';
+import { Utils } from '../../utils';
 
 @Component({
   selector: 'app-faq',
@@ -98,7 +99,9 @@ export class FAQComponent implements OnInit {
         }
       );
   }
-
+  scroll() {
+    Utils.scrollTopWindow();
+  }
   addOrUpdate() {
     this.addUpdate.tableType = this.tableType;
     this.addUpdate.rowId = this.productId;
@@ -107,40 +110,58 @@ export class FAQComponent implements OnInit {
     this.addUpdate.isActive = true;
     //TODO Order Id Must Fill From Input
     this.addUpdate.orderID = 1;
-    if (this.addUpdate.id === 0) {
-      this._FaqService.create(this.addUpdate, 'FAQ').subscribe((data) => {
-        if (data.success) {
-          this.setPage();
-          this.toastr.success(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
-    } else {
-      this._FaqService
-        .update(this.addUpdate.id, this.addUpdate, 'FAQ')
-        .subscribe((data) => {
+    if (this.addUpdate.id == 0) {
+      this._FaqService.create(this.addUpdate, 'FAQ').subscribe({
+        next: (data) => {
           if (data.success) {
-            this.rows.push(this.addUpdate);
             this.toastr.success(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
+            this.addUpdate = new FaqModel();
+            this.addForm.reset();
+            this.getFaqListByProductId();
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
+            this.getFaqListByProductId();
           }
+        },
+        error: (err) => {
+          console.log(err);
+
+          this.getFaqListByProductId();
+        },
+      });
+    } else {
+      this._FaqService
+        .update(this.addUpdate.id, this.addUpdate, 'FAQ')
+        .subscribe({
+          next: (data) => {
+            if (data.success) {
+              this.toastr.success(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+              this.addUpdate = new FaqModel();
+              this.addForm.reset();
+              this.getFaqListByProductId();
+            } else {
+              this.toastr.error(data.message, null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+              this.getFaqListByProductId();
+            }
+          },
+          error: (err) => {
+            console.log(err);
+
+            this.getFaqListByProductId();
+          },
         });
     }
-    this.addForm.reset();
-    this.getFaqListByProductId();
   }
 }
