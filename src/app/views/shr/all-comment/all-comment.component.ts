@@ -200,7 +200,9 @@ export class AllCommentComponent implements OnInit {
         console.log('Err!', reason);
       }
     );
+    this.replyText ='';
   }
+  
   replyComment(row : CommentModel){
     if (this.replyText !== null && this.replyText.length > 0) {
       this.parentComment.text = this.replyText;
@@ -208,6 +210,7 @@ export class AllCommentComponent implements OnInit {
         .create(this.parentComment, 'comment')
         .subscribe((data) => {
           if (data.success) {
+                this.sendFilter()
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
@@ -215,28 +218,54 @@ export class AllCommentComponent implements OnInit {
             });
           }
         });
+    
     }
 
-    row.isAccepted = true;
     row.isActive = true;
-    this._commentService
-      .update(row.id, row, 'comment')
+        //   this._commentService
+        // .update(row.id, row, 'comment')
+  
+        // .subscribe((data) => {
+        //   if (data.success) {
+        //     this.toastr.success(data.message, null, {
+        //       closeButton: true,
+        //       positionClass: 'toast-top-left',
+        //     });
+        //     this.sendFilter()
+  
+        //   } else {
+        //     this.toastr.error(data.message, null, {
+        //       closeButton: true,
+        //       positionClass: 'toast-top-left',
+        //     });
+        //   }
+        // });
 
-      .subscribe((data) => {
-        if (data.success) {
-          this.toastr.success(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-          this.sendFilter()
+    if (row.isAccepted == true) {
+    }
 
-        } else {
-          this.toastr.error(data.message, null, {
-            closeButton: true,
-            positionClass: 'toast-top-left',
-          });
-        }
-      });
+    else {      
+      row.isAccepted = true
+      this._commentService
+        .update(row.id, row, 'comment')
+  
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+             this.sendFilter()
+  
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
+          }
+        });
+       
+    }
   }
 // ===========[نپذیرفتن]=========
   modalReject(content : any , row : any){

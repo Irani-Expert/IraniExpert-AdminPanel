@@ -96,11 +96,11 @@
         <span>
           <div class="d-flex align-items-center">
             <!-- ========[ویرایش]===== -->
-            <button class="btn-modal-edited btn" (click)="showDialog(i.id , i.text)" *ngIf="editeType==2">
+            <button class="btn-modal-edited btn" (click)="showModalEdited(i.id , i.text)" *ngIf="editeType==2">
             <i class="pi pi-file-edit"></i>
             </button>
             <!-- ========[حذف]===== -->
-            <button class="btn btn-modal-delet" (click)="showDialog(i.id)" *ngIf="editeType==3">
+            <button class="btn btn-modal-delet" (click)="showModalDelited(i.id)" *ngIf="editeType==3">
               <i class="pi pi-trash"></i>
             </button>
             <div >{{i.text}}</div>
@@ -121,11 +121,12 @@
 </div>
 
 
-<p-dialog  header="آیا از عملیات مطمئن هستید" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-  <!-- =========[مدال ویرایش]====== -->
+<!-- =========[مدال ویرایش]====== -->
+<p-dialog  header="آیا از ویرایش تگ مطمئن هستید" [(visible)]="visibleEdited" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
   <div *ngIf="editeType==2">
     <div>
-      <div class="mb-4" [contentEditable]="editable" (input)="editFunction(selectedID ,$event.target.innerText , selectedMeta)">{{selectedText}}</div>
+      <p class="mb-2 mt-2">تگ را ویرایش دهید:</p>
+      <div class="edit-input mb-4" [contentEditable]="editable" (input)="editFunction(selectedID ,$event.target.innerText , selectedMeta)">{{selectedText}}</div>
   
       <p>نوع تگ را تعیین کنید:</p>
       <div class="row-switvh">
@@ -139,43 +140,47 @@
         <i class="pi pi-check mr-2"></i>انجام ویرایش
       </button>
       <button class="btn-reject btn" (click)="closeModal()">
-        <i class="pi pi-times"></i>کنسل
-      </button>
-    </div>
-  </div>
-  <!-- =========[مدال ایجاد]====== -->
-  <div *ngIf="editeType==1">
-    <div class="creat-tag">
-      <p class="mr-4">لطفا مقادیر تگ را وارد کنید:</p>
-      <input  class="visible-on-focus" (keydown.space)="$event.preventDefault()" [(ngModel)]="addItemIput" #firstNameField>
-    </div>
-    <p>نوع تگ را تعیین کنید:</p>
-    <div class="row-switvh">
-      <p class="mr-4"> متا تگ و هشتگ </p>
-      <p-inputSwitch [(ngModel)]="checkedMeta" ></p-inputSwitch>
-      <p class="ml-4">فقط متاتگ</p>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn-accept btn" (click)="addTagService()" *ngIf="addItemIput.length>0">
-        <i class="pi pi-check mr-2"></i>ایجاد تگ
-      </button>
-      <button class="btn-reject btn" (click)="closeModal()">
-        <i class="pi pi-times"></i>کنسل
-      </button>
-    </div>
-  </div>
-  <!-- =========[مدال حذف]====== -->
-  <div *ngIf="editeType==3">
-    <div class="row-btn">
-      <button class="btn-accept btn" (click)="deletetags(selectedID)">
-        <i class="pi pi-check mr-2"></i>حذف تگ
-      </button>
-      <button class="btn-reject btn" (click)="closeModal()">
         <i class="pi pi-times mr-2"></i>کنسل
       </button>
     </div>
   </div>
 </p-dialog>
 
+  <!-- =========[مدال حذف]====== -->
+  <p-dialog header="آیا از حذف تگ مطمئن هستید" [(visible)]="visibleDeleted" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <div>
+      <div class="row-btn">
+        <button class="btn-accept btn" (click)="deletetags(selectedID)">
+          <i class="pi pi-check mr-2"></i>حذف تگ
+        </button>
+        <button class="btn-reject btn" (click)="closeModal()">
+          <i class="pi pi-times mr-2"></i>کنسل
+        </button>
+      </div>
+    </div>
+  </p-dialog>
+<!-- =========[مدال ایجاد]====== -->
+<p-dialog header="آیا از ایجاد تگ مطمئن هستید" [(visible)]="visibleCreat" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <div >
+      <div class="creat-tag">
+        <p class="mr-4">لطفا مقادیر تگ را وارد کنید:</p>
+        <input  class="visible-on-focus" (keydown.space)="$event.preventDefault()" [(ngModel)]="addItemIput" #firstNameField>
+      </div>
+      <p>نوع تگ را تعیین کنید:</p>
+      <div class="row-switvh">
+        <p class="mr-4"> متا تگ و هشتگ </p>
+        <p-inputSwitch [(ngModel)]="checkedMeta" ></p-inputSwitch>
+        <p class="ml-4">فقط متاتگ</p>
+      </div>
+  
+      <div class="modal-footer">
+        <button class="btn-accept btn" (click)="addTagService()" *ngIf="addItemIput.length>0">
+          <i class="pi pi-check mr-2"></i>ایجاد تگ
+        </button>
+        <button class="btn-reject btn" (click)="closeModal()">
+          <i class="pi pi-times mr-2"></i>کنسل
+        </button>
+      </div>
+    </div>
+</p-dialog>
 

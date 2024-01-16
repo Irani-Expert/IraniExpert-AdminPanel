@@ -60,13 +60,19 @@ export class TagsComponent implements OnInit {
     this.page.size = 60;
   }
   // =========[مدال]======
-  visible: boolean = false;
+  visibleEdited: boolean = false;
+  visibleCreat: boolean = false;
+  visibleDeleted : boolean = false;
 
-  showDialog(id:number , text:any , meta:boolean) {
+  showModalEdited(id:number , text:any , meta:boolean) {
       this.selectedID = id;
       this.selectedText = text;
-      this.visible = true;
+      this.visibleEdited = true;
       this.selectedMeta =meta;
+  }
+  showModalDelited(id : number){
+    this.visibleDeleted = true;
+    this.selectedID = id;
   }
 
   // ==========
@@ -173,7 +179,7 @@ export class TagsComponent implements OnInit {
         this.updateTags(id);
       }
     }
-    this.visible = false;
+    this.visibleEdited = false;
   }
   deletetags(id: number) {
     this._articleService.delete(id, 'LinkTag').subscribe((res) => {
@@ -190,7 +196,7 @@ export class TagsComponent implements OnInit {
         });
       }
     });
-    this.visible = false;
+    this.visibleDeleted = false;
   }
   addTagService() {
     if (this.addItemIput.length > 0) {
@@ -223,14 +229,13 @@ export class TagsComponent implements OnInit {
       });
       this.addItemIput = '';
     }
-    this.visible = false;
+    this.visibleCreat = false;
   }
   changeSituation(type: number) {
     this.editable = false;
     
     if (type == 1) {
-      this.setFocus();
-      this.visible = true;
+      this.visibleCreat = true;
     }
     if (type == this.editeType) {
       this.editeType = 0;
@@ -242,15 +247,15 @@ export class TagsComponent implements OnInit {
       this.editable = true;
     }
   }
-  setFocus() {
-    setTimeout(() => this.firstNameField.nativeElement.focus(), 500); // 2500 is millisecond
-  }
+
   onToggle() {
     this.editable = false;
     this.editeType = 0;
   }
   closeModal(){
-    this.visible = false;
+    this.visibleEdited = false;
+    this.visibleCreat = false;
+    this.visibleDeleted = false;
   }
   
 }
