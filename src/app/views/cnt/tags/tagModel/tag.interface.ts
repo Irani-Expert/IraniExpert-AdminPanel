@@ -13,3 +13,8 @@ export interface Itag {
   groupTitle: string;
   isSharp : boolean;
 }
+
+export interface GroupId {
+  title : string;
+  value : number;
+}

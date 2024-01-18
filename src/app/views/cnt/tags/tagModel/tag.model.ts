@@ -1,4 +1,4 @@
-import { Itag } from './tag.interface';
+import { GroupId, Itag } from './tag.interface';
 
 export class tagModel implements Itag {
   id: number;
@@ -13,5 +13,9 @@ export class tagModel implements Itag {
   groupID: number;
   groupTitle: string;
   isSharp : boolean;
+}
 
+export class GroupIdModel implements GroupId {
+  title : string;
+  value : number;
 }

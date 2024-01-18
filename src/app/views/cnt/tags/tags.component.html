@@ -126,13 +126,18 @@
   <div *ngIf="editeType==2">
     <div>
       <p class="mb-2 mt-2">تگ را ویرایش دهید:</p>
-      <div class="edit-input mb-4" [contentEditable]="editable" (input)="editFunction(selectedID ,$event.target.innerText , selectedMeta)">{{selectedText}}</div>
-  
+      <input type="text " class="edit-input" [value]="selectedText"  (input)="editFunction($event.target.value )">
       <p>نوع تگ را تعیین کنید:</p>
       <div class="row-switvh">
         <p class="mr-4"> متا تگ و هشتگ </p>
         <p-inputSwitch [(ngModel)]="checkedMeta" ></p-inputSwitch>
         <p class="ml-4">فقط متاتگ</p>
+      </div>
+    </div>
+    <div class="row-id">
+      <p class="mr-3">تعیین گروپ آیدی:</p>
+      <div class="card flex justify-content-center">
+        <p-dropdown [options]="groupList" [(ngModel)]="selectedGroupId" optionLabel="title"  placeholder="Select a Id"></p-dropdown>
       </div>
     </div>
     <div class="modal-footer">
@@ -172,9 +177,14 @@
         <p-inputSwitch [(ngModel)]="checkedMeta" ></p-inputSwitch>
         <p class="ml-4">فقط متاتگ</p>
       </div>
-  
+      <div class="row-id">
+        <p class="mr-3">تعیین گروپ آیدی:</p>
+        <div class="card flex justify-content-center">
+          <p-dropdown [options]="groupList" [(ngModel)]="selectedGroupId" optionLabel="title"  placeholder="Select a Id"></p-dropdown>
+        </div>
+      </div>
       <div class="modal-footer">
-        <button class="btn-accept btn" (click)="addTagService()" *ngIf="addItemIput.length>0">
+        <button class="btn-accept btn" (click)="addTagService()" *ngIf="addItemIput.length>0 && selectedGroupId != null">
           <i class="pi pi-check mr-2"></i>ایجاد تگ
         </button>
         <button class="btn-reject btn" (click)="closeModal()">

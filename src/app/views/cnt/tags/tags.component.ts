@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ArticleService } from '../article/article/article.service';
-import { tagModel } from './tagModel/tag.model';
+import { GroupIdModel, tagModel } from './tagModel/tag.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
@@ -37,7 +37,6 @@ export class TagsComponent implements OnInit {
   editeType: number = 0;
   previousGroupId: number;
   dropDownTitleHolder: string = 'تمام هشتک‌ها';
-  groupList: any[] = new Array<any>();
   checkedMeta: boolean = false;
   selectedID: number;
   selectedText:string;
@@ -48,6 +47,7 @@ export class TagsComponent implements OnInit {
     id: number;
     text: string;
     isMeta : boolean;
+    groupIdEdiet : number;
   }>();
   colors: string[] = ['#d2e2e1', '#74b3be', '#a6887d', '#e8d3cc', '#0cead0'];
   constructor(
@@ -59,6 +59,10 @@ export class TagsComponent implements OnInit {
     this.page.pageNumber = 0;
     this.page.size = 60;
   }
+  // =========[گروپ آیدی]=======
+  groupList: GroupIdModel[] = new Array<GroupIdModel>();
+  selectedGroupId : GroupIdModel;
+
   // =========[مدال]======
   visibleEdited: boolean = false;
   visibleCreat: boolean = false;
@@ -66,6 +70,7 @@ export class TagsComponent implements OnInit {
 
   showModalEdited(id:number , text:any , meta:boolean) {
       this.selectedID = id;
+      this.selectedGroupId = this.groupList.find(it => it.value == 1)
       this.selectedText = text;
       this.visibleEdited = true;
       this.selectedMeta =meta;
@@ -77,7 +82,6 @@ export class TagsComponent implements OnInit {
 
   // ==========
   ngOnInit(): void {
-    
     this.getData(null);
     this.getGroupList();
   }
@@ -101,7 +105,8 @@ export class TagsComponent implements OnInit {
           backgroundColor: this.randomColor,
           id: xi.id,
           text: xi.title,
-          isMeta :xi.isSharp
+          isMeta :xi.isSharp,
+          groupIdEdiet : xi.groupID
         });
       }
       counter++;
@@ -112,6 +117,9 @@ export class TagsComponent implements OnInit {
       .getTitleValues(0, 10000, 'ID', null, 'Group')
       .subscribe((res: Result<Paginate<any[]>>) => {
         this.groupList = res.data.items;
+        
+        console.log(this.groupList);
+        
         //  this.page.totalElements = res.data.length;
       });
   }
@@ -143,21 +151,22 @@ export class TagsComponent implements OnInit {
     this.addItem.groupID = id;
     this.getData(id);
   }
-  editFunction(id: number, text: string , isMeta : boolean) {
-    this.updateTitle = text;
-    this.updateId = id;
-    this.checkedMeta = isMeta;
+  editFunction( text: string) {
+    this.selectedText = text;
   }
   updateTags(id: number) {
     var index = this.listItem.findIndex((x) => x.id == id);
     this.items[index].title = this.listItem[index].text;
     this.items[index].isSharp = this.listItem[index].isMeta;
+    this.items[index].groupID = this.listItem[index].groupIdEdiet;
     this._articleService.updateTags(id, this.items[index]).subscribe((data) => {
       if (data.success) {
         this.toastr.success(data.message, null, {
           closeButton: true,
           positionClass: 'toast-top-left',
         });
+    this.visibleEdited = false;
+        
       } else {
         this.toastr.error(data.message, null, {
           closeButton: true,
@@ -168,18 +177,24 @@ export class TagsComponent implements OnInit {
   }
   onContentChange(id: number) {
     console.log(this.checkedMeta);
-    if (this.updateId == id) {
       var index = this.listItem.findIndex((x) => x.id == id);
-      if (this.listItem[index].text != undefined) {
-        this.listItem[index].text = this.updateTitle;
-        this.listItem[index].isMeta = this.checkedMeta;
-        if (this.listItem[index].text[0] != '#') {
-          this.listItem[index].text = '#' + this.listItem[index].text;
+      console.log(this.listItem[index].text);
+      if (this.selectedText[0] != '#') {
+        var isPersian = /^[\u0600-\u06FF\s]+$/;
+
+        if (isPersian.test(this.selectedText[0])) {
+          this.selectedText = this.selectedText + '#';
+        } else {
+          this.selectedText = '#' + this.selectedText;
         }
-        this.updateTags(id);
       }
-    }
-    this.visibleEdited = false;
+        this.listItem[index].text = this.selectedText;
+        this.listItem[index].isMeta = this.checkedMeta;
+        this.listItem[index].groupIdEdiet = this.selectedGroupId.value;
+       
+        this.updateTags(id);
+      
+    
   }
   deletetags(id: number) {
     this._articleService.delete(id, 'LinkTag').subscribe((res) => {
@@ -211,8 +226,9 @@ export class TagsComponent implements OnInit {
         }
       }
       this.addItem.isSharp = this.checkedMeta;
+      this.addItem.groupID = this.selectedGroupId.value;
       this.addItem.title = this.addItemIput;
-      console.log(this.checkedMeta);
+      console.log(this.addItem.groupID);
       this._articleService.addLinkTag(this.addItem).subscribe((data) => {
         if (data.success) {
           this.toastr.success(data.message, null, {
