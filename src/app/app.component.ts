@@ -15,6 +15,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
   token = '';
+  static isLoggedIn = false;
   constructor(
     private spinner: NgxSpinnerService,
     private router: Router,
@@ -68,9 +69,11 @@ export class AppComponent implements OnInit, OnDestroy {
     // }
   }
   checkUser() {
-    this._userService
-      .getUserByToken()
-      .subscribe((res: Result<UserInforamationModel>) => {
+    this._userService.getUserByToken().subscribe({
+      next: (res) => {
+        if (res.success) {
+          AppComponent.isLoggedIn = true;
+        }
         if (!res.success) {
           localStorage.removeItem('currentUser');
           this.toastr.error(res.message, null, {
@@ -79,6 +82,21 @@ export class AppComponent implements OnInit, OnDestroy {
           });
           this.router.navigate(['/sessions/signin']);
         }
-      });
+      },
+      error: (err) => {
+        if (localStorage.getItem('currentUser')) {
+          localStorage.removeItem('currentUser');
+        }
+        this.toastr.error(
+          'دوباره تلاش کنید و در صورت خطا با پشتیبانی سایت ارتباط بگیرید',
+          'مشکل در ارتباط با سرور!',
+          {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          }
+        );
+        this.router.navigate(['/sessions/signin']);
+      },
+    });
   }
 }

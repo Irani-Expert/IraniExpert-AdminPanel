@@ -10,6 +10,7 @@ import {
   ResolveEnd,
 } from '@angular/router';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-admin-layout-sidebar-large',
@@ -39,5 +40,8 @@ export class AdminLayoutSidebarLargeComponent implements OnInit {
         this.moduleLoading = false;
       }
     });
+  }
+  get loggedIn() {
+    return AppComponent.isLoggedIn;
   }
 }
