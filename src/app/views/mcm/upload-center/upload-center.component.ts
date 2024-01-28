@@ -488,6 +488,7 @@ export class UploadCenterComponent implements OnInit, OnDestroy {
             description: '',
             fileExists: false,
             iconPath: null,
+            browserTitle: ''
           },
         ];
       }

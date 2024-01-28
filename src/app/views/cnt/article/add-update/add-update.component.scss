@@ -21,3 +21,23 @@ div:empty {
   color: #e9e1e1 !important;
   background-color: #663399 !important;
 }
+.color-code{
+  direction: ltr;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.box-color{
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+.input-color{
+  direction: ltr;
+}
+.col-color{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

@@ -30,6 +30,7 @@ import { PickListModule } from 'primeng/picklist';
 import { ItemType } from './brokers/broker-items-rel/item-type.pipe';
 import { DialogModule } from 'primeng/dialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
   ],
   imports: [
     CommonModule,
+    ColorPickerModule,
     FormsModule,
     CKEditorModule,
     ReactiveFormsModule,

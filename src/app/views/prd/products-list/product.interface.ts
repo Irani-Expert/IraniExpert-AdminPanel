@@ -7,4 +7,5 @@ export interface IProduct extends IBase {
   id: number;
   title: string;
   fileExists: boolean;
+  browserTitle : string;
 }

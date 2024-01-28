@@ -24,6 +24,7 @@ export class BrokerModel extends Base {
   isIRSupport: boolean = false;
   referralLink: string;
   staticRate: number;
+  colorCode : string;
   linkTags: [
     {
       title: string;
