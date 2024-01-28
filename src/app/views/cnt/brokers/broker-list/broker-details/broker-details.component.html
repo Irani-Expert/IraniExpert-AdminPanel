@@ -449,6 +449,7 @@
             <ng-container *ngIf="item.cardImagePath !== ''">
               <div class="img-holder">
                 <img
+                  (error)="item.cardImagePath = ''"
                   [src]="'https://dl.iraniexpert.com/' + item.cardImagePath"
                   alt="عکس شاخص"
                 />
@@ -495,6 +496,7 @@
             <ng-container *ngIf="item.secondCardImagePath !== ''">
               <div class="img-holder">
                 <img
+                  (error)="item.secondCardImagePath = ''"
                   [src]="
                     'https://dl.iraniexpert.com/' + item.secondCardImagePath
                   "
