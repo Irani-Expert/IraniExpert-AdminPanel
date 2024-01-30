@@ -149,4 +149,8 @@ export class UrlListComponent implements OnInit {
     this.page.pageNumber = 0;
     this.get(this.page, this.filter);
   }
+  getPage(pageNumber: number) {
+    this.page.pageNumber = pageNumber - 1;
+    this.get(this.page, this.filter);
+  }
 }

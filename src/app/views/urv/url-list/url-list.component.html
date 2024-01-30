@@ -3,7 +3,7 @@
 <p-button
   dir="ltr"
   (click)="goToDetails(-1)"
-  label="ایجاد سفارش"
+  label="ایجاد ریدایرکشن"
   icon="pi pi-plus"
   styleClass="p-button-raised p-button-sm"
   iconPos="right"
@@ -75,8 +75,9 @@
             let item of items
               | paginate
                 : {
-                    itemsPerPage: 10,
-                    currentPage: page.pageNumber
+                    itemsPerPage: 25,
+                    currentPage: page.pageNumber + 1,
+                    totalItems: page.totalElements
                   }
           "
         >
@@ -116,9 +117,9 @@
       </ng-container>
     </tbody>
   </table>
-  <div class="col-md-12 mt-3" *ngIf="items.length > 10">
+  <div class="col-md-12 mt-3" *ngIf="page.totalPages > 1">
     <pagination-controls
-      (pageChange)="get($event)"
+      (pageChange)="getPage($event)"
       previousLabel=""
       nextLabel=""
       responsive="true"
