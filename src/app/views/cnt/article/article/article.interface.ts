@@ -15,5 +15,6 @@ export interface IArticle extends IBase {
   isRTL: boolean;
   metaDescription: string;
   browserTitle: string;
-  linkTags:TableType[]
+  linkTags:TableType[];
+  colorCode : string;
 }

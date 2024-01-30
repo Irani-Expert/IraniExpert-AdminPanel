@@ -96,7 +96,7 @@
         <span>
           <div class="d-flex align-items-center">
             <!-- ========[ویرایش]===== -->
-            <button class="btn-modal-edited btn" (click)="showModalEdited(i.id , i.text)" *ngIf="editeType==2">
+            <button class="btn-modal-edited btn" (click)="showModalEdited(i.id , i.text , i.isMeta , i.groupIdEdiet)" *ngIf="editeType==2">
             <i class="pi pi-file-edit"></i>
             </button>
             <!-- ========[حذف]===== -->
@@ -122,73 +122,74 @@
 
 
 <!-- =========[مدال ویرایش]====== -->
-<p-dialog  header="آیا از ویرایش تگ مطمئن هستید" [(visible)]="visibleEdited" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+<p-dialog [(visible)]="visibleEdited" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
   <div *ngIf="editeType==2">
     <div>
-      <p class="mb-2 mt-2">تگ را ویرایش دهید:</p>
+      <p class="mb-2 mt-2">لطفا مقادیر تگ را وارد کنید:</p>
       <input type="text " class="edit-input" [value]="selectedText"  (input)="editFunction($event.target.value )">
-      <p>نوع تگ را تعیین کنید:</p>
+      <p>لطفا نوع تگ را تعیین کنید:</p>
       <div class="row-switvh">
-        <p class="mr-4"> متا تگ و هشتگ </p>
+        <p class="mr-4"> هشتگ هست </p>
         <p-inputSwitch [(ngModel)]="checkedMeta" ></p-inputSwitch>
-        <p class="ml-4">فقط متاتگ</p>
+        <p class="ml-4">هشتگ نیست</p>
       </div>
     </div>
     <div class="row-id">
-      <p class="mr-3">تعیین گروپ آیدی:</p>
+      <p class="mr-3">لطفا گروه را تعیین کنید:</p>
       <div class="card flex justify-content-center">
         <p-dropdown [options]="groupList" [(ngModel)]="selectedGroupId" optionLabel="title"  placeholder="Select a Id"></p-dropdown>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn-accept btn" (click)="onContentChange(selectedID)">
-        <i class="pi pi-check mr-2"></i>انجام ویرایش
+        <i class="pi pi-check mr-2"></i> ویرایش
       </button>
       <button class="btn-reject btn" (click)="closeModal()">
-        <i class="pi pi-times mr-2"></i>کنسل
+        <i class="pi pi-times mr-2"></i>لغو
       </button>
     </div>
   </div>
 </p-dialog>
 
   <!-- =========[مدال حذف]====== -->
-  <p-dialog header="آیا از حذف تگ مطمئن هستید" [(visible)]="visibleDeleted" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+  <p-dialog [(visible)]="visibleDeleted" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <div>
+      <p class="">آیا از حذف مطمئن هستید؟</p>
       <div class="row-btn">
         <button class="btn-accept btn" (click)="deletetags(selectedID)">
-          <i class="pi pi-check mr-2"></i>حذف تگ
+          <i class="pi pi-check mr-2"></i>حذف
         </button>
         <button class="btn-reject btn" (click)="closeModal()">
-          <i class="pi pi-times mr-2"></i>کنسل
+          <i class="pi pi-times mr-2"></i>لغو
         </button>
       </div>
     </div>
   </p-dialog>
 <!-- =========[مدال ایجاد]====== -->
-<p-dialog header="آیا از ایجاد تگ مطمئن هستید" [(visible)]="visibleCreat" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+<p-dialog  [(visible)]="visibleCreat" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <div >
       <div class="creat-tag">
         <p class="mr-4">لطفا مقادیر تگ را وارد کنید:</p>
-        <input  class="visible-on-focus" (keydown.space)="$event.preventDefault()" [(ngModel)]="addItemIput" #firstNameField>
+        <input class="visible-on-focus" (keydown.space)="$event.preventDefault()" [(ngModel)]="addItemIput" #firstNameField>
       </div>
-      <p>نوع تگ را تعیین کنید:</p>
+      <p>لطفا نوع تگ را تعیین کنید:</p>
       <div class="row-switvh">
-        <p class="mr-4"> متا تگ و هشتگ </p>
+        <p class="mr-4"> هشتگ هست </p>
         <p-inputSwitch [(ngModel)]="checkedMeta" ></p-inputSwitch>
-        <p class="ml-4">فقط متاتگ</p>
+        <p class="ml-4">هشتگ نیست</p>
       </div>
       <div class="row-id">
-        <p class="mr-3">تعیین گروپ آیدی:</p>
+        <p class="mr-3">  لطفا گروه را تعیین کنید:</p>
         <div class="card flex justify-content-center">
           <p-dropdown [options]="groupList" [(ngModel)]="selectedGroupId" optionLabel="title"  placeholder="Select a Id"></p-dropdown>
         </div>
       </div>
       <div class="modal-footer">
         <button class="btn-accept btn" (click)="addTagService()" *ngIf="addItemIput.length>0 && selectedGroupId != null">
-          <i class="pi pi-check mr-2"></i>ایجاد تگ
+          <i class="pi pi-check mr-2"></i>ایجاد
         </button>
         <button class="btn-reject btn" (click)="closeModal()">
-          <i class="pi pi-times mr-2"></i>کنسل
+          <i class="pi pi-times mr-2"></i>لغو
         </button>
       </div>
     </div>

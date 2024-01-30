@@ -196,6 +196,29 @@
                 <span class="slider"></span>
               </label>
             </div>
+            <!-- Browser title  -->
+            <div class="col-md-6 form-group mb-3">
+              <label for="browserTitle">عنوان در مرورگر:</label>
+              <input
+                type="text"
+                class="form-control form-control-rounded"
+                id="browserTitle"
+                placeholder="عنوان مرورگر مورد نظر را وارد کنید "
+                [formControl]="addForm.controls['browserTitle']"
+                [(ngModel)]="addUpdate.browserTitle"
+                maxlength="51"
+                minlength="2"
+              />
+
+              <small
+                *ngIf="
+                  addForm.controls['browserTitle'].hasError('required') &&
+                  addForm.controls['browserTitle'].touched
+                "
+                class="mat-text-warn m-t-negative"
+                >عنوان مرورگر محصول ضروری است</small
+              >
+            </div>
             <!-- description  -->
             <div class="col-md-12 form-group mb-3">
               <label for="description">توضیحات</label>

@@ -68,9 +68,14 @@ export class TagsComponent implements OnInit {
   visibleCreat: boolean = false;
   visibleDeleted : boolean = false;
 
-  showModalEdited(id:number , text:any , meta:boolean) {
+  showModalEdited(id:number , text:any , meta:boolean , groupId : number) {
       this.selectedID = id;
-      this.selectedGroupId = this.groupList.find(it => it.value == 1)
+      if (this.selectedGroupId == null || undefined) {
+        this.selectedGroupId = this.groupList.find(it => it.value == 1);
+      }
+      else {
+        this.selectedGroupId = this.groupList.find(it => it.value == groupId );
+      }
       this.selectedText = text;
       this.visibleEdited = true;
       this.selectedMeta =meta;
@@ -179,15 +184,15 @@ export class TagsComponent implements OnInit {
     console.log(this.checkedMeta);
       var index = this.listItem.findIndex((x) => x.id == id);
       console.log(this.listItem[index].text);
-      if (this.selectedText[0] != '#') {
-        var isPersian = /^[\u0600-\u06FF\s]+$/;
+      // if (this.selectedText[0] != '#') {
+      //   var isPersian = /^[\u0600-\u06FF\s]+$/;
 
-        if (isPersian.test(this.selectedText[0])) {
-          this.selectedText = this.selectedText + '#';
-        } else {
-          this.selectedText = '#' + this.selectedText;
-        }
-      }
+      //   if (isPersian.test(this.selectedText[0])) {
+      //     this.selectedText = this.selectedText + '#';
+      //   } else {
+      //     this.selectedText = '#' + this.selectedText;
+      //   }
+      // }
         this.listItem[index].text = this.selectedText;
         this.listItem[index].isMeta = this.checkedMeta;
         this.listItem[index].groupIdEdiet = this.selectedGroupId.value;
@@ -215,16 +220,16 @@ export class TagsComponent implements OnInit {
   }
   addTagService() {
     if (this.addItemIput.length > 0) {
-      this.addItemIput = this.addItemIput.replace(/#/g, '');
-      if (this.addItemIput[0] != '#') {
-        var isPersian = /^[\u0600-\u06FF\s]+$/;
+      // this.addItemIput = this.addItemIput.replace(/#/g, '');
+      // if (this.addItemIput[0] != '#') {
+      //   var isPersian = /^[\u0600-\u06FF\s]+$/;
 
-        if (isPersian.test(this.addItemIput[0])) {
-          this.addItemIput = this.addItemIput + '#';
-        } else {
-          this.addItemIput = '#' + this.addItemIput;
-        }
-      }
+      //   if (isPersian.test(this.addItemIput[0])) {
+      //     this.addItemIput = this.addItemIput + '#';
+      //   } else {
+      //     this.addItemIput = '#' + this.addItemIput;
+      //   }
+      // }
       this.addItem.isSharp = this.checkedMeta;
       this.addItem.groupID = this.selectedGroupId.value;
       this.addItem.title = this.addItemIput;

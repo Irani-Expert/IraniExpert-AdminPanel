@@ -279,6 +279,15 @@
             </div>
 
             <!-- Each Input -->
+            <!-- =======[color code]===== -->
+            <div class="d-flex flex-column m-2 col-auto">
+                <div class="box-color">
+                  <label for="cp-hex" class="font-bold block mb-2"> </label>
+                  <p-colorPicker  formControlName="colorCode" [(ngModel)]="color"></p-colorPicker>
+                  <label for="colorCode">انتخاب رنگ بروکر</label>
+                </div>
+                  <input type="text" [value]="color" class="form-control input-color radius mt-4">
+            </div>
             <!-- Seperator -->
             <span class="col-12"></span>
             <!-- Seperator -->

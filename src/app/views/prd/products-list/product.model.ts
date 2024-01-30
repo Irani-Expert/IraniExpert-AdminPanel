@@ -8,4 +8,6 @@ export class ProductModel extends Base implements IProduct {
   id: number;
   title: string;
   fileExists: boolean;
+  browserTitle : string;
+
 }

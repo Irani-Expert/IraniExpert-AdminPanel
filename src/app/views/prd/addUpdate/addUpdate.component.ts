@@ -17,6 +17,7 @@ import { catchError, map, throwError } from 'rxjs';
   styleUrls: ['./addUpdate.component.scss'],
 })
 export class AddUpdateComponent implements OnInit {
+  
   fileName: string = '';
   productId: number = parseInt(
     this._route.snapshot.paramMap.get('productId') ?? '0'
@@ -56,6 +57,7 @@ export class AddUpdateComponent implements OnInit {
       orderID: [null, Validators.compose([Validators.required])],
       isActive: [null, Validators.compose([Validators.required])],
       description: [null, Validators.compose([Validators.required])],
+      browserTitle : [null, Validators.compose([Validators.required])]
     });
   }
 
@@ -105,6 +107,7 @@ export class AddUpdateComponent implements OnInit {
   }
   sendData() {
     if (this.addUpdate.id === 0) {
+      // let x = {...this.addUpdate,...{colorCode: '',iconPath:'',platformType:0,type:0,versionHistory:'',brief:''}}
       this._productsService
         .create(this.addUpdate, 'product')
         .subscribe((data) => {
@@ -122,6 +125,7 @@ export class AddUpdateComponent implements OnInit {
           }
         });
     } else {
+      // let x = {...this.addUpdate,...{colorCode: '',iconPath:'',platformType:0,type:0,versionHistory:'',brief:''}}
       this._productsService
         .update(this.addUpdate.id, this.addUpdate, 'product')
         .subscribe((data) => {

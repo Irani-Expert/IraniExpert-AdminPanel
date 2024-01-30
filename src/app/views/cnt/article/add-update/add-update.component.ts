@@ -29,6 +29,8 @@ interface Tag {
   styleUrls: ['./add-update.component.scss'],
 })
 export class AddUpdateComponent implements OnInit, OnDestroy {
+  color: string = '';
+
   fileName: string = '';
   addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
   Tags: Tag[] = new Array<Tag>();
@@ -65,7 +67,10 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     private _groupService: GroupService,
     private _user: AuthenticateService,
     private _router: Router
-  ) {}
+  ) {
+    
+    this.color = '#6466f1';
+  }
   pushSectionItem() {
     this.items.forEach((x) => {
       let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
@@ -120,7 +125,12 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
       metaDescription: [''],
       browserTitle: [''],
       selectedItems: [''],
+      colorCode : ['']
     });
+
+
+
+    
   }
 
   selectGroup() {}
@@ -262,6 +272,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   }
 
   async addOrUpdate(row: ArticleModel) {
+    this.addUpdate.colorCode = this.color;
     row.updateBy = this._user.currentUserValue.userID;
     // if (row.isActive) {
     //   row.publishDate = new Date();
@@ -304,6 +315,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
           }
         });
     }
+
   }
   setTags() {
     let counter = 0;

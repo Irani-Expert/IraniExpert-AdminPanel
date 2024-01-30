@@ -16,5 +16,6 @@ export class ArticleModel extends Base implements IArticle {
   fileExists: boolean;
   metaDescription: string;
   browserTitle: string = '';
-  linkTags:TableType[]
+  linkTags:TableType[];
+  colorCode : string;
 }

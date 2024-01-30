@@ -67,13 +67,33 @@
                 " class="mat-text-warn m-t-negative">انتخاب نوع گروه ضروری است</small>
             </div>
             <!--  Meta  -->
-            <div class="col-md-6">
+            <div class="col-md-6 mt-4">
               <label for="meta">متا مقاله</label>
               <textarea type="text" class="form-control radius" id="meta" placeholder="متا را وارد نمایید"
                 [formControl]="addForm.controls['metaDescription']" [(ngModel)]="addUpdate.metaDescription"></textarea>
             </div>
+            <div class="col-md-6 col-color">
+              <div class="form-group mb-3 mt-1">
+                <label class="m-1">راست به چپ</label>
+                <label class="switch switch-primary mr-2 m-2">
+                  <input [formControl]="addForm.controls['isRTL']" [(ngModel)]="addUpdate.isRTL" type="checkbox"
+                    id="isRTL" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <!--  انتخاب رنگ مقاله  -->
+              <div class="">
+                <div class="box-color">
+                  <label for="cp-hex" class="font-bold block mb-2"> </label>
+                  <p-colorPicker [(ngModel)]="color"></p-colorPicker>
+                  <label for="colorCode">انتخاب رنگ مقاله</label>
+                </div>
+                <input [formControl]="addForm.controls['colorCode']" type="text" class="input-color form-control radius mt-4"  [(ngModel)]="color">
+              </div>
+
+            </div>
             <!--  Browser Title  -->
-            <div class="col-md-6">
+            <div class="col-md-6 mt-4">
               <label for="browserTitle">عنوان مقاله در مرورگر</label>
               <textarea type="text" class="form-control radius" id="browserTitle" placeholder="متا را وارد نمایید"
                 [formControl]="addForm.controls['browserTitle']" [(ngModel)]="addUpdate.browserTitle"></textarea>
@@ -89,14 +109,6 @@
                   display="chip"></p-multiSelect>
               </div>
             </ng-container>
-            <div class="col-md-6 form-group mb-3 mt-1">
-              <label class="m-1">راست به چپ</label>
-              <label class="switch switch-primary mr-2 m-2">
-                <input [formControl]="addForm.controls['isRTL']" [(ngModel)]="addUpdate.isRTL" type="checkbox"
-                  id="isRTL" />
-                <span class="slider"></span>
-              </label>
-            </div>
             <ng-container *appCanAccess="'Aََrticle-tags-Edit'">
 
               <div class="col-md-6" *ngIf="addUpdate.id !== 0">

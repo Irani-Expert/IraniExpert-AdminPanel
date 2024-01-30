@@ -34,6 +34,7 @@ interface Navigation {
   styleUrls: ['./broker-details.component.scss'],
 })
 export class BrokerDetailsComponent {
+  color  : string = '';
   isFileValid = false;
   navId = 0;
   isSecondFileValid = false;
@@ -61,6 +62,7 @@ export class BrokerDetailsComponent {
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService
   ) {
+    this.color = '#6466f1';
     this.routeSubscriber = this._router.events
       .pipe(takeUntil(this.routeSubject))
       .subscribe({
@@ -96,6 +98,7 @@ export class BrokerDetailsComponent {
                   countryIcon: [null],
                   email: [null, [Validators.required, Validators.email]],
                   phoneNumber: [null],
+                  colorCode : ['#6466f1']
                 });
                 this.showForm = true;
               } else {
@@ -346,6 +349,7 @@ export class BrokerDetailsComponent {
       isActive: this._controls['isActive'].value,
       countryName: this._controls['countryName'].value,
       countryIcon: this._controls['countryIcon'].value,
+      colorCode: this._controls['colorCode'].value
     };
     if (sendingItem.id == 0) {
       this.brokerService.create(sendingItem, 'Broker').subscribe((it) => {
@@ -364,6 +368,7 @@ export class BrokerDetailsComponent {
           }
         });
     }
+    this.color = this.item.colorCode;
   }
   get _controls() {
     if (this.formGroup) {
