@@ -178,7 +178,7 @@
             [ngModel]="addUpdate.parentID"
           >
             <option value="null">والد ندارد</option>
-            <option *ngFor="let item of rows" value="{{ item.id }}">
+            <option *ngFor="let item of allGroups" value="{{ item.id }}">
               {{ item.title }}
             </option>
           </select>

@@ -8,6 +8,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { GroupModel } from './group.model';
 import { GroupService } from './group.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { lastValueFrom, map } from 'rxjs';
 
 @Component({
   selector: 'app-group',
@@ -15,6 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./group.component.scss'],
 })
 export class GroupComponent implements OnInit {
+  allGroups = new Array<GroupModel>();
   rows: GroupModel[] = new Array<GroupModel>();
   viewMode: 'list' | 'grid' = 'list';
   allSelected: boolean;
@@ -28,18 +30,20 @@ export class GroupComponent implements OnInit {
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
-    private _router: Router,
+    private _router: Router
   ) {
+    this.getAllGroups();
     this.page.pageNumber = 0;
     this.page.size = 8;
     this._route.params.subscribe((params) => {
-      if(this.page.pageNumber!=params['pageIndex'] || this.rows.length==0){
-      this.page.pageNumber = params['pageIndex']
-      this.setPage(this.page.pageNumber)
+      if (
+        this.page.pageNumber != params['pageIndex'] ||
+        this.rows.length == 0
+      ) {
+        this.page.pageNumber = params['pageIndex'];
+        this.setPage(this.page.pageNumber);
       }
-      
-		});
-
+    });
   }
 
   ngOnInit() {
@@ -50,13 +54,20 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  setPage(pageInfo: number) {
+  async setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
     this._router.navigateByUrl(`bas/group/${pageInfo}`);
 
     this.getGroupList(this.page.pageNumber, this.page.size);
   }
-
+  getAllGroups() {
+    const result = this._groupService.get(0, null, 'ID', null, 'Group').pipe(
+      map((res) => {
+        this.allGroups = res.data.items;
+      })
+    );
+    return lastValueFrom(result);
+  }
   getGroupList(pageNumber: number, seedNumber: number) {
     this._groupService
       .get(
@@ -88,8 +99,7 @@ export class GroupComponent implements OnInit {
             // this.rows.forEach((element, index) => {
             //   if (element.id == id) this.rows.splice(index, 1);
             // });
-            this.setPage(this.page.pageNumber)
-
+            this.setPage(this.page.pageNumber);
           } else {
             this.toastr.error('خطا در حذف', res.message, {
               timeOut: 3000,
@@ -127,7 +137,7 @@ export class GroupComponent implements OnInit {
             positionClass: 'toast-top-left',
           });
           //this.rows.unshift(row);
-          this.setPage(this.page.pageNumber)
+          this.setPage(this.page.pageNumber);
 
           this.addForm.reset;
         } else {
