@@ -30,6 +30,8 @@ interface Tag {
 })
 export class AddUpdateComponent implements OnInit, OnDestroy {
   color: string = '';
+  itemFetched = false;
+  navId = 0;
 
   fileName: string = '';
   addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
@@ -67,10 +69,12 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     private _groupService: GroupService,
     private _user: AuthenticateService,
     private _router: Router
-  ) {
-    
-    this.color = '#6466f1';
+  ) { 
   }
+  changeNavId(event: string) {
+    this.navId = parseInt(event.split('-')[2]);
+  }
+
   pushSectionItem() {
     this.items.forEach((x) => {
       let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
@@ -127,8 +131,6 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
       selectedItems: [''],
       colorCode : ['']
     });
-
-
 
     
   }
@@ -251,7 +253,17 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
           this.group = this.groupList.find(
             (item) => item.value === this.addUpdate.groupID
           );
+
+          if( res.data.colorCode == null || undefined ){
+            this.color = '#6466f1';
+          }
+          else {
+            this.color = res.data.colorCode;
+          }
+
           this.pushSectionItem();
+          this.itemFetched = true;
+          
         } else {
           this._router.navigate(['/404']);
         }

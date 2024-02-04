@@ -62,7 +62,6 @@ export class BrokerDetailsComponent {
     private sanitizer: DomSanitizer,
     private spinner: NgxSpinnerService
   ) {
-    this.color = '#6466f1';
     this.routeSubscriber = this._router.events
       .pipe(takeUntil(this.routeSubject))
       .subscribe({
@@ -165,7 +164,14 @@ export class BrokerDetailsComponent {
             countryName: [this.item.countryName],
             countryIcon: [this.item.countryIcon],
             phoneNumber: [this.item.phoneNumber],
+            colorCode : [this.item.colorCode],
           });
+          if ( res.data.colorCode == null || undefined){
+            this.color = '#6466f1';
+           }
+           else {
+            this.color = res.data.colorCode;
+           }
         }
         return res.success;
       })

@@ -73,14 +73,6 @@
                 [formControl]="addForm.controls['metaDescription']" [(ngModel)]="addUpdate.metaDescription"></textarea>
             </div>
             <div class="col-md-6 col-color">
-              <div class="form-group mb-3 mt-1">
-                <label class="m-1">راست به چپ</label>
-                <label class="switch switch-primary mr-2 m-2">
-                  <input [formControl]="addForm.controls['isRTL']" [(ngModel)]="addUpdate.isRTL" type="checkbox"
-                    id="isRTL" />
-                  <span class="slider"></span>
-                </label>
-              </div>
               <!--  انتخاب رنگ مقاله  -->
               <div class="">
                 <div class="box-color">
@@ -90,33 +82,48 @@
                 </div>
                 <input [formControl]="addForm.controls['colorCode']" type="text" class="input-color form-control radius mt-4"  [(ngModel)]="color">
               </div>
-
             </div>
             <!--  Browser Title  -->
             <div class="col-md-6 mt-4">
               <label for="browserTitle">عنوان مقاله در مرورگر</label>
-              <textarea type="text" class="form-control radius" id="browserTitle" placeholder="متا را وارد نمایید"
+              <textarea type="text" class="form-control radius" id="browserTitle"
                 [formControl]="addForm.controls['browserTitle']" [(ngModel)]="addUpdate.browserTitle"></textarea>
             </div>
 
             <!-- Is Rtl -->
-            <ng-container *appCanAccess="'Aََrticle-tags-Edit'">
-              <div class="col-md-6 " *ngIf="addUpdate.id !== 0">
-                <label for="browserTitle">هشتک ها</label>
-                <!-- <p-multiSelect [options]="groupedCities" (onChange)="sectorFilter()" [(ngModel)]="selectedSector"  optionLabel="name"></p-multiSelect> -->
-                <p-multiSelect *ngIf="tetst" dir="ltr" [options]="Tags"
-                  [formControl]="addForm.controls['selectedItems']" [(ngModel)]="selectedTags" optionLabel="name"
-                  display="chip"></p-multiSelect>
-              </div>
-            </ng-container>
-            <ng-container *appCanAccess="'Aََrticle-tags-Edit'">
+            <div class="tags-box">
+              <ng-container *appCanAccess="'Aََrticle-tags-Edit'">
+                <div class="" *ngIf="addUpdate.id !== 0">
+                  <label for="browserTitle">هشتک ها</label>
+                  <!-- <p-multiSelect [options]="groupedCities" (onChange)="sectorFilter()" [(ngModel)]="selectedSector"  optionLabel="name"></p-multiSelect> -->
+                  <p-multiSelect *ngIf="tetst" dir="ltr" [options]="Tags"
+                    [formControl]="addForm.controls['selectedItems']" [(ngModel)]="selectedTags" optionLabel="name"
+                    display="chip"></p-multiSelect>
+                </div>
+              </ng-container>
 
-              <div class="col-md-6" *ngIf="addUpdate.id !== 0">
-                <button (click)="setTags()" class="btn-save btn d-inline-flex justify-content-around ">
-                  <i class="i-Yes text-bigger"></i>
-                </button>
+              <div class="mt-4">
+                <ng-container *appCanAccess="'Aََrticle-tags-Edit'">
+                  <div class="" *ngIf="addUpdate.id !== 0">
+                    <button (click)="setTags()" class="btn-save btn d-inline-flex justify-content-around ">
+                      <i class="i-Yes text-bigger"></i>
+                    </button>
+                  </div>
+                </ng-container>
+    
+                <div class="form-group mb-3 mt-1">
+                  <label class="m-1">راست به چپ</label>
+                  <label class="switch switch-primary mr-2 m-2">
+                    <input [formControl]="addForm.controls['isRTL']" [(ngModel)]="addUpdate.isRTL" type="checkbox"
+                      id="isRTL" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                
+               </div>
               </div>
-            </ng-container>
+
 
             <ng-container *ngIf="!addUpdate.fileExists">
               <div class="col-md-7 mt-4" *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']">
@@ -200,6 +207,25 @@
           <!-- [articleId]="articleId" -->
         </app-comment>
       </ng-template>
+    </li>
+
+    <li ngbNavItem [disabled]="!itemFetched" [domId]="'custom-nav-' + 5">
+      <a
+      ngbNavLink
+      class="text-small"
+      [ngClass]="!itemFetched ? 'disabled cursor-default' : ''"
+    >
+      <span class="d-flex align-items-center"
+        ><span class="text-small">پرسش های متداول </span></span
+      >
+    </a>
+    <ng-template ngbNavContent>
+      <div class="h-custom p-3">
+        <ng-container *ngIf="itemFetched">
+          <app-faq [productId]="addUpdate.id" [tableType]="1"></app-faq>
+        </ng-container>
+      </div>
+    </ng-template>
     </li>
   </ul>
 
