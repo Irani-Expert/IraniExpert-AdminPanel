@@ -38,6 +38,10 @@ div:empty {
 }
 .col-color{
   display: flex;
-  justify-content: space-around;
   align-items: center;
+}
+.tags-box{
+  display: flex;
+  width: 50%;
+  flex-direction: column;
 }
