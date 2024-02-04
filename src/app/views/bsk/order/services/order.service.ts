@@ -102,7 +102,7 @@ export class OrderService extends BaseService<any, 0> {
 
     return this._http.get<Result<Paginate<OrderModel[]>>>(
       this._base +
-        '/Orders/GetByUserIDe' +
+        '/OrderNew/MyOrder' +
         '?pageIndex=' +
         pageIndex +
         '&pageSize=' +
