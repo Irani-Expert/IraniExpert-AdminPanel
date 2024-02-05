@@ -31,6 +31,7 @@ import { ItemType } from './brokers/broker-items-rel/item-type.pipe';
 import { DialogModule } from 'primeng/dialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     ItemType,
   ],
   imports: [
+    InputMaskModule,
     CommonModule,
     ColorPickerModule,
     FormsModule,

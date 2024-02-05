@@ -39,9 +39,15 @@ div:empty {
 .col-color{
   display: flex;
   align-items: center;
+  margin-left: 1rem;
 }
 .tags-box{
   display: flex;
-  width: 50%;
+  width: 80%;
   flex-direction: column;
+}
+.text-switch{
+  text-align: center;
+  margin-left: 2rem;
+  padding-top: 2rem;
 }

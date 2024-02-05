@@ -97,7 +97,11 @@ export class BrokerDetailsComponent {
                   countryIcon: [null],
                   email: [null, [Validators.required, Validators.email]],
                   phoneNumber: [null],
-                  colorCode : ['#6466f1']
+                  colorCode : ['#6466f1'],
+                  studyTime: [null, [Validators.required] ],
+                  seoAccepted : [false] ,
+                  managementAccepted : [false] ,
+                  authorAccepted : [false] ,
                 });
                 this.showForm = true;
               } else {
@@ -159,12 +163,16 @@ export class BrokerDetailsComponent {
               this.item.isPersianSupport,
               [Validators.required],
             ],
+            studyTime: [this.item.studyTime, [Validators.required]],
             establishedYear: [this.item.establishedYear, [Validators.required]],
             email: [this.item.email, [Validators.required, Validators.email]],
             countryName: [this.item.countryName],
             countryIcon: [this.item.countryIcon],
             phoneNumber: [this.item.phoneNumber],
             colorCode : [this.item.colorCode],
+            authorAccepted: [this.item.authorAccepted],
+            managementAccepted: [this.item.managementAccepted],
+            seoAccepted: [this.item.seoAccepted]
           });
           if ( res.data.colorCode == null || undefined){
             this.color = '#6466f1';
@@ -342,11 +350,11 @@ export class BrokerDetailsComponent {
       cardImagePath: item.cardImagePath,
       secondCardImagePath: item.secondCardImagePath,
       secondTitle: this._controls['secondTitle'].value,
-      // studyTime: this._controls['studyTime'].value,
+      studyTime: this._controls['studyTime'].value,
       // Forcing True Will Change Later
-      authorAccepted: false,
-      managementAccepted: false,
-      seoAccepted: false,
+      authorAccepted: this._controls['authorAccepted'].value,
+      managementAccepted: this._controls['managementAccepted'].value,
+      seoAccepted: this._controls['seoAccepted'].value,
       // Forcing True Will Change Later
       referralLink: this._controls['referralLink'].value,
       phoneNumber: this._controls['phoneNumber'].value,

@@ -72,15 +72,18 @@
               <textarea type="text" class="form-control radius" id="meta" placeholder="متا را وارد نمایید"
                 [formControl]="addForm.controls['metaDescription']" [(ngModel)]="addUpdate.metaDescription"></textarea>
             </div>
-            <div class="col-md-6 col-color">
-              <!--  انتخاب رنگ مقاله  -->
-              <div class="">
-                <div class="box-color">
-                  <label for="cp-hex" class="font-bold block mb-2"> </label>
-                  <p-colorPicker [(ngModel)]="color"></p-colorPicker>
-                  <label for="colorCode">انتخاب رنگ مقاله</label>
-                </div>
-                <input [formControl]="addForm.controls['colorCode']" type="text" class="input-color form-control radius mt-4"  [(ngModel)]="color">
+            <div class="col-md-6">
+              <!-- ======[studyTime]== -->
+              <div>
+               <label for="studyTime">زمان مطالعه</label>
+               <br>
+               <p-inputMask dir="ltr" mask="99:99:99" placeholder="00:00:00" class="radius" id="studyTime" 
+                 [formControl]="addForm.controls['studyTime']" [(ngModel)]="addUpdate.studyTime">
+               </p-inputMask>
+               <small *ngIf="
+                  addForm.controls['studyTime'].hasError('required') &&
+                  addForm.controls['studyTime'].touched
+                " class="mat-text-warn m-t-negative ml-2">ورود زمان مطالعه ضروری است</small>
               </div>
             </div>
             <!--  Browser Title  -->
@@ -110,19 +113,70 @@
                     </button>
                   </div>
                 </ng-container>
-    
-                <div class="form-group mb-3 mt-1">
-                  <label class="m-1">راست به چپ</label>
-                  <label class="switch switch-primary mr-2 m-2">
-                    <input [formControl]="addForm.controls['isRTL']" [(ngModel)]="addUpdate.isRTL" type="checkbox"
-                      id="isRTL" />
-                    <span class="slider"></span>
-                  </label>
+  
+                <div class="d-flex">
+
+                    <!--  انتخاب رنگ مقاله  -->
+                    <div class="col-color">
+                      <div class="">
+                        <div class="box-color">
+                          <label for="cp-hex" class="font-bold block mb-2"> </label>
+                          <p-colorPicker [(ngModel)]="color"></p-colorPicker>
+                          <label for="colorCode">انتخاب رنگ مقاله</label>
+                        </div>
+                        <input [formControl]="addForm.controls['colorCode']" type="text" class="input-color form-control radius mt-4"  [(ngModel)]="color">
+                      </div>
+                    </div>
+                  
+                  <div class="form-group mb-3 mt-1 text-switch">
+                    <p>زبان متن</p>
+                    <span class="ml-2">فارسی</span>
+                    <label class="switch switch-primary">
+                      <input [formControl]="addForm.controls['isRTL']" [(ngModel)]="addUpdate.isRTL" type="checkbox"
+                        id="isRTL" />
+                      <span class="slider"></span>
+                    </label>
+                    <span>انگلیسی</span>
+                  </div>
+  
+                  <div class="form-group mb-3 mt-1 text-switch" *appCanAccess="'author-accepted-Edit'">
+                    <p>تایید نویسنده</p>
+                    <span class="ml-2">تایید</span>
+                    <label class="switch switch-primary">
+                      <input [formControl]="addForm.controls['isRTL']" [(ngModel)]="addUpdate.authorAccepted" type="checkbox"
+                        id="authorAccepted" />
+                      <span class="slider"></span>
+                    </label>
+                    <span>عدم تایید</span>
+                  </div>
+
+                  <div class="form-group mb-3 mt-1 text-switch" *appCanAccess="'seo-accepted-Edit'">
+                    <p>تایید مسئول سئو</p>
+                    <span class="ml-2">تایید</span>
+                    <label class="switch switch-primary">
+                      <input [formControl]="addForm.controls['seoAccepted']" [(ngModel)]="addUpdate.seoAccepted" type="checkbox"
+                        id="seoAccepted" />
+                      <span class="slider"></span>
+                    </label>
+                    <span>عدم تایید</span>
+                  </div>
+
+                  <div class="form-group mb-3 mt-1 text-switch" *appCanAccess="'management-accepted-Edit'">
+                    <p>تایید مدیر</p>
+                    <span class="ml-2">تایید</span>
+                    <label class="switch switch-primary">
+                      <input [formControl]="addForm.controls['managementAccepted']" [(ngModel)]="addUpdate.managementAccepted" type="checkbox"
+                        id="managementAccepted" />
+                      <span class="slider"></span>
+                    </label>
+                    <span>عدم تایید</span>
+                  </div>
+
                 </div>
 
                 
                </div>
-              </div>
+            </div>
 
 
             <ng-container *ngIf="!addUpdate.fileExists">

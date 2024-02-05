@@ -289,6 +289,27 @@
                  </div>
                    <input type="text" [(ngModel)]="color"   [ngModelOptions]="{ standalone: true }" class="form-control input-color radius mt-4">
              </div>
+
+            <!-- =======[study time]===== -->
+
+            <div class="ml-5">
+              <div
+              class="d-flex flex-column m-2 col-5 col-md-4 col-lg-3 col-xl-2 "
+            >
+              <label for="studyTime" class="text-small w-input"> زمان مطالعه</label>
+              <p-inputMask
+                mask="99:99:99"
+                formControlName="studyTime"
+                autocomplete="off"
+                [value]="item.studyTime"
+                id="studyTime"
+                class="radius text-small w-input"
+                placeholder="00:00:00"
+              >
+              </p-inputMask>
+            </div>
+            </div>
+
             <!-- Seperator -->
             <span class="col-12"></span>
             <!-- Seperator -->
@@ -380,6 +401,57 @@
                   formControlName="isPersianSupport"
                   type="checkbox"
                   id="isPersianSupport"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <!-- Each Input -->
+            <div class="col-auto form-group mb-3 mt-3" *appCanAccess="'management-accepted-Edit'">
+              <b class="d-block text-center mb-1 text-14 text-primary"
+                >تایید مدیر</b
+              >
+              <span class="m-1 text-12 slider-text top-custom-2">تایید</span>
+              <label for="managementAccepted" class="switch switch-primary mr-2 m-2">
+                <span>عدم تایید</span>
+                <input
+                  [value]="item.managementAccepted"
+                  formControlName="managementAccepted"
+                  type="checkbox"
+                  id="managementAccepted"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <!-- Each Input -->
+            <div class="col-auto form-group mb-3 mt-3" *appCanAccess="'seo-accepted-Edit'">
+              <b class="d-block text-center mb-1 text-14 text-primary"
+                >تایید مسئول سئو</b
+              >
+              <span class="m-1 text-12 slider-text top-custom-2">تایید</span>
+              <label for="seoAccepted" class="switch switch-primary mr-2 m-2">
+                <span>عدم تایید</span>
+                <input
+                  [value]="item.seoAccepted"
+                  formControlName="seoAccepted"
+                  type="checkbox"
+                  id="seoAccepted"
+                />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <!-- Each Input -->
+            <div class="col-auto form-group mb-3 mt-3" *appCanAccess="'author-accepted-Edit'">
+              <b class="d-block text-center mb-1 text-14 text-primary"
+                >تایید نویسنده</b
+              >
+              <span class="m-1 text-12 slider-text top-custom-2">تایید</span>
+              <label for="authorAccepted" class="switch switch-primary mr-2 m-2">
+                <span>عدم تایید</span>
+                <input
+                  [value]="item.authorAccepted"
+                  formControlName="authorAccepted"
+                  type="checkbox"
+                  id="authorAccepted"
                 />
                 <span class="slider"></span>
               </label>

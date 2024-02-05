@@ -17,4 +17,8 @@ export interface IArticle extends IBase {
   browserTitle: string;
   linkTags:TableType[];
   colorCode : string;
+  studyTime: string;
+  authorAccepted: boolean;
+  managementAccepted: boolean;
+  seoAccepted: boolean;
 }

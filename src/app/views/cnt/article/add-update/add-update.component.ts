@@ -129,7 +129,12 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
       metaDescription: [''],
       browserTitle: [''],
       selectedItems: [''],
-      colorCode : ['']
+      colorCode : [''],
+      authorAccepted: [false],
+      managementAccepted: [false],
+      seoAccepted : [false],
+      studyTime: [null, Validators.required],
+
     });
 
     

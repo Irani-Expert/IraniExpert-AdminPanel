@@ -18,4 +18,8 @@ export class ArticleModel extends Base implements IArticle {
   browserTitle: string = '';
   linkTags:TableType[];
   colorCode : string;
+  studyTime: string;
+  authorAccepted: boolean;
+  managementAccepted: boolean;
+  seoAccepted: boolean;
 }
