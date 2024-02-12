@@ -134,7 +134,7 @@ export class AddUpdateComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-            this._router.navigate(['prd/products-list']);
+            // this._router.navigate(['prd/products-list']);
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
