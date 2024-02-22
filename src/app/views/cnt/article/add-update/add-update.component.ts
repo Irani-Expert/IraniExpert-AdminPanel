@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleModel } from '../article/article.model';
-import { CKEditorComponent } from 'ng2-ckeditor';
+// import { CKEditorComponent } from 'ng2-ckeditor';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { ToastrService } from 'ngx-toastr';
@@ -16,8 +16,9 @@ import { HttpEventType } from '@angular/common/http';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { tagModel } from '../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../tagModel/tagRelation.model';
-import { ckeConfig } from 'src/app/shared/ckconfig';
-
+// import { ckeConfig } from 'src/app/shared/ckconfig';
+// import Editor from '@ckeditor/ckeditor5-build-classic';
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
 interface Tag {
   name: string;
   code: number;
@@ -57,8 +58,8 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   items: tagModel[] = new Array<tagModel>();
   formcontrol: FormGroup;
   tetst: boolean = false;
-  ckeConfig = ckeConfig;
-  @ViewChild('myckeditor') ckeditor: CKEditorComponent;
+  public Editor = Editor.Editor;
+  // @ViewChild('myckeditor') ckeditor: CKEditorComponent;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -69,8 +70,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     private _groupService: GroupService,
     private _user: AuthenticateService,
     private _router: Router
-  ) { 
-  }
+  ) {}
   changeNavId(event: string) {
     this.navId = parseInt(event.split('-')[2]);
   }
@@ -129,15 +129,12 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
       metaDescription: [''],
       browserTitle: [''],
       selectedItems: [''],
-      colorCode : [''],
+      colorCode: [''],
       authorAccepted: [false],
       managementAccepted: [false],
-      seoAccepted : [false],
+      seoAccepted: [false],
       studyTime: [null, Validators.required],
-
     });
-
-    
   }
 
   selectGroup() {}
@@ -259,16 +256,14 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
             (item) => item.value === this.addUpdate.groupID
           );
 
-          if( res.data.colorCode == null || undefined ){
+          if (res.data.colorCode == null || undefined) {
             this.color = '#6466f1';
-          }
-          else {
+          } else {
             this.color = res.data.colorCode;
           }
 
           this.pushSectionItem();
           this.itemFetched = true;
-          
         } else {
           this._router.navigate(['/404']);
         }
@@ -332,7 +327,6 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
           }
         });
     }
-
   }
   setTags() {
     let counter = 0;

@@ -5,7 +5,6 @@ import {
   NgbModal,
 } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { CKEditorComponent } from 'ng2-ckeditor';
 import { Page } from 'src/app/shared/models/Base/page';
 import { CalendarModel } from '../models/calendar.model';
 import { CountriesModel } from '../models/countries.model';

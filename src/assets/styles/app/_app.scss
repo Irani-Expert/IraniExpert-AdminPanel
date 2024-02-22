@@ -744,6 +744,10 @@ Buttons
     color: #fff !important;
   }
 }
+
+.ck-editor__editable_inline {
+  min-height: 500px;
+}
 // .p-inputnumber-buttons-vertical .p-button.p-inputnumber-button-up {
 //   padding: 0.2rem 0 !important;
 //   width: 100% !important;

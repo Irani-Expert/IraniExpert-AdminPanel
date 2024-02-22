@@ -17,6 +17,7 @@ import { JwtInterceptor } from './shared/services/auth/jwt.interceptor';
 import { ErrorInterceptor } from './shared/services/auth/error.interceptor';
 import { LoaderInterceptor } from './shared/loader.interceptor';
 import { DatePipe } from '@angular/common';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +40,7 @@ import { DatePipe } from '@angular/common';
     }),
     NgxSpinnerModule,
     SelectDropDownModule,
+    CKEditorModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

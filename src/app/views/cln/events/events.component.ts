@@ -11,7 +11,7 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { CalendarModel } from '../models/calendar.model';
 import { Page } from 'src/app/shared/models/Base/page';
 import { CountriesModel } from '../models/countries.model';
-import { CKEditorComponent } from 'ng2-ckeditor';
+// import { CKEditorComponent } from 'ng2-ckeditor';
 import { CalendarService } from '../services/calendar.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -99,7 +99,7 @@ export class EventsComponent implements OnInit {
   changing: boolean = false;
   isDataFetched: boolean = false;
   ckeConfig = ckeConfig;
-  @ViewChild('myckeditor') ckeditor: CKEditorComponent;
+  // @ViewChild('myckeditor') ckeditor: CKEditorComponent;
   loading: boolean = false;
   constructor(
     private _ngxSpinner: NgxSpinnerService,
