@@ -18,7 +18,9 @@ import { tagModel } from '../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../tagModel/tagRelation.model';
 // import { ckeConfig } from 'src/app/shared/ckconfig';
 // import Editor from '@ckeditor/ckeditor5-build-classic';
-import Editor from 'ckeditor5-custom-build/build/ckeditor';
+// import Editor from 'ckeditor5-custom-build/build/ckeditor';
+import { Ckeditor } from 'src/app/shared/ckconfig';
+
 interface Tag {
   name: string;
   code: number;
@@ -58,7 +60,8 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   items: tagModel[] = new Array<tagModel>();
   formcontrol: FormGroup;
   tetst: boolean = false;
-  public Editor = Editor.Editor;
+  public Editor = new Ckeditor();
+
   // @ViewChild('myckeditor') ckeditor: CKEditorComponent;
 
   constructor(

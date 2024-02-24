@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Page } from 'src/app/shared/models/Base/page';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { Result } from 'src/app/shared/models/Base/result.model';
-import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { ArticleModel } from './article.model';
 import { ArticleService } from './article.service';
 
@@ -25,22 +24,22 @@ export class ArticleComponent implements OnInit {
     private _route: ActivatedRoute,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    private _router: Router,
+    private _router: Router
   ) {
     this.page.pageNumber = 0;
     this.page.size = 6;
     this._route.params.subscribe((params) => {
-      if(this.page.pageNumber!=params['pageIndex'] || this.rows.length==0){
-        this.page.pageNumber = params['pageIndex']
-        this.setPage(this.page.pageNumber)
+      if (
+        this.page.pageNumber != params['pageIndex'] ||
+        this.rows.length == 0
+      ) {
+        this.page.pageNumber = params['pageIndex'];
+        this.setPage(this.page.pageNumber);
       }
-    
-		});
-
+    });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;

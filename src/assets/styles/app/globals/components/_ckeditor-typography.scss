@@ -1,0 +1,107 @@
+@font-face {
+  font-family: Yekan;
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Regular.eot");
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Regular.woff2")
+      format("woff2"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Regular.woff")
+      format("woff"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Regular.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Yekan;
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Bold.eot");
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Bold.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Bold.woff2")
+      format("woff2"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Bold.woff")
+      format("woff"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Bold.ttf")
+      format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Yekan;
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Fat.eot");
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Fat.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Fat.woff2")
+      format("woff2"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Fat.woff")
+      format("woff"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Fat.ttf")
+      format("truetype");
+  font-style: oblique;
+  font-display: swap;
+}
+@font-face {
+  font-family: Yekan;
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Heavy.eot");
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Heavy.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Heavy.woff2")
+      format("woff2"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Heavy.woff")
+      format("woff"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Heavy.ttf")
+      format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Yekan;
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Medium.eot");
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Medium.woff2")
+      format("woff2"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Medium.woff")
+      format("woff"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Medium.ttf")
+      format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Yekan;
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Light.eot");
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Light.woff2")
+      format("woff2"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Light.woff")
+      format("woff"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Light.ttf")
+      format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Yekan;
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Thin.eot");
+  src: url("../../../../../assets/fonts/ckeditor/YekanBakh-Thin.eot?#iefix")
+      format("embedded-opentype"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Thin.woff2")
+      format("woff2"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Thin.woff")
+      format("woff"),
+    url("../../../../../assets/fonts/ckeditor/YekanBakh-Thin.ttf")
+      format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+// Font-family
+$font-family-ckeditor: "Yekan", sans-serif;
