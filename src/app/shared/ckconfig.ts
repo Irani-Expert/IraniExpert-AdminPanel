@@ -22,6 +22,7 @@ export const ckeConfig = {
 
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { styles } from './cke-styles';
+import { headings } from './ck-headings';
 
 export interface StyleDefinition {
   name: string;
@@ -40,9 +41,12 @@ export class Ckeditor {
     this.Editor.defaultConfig.toolbar = {
       ...this.Editor.defaultConfig.toolbar,
       ...{
-        removeItems: ['textPartLanguage', 'imageUpload'],
+        removeItems: ['textPartLanguage', 'imageUpload', 'numberedList'],
         shouldNotGroupWhenFull: true,
       },
+    };
+    this.Editor.defaultConfig.heading = {
+      options: headings,
     };
   }
 
