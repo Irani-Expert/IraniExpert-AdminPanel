@@ -690,19 +690,13 @@
         </div>
         <hr class="d-flex flex-grow-1" style="margin: 13px 8px 13px 10px" />
       </div>
-      <!-- <ckeditor
-        (paste)="onPasteEditor($event)"
-        (change)="onChangeEditor($event)"
-        name="myckeditor"
-        [config]="ckeConfig"
-        debounce="100"
+      <ckeditor
+        [editor]="CkEditor.Editor"
         [(ngModel)]="eventDetails.description"
       >
-      </ckeditor> -->
-
+      </ckeditor>
       <!-- CKEDITOR -->
       <!-- CKEDITOR IraniExpert event-->
-
       <div class="row my-3">
         <hr class="d-flex flex-grow-1" style="margin: 13px 10px 13px 8px" />
         <div class="col-auto">
@@ -710,16 +704,11 @@
         </div>
         <hr class="d-flex flex-grow-1" style="margin: 13px 8px 13px 10px" />
       </div>
-      <!-- <ckeditor
-        (paste)="onPasteEditor($event)"
-        (change)="onChangeEditor($event)"
-        name="myckeditor"
-        [config]="ckeConfig"
-        debounce="100"
+      <ckeditor
+        [editor]="CkEditor.Editor"
         [(ngModel)]="eventDetails.iraniExpertDescription"
       >
-      </ckeditor> -->
-
+      </ckeditor>
       <!-- CKEDITOR -->
     </div>
 

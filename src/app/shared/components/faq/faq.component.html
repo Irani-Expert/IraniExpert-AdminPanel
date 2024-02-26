@@ -27,13 +27,8 @@
 
     <div class="col-md-6 form-group mb-3">
       <label for="title">پاسخ</label>
-      <!-- <ckeditor
-        [ngModelOptions]="{ standalone: true }"
-        [(ngModel)]="addUpdate.answer"
-        [config]="ckeConfig"
-        debounce="100"
-      >
-      </ckeditor> -->
+      <ckeditor [editor]="CkEditor.Editor" [(ngModel)]="addUpdate.answer">
+      </ckeditor>
       <small *ngIf="addUpdate.answer == ''" class="mat-text-warn m-t-negative"
         >نوشتن پاسخ ضروری است</small
       >

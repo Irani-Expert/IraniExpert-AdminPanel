@@ -1,5 +1,5 @@
 @import "./ckeditor-typography";
-
+@import "./ckeditor-components";
 .ck-editor__editable_inline {
   min-height: 500px;
   max-height: 1000px;
@@ -73,70 +73,4 @@
     width: fit-content;
     margin: 0 auto !important;
   }
-}
-
-.ck.ck-content {
-  // p.callout {
-  //   padding: 1.2em 2em;
-  //   border: 1px solid #e91e63;
-  //   border-right: 10px solid #e91e63;
-  //   border-radius: 5px;
-  //   margin: 1.5em;
-  // }
-  ul {
-    &.list-numeric {
-      li {
-        list-style: decimal;
-        padding-right: 0.25rem;
-        &::marker {
-          font-size: 1.25rem;
-          color: #3246d3;
-          font-weight: 700;
-        }
-      }
-    }
-    &.checkmark-blue {
-      li {
-        list-style: auto;
-        padding-right: 0.25rem;
-        &::marker {
-          content: url(../../../../icons/tick-blue.svg);
-        }
-      }
-    }
-    &.checkmark-green {
-      margin-right: -1rem;
-      list-style-type: none;
-      li {
-        display: flex;
-        align-items: flex-start;
-        list-style: auto;
-        &::before {
-          line-height: 0;
-          margin-left: 0.25rem;
-          content: url(../../../../icons/Tick-circle.svg);
-        }
-      }
-    }
-  }
-  ul {
-    &.d-block {
-      display: block;
-    }
-    &.d-flex {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
-  }
-
-  // p.counter {
-  //   position: relative;
-  //   display: flex;
-  //   background-color: #0058ff;
-  //   width: 200px;
-  //   padding: 0.5rem 0.25rem;
-  //   margin-left: 2rem;
-  // }
 }

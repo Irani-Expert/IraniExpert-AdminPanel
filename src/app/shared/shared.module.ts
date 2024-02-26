@@ -10,6 +10,7 @@ import { SharedDirectivesModule } from './directives/shared-directives.module';
 import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FAQComponent } from './components/faq/faq.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [FAQComponent],
@@ -20,6 +21,8 @@ import { FAQComponent } from './components/faq/faq.component';
     ToastrModule.forRoot(),
     NgbModule,
     SharedComponentsModule,
+    CKEditorModule,
+
     SharedDirectivesModule,
     SharedPipesModule,
     RouterModule,

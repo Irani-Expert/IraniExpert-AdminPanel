@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationEnd, Router, Scroll } from '@angular/router';
 import { Subject, Subscription, lastValueFrom, map, takeUntil } from 'rxjs';
 import { BrokersService } from '../../brokers.service';
@@ -6,7 +6,7 @@ import { BrokerModel } from '../../models/broker.model';
 import { ToastrService } from 'ngx-toastr';
 import { rates } from './rates';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ckeConfig } from 'src/app/shared/ckconfig';
+import { Ckeditor } from 'src/app/shared/ckconfig';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { HttpEventType } from '@angular/common/http';
 import { base64Maker } from 'src/app/shared/base64Maker';
@@ -34,7 +34,7 @@ interface Navigation {
   styleUrls: ['./broker-details.component.scss'],
 })
 export class BrokerDetailsComponent {
-  color  : string = '';
+  color: string = '';
   isFileValid = false;
   navId = 0;
   isSecondFileValid = false;
@@ -43,7 +43,6 @@ export class BrokerDetailsComponent {
   rates = rates;
   routeSubscriber: Subscription;
   item = new BrokerModel();
-  ckeConfig = ckeConfig;
   private routeSubject = new Subject();
   formGroup: FormGroup;
   file: Blob;
@@ -53,6 +52,8 @@ export class BrokerDetailsComponent {
   filePreview: any = '';
   secondFilePreview: any = '';
   itemFetched = false;
+  public CkEditor = new Ckeditor();
+
   constructor(
     private _router: Router,
     private _formBuilder: FormBuilder,
@@ -97,11 +98,11 @@ export class BrokerDetailsComponent {
                   countryIcon: [null],
                   email: [null, [Validators.required, Validators.email]],
                   phoneNumber: [null],
-                  colorCode : ['#6466f1'],
-                  studyTime: [null, [Validators.required] ],
-                  seoAccepted : [false] ,
-                  managementAccepted : [false] ,
-                  authorAccepted : [false] ,
+                  colorCode: ['#6466f1'],
+                  studyTime: [null, [Validators.required]],
+                  seoAccepted: [false],
+                  managementAccepted: [false],
+                  authorAccepted: [false],
                 });
                 this.showForm = true;
               } else {
@@ -169,17 +170,16 @@ export class BrokerDetailsComponent {
             countryName: [this.item.countryName],
             countryIcon: [this.item.countryIcon],
             phoneNumber: [this.item.phoneNumber],
-            colorCode : [this.item.colorCode],
+            colorCode: [this.item.colorCode],
             authorAccepted: [this.item.authorAccepted],
             managementAccepted: [this.item.managementAccepted],
-            seoAccepted: [this.item.seoAccepted]
+            seoAccepted: [this.item.seoAccepted],
           });
-          if ( res.data.colorCode == null || undefined){
+          if (res.data.colorCode == null || undefined) {
             this.color = '#6466f1';
-           }
-           else {
+          } else {
             this.color = res.data.colorCode;
-           }
+          }
         }
         return res.success;
       })
@@ -363,7 +363,7 @@ export class BrokerDetailsComponent {
       isActive: this._controls['isActive'].value,
       countryName: this._controls['countryName'].value,
       countryIcon: this._controls['countryIcon'].value,
-      colorCode: this._controls['colorCode'].value
+      colorCode: this._controls['colorCode'].value,
     };
     if (sendingItem.id == 0) {
       this.brokerService.create(sendingItem, 'Broker').subscribe((it) => {

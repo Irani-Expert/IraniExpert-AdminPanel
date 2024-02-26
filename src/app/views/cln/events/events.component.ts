@@ -1,7 +1,6 @@
 import {
   Component,
   HostListener,
-  Inject,
   OnInit,
   TemplateRef,
   ViewChild,
@@ -15,7 +14,6 @@ import { CountriesModel } from '../models/countries.model';
 import { CalendarService } from '../services/calendar.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import {
@@ -28,7 +26,7 @@ import {
 import { Utils } from 'src/app/shared/utils';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BehaviorSubject } from 'rxjs';
-import { ckeConfig } from 'src/app/shared/ckconfig';
+import { Ckeditor } from 'src/app/shared/ckconfig';
 
 @Component({
   selector: 'app-events',
@@ -98,7 +96,8 @@ export class EventsComponent implements OnInit {
   countriesData: CountriesModel[];
   changing: boolean = false;
   isDataFetched: boolean = false;
-  ckeConfig = ckeConfig;
+  public CkEditor = new Ckeditor();
+
   // @ViewChild('myckeditor') ckeditor: CKEditorComponent;
   loading: boolean = false;
   constructor(

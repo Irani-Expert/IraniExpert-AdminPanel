@@ -513,13 +513,13 @@
               />
             </div>
             <div class="col-12">
-              <!-- <ckeditor
+              <ckeditor
                 [ngModelOptions]="{ standalone: true }"
                 [(ngModel)]="item.description"
-                [config]="ckeConfig"
+                [editor]="CkEditor.Editor"
                 debounce="100"
               >
-              </ckeditor> -->
+              </ckeditor>
             </div>
             <!-- CKEDITOR -->
           </div>

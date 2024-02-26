@@ -14,6 +14,7 @@ import { ButtonModule } from 'primeng/button';
 
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [CalendarComponent, CountriesComponent, EventsComponent],
@@ -23,6 +24,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CommonModule,
     ClnRoutingModule,
     NgbModule,
+    CKEditorModule,
+
     ReactiveFormsModule,
     FormsModule,
     ButtonModule,

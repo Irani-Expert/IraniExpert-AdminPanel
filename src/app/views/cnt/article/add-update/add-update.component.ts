@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleModel } from '../article/article.model';
-// import { CKEditorComponent } from 'ng2-ckeditor';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { ToastrService } from 'ngx-toastr';
@@ -16,9 +15,6 @@ import { HttpEventType } from '@angular/common/http';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { tagModel } from '../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../tagModel/tagRelation.model';
-// import { ckeConfig } from 'src/app/shared/ckconfig';
-// import Editor from '@ckeditor/ckeditor5-build-classic';
-// import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { Ckeditor } from 'src/app/shared/ckconfig';
 
 interface Tag {
@@ -60,9 +56,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   items: tagModel[] = new Array<tagModel>();
   formcontrol: FormGroup;
   tetst: boolean = false;
-  public Editor = new Ckeditor();
-
-  // @ViewChild('myckeditor') ckeditor: CKEditorComponent;
+  public CkEditor = new Ckeditor();
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -142,15 +136,6 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
 
   selectGroup() {}
 
-  onChangeEditor(): void {
-    console.log('onChange');
-    //this.log += new Date() + "<br />";
-  }
-
-  onPasteEditor(): void {
-    console.log('onPaste');
-    //this.log += new Date() + "<br />";
-  }
   onFileChanged(event: any) {
     this.imgChangeEvt = event;
     let file = event.target.files[0];
