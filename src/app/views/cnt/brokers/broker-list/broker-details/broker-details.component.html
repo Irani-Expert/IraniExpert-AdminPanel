@@ -365,39 +365,43 @@
             <!-- Each Input -->
 
             <!-- =======[color code]===== -->
-             <div class="d-flex flex-column m-2 col-auto">
-                 <div class="box-color">
-                   <label for="cp-hex" class="font-bold block mb-2"> </label>
-                   <p-colorPicker  formControlName="colorCode" [(ngModel)]="color"></p-colorPicker>
-                   <label for="colorCode">انتخاب رنگ بروکر</label>
-                 </div>
-                   <input type="text" [(ngModel)]="color"   [ngModelOptions]="{ standalone: true }" class="form-control input-color radius mt-4">
-             </div>
+            <div class="d-flex flex-column m-2 col-auto">
+              <div class="box-color">
+                <label for="cp-hex" class="font-bold block mb-2"> </label>
+                <p-colorPicker
+                  formControlName="colorCode"
+                  [(ngModel)]="color"
+                ></p-colorPicker>
+                <label for="colorCode">انتخاب رنگ بروکر</label>
+              </div>
+              <input
+                type="text"
+                [(ngModel)]="color"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control input-color radius mt-4"
+              />
+            </div>
 
             <!-- =======[study time]===== -->
 
             <div class="ml-5">
               <div
-              class="d-flex flex-column m-2 col-5 col-md-4 col-lg-3 col-xl-2 "
-            >
-              <label for="studyTime" class="text-small w-input"> زمان مطالعه</label>
-              <p-inputMask
-                mask="99:99:99"
-                formControlName="studyTime"
-                autocomplete="off"
-                [value]="item.studyTime"
-                id="studyTime"
-                class="radius text-small w-input"
-                placeholder="00:00:00"
+                class="d-flex flex-column m-2 col-5 col-md-4 col-lg-3 col-xl-2"
               >
-              </p-inputMask>
-              <small *ngIf="
-              formGroup.controls['studyTime'].hasError('required') &&
-              formGroup.controls['studyTime'].touched"
-              class="mat-text-warn m-t-negative ml-2" >
-                ورود زمان مطالعه ضروری است
-              </small>
-            </div>
+                <label for="studyTime" class="text-small w-input">
+                  زمان مطالعه</label
+                >
+                <p-inputMask
+                  mask="99:99:99"
+                  formControlName="studyTime"
+                  autocomplete="off"
+                  [value]="item.studyTime"
+                  id="studyTime"
+                  class="radius text-small w-input"
+                  placeholder="00:00:00"
+                >
+                </p-inputMask>
+              </div>
             </div>
 
             <!-- Seperator -->
@@ -496,12 +500,18 @@
               </label>
             </div>
             <!-- Each Input -->
-            <div class="col-auto form-group mb-3 mt-3" *appCanAccess="'management-accepted-Edit'">
+            <div
+              class="col-auto form-group mb-3 mt-3"
+              *appCanAccess="'management-accepted-Edit'"
+            >
               <b class="d-block text-center mb-1 text-14 text-primary"
                 >تایید مدیر</b
               >
               <span class="m-1 text-12 slider-text top-custom-2">تایید</span>
-              <label for="managementAccepted" class="switch switch-primary mr-2 m-2">
+              <label
+                for="managementAccepted"
+                class="switch switch-primary mr-2 m-2"
+              >
                 <span>عدم تایید</span>
                 <input
                   [value]="item.managementAccepted"
@@ -513,7 +523,10 @@
               </label>
             </div>
             <!-- Each Input -->
-            <div class="col-auto form-group mb-3 mt-3" *appCanAccess="'seo-accepted-Edit'">
+            <div
+              class="col-auto form-group mb-3 mt-3"
+              *appCanAccess="'seo-accepted-Edit'"
+            >
               <b class="d-block text-center mb-1 text-14 text-primary"
                 >تایید مسئول سئو</b
               >
@@ -530,12 +543,18 @@
               </label>
             </div>
             <!-- Each Input -->
-            <div class="col-auto form-group mb-3 mt-3" *appCanAccess="'author-accepted-Edit'">
+            <div
+              class="col-auto form-group mb-3 mt-3"
+              *appCanAccess="'author-accepted-Edit'"
+            >
               <b class="d-block text-center mb-1 text-14 text-primary"
                 >تایید نویسنده</b
               >
               <span class="m-1 text-12 slider-text top-custom-2">تایید</span>
-              <label for="authorAccepted" class="switch switch-primary mr-2 m-2">
+              <label
+                for="authorAccepted"
+                class="switch switch-primary mr-2 m-2"
+              >
                 <span>عدم تایید</span>
                 <input
                   [value]="item.authorAccepted"
@@ -581,7 +600,7 @@
               <ckeditor
                 [ngModelOptions]="{ standalone: true }"
                 [(ngModel)]="item.description"
-                [config]="ckeConfig"
+                [editor]="CkEditor.Editor"
                 debounce="100"
               >
               </ckeditor>

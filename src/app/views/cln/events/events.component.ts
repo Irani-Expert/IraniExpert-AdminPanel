@@ -1,7 +1,6 @@
 import {
   Component,
   HostListener,
-  Inject,
   OnInit,
   TemplateRef,
   ViewChild,
@@ -11,11 +10,10 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { CalendarModel } from '../models/calendar.model';
 import { Page } from 'src/app/shared/models/Base/page';
 import { CountriesModel } from '../models/countries.model';
-import { CKEditorComponent } from 'ng2-ckeditor';
+// import { CKEditorComponent } from 'ng2-ckeditor';
 import { CalendarService } from '../services/calendar.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import {
@@ -28,7 +26,7 @@ import {
 import { Utils } from 'src/app/shared/utils';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BehaviorSubject } from 'rxjs';
-import { ckeConfig } from 'src/app/shared/ckconfig';
+import { Ckeditor } from 'src/app/shared/ckconfig';
 
 @Component({
   selector: 'app-events',
@@ -98,8 +96,9 @@ export class EventsComponent implements OnInit {
   countriesData: CountriesModel[];
   changing: boolean = false;
   isDataFetched: boolean = false;
-  ckeConfig = ckeConfig;
-  @ViewChild('myckeditor') ckeditor: CKEditorComponent;
+  public CkEditor = new Ckeditor();
+
+  // @ViewChild('myckeditor') ckeditor: CKEditorComponent;
   loading: boolean = false;
   constructor(
     private _ngxSpinner: NgxSpinnerService,

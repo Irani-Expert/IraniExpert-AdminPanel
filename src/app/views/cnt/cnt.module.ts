@@ -6,7 +6,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ArticleComponent } from './article/article/article.component';
 import { AddUpdateComponent } from './article/add-update/add-update.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CKEditorModule } from 'ng2-ckeditor';
+
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { ImageCropperModule } from 'projects/ngx-image-cropper/src/public-api';
 import { LinkTypePipe } from 'src/app/shared/pipes/link-type.pipe';
@@ -32,6 +32,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { InputMaskModule } from 'primeng/inputmask';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     SharedModule,
     DialogModule,
     SharedDirectivesModule,
-    InputSwitchModule
+    InputSwitchModule,
   ],
   providers: [FileUploaderService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

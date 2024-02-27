@@ -17,36 +17,36 @@ div:empty {
   float: left;
   cursor: pointer;
 }
-.tags-bg{
+.tags-bg {
   color: #e9e1e1 !important;
   background-color: #663399 !important;
 }
-.color-code{
+.color-code {
   direction: ltr;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.box-color{
+.box-color {
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
 }
-.input-color{
+.input-color {
   direction: ltr;
 }
-.col-color{
+.col-color {
   display: flex;
   align-items: center;
   margin-left: 1rem;
 }
-.tags-box{
+.tags-box {
   display: flex;
   width: 80%;
   flex-direction: column;
 }
-.text-switch{
+.text-switch {
   text-align: center;
   margin-left: 2rem;
   padding-top: 2rem;

@@ -1,0 +1,76 @@
+@import "./ckeditor-typography";
+@import "./ckeditor-components";
+.ck-editor__editable_inline {
+  min-height: 500px;
+  max-height: 1000px;
+  font-family: $font-family-ckeditor !important;
+
+  li {
+    margin-bottom: 0.725rem;
+  }
+  table {
+    width: 100% !important;
+  }
+  a {
+    color: #0058ff;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  thead {
+    tr,
+    th {
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    tr {
+      overflow: hidden;
+      border-radius: 15px;
+      th {
+        padding: 12px 5px;
+
+        background: #f3f3f3;
+        border: none;
+        vertical-align: middle;
+      }
+    }
+  }
+  tbody {
+    th,
+    td {
+      vertical-align: middle;
+      color: #646464;
+      font-weight: 500;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      font-size: 0.95rem;
+      small {
+        color: darken(#ccc, 10%);
+        font-weight: 300;
+      }
+    }
+    tr {
+      border-radius: 15px;
+      overflow: hidden;
+      &:nth-child(even) {
+        background-color: #f3f3f3;
+      }
+      &:nth-child(odd) {
+        background-color: #fff;
+      }
+      th,
+      td {
+        text-align: center;
+        border: none;
+      }
+
+      &:hover {
+        filter: drop-shadow(0px 1px 2px #bababa);
+      }
+    }
+  }
+  img {
+    width: fit-content;
+    margin: 0 auto !important;
+  }
+}

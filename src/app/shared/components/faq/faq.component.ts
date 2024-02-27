@@ -5,8 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { FaqModel } from './faq.model';
 import { FaqService } from './faq.service';
-import { ckeConfig } from 'src/app/shared/ckconfig';
 import { Utils } from '../../utils';
+import { Ckeditor } from 'src/app/shared/ckconfig';
 
 @Component({
   selector: 'app-faq',
@@ -14,8 +14,7 @@ import { Utils } from '../../utils';
   styleUrls: ['./faq.component.scss'],
 })
 export class FAQComponent implements OnInit {
-  ckeConfig = ckeConfig;
-
+  CkEditor = new Ckeditor();
   rows: FaqModel[] = new Array<FaqModel>();
   @Input() productId: number = 0;
   @Input() tableType: number = 6;
@@ -28,9 +27,7 @@ export class FAQComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder
-  ) {
-    // this.ckeConfig.
-  }
+  ) {}
 
   ngOnInit(): void {
     this.addUpdate.id = 0;

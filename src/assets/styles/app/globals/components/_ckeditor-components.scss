@@ -1,0 +1,132 @@
+.ck.ck-content {
+  ul {
+    &.list-unstyled {
+      li {
+        list-style: none;
+        padding-right: 0.25rem;
+      }
+    }
+    &.list-numeric {
+      li {
+        list-style: decimal;
+        padding-right: 0.25rem;
+        &::marker {
+          font-size: 1.25rem;
+          color: inherit;
+          font-weight: 700;
+        }
+      }
+    }
+    &.checkmark-blue {
+      li {
+        list-style: auto;
+        padding-right: 0.25rem;
+        &::marker {
+          content: url(../../../../icons/tick-blue.svg);
+        }
+      }
+    }
+    &.checkmark-green {
+      margin-right: -1rem;
+      list-style-type: none;
+      li {
+        display: flex;
+        align-items: flex-start;
+        list-style: auto;
+        &::before {
+          line-height: 0;
+          margin-left: 0.25rem;
+          content: url(../../../../icons/Tick-circle.svg);
+        }
+      }
+    }
+  }
+  ul {
+    &.d-block {
+      display: block;
+    }
+    &.d-flex {
+      li {
+        margin: 0 1rem;
+      }
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+  }
+
+  span.dashed-title-blue {
+    &::before {
+      content: "";
+      height: 8px;
+      width: 28px;
+      border-radius: 6px;
+      display: inline-block;
+      margin: 0 0 -1px 6px;
+      background-color: #3246d3;
+    }
+    color: #3246d3;
+  }
+
+  span.dashed-title-green {
+    &::before {
+      content: "";
+      width: 28px;
+
+      height: 8px;
+      border-radius: 6px;
+      display: inline-block;
+      margin: 0 0 -1px 6px;
+      background-color: #098b41;
+    }
+    color: #098b41;
+  }
+
+  span.dashed-title {
+    &-green,
+    &-blue {
+      &.sm {
+        &::before {
+          width: 16px;
+        }
+      }
+      &.md {
+        &::before {
+          width: 28px;
+        }
+      }
+      &.lg {
+        &::before {
+          width: 37px;
+        }
+      }
+    }
+  }
+  span.content-box {
+    &-green {
+      direction: ltr;
+      padding-top: 5px;
+      border-radius: 5px;
+      padding-right: 12px;
+      padding-left: 12px;
+      font-size: 24px;
+      outline: 1.5px solid #00ffa8 !important;
+      background: rgb(243, 248, 246);
+      background: linear-gradient(
+        90deg,
+        rgba(243, 248, 246, 0.4683123249) 0%,
+        rgba(0, 255, 168, 0.2862394958) 86%,
+        rgba(0, 255, 168, 0.3226540616) 100%
+      );
+    }
+    &-bordered {
+      padding: 16px 12px 15px 12px;
+      border-radius: 12px;
+      vertical-align: middle;
+      text-align: center;
+      display: inline-block;
+      border: 2px solid #0080ff;
+    }
+  }
+}

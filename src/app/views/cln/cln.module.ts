@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ClnRoutingModule } from './cln.routing';
 import { CalendarComponent } from './calendar/calendar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CKEditorModule } from 'ng2-ckeditor';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploaderService } from 'src/app/shared/services/fileUploader.service';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -14,6 +14,7 @@ import { ButtonModule } from 'primeng/button';
 
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [CalendarComponent, CountriesComponent, EventsComponent],
@@ -24,6 +25,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ClnRoutingModule,
     NgbModule,
     CKEditorModule,
+
     ReactiveFormsModule,
     FormsModule,
     ButtonModule,
