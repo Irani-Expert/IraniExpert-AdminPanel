@@ -32,6 +32,12 @@
                 id="title"
                 class="form-control radius text-small"
               />
+              <small *ngIf="
+              formGroup.controls['title'].hasError('required') &&
+              formGroup.controls['title'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود عنوان ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -47,6 +53,12 @@
                 id="secondTitle"
                 class="form-control radius text-small"
               />
+              <small *ngIf="
+              formGroup.controls['secondTitle'].hasError('required') &&
+              formGroup.controls['secondTitle'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود نام بروکر ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -62,6 +74,12 @@
                 id="minDeposit"
                 class="form-control radius text-small"
               />
+              <small *ngIf="
+              formGroup.controls['minDeposit'].hasError('required') &&
+              formGroup.controls['minDeposit'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود حداقل واریزی ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -77,6 +95,12 @@
                 [value]="item.webSiteLink"
                 class="form-control radius text-small"
               />
+              <small *ngIf="
+              formGroup.controls['webSiteLink'].hasError('required') &&
+              formGroup.controls['webSiteLink'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود لینک وب سایت ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -94,6 +118,12 @@
                 id="telegramSupportLink"
                 class="form-control radius text-small"
               />
+              <small *ngIf="
+              formGroup.controls['telegramSupportLink'].hasError('required') &&
+              formGroup.controls['telegramSupportLink'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود لینک پشتیبان تلگرام ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -109,6 +139,12 @@
                 class="form-control radius text-small"
                 [value]="item.videoLink"
               />
+              <small *ngIf="
+              formGroup.controls['videoLink'].hasError('required') &&
+              formGroup.controls['videoLink'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود لینک ویدئو ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -124,6 +160,12 @@
                 [value]="item.leverage"
                 class="form-control radius text-small"
               />
+              <small *ngIf="
+              formGroup.controls['leverage'].hasError('required') &&
+              formGroup.controls['leverage'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود اهرم(لوریج) ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -141,6 +183,12 @@
                 id="browserTitle"
                 class="form-control radius text-small"
               />
+              <small *ngIf="
+              formGroup.controls['browserTitle'].hasError('required') &&
+              formGroup.controls['browserTitle'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود عنوان در مرورگر ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -156,6 +204,12 @@
                 [value]="item.establishedYear"
                 class="form-control radius text-small"
               />
+              <small *ngIf="
+              formGroup.controls['establishedYear'].hasError('required') &&
+              formGroup.controls['establishedYear'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود سال تاًسیس ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -171,6 +225,12 @@
                 id="email"
                 class="form-control radius text-small"
               />
+              <small *ngIf="
+              formGroup.controls['email'].hasError('required') &&
+              formGroup.controls['email'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود ایمیل ضروری است
+              </small>
             </div>
             <!-- Each Input -->
 
@@ -189,6 +249,12 @@
                 id="tradingSymbols"
                 class="form-control radius text-small"
               />
+              <small *ngIf="
+              formGroup.controls['tradingSymbols'].hasError('required') &&
+              formGroup.controls['tradingSymbols'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود نماد های معاملاتی ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Seperator -->
@@ -205,6 +271,12 @@
                 id="brief"
                 class="radius text-small"
               ></textarea>
+              <small *ngIf="
+              formGroup.controls['brief'].hasError('required') &&
+              formGroup.controls['brief'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود توضیح مختصر ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -218,6 +290,12 @@
                 [value]="item.metaDescription"
                 class="radius text-small"
               ></textarea>
+              <small *ngIf="
+              formGroup.controls['metaDescription'].hasError('required') &&
+              formGroup.controls['metaDescription'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود متا بروکر ضروری است
+              </small>
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
@@ -276,6 +354,12 @@
                   </div>
                 </ng-template>
               </p-dropdown>
+              <small *ngIf="
+              formGroup.controls['staticRate'].hasError('required') &&
+              formGroup.controls['staticRate'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود امتیاز ضروری است
+              </small>
             </div>
 
             <!-- Each Input -->
@@ -307,6 +391,12 @@
                 placeholder="00:00:00"
               >
               </p-inputMask>
+              <small *ngIf="
+              formGroup.controls['studyTime'].hasError('required') &&
+              formGroup.controls['studyTime'].touched"
+              class="mat-text-warn m-t-negative ml-2" >
+                ورود زمان مطالعه ضروری است
+              </small>
             </div>
             </div>
 
