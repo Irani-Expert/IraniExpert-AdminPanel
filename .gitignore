@@ -10,6 +10,7 @@ gull/dist
 node_modules
 gull/node_modules
 gull/package-lock.json
+ckeditor5-custom-build/ 
 
 # IDEs and editors
 /.idea
