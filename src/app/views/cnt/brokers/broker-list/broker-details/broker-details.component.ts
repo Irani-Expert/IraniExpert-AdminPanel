@@ -36,8 +36,9 @@ interface Navigation {
 export class BrokerDetailsComponent {
   color: string = '';
   isFileValid = false;
-  navId = 0;
   isSecondFileValid = false;
+  thirdFileValid = false;
+  navId = 0;
   imgSrc = '/uploads/images/articles/8536cf59721a481e883faaba8b0c6bdf.jpg';
   selectedRate: number = 10;
   rates = rates;
@@ -47,10 +48,13 @@ export class BrokerDetailsComponent {
   formGroup: FormGroup;
   file: Blob;
   secondFile: Blob;
+  thirdFile : Blob;
   fileName = '';
   secondFileName = '';
+  thirdFileName = '';
   filePreview: any = '';
   secondFilePreview: any = '';
+  thirdfilePreview: any = '';
   itemFetched = false;
   public CkEditor = new Ckeditor();
 
@@ -211,18 +215,28 @@ export class BrokerDetailsComponent {
         this.filePreview = this.sanitizer.bypassSecurityTrustUrl(url);
         this.fileName = file.name;
         this.file = new Blob([file], { type: file.type });
-      } else {
+      } 
+      if (index == 1) {
         this.isSecondFileValid = true;
         let url = await base64Maker(file);
         this.secondFilePreview = this.sanitizer.bypassSecurityTrustUrl(url);
         this.secondFileName = file.name;
         this.secondFile = new Blob([file], { type: file.type });
       }
+      if (index == 2) {
+        this.thirdFileValid = true;
+        let url = await base64Maker(file);
+        this.thirdfilePreview = this.sanitizer.bypassSecurityTrustUrl(url);
+        this.thirdFileName = file.name;
+        this.thirdFile = new Blob([file], { type: file.type });
+      }
     } else {
       this.filePreview = '';
       this.secondFilePreview = '';
+      this.thirdfilePreview = '';
       this.isFileValid = false;
       this.isSecondFileValid = false;
+      this.thirdFileValid = false;
     }
   }
 
@@ -237,6 +251,9 @@ export class BrokerDetailsComponent {
             }
             if (type == 1) {
               this.item.secondCardImagePath = res.body.data[0];
+            }
+            if (type == 2) {
+              this.item.thirdCardImagePath = res.body.data[0];
             }
           }
           return res.body.success;
@@ -265,6 +282,14 @@ export class BrokerDetailsComponent {
         clearTimeout(timeout);
       }
     }
+
+    if (index == 2) {
+      if (await this.uploadFile(this.thirdFile, this.thirdFileName, 2)) {
+        this.thirdFile = new Blob();
+        this.spinner.hide();
+        clearTimeout(timeout);
+      }
+    }
   }
   async deleteFile(path: string, type: number) {
     this.fileUploader.deleteFile(path).subscribe({
@@ -277,6 +302,10 @@ export class BrokerDetailsComponent {
           if (type == 1) {
             this.item.secondCardImagePath = '';
             this.secondFilePreview = '';
+          }
+          if ( type == 2) {
+            this.item.thirdCardImagePath = '';
+            this.thirdfilePreview = '';
           }
           this.toastr.success(res.message, null, {
             messageClass: 'text-small',
@@ -310,19 +339,20 @@ export class BrokerDetailsComponent {
       });
       return;
     } else {
-      if (
-        this.item.cardImagePath == '' ||
-        this.item.secondCardImagePath == ''
-      ) {
-        this.toastr.error('از آپلود شدن عکس ها اطمینان حاصل کنید', null, {
-          positionClass: 'toast-top-center',
-          progressBar: true,
-          timeOut: 3000,
-        });
-        return;
-      } else {
+      // if (
+      //   this.item.cardImagePath == '' ||
+      //   this.item.secondCardImagePath == ''
+      // ) {
+      //   this.toastr.error('از آپلود شدن عکس ها اطمینان حاصل کنید', null, {
+      //     positionClass: 'toast-top-center',
+      //     progressBar: true,
+      //     timeOut: 3000,
+      //   });
+      //   return;
+      // } else {
+      //   this.setItem(this.item);
+      // }
         this.setItem(this.item);
-      }
     }
   }
   setItem(item: BrokerModel) {
@@ -347,8 +377,9 @@ export class BrokerDetailsComponent {
       metaDescription: this._controls['metaDescription'].value,
       title: this._controls['title'].value,
       browserTitle: this._controls['browserTitle'].value,
-      cardImagePath: item.cardImagePath,
-      secondCardImagePath: item.secondCardImagePath,
+      cardImagePath: item.cardImagePath == ''? ' ' : item.cardImagePath,
+      secondCardImagePath: item.secondCardImagePath  == ''? ' ' : item.secondCardImagePath,
+      thirdCardImagePath: item.thirdCardImagePath  == ''? ' ' : item.thirdCardImagePath,
       secondTitle: this._controls['secondTitle'].value,
       studyTime: this._controls['studyTime'].value,
       // Forcing True Will Change Later
@@ -366,6 +397,7 @@ export class BrokerDetailsComponent {
       colorCode: this._controls['colorCode'].value,
     };
     if (sendingItem.id == 0) {
+      
       this.brokerService.create(sendingItem, 'Broker').subscribe((it) => {
         this.showToast(it.success, it.message);
         if (it.success) {

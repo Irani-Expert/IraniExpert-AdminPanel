@@ -646,7 +646,8 @@
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
-            <div class="col-auto form-group mb-3 mt-3">
+            <div class="col-auto form-group mb-3 mt-3"
+            *appCanAccess="'is-active-Edit'">
               <b class="d-block text-center mb-1 text-14 text-primary">نمایش</b>
               <span class="m-1 text-12 slider-text top-custom-2">داده شود</span>
               <label for="isActive" class="switch switch-primary mr-2 m-2">
@@ -790,6 +791,54 @@
               <button
                 [disabled]="!isSecondFileValid"
                 (click)="uploadOnClick(1)"
+                class="btn-upload btn d-inline-flex align-self-center justify-content-start py-btns radius align-items-center m-1 w-fit-content"
+              >
+                <!-- (click)="upload()" -->
+                <i class="i-Upload text-dark text-bigger mr-3"></i>
+                <strong class="text-small">آپلود</strong>
+              </button>
+            </ng-container>
+          </div>
+          <div class="col-6 d-flex flex-column gap-15 justify-content-between mt-4">
+            <strong class="d-block text-secondary text-center text-16"
+              > عکس شاخص سوم</strong
+            >
+            <ng-container *ngIf="item.thirdCardImagePath !== ''">
+              <div class="img-holder">
+                <img
+                  (error)="item.thirdCardImagePath = ''"
+                  [src]="
+                    'https://dl.iraniexpert.com/' + item.thirdCardImagePath
+                  "
+                  alt="عکس شاخص سوم"
+                />
+              </div>
+              <div class="buttons-container">
+                <button *ngIf="false" class="btn btn-change radius">
+                  <span class="pi pi-sync mr-2"></span
+                  ><span>تبدیل به عکس اصلی</span>
+                </button>
+                <button
+                  (click)="deleteFile(item.thirdCardImagePath, 2)"
+                  class="btn btn-delete radius"
+                >
+                  <span class="pi pi-trash mr-2"></span><span>حذف</span>
+                </button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="item.thirdCardImagePath == ''">
+              <div class="img-holder" *ngIf="thirdfilePreview !== ''">
+                <img [src]="thirdfilePreview" alt="عکس شاخص" />
+              </div>
+              <input
+                type="file"
+                (change)="changeFilePath($event, 2)"
+                class="text-small align-self-center"
+                id="thirdCardImagePath"
+              />
+              <button
+                [disabled]="!thirdFileValid"
+                (click)="uploadOnClick(2)"
                 class="btn-upload btn d-inline-flex align-self-center justify-content-start py-btns radius align-items-center m-1 w-fit-content"
               >
                 <!-- (click)="upload()" -->

@@ -11,6 +11,7 @@ export class BrokerModel extends Base {
   publishDate: string;
   cardImagePath: string = '';
   secondCardImagePath: string = '';
+  thirdCardImagePath: string = '';
   secondTitle: string;
   isRTL: boolean = false;
   metaDescription: string;
