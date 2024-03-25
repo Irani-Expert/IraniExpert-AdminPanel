@@ -23,14 +23,14 @@ interface Tag {
   styleUrls: ['./countries.component.scss'],
 })
 export class CountriesComponent implements OnInit {
-
   openCountryDetailIndex: number = 0;
   filter: FilterModel = new FilterModel();
   filterHolder: FilterModel = new FilterModel();
   countries: CountriesModel[] = new Array<CountriesModel>();
   countryDetail: CountriesModel;
 
-  calendarDetail : CalendarDetailModel = new CalendarDetailModel;
+  calendarDetail: CalendarDetailModel = new CalendarDetailModel();
+  loadMultiSelect: boolean;
 
   public CkEditor = new Ckeditor();
 
@@ -38,12 +38,13 @@ export class CountriesComponent implements OnInit {
     private calendarService: CalendarService,
     private toastr: ToastrService,
     private modal: NgbModal,
-    private _indicatorValueService : IndicatorValueService,
-    private _calendarDetail : CalendarDetailService
+    private _indicatorValueService: IndicatorValueService,
+    private _calendarDetail: CalendarDetailService
   ) {}
 
   async ngOnInit() {
     this.getCountries(undefined);
+    await this.getTags();
     // this.getTags();
   }
 
@@ -64,6 +65,7 @@ export class CountriesComponent implements OnInit {
           timeOut: 1500,
         });
       }
+
       if (res.data.totalCount >= 1) {
         this.countries.forEach((item) => {
           item.codeFlag = item.code.toLowerCase();
@@ -75,7 +77,11 @@ export class CountriesComponent implements OnInit {
     });
   }
 
-  openDetailModal(content: NgbModal, item: CountriesModel) {
+  async openDetailModal(content: NgbModal, item: CountriesModel) {
+    this.loadMultiSelect = false;
+
+    this.tags = [];
+    this.selectedTags = [];
     this.countryDetail = { ...item };
 
     this.modal.open(content, {
@@ -84,18 +90,16 @@ export class CountriesComponent implements OnInit {
       size: 'lg',
     });
 
-    if (this.countryDetail.id == 999|| this.countryDetail.id == 0 ) {
+    if (this.countryDetail.id == 999 || this.countryDetail.id == 0) {
       this.hideUpdateBtn = false;
-    }
-    else {
+    } else {
       this.hideUpdateBtn = true;
     }
 
-    this.getCountriesDetail();
-    this.getTags();
+    await this.getCountriesDetail();
+
     this.pushSectionItem();
   }
-
 
   setFilter() {
     this.filterHolder = { ...this.filter };
@@ -109,7 +113,7 @@ export class CountriesComponent implements OnInit {
   putCountry() {
     let itemToSend = { ...this.countryDetail };
     this.calendarService
-      .update(itemToSend.id, itemToSend , 'CalendarCountry')
+      .update(itemToSend.id, itemToSend, 'CalendarCountry')
       .subscribe((res) => {
         if (res.success) {
           this.modal.dismissAll('Put-Succeed');
@@ -125,19 +129,20 @@ export class CountriesComponent implements OnInit {
           });
         }
       });
-  
   }
   changeValue(key: string, value: any) {
     this.countryDetail[key] = value;
   }
   // ==========[هشتگ ها]====
-    // ==========[new get]========
-    getCountriesDetail(){
-      this._calendarDetail.GetDetailsAndHistory(this.countryDetail.id).subscribe((res) => {
-        this.calendarDetail = res.data;
-      });
-    }
-    // ==========[]========
+  // ==========[new get]========
+  async getCountriesDetail() {
+    const req = this._calendarDetail.GetDetailsAndHistory(
+      this.countryDetail.id
+    );
+    const res = await lastValueFrom(req);
+    this.calendarDetail = res.data;
+  }
+  // ==========[]========
   addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
   tags: Tag[] = new Array<Tag>();
   tagItems: tagModel[] = new Array<tagModel>();
@@ -157,29 +162,26 @@ export class CountriesComponent implements OnInit {
 
   pushSectionItem() {
     this.tagItems.forEach((x) => {
-      let index = this.calendarDetail.linkTags.findIndex((i) => i.value == x.id);
-      console.log(index);
-      
+      let index = this.calendarDetail.linkTags.findIndex(
+        (i) => i.value == x.id
+      );
       if (index != -1) {
-        this.selectedTags.push({ name: x.title, code: x.id });
-
+        this.selectedTags.unshift({ name: x.title, code: x.id });
         this.tags.unshift({ name: x.title, code: x.id });
       } else {
         this.tags.push({ name: x.title, code: x.id });
-      
       }
     });
+    this.loadMultiSelect = true;
   }
 
   setTags() {
-    let counter = 0;
     this.selectedTags.forEach((x) => {
       this.addTagsData.push({
         linkTagID: x.code,
         rowID: this.calendarDetail.details.id,
         tableType: 33,
       });
-      counter++;
     });
     if (this.selectedTags.length == 0) {
       this.deleteTags();
@@ -229,38 +231,38 @@ export class CountriesComponent implements OnInit {
   // <!-- =========[مدال به روز رسانی]====== -->
 
   updateId: number;
-  hideUpdateBtn : boolean;
+  hideUpdateBtn: boolean;
 
-  openUpdateModal(content: NgbModal,indicatorId: number){
-
+  openUpdateModal(content: NgbModal, indicatorId: number) {
     this.updateId = indicatorId;
 
     this.modal.open(content, {
       animation: true,
       centered: true,
       size: 'md',
-      backdrop: 'static'
+      backdrop: 'static',
     });
 
     this.addUpdate();
   }
 
-  addUpdate(){
-    this._indicatorValueService.getIndicatorValue(this.updateId).subscribe((res) => {
-      if(res.success){
-        this.toastr.success(res.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-        this.modal.dismissAll();
-      } else {
-        this.toastr.error(res.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
-        this.modal.dismissAll();
-      }
-    });
+  addUpdate() {
+    this._indicatorValueService
+      .getIndicatorValue(this.updateId)
+      .subscribe((res) => {
+        if (res.success) {
+          this.toastr.success(res.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.modal.dismissAll();
+        } else {
+          this.toastr.error(res.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          this.modal.dismissAll();
+        }
+      });
   }
-
 }

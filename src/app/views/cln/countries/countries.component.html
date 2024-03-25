@@ -124,7 +124,6 @@
     </div>
     <div class="modal-body pt-2">
       <div class="row-model">
-
         <div class="d-flex flex-column flex-wrap">
           <div class="align-self-center mb-2">
             <span
@@ -190,7 +189,7 @@
             </div>
           </div>
           <!-- Each Value -->
-  
+
           <!-- Each Value -->
           <div class="d-flex flex-column mr-4 mb-1">
             <span class="my-1 d-inline"
@@ -239,7 +238,7 @@
                 style="font-size: 0.82rem"
               ></span>
               <input
-              (input)="changeValue('title', $event.target.value)"
+                (input)="changeValue('title', $event.target.value)"
                 type="text"
                 class="form-control radius text-small border-0"
                 value="{{ countryDetail.title }}"
@@ -257,71 +256,71 @@
                 style="font-size: 0.82rem"
               ></span>
               <input
-              (input)="changeValue('browserTitle', $event.target.value)"
-              value="{{ countryDetail.browserTitle }}"
+                (input)="changeValue('browserTitle', $event.target.value)"
+                value="{{ countryDetail.browserTitle }}"
                 type="text"
                 class="form-control radius text-small border-0"
               />
             </div>
           </div>
-          
         </div>
         <!-- ================[ستون سمت چپ]======== -->
         <div class="d-flex flex-column flex-wrap">
-
           <div class="d-flex flex-column mr-4 mb-1">
             <span class="my-1 d-inline">
               <strong class="text-small">متا دسکریپشن</strong>
             </span>
             <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
-
               <textarea
-              (input)="changeValue('metaDescription', $event.target.value)"
-              value="{{ countryDetail.metaDescription }}"
+                (input)="changeValue('metaDescription', $event.target.value)"
+                value="{{ countryDetail.metaDescription }}"
                 type="text"
-                class="form-control radius w-91">
+                class="form-control radius w-91"
+              >
               </textarea>
             </div>
           </div>
 
-          <ng-container>
-            <div class="my-2 w-53">
-              <label for="selectedItems">هشتک ها</label>
+          <div class="my-2 w-53">
+            <ng-container *ngIf="loadMultiSelect">
+              <label>هشتک ها</label>
               <p-multiSelect
                 dir="ltr"
                 [options]="tags"
                 [(ngModel)]="selectedTags"
                 optionLabel="name"
                 display="chip"
-              ></p-multiSelect>
-            </div>
-            <div class="mb-4">
-              <button
+              ></p-multiSelect
+            ></ng-container>
+          </div>
+          <div class="mb-4">
+            <button
               (click)="setTags()"
               class="btn-save btn d-inline-flex justify-content-around my-2"
             >
               <i class="i-Yes text-bigger margin-icon"></i>
               <span>تائید</span>
             </button>
-            </div>
-          </ng-container>
+          </div>
 
           <ckeditor
-          [editor]="CkEditor.Editor"
-          [(ngModel)]="countryDetail.description">
+            [editor]="CkEditor.Editor"
+            [(ngModel)]="countryDetail.description"
+          >
           </ckeditor>
-        
         </div>
       </div>
     </div>
     <div class="d-flex flex-grow-1"></div>
     <div class="modal-footer border-0 row-footer">
       <div>
-        <button *ngIf="hideUpdateBtn"
-         type="button" class="btn-update" (click)="openUpdateModal(updateModal, countryDetail.id)">
-          <p class="margin-0">
-            به روز رسانی اندیکاتورها
-          </p>
+        <button
+          *ngIf="hideUpdateBtn"
+          type="button"
+          class="btn-update"
+          (click)="openUpdateModal(updateModal, countryDetail.id)"
+        >
+          <p class="margin-0">به روز رسانی اندیکاتورها</p>
           <div class="spiner-btn">
             <i class="pi pi-history"></i>
           </div>
@@ -347,14 +346,16 @@
         </button>
       </div>
     </div>
-  </div></ng-template
->
+  </div>
+</ng-template>
 
 <!-- =========[مدال به روز رسانی]====== -->
 
-<ng-template let-modal #updateModal >
+<ng-template let-modal #updateModal>
   <div class="row-spiner">
-    <p class="font-size-135">لطفا تا اتمام فرایند به روز رسانی در صفحه بمانید</p>
+    <p class="font-size-135">
+      لطفا تا اتمام فرایند به روز رسانی در صفحه بمانید
+    </p>
     <div class="">
       <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
     </div>
