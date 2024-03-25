@@ -17,7 +17,6 @@ import { catchError, map, throwError } from 'rxjs';
   styleUrls: ['./addUpdate.component.scss'],
 })
 export class AddUpdateComponent implements OnInit {
-  
   fileName: string = '';
   productId: number = parseInt(
     this._route.snapshot.paramMap.get('productId') ?? '0'
@@ -57,7 +56,7 @@ export class AddUpdateComponent implements OnInit {
       orderID: [null, Validators.compose([Validators.required])],
       isActive: [null, Validators.compose([Validators.required])],
       description: [null, Validators.compose([Validators.required])],
-      browserTitle : [null, Validators.compose([Validators.required])]
+      browserTitle: [null, Validators.compose([Validators.required])],
     });
   }
 
@@ -210,6 +209,7 @@ export class AddUpdateComponent implements OnInit {
     this.imgChangeEvt = event;
     let eventFile = event.target.files[0];
     if (eventFile.type == 'image/webp') {
+      this.fileName = eventFile.name;
       this.imageUploadFile = new Blob([eventFile], {
         type: eventFile.type,
       });
