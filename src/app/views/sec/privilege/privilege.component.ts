@@ -41,7 +41,7 @@ export class PrivilegeComponent implements OnInit {
     this.addForm = this._formBuilder.group({
       keyValue: [null, Validators.required],
       keyType: [null, Validators.required],
-      parentID: [null],
+      parentID: 0,
       title: [null, Validators.required],
       isActive: [null, Validators.required],
     });
@@ -137,7 +137,8 @@ export class PrivilegeComponent implements OnInit {
   }
   async addOrUpdate(row: PrivilegeModel) {
     if (row.id === 0) {
-      await this._privilegeService
+      // delete row.parentID;
+       this._privilegeService
         .create(row, 'Privilege')
         .subscribe((data) => {
           if (data.success) {

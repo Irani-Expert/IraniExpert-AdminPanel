@@ -75,6 +75,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   pushSectionItem() {
     this.items.forEach((x) => {
       let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
+      
       if (index != -1) {
         this.selectedTags.push({ name: x.title, code: x.id });
 

@@ -1,3 +1,4 @@
+import { TableType } from '../../Log/models/table-typeModel';
 import { ICountries } from './countries.interface';
 
 export class CountriesModel implements ICountries {
@@ -7,4 +8,10 @@ export class CountriesModel implements ICountries {
   currency: string;
   currencySymbol: string;
   codeFlag: string;
+  title?: string;
+  browserTitle?: string;
+  description?: string;
+  linkTags?:TableType[];
+  metaDescription?: string;
+
 }

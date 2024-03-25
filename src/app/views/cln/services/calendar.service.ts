@@ -81,6 +81,7 @@ export class CalendarService extends BaseService<Object, number> {
       _options
     );
   }
+
   getCalendarCountries(
     name: string
   ): Observable<Result<Paginate<CountriesModel[]>>> {
@@ -101,6 +102,7 @@ export class CalendarService extends BaseService<Object, number> {
       _options
     );
   }
+  
   getTelegramStatus() {
     let telegramRoute = ' https://climax.iraniexpert.ir/api/Test/TelegramCal';
     let authorParam = `?authorID=${this._auth.currentUserValue.userID}`;

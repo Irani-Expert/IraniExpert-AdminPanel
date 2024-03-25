@@ -4,6 +4,18 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CountriesModel } from '../models/countries.model';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
+import { tagModel } from '../../cnt/tags/tagModel/tag.model';
+import { tagRelationModel } from '../../cnt/article/tagModel/tagRelation.model';
+import { Ckeditor } from 'src/app/shared/ckconfig';
+import { IndicatorValueService } from '../services/indicator-value.service';
+import { CalendarDetailService } from '../services/calendar-detail.service';
+import { lastValueFrom, map } from 'rxjs';
+import { CalendarDetailModel } from '../models/calendardetail.model';
+
+interface Tag {
+  name: string;
+  code: number;
+}
 
 @Component({
   selector: 'app-countries',
@@ -11,21 +23,30 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
   styleUrls: ['./countries.component.scss'],
 })
 export class CountriesComponent implements OnInit {
+
   openCountryDetailIndex: number = 0;
   filter: FilterModel = new FilterModel();
   filterHolder: FilterModel = new FilterModel();
   countries: CountriesModel[] = new Array<CountriesModel>();
   countryDetail: CountriesModel;
 
+  calendarDetail : CalendarDetailModel = new CalendarDetailModel;
+
+  public CkEditor = new Ckeditor();
+
   constructor(
     private calendarService: CalendarService,
     private toastr: ToastrService,
-    private modal: NgbModal
+    private modal: NgbModal,
+    private _indicatorValueService : IndicatorValueService,
+    private _calendarDetail : CalendarDetailService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.getCountries(undefined);
+    // this.getTags();
   }
+
   getCountries(name: string) {
     this.calendarService.getCalendarCountries(name).subscribe((res) => {
       this.countries = res.data.items;
@@ -53,15 +74,29 @@ export class CountriesComponent implements OnInit {
       }
     });
   }
+
   openDetailModal(content: NgbModal, item: CountriesModel) {
     this.countryDetail = { ...item };
 
     this.modal.open(content, {
       animation: true,
       centered: true,
-      size: 'sm',
+      size: 'lg',
     });
+
+    if (this.countryDetail.id == 999|| this.countryDetail.id == 0 ) {
+      this.hideUpdateBtn = false;
+    }
+    else {
+      this.hideUpdateBtn = true;
+    }
+
+    this.getCountriesDetail();
+    this.getTags();
+    this.pushSectionItem();
   }
+
+
   setFilter() {
     this.filterHolder = { ...this.filter };
     this.getCountries(this.filter.name);
@@ -74,7 +109,7 @@ export class CountriesComponent implements OnInit {
   putCountry() {
     let itemToSend = { ...this.countryDetail };
     this.calendarService
-      .update(itemToSend.id, itemToSend, 'CalendarCountry')
+      .update(itemToSend.id, itemToSend , 'CalendarCountry')
       .subscribe((res) => {
         if (res.success) {
           this.modal.dismissAll('Put-Succeed');
@@ -90,8 +125,142 @@ export class CountriesComponent implements OnInit {
           });
         }
       });
+  
   }
   changeValue(key: string, value: any) {
     this.countryDetail[key] = value;
   }
+  // ==========[هشتگ ها]====
+    // ==========[new get]========
+    getCountriesDetail(){
+      this._calendarDetail.GetDetailsAndHistory(this.countryDetail.id).subscribe((res) => {
+        this.calendarDetail = res.data;
+      });
+    }
+    // ==========[]========
+  addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
+  tags: Tag[] = new Array<Tag>();
+  tagItems: tagModel[] = new Array<tagModel>();
+  selectedTags: Tag[] = new Array<Tag>();
+
+  async getTags() {
+    const res = this._calendarDetail.getTags().pipe(
+      map((it) => {
+        this.tagItems = it.data.items;
+
+        return { res: it.success, message: it.message };
+      })
+    );
+    const tagsRes = await lastValueFrom(res);
+    return tagsRes;
+  }
+
+  pushSectionItem() {
+    this.tagItems.forEach((x) => {
+      let index = this.calendarDetail.linkTags.findIndex((i) => i.value == x.id);
+      console.log(index);
+      
+      if (index != -1) {
+        this.selectedTags.push({ name: x.title, code: x.id });
+
+        this.tags.unshift({ name: x.title, code: x.id });
+      } else {
+        this.tags.push({ name: x.title, code: x.id });
+      
+      }
+    });
+  }
+
+  setTags() {
+    let counter = 0;
+    this.selectedTags.forEach((x) => {
+      this.addTagsData.push({
+        linkTagID: x.code,
+        rowID: this.calendarDetail.details.id,
+        tableType: 33,
+      });
+      counter++;
+    });
+    if (this.selectedTags.length == 0) {
+      this.deleteTags();
+    } else {
+      this.addTags();
+    }
+  }
+
+  addTags() {
+    this._calendarDetail
+      .create(this.addTagsData, 'LinkTagRelation/AddUpdateLinkTagRelations')
+      .subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
+  }
+
+  deleteTags() {
+    this._calendarDetail
+      .create(
+        { rowID: this.calendarDetail.details.id, tableType: 33 },
+        'LinkTagRelation/DeleteLinkTagRelations'
+      )
+      .subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
+      });
+  }
+  // <!-- =========[مدال به روز رسانی]====== -->
+
+  updateId: number;
+  hideUpdateBtn : boolean;
+
+  openUpdateModal(content: NgbModal,indicatorId: number){
+
+    this.updateId = indicatorId;
+
+    this.modal.open(content, {
+      animation: true,
+      centered: true,
+      size: 'md',
+      backdrop: 'static'
+    });
+
+    this.addUpdate();
+  }
+
+  addUpdate(){
+    this._indicatorValueService.getIndicatorValue(this.updateId).subscribe((res) => {
+      if(res.success){
+        this.toastr.success(res.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+        this.modal.dismissAll();
+      } else {
+        this.toastr.error(res.message, null, {
+          closeButton: true,
+          positionClass: 'toast-top-left',
+        });
+        this.modal.dismissAll();
+      }
+    });
+  }
+
 }

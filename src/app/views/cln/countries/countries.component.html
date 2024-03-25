@@ -123,131 +123,240 @@
       </button>
     </div>
     <div class="modal-body pt-2">
-      <div class="d-flex flex-column flex-wrap">
-        <div class="align-self-center mb-2">
-          <span
-            class="shadow-lg fi"
-            [ngClass]="'fi-' + countryDetail.codeFlag"
-            style="font-size: 5.8rem; border-radius: 6px"
-          ></span>
-        </div>
-        <!-- Each Value -->
-        <div class="d-flex flex-column mr-4 mb-1">
-          <span class="my-1 d-inline"
-            ><strong class="text-small">شناسه</strong></span
-          >
-          <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
-            <span
-              class="pi pi-circle-fill text-primary m-1"
-              style="font-size: 0.82rem"
-            ></span>
-            <input
-              disabled
-              type="text"
-              class="form-control radius text-small border-0"
-              value="{{ countryDetail.id }}"
-            />
-          </div>
-        </div>
-        <!-- Each Value -->
-        <!-- Each Value -->
-        <div class="d-flex flex-column mr-4 mb-1">
-          <span class="my-1 d-inline"
-            ><strong class="text-small">کد کشور</strong></span
-          >
-          <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
-            <span
-              class="pi pi-circle-fill text-primary m-1"
-              style="font-size: 0.82rem"
-            ></span>
-            <input
-              disabled
-              type="text"
-              class="form-control radius text-small border-0"
-              value="{{ countryDetail.code }}"
-            />
-          </div>
-        </div>
-        <!-- Each Value -->
-        <!-- Each Value -->
-        <div class="d-flex flex-column mr-4 mb-1">
-          <span class="my-1 d-inline"
-            ><strong class="text-small">نام کشور</strong></span
-          >
-          <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
-            <span
-              class="pi pi-circle-fill text-primary m-1"
-              style="font-size: 0.82rem"
-            ></span>
-            <input
-              (input)="changeValue('name', $event.target.value)"
-              type="text"
-              class="form-control radius text-small border-0"
-              value="{{ countryDetail.name }}"
-            />
-          </div>
-        </div>
-        <!-- Each Value -->
+      <div class="row-model">
 
-        <!-- Each Value -->
-        <div class="d-flex flex-column mr-4 mb-1">
-          <span class="my-1 d-inline"
-            ><strong class="text-small">ارز</strong></span
-          >
-          <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+        <div class="d-flex flex-column flex-wrap">
+          <div class="align-self-center mb-2">
             <span
-              class="pi pi-circle-fill text-primary m-1"
-              style="font-size: 0.82rem"
+              class="shadow-lg fi"
+              [ngClass]="'fi-' + countryDetail.codeFlag"
+              style="font-size: 5.8rem; border-radius: 6px"
             ></span>
-            <input
-              (input)="changeValue('currency', $event.target.value)"
-              type="text"
-              class="form-control radius text-small border-0"
-              value="{{ countryDetail.currency }}"
-            />
           </div>
-        </div>
-        <!-- Each Value -->
-        <!-- Each Value -->
-        <div class="d-flex flex-column mr-4 mb-1">
-          <span class="my-1 d-inline"
-            ><strong class="text-small">نماد ارز</strong></span
-          >
-          <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
-            <span
-              class="pi pi-circle-fill text-primary m-1"
-              style="font-size: 0.82rem"
-            ></span>
-            <input
-              (input)="changeValue('currencySymbol', $event.target.value)"
-              type="text"
-              class="form-control radius text-small border-0"
-              value="{{ countryDetail.currencySymbol }}"
-            />
+          <!-- Each Value -->
+          <div class="d-flex flex-column mr-4 mb-3">
+            <span class="my-1 d-inline"
+              ><strong class="text-small">شناسه</strong></span
+            >
+            <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+              <span
+                class="pi pi-circle-fill text-primary m-1"
+                style="font-size: 0.82rem"
+              ></span>
+              <input
+                disabled
+                type="text"
+                class="form-control radius text-small border-0"
+                value="{{ countryDetail.id }}"
+              />
+            </div>
           </div>
+          <!-- Each Value -->
+          <!-- Each Value -->
+          <div class="d-flex flex-column mr-4 mb-3">
+            <span class="my-1 d-inline"
+              ><strong class="text-small">کد کشور</strong></span
+            >
+            <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+              <span
+                class="pi pi-circle-fill text-primary m-1"
+                style="font-size: 0.82rem"
+              ></span>
+              <input
+                disabled
+                type="text"
+                class="form-control radius text-small border-0"
+                value="{{ countryDetail.code }}"
+              />
+            </div>
+          </div>
+          <!-- Each Value -->
+          <!-- Each Value -->
+          <div class="d-flex flex-column mr-4 mb-1">
+            <span class="my-1 d-inline"
+              ><strong class="text-small">نام کشور(فارسی)</strong></span
+            >
+            <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+              <span
+                class="pi pi-circle-fill text-primary m-1"
+                style="font-size: 0.82rem"
+              ></span>
+              <input
+                (input)="changeValue('name', $event.target.value)"
+                type="text"
+                class="form-control radius text-small border-0"
+                value="{{ countryDetail.name }}"
+              />
+            </div>
+          </div>
+          <!-- Each Value -->
+  
+          <!-- Each Value -->
+          <div class="d-flex flex-column mr-4 mb-1">
+            <span class="my-1 d-inline"
+              ><strong class="text-small">ارز</strong></span
+            >
+            <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+              <span
+                class="pi pi-circle-fill text-primary m-1"
+                style="font-size: 0.82rem"
+              ></span>
+              <input
+                (input)="changeValue('currency', $event.target.value)"
+                type="text"
+                class="form-control radius text-small border-0"
+                value="{{ countryDetail.currency }}"
+              />
+            </div>
+          </div>
+          <!-- Each Value -->
+          <!-- Each Value -->
+          <div class="d-flex flex-column mr-4 mb-1">
+            <span class="my-1 d-inline">
+              <strong class="text-small">نماد ارز</strong>
+            </span>
+            <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+              <span
+                class="pi pi-circle-fill text-primary m-1"
+                style="font-size: 0.82rem"
+              ></span>
+              <input
+                (input)="changeValue('currencySymbol', $event.target.value)"
+                type="text"
+                class="form-control radius text-small border-0"
+                value="{{ countryDetail.currencySymbol }}"
+              />
+            </div>
+          </div>
+          <!-- Each Value -->
+          <div class="d-flex flex-column mr-4 mb-1">
+            <span class="my-1 d-inline">
+              <strong class="text-small">نام کشور(انگلیسی)</strong>
+            </span>
+            <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+              <span
+                class="pi pi-circle-fill text-primary m-1"
+                style="font-size: 0.82rem"
+              ></span>
+              <input
+              (input)="changeValue('title', $event.target.value)"
+                type="text"
+                class="form-control radius text-small border-0"
+                value="{{ countryDetail.title }}"
+              />
+            </div>
+          </div>
+
+          <div class="d-flex flex-column mr-4 mb-1">
+            <span class="my-1 d-inline">
+              <strong class="text-small">عنوان در مرورگر</strong>
+            </span>
+            <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+              <span
+                class="pi pi-circle-fill text-primary m-1"
+                style="font-size: 0.82rem"
+              ></span>
+              <input
+              (input)="changeValue('browserTitle', $event.target.value)"
+              value="{{ countryDetail.browserTitle }}"
+                type="text"
+                class="form-control radius text-small border-0"
+              />
+            </div>
+          </div>
+          
         </div>
-        <!-- Each Value -->
+        <!-- ================[ستون سمت چپ]======== -->
+        <div class="d-flex flex-column flex-wrap">
+
+          <div class="d-flex flex-column mr-4 mb-1">
+            <span class="my-1 d-inline">
+              <strong class="text-small">متا دسکریپشن</strong>
+            </span>
+            <div class="d-flex flex-row ml-1 flex-wrap align-items-center">
+
+              <textarea
+              (input)="changeValue('metaDescription', $event.target.value)"
+              value="{{ countryDetail.metaDescription }}"
+                type="text"
+                class="form-control radius w-91">
+              </textarea>
+            </div>
+          </div>
+
+          <ng-container>
+            <div class="my-2 w-53">
+              <label for="selectedItems">هشتک ها</label>
+              <p-multiSelect
+                dir="ltr"
+                [options]="tags"
+                [(ngModel)]="selectedTags"
+                optionLabel="name"
+                display="chip"
+              ></p-multiSelect>
+            </div>
+            <div class="mb-4">
+              <button
+              (click)="setTags()"
+              class="btn-save btn d-inline-flex justify-content-around my-2"
+            >
+              <i class="i-Yes text-bigger margin-icon"></i>
+              <span>تائید</span>
+            </button>
+            </div>
+          </ng-container>
+
+          <ckeditor
+          [editor]="CkEditor.Editor"
+          [(ngModel)]="countryDetail.description">
+          </ckeditor>
+        
+        </div>
       </div>
     </div>
     <div class="d-flex flex-grow-1"></div>
-    <div class="modal-footer border-0">
-      <button
-        *appCanAccess="'Calendar-Countries-Edit'"
-        (click)="putCountry()"
-        type="button"
-        class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"
-      >
-        <i class="i-Yes text-bigger mr-2"></i
-        ><strong class="text-small">ذخیره</strong>
-      </button>
-      <button
-        (click)="modal.dismiss()"
-        type="button"
-        class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"
-      >
-        <i class="i-Close text-bigger mr-2"></i
-        ><strong class="text-small">انصراف</strong>
-      </button>
+    <div class="modal-footer border-0 row-footer">
+      <div>
+        <button *ngIf="hideUpdateBtn"
+         type="button" class="btn-update" (click)="openUpdateModal(updateModal, countryDetail.id)">
+          <p class="margin-0">
+            به روز رسانی اندیکاتورها
+          </p>
+          <div class="spiner-btn">
+            <i class="pi pi-history"></i>
+          </div>
+        </button>
+      </div>
+      <div>
+        <button
+          *appCanAccess="'Calendar-Countries-Edit'"
+          (click)="putCountry()"
+          type="button"
+          class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"
+        >
+          <i class="i-Yes text-bigger mr-2"></i
+          ><strong class="text-small">ذخیره</strong>
+        </button>
+        <button
+          (click)="modal.dismiss()"
+          type="button"
+          class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center ml-2 float-right"
+        >
+          <i class="i-Close text-bigger mr-2"></i
+          ><strong class="text-small">انصراف</strong>
+        </button>
+      </div>
     </div>
   </div></ng-template
 >
+
+<!-- =========[مدال به روز رسانی]====== -->
+
+<ng-template let-modal #updateModal >
+  <div class="row-spiner">
+    <p class="font-size-135">لطفا تا اتمام فرایند به روز رسانی در صفحه بمانید</p>
+    <div class="">
+      <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+    </div>
+  </div>
+</ng-template>
