@@ -37,6 +37,17 @@ export class Ckeditor {
     this.Editor.defaultConfig.style = {
       definitions: styles,
     };
+
+    this.Editor.defaultConfig.htmlSupport = {
+      allow: [
+        {
+          name: /.*/,
+          attributes: true,
+          classes: true,
+          styles: true,
+        },
+      ],
+    };
     this.Editor.defaultConfig.fontSize = {
       options: [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 26, 28, 36, 48, 72],
       supportAllValues: true,
