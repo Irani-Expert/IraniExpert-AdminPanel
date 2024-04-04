@@ -20,6 +20,7 @@ import { SharedPipesModule } from 'src/app/shared/pipes/shared-pipes.module';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { GalleryComponent } from './gallery/gallery.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
   declarations: [
     ProductsListComponent,
@@ -42,6 +43,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NgbModule,
     ImageCropperModule,
     SharedPipesModule,
+    CKEditorModule,
     SharedDirectivesModule,
     SharedModule,
   ],

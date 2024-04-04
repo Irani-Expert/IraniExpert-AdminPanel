@@ -27,11 +27,12 @@ export class FAQComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.addUpdate.id = 0;
+    this.addUpdate.answer = '';
+  }
 
   ngOnInit(): void {
-    this.addUpdate.id = 0;
-
     this.addForm = this._formBuilder.group({
       question: [null, Validators.compose([Validators.required])],
       answer: [null],
