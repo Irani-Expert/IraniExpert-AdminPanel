@@ -1,8 +1,7 @@
 <ng-container *ngIf="ifDataExist">
   <ul ngbNav #nav="ngbNav" class="nav-tabs">
     <li ngbNavItem>
-      <a ngbNavLink
-        >
+      <a ngbNavLink>
         <p *ngIf="addUpdate.id == 0">ایجاد</p>
         <p *ngIf="addUpdate.id !== 0">ویرایش</p></a
       >
@@ -38,42 +37,39 @@
               <label class="d-block" for="picker1">انتخاب تصویر</label>
               <div class="col-md-7 mt-4">
                 <input
-                type="file"
-                class="text-small"
-                id="files"
-                (change)="
-                  this.isFileValid = checkFileValidation($event)
-                "
-                [ngModel]="imageInputText"
-              />
-              <div
-              class="d-flex flex-row flex-wrap justify-content-around align-items-center col-10 col-lg-4 col-md-8"
-            >
-            <button
-            [disabled]="!isFileValid"
-            class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
-            (click)="uploadImg()"
-            *ngIf="imageUploadProccess==0"
-          >
-            <i class="i-Upload text-dark text-bigger mr-3"></i>
-            <strong class="text-small">آپلود</strong>
-          </button>
-          <div
-          *ngIf="imageUploadProccess > 0 && imageUploadProccess < 100"
-          class="progress bg-progress-container radius-progress m-2 flex-grow-1"
-          style="height: 32px"
-        >
-          <div
-            class="progress-bar bg-progressbar radius-progress pl-1"
-            [style.width]="progress + '%'"
-          >
-            {{ progress }}%
-          </div>
-        </div>
-        
-            </div>
-            <div class="col-8 col-md-6 col-lg-5">
-             <!-- <image-cropper
+                  type="file"
+                  class="text-small"
+                  id="files"
+                  (change)="this.isFileValid = checkFileValidation($event)"
+                  [ngModel]="imageInputText"
+                />
+                <div
+                  class="d-flex flex-row flex-wrap justify-content-around align-items-center col-10 col-lg-4 col-md-8"
+                >
+                  <button
+                    [disabled]="!isFileValid"
+                    class="btn-upload btn d-inline-flex justify-content-start py-btns radius align-items-center m-1"
+                    (click)="uploadImg()"
+                    *ngIf="imageUploadProccess == 0"
+                  >
+                    <i class="i-Upload text-dark text-bigger mr-3"></i>
+                    <strong class="text-small">آپلود</strong>
+                  </button>
+                  <div
+                    *ngIf="imageUploadProccess > 0 && imageUploadProccess < 100"
+                    class="progress bg-progress-container radius-progress m-2 flex-grow-1"
+                    style="height: 32px"
+                  >
+                    <div
+                      class="progress-bar bg-progressbar radius-progress pl-1"
+                      [style.width]="progress + '%'"
+                    >
+                      {{ progress }}%
+                    </div>
+                  </div>
+                </div>
+                <div class="col-8 col-md-6 col-lg-5">
+                  <!-- <image-cropper
                 [maintainAspectRatio]="false"
                 [resizeToWidth]="1280"
                 [imageChangedEvent]="imgChangeEvt"
@@ -82,23 +78,21 @@
                 *ngIf="imageUploadProccess==0"
               >
               </image-cropper>  -->
-              </div>
-         
+                </div>
+
                 <div class="float-left w-25">
-                  <img [src]="cropImagePreview" alt=""  />
+                  <img [src]="cropImagePreview" alt="" />
                 </div>
                 <button
-                class="btn-delete btn mt-2 d-inline-flex justify-content-around py-btns radius align-items-center"
-                (click)="deleteImg(addUpdate.cardImagePath)"
-                 *ngIf="imageUploadProccess==100">
-                <i class="i-Close text-bigger mr-2"></i>
-                <strong>حذف</strong>
-              </button>
+                  class="btn-delete btn mt-2 d-inline-flex justify-content-around py-btns radius align-items-center"
+                  (click)="deleteImg(addUpdate.cardImagePath)"
+                  *ngIf="imageUploadProccess == 100"
+                >
+                  <i class="i-Close text-bigger mr-2"></i>
+                  <strong>حذف</strong>
+                </button>
               </div>
-              <div>
-
-              </div>
-           
+              <div></div>
             </div>
             <!-- <div class="col-12 mt-1 mb-2">
               <button
@@ -231,7 +225,6 @@
                 id="description"
                 [formControl]="addForm.controls['description']"
                 [(ngModel)]="addUpdate.description"
-                maxlength="501"
               >
               </textarea>
               <small
@@ -248,7 +241,7 @@
             class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="addOrUpdate()"
             *ngIf="addUpdate.id !== 0"
-            [disabled]="!addForm.valid "
+            [disabled]="!addForm.valid"
           >
             <i class="i-Pen-5 text-bigger mr-2"></i>
             <strong>ویرایش</strong>
@@ -260,7 +253,7 @@
             class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center"
             (click)="addOrUpdate()"
             *ngIf="addUpdate.id === 0"
-            [disabled]="(!addForm.valid)"
+            [disabled]="!addForm.valid"
           >
             <i class="i-Add text-bigger mr-2"></i>
             <strong>ایجاد</strong>
