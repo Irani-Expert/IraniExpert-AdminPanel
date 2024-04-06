@@ -48,7 +48,7 @@ export class BrokerDetailsComponent {
   formGroup: FormGroup;
   file: Blob;
   secondFile: Blob;
-  thirdFile : Blob;
+  thirdFile: Blob;
   fileName = '';
   secondFileName = '';
   thirdFileName = '';
@@ -215,7 +215,7 @@ export class BrokerDetailsComponent {
         this.filePreview = this.sanitizer.bypassSecurityTrustUrl(url);
         this.fileName = file.name;
         this.file = new Blob([file], { type: file.type });
-      } 
+      }
       if (index == 1) {
         this.isSecondFileValid = true;
         let url = await base64Maker(file);
@@ -303,7 +303,7 @@ export class BrokerDetailsComponent {
             this.item.secondCardImagePath = '';
             this.secondFilePreview = '';
           }
-          if ( type == 2) {
+          if (type == 2) {
             this.item.thirdCardImagePath = '';
             this.thirdfilePreview = '';
           }
@@ -352,7 +352,7 @@ export class BrokerDetailsComponent {
       // } else {
       //   this.setItem(this.item);
       // }
-        this.setItem(this.item);
+      this.setItem(this.item);
     }
   }
   setItem(item: BrokerModel) {
@@ -377,9 +377,11 @@ export class BrokerDetailsComponent {
       metaDescription: this._controls['metaDescription'].value,
       title: this._controls['title'].value,
       browserTitle: this._controls['browserTitle'].value,
-      cardImagePath: item.cardImagePath == ''? ' ' : item.cardImagePath,
-      secondCardImagePath: item.secondCardImagePath  == ''? ' ' : item.secondCardImagePath,
-      thirdCardImagePath: item.thirdCardImagePath  == ''? ' ' : item.thirdCardImagePath,
+      cardImagePath: item.cardImagePath == '' ? ' ' : item.cardImagePath,
+      secondCardImagePath:
+        item.secondCardImagePath == '' ? ' ' : item.secondCardImagePath,
+      thirdCardImagePath:
+        item.thirdCardImagePath == '' ? ' ' : item.thirdCardImagePath,
       secondTitle: this._controls['secondTitle'].value,
       studyTime: this._controls['studyTime'].value,
       // Forcing True Will Change Later
@@ -397,7 +399,6 @@ export class BrokerDetailsComponent {
       colorCode: this._controls['colorCode'].value,
     };
     if (sendingItem.id == 0) {
-      
       this.brokerService.create(sendingItem, 'Broker').subscribe((it) => {
         this.showToast(it.success, it.message);
         if (it.success) {
@@ -486,9 +487,6 @@ export class BrokerDetailsComponent {
       .create(this.addTagsData, 'LinkTagRelation/AddUpdateLinkTagRelations')
       .subscribe((data) => {
         if (data.success) {
-          this._router.navigateByUrl('/cnt/brokers/1', {
-            skipLocationChange: true,
-          });
           this.toastr.success(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -509,9 +507,6 @@ export class BrokerDetailsComponent {
       )
       .subscribe((data) => {
         if (data.success) {
-          this._router.navigateByUrl('/cnt/brokers/1', {
-            skipLocationChange: true,
-          });
           this.toastr.success(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
