@@ -34,7 +34,7 @@ export class FAQComponent implements OnInit {
 
   ngOnInit(): void {
     this.addForm = this._formBuilder.group({
-      question: [null, Validators.compose([Validators.required])],
+      question: [null, Validators.required],
       answer: [null],
     });
 
