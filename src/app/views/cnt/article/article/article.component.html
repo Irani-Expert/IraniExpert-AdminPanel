@@ -9,6 +9,19 @@
 
 <div class="separator-breadcrumb border-top"></div>
 
+<!-- DropDown Group -->
+
+<div class="col-6 col-md-5 col-lg-3 col-xl-2 p-0 my-2" *ngIf="loadDropDown">
+  <p-dropdown
+    (onChange)="changeGroup()"
+    [options]="groups"
+    [(ngModel)]="selectedGroup"
+    optionLabel="title"
+  >
+  </p-dropdown>
+</div>
+
+<!-- DropDown Group -->
 <section class="main-table">
   <table class="table">
     <thead class="bg-dark text-white">
@@ -30,7 +43,6 @@
             | paginate
               : {
                   itemsPerPage: page.size,
-                  page: page.pageNumber,
                   currentPage: page.pageNumber,
                   totalItems: page.totalElements
                 }
@@ -57,7 +69,7 @@
             *ngIf="
               item.updatedByFirstName == null && item.updatedByLastName == null
             "
-            >lpln hldk psdk fd'd</ng-container
+            >&nbsp;</ng-container
           ><ng-container
             *ngIf="
               item.updatedByFirstName !== null &&
