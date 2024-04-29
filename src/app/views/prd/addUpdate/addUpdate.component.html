@@ -176,20 +176,6 @@
                 >انتخاب نوع گروه ضروری است</small
               >
             </div>
-            <!-- isActive  -->
-            <div class="col-md-6 form-group mb-3 mt-3">
-              <label class="m-1">فعال</label>
-              <label class="switch switch-primary mr-2 m-2">
-                <span>غیرفعال</span>
-                <input
-                  [(ngModel)]="addUpdate.isActive"
-                  [formControl]="addForm.controls['isActive']"
-                  type="checkbox"
-                  id="isActive"
-                />
-                <span class="slider"></span>
-              </label>
-            </div>
             <!-- Browser title  -->
             <div class="col-md-6 form-group mb-3">
               <label for="browserTitle">عنوان در مرورگر:</label>
@@ -213,25 +199,209 @@
                 >عنوان مرورگر محصول ضروری است</small
               >
             </div>
-            <!-- description  -->
-            <div class="col-md-12 form-group mb-3">
-              <label for="description">توضیحات</label>
-              <textarea
-                name=""
-                cols="30"
-                rows="10"
+            <!-- ========[secend title]===== -->
+            <div class="col-md-6 form-group mb-3">
+              <label for="secondTitle">عنوان دوم</label>
+              <input
                 type="text"
                 class="form-control form-control-rounded"
-                id="description"
-                [formControl]="addForm.controls['description']"
-                [(ngModel)]="addUpdate.description"
+                id="secondTitle"
+                placeholder="عنوان مورد نظر را وارد کنید "
+                [formControl]="addForm.controls['secondTitle']"
+                [(ngModel)]="addUpdate.secondTitle"
+                maxlength="51"
+                minlength="2"
+              />
+            </div>
+            <!-- ========[meta]===== -->
+            <div class="col-md-6 form-group mb-3">
+              <label for="title">متا دیسکریپشن</label>
+              <input
+                type="text"
+                class="form-control form-control-rounded"
+                id="title"
+                placeholder="متا دیسکریپشن مورد نظر را وارد کنید "
+                [formControl]="addForm.controls['metaDescription']"
+                [(ngModel)]="addUpdate.metaDescription"
+                maxlength="51"
+                minlength="2"
+              />
+            </div>
+            <!-- ========[boolean]===== -->
+            <div class="col-md-6 form-group mb-3 mt-3">
+              <div class="d-flex">
+                <div
+                  class="form-group mb-3 mt-1 text-switch text-align mr-3"
+                >
+                  <p>زبان متن</p>
+                  <span class="ml-2">فارسی</span>
+                  <label class="switch switch-primary">
+                    <input
+                      [formControl]="addForm.controls['isRTL']"
+                      [(ngModel)]="addUpdate.isRTL"
+                      type="checkbox"
+                      id="isRTL"
+                    />
+                    <span class="slider"></span>
+                  </label>
+                  <span>انگلیسی</span>
+                </div>
+
+                <div *appCanAccess="'management-accepted-Edit'"
+                  class="form-group mb-3 mt-1 text-switch text-align mr-3"
+                >
+                  <p>تایید مدیر</p>
+                  <span class="ml-2">تایید</span>
+                  <label class="switch switch-primary">
+                    <input
+                      [formControl]="addForm.controls['managementAccepted']"
+                      [(ngModel)]="addUpdate.managementAccepted"
+                      type="checkbox"
+                      id="managementAccepted"
+                    />
+                    <span class="slider"></span>
+                  </label>
+                  <span>عدم تایید</span>
+                </div>
+
+                <div *appCanAccess="'seo-accepted-Edit'"
+                  class="form-group mb-3 mt-1 text-switch text-align mr-3"
+                >
+                  <p>تایید مسئول سئو</p>
+                  <span class="ml-2">تایید</span>
+                  <label class="switch switch-primary">
+                    <input
+                      [formControl]="addForm.controls['seoAccepted']"
+                      [(ngModel)]="addUpdate.seoAccepted"
+                      type="checkbox"
+                      id="seoAccepted"
+                    />
+                    <span class="slider"></span>
+                  </label>
+                  <span>عدم تایید</span>
+                </div>
+
+                <div *appCanAccess="'author-accepted-Edit'"
+                  class="form-group mb-3 mt-1 text-switch text-align mr-3"
+                >
+                  <p>تایید نویسنده</p>
+                  <span class="ml-2">تایید</span>
+                  <label class="switch switch-primary">
+                    <input
+                      [formControl]="addForm.controls['authorizeAccepted']"
+                      [(ngModel)]="addUpdate.authorizeAccepted"
+                      type="checkbox"
+                      id="authorizeAccepted"
+                    />
+                    <span class="slider"></span>
+                  </label>
+                  <span>عدم تایید</span>
+                </div>
+              </div>
+              <div class="mt-3">
+                <!--  انتخاب رنگ مقاله  -->
+                <div class="col-color">
+                  <div class="">
+                    <div class="box-color">
+                      <label for="cp-hex" class="font-bold block mb-2">
+                      </label>
+                      <p-colorPicker formControlName="colorCode" [(ngModel)]="addUpdate.colorCode"></p-colorPicker>
+                      <label for="colorCode">انتخاب رنگ محصول</label>
+                    </div>
+                    <input
+                      [formControl]="addForm.controls['colorCode']"
+                      type="text"
+                      class="input-color form-control radius mt-4"
+                      [(ngModel)]="addUpdate.colorCode"
+                      placeholder="رنگ محصول را وارد کنید"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ========[brief]===== -->
+            <div class="col-md-6 form-group mb-3">
+              <label for="brief">متن کوتاه</label>
+              <textarea
+                type="text"
+                class="form-control form-control-rounded"
+                id="brief"
+                placeholder="متن کوتاه مورد نظر را وارد کنید "
+                [formControl]="addForm.controls['brief']"
+                [(ngModel)]="addUpdate.brief"
+                maxlength="51"
+                minlength="2"
               >
               </textarea>
-              <small
-                *ngIf="addForm.controls['description'].hasError('maxlength')"
-                class="mat-text-warn m-t-negative"
-                >توضیحات بیشتر از حد مجاز</small
-              >
+            </div>
+
+            <div class="col-md-12">
+
+              <ng-container *ngIf="addUpdate.id !== 0">
+                <div class="my-2">
+                  <label for="selectedItems">هشتک ها</label>
+                  <p-multiSelect
+                    dir="ltr"
+                    [options]="tags"
+                    [formControl]="addForm.controls['selectedItems']"
+                    [(ngModel)]="selectedTags"
+                    optionLabel="name"
+                    display="chip"
+                  ></p-multiSelect>
+                </div>
+
+                <div class="mb-4">
+                  <button
+                    (click)="setTags()"
+                    class="btn-save btn d-inline-flex justify-content-around my-2"
+                  >
+                    <i class="i-Yes text-bigger margin-icon ml-1"></i>
+                    <span>تائید</span>
+                  </button>
+                </div>
+
+              </ng-container>
+
+              <!-- <div class="my-2">
+                <ng-container>
+                  <label>هشتک ها</label>
+                  <p-multiSelect
+                    dir="ltr"
+                    [options]="tags"
+                    [(ngModel)]="selectedTags"
+                    optionLabel="name"
+                    display="chip"
+                  ></p-multiSelect
+                ></ng-container>
+              </div>
+              <div class="mb-4">
+                <button
+                  (click)="setTags()"
+                  class="btn-save btn d-inline-flex justify-content-around my-2"
+                >
+                  <i class="i-Yes text-bigger margin-icon"></i>
+                  <span>تائید</span>
+                </button>
+              </div> -->
+              
+            </div>
+
+            <!-- description  -->
+            <div class="col-md-12 form-group mb-3">
+              <ckeditor
+              [formControl]="addForm.controls['description']"
+              [editor]="CkEditor.Editor"
+              [(ngModel)]="addUpdate.description"
+            >
+            </ckeditor>
+            <small
+              *ngIf="
+                addForm.controls['description'].hasError('required') &&
+                addForm.controls['description'].touched
+              "
+              class="mat-text-warn m-t-negative"
+              >توضیحات ضروری است</small
+            >
             </div>
           </form>
         </div>
@@ -247,6 +417,18 @@
             <strong>ویرایش</strong>
           </button>
         </ng-container>
+        <!-- isActive  -->
+        <label class="m-3">فعال</label>
+        <label class="switch switch-primary mr-2 m-2">
+          <span>غیرفعال</span>
+          <input
+            [(ngModel)]="addUpdate.isActive"
+            [formControl]="addForm.controls['isActive']"
+            type="checkbox"
+            id="isActive"
+          />
+          <span class="slider"></span>
+        </label>
         <ng-container *appCanAccess="'ProductT-Add'">
           <button
             type="button"
