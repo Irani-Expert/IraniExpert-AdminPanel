@@ -9,7 +9,17 @@ import { ProductModel } from '../products-list/product.model';
 import { ProductService } from '../products-list/product.service';
 import { error } from 'console';
 import { HttpEventType } from '@angular/common/http';
-import { catchError, map, throwError } from 'rxjs';
+import { catchError, lastValueFrom, map, throwError } from 'rxjs';
+import { Ckeditor } from 'src/app/shared/ckconfig';
+import { tagRelationModel } from '../../cnt/article/tagModel/tagRelation.model';
+import { tagModel } from '../../cnt/tags/tagModel/tag.model';
+import { Paginate } from 'src/app/shared/models/Base/paginate.model';
+import { FilterModel } from 'src/app/shared/models/Base/filter.model';
+
+interface Tag {
+  name: string;
+  code: number;
+}
 
 @Component({
   selector: 'app-addUpdate',
@@ -31,6 +41,8 @@ export class AddUpdateComponent implements OnInit {
   isFileValid: boolean = false;
   cropImagePreview: any = '';
   ifDataExist: boolean = false;
+  public CkEditor = new Ckeditor();
+
   constructor(
     private _route: ActivatedRoute,
     private _formBuilder: FormBuilder,
@@ -39,7 +51,9 @@ export class AddUpdateComponent implements OnInit {
     private fileUploader: FileUploaderService,
     private _productsService: ProductService,
     private _fileUploaderService: FileUploaderService
-  ) {}
+  ) {
+    // this.getTags();
+  }
 
   async ngOnInit() {
     if (this.productId === 0) {
@@ -50,6 +64,7 @@ export class AddUpdateComponent implements OnInit {
     } else {
       this.getProductById();
     }
+    this.getTags();
     this.addForm = this._formBuilder.group({
       title: [null, Validators.compose([Validators.required])],
       type: [null, Validators.compose([Validators.required])],
@@ -57,24 +72,195 @@ export class AddUpdateComponent implements OnInit {
       isActive: [null, Validators.compose([Validators.required])],
       description: [null, Validators.compose([Validators.required])],
       browserTitle: [null, Validators.compose([Validators.required])],
+      colorCode: ['#6466f1'],
+      isRTL: [null],
+      secondTitle: [null],
+      authorizeAccepted: [false],
+      managementAccepted: [false],
+      seoAccepted: [false],
+      metaDescription: [null],
+      brief: [null],
+      selectedItems: [''],
     });
-  }
+    
+    // if ((await this.getTags()).res) {
+    //   this.pushSectionItem();
+    // }
 
+  }
+// ===========[هشتک ها]========
+items: tagModel[] = new Array<tagModel>();
+selectedTags: Tag[] = new Array<Tag>();
+tags: Tag[] = new Array<Tag>();
+filterHolder: FilterModel = new FilterModel();
+selectedItems: string[] = [];
+// tetst: boolean = false;
+addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
+
+async getTags() {
+  this._productsService.getTags(this.filterHolder, 0, 1000).subscribe(
+    (res: Result<Paginate<tagModel[]>>) => {
+      this.items = [];
+      this.items = res.data['items'];
+      this.pushSectionItem();
+    },
+    (error) => {}
+  );
+}
+
+pushSectionItem() {
+  this.items.forEach((x) => {
+    let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
+    
+    if (index != -1) {
+      this.selectedTags.push({ name: x.title, code: x.id });
+
+      this.tags.unshift({ name: x.title, code: x.id });
+    } else {
+      this.tags.push({ name: x.title, code: x.id });
+    }
+  });
+  // setTimeout(() => {
+  //   this.tetst = true;
+  // }, 500);
+}
+
+setTags() {
+  let counter = 0;
+  this.selectedTags.forEach((x) => {
+    this.addTagsData.push({
+      linkTagID: x['code'],
+      rowID: this.productId,
+      tableType: 6,
+    });
+    counter++;
+  });
+  this.addTags();
+}
+
+addTags() {
+  this._productsService.addTagToArticle(this.addTagsData).subscribe((data) => {
+    if (data.success) {
+      this.toastr.success(data.message, null, {
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      });
+    } else {
+      this.toastr.error(data.message, null, {
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      });
+    }
+  });
+}
+// addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
+
+// tags: Tag[] = new Array<Tag>();
+// tagItems: tagModel[] = new Array<tagModel>();
+// selectedTags: Tag[] = new Array<Tag>();
+
+// loadMultiSelect: boolean;
+
+// async getTags() {
+//   const res = this._productsService.getTags().pipe(
+//     map((it) => {
+//       this.tagItems = it.data.items;
+
+//       return { res: it.success, message: it.message };
+//     })
+//   );
+//   const tagsRes = await lastValueFrom(res);
+//   return tagsRes;
+  
+// }
+
+// pushSectionItem() {
+  
+//   this.tagItems.forEach((x) => {
+//     let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
+    
+//     if (index != -1) {
+//       this.selectedTags.push({ name: x.title, code: x.id });
+
+//       this.tags.unshift({ name: x.title, code: x.id });
+//     } else {
+//       this.tags.push({ name: x.title, code: x.id });
+//     }
+//   });
+// }
+
+// setTags() {
+//   this.selectedTags.forEach((x) => {
+//     this.addTagsData.push({
+//       linkTagID: x.code,
+//       rowID: this.productId,
+//       tableType: 6,
+//     });
+//   });
+//   if (this.selectedTags.length == 0) {
+//     this.deleteTags();
+//   } else {
+//     this.addTags();
+//   }
+// }
+
+// addTags() {
+//   this._productsService
+//     .create(this.addTagsData, 'LinkTagRelation/AddUpdateLinkTagRelations')
+//     .subscribe((data) => {
+//       if (data.success) {
+//         this.toastr.success(data.message, null, {
+//           closeButton: true,
+//           positionClass: 'toast-top-left',
+//         });
+//       } else {
+//         this.toastr.error(data.message, null, {
+//           closeButton: true,
+//           positionClass: 'toast-top-left',
+//         });
+//       }
+//     });
+// }
+
+// deleteTags() {
+//   this._productsService
+//     .create(
+//       { rowID: this.productId, tableType: 6 },
+//       'LinkTagRelation/DeleteLinkTagRelations'
+//     )
+//     .subscribe((data) => {
+//       if (data.success) {
+//         this.toastr.success(data.message, null, {
+//           closeButton: true,
+//           positionClass: 'toast-top-left',
+//         });
+//       } else {
+//         this.toastr.error(data.message, null, {
+//           closeButton: true,
+//           positionClass: 'toast-top-left',
+//         });
+//       }
+//     });
+// }
+// ===========
   async getProductById() {
     if (this.productId !== 0)
       this._productsService
-        .getOneByID(this.productId, 'Product')
+        .getOneByID(this.productId, 'Product/GetById')
         .subscribe((res: Result<ProductModel>) => {
           if (res.success) {
             this.addUpdate = res.data;
+            this.pushSectionItem();
             this.ifDataExist = true;
           } else {
             this._router.navigate(['/404']);
           }
         });
+        
+
   }
   onFileChanged(event: any) {
-    console.log(this.cropImagePreview);
+    // console.log(this.cropImagePreview);
     this.imgChangeEvt = event;
     this.fileName = event.target.files[0].name;
   }
@@ -103,6 +289,7 @@ export class AddUpdateComponent implements OnInit {
     setTimeout(() => {
       this.sendData();
     }, 800);
+    
   }
   sendData() {
     if (this.addUpdate.id === 0) {
@@ -142,6 +329,7 @@ export class AddUpdateComponent implements OnInit {
           }
         });
     }
+    
   }
   selectType($event: any) {
     if ($event != undefined) {

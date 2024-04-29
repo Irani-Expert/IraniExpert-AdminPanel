@@ -21,6 +21,9 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
 import { GalleryComponent } from './gallery/gallery.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { MultiSelectModule } from 'primeng/multiselect';
+
 @NgModule({
   declarations: [
     ProductsListComponent,
@@ -46,6 +49,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     CKEditorModule,
     SharedDirectivesModule,
     SharedModule,
+    ColorPickerModule,
+    MultiSelectModule
   ],
 
   providers: [FileUploaderService],

@@ -19,6 +19,7 @@ import {
   throwError,
 } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
+import { Ckeditor } from 'src/app/shared/ckconfig';
 
 @Component({
   selector: 'app-back-test',
@@ -26,6 +27,8 @@ import { HttpEventType } from '@angular/common/http';
   styleUrls: ['./back-test.component.scss'],
 })
 export class BackTestComponent implements OnInit {
+  public CkEditor = new Ckeditor();
+
   fileName: string = '';
   isFileValid: boolean = false;
   progress: number = 0;
