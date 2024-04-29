@@ -225,7 +225,12 @@ export class AddUpdateComponent implements OnInit {
     //   this
     // }
     this.fileUploader
-      .upload(this.imageUploadFile, 'products', this.fileName)
+      .newUpload(
+        this.imageUploadFile,
+        this.productId,
+        this.tableType,
+        this.fileName
+      )
       .pipe(
         map((event) => {
           let toasterType = 2;

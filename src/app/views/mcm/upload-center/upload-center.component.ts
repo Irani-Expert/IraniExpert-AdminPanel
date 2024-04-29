@@ -265,7 +265,7 @@ export class UploadCenterComponent implements OnInit, OnDestroy {
   upload() {
     this.progress = 1;
     this.fileUploader
-      .upload(this.file, 'audios', this.fileName)
+      .newUpload(this.file, 0, 30, this.fileName)
       .pipe(
         map((event) => {
           if (event.type == HttpEventType.UploadProgress) {
@@ -488,7 +488,7 @@ export class UploadCenterComponent implements OnInit, OnDestroy {
             description: '',
             fileExists: false,
             iconPath: null,
-            browserTitle: ''
+            browserTitle: '',
           },
         ];
       }

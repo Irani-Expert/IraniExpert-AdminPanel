@@ -379,7 +379,7 @@ export class BannerComponent implements OnInit {
   uploadImg() {
     this.imageUploadProccess = 1;
     this.fileUploader
-      .upload(this.imageUploadFile, 'banners', this.fileName)
+      .newUpload(this.imageUploadFile, this.addUpdate.id, 7, this.fileName)
       .pipe(
         map((event) => {
           let toasterType = 2;

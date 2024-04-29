@@ -18,7 +18,11 @@
 
   <div class="col-md-6 form-group mb-3">
     <label for="answer">پاسخ</label>
-    <ckeditor [editor]="CkEditor.Editor" [(ngModel)]="addUpdate.answer">
+    <ckeditor
+      (ready)="onReady($event)"
+      [editor]="CkEditor.Editor"
+      [(ngModel)]="addUpdate.answer"
+    >
     </ckeditor>
     <small *ngIf="addUpdate.answer == ''" class="mat-text-warn m-t-negative"
       >نوشتن پاسخ ضروری است</small

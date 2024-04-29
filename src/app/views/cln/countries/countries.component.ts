@@ -11,6 +11,7 @@ import { IndicatorValueService } from '../services/indicator-value.service';
 import { CalendarDetailService } from '../services/calendar-detail.service';
 import { lastValueFrom, map } from 'rxjs';
 import { CalendarDetailModel } from '../models/calendardetail.model';
+import { UploadAdapter } from 'src/app/shared/upload-adapter';
 
 interface Tag {
   name: string;
@@ -42,6 +43,13 @@ export class CountriesComponent implements OnInit {
     private _calendarDetail: CalendarDetailService
   ) {}
 
+  onReady(editor) {
+    const rowID = this.countryDetail.id;
+    const tableType = 33; // Countries Table Type
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return new UploadAdapter(loader, rowID, tableType);
+    };
+  }
   async ngOnInit() {
     this.getCountries(undefined);
     await this.getTags();

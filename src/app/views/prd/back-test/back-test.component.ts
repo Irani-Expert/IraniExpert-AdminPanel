@@ -160,7 +160,7 @@ export class BackTestComponent implements OnInit {
   uploadVideo() {
     this.progress = 1;
     this._fileUploaderService
-      .upload(this.videoFile, 'backTests', this.videoName)
+      .newUpload(this.videoFile, this.addUpdate.id, 22, this.videoName)
       .pipe(
         map((event) => {
           if (event.type == HttpEventType.UploadProgress) {

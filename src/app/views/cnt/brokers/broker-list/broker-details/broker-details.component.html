@@ -32,14 +32,16 @@
                 id="title"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['title'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['title'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['title'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['title'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود عنوان ضروری است
               </small>
             </div>
@@ -57,14 +59,16 @@
                 id="secondTitle"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['secondTitle'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['secondTitle'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['secondTitle'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['secondTitle'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود نام بروکر ضروری است
               </small>
             </div>
@@ -82,14 +86,16 @@
                 id="minDeposit"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['minDeposit'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['minDeposit'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['minDeposit'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['minDeposit'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود حداقل واریزی ضروری است
               </small>
             </div>
@@ -107,14 +113,16 @@
                 [value]="item.webSiteLink"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['webSiteLink'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['webSiteLink'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['webSiteLink'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['webSiteLink'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود لینک وب سایت ضروری است
               </small>
             </div>
@@ -134,14 +142,22 @@
                 id="telegramSupportLink"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['telegramSupportLink'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="
+                  !formGroup.controls['telegramSupportLink'].hasError(
+                    'required'
+                  )
+                "
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['telegramSupportLink'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="
+                  formGroup.controls['telegramSupportLink'].hasError('required')
+                "
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود لینک پشتیبان تلگرام ضروری است
               </small>
             </div>
@@ -159,14 +175,16 @@
                 class="form-control radius text-small"
                 [value]="item.videoLink"
               />
-              <small *ngIf="
-              !formGroup.controls['videoLink'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['videoLink'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['videoLink'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['videoLink'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود لینک ویدئو ضروری است
               </small>
             </div>
@@ -184,14 +202,16 @@
                 [value]="item.leverage"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['leverage'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['leverage'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['leverage'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['leverage'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود اهرم(لوریج) ضروری است
               </small>
             </div>
@@ -211,14 +231,16 @@
                 id="browserTitle"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['browserTitle'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['browserTitle'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['browserTitle'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['browserTitle'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود عنوان در مرورگر ضروری است
               </small>
             </div>
@@ -236,14 +258,20 @@
                 [value]="item.establishedYear"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['establishedYear'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="
+                  !formGroup.controls['establishedYear'].hasError('required')
+                "
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['establishedYear'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="
+                  formGroup.controls['establishedYear'].hasError('required')
+                "
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود سال تاًسیس ضروری است
               </small>
             </div>
@@ -261,14 +289,16 @@
                 id="email"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['email'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['email'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['email'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['email'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود ایمیل ضروری است
               </small>
             </div>
@@ -289,14 +319,20 @@
                 id="tradingSymbols"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['tradingSymbols'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="
+                  !formGroup.controls['tradingSymbols'].hasError('required')
+                "
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['tradingSymbols'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="
+                  formGroup.controls['tradingSymbols'].hasError('required')
+                "
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود نماد های معاملاتی ضروری است
               </small>
             </div>
@@ -315,14 +351,16 @@
                 id="brief"
                 class="radius text-small"
               ></textarea>
-              <small *ngIf="
-              !formGroup.controls['brief'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['brief'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['brief'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['brief'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود توضیح مختصر ضروری است
               </small>
             </div>
@@ -338,14 +376,20 @@
                 [value]="item.metaDescription"
                 class="radius text-small"
               ></textarea>
-              <small *ngIf="
-              !formGroup.controls['metaDescription'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="
+                  !formGroup.controls['metaDescription'].hasError('required')
+                "
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['metaDescription'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="
+                  formGroup.controls['metaDescription'].hasError('required')
+                "
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود متا بروکر ضروری است
               </small>
             </div>
@@ -365,10 +409,11 @@
                 [value]="item.referralLink"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['referralLink'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['referralLink'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
             </div>
             <!-- Each Input -->
@@ -387,10 +432,11 @@
                 id="phoneNumber"
                 class="form-control radius text-small"
               />
-              <small *ngIf="
-              !formGroup.controls['phoneNumber'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['phoneNumber'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
             </div>
             <!-- Each Input -->
@@ -416,14 +462,16 @@
                   </div>
                 </ng-template>
               </p-dropdown>
-              <small *ngIf="
-              !formGroup.controls['staticRate'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['staticRate'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['staticRate'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['staticRate'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود امتیاز ضروری است
               </small>
             </div>
@@ -446,9 +494,7 @@
                 [ngModelOptions]="{ standalone: true }"
                 class="form-control input-color radius mt-4"
               />
-              <small>
-                &nbsp;
-              </small>
+              <small> &nbsp; </small>
             </div>
 
             <!-- =======[study time]===== -->
@@ -471,14 +517,16 @@
                 >
                 </p-inputMask>
               </div>
-              <small *ngIf="
-              !formGroup.controls['studyTime'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
-               &nbsp;
+              <small
+                *ngIf="!formGroup.controls['studyTime'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
+                &nbsp;
               </small>
-              <small *ngIf="
-              formGroup.controls['studyTime'].hasError('required')"
-              class="mat-text-warn m-t-negative ml-2" >
+              <small
+                *ngIf="formGroup.controls['studyTime'].hasError('required')"
+                class="mat-text-warn m-t-negative ml-2"
+              >
                 ورود زمان مطالعه ضروری است
               </small>
             </div>
@@ -646,8 +694,10 @@
             </div>
             <!-- Each Input -->
             <!-- Each Input -->
-            <div class="col-auto form-group mb-3 mt-3"
-            *appCanAccess="'is-active-Edit'">
+            <div
+              class="col-auto form-group mb-3 mt-3"
+              *appCanAccess="'is-active-Edit'"
+            >
               <b class="d-block text-center mb-1 text-14 text-primary">نمایش</b>
               <span class="m-1 text-12 slider-text top-custom-2">داده شود</span>
               <label for="isActive" class="switch switch-primary mr-2 m-2">
@@ -678,6 +728,7 @@
             </div>
             <div class="col-12">
               <ckeditor
+                (ready)="onReady($event)"
                 [ngModelOptions]="{ standalone: true }"
                 [(ngModel)]="item.description"
                 [editor]="CkEditor.Editor"
@@ -799,9 +850,11 @@
               </button>
             </ng-container>
           </div>
-          <div class="col-6 d-flex flex-column gap-15 justify-content-between mt-4">
-            <strong class="d-block text-secondary text-center text-16"
-              > عکس شاخص سوم</strong
+          <div
+            class="col-6 d-flex flex-column gap-15 justify-content-between mt-4"
+          >
+            <strong class="d-block text-secondary text-center text-16">
+              عکس شاخص سوم</strong
             >
             <ng-container *ngIf="item.thirdCardImagePath !== ''">
               <div class="img-holder">

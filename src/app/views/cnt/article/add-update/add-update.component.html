@@ -280,7 +280,7 @@
                 *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']"
               >
                 <label class="d-block" for="picker1">انتخاب تصویر</label>
-                <input type="file" (change)="onFileChanged($event)" />
+                <input type="file" (change)="onImgChanged($event)" />
                 <div>
                   <image-cropper
                     [imageChangedEvent]="imgChangeEvt"
@@ -306,15 +306,53 @@
                   type="button"
                   [disabled]="!cropImagePreview || isLoading"
                   class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center"
-                  (click)="uploadFile()"
+                  (click)="uploadImg()"
                 >
                   <i class="i-Upload text-bigger mr-2"></i>
-                  <strong>آپلود کن</strong>
+                  <strong>آپلود عکس شاخص</strong>
                 </button>
               </div>
             </ng-container>
+
+            <div
+              *appCanAccess="['ArticleT-Edit', 'ArticleT-Add']"
+              class="col-12 my-5"
+            >
+              <p><strong>آپلود فایل روی سرور</strong></p>
+              <div>
+                <label class="d-block" for="picker2">انتخاب فایل</label>
+                <input
+                  id="picker2"
+                  type="file"
+                  (change)="onFileChanged($event)"
+                />
+                <button
+                  type="button"
+                  class="btn-upload btn d-inline-flex justify-content-around py-btns radius align-items-center mx-4"
+                  (click)="uploadFile()"
+                >
+                  <i class="i-Upload text-bigger mr-2"></i>
+                  <strong>آپلود</strong>
+                </button>
+                <div class="d-flex" style="gap: 0.75rem">
+                  <input
+                    disabled
+                    type="text"
+                    class="form-control radius mx-0 my-3 w-auto d-inline-flex"
+                    [value]="filePath"
+                  />
+                  <span
+                    (click)="copyToClipboard()"
+                    [ngClass]="isCopied ? 'copied' : 'not-copied'"
+                    class="btn-copy-to-clipboard"
+                  ></span>
+                </div>
+              </div>
+            </div>
+
             <div class="col-md-12 form-group mb-3 mt-3">
               <ckeditor
+                (ready)="onReady($event)"
                 [editor]="CkEditor.Editor"
                 [(ngModel)]="addUpdate.description"
               >
@@ -328,6 +366,7 @@
                 >توضیحات ضروری است</small
               >
             </div>
+
             <div class="col-12">
               <h4>تگ ها</h4>
               <ng-container *ngFor="let item of selectedTags">
@@ -339,7 +378,10 @@
                 </div>
               </ng-container>
             </div>
-            <div class="col-md-6 form-group mb-3 mt-3" *appCanAccess="'is-active-Edit'">
+            <div
+              class="col-md-6 form-group mb-3 mt-3"
+              *appCanAccess="'is-active-Edit'"
+            >
               <label class="m-1">نمایش داده شود</label>
               <label class="switch switch-primary mr-2 m-2">
                 <span>عدم نمایش</span>

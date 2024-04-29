@@ -270,7 +270,7 @@ export class GalleryComponent implements OnInit {
   uploadImg() {
     this.imageUploadProccess = 1;
     this.fileUploader
-      .upload(this.imageUploadFile, 'audios', this.fileName)
+      .newUpload(this.imageUploadFile, this.productId, 6, this.fileName)
       .pipe(
         map((event) => {
           let toasterType = 2;

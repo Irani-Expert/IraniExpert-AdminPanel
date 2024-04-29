@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment.prod';
 import { Result } from '../models/Base/result.model';
 import { AuthenticateService } from './auth/authenticate.service';
 import { UserInfoModel } from '../models/userInfoModel';
+import { TableType } from 'src/app/views/Log/models/table-typeModel';
 
 @Injectable()
 export class FileUploaderService {
@@ -104,6 +105,16 @@ export class FileUploaderService {
       formData,
       { reportProgress: true, observe: 'events' }
     );
+  }
+
+  newUpload(blob: Blob, rowID: number, tableType: number, fileName: string) {
+    const url = `https://dev.iraniexpert.com/api/Files/Upload?TableType=${tableType}&RowID=${rowID}`;
+    const formData = new FormData();
+    formData.append('File', blob, fileName);
+    return this._http.post<Result<any>>(url, formData, {
+      reportProgress: true,
+      observe: 'events',
+    });
   }
   // dataURItoBlobForVoice(dataURI) {
   //   const base64 = window.atob(dataURI);

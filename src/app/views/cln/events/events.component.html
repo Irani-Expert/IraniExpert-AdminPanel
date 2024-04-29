@@ -691,6 +691,7 @@
         <hr class="d-flex flex-grow-1" style="margin: 13px 8px 13px 10px" />
       </div>
       <ckeditor
+        (ready)="onReady($event)"
         [editor]="CkEditor.Editor"
         [(ngModel)]="eventDetails.description"
       >
@@ -705,6 +706,7 @@
         <hr class="d-flex flex-grow-1" style="margin: 13px 8px 13px 10px" />
       </div>
       <ckeditor
+        (ready)="onReady($event)"
         [editor]="CkEditor.Editor"
         [(ngModel)]="eventDetails.iraniExpertDescription"
       >

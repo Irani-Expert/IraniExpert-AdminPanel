@@ -10,12 +10,13 @@ import { GroupService } from 'src/app/views/bas/group/group.service';
 import { ImageCroppedEvent } from 'projects/ngx-image-cropper/src/public-api';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
-import { catchError, map, throwError } from 'rxjs';
+import { catchError, lastValueFrom, map, throwError } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { tagModel } from '../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../tagModel/tagRelation.model';
 import { Ckeditor } from 'src/app/shared/ckconfig';
+import { UploadAdapter } from 'src/app/shared/upload-adapter';
 
 interface Tag {
   name: string;
@@ -68,6 +69,13 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     private _user: AuthenticateService,
     private _router: Router
   ) {}
+  onReady(editor) {
+    const rowID = this.articleId;
+    const tableType = 1; // Articles Table Type
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return new UploadAdapter(loader, rowID, tableType);
+    };
+  }
   changeNavId(event: string) {
     this.navId = parseInt(event.split('-')[2]);
   }
@@ -75,7 +83,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   pushSectionItem() {
     this.items.forEach((x) => {
       let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
-      
+
       if (index != -1) {
         this.selectedTags.push({ name: x.title, code: x.id });
 
@@ -137,13 +145,17 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
 
   selectGroup() {}
 
-  onFileChanged(event: any) {
+  onImgChanged(event: any) {
     this.imgChangeEvt = event;
     let file = event.target.files[0];
     this.fileName = file.name;
     this.file = new Blob([file], {
       type: file.type,
     });
+  }
+
+  onFileChanged(event: any) {
+    let file = event.target.files[0];
   }
 
   cropImg(e: ImageCroppedEvent) {
@@ -177,11 +189,55 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
         }
       });
   }
+  copyToClipboard() {
+    if (!this.isCopied && this.filePath !== '') {
+      navigator.clipboard.writeText(this.filePath);
+      this.isCopied = true;
+      this.toastr.success('در کلیپبورد ذخیره شد');
+    }
+  }
 
+  isCopied = false;
+  filePath = '';
   async uploadFile() {
+    let resPath = '';
+    this.isLoading = true;
+    let fileName = '';
+    let blob: Blob;
+    const element = document.getElementById('picker2');
+    if (element instanceof HTMLInputElement) {
+      let file = element.files[0];
+      fileName = file.name;
+      blob = new Blob([file], {
+        type: file.type,
+      });
+      let tableType = 1; // Articles Table Type
+      const res$ = this._fileUploaderService
+        .newUpload(blob, this.articleId, tableType, fileName)
+        .pipe(
+          map((it) => {
+            if (it.type == HttpEventType.Response) {
+              if (it.body.success) {
+                resPath = it.body.data;
+                return { success: true, message: it.body.message };
+              }
+              return { success: false, message: it.body.message };
+            }
+          })
+        );
+      const res = await lastValueFrom(res$);
+      if (res.success) {
+        this.filePath = resPath;
+        this.toastr.success(res.message);
+      } else this.toastr.error(res.message);
+    }
+    // const res = this._fileUploaderService
+    // .upload(, 'articles', this.fileName)
+  }
+  async uploadImg() {
     this.isLoading = true;
     this._fileUploaderService
-      .upload(this.file, 'articles', this.fileName)
+      .newUpload(this.file, this.articleId, this.tableType, this.fileName)
       .pipe(
         map((res) => {
           if (res.type == HttpEventType.Response) {

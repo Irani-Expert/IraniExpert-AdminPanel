@@ -72,6 +72,26 @@ export const styles: StyleDefinition[] = [
     element: 'ul',
     name: 'List Inline',
   },
+  {
+    classes: ['d-block download-station'],
+    element: 'a',
+    name: 'جایگاه فایل دانلودی',
+  },
+  {
+    classes: ['download-icon'],
+    element: 'a',
+    name: 'ایکون دانلود',
+  },
+  {
+    classes: ['bordered'],
+    element: 'a',
+    name: 'لبه دار',
+  },
+  {
+    classes: ['green'],
+    element: 'a',
+    name: 'سبز',
+  },
 ];
 // const styles2 =  [{
 //     classes: ['info-box'],

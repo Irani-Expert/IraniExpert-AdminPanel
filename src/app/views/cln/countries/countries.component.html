@@ -304,6 +304,7 @@
           </div>
 
           <ckeditor
+            (ready)="onReady($event)"
             [editor]="CkEditor.Editor"
             [(ngModel)]="countryDetail.description"
           >

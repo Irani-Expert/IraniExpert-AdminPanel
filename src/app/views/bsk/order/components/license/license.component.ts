@@ -82,7 +82,7 @@ export class LicenseComponent implements OnInit {
     if (this.isFileChanged && !this.fileExists) {
       this.spin(true);
       const uploadRes = this._uploadService
-        .upload(this.file, 'licenses', this.fileName)
+        .newUpload(this.file, this.licenseID, 31, this.fileName)
         .pipe(
           map((event) => {
             if (event.type == HttpEventType.Response) {

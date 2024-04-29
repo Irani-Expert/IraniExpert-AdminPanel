@@ -15,6 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { tagModel } from '../../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../../../article/tagModel/tagRelation.model';
 import { Utils } from 'src/app/shared/utils';
+import { UploadAdapter } from 'src/app/shared/upload-adapter';
 
 interface Tag {
   name: string;
@@ -130,7 +131,13 @@ export class BrokerDetailsComponent {
         },
       });
   }
-
+  onReady(editor) {
+    const rowID = this.item.id;
+    const tableType = 36; // Brokers Table Type
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return new UploadAdapter(loader, rowID, tableType);
+    };
+  }
   ngOnInit() {}
   showForm = false;
   ngOnDestroy() {
@@ -242,24 +249,26 @@ export class BrokerDetailsComponent {
 
   // Upload File
   async uploadFile(file: Blob, fileName: string, type: number) {
-    const uploadRes = this.fileUploader.upload(file, 'article', fileName).pipe(
-      map((res) => {
-        if (res.type === HttpEventType.Response) {
-          if (res.body.success) {
-            if (type == 0) {
-              this.item.cardImagePath = res.body.data[0];
+    const uploadRes = this.fileUploader
+      .newUpload(file, this.item.id, 36, fileName)
+      .pipe(
+        map((res) => {
+          if (res.type === HttpEventType.Response) {
+            if (res.body.success) {
+              if (type == 0) {
+                this.item.cardImagePath = res.body.data[0];
+              }
+              if (type == 1) {
+                this.item.secondCardImagePath = res.body.data[0];
+              }
+              if (type == 2) {
+                this.item.thirdCardImagePath = res.body.data[0];
+              }
             }
-            if (type == 1) {
-              this.item.secondCardImagePath = res.body.data[0];
-            }
-            if (type == 2) {
-              this.item.thirdCardImagePath = res.body.data[0];
-            }
+            return res.body.success;
           }
-          return res.body.success;
-        }
-      })
-    );
+        })
+      );
     const value = await lastValueFrom(uploadRes);
     return value;
   }
