@@ -108,7 +108,7 @@ export class FileUploaderService {
   }
 
   newUpload(blob: Blob, rowID: number, tableType: number, fileName: string) {
-    const url = `https://dev.iraniexpert.com/api/Files/Upload?TableType=${tableType}&RowID=${rowID}`;
+    const url = `${this.uploardUrl}?TableType=${tableType}&RowID=${rowID}`;
     const formData = new FormData();
     formData.append('File', blob, fileName);
     return this._http.post<Result<any>>(url, formData, {

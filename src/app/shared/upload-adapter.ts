@@ -1,4 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment.prod';
 
 export class UploadAdapter {
   loader: any;
@@ -26,7 +27,7 @@ export class UploadAdapter {
     const xhr = (this.xhr = new XMLHttpRequest());
     xhr.open(
       'POST',
-      `https://dev.iraniexpert.com/api/Files/UploadCKEditor?TableType=${this.tableType}&RowId=${this.rowID}`,
+      `${environment.ckEditorUploadUrl}?TableType=${this.tableType}&RowId=${this.rowID}`,
       true
     ); // TODO change the URL
     xhr.responseType = 'json';
