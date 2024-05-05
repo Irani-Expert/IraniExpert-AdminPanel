@@ -243,7 +243,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
           if (res.type == HttpEventType.Response) {
             if (res.body.success) {
               this.isLoading = false;
-              this.addUpdate.cardImagePath = res.body.data[0];
+              this.addUpdate.cardImagePath = res.body.data;
               this.addUpdate.fileExists = true;
               this.toastr.success(res.body.message, '', {
                 positionClass: 'toast-top-left',
@@ -272,7 +272,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     //   .uploadFile(this.cropImagePreview, 'articles')
     //   .subscribe((res: Result<string[]>) => {
     //     if (res.success) {
-    //       this.addUpdate.cardImagePath = res.data[0];
+    //       this.addUpdate.cardImagePath = res.data;
     //       this.addUpdate.fileExists = true;
     //       this.toastr.success('با موفقیت آپلود شد', null, {
     //         closeButton: true,

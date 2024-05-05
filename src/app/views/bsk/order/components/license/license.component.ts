@@ -82,16 +82,16 @@ export class LicenseComponent implements OnInit {
     if (this.isFileChanged && !this.fileExists) {
       this.spin(true);
       const uploadRes = this._uploadService
-        .newUpload(this.file, this.licenseID, 31, this.fileName)
+        .newUpload(this.file, this.rowID, 31, this.fileName)
         .pipe(
           map((event) => {
             if (event.type == HttpEventType.Response) {
               if (event.body) {
                 if (event.body.success) {
                   this.fileExists = true;
-                  this.license.licenseFilePath = event.body.data[0];
+                  this.license.licenseFilePath = event.body.data;
                   this.licenseForm.controls['filePath'].setValue(
-                    event.body.data[0]
+                    event.body.data
                   );
                   return true;
                 }

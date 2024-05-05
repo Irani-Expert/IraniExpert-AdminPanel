@@ -256,13 +256,13 @@ export class BrokerDetailsComponent {
           if (res.type === HttpEventType.Response) {
             if (res.body.success) {
               if (type == 0) {
-                this.item.cardImagePath = res.body.data[0];
+                this.item.cardImagePath = res.body.data;
               }
               if (type == 1) {
-                this.item.secondCardImagePath = res.body.data[0];
+                this.item.secondCardImagePath = res.body.data;
               }
               if (type == 2) {
-                this.item.thirdCardImagePath = res.body.data[0];
+                this.item.thirdCardImagePath = res.body.data;
               }
             }
             return res.body.success;

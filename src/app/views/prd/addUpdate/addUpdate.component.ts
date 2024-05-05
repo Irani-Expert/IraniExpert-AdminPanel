@@ -82,167 +82,168 @@ export class AddUpdateComponent implements OnInit {
       brief: [null],
       selectedItems: [''],
     });
-    
+
     // if ((await this.getTags()).res) {
     //   this.pushSectionItem();
     // }
-
   }
-// ===========[هشتک ها]========
-items: tagModel[] = new Array<tagModel>();
-selectedTags: Tag[] = new Array<Tag>();
-tags: Tag[] = new Array<Tag>();
-filterHolder: FilterModel = new FilterModel();
-selectedItems: string[] = [];
-// tetst: boolean = false;
-addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
+  // ===========[هشتک ها]========
+  items: tagModel[] = new Array<tagModel>();
+  selectedTags: Tag[] = new Array<Tag>();
+  tags: Tag[] = new Array<Tag>();
+  filterHolder: FilterModel = new FilterModel();
+  selectedItems: string[] = [];
+  // tetst: boolean = false;
+  addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
 
-async getTags() {
-  this._productsService.getTags(this.filterHolder, 0, 1000).subscribe(
-    (res: Result<Paginate<tagModel[]>>) => {
-      this.items = [];
-      this.items = res.data['items'];
-      this.pushSectionItem();
-    },
-    (error) => {}
-  );
-}
+  async getTags() {
+    this._productsService.getTags(this.filterHolder, 0, 1000).subscribe(
+      (res: Result<Paginate<tagModel[]>>) => {
+        this.items = [];
+        this.items = res.data['items'];
+        this.pushSectionItem();
+      },
+      (error) => {}
+    );
+  }
 
-pushSectionItem() {
-  this.items.forEach((x) => {
-    let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
-    
-    if (index != -1) {
-      this.selectedTags.push({ name: x.title, code: x.id });
+  pushSectionItem() {
+    this.items.forEach((x) => {
+      let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
 
-      this.tags.unshift({ name: x.title, code: x.id });
-    } else {
-      this.tags.push({ name: x.title, code: x.id });
-    }
-  });
-  // setTimeout(() => {
-  //   this.tetst = true;
-  // }, 500);
-}
+      if (index != -1) {
+        this.selectedTags.push({ name: x.title, code: x.id });
 
-setTags() {
-  let counter = 0;
-  this.selectedTags.forEach((x) => {
-    this.addTagsData.push({
-      linkTagID: x['code'],
-      rowID: this.productId,
-      tableType: 6,
+        this.tags.unshift({ name: x.title, code: x.id });
+      } else {
+        this.tags.push({ name: x.title, code: x.id });
+      }
     });
-    counter++;
-  });
-  this.addTags();
-}
+    // setTimeout(() => {
+    //   this.tetst = true;
+    // }, 500);
+  }
 
-addTags() {
-  this._productsService.addTagToArticle(this.addTagsData).subscribe((data) => {
-    if (data.success) {
-      this.toastr.success(data.message, null, {
-        closeButton: true,
-        positionClass: 'toast-top-left',
+  setTags() {
+    let counter = 0;
+    this.selectedTags.forEach((x) => {
+      this.addTagsData.push({
+        linkTagID: x['code'],
+        rowID: this.productId,
+        tableType: 6,
       });
-    } else {
-      this.toastr.error(data.message, null, {
-        closeButton: true,
-        positionClass: 'toast-top-left',
+      counter++;
+    });
+    this.addTags();
+  }
+
+  addTags() {
+    this._productsService
+      .addTagToArticle(this.addTagsData)
+      .subscribe((data) => {
+        if (data.success) {
+          this.toastr.success(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        } else {
+          this.toastr.error(data.message, null, {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        }
       });
-    }
-  });
-}
-// addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
+  }
+  // addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
 
-// tags: Tag[] = new Array<Tag>();
-// tagItems: tagModel[] = new Array<tagModel>();
-// selectedTags: Tag[] = new Array<Tag>();
+  // tags: Tag[] = new Array<Tag>();
+  // tagItems: tagModel[] = new Array<tagModel>();
+  // selectedTags: Tag[] = new Array<Tag>();
 
-// loadMultiSelect: boolean;
+  // loadMultiSelect: boolean;
 
-// async getTags() {
-//   const res = this._productsService.getTags().pipe(
-//     map((it) => {
-//       this.tagItems = it.data.items;
+  // async getTags() {
+  //   const res = this._productsService.getTags().pipe(
+  //     map((it) => {
+  //       this.tagItems = it.data.items;
 
-//       return { res: it.success, message: it.message };
-//     })
-//   );
-//   const tagsRes = await lastValueFrom(res);
-//   return tagsRes;
-  
-// }
+  //       return { res: it.success, message: it.message };
+  //     })
+  //   );
+  //   const tagsRes = await lastValueFrom(res);
+  //   return tagsRes;
 
-// pushSectionItem() {
-  
-//   this.tagItems.forEach((x) => {
-//     let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
-    
-//     if (index != -1) {
-//       this.selectedTags.push({ name: x.title, code: x.id });
+  // }
 
-//       this.tags.unshift({ name: x.title, code: x.id });
-//     } else {
-//       this.tags.push({ name: x.title, code: x.id });
-//     }
-//   });
-// }
+  // pushSectionItem() {
 
-// setTags() {
-//   this.selectedTags.forEach((x) => {
-//     this.addTagsData.push({
-//       linkTagID: x.code,
-//       rowID: this.productId,
-//       tableType: 6,
-//     });
-//   });
-//   if (this.selectedTags.length == 0) {
-//     this.deleteTags();
-//   } else {
-//     this.addTags();
-//   }
-// }
+  //   this.tagItems.forEach((x) => {
+  //     let index = this.addUpdate.linkTags.findIndex((i) => i.value == x.id);
 
-// addTags() {
-//   this._productsService
-//     .create(this.addTagsData, 'LinkTagRelation/AddUpdateLinkTagRelations')
-//     .subscribe((data) => {
-//       if (data.success) {
-//         this.toastr.success(data.message, null, {
-//           closeButton: true,
-//           positionClass: 'toast-top-left',
-//         });
-//       } else {
-//         this.toastr.error(data.message, null, {
-//           closeButton: true,
-//           positionClass: 'toast-top-left',
-//         });
-//       }
-//     });
-// }
+  //     if (index != -1) {
+  //       this.selectedTags.push({ name: x.title, code: x.id });
 
-// deleteTags() {
-//   this._productsService
-//     .create(
-//       { rowID: this.productId, tableType: 6 },
-//       'LinkTagRelation/DeleteLinkTagRelations'
-//     )
-//     .subscribe((data) => {
-//       if (data.success) {
-//         this.toastr.success(data.message, null, {
-//           closeButton: true,
-//           positionClass: 'toast-top-left',
-//         });
-//       } else {
-//         this.toastr.error(data.message, null, {
-//           closeButton: true,
-//           positionClass: 'toast-top-left',
-//         });
-//       }
-//     });
-// }
-// ===========
+  //       this.tags.unshift({ name: x.title, code: x.id });
+  //     } else {
+  //       this.tags.push({ name: x.title, code: x.id });
+  //     }
+  //   });
+  // }
+
+  // setTags() {
+  //   this.selectedTags.forEach((x) => {
+  //     this.addTagsData.push({
+  //       linkTagID: x.code,
+  //       rowID: this.productId,
+  //       tableType: 6,
+  //     });
+  //   });
+  //   if (this.selectedTags.length == 0) {
+  //     this.deleteTags();
+  //   } else {
+  //     this.addTags();
+  //   }
+  // }
+
+  // addTags() {
+  //   this._productsService
+  //     .create(this.addTagsData, 'LinkTagRelation/AddUpdateLinkTagRelations')
+  //     .subscribe((data) => {
+  //       if (data.success) {
+  //         this.toastr.success(data.message, null, {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //       } else {
+  //         this.toastr.error(data.message, null, {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //       }
+  //     });
+  // }
+
+  // deleteTags() {
+  //   this._productsService
+  //     .create(
+  //       { rowID: this.productId, tableType: 6 },
+  //       'LinkTagRelation/DeleteLinkTagRelations'
+  //     )
+  //     .subscribe((data) => {
+  //       if (data.success) {
+  //         this.toastr.success(data.message, null, {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //       } else {
+  //         this.toastr.error(data.message, null, {
+  //           closeButton: true,
+  //           positionClass: 'toast-top-left',
+  //         });
+  //       }
+  //     });
+  // }
+  // ===========
   async getProductById() {
     if (this.productId !== 0)
       this._productsService
@@ -256,8 +257,6 @@ addTags() {
             this._router.navigate(['/404']);
           }
         });
-        
-
   }
   onFileChanged(event: any) {
     // console.log(this.cropImagePreview);
@@ -277,7 +276,7 @@ addTags() {
   //     .uploadFile(this.cropImagePreview, 'products',this.fileName)
   //     .subscribe((res: Result<string[]>) => {
   //       if (res.success) {
-  //         this.addUpdate.cardImagePath = res.data[0];
+  //         this.addUpdate.cardImagePath = res.data;
   //         this.addUpdate.fileExists = true;
   //       } else {
   //         this.addUpdate.cardImagePath = res.errors[0];
@@ -289,7 +288,6 @@ addTags() {
     setTimeout(() => {
       this.sendData();
     }, 800);
-    
   }
   sendData() {
     if (this.addUpdate.id === 0) {
@@ -329,7 +327,6 @@ addTags() {
           }
         });
     }
-    
   }
   selectType($event: any) {
     if ($event != undefined) {
@@ -427,7 +424,7 @@ addTags() {
               (100 * event.loaded) / event.total
             );
           } else if (event.type == HttpEventType.Response) {
-            this.addUpdate.cardImagePath = event.body.data[0];
+            this.addUpdate.cardImagePath = event.body.data;
             if (event.body.success) {
               this.isFileValid = false;
               toasterType = 1;

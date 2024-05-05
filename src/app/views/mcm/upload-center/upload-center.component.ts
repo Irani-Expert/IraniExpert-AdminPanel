@@ -271,7 +271,7 @@ export class UploadCenterComponent implements OnInit, OnDestroy {
           if (event.type == HttpEventType.UploadProgress) {
             this.progress = Math.round((100 * event.loaded) / event.total);
           } else if (event.type == HttpEventType.Response) {
-            this.fileModel.filePath = event.body.data[0];
+            this.fileModel.filePath = event.body.data;
             if (event.body.success) {
               this.addForm.controls['filePath'].setValue(
                 this.fileModel.filePath

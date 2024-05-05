@@ -388,7 +388,7 @@ export class BannerComponent implements OnInit {
               (100 * event.loaded) / event.total
             );
           } else if (event.type == HttpEventType.Response) {
-            this.addUpdate.filePath = event.body.data[0];
+            this.addUpdate.filePath = event.body.data;
 
             if (event.body.success) {
               this.addForm.controls['filePath'].setValue(
