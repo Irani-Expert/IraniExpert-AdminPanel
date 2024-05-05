@@ -31,7 +31,7 @@ export class CalendarDetailService extends BaseService<Object, number>  {
 
   getTags() {
     return this._http.get<Result<Paginate<tagModel[]>>>(
-      this._base + '/LinkTag?pageIndex=0&accending=false&TableType=33',
+      this._base + '/LinkTag?pageIndex=0&accending=false',
       this._options
     );
   }

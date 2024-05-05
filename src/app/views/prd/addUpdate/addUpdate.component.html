@@ -216,7 +216,7 @@
             <!-- ========[meta]===== -->
             <div class="col-md-6 form-group mb-3">
               <label for="title">متا دیسکریپشن</label>
-              <input
+              <textarea
                 type="text"
                 class="form-control form-control-rounded"
                 id="title"
@@ -225,7 +225,7 @@
                 [(ngModel)]="addUpdate.metaDescription"
                 maxlength="51"
                 minlength="2"
-              />
+              ></textarea>
             </div>
             <!-- ========[boolean]===== -->
             <div class="col-md-6 form-group mb-3 mt-3">
