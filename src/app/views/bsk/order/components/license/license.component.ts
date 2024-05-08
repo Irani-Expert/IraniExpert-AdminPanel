@@ -89,6 +89,7 @@ export class LicenseComponent implements OnInit {
               if (event.body) {
                 if (event.body.success) {
                   this.fileExists = true;
+
                   this.license.licenseFilePath = event.body.data;
                   this.licenseForm.controls['filePath'].setValue(
                     event.body.data
