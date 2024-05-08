@@ -17,6 +17,7 @@ import { tagModel } from '../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../tagModel/tagRelation.model';
 import { Ckeditor } from 'src/app/shared/ckconfig';
 import { UploadAdapter } from 'src/app/shared/upload-adapter';
+import { environment } from 'src/environments/environment.prod';
 
 interface Tag {
   name: string;
@@ -227,7 +228,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
         );
       const res = await lastValueFrom(res$);
       if (res.success) {
-        this.filePath = resPath;
+        this.filePath = 'https://dl.iraniexpert.com' + resPath;
         this.toastr.success(res.message);
       } else this.toastr.error(res.message);
     }
