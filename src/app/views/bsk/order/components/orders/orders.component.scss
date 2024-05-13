@@ -117,3 +117,41 @@
   align-items: center !important;
   gap: 0.25rem !important;
 }
+
+:host ::ng-deep .p-calendar .p-datepicker {
+  @media screen and (max-width: 1024px) {
+    left: -50% !important;
+  }
+  left: -25% !important;
+}
+
+:host ::ng-deep .p-button.p-button-sm {
+  padding: 0.55625rem 1.09375rem;
+}
+:host ::ng-deep .p-dialog-content {
+  @media screen and (min-width: 1200px) {
+    overflow: unset;
+  }
+}
+:host ::ng-deep .p-sidebar-content {
+  overflow: unset;
+}
+
+:host ::ng-deep .p-datepicker-calendar-container {
+  table {
+    td,
+    th {
+      padding: 0;
+    }
+  }
+}
+
+:host ::ng-deep .p-sidebar-top {
+  background: #fff !important;
+
+  height: fit-content;
+}
+
+:host ::ng-deep .p-sidebar-right {
+  background: #fff !important;
+}

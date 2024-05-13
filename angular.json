@@ -24,7 +24,8 @@
             "allowedCommonJsDependencies": [
               "echarts",
               "highlight.js",
-              "angular2-text-mask"
+              "angular2-text-mask",
+              "jalali-moment"
             ],
             "outputPath": "dist",
             "index": "src/index.html",

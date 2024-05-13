@@ -7,47 +7,154 @@
     styleClass="p-button-raised p-button-sm"
     iconPos="right"
   ></p-button>
-  <div class="d-block mt-4">
-    <!-- Country -->
-    <strong for="pageOrder" class="text-small"> وضعیت سفارش </strong>
-    <div ngbDropdown placement="bottom-end" class="col-auto mt-3">
-      <button
-        type="button"
-        class="btn btn-filter radius py-btns text-small dropdown-btn-custom"
-        id="dropdownBasic1"
-        ngbDropdownToggle
-      >
-        <span
-          class="pi"
-          [ngClass]="'pi-' + transactions[transactionIndexHolder].icon"
-        ></span>
-        <strong class="ml-1" style="font-size: 0.76rem">{{
-          transactions[transactionIndexHolder].title
-        }}</strong>
-      </button>
-      <div
-        ngbDropdownMenu
-        class="mt-1 shadow-lg radius dropDown-scroll"
-        aria-labelledby="dropdownBasic1"
-        style="overflow: auto"
-      >
+  <div class="d-flex flex-wrap mt-4 align-items-end" style="gap: 0.5rem">
+    <!-- Transactions -->
+    <div class="d-flex flex-column">
+      <div ngbDropdown placement="bottom-end" class="col-auto my-3 my-3">
         <button
-          class="text-left btn mt-2"
-          ngbDropdownItem
-          *ngFor="let transaction of transactions; let i = index"
-          (click)="setFilter(i)"
+          type="button"
+          style="padding: 0.75rem 1.25rem"
+          class="btn btn-filter radius text-small dropdown-btn-custom"
+          id="dropdownBasic1"
+          ngbDropdownToggle
         >
           <span
             class="pi"
-            [ngClass]="'pi-' + transaction.icon"
-            style="font-size: 0.8rem"
+            [ngClass]="'pi-' + transactions[transactionIndexHolder].icon"
           ></span>
-          <strong class="text-small ml-1">{{ transaction.title }}</strong>
+          <strong class="ml-1" style="font-size: 0.76rem">{{
+            transactions[transactionIndexHolder].title
+          }}</strong>
         </button>
+        <div
+          ngbDropdownMenu
+          class="mt-1 shadow-lg radius dropDown-scroll"
+          aria-labelledby="dropdownBasic1"
+          style="overflow: auto"
+        >
+          <button
+            class="text-left btn mt-2"
+            ngbDropdownItem
+            *ngFor="let transaction of transactions; let i = index"
+            (click)="setTransactionStatus(i)"
+          >
+            <span
+              class="pi"
+              [ngClass]="'pi-' + transaction.icon"
+              style="font-size: 0.8rem"
+            ></span>
+            <strong class="text-small ml-1">{{ transaction.title }}</strong>
+          </button>
+        </div>
       </div>
     </div>
+    <p-button
+      dir="ltr"
+      (click)="openAdvancedFilter = true"
+      label="فیلتر"
+      icon="pi pi-filter"
+      styleClass="p-button-raised p-button-sm p-button-secondary my-3"
+      iconPos="right"
+    ></p-button>
+    <!-- Transactions -->
+    <ng-container *ngIf="false">
+      <!-- Name -->
+      <div class="col-auto my-3">
+        <span class="p-float-label">
+          <input
+            (input)="searchByUsername($event.target.value)"
+            class="p-inputtext-sm"
+            pInputText
+            id="firstName"
+          />
+          <label class="text-small" htmlFor="firstName">نام</label>
+        </span>
+      </div>
+      <!-- Name -->
 
-    <!-- Country -->
+      <!-- Last-Name -->
+      <div class="col-auto my-3">
+        <span class="p-float-label">
+          <input
+            (input)="searchByLastname($event.target.value)"
+            class="p-inputtext-sm"
+            pInputText
+            id="lastName"
+          />
+          <label class="text-small" htmlFor="lastName">نام خانوادگی</label>
+        </span>
+      </div>
+      <!-- Last-Name -->
+
+      <!-- Account-Number -->
+      <div class="col-auto my-3">
+        <span class="p-float-label">
+          <input
+            (input)="searchByAccountNumber($event.target.value)"
+            class="p-inputtext-sm"
+            pInputText
+            id="accountNumber"
+          />
+          <label class="text-small" htmlFor="accountNumber">شماره حساب</label>
+        </span>
+      </div>
+      <!-- Account-Number -->
+
+      <!-- Order-Date -->
+      <div class="col-auto my-3">
+        <span class="p-float-label block">
+          <p-calendar
+            dateFormat="yy-mm-dd"
+            (onSelect)="changeCreateDate()"
+            [(ngModel)]="createDate"
+            inputId="createDate"
+            selectionMode="range"
+          >
+          </p-calendar>
+          <label class="text-small" for="createDate"> تاریخ سفارش</label>
+        </span>
+      </div>
+
+      <!-- Order-Date -->
+
+      <!-- License-Start-Date -->
+      <div class="col-auto my-3">
+        <span class="p-float-label block">
+          <p-calendar
+            (onSelect)="changeLicenseStartDate()"
+            dateFormat="yy-mm-dd"
+            [(ngModel)]="licenseStartDate"
+            inputId="licenseStartDate"
+            selectionMode="range"
+          >
+          </p-calendar>
+          <label class="text-small" for="licenseStartDate">
+            تاریخ شروع لایسنس</label
+          >
+        </span>
+      </div>
+
+      <!-- License-Start-Date -->
+
+      <!-- License-Exp-Date -->
+      <div class="col-auto my-3">
+        <span class="p-float-label block">
+          <p-calendar
+            (onSelect)="changeLicenseExpDate()"
+            dateFormat="yy-mm-dd"
+            [(ngModel)]="licenseExpireDate"
+            inputId="licenseExpireDate"
+            selectionMode="range"
+          >
+          </p-calendar>
+          <label class="text-small" for="licenseExpireDate">
+            تاریخ پایان لایسنس</label
+          >
+        </span>
+      </div>
+
+      <!-- License-Exp-Date -->
+    </ng-container>
   </div>
   <div
     id="firstSection"
@@ -218,9 +325,10 @@
     [closeOnEscape]="false"
     [(visible)]="modalVisible"
     [breakpoints]="{ '960px': '83vw', '768px': '90vw' }"
-    [style]="{ width: '70vw' }"
+    [style]="{ width: '75vw' }"
     [draggable]="false"
     [modal]="true"
+    [resizable]="false"
     [maximizable]="true"
   >
     <div class="custom-card">
@@ -283,4 +391,104 @@
 </ng-container>
 <ng-container *ngIf="view == 1">
   <app-add-order (output)="addOrder($event)"></app-add-order>
+</ng-container>
+
+<ng-container *ngIf="view == 0">
+  <p-sidebar
+    (onClose)="openAdvancedFilter = false"
+    [(visible)]="openAdvancedFilter"
+    [position]="isDeviceMedium ? 'right' : 'top'"
+  >
+    <ng-template pTemplate="header"> </ng-template>
+    <div class="row align-items-end" style="gap: 0.5rem">
+      <!-- Name -->
+      <div class="col-auto my-3">
+        <span class="p-float-label">
+          <input
+            (input)="searchByUsername($event.target.value)"
+            class="p-inputtext-sm"
+            pInputText
+            id="firstName"
+          />
+          <label class="text-small" htmlFor="firstName">نام</label>
+        </span>
+      </div>
+      <!-- Name -->
+      <!-- Last-Name -->
+      <div class="col-auto my-3">
+        <span class="p-float-label">
+          <input
+            (input)="searchByLastname($event.target.value)"
+            class="p-inputtext-sm"
+            pInputText
+            id="lastName"
+          />
+          <label class="text-small" htmlFor="lastName">نام خانوادگی</label>
+        </span>
+      </div>
+      <!-- Last-Name -->
+      <!-- Account-Number -->
+      <div class="col-auto my-3">
+        <span class="p-float-label">
+          <input
+            (input)="searchByAccountNumber($event.target.value)"
+            class="p-inputtext-sm"
+            pInputText
+            id="accountNumber"
+          />
+          <label class="text-small" htmlFor="accountNumber">شماره حساب</label>
+        </span>
+      </div>
+      <!-- Account-Number -->
+      <!-- Order-Date -->
+      <div class="col-auto my-3">
+        <span class="p-float-label block">
+          <p-calendar
+            dateFormat="yy-mm-dd"
+            (onSelect)="changeCreateDate()"
+            [(ngModel)]="createDate"
+            inputId="createDate"
+            selectionMode="range"
+          >
+          </p-calendar>
+          <label class="text-small" for="createDate"> تاریخ سفارش</label>
+        </span>
+      </div>
+      <!-- Order-Date -->
+      <!-- License-Start-Date -->
+      <div class="col-auto my-3">
+        <span class="p-float-label block">
+          <p-calendar
+            (onSelect)="changeLicenseStartDate()"
+            dateFormat="yy-mm-dd"
+            [(ngModel)]="licenseStartDate"
+            inputId="licenseStartDate"
+            selectionMode="range"
+          >
+          </p-calendar>
+          <label class="text-small" for="licenseStartDate">
+            تاریخ شروع لایسنس</label
+          >
+        </span>
+      </div>
+      <!-- License-Start-Date -->
+      <!-- License-Exp-Date -->
+      <div class="col-auto my-3">
+        <span class="p-float-label block">
+          <p-calendar
+            (onSelect)="changeLicenseExpDate()"
+            dateFormat="yy-mm-dd"
+            [(ngModel)]="licenseExpireDate"
+            inputId="licenseExpireDate"
+            selectionMode="range"
+          >
+          </p-calendar>
+          <label class="text-small" for="licenseExpireDate">
+            تاریخ پایان لایسنس</label
+          >
+        </span>
+      </div>
+      <!-- License-Exp-Date -->
+    </div>
+  </p-sidebar>
 </ng-container>

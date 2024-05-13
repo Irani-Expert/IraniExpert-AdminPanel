@@ -51,12 +51,18 @@ export class OrderDetailComponent {
     this.invoiceCreated = false;
     this.invoiceStatusChanged = false;
   }
-  changeDropDown(event) {
+  async changeDropDown(event) {
     if (event.value.value !== this.invoice._invoiceItem.status) {
       this.invoiceStatusChanged = true;
     }
     this.invoice.changeStatus = event.value.value;
-    window.location.reload();
+    const res = await this.invoice.update();
+    if (res.success)
+      this.toastr.success(res.message, null, {
+        positionClass: 'toast-top-left',
+        closeButton: true,
+      });
+    this.actionRes.emit(true);
   }
 
   async action(type: string) {

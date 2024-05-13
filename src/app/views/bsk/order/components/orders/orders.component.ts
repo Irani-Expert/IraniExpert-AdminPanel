@@ -1,5 +1,6 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
-import * as moment from 'jalali-moment';
+import * as jalali_moment from 'jalali-moment';
+import * as moment from 'moment';
 import {
   OrderDetailHeader,
   OrdersModel,
@@ -9,7 +10,13 @@ import {
 import { OrderService } from '../../services/order.service';
 import { Page } from 'src/app/shared/models/Base/page';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
-import { lastValueFrom, map } from 'rxjs';
+import {
+  BehaviorSubject,
+  Subject,
+  debounceTime,
+  lastValueFrom,
+  map,
+} from 'rxjs';
 import { Utils } from 'src/app/shared/utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -71,6 +78,7 @@ enum View {
   providers: [DialogService],
 })
 export class OrdersComponent {
+  openAdvancedFilter = false;
   transactions = transactionsInit;
   transactionIndexHolder = 0;
   products = new Array<ProductModel>();
@@ -102,6 +110,9 @@ export class OrdersComponent {
   ];
   headerValue: 'کد رهگیری' | 'شناسه' = 'کد رهگیری';
   table: TableModel<OrdersModel[]>;
+  searchByNameSubject = new Subject<string>();
+  searchByLastNameSubject = new Subject<string>();
+  searchByAccountNumberSubject = new Subject<string>();
   constructor(
     private auth: AuthenticateService,
     private toastr: ToastrService,
@@ -110,6 +121,27 @@ export class OrdersComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
+    this.searchByNameSubject.pipe(debounceTime(700)).subscribe({
+      next: (val) => {
+        this.filter.firstName = val;
+        this.page.pageNumber = 0;
+        this.getOrders();
+      },
+    });
+    this.searchByLastNameSubject.pipe(debounceTime(700)).subscribe({
+      next: (val) => {
+        this.filter.lastName = val;
+        this.page.pageNumber = 0;
+        this.getOrders();
+      },
+    });
+    this.searchByAccountNumberSubject.pipe(debounceTime(700)).subscribe({
+      next: (val) => {
+        this.filter.accountNumber = val;
+        this.page.pageNumber = 0;
+        this.getOrders();
+      },
+    });
     this.page.size = 12;
     this.table = {
       headers: this.headers,
@@ -155,7 +187,10 @@ export class OrdersComponent {
         next: (val) => {
           if (val) {
             this.orderService.ordersValue.forEach((item) => {
-              item.hijriCreateDate = moment(item.createDate, 'YYYY/MM/DD')
+              item.hijriCreateDate = jalali_moment(
+                item.createDate,
+                'YYYY/MM/DD'
+              )
                 .locale('fa')
                 .format('YYYY/MM/DD');
             });
@@ -189,6 +224,7 @@ export class OrdersComponent {
     if (Utils.isLMonitor()) {
       this.isDeviceMedium = true;
     } else {
+      this.openAdvancedFilter = false;
       this.isDeviceMedium = false;
     }
   }
@@ -344,10 +380,87 @@ export class OrdersComponent {
     }
   }
 
-  setFilter(index: number) {
+  setTransactionStatus(index: number) {
     this.transactionIndexHolder = index;
     this.filter.TransactionStatus = this.transactions[index].value;
     this.page.pageNumber = 0;
+    this.getOrders();
+  }
+
+  searchByUsername(event: string) {
+    if (event.trim().length !== 0 && event.length > 3) {
+      this.searchByNameSubject.next(event);
+      return;
+    }
+  }
+  searchByLastname(event: string) {
+    if (event.trim().length !== 0 && event.length > 3) {
+      this.searchByLastNameSubject.next(event);
+      return;
+    }
+  }
+  searchByAccountNumber(event: string) {
+    if (event.trim().length !== 0 && event.length > 3) {
+      this.searchByAccountNumberSubject.next(event);
+      return;
+    }
+  }
+
+  deleteFilter(key: keyof FilterModel) {
+    delete this.filter[key];
+    this.page.pageNumber = 0;
+    this.getOrders();
+  }
+  deleteAllFilters() {
+    this.filter = new FilterModel();
+    this.page.pageNumber = 0;
+    this.getOrders();
+  }
+
+  createDate: Date | undefined;
+  licenseStartDate: Date | undefined;
+  licenseExpireDate: Date | undefined;
+  changeCreateDate() {
+    if (this.createDate[1] !== null) {
+      this.filter.toCreateDate = moment(this.createDate[1]).format(
+        'YYYY-MM-DD'
+      );
+    } else {
+      delete this.filter.toCreateDate;
+    }
+    this.filter.fromCreateDate = moment(this.createDate[0]).format(
+      'YYYY-MM-DD'
+    );
+
+    this.getOrders();
+  }
+
+  changeLicenseStartDate() {
+    if (this.licenseStartDate[1] !== null) {
+      this.filter.toStartDate = moment(this.licenseStartDate[1]).format(
+        'YYYY-MM-DD'
+      );
+    } else {
+      delete this.filter.toStartDate;
+    }
+    this.filter.fromStartDate = moment(this.licenseStartDate[0]).format(
+      'YYYY-MM-DD'
+    );
+
+    this.getOrders();
+  }
+  changeLicenseExpDate() {
+    if (this.licenseExpireDate[1] !== null) {
+      this.filter.toExpireDate = moment(this.licenseExpireDate[1]).format(
+        'YYYY-MM-DD'
+      );
+    } else {
+      delete this.filter.toExpireDate;
+    }
+    this.filter.fromExpireDate = moment(this.licenseExpireDate[0]).format(
+      'YYYY-MM-DD'
+    );
+
     this.getOrders();
   }
 }

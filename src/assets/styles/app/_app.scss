@@ -19,6 +19,11 @@
 @import "../vendor/bootstrap/bootstrap.scss";
 @import "bootstrap-rtl.scss";
 @import "globals/globals";
+
+.p-calendar .p-inputtext {
+  padding: 0.55625rem;
+}
+
 .p-component {
   font-family: $font-family-base !important;
 }

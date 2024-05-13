@@ -129,7 +129,9 @@ export class OrderService extends BaseService<any, 0> {
   getOrdersNew(page: Page, _filter: FilterModel) {
     let filterRow = '';
     Object.keys(_filter).forEach((key) => {
-      key ? (filterRow += `&${key + '=' + _filter[key]}`) : filterRow;
+      key && _filter[key]
+        ? (filterRow += `&${key + '=' + _filter[key]}`)
+        : filterRow;
     });
     return this._http.get<Result<Paginate<OrdersModel[]>>>(
       this._base +
