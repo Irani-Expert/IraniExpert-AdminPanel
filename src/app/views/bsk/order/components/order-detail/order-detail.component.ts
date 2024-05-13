@@ -56,6 +56,7 @@ export class OrderDetailComponent {
       this.invoiceStatusChanged = true;
     }
     this.invoice.changeStatus = event.value.value;
+    window.location.reload();
   }
 
   async action(type: string) {

@@ -5,7 +5,6 @@
   (click)="updateNotebar()"
 ></div>
 
-
 <!-- <button
   class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
   (click)="openFilterModal(filterModal)"
@@ -14,13 +13,12 @@
   <strong class="text-dark ml-2">فیلتر</strong>
 </button> -->
 <div class="pb-3 d-flex flex-row row align-items-center">
-
   <div class="d-flex row col-10 align-items-center">
     <strong class="m-1 text-small"
       ><i class="i-Filter-2 text-dark text-bigger mr-1"></i> فیلتر بر اساس
       &nbsp; : &nbsp;</strong
     >
-    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1 ">
+    <div ngbDropdown placement="bottom-end" class="d-inline-block m-1">
       <button
         type="button"
         class="btn btn-details radius py-btns text-small"
@@ -38,7 +36,7 @@
           class="text-left btn"
           ngbDropdownItem
           *ngFor="let item of statusTitles"
-          (click)="this.page.pageNumber = 1;getUserNeedByUserWant(item.id, 0);"
+          (click)="this.page.pageNumber = 1; getUserNeedByUserWant(item.id, 0)"
         >
           <strong>{{ item.title }}</strong>
         </button>
@@ -47,10 +45,8 @@
 
     <!-- TableType -->
 
-
-
     <button
-    (click)="toggleFilters()"
+      (click)="toggleFilters()"
       class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center m-1"
     >
       <strong class="text-small mr-1">پیشرفته</strong>
@@ -66,156 +62,159 @@
   </div>
 </div>
 <div @slideInOut *ngIf="isDivExpanded">
-    <div class="row d-flex align-items-center">
-  <input
-  type="text"
-  class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
-  placeholder="Id"
-  [(ngModel)]="filterModel.iD"
+  <div class="row d-flex align-items-center">
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small"
+      placeholder="Id"
+      [(ngModel)]="filterModel.iD"
+    />
+    <span
+      *ngIf="filterHolder.iD"
+      (click)="removeFilter('iD')"
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
 
-/>
-<span
-  *ngIf="filterHolder.iD"
-  (click)="removeFilter('iD')"
-  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-  ><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="نام"
+      [(ngModel)]="filterModel.firstName"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.firstName"
+      (click)="removeFilter('firstName')"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="نام خانوادگی"
+      [(ngModel)]="filterModel.lastName"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.lastName"
+      (click)="removeFilter('lastName')"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="شماره تلفن"
+      [(ngModel)]="filterModel.phoneNumber"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.phoneNumber"
+      (click)="removeFilter('phoneNumber')"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="ایمیل"
+      [(ngModel)]="filterModel.email"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.email"
+      (click)="filterModel.email = null; removeFilter('email')"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <input
+      type="text"
+      class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
+      placeholder="میزان"
+      [(ngModel)]="filterModel.amount"
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.amount"
+      (click)="filterModel.amount = null; removeFilter('amount')"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
 
-
-  <input
-  type="text"
-  class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-  placeholder="نام"
-  [(ngModel)]="filterModel.firstName"
-/>
-<span
-  class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.firstName"
-(click)="removeFilter('firstName')"
-  ><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="نام خانوادگی"
-[(ngModel)]="filterModel.lastName"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.lastName"
-(click)="removeFilter('lastName')"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="شماره تلفن"
-[(ngModel)]="filterModel.phoneNumber"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.phoneNumber"
-(click)=" removeFilter('phoneNumber')"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="ایمیل"
-[(ngModel)]="filterModel.email"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.email"
-(click)="filterModel.email = null; removeFilter('email')"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<input
-type="text"
-class="form-control m-1 radius col-9 col-sm-5 col-md-2 bg-white text-small"
-placeholder="میزان"
-[(ngModel)]="filterModel.amount"
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.amount"
-(click)="filterModel.amount = null; removeFilter('amount')"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-
-<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
->ازتاریخ</strong
->
-<input
-type="text"
-ngbDatepicker
-#datePickerStatus1="ngbDatepicker"
-type="text"
-[navigation]="'select'"
-placement="bottom-right"
-autocomplete="off"
-class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
-[(ngModel)]="fromCreateDate"
-ngbDatepicker
-[outsideDays]="'collapsed'"
-[footerTemplate]="toCRTfooterTemplate"
-(click)="datePickerStatus1.toggle()"
-placeholder=" روز / ماه / سال "
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.fromCreateDate"
-(click)="filterModel.fromCreateDate = null;fromCreateDate=null; removeFilter('fromCreateDate')"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
->تا تاریخ</strong
->
-<input
-type="text"
-[navigation]="'select'"
-#datePickerStatus2="ngbDatepicker"
-placement="bottom-right"
-autocomplete="off"
-class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
-[(ngModel)]="toCreateDate"
-ngbDatepicker
-[outsideDays]="'collapsed'"
-[footerTemplate]="toCRTfooterTemplate"
-#toCreateDatePicker="ngbDatepicker"
-(click)="datePickerStatus2.toggle()"
-placeholder=" روز / ماه / سال "
-/>
-<span
-class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
-*ngIf="filterHolder.toCreateDate"
-(click)="toCreateDate=null; removeFilter('toCreateDate')"
-><span class="pi pi-times" style="font-size: 0.7rem"></span
-></span>
-<div class="mb-1 mr-1">
-  <strong class="m-1 text-small">فعالیت مالی</strong>
-  <label class="switch switch-primary mr-2 m-2">
-    <input type="checkbox" [(ngModel)]="filterModel.financialActivity"/>
-    <span class="slider"></span>
-  </label>
+    <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+      >ازتاریخ</strong
+    >
+    <input
+      type="text"
+      ngbDatepicker
+      #datePickerStatus1="ngbDatepicker"
+      type="text"
+      [navigation]="'select'"
+      placement="bottom-right"
+      autocomplete="off"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+      [(ngModel)]="fromCreateDate"
+      ngbDatepicker
+      [outsideDays]="'collapsed'"
+      [footerTemplate]="toCRTfooterTemplate"
+      (click)="datePickerStatus1.toggle()"
+      placeholder=" روز / ماه / سال "
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.fromCreateDate"
+      (click)="
+        filterModel.fromCreateDate = null;
+        fromCreateDate = null;
+        removeFilter('fromCreateDate')
+      "
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <strong for="fromCreateDate" class="text-small mr-sm-2 pl-sm-2 pl-5"
+      >تا تاریخ</strong
+    >
+    <input
+      type="text"
+      [navigation]="'select'"
+      #datePickerStatus2="ngbDatepicker"
+      placement="bottom-right"
+      autocomplete="off"
+      class="form-control m-1 radius col-9 col-sm-5 col-lg-1 col-md-2 bg-white text-small cursor-pointer date-picker"
+      [(ngModel)]="toCreateDate"
+      ngbDatepicker
+      [outsideDays]="'collapsed'"
+      [footerTemplate]="toCRTfooterTemplate"
+      #toCreateDatePicker="ngbDatepicker"
+      (click)="datePickerStatus2.toggle()"
+      placeholder=" روز / ماه / سال "
+    />
+    <span
+      class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
+      *ngIf="filterHolder.toCreateDate"
+      (click)="toCreateDate = null; removeFilter('toCreateDate')"
+      ><span class="pi pi-times" style="font-size: 0.7rem"></span
+    ></span>
+    <div class="mb-1 mr-1">
+      <strong class="m-1 text-small">فعالیت مالی</strong>
+      <label class="switch switch-primary mr-2 m-2">
+        <input type="checkbox" [(ngModel)]="filterModel.financialActivity" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="mb-1 mr-1">
+      <strong class="m-1 text-small">استفاده از ربات</strong>
+      <label class="switch switch-primary mr-2 m-2">
+        <input type="checkbox" [(ngModel)]="filterModel.robotUsage" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <button
+      type="button"
+      ngbAutofocus
+      class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
+      (click)="filterButton()"
+    >
+      <i class="i-Filter-2 text-bigger mr-2"></i>
+      <strong class="text-small">فیلتر </strong>
+    </button>
+  </div>
 </div>
-<div class="mb-1 mr-1">
-  <strong class="m-1 text-small">استفاده از ربات</strong>
-  <label class="switch switch-primary mr-2 m-2">
-    <input type="checkbox" [(ngModel)]="filterModel.robotUsage" />
-    <span class="slider"></span>
-  </label>
-</div>
-   <button
-    type="button"
-    ngbAutofocus
-    class="btn-filter btn d-inline-flex justify-content-around py-btns radius align-items-center"
-    (click)="filterButton()"
-  >
-    <i class="i-Filter-2 text-bigger mr-2"></i>
-    <strong class="text-small">فیلتر </strong>
-  </button> 
-</div></div>
 <!-- <div *ngIf="filterValues.length > 0">
   <div
     *ngFor="let item of filterValues"
@@ -395,8 +394,9 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       <div
         class="mb-2 card-footer bg-gray d-flex justify-content-end flex-wrap"
       >
-      <div class="col-2 d-flex justify-content-center align-items-center" >
-        <!-- <div class=" btn-light col-6 py-btns radius  d-flex justify-content-center align-items-center">2</div> --></div>
+        <div class="col-2 d-flex justify-content-center align-items-center">
+          <!-- <div class=" btn-light col-6 py-btns radius  d-flex justify-content-center align-items-center">2</div> -->
+        </div>
         <button
           type="button"
           class="btn-light btn d-inline-flex justify-content-around py-btns radius align-items-center"
@@ -487,9 +487,10 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
 
     <div></div>
   </div> -->
-  <div class="col-md-12 mt-3" >
-    <pagination-controls  *ngIf="page.totalElements > page.size"
-      (pageChange)="setPage($event,null)"
+  <div class="col-md-12 mt-3">
+    <pagination-controls
+      *ngIf="page.totalElements > page.size"
+      (pageChange)="setPage($event, null)"
       previousLabel=""
       nextLabel=""
       responsive="true"
@@ -834,7 +835,7 @@ class="d-inline-flex p-2 bg-light rounded-circle cursor-pointer"
       </button>
     </div>
   </div>
-</ng-template> 
+</ng-template>
 <!-- 
 <ng-template #filterModal let-modal>
   <div class="bg--gray px-3">
