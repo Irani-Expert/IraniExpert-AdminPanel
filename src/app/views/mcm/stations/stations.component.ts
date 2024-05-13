@@ -10,6 +10,7 @@ import { Result } from 'src/app/shared/models/Base/result.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ViewportScroller } from '@angular/common';
 import { Page } from 'src/app/shared/models/Base/page';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-stations',
@@ -159,15 +160,43 @@ export class StationsComponent implements OnInit {
     console.log(this.addForm);
   }
   async uploadFile() {
+    let tableType = 35; // Stations TableType
     this.loader.show();
     this.uploaderService
-      .uploadFile(this.filePreview, 'banners', this.fileName)
-      .subscribe((res: Result<string[]>) => {
-        if (res.success) {
-          this.station.cardImagePath = res.data[0];
-        } else {
+      .newUpload(this.filePreview, this.station.id, tableType, this.fileName)
+      .subscribe({
+        next: (val) => {
+          if (val.type == HttpEventType.Response) {
+            const res = val.body;
+            if (res.success) {
+              this.station.cardImagePath = res.data;
+              this.toastr.success('با موفقیت آپلود شد', null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              this.toastr.error(res.message, 'خطا در آپلود تصویر', {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+              this.station.cardImagePath = undefined;
+            }
+          }
+        },
+        error: (err) => {
           this.station.cardImagePath = undefined;
-        }
+          this.toastr.error(null, 'خطا در آپلود تصویر', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        },
+        // (res: Result<string[]>) => {
+        //   if (res.success) {
+        //     this.station.cardImagePath = res.data;
+        //   } else {
+        //     this.station.cardImagePath = undefined;
+        //   }
+        // }
       });
   }
   deleteModal(content, type: string, item: StationModel) {

@@ -129,4 +129,32 @@
       border: 2px solid #0080ff;
     }
   }
+  .download-station {
+    color: unset;
+    border-radius: 12px;
+    width: fit-content;
+    padding: 0.5rem 0.75rem;
+    height: initial;
+    &.green {
+      background: rgb(243, 248, 246);
+      background: linear-gradient(
+        90deg,
+        rgba(243, 248, 246, 0.4683123249) 0%,
+        rgba(0, 255, 168, 0.2862394958) 86%,
+        rgba(0, 255, 168, 0.3226540616) 100%
+      );
+    }
+    &.bordered {
+      border: 2px solid #0080ff;
+    }
+  }
+
+  .download-icon {
+    &::before {
+      margin-left: 0.5rem;
+      vertical-align: middle;
+      line-height: 0;
+      content: url(https://www.iraniexpert.com/Download-icon.ddea814380632099.svg);
+    }
+  }
 }

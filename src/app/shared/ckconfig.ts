@@ -23,6 +23,8 @@
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { styles } from './cke-styles';
 import { headings } from './ck-headings';
+import { UploadAdapter } from './upload-adapter';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 export interface StyleDefinition {
   name: string;
@@ -33,9 +35,20 @@ export interface StyleDefinition {
 export class Ckeditor {
   Editor = Editor.Editor;
   constructor(uploadUrl?: string) {
-    this.setUploadUrl(uploadUrl);
+    // this.setUploadUrl(uploadUrl);
     this.Editor.defaultConfig.style = {
       definitions: styles,
+    };
+
+    this.Editor.defaultConfig.htmlSupport = {
+      allow: [
+        {
+          name: /.*/,
+          attributes: true,
+          classes: true,
+          styles: true,
+        },
+      ],
     };
     this.Editor.defaultConfig.fontSize = {
       options: [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 26, 28, 36, 48, 72],
@@ -54,22 +67,21 @@ export class Ckeditor {
     };
   }
 
-  setUploadUrl(uploadUrl: string) {
-    this.Editor.defaultConfig.simpleUpload = {
-      uploadUrl: uploadUrl
-        ? uploadUrl
-        : 'https://dl.iraniexpert.com/FileUploader/FileUploadCkEditor',
-    };
+  // setUploadUrl(uploadUrl: string) {
+  //   this.Editor.defaultConfig.simpleUpload = {
+  //     uploadUrl: uploadUrl
+  //       ? uploadUrl
+  //       : 'https://dl.iraniexpert.com/Files/UploadCKEditor',
+  //   };
+  //   // There is Other Configuration as In need
+  //   // Headers sent along with the XMLHttpRequest to the upload server.
+  //   //  headers: {
+  //   //      'X-CSRF-TOKEN': 'CSRF-Token',
+  //   //
 
-    // There is Other Configuration as In need
-    // Headers sent along with the XMLHttpRequest to the upload server.
-    //  headers: {
-    //      'X-CSRF-TOKEN': 'CSRF-Token',
-    //
-
-    // Enable the XMLHttpRequest.withCredentials property.
-    //  withCredentials: true,
-  }
+  //   // Enable the XMLHttpRequest.withCredentials property.
+  //   //  withCredentials: true,
+  // }
 
   setStyle(styles: StyleDefinition[]) {
     if (styles.length > 0) {

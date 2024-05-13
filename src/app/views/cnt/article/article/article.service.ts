@@ -10,6 +10,9 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { tagModel } from '../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../tagModel/tagRelation.model';
+import { Page } from 'src/app/shared/models/Base/page';
+import { ArticleFilter } from './article-filter.model';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -98,5 +101,30 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
       }),
     };
     return this._http.get(this._base + '/' + route + '?id=' + id, _options);
+  }
+
+  async getArticles(page: Page, groupID?: number) {
+    let params = '';
+    let i = 0;
+    debugger;
+    let pageModel = {
+      pageIndex: page.pageNumber - 1,
+      pageSize: 6,
+      accending: false,
+    };
+    for (let key in pageModel) {
+      params += `${i !== 0 ? '&' : ''}${key}=${pageModel[key]}`;
+      i++;
+    }
+
+    if (groupID && groupID !== 1) {
+      params += `&groupID=${groupID}`;
+    }
+    const res = this._http.get<Result<Paginate<ArticleModel[]>>>(
+      `${environment.api.baseUrl}/Article?${params}`,
+      this._options
+    );
+
+    return await lastValueFrom(res);
   }
 }

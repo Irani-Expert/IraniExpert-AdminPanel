@@ -379,7 +379,7 @@ export class BannerComponent implements OnInit {
   uploadImg() {
     this.imageUploadProccess = 1;
     this.fileUploader
-      .upload(this.imageUploadFile, 'banners', this.fileName)
+      .newUpload(this.imageUploadFile, this.addUpdate.id, 7, this.fileName)
       .pipe(
         map((event) => {
           let toasterType = 2;
@@ -388,7 +388,7 @@ export class BannerComponent implements OnInit {
               (100 * event.loaded) / event.total
             );
           } else if (event.type == HttpEventType.Response) {
-            this.addUpdate.filePath = event.body.data[0];
+            this.addUpdate.filePath = event.body.data;
 
             if (event.body.success) {
               this.addForm.controls['filePath'].setValue(

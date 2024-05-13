@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
             if (event.routerEvent instanceof NavigationEnd) {
               let url = event.routerEvent.urlAfterRedirects;
               if (url.includes('checkUserPermission')) {
-                subscriber.unsubscribe();
+                console.log('not The first time');
               } else {
                 this.checkUser();
               }

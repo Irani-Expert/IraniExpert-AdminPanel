@@ -11,10 +11,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CountriesComponent } from './countries/countries.component';
 import { EventsComponent } from './events/events.component';
 import { ButtonModule } from 'primeng/button';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [CalendarComponent, CountriesComponent, EventsComponent],
@@ -23,13 +24,14 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     NgxPaginationModule,
     CommonModule,
     ClnRoutingModule,
+    MultiSelectModule,
     NgbModule,
     CKEditorModule,
-
     ReactiveFormsModule,
     FormsModule,
     ButtonModule,
     NgxSpinnerModule,
+    ProgressSpinnerModule
   ],
   providers: [FileUploaderService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -1,50 +1,43 @@
-<form [formGroup]="addForm">
-  <!-- *appCanAccess="'ProductT-Edit'" -->
-  <div class="row">
-    <div class="col-md-6 form-group mb-3">
-      <label for="title">سوال</label>
-      <textarea
-        name=""
-        id=""
-        cols="30"
-        rows="5"
-        type="text"
-        class="form-control form-control-rounded"
-        id="question"
-        placeholder="سوال را وارد نمایید."
-        [formControl]="addForm.controls['question']"
-        [(ngModel)]="addUpdate.question"
-      ></textarea>
-      <small
-        *ngIf="
-          addForm.controls['question'].hasError('required') &&
-          addForm.controls['question'].touched
-        "
-        class="mat-text-warn m-t-negative"
-        >ورود سوال ضروری است</small
-      >
-    </div>
-
-    <div class="col-md-6 form-group mb-3">
-      <label for="title">پاسخ</label>
-      <ckeditor [editor]="CkEditor.Editor" [(ngModel)]="addUpdate.answer">
-      </ckeditor>
-      <small *ngIf="addUpdate.answer == ''" class="mat-text-warn m-t-negative"
-        >نوشتن پاسخ ضروری است</small
-      >
-    </div>
-
-    <button
-      type="button"
-      class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
-      (click)="addOrUpdate()"
-      [disabled]="!addForm.valid || addUpdate.answer?.trim().length == 0"
+<!-- *appCanAccess="'ProductT-Edit'" -->
+<div class="row">
+  <div class="col-md-6 form-group mb-3">
+    <label for="question">سوال</label>
+    <textarea
+      cols="30"
+      rows="5"
+      type="text"
+      class="form-control form-control-rounded"
+      id="question"
+      placeholder="سوال را وارد نمایید."
+      [(ngModel)]="addUpdate.question"
+    ></textarea>
+    <small *ngIf="addUpdate.question == ''" class="mat-text-warn m-t-negative"
+      >نوشتن سوال ضروری است</small
     >
-      <i class="i-Yes text-bigger mr-2"></i>
-      <strong>ذخیره</strong>
-    </button>
   </div>
-</form>
+
+  <div class="col-md-6 form-group mb-3">
+    <label for="answer">پاسخ</label>
+    <ckeditor
+      (ready)="onReady($event)"
+      [editor]="CkEditor.Editor"
+      [(ngModel)]="addUpdate.answer"
+    >
+    </ckeditor>
+    <small *ngIf="addUpdate.answer == ''" class="mat-text-warn m-t-negative"
+      >نوشتن پاسخ ضروری است</small
+    >
+  </div>
+
+  <button
+    type="button"
+    class="btn-save btn d-inline-flex justify-content-around py-btns radius align-items-center mb-4"
+    (click)="addOrUpdate()"
+  >
+    <i class="i-Yes text-bigger mr-2"></i>
+    <strong>ذخیره</strong>
+  </button>
+</div>
 <div class="separator-breadcrumb border-top">
   <!-- *appCanAccess="'ProductT-Edit'" -->
 </div>

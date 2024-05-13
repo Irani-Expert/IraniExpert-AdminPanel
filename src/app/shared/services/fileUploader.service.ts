@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, throwError } from 'rxjs';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, map, throwError } from 'rxjs';
+import {
+  HttpHeaders,
+  HttpClient,
+  HttpParams,
+  HttpEventType,
+} from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Result } from '../models/Base/result.model';
 import { AuthenticateService } from './auth/authenticate.service';
 import { UserInfoModel } from '../models/userInfoModel';
+import { TableType } from 'src/app/views/Log/models/table-typeModel';
 
 @Injectable()
 export class FileUploaderService {
@@ -104,6 +110,25 @@ export class FileUploaderService {
       formData,
       { reportProgress: true, observe: 'events' }
     );
+  }
+
+  newUpload(blob: Blob, rowID: number, tableType: number, fileName: string) {
+    const url = `${this.uploardUrl}?TableType=${tableType}&RowID=${rowID}`;
+    const formData = new FormData();
+    formData.append('File', blob, fileName);
+    return this._http
+      .post<Result<any>>(url, formData, {
+        reportProgress: true,
+        observe: 'events',
+      })
+      .pipe(
+        map((it) => {
+          if (it.type == HttpEventType.Response) {
+            it.body.data = it.body.data.split('.com')[1];
+          }
+          return it;
+        })
+      );
   }
   // dataURItoBlobForVoice(dataURI) {
   //   const base64 = window.atob(dataURI);

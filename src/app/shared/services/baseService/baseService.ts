@@ -147,7 +147,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
     pageIndex: number,
     pageSize: number,
     pageOrder: string,
-    filter: string,
+    filter: any,
     route: string
   ): Observable<Result<Paginate<T[]>>> {
     let _options = {

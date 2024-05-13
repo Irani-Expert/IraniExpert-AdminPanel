@@ -27,6 +27,7 @@ import { Utils } from 'src/app/shared/utils';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BehaviorSubject } from 'rxjs';
 import { Ckeditor } from 'src/app/shared/ckconfig';
+import { UploadAdapter } from 'src/app/shared/upload-adapter';
 
 @Component({
   selector: 'app-events',
@@ -123,6 +124,13 @@ export class EventsComponent implements OnInit {
       );
       this.reduceTimer();
     }
+  }
+  onReady(editor) {
+    const rowID = this.eventDetails.id;
+    const tableType = 34; // Events Table Type
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return new UploadAdapter(loader, rowID, tableType);
+    };
   }
   async ngOnInit(): Promise<void> {
     this.page.pageNumber = 1;

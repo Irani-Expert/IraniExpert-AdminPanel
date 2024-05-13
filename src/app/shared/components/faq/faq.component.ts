@@ -7,6 +7,7 @@ import { FaqModel } from './faq.model';
 import { FaqService } from './faq.service';
 import { Utils } from '../../utils';
 import { Ckeditor } from 'src/app/shared/ckconfig';
+import { UploadAdapter } from '../../upload-adapter';
 
 @Component({
   selector: 'app-faq',
@@ -27,13 +28,20 @@ export class FAQComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.addUpdate.id = 0;
-
+    this.addUpdate.answer = '';
+  }
+  onReady(editor) {
+    const rowID = this.productId;
+    const tableType = this.tableType; // Articles Table Type
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return new UploadAdapter(loader, rowID, tableType);
+    };
+  }
+  ngOnInit(): void {
     this.addForm = this._formBuilder.group({
-      question: [null, Validators.compose([Validators.required])],
+      question: [null, Validators.required],
       answer: [null],
     });
 

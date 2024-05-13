@@ -5,4 +5,8 @@ export interface ICountries {
   currency: string;
   currencySymbol: string;
   codeFlag: string;
+  title?: string;
+  browserTitle?: string;
+  description?: string;
+  metaDescription?: string;
 }

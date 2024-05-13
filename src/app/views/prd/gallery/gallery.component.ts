@@ -148,7 +148,7 @@ export class GalleryComponent implements OnInit {
   //       (res: Result<string[]>) => {
   //         if (res.success) {
   //           this.addUpdate = new FileModel();
-  //           this.addUpdate.filePath = res.data[0];
+  //           this.addUpdate.filePath = res.data;
   //           this.toastr.success('با موفقیت آپلود شد', null, {
   //             closeButton: true,
   //             positionClass: 'toast-top-left',
@@ -270,7 +270,7 @@ export class GalleryComponent implements OnInit {
   uploadImg() {
     this.imageUploadProccess = 1;
     this.fileUploader
-      .upload(this.imageUploadFile, 'audios', this.fileName)
+      .newUpload(this.imageUploadFile, this.productId, 6, this.fileName)
       .pipe(
         map((event) => {
           let toasterType = 2;
@@ -279,7 +279,7 @@ export class GalleryComponent implements OnInit {
               (100 * event.loaded) / event.total
             );
           } else if (event.type == HttpEventType.Response) {
-            this.addUpdate.filePath = event.body.data[0];
+            this.addUpdate.filePath = event.body.data;
             if (event.body.success) {
               this.isFileValid = false;
               toasterType = 1;

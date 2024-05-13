@@ -19,6 +19,7 @@ import {
   throwError,
 } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
+import { Ckeditor } from 'src/app/shared/ckconfig';
 
 @Component({
   selector: 'app-back-test',
@@ -26,6 +27,8 @@ import { HttpEventType } from '@angular/common/http';
   styleUrls: ['./back-test.component.scss'],
 })
 export class BackTestComponent implements OnInit {
+  public CkEditor = new Ckeditor();
+
   fileName: string = '';
   isFileValid: boolean = false;
   progress: number = 0;
@@ -117,37 +120,40 @@ export class BackTestComponent implements OnInit {
     alert('image Failed to Show');
   }
   uploadFile() {
+    let tableType = 6;
     this._fileUploaderService
-      .uploadFile(this.cropImagePreview, 'backTests', this.fileName)
-      .subscribe(
-        (res: Result<string[]>) => {
-          if (res.success) {
-            this.addUpdate.cardImagePath = res.data[0];
-            this.toastr.success('با موفقیت آپلود شد', null, {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
-          } else {
-            //TODO Delete Set AddUpdate.cardImagePath
-            this.addUpdate.cardImagePath = res.errors[0];
-            this.toastr.error(res.errors[0], 'خطا در آپلود تصویر', {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            });
+      .newUpload(
+        this.cropImagePreview,
+        this.productId,
+        tableType,
+        this.fileName
+      )
+      .subscribe({
+        next: (res) => {
+          if (res.type == HttpEventType.Response) {
+            if (res.body.success) {
+              this.addUpdate.cardImagePath = res.body.data;
+              this.toastr.success('با موفقیت آپلود شد', null, {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            } else {
+              //TODO Delete Set AddUpdate.cardImagePath
+              this.toastr.error(res.body.message, 'خطا در آپلود تصویر', {
+                closeButton: true,
+                positionClass: 'toast-top-left',
+              });
+            }
           }
           //Todo Image={}
         },
-        (error) => {
-          this.toastr.error(
-            'خطاارتباط با سرور!!! لطفا با واحد فناوری اطلاعات تماس بگیرید.',
-            null,
-            {
-              closeButton: true,
-              positionClass: 'toast-top-left',
-            }
-          );
-        }
-      );
+        error: (err) => {
+          this.toastr.error(null, 'خطا در آپلود تصویر', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+        },
+      });
   }
 
   // Video Downloader
@@ -160,13 +166,13 @@ export class BackTestComponent implements OnInit {
   uploadVideo() {
     this.progress = 1;
     this._fileUploaderService
-      .upload(this.videoFile, 'backTests', this.videoName)
+      .newUpload(this.videoFile, this.addUpdate.id, 22, this.videoName)
       .pipe(
         map((event) => {
           if (event.type == HttpEventType.UploadProgress) {
             this.progress = Math.round((100 * event.loaded) / event.total);
           } else if (event.type == HttpEventType.Response) {
-            this.addUpdate.videoUrl = event.body.data[0];
+            this.addUpdate.videoUrl = event.body.data;
             if (event.body.success) {
               this.toastr.success(event.body.message, '', {
                 positionClass: 'toast-top-left',
