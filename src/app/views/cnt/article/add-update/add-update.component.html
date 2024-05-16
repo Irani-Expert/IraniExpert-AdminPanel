@@ -459,3 +459,9 @@
 
   <div [ngbNavOutlet]="nav"></div>
 </ng-container>
+
+<p-sidebar [(visible)]="sideBarVisible">
+  <app-schema-generator
+    (onModified)="updateSchema($event)"
+  ></app-schema-generator>
+</p-sidebar>

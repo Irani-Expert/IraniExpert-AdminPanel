@@ -41,9 +41,19 @@ const transactionsInit: Array<{
   //   icon: 'inbox',
   // },
   {
+    title: ' نهایی',
+    value: 8,
+    icon: 'check-square',
+  },
+  {
     title: ' در انتظار پرداخت',
     value: 1,
     icon: 'hourglass',
+  },
+  {
+    title: ' در انتظار تایید',
+    value: 6,
+    icon: 'pause',
   },
   {
     title: ' تایید شده',
@@ -54,16 +64,6 @@ const transactionsInit: Array<{
     title: ' خطا در پرداخت',
     value: 5,
     icon: 'exclamation-triangle',
-  },
-  {
-    title: ' در انتظار تایید',
-    value: 6,
-    icon: 'pause',
-  },
-  {
-    title: ' نهایی',
-    value: 8,
-    icon: 'check-square',
   },
 ];
 type DetailHeader = { value: string | number; key: string };
@@ -113,6 +113,7 @@ export class OrdersComponent {
   searchByNameSubject = new Subject<string>();
   searchByLastNameSubject = new Subject<string>();
   searchByAccountNumberSubject = new Subject<string>();
+  searchByLicenseVerSubject = new Subject<string>();
   constructor(
     private auth: AuthenticateService,
     private toastr: ToastrService,
@@ -121,6 +122,14 @@ export class OrdersComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
+    this.searchByLicenseVerSubject.pipe(debounceTime(700)).subscribe({
+      next: (val) => {
+        this.filter.versionNumber = val;
+        this.page.pageNumber = 0;
+        this.getOrders();
+      },
+    });
+
     this.searchByNameSubject.pipe(debounceTime(700)).subscribe({
       next: (val) => {
         this.filter.firstName = val;
@@ -151,7 +160,7 @@ export class OrdersComponent {
 
   async ngOnInit() {
     this.filter.TransactionStatus = 8;
-    this.transactionIndexHolder = 4;
+    this.transactionIndexHolder = 0;
     this.activatedRoute.params.subscribe((params) => {
       this.view = View.ViewAll;
       if (
@@ -392,17 +401,36 @@ export class OrdersComponent {
       this.searchByNameSubject.next(event);
       return;
     }
+    if (event.length == 0 && this.filter.firstName) {
+      this.deleteFilter('firstName');
+    }
   }
   searchByLastname(event: string) {
     if (event.trim().length !== 0 && event.length > 3) {
       this.searchByLastNameSubject.next(event);
       return;
     }
+    if (event.length == 0 && this.filter.lastName) {
+      this.deleteFilter('lastName');
+    }
   }
   searchByAccountNumber(event: string) {
     if (event.trim().length !== 0 && event.length > 3) {
       this.searchByAccountNumberSubject.next(event);
       return;
+    }
+    if (event.length == 0 && this.filter.accountNumber) {
+      this.deleteFilter('accountNumber');
+    }
+  }
+
+  searchByLicenseVersion(event: string) {
+    if (event.trim().length !== 0 && event.length >= 2) {
+      this.searchByAccountNumberSubject.next(event);
+      return;
+    }
+    if (event.length == 0 && this.filter.versionNumber) {
+      this.deleteFilter('versionNumber');
     }
   }
 
@@ -413,10 +441,16 @@ export class OrdersComponent {
   }
   deleteAllFilters() {
     this.filter = new FilterModel();
+    this.filter.TransactionStatus = 8;
+    this.transactionIndexHolder = 0;
     this.page.pageNumber = 0;
     this.getOrders();
   }
-
+  get filteredKeys() {
+    const keys = Object.keys(this.filter);
+    keys.splice(keys.indexOf('TransactionStatus'), 1);
+    return keys;
+  }
   createDate: Date | undefined;
   licenseStartDate: Date | undefined;
   licenseExpireDate: Date | undefined;
@@ -464,3 +498,103 @@ export class OrdersComponent {
     this.getOrders();
   }
 }
+
+// <!-- Transactions -->
+// <ng-container *ngIf="false">
+//   <!-- Name -->
+//   <div class="col-auto my-3">
+//     <span class="p-float-label">
+//       <input
+//         (input)="searchByUsername($event.target.value)"
+//         class="p-inputtext-sm"
+//         pInputText
+//         id="firstName"
+//       />
+//       <label class="text-small" htmlFor="firstName">نام</label>
+//     </span>
+//   </div>
+//   <!-- Name -->
+
+//   <!-- Last-Name -->
+//   <div class="col-auto my-3">
+//     <span class="p-float-label">
+//       <input
+//         (input)="searchByLastname($event.target.value)"
+//         class="p-inputtext-sm"
+//         pInputText
+//         id="lastName"
+//       />
+//       <label class="text-small" htmlFor="lastName">نام خانوادگی</label>
+//     </span>
+//   </div>
+//   <!-- Last-Name -->
+
+//   <!-- Account-Number -->
+//   <div class="col-auto my-3">
+//     <span class="p-float-label">
+//       <input
+//         (input)="searchByAccountNumber($event.target.value)"
+//         class="p-inputtext-sm"
+//         pInputText
+//         id="accountNumber"
+//       />
+//       <label class="text-small" htmlFor="accountNumber">شماره حساب</label>
+//     </span>
+//   </div>
+//   <!-- Account-Number -->
+
+//   <!-- Order-Date -->
+//   <div class="col-auto my-3">
+//     <span class="p-float-label block">
+//       <p-calendar
+//         dateFormat="yy-mm-dd"
+//         (onSelect)="changeCreateDate()"
+//         [(ngModel)]="createDate"
+//         inputId="createDate"
+//         selectionMode="range"
+//       >
+//       </p-calendar>
+//       <label class="text-small" for="createDate"> تاریخ سفارش</label>
+//     </span>
+//   </div>
+
+//   <!-- Order-Date -->
+
+//   <!-- License-Start-Date -->
+//   <div class="col-auto my-3">
+//     <span class="p-float-label block">
+//       <p-calendar
+//         (onSelect)="changeLicenseStartDate()"
+//         dateFormat="yy-mm-dd"
+//         [(ngModel)]="licenseStartDate"
+//         inputId="licenseStartDate"
+//         selectionMode="range"
+//       >
+//       </p-calendar>
+//       <label class="text-small" for="licenseStartDate">
+//         تاریخ شروع لایسنس</label
+//       >
+//     </span>
+//   </div>
+
+//   <!-- License-Start-Date -->
+
+//   <!-- License-Exp-Date -->
+//   <div class="col-auto my-3">
+//     <span class="p-float-label block">
+//       <p-calendar
+//         (onSelect)="changeLicenseExpDate()"
+//         dateFormat="yy-mm-dd"
+//         [(ngModel)]="licenseExpireDate"
+//         inputId="licenseExpireDate"
+//         selectionMode="range"
+//       >
+//       </p-calendar>
+//       <label class="text-small" for="licenseExpireDate">
+//         تاریخ پایان لایسنس</label
+//       >
+//     </span>
+//   </div>
+
+//   <!-- License-Exp-Date -->
+// </ng-container>

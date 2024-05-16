@@ -1,0 +1,17 @@
+<h3 class="text-white text-right">Schema</h3>
+
+<textarea
+  dir="ltr"
+  class="w-100"
+  id="float-input"
+  pInputTextarea
+  [(ngModel)]="schema"
+  placeholder="{{ placeholder }}"
+  [autoResize]="true"
+></textarea>
+<p-button
+  (onClick)="modify()"
+  styleClass="p-button-raised p-button-sm"
+  label="ثبت"
+  icon="pi pi-plus"
+></p-button>

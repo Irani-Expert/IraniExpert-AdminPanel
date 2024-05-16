@@ -56,105 +56,15 @@
       styleClass="p-button-raised p-button-sm p-button-secondary my-3"
       iconPos="right"
     ></p-button>
-    <!-- Transactions -->
-    <ng-container *ngIf="false">
-      <!-- Name -->
-      <div class="col-auto my-3">
-        <span class="p-float-label">
-          <input
-            (input)="searchByUsername($event.target.value)"
-            class="p-inputtext-sm"
-            pInputText
-            id="firstName"
-          />
-          <label class="text-small" htmlFor="firstName">نام</label>
-        </span>
-      </div>
-      <!-- Name -->
-
-      <!-- Last-Name -->
-      <div class="col-auto my-3">
-        <span class="p-float-label">
-          <input
-            (input)="searchByLastname($event.target.value)"
-            class="p-inputtext-sm"
-            pInputText
-            id="lastName"
-          />
-          <label class="text-small" htmlFor="lastName">نام خانوادگی</label>
-        </span>
-      </div>
-      <!-- Last-Name -->
-
-      <!-- Account-Number -->
-      <div class="col-auto my-3">
-        <span class="p-float-label">
-          <input
-            (input)="searchByAccountNumber($event.target.value)"
-            class="p-inputtext-sm"
-            pInputText
-            id="accountNumber"
-          />
-          <label class="text-small" htmlFor="accountNumber">شماره حساب</label>
-        </span>
-      </div>
-      <!-- Account-Number -->
-
-      <!-- Order-Date -->
-      <div class="col-auto my-3">
-        <span class="p-float-label block">
-          <p-calendar
-            dateFormat="yy-mm-dd"
-            (onSelect)="changeCreateDate()"
-            [(ngModel)]="createDate"
-            inputId="createDate"
-            selectionMode="range"
-          >
-          </p-calendar>
-          <label class="text-small" for="createDate"> تاریخ سفارش</label>
-        </span>
-      </div>
-
-      <!-- Order-Date -->
-
-      <!-- License-Start-Date -->
-      <div class="col-auto my-3">
-        <span class="p-float-label block">
-          <p-calendar
-            (onSelect)="changeLicenseStartDate()"
-            dateFormat="yy-mm-dd"
-            [(ngModel)]="licenseStartDate"
-            inputId="licenseStartDate"
-            selectionMode="range"
-          >
-          </p-calendar>
-          <label class="text-small" for="licenseStartDate">
-            تاریخ شروع لایسنس</label
-          >
-        </span>
-      </div>
-
-      <!-- License-Start-Date -->
-
-      <!-- License-Exp-Date -->
-      <div class="col-auto my-3">
-        <span class="p-float-label block">
-          <p-calendar
-            (onSelect)="changeLicenseExpDate()"
-            dateFormat="yy-mm-dd"
-            [(ngModel)]="licenseExpireDate"
-            inputId="licenseExpireDate"
-            selectionMode="range"
-          >
-          </p-calendar>
-          <label class="text-small" for="licenseExpireDate">
-            تاریخ پایان لایسنس</label
-          >
-        </span>
-      </div>
-
-      <!-- License-Exp-Date -->
-    </ng-container>
+    <p-button
+      [disabled]="filteredKeys.length == 0"
+      dir="ltr"
+      (onClick)="deleteAllFilters()"
+      label="حذف فیلتر"
+      icon="pi pi-times"
+      styleClass="p-button-raised p-button-sm p-button-danger my-3"
+      iconPos="right"
+    ></p-button>
   </div>
   <div
     id="firstSection"
@@ -489,6 +399,20 @@
         </span>
       </div>
       <!-- License-Exp-Date -->
+
+      <!-- License-Version -->
+      <div class="col-auto my-3">
+        <span class="p-float-label">
+          <input
+            (input)="searchByLicenseVersion($event.target.value)"
+            class="p-inputtext-sm"
+            pInputText
+            id="versionNumber"
+          />
+          <label class="text-small" htmlFor="versionNumber">ورژن لایسنس</label>
+        </span>
+      </div>
+      <!-- License-Version -->
     </div>
   </p-sidebar>
 </ng-container>

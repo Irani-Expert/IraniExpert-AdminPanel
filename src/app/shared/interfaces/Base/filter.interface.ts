@@ -13,7 +13,7 @@ export interface IFilter {
   toStartDate: string;
   fromExpireDate: string;
   toExpireDate: string;
-  versionNumber: number;
+  versionNumber: number | string;
   userID: number;
   parentID: number;
   rowID: number;
@@ -21,8 +21,8 @@ export interface IFilter {
   email: string;
   rate: number;
   isAccepted: boolean;
-  groupID:number;
-  TableType:number;
-  fromUpdateDate:string;
-  toUpdateDate:string
+  groupID: number;
+  TableType: number;
+  fromUpdateDate: string;
+  toUpdateDate: string;
 }

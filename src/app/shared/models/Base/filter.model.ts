@@ -21,7 +21,7 @@ export class FilterModel implements IFilter {
   toStartDate: string;
   fromExpireDate: string;
   toExpireDate: string;
-  versionNumber: number;
+  versionNumber: number | string;
   userID: number;
   amount: number;
   financialActivity: boolean;

@@ -33,6 +33,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { SchemaGeneratorComponent } from './article/schema-generator/schema-generator.component';
+import { SidebarModule } from 'primeng/sidebar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -51,8 +55,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     BenefitsComponent,
     BrokerItemsRelComponent,
     ItemType,
+    SchemaGeneratorComponent,
   ],
   imports: [
+    ButtonModule,
     InputMaskModule,
     CommonModule,
     ColorPickerModule,
@@ -61,6 +67,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ReactiveFormsModule,
     CntRoutingModule,
     ImageCropperModule,
+    InputTextareaModule,
+    SidebarModule,
     PickListModule,
     NgxPaginationModule,
     DropdownModule,

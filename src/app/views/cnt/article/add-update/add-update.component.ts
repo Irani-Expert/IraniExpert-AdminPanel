@@ -30,6 +30,8 @@ interface Tag {
   styleUrls: ['./add-update.component.scss'],
 })
 export class AddUpdateComponent implements OnInit, OnDestroy {
+  sideBarVisible = true;
+
   color: string = '';
   itemFetched = false;
   navId = 0;
@@ -400,5 +402,11 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  updateSchema(value: string) {
+    const schema = value.replace(/\n/g, '').replace(/\t/g, '');
+    const parsedSchema = JSON.parse(schema);
+    console.log(parsedSchema);
   }
 }
