@@ -30,11 +30,11 @@ const adminRoutes: Routes = [
     loadChildren: () =>
       import('./views/cnt/cnt.module').then((m) => m.CntModule),
   },
-  {
-    path: 'mrk',
-    loadChildren: () =>
-      import('./views/mrk/subuser.module').then((m) => m.SubuserModule),
-  },
+  // {
+  //   path: 'mrk',
+  //   loadChildren: () =>
+  //     import('./views/mrk/subuser.module').then((m) => m.SubuserModule),
+  // },
   {
     path: 'bsk',
     loadChildren: () =>
@@ -50,11 +50,11 @@ const adminRoutes: Routes = [
     loadChildren: () =>
       import('./views/sec/sec.module').then((m) => m.SecModule),
   },
-  {
-    path: 'crt',
-    loadChildren: () =>
-      import('./views/crt/contract.module').then((m) => m.ContractModule),
-  },
+  // {
+  //   path: 'crt',
+  //   loadChildren: () =>
+  //     import('./views/crt/contract.module').then((m) => m.ContractModule),
+  // },
   {
     path: 'urv',
     loadChildren: () =>
@@ -65,11 +65,11 @@ const adminRoutes: Routes = [
     loadChildren: () =>
       import('./views/dct/discount.module').then((m) => m.DiscountModule),
   },
-  {
-    path: 'log-info',
-    loadChildren: () =>
-      import('./views/Log/log.module').then((m) => m.LogModule),
-  },
+  // {
+  //   path: 'log-info',
+  //   loadChildren: () =>
+  //     import('./views/Log/log.module').then((m) => m.LogModule),
+  // },
   {
     path: 'calendar',
     loadChildren: () =>
@@ -131,17 +131,17 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'mrk',
-    component: NotFoundComponent,
-    children: [
-      {
-        path: 'mrk',
-        loadChildren: () =>
-          import('./views/mrk/subuser.module').then((m) => m.SubuserModule),
-      },
-    ],
-  },
+  // {
+  //   path: 'mrk',
+  //   component: NotFoundComponent,
+  //   // children: [
+  //   //   {
+  //   //     path: 'mrk',
+  //   //     loadChildren: () =>
+  //   //       import('./views/mrk/subuser.module').then((m) => m.SubuserModule),
+  //   //   },
+  //   // ],
+  // },
   {
     path: 'cnt',
     component: NotFoundComponent,
@@ -153,17 +153,17 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'crt',
-    component: NotFoundComponent,
-    children: [
-      {
-        path: 'crt',
-        loadChildren: () =>
-          import('./views/crt/contract.module').then((m) => m.ContractModule),
-      },
-    ],
-  },
+  // {
+  //   path: 'crt',
+  //   component: NotFoundComponent,
+  //   children: [
+  //     {
+  //       path: 'crt',
+  //       loadChildren: () =>
+  //         import('./views/crt/contract.module').then((m) => m.ContractModule),
+  //     },
+  //   ],
+  // },
   {
     path: 'dct',
     component: NotFoundComponent,
@@ -175,18 +175,18 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: '',
-    pathMatch: 'full',
-    component: NotFoundComponent,
-    children: [
-      {
-        path: 'log-info',
-        loadChildren: () =>
-          import('./views/Log/log.module').then((m) => m.LogModule),
-      },
-    ],
-  },
+  // {
+  //   path: '',
+  //   pathMatch: 'full',
+  //   component: NotFoundComponent,
+  //   // children: [
+  //   //   {
+  //   //     path: 'log-info',
+  //   //     loadChildren: () =>
+  //   //       import('./views/Log/log.module').then((m) => m.LogModule),
+  //   //   },
+  //   // ],
+  // },
   {
     path: 'bsk',
     component: NotFoundComponent,

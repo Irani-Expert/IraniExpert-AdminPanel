@@ -5,16 +5,15 @@ import { SubUserComponent } from './sub-user/sub-user.component';
 import { SubListProfitComponent } from './sub-list-profit/sub-list-profit.component';
 
 const routes: Routes = [
-
-{
-  path: 'sub-list-profit',
-  component: SubListProfitComponent,
-  canActivate: [AuthGuard],
-},
+  // {
+  //   path: 'sub-list-profit',
+  //   component: SubListProfitComponent,
+  //   canActivate: [AuthGuard],
+  // },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SubuserRoutingModule { }
+export class SubuserRoutingModule {}

@@ -67,14 +67,14 @@ export class NavigationService {
       state: '/dashboard/user-profile',
       privilege: 'UserProfile-Full',
     },
-    {
-      name: 'مشتریان من',
-      description: 'پروفایل',
-      navType: 'link',
-      icon: 'i-Add-UserStar',
-      state: '/mrk/sub-list-profit',
-      privilege: 'MySubscribers-Full',
-    },
+    // {
+    //   name: 'مشتریان من',
+    //   description: 'پروفایل',
+    //   navType: 'link',
+    //   icon: 'i-Add-UserStar',
+    //   state: '/mrk/sub-list-profit',
+    //   privilege: 'MySubscribers-Full',
+    // },
 
     {
       name: '*',
@@ -109,13 +109,13 @@ export class NavigationService {
       privilege: 'ArticleT-Add',
     },
 
-    {
-      name: 'کمیسیون ها',
-      navType: 'link',
-      icon: 'i-Dollar',
-      state: '/crt/profits',
-      privilege: 'Comissions-Contracts-Watch',
-    },
+    // {
+    //   name: 'کمیسیون ها',
+    //   navType: 'link',
+    //   icon: 'i-Dollar',
+    //   state: '/crt/profits',
+    //   privilege: 'Comissions-Contracts-Watch',
+    // },
     {
       name: 'سفارشات',
       navType: 'link',
@@ -188,14 +188,14 @@ export class NavigationService {
       state: '/bas/group/1',
       privilege: 'Groups-Watch',
     },
-    {
-      name: 'فعالیت ها',
-      description: '',
-      navType: 'link',
-      icon: 'i-Clock-Forward',
-      state: '/log-info',
-      privilege: 'Logs-Watch',
-    },
+    // {
+    //   name: 'فعالیت ها',
+    //   description: '',
+    //   navType: 'link',
+    //   icon: 'i-Clock-Forward',
+    //   state: '/log-info',
+    //   privilege: 'Logs-Watch',
+    // },
     {
       name: 'تقویم اقتصادی',
       description: '',

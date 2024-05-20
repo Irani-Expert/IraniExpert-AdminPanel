@@ -24,6 +24,7 @@ export class SchemaGeneratorComponent implements OnInit {
   ngOnInit(): void {}
 
   modify() {
-    this.onModifed.emit(this.schema);
+    const schema = this.schema.slice().replace(/\n/g, '').replace(/\t/g, '');
+    this.onModifed.emit(schema);
   }
 }

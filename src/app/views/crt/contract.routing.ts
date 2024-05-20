@@ -4,14 +4,11 @@ import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { AllCommissionComponent } from './all-commission/all-commission.component';
 import { ProfitsComponent } from './profits/profits.component';
 const routes: Routes = [
-
-
-  {
-    path: 'profits',
-    component: ProfitsComponent,
-    canActivate: [AuthGuard],
-  },
-
+  // {
+  //   path: 'profits',
+  //   component: ProfitsComponent,
+  //   canActivate: [AuthGuard],
+  // },
 ];
 
 @NgModule({

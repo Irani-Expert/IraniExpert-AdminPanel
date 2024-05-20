@@ -405,8 +405,7 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
   }
 
   updateSchema(value: string) {
-    const schema = value.replace(/\n/g, '').replace(/\t/g, '');
-    const parsedSchema = JSON.parse(schema);
+    const parsedSchema = JSON.parse(value);
     console.log(parsedSchema);
   }
 }
