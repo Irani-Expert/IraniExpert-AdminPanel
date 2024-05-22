@@ -37,8 +37,7 @@ export class License {
   }
   async post(item) {
     item.id = 0;
-    item.startDate = await this.startDate(item);
-    item.expireDate = await this.expireDate(item);
+
     return await lastValueFrom(
       this._licenseService.create(item, 'License').pipe(
         map((res) => {
@@ -48,8 +47,6 @@ export class License {
     );
   }
   async put(item) {
-    item.startDate = await this.startDate(item);
-    item.expireDate = await this.expireDate(item);
     return await lastValueFrom(
       this._licenseService.update(this.licenseID, item, 'License').pipe(
         map((res) => {

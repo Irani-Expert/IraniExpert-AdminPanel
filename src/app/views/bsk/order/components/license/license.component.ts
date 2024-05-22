@@ -9,6 +9,7 @@ import { FileUploaderService } from 'src/app/shared/services/fileUploader.servic
 import { HttpEventType } from '@angular/common/http';
 import { Result } from 'src/app/shared/models/Base/result.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-license',
@@ -171,18 +172,13 @@ export class LicenseComponent implements OnInit {
     }
   }
   updateForm(item: LicenseModel) {
-    let startYear = parseInt(item.startDate.slice(0, 4));
-    let startMonth = parseInt(item.startDate.slice(5, 7));
-    let startDay = parseInt(item.startDate.slice(8, 10));
-    let expYear = parseInt(item.expireDate.slice(0, 4));
-    let expMonth = parseInt(item.expireDate.slice(5, 7));
-    let expDay = parseInt(item.expireDate.slice(8, 10));
     this.licenseForm.patchValue({
-      startDate: new Date(startYear, startMonth, startDay),
-      expireDate: new Date(expYear, expMonth, expDay),
+      startDate: moment(item.startDate).toDate(),
+      expireDate: moment(item.expireDate).toDate(),
       versionNumber: item.versionNumber,
       filePath: item.filePath,
     });
+
     this.minDate = this.licenseForm.controls['startDate'].value;
     this.maxDate = this.licenseForm.controls['expireDate'].value;
     this.fileExists = item.fileExists;
@@ -211,10 +207,16 @@ export class LicenseComponent implements OnInit {
       let item = {
         id: this.licenseID,
         rowID: this.rowID,
-        expireDate: this.licenseForm.controls['expireDate'].value,
+        expireDate: moment(this.licenseForm.controls['expireDate'].value)
+          .add(1, 'day')
+          .toDate()
+          .toISOString(),
         filePath: this.licenseForm.controls['filePath'].value,
         versionNumber: this.licenseForm.controls['versionNumber'].value,
-        startDate: this.licenseForm.controls['startDate'].value,
+        startDate: moment(this.licenseForm.controls['startDate'].value)
+          .add(1, 'day')
+          .toDate()
+          .toISOString(),
       };
 
       if (this.licenseID == null) {
