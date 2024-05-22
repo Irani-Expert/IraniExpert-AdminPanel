@@ -58,29 +58,4 @@ export class License {
   set licenseFilePath(filePath: string) {
     this.licenseModel.filePath = filePath;
   }
-  async expireDate(item) {
-    let date = new Date(item.expireDate);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    item.expireDate =
-      date.getFullYear() +
-      '-' +
-      (month < 10 ? '0' + month : month) +
-      '-' +
-      (day < 10 ? '0' + day : day);
-    return item.expireDate;
-  }
-  async startDate(item) {
-    let date = new Date(item.startDate);
-    date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    item.startDate =
-      date.getFullYear() +
-      '-' +
-      (month < 10 ? '0' + month : month) +
-      '-' +
-      (day < 10 ? '0' + day : day);
-    return item.startDate;
-  }
 }
