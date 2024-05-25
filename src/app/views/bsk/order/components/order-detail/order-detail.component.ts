@@ -56,13 +56,6 @@ export class OrderDetailComponent {
       this.invoiceStatusChanged = true;
     }
     this.invoice.changeStatus = event.value.value;
-    const res = await this.invoice.update();
-    if (res.success)
-      this.toastr.success(res.message, null, {
-        positionClass: 'toast-top-left',
-        closeButton: true,
-      });
-    this.actionRes.emit(true);
   }
 
   async action(type: string) {
