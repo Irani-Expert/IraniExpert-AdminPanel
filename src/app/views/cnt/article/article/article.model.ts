@@ -22,4 +22,6 @@ export class ArticleModel extends Base implements IArticle {
   authorAccepted: boolean;
   managementAccepted: boolean;
   seoAccepted: boolean;
+  seoSchema?:string;
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleModel } from '../article/article.model';
@@ -17,7 +17,6 @@ import { tagModel } from '../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../tagModel/tagRelation.model';
 import { Ckeditor } from 'src/app/shared/ckconfig';
 import { UploadAdapter } from 'src/app/shared/upload-adapter';
-import { environment } from 'src/environments/environment.prod';
 
 interface Tag {
   name: string;
@@ -30,7 +29,7 @@ interface Tag {
   styleUrls: ['./add-update.component.scss'],
 })
 export class AddUpdateComponent implements OnInit, OnDestroy {
-  sideBarVisible = true;
+  sideBarVisible = false;
 
   color: string = '';
   itemFetched = false;
@@ -388,24 +387,36 @@ export class AddUpdateComponent implements OnInit, OnDestroy {
     });
     this.addTags();
   }
-  addTags() {
-    this._articleService.addTagToArticle(this.addTagsData).subscribe((data) => {
-      if (data.success) {
-        this.toastr.success(data.message, null, {
+  async addTags() {
+    try {
+      const res = await this._articleService.addTagToArticle(this.addTagsData);
+      if (res.success) {
+        this.toastr.success(res.message, null, {
           closeButton: true,
           positionClass: 'toast-top-left',
         });
-      } else {
-        this.toastr.error(data.message, null, {
-          closeButton: true,
-          positionClass: 'toast-top-left',
-        });
+        return;
       }
-    });
+      this.toastr.error(res.message, null, {
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      });
+    } catch (error) {
+      this.toastr.error('لطفا دوباره تلاش کنید', 'موفق', {
+        closeButton: true,
+        positionClass: 'toast-top-left',
+      });
+      throw new Error(`Error: ${error}`);
+    }
   }
 
   updateSchema(value: string) {
-    const parsedSchema = JSON.parse(value);
-    console.log(parsedSchema);
+    this.addUpdate.seoSchema = value;
+    console.log(this.addUpdate.seoSchema);
+    
+  }
+
+  toggleSchemaSidebar() {
+    this.sideBarVisible = !this.sideBarVisible;
   }
 }

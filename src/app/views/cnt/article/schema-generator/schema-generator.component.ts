@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class SchemaGeneratorComponent implements OnInit {
   @Input('schema') schema: string = '';
   @Output('onModified') onModifed = new EventEmitter<string>();
+  value = '';
   placeholder = `{
 "@context":"http://schema.org",
 "@type":"Organization",
@@ -21,10 +22,17 @@ export class SchemaGeneratorComponent implements OnInit {
 }`;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.value = this.schema.slice();
+    this.value = this.value
+      .trim()
+      .replace(/",/g, '",\n')
+      .replace(/{/g, '{\n')
+      .replace(/}/g, '\n}');
+  }
 
   modify() {
-    const schema = this.schema.slice().replace(/\n/g, '').replace(/\t/g, '');
+    const schema = this.value.slice().replace(/[\n\t]/g, '');
     this.onModifed.emit(schema);
   }
 }

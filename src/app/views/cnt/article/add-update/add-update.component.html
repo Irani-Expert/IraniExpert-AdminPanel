@@ -462,6 +462,17 @@
 
 <p-sidebar [(visible)]="sideBarVisible">
   <app-schema-generator
+    [schema]="addUpdate.seoSchema ? addUpdate.seoSchema : ''"
     (onModified)="updateSchema($event)"
   ></app-schema-generator>
 </p-sidebar>
+
+<div class="schema-placement">
+  <button
+    ngbTooltip="SEO Schema"
+    (click)="toggleSchemaSidebar()"
+    class="schema-toggle-btn"
+  >
+    <i class="pi pi-cog"></i>
+  </button>
+</div>

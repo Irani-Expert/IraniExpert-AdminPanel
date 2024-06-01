@@ -15,10 +15,11 @@ export interface IArticle extends IBase {
   isRTL: boolean;
   metaDescription: string;
   browserTitle: string;
-  linkTags:TableType[];
-  colorCode : string;
+  linkTags: TableType[];
+  colorCode: string;
   studyTime: string;
   authorAccepted: boolean;
   managementAccepted: boolean;
   seoAccepted: boolean;
+  seoSchema?: string;
 }

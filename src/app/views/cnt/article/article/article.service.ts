@@ -12,7 +12,7 @@ import { tagModel } from '../../tags/tagModel/tag.model';
 import { tagRelationModel } from '../tagModel/tagRelation.model';
 import { Page } from 'src/app/shared/models/Base/page';
 import { ArticleFilter } from './article-filter.model';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -79,15 +79,22 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
       this._options
     );
   }
-  addTagToArticle(tagRelation: tagRelationModel[]) {
+  async addTagToArticle(tagRelation: tagRelationModel[]) {
     let loggedUserID = this.auth.currentUserValue.userID;
-    return this._http.post<Result<tagModel>>(
-      this._base +
-        '/LinkTagRelation/AddUpdateLinkTagRelations?authorID=' +
-        loggedUserID,
-      tagRelation,
-      this._options
-    );
+    const res = this._http
+      .post<Result<tagModel>>(
+        this._base +
+          '/LinkTagRelation/AddUpdateLinkTagRelations?authorID=' +
+          loggedUserID,
+        tagRelation,
+        this._options
+      )
+      .pipe(
+        map((it) => {
+          return it;
+        })
+      );
+    return lastValueFrom(res);
   }
   getDetails(id: number, route: string) {
     let _options = {

@@ -91,3 +91,43 @@ input[type="file"]::file-selector-button {
 input[type="file"]::file-selector-button:hover {
   background: #4a5352;
 }
+
+.schema-placement {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  .schema-toggle-btn {
+    @apply .btn;
+    width: 45px;
+    height: 45px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #5147dd;
+    border: unset;
+    border-radius: 0 12px 12px 0;
+    position: relative;
+    top: 15%;
+    left: 0;
+    i {
+      color: #fff;
+      font-size: 1.5rem !important;
+    }
+
+    &:hover {
+      i {
+        animation: spinner 2s both ease-in-out;
+      }
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(270deg);
+  }
+}
