@@ -5,5 +5,6 @@ export class PlanOptionModel extends Base implements IPlanOption {
   plan: string;
   price: number;
   iconPath: string;
+  discountPrice: number;
 }
 

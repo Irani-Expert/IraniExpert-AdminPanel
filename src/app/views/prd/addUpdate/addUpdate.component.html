@@ -213,6 +213,35 @@
                 minlength="2"
               />
             </div>
+            <!-- ========[price]===== -->
+            <div class="col-md-6 d-flex">
+
+              <div class="col-md-5 form-group mb-3">
+                <label for="price">قیمت</label>
+                <input
+                  type="number"
+                  class="form-control form-control-rounded"
+                  id="price"
+                  placeholder="قیمت مورد نظر را وارد کنید "
+                  [formControl]="addForm.controls['price']"
+                  [(ngModel)]="addUpdate.price"
+                />
+              </div>
+      
+              <div class="col-md-3 form-group mb-3">
+                <label for="discountPrice">میزان تخفیف</label>
+                <input
+                  type="number"
+                  class="form-control form-control-rounded"
+                  id="discountPrice"
+                  placeholder="0"
+                  [formControl]="addForm.controls['discountPrice']"
+                  [(ngModel)]="addUpdate.discountPrice"
+                />
+              </div>
+
+            </div>
+
             <!-- ========[meta]===== -->
             <div class="col-md-6 form-group mb-3">
               <label for="title">متا دیسکریپشن</label>

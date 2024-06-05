@@ -13,5 +13,7 @@ export interface IBase {
   metaDescription: string;
   browserTitle: string;
   brief: string;
+  discountPrice?: number;
+  price?: number;
 }
 

@@ -35,9 +35,15 @@ export class PlanOptionComponent implements OnInit {
       isActive: [null],
       price: [null],
       iconPath: [null],
+      discountPrice : [0],
     });
   }
   async addOrUpdate(item: PlanOptionModel) {
+    if(this.addUpdate.discountPrice == null){
+      this.addUpdate.discountPrice = 0;
+    }
+    console.log(this.addUpdate.discountPrice);
+    
     if (item.id === 0) {
       this._planOptionService.create(item, 'PlanOption').subscribe((data) => {
         if (data.success) {
@@ -63,13 +69,13 @@ export class PlanOptionComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-            this.addForm.reset();
+            // this.addForm.reset();
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-            this.addForm.reset();
+            // this.addForm.reset();
           }
         });
     }

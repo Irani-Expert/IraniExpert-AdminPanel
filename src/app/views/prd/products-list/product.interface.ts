@@ -8,4 +8,6 @@ export interface IProduct extends IBase {
   title: string;
   fileExists: boolean;
   browserTitle : string;
+  discountPrice?: number;
+  price?: number;
 }

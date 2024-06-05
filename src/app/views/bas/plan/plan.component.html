@@ -288,6 +288,18 @@
             [(ngModel)]="addUpdate.price"
           />
         </div>
+
+        <div class="col-md-4 form-group mb-3">
+          <label for="discountPrice">میزان تخفیف</label>
+          <input
+            type="number"
+            class="form-control form-control-rounded"
+            id="discountPrice"
+            placeholder="0"
+            [formControl]="addForm.controls['discountPrice']"
+            [(ngModel)]="addUpdate.discountPrice"
+          />
+        </div>
         <!-- Url -->
         <!-- isFirstBuy -->
         <div class="form-group col mb-3 mt-4 pt-2">

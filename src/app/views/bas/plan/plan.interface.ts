@@ -14,4 +14,5 @@ export interface IPlan extends IBase {
   bgColor: string;
   textColor: string;
   planType: number;
+  discountPrice?: number;
 }

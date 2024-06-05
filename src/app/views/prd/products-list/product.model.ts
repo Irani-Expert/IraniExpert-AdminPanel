@@ -19,6 +19,6 @@ export class ProductModel extends Base implements IProduct {
   metaDescription: string;
   brief: string;
   linkTags?:TableType[];
-
-
+  discountPrice?: number;
+  price?: number;
 }

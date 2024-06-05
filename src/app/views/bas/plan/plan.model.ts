@@ -14,4 +14,5 @@ export class PlanModel extends Base implements IPlan {
   bgColor: string = '';
   textColor: string = '';
   planType: number = 0;
+  discountPrice : number;
 }

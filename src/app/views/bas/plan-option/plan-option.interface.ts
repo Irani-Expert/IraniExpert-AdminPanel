@@ -5,4 +5,5 @@ export interface IPlanOption extends IBase{
   plan: string;
   price: number;
   iconPath: string;
+  discountPrice: number;
 }

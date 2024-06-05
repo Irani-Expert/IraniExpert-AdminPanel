@@ -81,6 +81,8 @@ export class AddUpdateComponent implements OnInit {
       metaDescription: [null],
       brief: [null],
       selectedItems: [''],
+      price: [0],
+      discountPrice: [0],
     });
 
     // if ((await this.getTags()).res) {
@@ -93,7 +95,6 @@ export class AddUpdateComponent implements OnInit {
   tags: Tag[] = new Array<Tag>();
   filterHolder: FilterModel = new FilterModel();
   selectedItems: string[] = [];
-  // tetst: boolean = false;
   addTagsData: tagRelationModel[] = new Array<tagRelationModel>();
 
   async getTags() {
@@ -119,9 +120,6 @@ export class AddUpdateComponent implements OnInit {
         this.tags.push({ name: x.title, code: x.id });
       }
     });
-    // setTimeout(() => {
-    //   this.tetst = true;
-    // }, 500);
   }
 
   setTags() {
@@ -290,6 +288,12 @@ export class AddUpdateComponent implements OnInit {
     }, 800);
   }
   sendData() {
+    if (this.addUpdate.price == null){
+      this.addUpdate.price = 0;
+    }
+    if (this.addUpdate.discountPrice == null) {
+      this.addUpdate.discountPrice =0;
+    }
     if (this.addUpdate.id === 0) {
       // let x = {...this.addUpdate,...{colorCode: '',iconPath:'',platformType:0,type:0,versionHistory:'',brief:''}}
       this._productsService

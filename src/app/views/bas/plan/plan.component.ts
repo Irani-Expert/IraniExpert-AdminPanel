@@ -57,6 +57,7 @@ export class PlanComponent implements OnInit {
       iconPath: [''],
       isFirstBuy: [false],
       planType: [99, Validators.required],
+     discountPrice: [0],
     });
   }
   setPage(pageInfo: number) {
@@ -175,6 +176,7 @@ export class PlanComponent implements OnInit {
               productId: this.addUpdate.productId,
               product: this.addUpdate.product,
               price: this.addUpdate.price,
+              discountPrice : this.addUpdate.discountPrice,
               expireDate: new Date(
                 new Date().getFullYear() + 10,
                 new Date().getMonth(),
@@ -186,6 +188,11 @@ export class PlanComponent implements OnInit {
               planType: this.addUpdate.planType,
               maximumBalance: null,
             };
+
+            if(planToSend.discountPrice == null) {
+              planToSend.discountPrice = 0;
+            }
+            
             this.addOrUpdate(planToSend);
           }
         },
@@ -204,7 +211,7 @@ export class PlanComponent implements OnInit {
               closeButton: true,
               positionClass: 'toast-top-left',
             });
-            this.addForm.reset();
+            this.addForm.reset();            
           } else {
             this.toastr.error(data.message, null, {
               closeButton: true,
