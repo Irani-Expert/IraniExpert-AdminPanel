@@ -5,9 +5,16 @@
   >
     <i class="i-Add text-bigger mr-2"></i><strong>ایجاد</strong>
   </button>
-
-  <div class="separator-breadcrumb border-top"></div>
 </ng-container>
+
+<button
+  class="btn-filter btn d-inline-flex mx-3 justify-content-around py-btns radius align-items-center mb-4"
+  (click)="toggleFilter()"
+>
+  <i class="pi pi-filter text-bigger mr-2"></i><strong>فیلتر</strong>
+</button>
+
+<div class="separator-breadcrumb border-top"></div>
 
 <section class="main-table">
   <table class="table">
@@ -31,8 +38,7 @@
             | paginate
               : {
                   itemsPerPage: page.size,
-                  page: page.pageNumber,
-                  currentPage: page.pageNumber,
+                  currentPage: page.currentPage,
                   totalItems: page.totalElements
                 }
         "
@@ -41,8 +47,8 @@
         <td>{{ item.createBy }}</td>
         <td *ngIf="item.percent != 0">%{{ item.percent }}</td>
         <td *ngIf="item.percent == 0">${{ item.amount }}</td>
-        <td>{{ item.createDate }}</td>
-        <td>{{ item.expireDate }}</td>
+        <td>{{ item.createDate | date : "YYYY-MM-dd" }}</td>
+        <td>{{ item.expireDate | date : "YYYY-MM-dd" }}</td>
 
         <td *ngIf="item.isUsed">
           <span class="text-small text-white badge bg_gray">استفاده شده</span>
@@ -231,3 +237,100 @@
     </button>
   </div>
 </ng-template>
+
+<p-sidebar
+  (onClose)="toggleFilter()"
+  [(visible)]="filterVisible"
+  [position]="isMobile ? 'right' : 'top'"
+>
+  <div class="row align-items-end" style="gap: 0.5rem">
+    <!-- Code -->
+    <div class="col-auto my-3">
+      <span class="p-float-label">
+        <input
+          (input)="search($event.target.value, 'code')"
+          class="p-inputtext-sm"
+          pInputText
+          id="code"
+        />
+        <label class="text-small" htmlFor="code">کد</label>
+      </span>
+    </div>
+    <!-- Code -->
+
+    <!-- Amount -->
+    <div class="col-auto my-3">
+      <div class="p-inputgroup" dir="ltr">
+        <span class="p-inputgroup-addon"> <i class="pi pi-dollar"></i></span>
+        <span class="p-float-label">
+          <input
+            (input)="search($event.target.value, 'amount')"
+            class="p-inputtext-sm"
+            type="text"
+            pInputText
+            placeholder="0"
+            id="amount"
+          />
+          <label class="text-small" htmlFor="amount">مقدار</label>
+        </span>
+      </div>
+    </div>
+    <!-- Amount -->
+
+    <!-- Percent -->
+    <div class="col-auto my-3">
+      <div class="p-inputgroup" dir="ltr">
+        <span class="p-inputgroup-addon">
+          <i class="pi pi-percentage"></i
+        ></span>
+        <span class="p-float-label">
+          <input
+            (input)="search($event.target.value, 'percent')"
+            class="p-inputtext-sm"
+            type="text"
+            pInputText
+            placeholder="0"
+            id="percent"
+          />
+          <label class="text-small" htmlFor="percent">درصد</label>
+        </span>
+      </div>
+    </div>
+    <!-- Percent -->
+
+    <!-- Order-Date -->
+    <div class="col-auto my-3">
+      <span class="p-float-label block">
+        <p-calendar
+          dateFormat="yy-mm-dd"
+          (onSelect)="changeCreateDate()"
+          [(ngModel)]="createDate"
+          inputId="createDate"
+          selectionMode="range"
+        >
+          <ng-template pTemplate="header">
+            <div class="row p-0 m-0 justify-content-around">
+              <button class="col-auto p-button p-button-sm" (click)="getWeek()">
+                هفت روز
+              </button>
+              <button
+                class="col-auto p-button p-button-sm"
+                (click)="getThisMonth()"
+              >
+                این ماه
+              </button>
+              <button
+                class="col-auto p-button p-button-sm"
+                (click)="getPreviousMonth()"
+              >
+                ماه گذشته
+              </button>
+            </div>
+          </ng-template>
+        </p-calendar>
+        <label class="text-small" for="createDate"> تاریخ ایجاد</label>
+      </span>
+    </div>
+    <!-- Order-Date -->
+  </div>
+</p-sidebar>

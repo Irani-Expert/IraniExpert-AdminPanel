@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Page } from 'src/app/shared/models/Base/page';
 import { DiscountModel } from '../discount/discount.model';
-import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'jalali-moment';
-import { discountService } from '../discount.service';
+import { DiscountService } from '../discount.service';
 import { ToastrService } from 'ngx-toastr';
-import { number } from 'echarts';
-import { Result } from 'src/app/shared/models/Base/result.model';
 import { DatePipe } from '@angular/common';
+import { Utils } from 'src/app/shared/utils';
+import { Subject, debounceTime } from 'rxjs';
+import { FilterDiscount } from './discount-filter.interface';
 
 @Component({
   selector: 'app-discount',
@@ -17,27 +17,39 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./discount.component.scss'],
 })
 export class DiscountComponent implements OnInit {
+  filterModel = {} as FilterDiscount;
   viewMode: 'list' | 'grid' = 'list';
   rows: DiscountModel[] = new Array<DiscountModel>();
   page: Page = new Page();
   ShowModel: DiscountModel = new DiscountModel();
   AddList: FormGroup;
   checkbox: boolean = false;
-
+  search$ = new Subject<{
+    value: string;
+    target: keyof FilterDiscount | string;
+  }>();
   todayDate: string;
 
   constructor(
     private toastr: ToastrService,
     private modalService: NgbModal,
     private _formBuilder: FormBuilder,
-    private _discountService: discountService,
+    private _discountService: DiscountService,
     public datepipe: DatePipe
   ) {
-    this.page.pageNumber = 0;
-    this.page.size = 12;
+    this.search$.pipe(debounceTime(1500)).subscribe({
+      next: (data) => {
+        if (data.value) {
+          this.filterModel[data.target] = data.value;
+          this.setFilter();
+        }
+      },
+    });
   }
 
   ngOnInit(): void {
+    this.checkDevice();
+
     this.AddList = this._formBuilder.group({
       expireDate: [null, Validators.compose([Validators.required])],
       percent: [null, Validators.compose([Validators.required])],
@@ -48,76 +60,52 @@ export class DiscountComponent implements OnInit {
     this.getDiscountList(this.page.pageNumber);
   }
   deleteDiscount(id: number) {
-    this._discountService
-      .delete(id, 'Discount')
-      .subscribe((res) => {
-        if (res.success) {
-          this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
-            timeOut: 3000,
-            positionClass: 'toast-top-left',
-          });
-        } else {
-          this.toastr.error('خطا در حذف', res.message, {
-            timeOut: 3000,
-            positionClass: 'toast-top-left',
-          });
-        }
-        this.getDiscountList(this.page.pageNumber);
-      });
+    this._discountService.delete(id, 'Discount').subscribe((res) => {
+      if (res.success) {
+        this.toastr.success('فرایند حذف موفقیت آمیز بود', 'موفقیت آمیز!', {
+          timeOut: 3000,
+          positionClass: 'toast-top-left',
+        });
+      } else {
+        this.toastr.error('خطا در حذف', res.message, {
+          timeOut: 3000,
+          positionClass: 'toast-top-left',
+        });
+      }
+      this.getDiscountList(this.page.pageNumber);
+    });
   }
   setPage(pageInfo: number) {
+    this.page.pageNumber = pageInfo;
     this.getDiscountList(pageInfo);
   }
-  getDiscountList(pageNumber: number) {
-    this.page.pageNumber = pageNumber;
-    this._discountService
-      .get(
-        pageNumber !== 0 ? pageNumber - 1 : pageNumber,
-        12,
-        '',
-        '',
-        'Discount'
-      )
-      .subscribe((res: Result<Paginate<DiscountModel[]>>) => {
-        this.page.totalElements = res.data.totalCount;
-        this.page.totalPages = res.data.totalPages - 1;
-        this.page.pageNumber = res.data.pageNumber + 1;
+  async getDiscountList(pageNumber: number) {
+    const res = await this._discountService.getAll(
+      pageNumber,
+      this.filterModel
+    );
+    if (res.success) {
+      this.page.currentPage = res.data.pageNumber;
 
-        this.rows = res.data.items;
-        let counter = 0;
-        this.rows.forEach((x) => {
-          this.rows[counter].expireDate = moment(
-            this.rows[counter].expireDate,
-            'YYYY/MM/DD'
-          )
-            .locale('fa')
-            .format('YYYY/MM/DD');
-          this.rows[counter].createDate = moment(
-            this.rows[counter].createDate,
-            'YYYY/MM/DD'
-          )
-            .locale('fa')
-            .format('YYYY/MM/DD');
-          counter++;
-        });
-      });
+      this.rows = res.data.items;
+    }
   }
   changeCheckBox() {
-    this.ShowModel.amount=0
-    this.ShowModel.percent=0
+    this.ShowModel.amount = 0;
+    this.ShowModel.percent = 0;
     this.checkbox = !this.checkbox;
   }
   createDiscount() {
-    var dateKeeper = this.ShowModel.expireDate;
+    let dateKeeper = this.ShowModel.expireDate;
     this.ShowModel.expireDate = moment
       .from(this.ShowModel.expireDate, 'fa', 'YYYY-MM-DD')
       .format('YYYY-MM-DD');
 
-    var today = new Date();
-    var ChoosenDate = Number(new Date(this.ShowModel.expireDate).getTime());
-    var dates = Number(new Date(today).getTime());
+    let today = new Date();
+    let ChoosenDate = Number(new Date(this.ShowModel.expireDate).getTime());
+    let dates = Number(today.getTime());
     if (ChoosenDate <= dates) {
-      this.toastr.error('تاریخ وارده اشتباه است', null, {
+      this.toastr.error('تاریخ وارد شده اشتباه است', null, {
         closeButton: true,
         positionClass: 'toast-top-left',
       });
@@ -131,35 +119,26 @@ export class DiscountComponent implements OnInit {
       if (this.ShowModel.percent != null) {
         this.ShowModel.percent = Number(this.ShowModel.percent);
       }
-      this.ShowModel.createDate = this.datepipe.transform(
-        new Date(),
-        'yyyy-MM-dd'
-      );
-      this.ShowModel.updateDate = this.datepipe.transform(
-        new Date(),
-        'yyyy-MM-dd'
-      );
+      this.ShowModel.createDate = this.datepipe.transform(today, 'yyyy-MM-dd');
+      this.ShowModel.updateDate = this.datepipe.transform(today, 'yyyy-MM-dd');
       this._discountService
         .create(this.ShowModel, 'Discount')
-        .subscribe(
-          (data) => {
-            debugger
-            if (data.success) {
-              this.toastr.success(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
+        .subscribe((data) => {
+          if (data.success) {
+            this.toastr.success(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
 
-              this.modalService.dismissAll();
-              this.getDiscountList(0);
-            } else {
-              this.toastr.error(data.message, null, {
-                closeButton: true,
-                positionClass: 'toast-top-left',
-              });
-            }
+            this.modalService.dismissAll();
+            this.getDiscountList(0);
+          } else {
+            this.toastr.error(data.message, null, {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            });
           }
-        );
+        });
       this.ShowModel.expireDate = dateKeeper;
 
       this.AddList.reset();
@@ -169,5 +148,76 @@ export class DiscountComponent implements OnInit {
     this.modalService
       .open(modal, { ariaLabelledBy: 'modal-basic-title', centered: true })
       .result.then((_result) => {});
+  }
+
+  filterVisible = false;
+  isMobile = false;
+  toggleFilter() {
+    this.filterVisible = !this.filterVisible;
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkDevice();
+  }
+
+  checkDevice() {
+    if (Utils.isLMonitor()) this.isMobile = true;
+    else this.isMobile = false;
+  }
+
+  search(value: string, target: keyof FilterDiscount) {
+    if (value.trim().length > 0) {
+      this.search$.next({ value, target });
+    }
+    if (value.trim().length == 0 && this.filterModel[target]) {
+      this.deleteFilter(target);
+      this.setFilter();
+    }
+  }
+
+  setFilter() {
+    this.getDiscountList(0);
+  }
+  deleteFilter(key: keyof FilterDiscount) {
+    delete this.filterModel[key];
+  }
+
+  createDate: Date | undefined | Date[];
+  changeCreateDate() {
+    if (this.createDate[1] !== null) {
+      this.filterModel.toCreateDate = moment(this.createDate[1]).format(
+        'YYYY-MM-DD'
+      );
+    } else {
+      delete this.filterModel.toCreateDate;
+    }
+    this.filterModel.fromCreateDate = moment(this.createDate[0]).format(
+      'YYYY-MM-DD'
+    );
+
+    this.setFilter();
+  }
+
+  getWeek() {
+    const today = moment(new Date()).toDate();
+    const week = moment(new Date()).add(-1, 'week').toDate();
+
+    this.createDate = [week, today];
+    this.changeCreateDate();
+  }
+
+  getThisMonth() {
+    const today = moment(new Date()).toDate();
+    const month = moment(new Date()).add(-1, 'month').toDate();
+    this.createDate = [month, today];
+    this.changeCreateDate();
+  }
+
+  getPreviousMonth() {
+    const lastMonth = moment(new Date()).add(-1, 'month').toDate();
+    const twoMonthAgo = moment(new Date()).add(-2, 'month').toDate();
+    this.createDate = [twoMonthAgo, lastMonth];
+    this.changeCreateDate();
   }
 }

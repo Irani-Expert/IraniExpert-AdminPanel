@@ -7,6 +7,9 @@ import { dctRoutingModule } from './discount.routing';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DatePipe } from '@angular/common';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
+import { SidebarModule } from 'primeng/sidebar';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [DiscountComponent],
@@ -16,7 +19,10 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
     SharedDirectivesModule,
     FormsModule,
     ReactiveFormsModule,
+    SidebarModule,
     dctRoutingModule,
+    InputTextModule,
+    CalendarModule,
     NgxPaginationModule,
     DatePipe,
   ],
