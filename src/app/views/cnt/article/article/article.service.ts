@@ -66,15 +66,16 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
   updateTags(id: number, tagsModel: tagModel) {
     let loggedUserID = this.auth.currentUserValue.userID;
     return this._http.put<Result<tagModel>>(
-      this._base + '/LinkTag/' + id + '?authorID=' + loggedUserID,
+      this._base + '/LinkTag/' + id,
+      // + '?authorID=' + loggedUserID,
       tagsModel,
       this._options
     );
   }
   addLinkTag(tagsModel: tagModel) {
-    let loggedUserID = this.auth.currentUserValue.userID;
+    // let loggedUserID = this.auth.currentUserValue.userID;
     return this._http.post<Result<tagModel>>(
-      this._base + '/LinkTag?authorID=' + loggedUserID,
+      this._base + '/LinkTag',
       tagsModel,
       this._options
     );
@@ -83,9 +84,8 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
     let loggedUserID = this.auth.currentUserValue.userID;
     const res = this._http
       .post<Result<tagModel>>(
-        this._base +
-          '/LinkTagRelation/AddUpdateLinkTagRelations?authorID=' +
-          loggedUserID,
+        this._base + '/LinkTagRelation/AddUpdateLinkTagRelations',
+        //  +loggedUserID,
         tagRelation,
         this._options
       )

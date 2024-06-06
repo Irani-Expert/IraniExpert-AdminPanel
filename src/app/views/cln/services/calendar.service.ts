@@ -102,10 +102,10 @@ export class CalendarService extends BaseService<Object, number> {
       _options
     );
   }
-  
+
   getTelegramStatus() {
     let telegramRoute = ' https://climax.iraniexpert.ir/api/Test/TelegramCal';
-    let authorParam = `?authorID=${this._auth.currentUserValue.userID}`;
+    // let authorParam = `?authorID=${this._auth.currentUserValue.userID}`;
     let _options = {
       headers: new HttpHeaders({
         Authorization: 'Bearer anonymous',
@@ -116,9 +116,6 @@ export class CalendarService extends BaseService<Object, number> {
         Expires: '0',
       }),
     };
-    return this._http.get<Result<string>>(
-      telegramRoute + authorParam,
-      _options
-    );
+    return this._http.get<Result<string>>(telegramRoute, _options);
   }
 }

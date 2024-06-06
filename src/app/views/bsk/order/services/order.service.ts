@@ -163,4 +163,20 @@ export class OrderService extends BaseService<any, 0> {
     this.basketItemsToAdd.forEach((it) => (price += it.price));
     return price;
   }
+
+  async createLogOnDownload(id: number, link: string) {
+    let model = {
+      actionDescriptor: '/client/download-license',
+      rowID: id,
+      description: link,
+      requestType: 0,
+    };
+    const req = this.create(model, 'Logging').pipe(
+      map((it) => {
+        return it;
+      })
+    );
+
+    return await lastValueFrom(req);
+  }
 }

@@ -77,10 +77,10 @@ export class UserMangementComponent implements OnInit {
   };
   roles: RoleModel[] = new Array<RoleModel>();
 
-  ToSignUpDate:string;
-  fromSignUpDate:string;
-  filterHolder: UsersModel=new UsersModel;
-  addupdateKeeper:UsersModel=new UsersModel;
+  ToSignUpDate: string;
+  fromSignUpDate: string;
+  filterHolder: UsersModel = new UsersModel();
+  addupdateKeeper: UsersModel = new UsersModel();
   userParent: referralModel = new referralModel();
   isChangingParent: boolean = false;
   convertDate: { year: number; month: number; day: number };
@@ -93,7 +93,7 @@ export class UserMangementComponent implements OnInit {
   filterData: UsersModel = new UsersModel();
   dropdownList = [];
   selectedItems = [];
-  updateRoleIdV:boolean=true;
+  updateRoleIdV: boolean = true;
   userType: string = 'همه';
   roleKeeper = [];
   isDivExpanded: boolean = false;
@@ -112,19 +112,19 @@ export class UserMangementComponent implements OnInit {
     public datepipe: DatePipe,
     private _auth: AuthenticateService,
     private _route: ActivatedRoute,
-    private _router: Router,
-
+    private _router: Router
   ) {
     this.page.pageNumber = 1;
     this.page.size = 8;
     this._route.params.subscribe((params) => {
-      if(this.page.pageNumber!=params['pageNumber'] || this.rows.length==0){
-        
-        this.page.pageNumber = params['pageNumber']
-        this.setPage(this.page.pageNumber)
+      if (
+        this.page.pageNumber != params['pageNumber'] ||
+        this.rows.length == 0
+      ) {
+        this.page.pageNumber = params['pageNumber'];
+        this.setPage(this.page.pageNumber);
       }
-
-		});
+    });
   }
 
   ngOnInit(): void {
@@ -153,7 +153,6 @@ export class UserMangementComponent implements OnInit {
     });
   }
   setPage(pageInfo: number) {
-    
     this.page.pageNumber = pageInfo;
     this.getUsersList(
       this.page.pageNumber,
@@ -162,10 +161,9 @@ export class UserMangementComponent implements OnInit {
       null
     );
     this._router.navigateByUrl(`sec/user-management/${this.page.pageNumber}`);
-
   }
- 
-  usersEdit(content: any, row: UsersModel,userID:number) {
+
+  usersEdit(content: any, row: UsersModel, userID: number) {
     this.userParent.firstname = '';
     this.userParent.lastName = '';
     this.roleKeeper = row.roles;
@@ -202,7 +200,6 @@ export class UserMangementComponent implements OnInit {
       .result.then(
         (result: boolean) => {
           if (result != undefined) {
-            
             this.updateUserInfo(userID);
           }
         },
@@ -261,7 +258,6 @@ export class UserMangementComponent implements OnInit {
   //     )
   //     .subscribe(
   //       (res: Result<Paginate<RoleModel[]>>) => {
-     
 
   //         this.page.totalElements = res.data.totalCount;
   //         this.page.totalPages = res.data.totalPages - 1;
@@ -297,12 +293,11 @@ export class UserMangementComponent implements OnInit {
     this.roleKeeper = [];
   }
   updateRoleId() {
-    let userId=this._auth.currentUserValue.userID
-    this._usersService.updateUserRole(this.roleModel,userId).subscribe((data) => {
+    // let userId=this._auth.currentUserValue.userID
+    this._usersService.updateUserRole(this.roleModel).subscribe((data) => {
       if (data.success) {
         this.roleKeeper = [];
         this.setPage(this.page.pageNumber);
-
       } else {
       }
     });
@@ -374,29 +369,35 @@ export class UserMangementComponent implements OnInit {
     roleIdSaver: number,
     userType: string
   ) {
-    if(roleIdSaver!=null){
-      this.roleIdSaver=roleIdSaver
+    if (roleIdSaver != null) {
+      this.roleIdSaver = roleIdSaver;
     }
     pageNumber = pageNumber - 1;
     if (userType != null) {
       this.userType = userType;
     }
     this.roleKeeper = [];
-    this._usersService.getUserByFilter(pageNumber,pageSize,this.filterHolder,null,roleIdSaver).subscribe((data) => {
-    this.rows=[]
-      this.rows=data['data'].items
-    this.rows.forEach(date=>{
-      date.persianSignUpDate= moment(date.signUpDate, 'YYYY/MM/DD')
-      .locale('fa')
-      .format('YYYY/MM/DD');
-    })
-    this.page.pageNumber=data['data'].pageNumber+1
-    this.page.totalElements=data['data'].totalCount
-    
-    });
+    this._usersService
+      .getUserByFilter(
+        pageNumber,
+        pageSize,
+        this.filterHolder,
+        null,
+        roleIdSaver
+      )
+      .subscribe((data) => {
+        this.rows = [];
+        this.rows = data['data'].items;
+        this.rows.forEach((date) => {
+          date.persianSignUpDate = moment(date.signUpDate, 'YYYY/MM/DD')
+            .locale('fa')
+            .format('YYYY/MM/DD');
+        });
+        this.page.pageNumber = data['data'].pageNumber + 1;
+        this.page.totalElements = data['data'].totalCount;
+      });
   }
   updateUserInfo(userID: number) {
-   
     var finder = this.rows.findIndex((x) => x.id == userID);
     this.roleModel = [];
     var counter = 0;
@@ -406,32 +407,26 @@ export class UserMangementComponent implements OnInit {
       this.roleModel[counter].roleId = x.item_id;
       counter += 1;
     });
-    if(this.updateRoleIdV){
-      this.updateRoleId()
-
+    if (this.updateRoleIdV) {
+      this.updateRoleId();
     }
-    this.updateRoleIdV=true
+    this.updateRoleIdV = true;
     this._userProfileSevice
       .updateUserbyAspnet(userID, this.addUpdate)
       .subscribe((data) => {
         if (data) {
-
-          if(!this.filterHolder){
-            
+          if (!this.filterHolder) {
             this.page.pageNumber = 1;
             this.setPage(this.page.pageNumber);
           }
-        this.startFilter()
-
-       
+          this.startFilter();
 
           this.toastr.success(data.message, null, {
-                      closeButton: true,
-                      positionClass: 'toast-top-left',
-                    });
-                    // this.updateRoleId()
-         }
-         else{
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          });
+          // this.updateRoleId()
+        } else {
           this.toastr.warning(data.message, null, {
             closeButton: true,
             positionClass: 'toast-top-left',
@@ -452,7 +447,7 @@ export class UserMangementComponent implements OnInit {
           var finder = this.rows.findIndex((x) => x.id == userId);
           this.addUpdate = this.rows[finder];
           this.addUpdate.isActive = !this.addUpdate.isActive;
-          this.updateRoleIdV=false
+          this.updateRoleIdV = false;
           this.updateUserInfo(userId);
         },
         (reject) => {
@@ -465,7 +460,7 @@ export class UserMangementComponent implements OnInit {
     this.stateOfChevron =
       this.stateOfChevron === 'default' ? 'rotated' : 'default';
   }
-  convertDatetoMiladi(){
+  convertDatetoMiladi() {
     if (this.ToSignUpDate != null) {
       this.filterData.ToSignUpDate =
         this.ToSignUpDate['year'] +
@@ -485,22 +480,21 @@ export class UserMangementComponent implements OnInit {
   }
   startFilter() {
     this.page.pageNumber = 1;
- 
+
     this.setPage(this.page.pageNumber);
   }
   filteredItems(filter: UsersModel) {
     this.filterHolder = { ...filter };
   }
-  filterButton(){
-    this.convertDatetoMiladi()
+  filterButton() {
+    this.convertDatetoMiladi();
     this.filteredItems(this.filterData);
-    this.startFilter()
+    this.startFilter();
   }
-  removeFilter(item:string){
-    delete this.filterHolder[item]
-    delete this.filterData[item]
-    this.startFilter()
-
+  removeFilter(item: string) {
+    delete this.filterHolder[item];
+    delete this.filterData[item];
+    this.startFilter();
   }
   async getRoleListservice() {
     this._roleService.get(0, 100, 'ID', null, 'aspnetrole').subscribe(

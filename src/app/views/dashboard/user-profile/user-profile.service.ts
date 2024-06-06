@@ -41,10 +41,7 @@ export class UserProfileService {
       this._options
     );
   }
-  updateUserbyAspnet(
-    id: number,
-    t: UsersModel
-  ): Observable<Result<boolean>> {
+  updateUserbyAspnet(id: number, t: UsersModel): Observable<Result<boolean>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -55,7 +52,7 @@ export class UserProfileService {
       }),
     };
     return this._http.put<Result<boolean>>(
-      environment.api.baseUrl + '/AspNetUser/' + id+'?authorID='+2217,
+      environment.api.baseUrl + '/AspNetUser/' + id,
       t,
       _options
     );

@@ -1,4 +1,11 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
@@ -12,6 +19,7 @@ import { OrderModel } from '../order/models/order.model';
 import { OrderService } from '../order/services/order.service';
 import { AddPaymentComponent } from 'src/app/shared/components/add-payment/add-payment.component';
 import * as moment from 'jalali-moment';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-user-order',
@@ -19,6 +27,7 @@ import * as moment from 'jalali-moment';
   styleUrls: ['./user-order.component.scss'],
 })
 export class UserOrderComponent implements OnInit {
+  // @ViewChild('downloadLink') downloadATag: ElementRef;
   toggled = false;
   rows: OrderModel[] = new Array<OrderModel>();
   viewMode: 'list' | 'grid' = 'list';
@@ -126,5 +135,24 @@ export class UserOrderComponent implements OnInit {
             this.getOrderList(this.page.pageNumber, this.page.size);
           });
       });
+  }
+
+  async download(item: OrderModel) {
+    let contentUrl = 'https://dl.iraniexpert.com/';
+    let downloadTag = document.createElement('a');
+    const res = await this._orderService.createLogOnDownload(
+      item.id,
+      contentUrl + '/' + item.filePath
+    );
+    if (res.success) {
+      downloadTag.target = '_blank';
+      downloadTag.href = contentUrl + '/' + item.filePath;
+      downloadTag.click();
+      document.removeChild(downloadTag);
+    } else {
+      this.toastr.error('لطفا دوباره تلاش کنید', 'خطا!', {
+        positionClass: 'toast-top-left',
+      });
+    }
   }
 }

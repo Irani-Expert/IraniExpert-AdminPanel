@@ -92,9 +92,8 @@ export class ProductService extends BaseService<ProductModel, 0> {
   addTagToArticle(tagRelation: tagRelationModel[]) {
     let loggedUserID = this.auth.currentUserValue.userID;
     return this._http.post<Result<tagModel>>(
-      this._base +
-        '/LinkTagRelation/AddUpdateLinkTagRelations?authorID=' +
-        loggedUserID,
+      this._base + '/LinkTagRelation/AddUpdateLinkTagRelations',
+      // +'?authorID='loggedUserID,
       tagRelation,
       this._options
     );

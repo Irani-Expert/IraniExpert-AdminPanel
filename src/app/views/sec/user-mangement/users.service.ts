@@ -42,10 +42,10 @@ export class UsersService extends BaseService<UsersModel, 0> {
       }),
     };
     return this._http.put<Result<boolean>>(
-      environment.api.baseUrl +
-        '/AspNetUser/ChangePassword' +
-        '?authorID=' +
-        this.auth.currentUserValue.userID,
+      environment.api.baseUrl + '/AspNetUser/ChangePassword',
+      // +
+      // '?authorID=' +
+      // this.auth.currentUserValue.userID,
       t,
       _options
     );
@@ -78,8 +78,7 @@ export class UsersService extends BaseService<UsersModel, 0> {
     );
   }
   updateUserRole(
-    roles: UserRolesModel[],
-    authorID: number
+    roles: UserRolesModel[]
   ): Observable<Result<UserRolesModel[]>> {
     let _options = {
       headers: new HttpHeaders({
@@ -92,9 +91,7 @@ export class UsersService extends BaseService<UsersModel, 0> {
       }),
     };
     return this._http.post<Result<UserRolesModel[]>>(
-      environment.api.baseUrl +
-        '/AspNetUserRole/AddUpdateUserRoles/?authorID=' +
-        authorID,
+      environment.api.baseUrl + '/AspNetUserRole/AddUpdateUserRoles',
       roles,
       _options
     );

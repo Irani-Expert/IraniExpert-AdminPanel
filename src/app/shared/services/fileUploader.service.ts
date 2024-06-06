@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, map, throwError } from 'rxjs';
-import {
-  HttpHeaders,
-  HttpClient,
-  HttpParams,
-  HttpEventType,
-} from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpEventType } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Result } from '../models/Base/result.model';
 import { AuthenticateService } from './auth/authenticate.service';
 import { UserInfoModel } from '../models/userInfoModel';
-import { TableType } from 'src/app/views/Log/models/table-typeModel';
 
 @Injectable()
 export class FileUploaderService {
@@ -65,7 +59,7 @@ export class FileUploaderService {
   // Delete Request
   deleteFile(filePath: string) {
     return this._http.post<Result<string[]>>(
-      this.mainUrl + '/Files/Delete?authorID=' + this.userInfo.userID,
+      this.mainUrl + '/Files/Delete',
       `"${filePath}"`,
       this._httpDeleteOptions
     );
@@ -98,19 +92,19 @@ export class FileUploaderService {
       this._httpOptions
     );
   }
-  upload(_blob: Blob, folder: string, fileName: string) {
-    const formData = new FormData();
-    formData.append('_file', _blob, `${fileName}`);
-    return this._http.post<Result<string[]>>(
-      this.uploardUrl +
-        '?folder=' +
-        folder +
-        '&authorID=' +
-        this.userInfo.userID,
-      formData,
-      { reportProgress: true, observe: 'events' }
-    );
-  }
+  // upload(_blob: Blob, folder: string, fileName: string) {
+  //   const formData = new FormData();
+  //   formData.append('_file', _blob, `${fileName}`);
+  //   return this._http.post<Result<string[]>>(
+  //     this.uploardUrl +
+  //       '?folder=' +
+  //       folder +
+  //       '&authorID=' +
+  //       this.userInfo.userID,
+  //     formData,
+  //     { reportProgress: true, observe: 'events' }
+  //   );
+  // }
 
   newUpload(blob: Blob, rowID: number, tableType: number, fileName: string) {
     const url = `${this.uploardUrl}?TableType=${tableType}&RowID=${rowID}`;

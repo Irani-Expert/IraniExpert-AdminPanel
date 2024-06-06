@@ -85,9 +85,11 @@
 
         <td>
           <a
+            #downloadLink
+            target="_blank"
             *ngIf="item.transactionStatus == 8 && item.filePath != null"
+            (click)="download(item)"
             class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
-            href="https://dl.iraniExpert.com/{{ item.filePath }}"
             ><i class="i-Download text-dark text-bigger mr-3"></i>
             <strong>دانلود</strong></a
           >
