@@ -1,6 +1,39 @@
 .Left-0 {
   left: 0;
 }
+
+.slider-container {
+  width: 200px;
+  max-width: 100%;
+}
+
+.input-numbers {
+  height: 75%;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  flex-direction: row-reverse;
+  align-items: center;
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+  .single-input {
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    min-width: fit-content;
+    max-width: 100%;
+    text-align: center;
+  }
+}
 input[type="checkbox"] {
   height: 0;
   width: 0;

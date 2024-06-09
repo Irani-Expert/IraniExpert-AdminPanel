@@ -17,6 +17,8 @@ import { FilterDiscount } from './discount-filter.interface';
   styleUrls: ['./discount.component.scss'],
 })
 export class DiscountComponent implements OnInit {
+  amountValues: number[] = [1, 9999];
+  percentValues: number[] = [1, 100];
   filterModel = {} as FilterDiscount;
   viewMode: 'list' | 'grid' = 'list';
   rows: DiscountModel[] = new Array<DiscountModel>();
@@ -219,5 +221,45 @@ export class DiscountComponent implements OnInit {
     const twoMonthAgo = moment(new Date()).add(-2, 'month').toDate();
     this.createDate = [twoMonthAgo, lastMonth];
     this.changeCreateDate();
+  }
+
+  changePercent(value: string, target?: keyof FilterDiscount) {
+    let intValue = parseInt(value);
+    if (target == 'fromPercent') {
+      if (intValue >= this.percentValues[1]) {
+        intValue = this.percentValues[1] - 1;
+      }
+      this.percentValues = [intValue, this.percentValues[1]];
+    } else if (target == 'toPercent') {
+      if (intValue <= this.percentValues[0])
+        intValue = this.percentValues[0] + 1;
+      this.percentValues = [this.percentValues[0], intValue];
+    }
+    this.search(intValue.toString(), target);
+  }
+
+  changeAmount(value: string, target?: keyof FilterDiscount) {
+    let intValue = parseInt(value);
+    if (target == 'fromAmount') {
+      if (intValue >= this.amountValues[1]) {
+        intValue = this.amountValues[1] - 1;
+      }
+      this.amountValues = [intValue, this.amountValues[1]];
+    } else if (target == 'toAmount') {
+      if (intValue <= this.amountValues[0]) intValue = this.amountValues[0] + 1;
+      this.amountValues = [this.amountValues[0], intValue];
+    }
+    this.search(intValue.toString(), target);
+  }
+
+  slidePercent() {
+    this.filterModel['fromPercent'] = this.percentValues[0];
+    this.filterModel['toPercent'] = this.percentValues[1];
+    this.setFilter();
+  }
+  slideAmount() {
+    this.filterModel['fromAmount'] = this.amountValues[0];
+    this.filterModel['toAmount'] = this.amountValues[1];
+    this.setFilter();
   }
 }

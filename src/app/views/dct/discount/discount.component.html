@@ -243,7 +243,7 @@
   [(visible)]="filterVisible"
   [position]="isMobile ? 'right' : 'top'"
 >
-  <div class="row align-items-end" style="gap: 0.5rem">
+  <div class="row align-items-stretch" style="gap: 0.5rem">
     <!-- Code -->
     <div class="col-auto my-3">
       <span class="p-float-label">
@@ -260,41 +260,66 @@
 
     <!-- Amount -->
     <div class="col-auto my-3">
-      <div class="p-inputgroup" dir="ltr">
-        <span class="p-inputgroup-addon"> <i class="pi pi-dollar"></i></span>
-        <span class="p-float-label">
+      <div class="slider-container h-75">
+        <div class="input-numbers">
           <input
-            (input)="search($event.target.value, 'amount')"
-            class="p-inputtext-sm"
-            type="text"
-            pInputText
-            placeholder="0"
-            id="amount"
+            class="single-input"
+            type="number"
+            min="0"
+            max="9999"
+            [(ngModel)]="amountValues[0]"
+            (change)="changeAmount($event.target.value, 'fromAmount')"
           />
-          <label class="text-small" htmlFor="amount">مقدار</label>
-        </span>
+          <span>&UnderBar;</span>
+          <input
+            min="0"
+            max="9999"
+            class="single-input"
+            type="number"
+            [(ngModel)]="amountValues[1]"
+            (change)="changeAmount($event.target.value, 'toAmount')"
+          />
+        </div>
+        <p-slider
+          max="9999"
+          (onSlideEnd)="slideAmount()"
+          [(ngModel)]="amountValues"
+          [range]="true"
+        ></p-slider>
       </div>
+      <span class="d-block text-white text-center">مقدار</span>
     </div>
     <!-- Amount -->
 
     <!-- Percent -->
     <div class="col-auto my-3">
-      <div class="p-inputgroup" dir="ltr">
-        <span class="p-inputgroup-addon">
-          <i class="pi pi-percentage"></i
-        ></span>
-        <span class="p-float-label">
+      <div class="slider-container h-75">
+        <div class="input-numbers">
           <input
-            (input)="search($event.target.value, 'percent')"
-            class="p-inputtext-sm"
-            type="text"
-            pInputText
-            placeholder="0"
-            id="percent"
+            class="single-input"
+            type="number"
+            min="0"
+            max="100"
+            [(ngModel)]="percentValues[0]"
+            (change)="changePercent($event.target.value, 'fromPercent')"
           />
-          <label class="text-small" htmlFor="percent">درصد</label>
-        </span>
+          <span>&UnderBar;</span>
+          <input
+            min="0"
+            max="100"
+            class="single-input"
+            type="number"
+            [(ngModel)]="percentValues[1]"
+            (change)="changePercent($event.target.value, 'toPercent')"
+          />
+        </div>
+        <p-slider
+          (onSlideEnd)="slidePercent()"
+          [(ngModel)]="percentValues"
+          [range]="true"
+        ></p-slider>
       </div>
+      <span class="d-block text-white text-center">درصد</span>
     </div>
     <!-- Percent -->
 

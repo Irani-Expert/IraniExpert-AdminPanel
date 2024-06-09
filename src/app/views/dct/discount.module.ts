@@ -9,19 +9,23 @@ import { DatePipe } from '@angular/common';
 import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directives.module';
 import { SidebarModule } from 'primeng/sidebar';
 import { InputTextModule } from 'primeng/inputtext';
+import { SliderModule } from 'primeng/slider';
 import { CalendarModule } from 'primeng/calendar';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [DiscountComponent],
   imports: [
     CommonModule,
     NgPersianDatepickerModule,
+    InputNumberModule,
     SharedDirectivesModule,
     FormsModule,
     ReactiveFormsModule,
     SidebarModule,
     dctRoutingModule,
     InputTextModule,
+    SliderModule,
     CalendarModule,
     NgxPaginationModule,
     DatePipe,

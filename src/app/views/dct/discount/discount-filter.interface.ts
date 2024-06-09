@@ -1,12 +1,17 @@
 export interface FilterDiscount {
   id: number;
-  percent: number;
   tableType: number;
   rowID: number;
   userID: number;
   code: string;
   isUsed: boolean;
-  amount: number;
+
+  fromAmount: number;
+  toAmount: number;
+
+  fromPercent: number;
+  toPercent: number;
+
   fromCreateDate: string;
   toCreateDate: string;
 
