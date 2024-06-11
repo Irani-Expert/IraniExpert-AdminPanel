@@ -13,6 +13,10 @@ import { SharedDirectivesModule } from 'src/app/shared/directives/shared-directi
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { PermissionsComponent } from './permissions/permissions.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { SidebarModule } from 'primeng/sidebar';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,12 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
     UserPrivilegeComponent,
     PermissionsComponent,
   ],
+
   imports: [
+    DynamicDialogModule,
+    DialogModule,
+    SidebarModule,
+    SharedModule,
     NgxPaginationModule,
     DragDropModule,
     CommonModule,

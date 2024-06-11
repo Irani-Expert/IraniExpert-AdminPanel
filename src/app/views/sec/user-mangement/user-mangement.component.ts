@@ -19,7 +19,7 @@ import { RoleService } from '../role-mangement/role.service';
 import { UserRolesModel } from 'src/app/shared/models/userRoles';
 import { UserProfileService } from '../../dashboard/user-profile/user-profile.service';
 import { referralModel } from 'src/app/shared/models/referralModel';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom, map } from 'rxjs';
 import * as moment from 'jalali-moment';
 import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 import {
@@ -33,11 +33,17 @@ import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { DatePipe } from '@angular/common';
 import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CreateNote } from '../../bsk/order/components/notes/create-note';
+import { CommentModel } from 'src/app/shared/models/comment.model';
+import { OrderService } from '../../bsk/order/services/order.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AdditionComponent } from 'src/app/shared/components/addition/addition.component';
 
 @Component({
   selector: 'app-user-mangement',
   templateUrl: './user-mangement.component.html',
   styleUrls: ['./user-mangement.component.scss'],
+  providers: [DialogService],
   animations: [
     trigger('rotate90deg', [
       state('default', style({ transform: 'rotate(0)' })),
@@ -110,9 +116,12 @@ export class UserMangementComponent implements OnInit {
     public _roleService: RoleService,
     private _userProfileSevice: UserProfileService,
     public datepipe: DatePipe,
-    private _auth: AuthenticateService,
+    private auth: AuthenticateService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private orderService: OrderService,
+    public dialogService: DialogService,
+
   ) {
     this.page.pageNumber = 1;
     this.page.size = 8;
@@ -152,6 +161,97 @@ export class UserMangementComponent implements OnInit {
       permision: [null, Validators.compose([Validators.required])],
     });
   }
+  // =========[sidebar]=======
+  sideBarVisible: boolean = false;
+  compileNotesComponent = false;
+  sidebarVisible: boolean = false;
+  userRowID: number = -1;
+  notes = new Array<CommentModel>();
+
+  async getNotes(rowID: number, commentCount: number) {
+    if (commentCount > 0 && this.userRowID !== rowID) {
+      this.userRowID = rowID;
+      const notesServerRes = this.orderService
+        .getByTableTypeandRowId(0, 123456789, null, rowID, 20, 'Comment')
+        .pipe(
+          map((res) => {
+            if (res.success && res.data.totalCount > 0) {
+              this.orderService.notesOrderSubject.next(res.data.items);
+            }
+            return res.success;
+          })
+        );
+      return lastValueFrom(notesServerRes);
+    } else {
+      if (commentCount == 0) {
+        this.notes = new Array<CommentModel>();
+      }
+      this.userRowID = rowID;
+      return false;
+    }
+  }
+
+  async showSideBar(rowID: number, commentCount: number){    
+    this.sideBarVisible = true;
+    if (await this.getNotes(rowID, commentCount)) {
+      this.notes = this.orderService.notes;
+      this.compileNotesComponent = true;
+    }
+  }
+
+  noteText = '';
+  createNote() {
+    let note = new CreateNote(
+      this.noteText,
+      this.auth.currentUserValue,
+      this.userRowID,
+      20
+    );
+    this.openAdditionModal(note.noteToSend);
+  }
+  modalRef: DynamicDialogRef | undefined;
+  openAdditionModal(_note) {
+    this.modalRef = this.dialogService.open(AdditionComponent, {
+      data: {
+        sendingItem: _note,
+        routeOfAction: 'Comment',
+      },
+      header: 'ایجاد',
+      draggable: false,
+    });
+    this.modalRef.onClose.subscribe((res) => {
+      this.modalConfirmed(res);
+    });
+  }
+  modalConfirmed(result: Result<any>) {
+    if (result) {
+      result.success
+        ? this.toastr.success(result.message, '', {
+            closeButton: true,
+            positionClass: 'toast-top-left',
+          })
+        : this.toastr.error(
+            result.message ||
+              'خطا در برقراری اتصال ! با واحد فناوری تماس بگیرید',
+            '',
+            {
+              closeButton: true,
+              positionClass: 'toast-top-left',
+            }
+          );
+      this.userRowID = -1;
+      this.closeSideBar();
+      // this.getOrders();
+      // this.noteText = '';
+    } else {
+      console.log('Denied Or Server Err');
+    }
+  }
+  closeSideBar() {
+    this.sidebarVisible = false;
+    this.noteText = '';
+  }
+  
   setPage(pageInfo: number) {
     this.page.pageNumber = pageInfo;
     this.getUsersList(

@@ -29,3 +29,35 @@ td {
 a {
   margin: 0 5px;
 }
+.scale {
+  scale: 0.85;
+  margin-left: -1rem;
+}
+.btn-comment{
+  border: 0;
+  width: 9rem;
+  height: 2.15rem;
+  border-radius: 7px;
+  cursor: pointer;
+  background-color: bisque;
+  position: relative;
+  top: -2px;
+  transition: all 0.2s ease-in-out;
+}
+.btn-comment:hover{
+background-color: #b7a58f;
+}
+.btn-comment-text{
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+.btn-comment-box{
+  align-items: baseline;
+  display: flex;
+  padding-top: 0.2rem;
+}
+.btn-comment-icon{
+  scale: 0.85;
+  position: relative;
+  bottom: -3px;
+}

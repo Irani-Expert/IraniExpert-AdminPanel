@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/services/auth/auth.guard';
 import { UserMangementComponent } from './user-mangement/user-mangement.component';
-import { PermissionsComponent } from './permissions/permissions.component';
 
 const routes: Routes = [
   {
@@ -11,11 +10,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
 
-  {
-    path: 'permissions',
-    component: PermissionsComponent,
-    canActivate: [AuthGuard],
-  },
+  // {
+  //   path: 'createNote',
+  //   component: PermissionsComponent,
+  //   canActivate: [AuthGuard],
+  // },
 ];
 
 @NgModule({

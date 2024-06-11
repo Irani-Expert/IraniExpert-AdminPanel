@@ -11,9 +11,13 @@ import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FAQComponent } from './components/faq/faq.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { NotesComponent } from '../views/bsk/order/components/notes/notes.component';
 
 @NgModule({
-  declarations: [FAQComponent],
+  declarations: [
+    FAQComponent,
+    NotesComponent,
+  ],
   imports: [
     CommonModule,
     PerfectScrollbarModule,
@@ -22,14 +26,16 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     NgbModule,
     SharedComponentsModule,
     CKEditorModule,
-
     SharedDirectivesModule,
     SharedPipesModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [FAQComponent],
+  exports: [
+    FAQComponent,
+    NotesComponent,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule {}

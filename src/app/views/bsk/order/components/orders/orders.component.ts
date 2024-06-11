@@ -330,7 +330,8 @@ export class OrdersComponent {
     let note = new CreateNote(
       this.noteText,
       this.auth.currentUserValue,
-      this.orderID
+      this.orderID,
+      8
     );
     this.openAdditionModal(note.noteToSend);
   }

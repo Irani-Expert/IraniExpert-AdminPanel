@@ -261,8 +261,16 @@
         <td>{{ item.phoneNumber }}</td>
         <td>{{ item.persianSignUpDate }}</td>
         <td *appCanAccess="'User-Edit'" class="td-oprate">
+          <button (click)="showSideBar(item.id , item.commentCount)" class="btn-comment">
+            <span class="btn-comment-box">              
+              <i class="pi pi-comment btn-comment-icon"></i>
+              <p class="btn-comment-text">افزودن یادداشت</p>
+              <p class="btn-comment-text">{{'(' + item.commentCount + ')'}}</p>
+            </span>
+          </button>
+
           <button
-            class="btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
+            class="scale btn-download btn d-inline-flex justify-content-around py-btns radius align-items-center mr-1"
             (click)="usersEdit(addUpdateModal, item, item.id)"
           >
             <i class="i-Pen-5 text-bigger mr-2"></i><strong>ویرایش</strong>
@@ -270,7 +278,7 @@
           <button
             *ngIf="item.isActive == false"
             (click)="updateQuestion(updateTrust, item.id)"
-            class="btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
+            class="scale btn-delete btn d-inline-flex justify-content-around py-btns radius align-items-center"
           >
             <i class="i-Circular-Point text-bigger mr-2"></i>
             <strong>فعال کردن</strong>
@@ -278,7 +286,7 @@
           <button
             *ngIf="item.isActive"
             (click)="updateQuestion(updateTrust, item.id)"
-            class="btn-success btn d-inline-flex justify-content-around py-btns radius align-items-center"
+            class="scale btn-success btn d-inline-flex justify-content-around py-btns radius align-items-center"
           >
             <i class="i-Yes text-bigger mr-2"></i>
             <strong>غیرفعال کردن</strong>
@@ -592,3 +600,39 @@
     </button>
   </div>
 </ng-template>
+
+<!-- // =========[sidebar]======= -->
+
+<p-sidebar [(visible)]="sideBarVisible">
+  <div>
+    <form (keydown.enter)="createNote()" (ngSubmit)="createNote()">
+      <div class="row g-0 p-0 m-0">
+        <div class="col-12 form-group mb-3 mt-3">
+          <label class="text-white" for="text">ایجاد یادداشت</label>
+          <textarea
+            name="text"
+            id="text"
+            type="text"
+            [(ngModel)]="noteText"
+            class="form-control bg-white text-dark textarea-font"
+          ></textarea>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end mr-3">
+        <button
+          type="submit"
+          class="btn-add btn d-inline-flex justify-content-around py-btns radius align-items-center mb-2"
+        >
+          <span class="pi pi-plus mr-2"></span
+          ><strong class="text-smaller">ایجاد</strong>
+        </button>
+      </div>
+    </form>
+
+    <ng-container *ngIf="compileNotesComponent">
+      <ng-container *ngFor="let note of notes">
+        <app-notes [data]="note"></app-notes>
+      </ng-container>
+    </ng-container>
+  </div>
+</p-sidebar>

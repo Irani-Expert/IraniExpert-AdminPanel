@@ -25,11 +25,11 @@ import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { TabViewModule } from 'primeng/tabview';
 import { OrderDetailPipe } from './order/components/order-detail.pipe';
 import { TableHeaderPipe } from './order/components/table-header.pipe';
 import { ContextMenuModule } from 'primeng/contextmenu';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { EditComponent } from 'src/app/shared/components/edit/edit.component';
 import { OrderDetailComponent } from './order/components/order-detail/order-detail.component';
@@ -39,17 +39,17 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { AdditionComponent } from 'src/app/shared/components/addition/addition.component';
-import { NotesComponent } from './order/components/notes/notes.component';
 import { LicenseComponent } from './order/components/license/license.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AddOrderComponent } from './order/components/add-order/add-order.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { PlanTypePipe } from 'src/app/shared/pipes/planType.pipe';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 @NgModule({
   declarations: [
     // OrderComponent,
-    NotesComponent,
     TransactionStatusPipe,
     PaymentStatusPipe,
     BankTypePipe,
@@ -70,6 +70,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
   ],
   imports: [
     SelectButtonModule,
+    SharedModule,
     CalendarModule,
     InputNumberModule,
     DropdownModule,

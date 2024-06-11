@@ -17,4 +17,5 @@ export class UsersModel extends Base implements IUsers {
   fromSignUpDate:string;
   referralCode:string
   roles:RoleModel[]
+  commentCount = 0;
 }

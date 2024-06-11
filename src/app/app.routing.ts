@@ -209,17 +209,7 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'sec',
-    component: NotFoundComponent,
-    children: [
-      {
-        path: 'sec',
-        loadChildren: () =>
-          import('./views/sec/sec.module').then((m) => m.SecModule),
-      },
-    ],
-  },
+  
 
   // {
   //   path: '',
