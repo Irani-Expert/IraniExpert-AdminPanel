@@ -164,7 +164,6 @@ export class UserMangementComponent implements OnInit {
   // =========[sidebar]=======
   sideBarVisible: boolean = false;
   compileNotesComponent = false;
-  sidebarVisible: boolean = false;
   userRowID: number = -1;
   notes = new Array<CommentModel>();
 
@@ -248,7 +247,7 @@ export class UserMangementComponent implements OnInit {
     }
   }
   closeSideBar() {
-    this.sidebarVisible = false;
+    this.sideBarVisible = false;
     this.noteText = '';
   }
   

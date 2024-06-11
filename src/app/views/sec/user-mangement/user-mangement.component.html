@@ -603,7 +603,11 @@
 
 <!-- // =========[sidebar]======= -->
 
-<p-sidebar [(visible)]="sideBarVisible">
+<p-sidebar
+ [(visible)]="sideBarVisible"
+ (onHide)="closeSideBar()"
+ position="left"
+>
   <div>
     <form (keydown.enter)="createNote()" (ngSubmit)="createNote()">
       <div class="row g-0 p-0 m-0">
