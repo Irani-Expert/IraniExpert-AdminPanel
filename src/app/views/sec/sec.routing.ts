@@ -10,11 +10,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
 
-  // {
-  //   path: 'createNote',
-  //   component: PermissionsComponent,
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 'permissions',
+    component: PermissionsComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
