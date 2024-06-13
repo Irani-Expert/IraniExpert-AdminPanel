@@ -17,8 +17,8 @@ export class InvoiceService extends BaseService<InvoiceModel, 0> {
   get invoiceValue() {
     return this.invoiceItemSubject.value;
   }
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
 
   /**

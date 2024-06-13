@@ -19,9 +19,9 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    */
   constructor(
     protected _http: HttpClient,
-    protected _base: string,
-    public auth: AuthenticateService
-  ) {}
+    protected _base: string
+  ) // public auth: AuthenticateService
+  {}
 
   /**
    *  درخواست ایجاد
@@ -30,8 +30,6 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @returns insert
    */
   create(t: object, route: string): Observable<Result<number>> {
-    let loggedUserID = this.auth.currentUserValue.userID;
-
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -59,7 +57,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @returns update
    */
   update(id: number, t: T, route: string): Observable<Result<T>> {
-    let loggedUserID = this.auth.currentUserValue.userID;
+    // let loggedUserID = this.auth.currentUserValue.userID;
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -210,7 +208,7 @@ export abstract class BaseService<T, ID> implements IBaseService<T, ID> {
    * @returns by id
    */
   delete(id: number, route: string): Observable<Result<T>> {
-    let loggedUserID = this.auth.currentUserValue.userID;
+    // let loggedUserID = this.auth.currentUserValue.userID;
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

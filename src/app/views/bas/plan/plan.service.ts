@@ -14,8 +14,8 @@ import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.s
 export class PlanService extends BaseService<PlanModel, 0> {
   userGuid = environment.jwtToken;
   plans$ = new BehaviorSubject<Array<PlanModel>>(new Array<PlanModel>());
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
   get plansOfProductId() {
     return this.plans$.value;

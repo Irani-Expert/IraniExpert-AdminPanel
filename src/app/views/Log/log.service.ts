@@ -22,8 +22,8 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
 export class LogService extends BaseService<Object, number> {
   userGuid = environment.jwtToken;
 
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
   getAllTableType() {
     let _options = {

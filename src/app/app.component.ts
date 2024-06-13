@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AuthenticateService } from './shared/services/auth/authenticate.service';
-import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
+import { NavigationEnd, Router, Scroll } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Result } from './shared/models/Base/result.model';
-import { UserInforamationModel } from './shared/models/userInforamationModel';
 import { UsersService } from './views/sec/user-mangement/users.service';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -99,4 +96,6 @@ export class AppComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  ngAfterViewInit() {}
 }

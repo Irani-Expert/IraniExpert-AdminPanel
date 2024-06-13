@@ -7,15 +7,14 @@ import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.s
 import { Result } from 'src/app/shared/models/Base/result.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IndicatorValueService extends BaseService<Object, number> {
-
-  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, _auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
 
-  getIndicatorValue( countryId: number ) : Observable<Result<number>> {
+  getIndicatorValue(countryId: number): Observable<Result<number>> {
     let _options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -27,12 +26,8 @@ export class IndicatorValueService extends BaseService<Object, number> {
     };
 
     return this._http.get<Result<number>>(
-      this._base +
-        '/IndicatorValue/AddUpdate?countryId='+
-         countryId,
+      this._base + '/IndicatorValue/AddUpdate?countryId=' + countryId,
       _options
     );
-
-
   }
 }

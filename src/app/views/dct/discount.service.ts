@@ -21,8 +21,8 @@ export class DiscountService extends BaseService<DiscountModel, number> {
     Pragma: 'no-cache',
     Expires: '0',
   });
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
 
   async getAll(pageNumber: number, filter: FilterDiscount) {

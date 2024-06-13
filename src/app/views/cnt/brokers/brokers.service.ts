@@ -31,8 +31,8 @@ export class BrokersService extends BaseService<any, 0> {
       Expires: '0',
     }),
   };
-  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, _auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
   getBrokers(page: Page, _filter: FilterBrokers) {
     let filterRow = '';

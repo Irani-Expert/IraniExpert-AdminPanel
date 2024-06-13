@@ -31,8 +31,8 @@ export class UrvService extends BaseService<UrlModel, undefined> {
   };
   singelUrlSubject = new BehaviorSubject<SingleUrlModel>(null);
   tableTypes$ = new BehaviorSubject<TableType[]>(new Array<TableType>());
-  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, _auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
   async getTableTypes() {
     const res = this._http

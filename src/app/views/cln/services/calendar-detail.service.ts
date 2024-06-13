@@ -9,12 +9,10 @@ import { Paginate } from 'src/app/shared/models/Base/paginate.model';
 import { tagModel } from '../../cnt/tags/tagModel/tag.model';
 import { CalendarDetailModel } from '../models/calendardetail.model';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class CalendarDetailService extends BaseService<Object, number>  {
-
+export class CalendarDetailService extends BaseService<Object, number> {
   _options = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -25,8 +23,8 @@ export class CalendarDetailService extends BaseService<Object, number>  {
     }),
   };
 
-  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, _auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
 
   getTags() {
@@ -36,11 +34,11 @@ export class CalendarDetailService extends BaseService<Object, number>  {
     );
   }
 
-  GetDetailsAndHistory( countryId: number ) : Observable<Result<CalendarDetailModel>> {
+  GetDetailsAndHistory(
+    countryId: number
+  ): Observable<Result<CalendarDetailModel>> {
     return this._http.get<Result<CalendarDetailModel>>(
-      this._base +
-        '/CalendarCountry/GetDetailsAndHistory?id='+
-         countryId,
+      this._base + '/CalendarCountry/GetDetailsAndHistory?id=' + countryId,
       this._options
     );
   }

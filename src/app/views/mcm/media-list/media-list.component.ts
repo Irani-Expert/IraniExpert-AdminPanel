@@ -105,45 +105,43 @@ export class MediaListComponent implements OnInit {
   }
 
   getDirectories() {
-    var indexOfElement = 0;
-    this.files = new Array<FileInfoModel>();
-    this.folders = new Array<string>();
-    let subscriber = this.mcmService.getFiles(this.filterFiles).subscribe({
-      next: (res) => {
-        if (res.success) {
-          res.data.files.forEach((item) => {
-            let splitedArray = item.filePath.split('\\').splice(1, 2);
-
-            item.fileActualPath =
-              '/' +
-              splitedArray[0] +
-              '/' +
-              splitedArray[1] +
-              '/' +
-              (this.filterFiles.filePath ? this.filterFiles.filePath : '');
-            this.addFilesToRow(item, indexOfElement);
-            indexOfElement++;
-          });
-
-          this.folders = res.data.folders;
-        } else {
-          this.toastr.error(res.message, null, {
-            positionClass: 'toast-top-left',
-            progressBar: true,
-            timeOut: 4000,
-          });
-        }
-      },
-      error: (_err) => {
-        this.toastr.error('مشکل در برقراری ارتباط', null, {
-          positionClass: 'toast-top-left',
-          progressBar: true,
-          timeOut: 4000,
-        });
-        subscriber.unsubscribe();
-      },
-      complete: () => {},
-    });
+    // var indexOfElement = 0;
+    // this.files = new Array<FileInfoModel>();
+    // this.folders = new Array<string>();
+    // let subscriber = this.mcmService.getFiles(this.filterFiles).subscribe({
+    //   next: (res) => {
+    //     if (res.success) {
+    //       res.data.files.forEach((item) => {
+    //         let splitedArray = item.filePath.split('\\').splice(1, 2);
+    //         item.fileActualPath =
+    //           '/' +
+    //           splitedArray[0] +
+    //           '/' +
+    //           splitedArray[1] +
+    //           '/' +
+    //           (this.filterFiles.filePath ? this.filterFiles.filePath : '');
+    //         this.addFilesToRow(item, indexOfElement);
+    //         indexOfElement++;
+    //       });
+    //       this.folders = res.data.folders;
+    //     } else {
+    //       this.toastr.error(res.message, null, {
+    //         positionClass: 'toast-top-left',
+    //         progressBar: true,
+    //         timeOut: 4000,
+    //       });
+    //     }
+    //   },
+    //   error: (_err) => {
+    //     this.toastr.error('مشکل در برقراری ارتباط', null, {
+    //       positionClass: 'toast-top-left',
+    //       progressBar: true,
+    //       timeOut: 4000,
+    //     });
+    //     subscriber.unsubscribe();
+    //   },
+    //   complete: () => {},
+    // });
   }
   // Add Files Into Row
   async addFilesToRow(item: FileInfoModel, index: number) {

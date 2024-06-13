@@ -14,8 +14,8 @@ import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.s
 export class ContractService extends BaseService<ContractModel, number> {
   userGuid = environment.jwtToken;
 
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
   getUserInfiById(
     id: number,

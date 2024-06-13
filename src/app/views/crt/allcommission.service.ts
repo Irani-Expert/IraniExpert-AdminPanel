@@ -18,8 +18,8 @@ import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.s
 export class allcommissionService extends BaseService<ConditionModel, number> {
   userGuid = environment.jwtToken;
 
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
   addReceipt(data: ReceiptModel) {
     let _options = {

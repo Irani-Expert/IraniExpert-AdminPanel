@@ -27,8 +27,8 @@ export class UserNeedService extends BaseService<UserNeedModel, 0> {
       // Authorization: 'bearer ' + environment.jwtToken,
     }),
   };
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
   public sidebarState: INoteSidebar = {
     sidenavOpen: true,

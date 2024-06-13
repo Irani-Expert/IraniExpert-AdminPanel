@@ -16,6 +16,7 @@ import { OrdersModel, SingleOrderModel } from '../models/orders-new.model';
 import { BehaviorSubject, lastValueFrom, map } from 'rxjs';
 import { CommentModel } from 'src/app/shared/models/comment.model';
 import { OrderItemBasket } from '../models/AddOrder.interface';
+import { UserInfoModel } from 'src/app/shared/models/userInfoModel';
 interface INoteSidebar {
   sidenavOpen?: boolean;
 }
@@ -47,8 +48,8 @@ export class OrderService extends BaseService<any, 0> {
   productsBSubject = new BehaviorSubject<ProductModel[]>(
     new Array<ProductModel>()
   );
-  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, _auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
   public sidebarState: INoteSidebar = {
     sidenavOpen: true,
@@ -98,7 +99,10 @@ export class OrderService extends BaseService<any, 0> {
     pageOrder: string,
     filter: string
   ): Observable<Result<Paginate<OrderModel[]>>> {
-    this.userID = this._auth.currentUserValue.userID;
+    let localUser: UserInfoModel = JSON.parse(
+      localStorage.getItem('currentUser')
+    );
+    this.userID = localUser.userID;
 
     return this._http.get<Result<Paginate<OrderModel[]>>>(
       this._base +

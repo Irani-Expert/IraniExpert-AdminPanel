@@ -13,8 +13,8 @@ import { AuthenticateService } from 'src/app/shared/services/auth/authenticate.s
 export class BackTestService extends BaseService<BackTestModel, 0> {
   userGuid = environment.jwtToken;
 
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
 
   /**

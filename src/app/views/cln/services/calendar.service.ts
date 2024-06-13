@@ -14,8 +14,8 @@ import { FilterModel } from 'src/app/shared/models/Base/filter.model';
   providedIn: 'root',
 })
 export class CalendarService extends BaseService<Object, number> {
-  constructor(public _http: HttpClient, public _auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, _auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
 
   // Get All Events

@@ -14,8 +14,8 @@ import { CommissionModel } from './commission.model';
 export class CommissionService extends BaseService<CommissionModel, 0> {
   userID: number;
 
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
 
   getMyCommission(

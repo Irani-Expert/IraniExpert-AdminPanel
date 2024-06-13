@@ -19,8 +19,8 @@ import { lastValueFrom, map } from 'rxjs';
 })
 export class ArticleService extends BaseService<ArticleModel, 0> {
   userGuid = environment.jwtToken;
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
   _options = {
     headers: new HttpHeaders({
@@ -64,7 +64,6 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
     );
   }
   updateTags(id: number, tagsModel: tagModel) {
-    let loggedUserID = this.auth.currentUserValue.userID;
     return this._http.put<Result<tagModel>>(
       this._base + '/LinkTag/' + id,
       // + '?authorID=' + loggedUserID,
@@ -81,7 +80,6 @@ export class ArticleService extends BaseService<ArticleModel, 0> {
     );
   }
   async addTagToArticle(tagRelation: tagRelationModel[]) {
-    let loggedUserID = this.auth.currentUserValue.userID;
     const res = this._http
       .post<Result<tagModel>>(
         this._base + '/LinkTagRelation/AddUpdateLinkTagRelations',

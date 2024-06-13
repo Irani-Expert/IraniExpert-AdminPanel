@@ -14,8 +14,8 @@ import { environment } from 'src/environments/environment.prod';
 export class CommentService extends BaseService<CommentModel, 0> {
   userGuid = environment.jwtToken;
 
-  constructor(public _http: HttpClient, public auth: AuthenticateService) {
-    super(_http, environment.api.baseUrl, auth);
+  constructor(public _http: HttpClient) {
+    super(_http, environment.api.baseUrl);
   }
 
   /**
